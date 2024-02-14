@@ -5,11 +5,14 @@
 
 
 ///Redirect right to checkout page
-add_filter ('woocommerce_add_to_cart_redirect', 'woo_redirect_to_checkout');
+add_filter('woocommerce_add_to_cart_validation', 'custom_redirect_after_add_to_cart', 10, 3);
 
-function woo_redirect_to_checkout() {
-	$checkout_url = WC()->cart->get_checkout_url();
-	return $checkout_url;
+function custom_redirect_after_add_to_cart($passed, $product_id, $quantity) {
+    if ($passed) {
+        wp_safe_redirect(wc_get_checkout_url());
+        exit;
+    }
+    return $passed;
 }
 
 
