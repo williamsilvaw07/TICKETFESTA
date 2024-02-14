@@ -2210,7 +2210,7 @@ function delete_bank_details_on_admin_backend($user_id) {
         }
     }
 }
-
+ 
 add_action('show_user_profile', function($user) {
     delete_bank_details_on_admin_backend($user->ID);
 });

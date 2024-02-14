@@ -406,3 +406,7 @@ html .event-venue-city-organizer{
     align-items: center;
     gap: 21px;
 }
+
+.tribe-events-c-subscribe-dropdown__container{
+    display: none!important;
+}
