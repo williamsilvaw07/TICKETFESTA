@@ -2,6 +2,17 @@
 
 
 
+
+
+///Redirect right to checkout page
+add_filter ('woocommerce_add_to_cart_redirect', 'woo_redirect_to_checkout');
+
+function woo_redirect_to_checkout() {
+	$checkout_url = WC()->cart->get_checkout_url();
+	return $checkout_url;
+}
+
+
 // $custom_post = get_post(1742);
 // echo "<pre>";
 // $product = wc_get_product(1835);
