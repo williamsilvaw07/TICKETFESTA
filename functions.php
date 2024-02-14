@@ -5,10 +5,11 @@
 
 
 ///Redirect right to checkout page
-add_filter('woocommerce_add_to_cart_redirect', 'redirect_to_checkout_after_add_to_cart');
+add_filter ('woocommerce_add_to_cart_redirect', 'woo_redirect_to_checkout');
 
-function redirect_to_checkout_after_add_to_cart() {
-    return wc_get_checkout_url();
+function woo_redirect_to_checkout() {
+	$checkout_url = WC()->cart->get_checkout_url();
+	return $checkout_url;
 }
 
 
