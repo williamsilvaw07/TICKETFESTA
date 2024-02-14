@@ -1,0 +1,408 @@
+/**
+ * Theme Name:     GeneratePress Child
+ * Author:        William Silva
+ * Template:       generatepress
+ * Text Domain:	   generatepress-child
+ * Description:    GeneratePress is a lightweight WordPress theme built with a focus on speed and usability. Performance is important to us, which is why a fresh GeneratePress install adds less than 10kb (gzipped) to your page size. We take full advantage of the block editor (Gutenberg), which gives you more control over creating your content. If you use page builders, GeneratePress is the right theme for you. It is completely compatible with all major page builders, including Beaver Builder and Elementor. Thanks to our emphasis on WordPress coding standards, we can boast full compatibility with all well-coded plugins, including WooCommerce. GeneratePress is fully responsive, uses valid HTML/CSS, and is translated into over 25 languages by our amazing community of users. A few of our many features include 60+ color controls, powerful dynamic typography, 5 navigation locations, 5 sidebar layouts, dropdown menus (click or hover), and 9 widget areas. Learn more and check out our powerful premium version at https://generatepress.com
+ */
+
+
+
+ /*****GLOBO CSS****/
+ body {
+    overflow-x: hidden;
+}
+ .grid-container {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 100%;
+}
+.separate-containers .inside-article{
+    padding: inherit!important;
+}
+ .content-wrapper {
+    background-color:#0d0e0e;
+}
+ body {
+    font-family: "Plus Jakarta Sans", Sans-serif;
+    background-color:#282828;
+    color: white!important;
+
+  }
+  .entry-content .alignwide, body:not(.no-sidebar) .entry-content .alignfull{
+    margin-left:inherit!important;
+    width: inherit!important;
+    max-width:inherit!important;
+  }
+  .entry-content{
+    background-color:black;
+
+  }
+
+  html h1 {
+    font-size: 31px;
+    font-weight: bold;
+    line-height: 35px;
+  }
+  
+  .tribe-ui-datepicker.ui-datepicker body, .ui-datepicker-title span , .tribe-ui-datepicker.ui-datepicker button, .tribe-ui-datepicker.ui-datepicker input, .tribe-ui-datepicker.ui-datepicker select, .tribe-ui-datepicker.ui-datepicker textarea {
+   font-family: "Plus Jakarta Sans", Sans-serif!important;
+    font-size: 12px!important;
+  }
+body h1 ,body h2,body h3,body h4,body h5,body h6,html p,html a,body span,dd,dt, .main-navigation .main-nav ul li a{
+color:white!important;
+font-family: "Plus Jakarta Sans", Sans-serif;
+}
+#tribe-events-pg-template {
+    max-width: 1800px;
+    padding: 0 3%;
+}
+
+/*****END***/
+/***HEADER***/
+
+.site-header {
+    --base-3: transparent; /* or use rgba(255, 255, 255, 0) for a white color with 0 opacity */
+    background-color: var(--base-3);
+    color: white!important;
+}
+.inside-header {
+    padding: 9px 40px;
+}
+
+
+
+/****END***/
+
+
+
+/*******COLOR CSS FOR GOBE******/
+.main_custom_container_second .tribe-button-primary {
+    background: #d3fa16!important;
+    color: #000000!important;
+    text-transform: capitalize!important;
+}
+a.tribe-button.tribe-button-primary.add-new , .organizers_add_new_btn{
+    background: #d3fa16!important;
+    color: #000000!important;
+    text-transform: capitalize!important;
+    text-decoration: none;
+    white-space: nowrap;
+}
+.organizers_add_new_btn{
+    background: #d3fa16!important;
+    color: #000000!important;
+    text-transform: capitalize!important;
+    text-decoration: none;
+    white-space: nowrap;
+    border-radius: 3px;
+    line-height: 1;
+    padding: 9px 12px;
+    font-size: 12px;
+    height: fit-content;
+    margin-bottom: 0!important;
+}
+.tribe-upcoming{
+    background-color: #3d3d3f!important;
+    text-transform: capitalize!important;
+    font-family: "Plus Jakarta Sans", Sans-serif!important;
+    letter-spacing: 1px!important;
+    font-weight: 200!important;
+}
+
+.tribe-ui-datepicker.ui-datepicker a.ui-state-active {
+    background: #d3fa16!important;
+    color: #000000!important;
+}
+/**********************END***********************************/
+
+/****INPUTS MAIN GLOBE***/
+.page-template-organizer-template-php input[type="text"], .page-template-organizer-template-php input[type="email"], .page-template-organizer-template-php input[type="url"], .page-template-organizer-template-php input[type="password"], .page-template-organizer-template-php input[type="search"],.page-template-organizer-template-php  input[type="tel"], .page-template-organizer-template-php input[type="number"],.page-template-organizer-template-php textarea, .page-template-organizer-template-php select {
+    color: white!important;
+    background-color: #3F3F3F!important;
+    border-color: #888888!important;
+    border-radius: 4px;
+
+}
+.mce-container, .mce-container *, .mce-widget, .mce-widget *, .mce-reset {
+
+    background: #3F3F3F!important;
+    color: #ffffff!important;  
+}
+
+#tinymce p{
+    font-family: "Plus Jakarta Sans", Sans-serif!important;  
+
+}
+
+/****END***/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/***********FRONTEND ALL EVENTS*****/
+
+
+.tribe-events-view {
+    background-color: #0d0e0e!important;
+}
+html .elementor-widget-tec_elementor_widget_events_view{
+    padding: 0!important;
+}
+.entry-header , .tribe-events-c-events-bar__views , html .tribe-common--breakpoint-medium.tribe-events .tribe-events-c-top-bar__today-button , .tribe-events-c-top-bar__nav-list{
+    display: none!important;
+}
+.entry-content{
+    margin-top: 0;
+}
+
+body .tribe-events-l-container {
+    padding-top:30px!important;
+}
+.tribe-events-header__events-bar{
+    max-width: 900px;
+    margin: 0 auto!important;
+margin-bottom: 60px!important;
+border-radius: 5px;
+
+}
+.tribe-events-c-search__input-group {
+    border-radius: 5px;
+}
+.tribe-events-c-search__button{
+   
+
+    letter-spacing: 1px!important;
+    font-size: 13px!important;
+    padding: 10px!important;
+}
+
+.tribe-common--breakpoint-medium.tribe-common .tribe-common-c-btn-border-small, .tribe-common--breakpoint-medium.tribe-common a.tribe-common-c-btn-border-small {
+
+    color: black!important;
+}
+.tribe-events .tribe-events-header--has-event-search .tribe-events-c-events-bar__filter-button-text {
+    color: var(--tec-color-text-events-bar-input)!important;
+}
+.tribe-common .tribe-common-c-svgicon__svg-fill {
+    fill: #ffffff!important;
+}
+
+
+.tribe-events-pro-photo__event{
+    border: 2px solid black;
+    border-radius: 7px!important;
+    background: white!important;
+    color: black!important;
+    padding: 0!important;
+    position: relative!important;
+ 
+
+}
+
+.tribe-common .tribe-common-g-row {
+    display: flex!important;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.tribe-events-pro-photo__event {
+    flex: 0 1 calc(33.33% - 10px); 
+    margin: 5px; 
+    max-width: calc(33.33% - 10px); 
+}
+.tribe-events-pro-photo__event-featured-image-wrapper{
+    margin-bottom: 0!important;
+} 
+
+.tribe-events-pro .tribe-events-pro-photo__event-details-wrapper {
+    display: flex;
+    color: black;
+    padding: 12px 17px;
+}
+
+.tribe-common--breakpoint-medium.tribe-common .tribe-common-h4--min-medium {
+    font-size: 24px!important;
+    line-height: var(--tec-line-height-1);
+
+}
+
+.tribe-events-pro .tribe-events-pro-photo__event-date-tag-month , .tribe-events-status-label__text , .tribe-events-pro-photo__event-title-link  , .tribe-events-c-small-cta__price ,.tribe-common--breakpoint-medium.tribe-common .tribe-common-h4--min-medium , .tribe-common--breakpoint-medium.tribe-common .tribe-common-b3 , .tribe-common--breakpoint-medium.tribe-common .tribe-common-h6 {
+
+    color: black!important;
+}
+
+
+
+.event-actions {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    align-content: center;
+    justify-content: flex-start;
+    margin-top: 10px!important;
+    gap: 10px!important;
+   
+}
+
+.event_actions_inner{
+    gap: 7px;
+    display: flex;
+    flex-direction: row-reverse;
+    align-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+body .event-actions a {
+    text-decoration: none;
+    background: #d3fa16!important;
+    color: black!important;
+    padding: 10px 13px;
+    width: fit-content;
+    font-size: 14px;
+    border-radius: 5px;
+    display: block;
+    text-align: center;
+    margin-top: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    gap: 6px;
+    font-size: 14px!important;
+    font-weight: 600!important;
+    border: 2px solid #d3fa16;
+    transition: border 0.3s ease-in-out;
+}
+body .event-actions a:hover{
+   border: 2px solid black ;
+}
+.event-actions span {
+    white-space: nowrap;
+    font-weight: 800;
+}
+.btn-get-tickets img {
+    max-width: 23px!important;
+    position: relative;
+    top: 0px;
+}
+
+.tribe-events-pro-photo__event-date-tag {
+    display: none;
+}
+.tribe-events-pro-photo__event-cost{
+
+    margin-top: 0!important;
+    font-size: 15px!important;
+    font-weight: 500!important;
+
+}
+
+html .event-venue-city-organizer{
+    font-size: 13px;
+    text-transform: capitalize!important;
+    margin-top: 5px!important;
+    font-weight: 300;
+}
+
+.tribe-events-pro-photo__event-title {
+    margin-bottom: 6px!important;
+    line-height: 22px!important;
+}
+
+.event-day{
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.share_btn img{
+    border-radius: 100px!important;
+    padding: 7px!important;
+    max-width: 33px!important;
+    background-color: white;
+    border: 1px solid #334AFF!important;
+
+}
+
+.share_btn{
+    position: absolute;
+    top:10px!important;
+    right: 15px!important;
+    display: none;
+}
+
+
+
+.tribe-events-pro-photo__event-featured-image:hover , .tribe-events-pro-photo__event-featured-image-wrapper a:hover{
+    content: none !important;
+    background-color: transparent !important; 
+    opacity: 1!important;
+}
+/*******end*****/
+
+
+
+/* Hide the share button by default */
+.share_btn {
+    display: none;
+}
+
+/* Display the share button when hovering over the image wrapper anchor */
+.tribe-events-pro-photo__event-featured-image-wrapper a:hover + .share_btn,
+.tribe-events-pro-photo__event-featured-image-wrapper a:hover ~ .share_btn {
+    display: block!important;
+}
+
+/* Keep the share button displayed when hovering over the button itself */
+.share_btn:hover {
+    display: block!important;
+}
+
+
+.close_popup{
+    position: absolute;
+    right: 10px;
+
+}
+
+
+.share_event_url{
+    display: flex;
+    flex-direction: column;
+    align-content: flex-start;
+    border: 1px solid #a7a7a7!important;
+    padding: 4px 15px!important;
+    border-radius: 4px;
+
+}
+.share_event_url span{
+    width: fit-content;
+    color: black!important;
+}
+.share_event_url .share_popup_box_title{
+    font-size: 11px;
+    font-weight: normal;
+    color: #39364f!important;
+}
+.share_event_url_inner{
+    display: flex;
+    align-content: center;
+    align-items: center;
+    gap: 21px;
+}
