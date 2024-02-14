@@ -410,3 +410,7 @@ html .event-venue-city-organizer{
 .tribe-events-c-subscribe-dropdown__container{
     display: none!important;
 }
+
+body .tribe-filter-bar__filters-slide span {
+color: black!important;
+}
