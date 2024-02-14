@@ -2,6 +2,22 @@
 
 
 
+function set_ticket_product_image_from_event_featured_image($product_id) {
+    // Assuming you can get the event ID associated with this product/ticket
+    $event_id = get_event_id_from_ticket_product($product_id); // You'll need to replace this with the actual function or method to get the event ID
+
+    if ($event_id) {
+        $thumbnail_id = get_post_thumbnail_id($event_id);
+
+        if ($thumbnail_id) {
+            set_post_thumbnail($product_id, $thumbnail_id);
+        }
+    }
+}
+
+// Hook into product creation and update - you might need to adjust these hooks
+add_action('woocommerce_new_product', 'set_ticket_product_image_from_event_featured_image');
+add_action('woocommerce_update_product', 'set_ticket_product_image_from_event_featured_image');
 
 
 ///Redirect right to checkout page
