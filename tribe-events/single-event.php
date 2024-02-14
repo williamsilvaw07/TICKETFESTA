@@ -1419,6 +1419,7 @@ max-width:900px
 
 
 .tribe-link-view-attendee {
+    display:none!important;
     margin: 0;
     padding: 0 15px;
     margin-bottom: 30px;
