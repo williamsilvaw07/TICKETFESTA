@@ -414,3 +414,12 @@ html .event-venue-city-organizer{
 body .tribe-filter-bar__filters-slide span {
 color: black!important;
 }
+.tribe-common--breakpoint-medium.tribe-events .tribe-events-c-messages__message {
+
+    color: white;
+    font-size: 20px;
+}
+
+.tribe-common--breakpoint-medium.tribe-events .tribe-events-c-nav {
+    display: none;
+}
