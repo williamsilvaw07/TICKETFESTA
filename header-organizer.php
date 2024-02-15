@@ -2454,15 +2454,15 @@ position: relative!important;
   background: rgba(0, 0, 0, 0.5); /* Dark overlay */
   color: #ffffff; /* Text color */
   width: 100%;
-  transition: .5s ease;
-  opacity:0;
+  opacity:1;
   color: white;
   text-align: center;
   padding: 20px;
+  transition: .5s ease;
 }
 
 .category-item:hover .overlay {
-  opacity: 1;
+  opacity: 0;
 }
 
 .overlay h2, .overlay h3 {
