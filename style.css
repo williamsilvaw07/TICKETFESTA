@@ -466,12 +466,8 @@ color: black!important;
 }
 
 
-.woocommerce-orders-table__row--status-completed .woocommerce-orders-table__cell-order-status{
-    width: fit-content!important;
-    color: #21DAB8;
-    border-radius: 6px;
-    background: rgba(19, 180, 151, 0.20)!important;
-    padding: 4px 9px!important;
+ .woocommerce-orders-table__cell-order-status{
+ display: none;
 }
 .woocommerce-MyAccount-navigation{
     min-height: 100%;
