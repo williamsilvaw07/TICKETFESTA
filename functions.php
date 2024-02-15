@@ -1,5 +1,34 @@
 <?php
 
+
+
+
+
+
+
+
+function display_event_id_in_orders($order) {
+    // Loop through order items
+    foreach ($order->get_items() as $item_id => $item) {
+        $product_id = $item->get_product_id();
+        // Assuming the event ID is stored in post meta for the product
+        $event_id = get_post_meta($product_id, '_event_id', true);
+
+        if (!empty($event_id)) {
+            // Fetch event title or any other information you have stored with the event ID
+            $event_post = get_post($event_id);
+            $event_title = isset($event_post->post_title) ? $event_post->post_title : '';
+
+            // Output the event title or ID
+            echo 'Event: ' . esc_html($event_title) . ' (ID: ' . esc_html($event_id) . ')';
+        }
+    }
+}
+
+add_action('woocommerce_order_details_after_order_table_items', 'display_event_id_in_orders', 10, 1);
+
+
+
 // Function to customize My Account page tabs
 
 function add_username_above_account_navigation() {
