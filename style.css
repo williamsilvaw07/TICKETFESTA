@@ -512,7 +512,7 @@ color: black!important;
     flex-direction: column;
 }
 
-.woocommerce-account thead tr{
+.woocommerce-account thead tr th{
     margin-bottom: 10px!important;
     border-bottom: 1px solid #444!important;
     padding-bottom: 12px!important;
