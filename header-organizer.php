@@ -2433,6 +2433,26 @@ position: relative!important;
 }
 
 
+.elementor-button-link{
+    color:black!important
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /****END*****/
 
 /****MEIDA QURRYS***/
