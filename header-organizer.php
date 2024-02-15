@@ -2487,11 +2487,15 @@ position: relative!important;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    gap:5px;
 }
 
 .category-images img{
-    max-width: 150px;
-    flex: 1 1 22%;v
+    max-width: 250px;
+    object-fit: contain;
+    width: 100%!important;
+    flex: 1 1 22%;
+
 }
 
 
