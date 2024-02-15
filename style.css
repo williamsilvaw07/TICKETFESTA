@@ -513,9 +513,9 @@ color: black!important;
 }
 
 .woocommerce-account thead{
-    margin-bottom: 10px;
-    border-bottom: 1px solid #444;
-    padding-bottom: 12px;
+    margin-bottom: 10px!important;
+    border-bottom: 1px solid #444!important;
+    padding-bottom: 12px!important;
 }
 .woocommerce-account .woocommerce{
     display: flex;
