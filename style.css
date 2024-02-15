@@ -483,3 +483,9 @@ color: black!important;
     overflow: auto;
     padding-left: 15px;
 }
+.my-account-welcome-message {
+    /* Add your custom styles here */
+    font-size: 1.2em;
+    margin-bottom: 20px;
+    text-align: center;
+}
