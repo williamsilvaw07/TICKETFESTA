@@ -517,8 +517,10 @@ color: black!important;
     border-bottom: 1px solid #444!important;
     padding-bottom: 12px!important;
 }
-.woocommerce-account tbody tr {
-    border-bottom: 1px solid #444!important;
+.woocommerce-account tbody tr td {
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #444;
 }
 .woocommerce-account .woocommerce{
     display: flex;
