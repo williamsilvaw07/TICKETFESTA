@@ -464,3 +464,12 @@ color: black!important;
     font-family: 'Font Awesome 5 Free';
     padding-right: 8px;
 }
+
+
+.woocommerce-orders-table__row--status-completed .woocommerce-orders-table__cell-order-status{
+    width: fit-content;
+    color: #21DAB8;
+    border-radius: 6px;
+    background: rgba(19, 180, 151, 0.20);
+    padding: 4px 9px;
+}
