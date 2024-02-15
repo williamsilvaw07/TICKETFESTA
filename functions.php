@@ -28,6 +28,24 @@ function move_custom_welcome_message_script() {
     }
 }
 add_action('wp_footer', 'move_custom_welcome_message_script');
+function change_view_order_text_script() {
+    if (is_account_page()) {
+        // Add inline JavaScript to change the "View" buttons to "View Tickets"
+        ?>
+        <script type="text/javascript">
+        jQuery(document).ready(function($) {
+            // Change the text of each "View" button to "View Tickets"
+            $('.woocommerce-MyAccount-orders .woocommerce-button').each(function() {
+                if ($(this).text().trim() === 'View') {
+                    $(this).text('View Tickets');
+                }
+            });
+        });
+        </script>
+        <?php
+    }
+}
+add_action('wp_footer', 'change_view_order_text_script');
 
 
 
