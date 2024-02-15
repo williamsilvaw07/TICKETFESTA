@@ -2483,14 +2483,38 @@ position: relative!important;
 }
 
 
+.category-images{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
 
 
 
 
 
 
+@media (max-width: 768px) { /* Adjustments for tablets */
+  .overlay {
+    position: relative; /* Position overlay relative to its container */
+    background: transparent; /* Optional: make the background transparent */
+  }
 
+  .overlay h2, .overlay h3 {
+    color: #000; /* Change text color for better visibility */
+  }
+}
 
+@media (max-width: 480px) { /* Adjustments for mobile phones */
+  .overlay {
+    position: relative; /* Position overlay relative to its container */
+    background: transparent; /* Optional: make the background transparent */
+  }
+
+  .overlay h2, .overlay h3 {
+    color: #000; /* Change text color for better visibility */
+  }
+}
 /****END*****/
 
 /****MEIDA QURRYS***/
