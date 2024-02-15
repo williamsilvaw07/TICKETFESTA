@@ -374,7 +374,8 @@ function category_image_gallery_shortcode($atts) {
             echo '<h2 class="gallery_organiser_is_for"> Organiser : ' . esc_html($cat_organiser) . '</h2>';
             if (!empty($category_images)) {
                 $attachment_id = attachment_url_to_postid($category_images[0]);
-                $attachment_src = wp_get_attachment_image_src($attachment_id, 'thumbnail')[0];
+                $attachment_src = wp_get_attachment_image_src($attachment_id, 'medium')[0];
+
                 echo '<a href="' . esc_url($category_link) . '"><img src="' . esc_url($attachment_src) . '" alt="' . esc_attr($category_name) . '" /></a>';
             } else {
                 echo '<p>No thumbnail available</p>';
