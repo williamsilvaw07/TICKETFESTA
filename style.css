@@ -494,3 +494,10 @@ color: black!important;
     margin-top: 20px;
     text-align: left;
 }
+.woocommerce-MyAccount-orders  .woocommerce-button{line-height: inherit;
+    padding: 7px 15px;
+    border-radius: 5px;
+    font-size: 14px;
+    background: #d5d5d5!important;
+    color: black!important;
+}
