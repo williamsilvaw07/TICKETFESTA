@@ -501,3 +501,59 @@ color: black!important;
     background: #d5d5d5!important;
     color: black!important;
 }
+
+
+
+
+
+
+
+/* Custom styles for the "My Account" orders table */
+.woocommerce-account .woocommerce-orders-table .coupon-style {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ffff99; /* Coupon background color */
+    margin-bottom: 1em;
+    padding: 10px;
+    border-radius: 10px;
+    position: relative;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Style for the left part of the coupon */
+.woocommerce-account .woocommerce-orders-table .coupon-style .woocommerce-orders-table__cell-order-number {
+    flex-grow: 1;
+    text-align: left;
+    font-weight: bold;
+    border-right: 2px dashed #ccc;
+}
+
+/* Style for the center part of the coupon */
+.woocommerce-account .woocommerce-orders-table .coupon-style .woocommerce-orders-table__cell-order-date,
+.woocommerce-account .woocommerce-orders-table .coupon-style .woocommerce-orders-table__cell-order-status,
+.woocommerce-account .woocommerce-orders-table .coupon-style .woocommerce-orders-table__cell-order-total {
+    flex-grow: 2;
+    text-align: center;
+}
+
+/* Style for the right part of the coupon (View Tickets button) */
+.woocommerce-account .woocommerce-orders-table .coupon-style .woocommerce-orders-table__cell-order-actions {
+    flex-grow: 1;
+    text-align: right;
+}
+
+/* Additional customizations */
+/* ... Add more customizations here ... */
+
+@media screen and (max-width: 768px) {
+    .woocommerce-account .woocommerce-orders-table .coupon-style {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .woocommerce-account .woocommerce-orders-table .coupon-style .woocommerce-orders-table__cell-order-number,
+    .woocommerce-account .woocommerce-orders-table .coupon-style .woocommerce-orders-table__cell-order-actions {
+        border: none;
+    }
+}
