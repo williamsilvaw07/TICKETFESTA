@@ -2437,9 +2437,13 @@ position: relative!important;
     color:black!important
 }
 
+.category-item h2{
+display:none
+}
 
-
-
+.category-item h2 a{
+display:block!important
+}
 
 
 
