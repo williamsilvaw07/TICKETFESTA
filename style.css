@@ -500,9 +500,22 @@ color: black!important;
     color: black!important;
 }
 
+.woocommerce-MyAccount-content{
+    background-color: rgb(26, 26, 26);
+    position: relative;
+    padding: 17px;
+    border-radius: 10px;
+    /* width: 100%; */
+    /* max-width: 500px; */
+    margin: 38px auto;
+    display: flex;
+    flex-direction: column;
+}
 
 
+.woocommerce-account .woocommerce{
+    display: flex;
 
-
+}
 
 
