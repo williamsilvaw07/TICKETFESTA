@@ -2489,7 +2489,10 @@ position: relative!important;
     flex-wrap: wrap;
 }
 
-
+.category-images img{
+    max-width: 150px;
+    flex: 1 1 22%;v
+}
 
 
 
