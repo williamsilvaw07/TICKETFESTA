@@ -487,9 +487,7 @@ color: black!important;
 }
 
 
-.woocommerce-MyAccount-orders thead{
-    display: none;
-}
+
 #custom-welcome-message{
     margin-top: 20px;
     text-align: left;
