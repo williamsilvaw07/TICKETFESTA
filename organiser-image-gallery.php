@@ -361,28 +361,29 @@ function category_image_gallery_shortcode($atts) {
         foreach ($categories as $category) {
             $category_id = $category->term_id;
             $category_name = $category->name;
-            $category_author_id = get_term_meta($category_id, 'category_owner_id', true); // User ID of the category creator
-            $category_author_name = $category_author_id ? get_userdata($category_author_id)->display_name : 'Unknown'; // Display name of the category creator
-            $category_link = add_query_arg('category_id', $category_id, get_permalink()); // Add category_id parameter to category link
-            $category_images = get_term_meta($category_id, 'category_images', true); // get category images
-            $cat_organiser = get_term_meta($category_id, 'category_organiser', true); // get category organiser 
+            $category_link = add_query_arg('category_id', $category_id, get_permalink());
+            $category_images = get_term_meta($category_id, 'category_images', true);
+            $cat_organiser = get_term_meta($category_id, 'category_organiser', true);
             $cat_organiser = get_post($cat_organiser)->post_title; 
             $category_images = explode(',', $category_images);
-
+        
             echo '<div class="category-item">';
-            echo '<h2><a href="' . esc_url($category_link) . '">' . esc_html($category_name) . '</a></h2>';
-            echo '<h2 class="gallery_organiser_is_for"> Organiser : ' . esc_html($cat_organiser) . '</h2>';
+            echo '<a href="' . esc_url($category_link) . '">';
             if (!empty($category_images)) {
                 $attachment_id = attachment_url_to_postid($category_images[0]);
                 $attachment_src = wp_get_attachment_image_src($attachment_id, 'large')[0];
-
-                echo '<a href="' . esc_url($category_link) . '"><img src="' . esc_url($attachment_src) . '" alt="' . esc_attr($category_name) . '" /></a>';
+                echo '<img src="' . esc_url($attachment_src) . '" alt="' . esc_attr($category_name) . '" />';
+                echo '<div class="overlay">';
+                echo '<h2>' . esc_html($category_name) . '</h2>';
+                echo '<h3>Organiser: ' . esc_html($cat_organiser) . '</h3>';
+                echo '</div>'; // Close overlay div
             } else {
                 echo '<p>No thumbnail available</p>';
             }
-            echo '</div>';
+            echo '</a>';
+            echo '</div>'; // Close category-item div
         }
-        echo '</div>';
+        echo '</div>'; // Close category-gallery div
     }
     wp_reset_query();
     return ob_get_clean();
