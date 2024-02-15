@@ -2433,7 +2433,7 @@ position: relative!important;
 }
 
 
-.elementor-button-link{
+.elementor-button-link span {
     color:black!important
 }
 
