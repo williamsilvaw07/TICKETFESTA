@@ -2,10 +2,14 @@
 
 // Function to customize My Account page tabs
 
-function enqueue_font_awesome() {
-    wp_enqueue_style( 'font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css' );
+function add_username_above_account_navigation() {
+    $current_user = wp_get_current_user();
+    if ($current_user->display_name) {
+        // Customize the welcome message as you like
+        echo '<p class="my-account-welcome-message">Welcome, ' . esc_html($current_user->display_name) . '!</p>';
+    }
 }
-add_action( 'wp_enqueue_scripts', 'enqueue_font_awesome' );
+add_action('woocommerce_before_account_navigation', 'add_username_above_account_navigation');
 
 
 function customize_my_account_menu_items( $items ) {

@@ -474,15 +474,12 @@ color: black!important;
     padding: 4px 9px!important;
 }
 .woocommerce-MyAccount-navigation{
-    height: inherit;
     min-height: 100%;
     position: absolute;
-    top: 0;
-    width: 100%;
+    top: 143px;
     max-width: 200px;
     height: 100vh;
     background-color: rgb(26, 26, 26);
-    position: fixed;
     overflow: auto;
     padding-left: 15px;
 }
