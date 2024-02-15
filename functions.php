@@ -1,32 +1,23 @@
 <?php
 
+
 function enqueue_custom_styles_for_orders() {
-    wp_enqueue_style('custom-orders-style', get_stylesheet_directory_uri() . '/css/custom-orders-style.css');
+    wp_enqueue_style( 'custom-orders-style', get_stylesheet_directory_uri() . '/css/custom-orders-style.css' );
 }
-add_action('wp_enqueue_scripts', 'enqueue_custom_styles_for_orders');
+add_action( 'wp_enqueue_scripts', 'enqueue_custom_styles_for_orders' );
 
 function add_custom_class_to_order_rows() {
-    if(is_account_page()) {
-        ?>
-        <script type="text/javascript">
-            jQuery(document).ready(function($) {
-                // Add class to the orders table rows
-                $('.woocommerce-orders-table__row').addClass('coupon-style');
-                // Change the text of the "View" button to "View Tickets"
-                $('.woocommerce-orders-table__row .woocommerce-button').text('View Tickets');
-                // Prepend 'Order ' to the order number
-                $('.woocommerce-orders-table__row .woocommerce-orders-table__cell-order-number a').each(function(){
-                    $(this).text(function(i, text) {
-                        return text.replace('#', 'Order #');
-                    });
-                });
+    ?>
+    <script type="text/javascript">
+        jQuery(document).ready(function($) {
+            $('.woocommerce-orders-table__row').each(function() {
+                $(this).addClass('coupon-style');
             });
-        </script>
-        <?php
-    }
+        });
+    </script>
+    <?php
 }
 add_action('wp_footer', 'add_custom_class_to_order_rows');
-
 
 function customize_order_number_display( $order_number, $order ) {
     return 'Order ' . $order_number; // Prepend "Order" to the order number
