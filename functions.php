@@ -2,30 +2,11 @@
 
 
 
-
-
-
-
-add_action('woocommerce_order_item_meta_end', 'add_event_details_to_order_items', 10, 3);
-
-function add_event_details_to_order_items($item_id, $item, $order) {
-    // Assuming each ticket product has a related event ID stored in its meta
-    $product_id = $item->get_product_id();
-    $event_id = get_post_meta($product_id, '_event_id', true); // Replace '_event_id' with the actual meta key
-
-    if ($event_id) {
-        // Fetch event details using the event ID
-        $event_post = get_post($event_id);
-
-        if ($event_post) {
-            // Output the event details. Customize this as needed.
-            echo '<div class="custom-event-details">';
-            echo '<a href="' . get_permalink($event_id) . '" class="event-title">' . esc_html($event_post->post_title) . '</a>';
-            // Add more event details here as needed
-            echo '</div>';
-        }
-    }
+function customize_order_number_display( $order_number, $order ) {
+    return 'Order ' . $order_number; // Prepend "Order" to the order number
 }
+
+add_filter( 'woocommerce_order_number', 'customize_order_number_display', 10, 2 );
 
 
 
