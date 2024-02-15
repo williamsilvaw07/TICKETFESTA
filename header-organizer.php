@@ -2492,8 +2492,9 @@ position: relative!important;
 
 .category-images img{
     max-width: 250px;
-    object-fit: contain;
+    object-fit: cover;
     width: 100%!important;
+    
     flex: 1 1 22%;
 
 }
