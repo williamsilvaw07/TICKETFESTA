@@ -518,4 +518,10 @@ color: black!important;
 
 }
 
+.account-orders-table span{
+    font-size: 14px;
+    color: #aaa;
+    text-transform: capitalize;
+    padding-left: 6px;
 
+}
