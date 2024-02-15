@@ -6,26 +6,29 @@
 
 
 
-
-function display_event_id_in_orders($order) {
-    // Loop through order items
-    foreach ($order->get_items() as $item_id => $item) {
+function display_event_info_in_orders( $order ) {
+    // Loop through the items in the order
+    foreach ( $order->get_items() as $item_id => $item ) {
+        // Get the product ID
         $product_id = $item->get_product_id();
-        // Assuming the event ID is stored in post meta for the product
-        $event_id = get_post_meta($product_id, '_event_id', true);
-
-        if (!empty($event_id)) {
-            // Fetch event title or any other information you have stored with the event ID
-            $event_post = get_post($event_id);
-            $event_title = isset($event_post->post_title) ? $event_post->post_title : '';
-
-            // Output the event title or ID
-            echo 'Event: ' . esc_html($event_title) . ' (ID: ' . esc_html($event_id) . ')';
+        
+        // Get the event ID using the ticket product ID. This assumes tickets are linked to events.
+        // You might need to replace this with the actual meta key or function used by the event plugin.
+        $event_id = get_post_meta( $product_id, '_event_id', true );
+        
+        if ( $event_id ) {
+            // Fetch the event post using the event ID
+            $event_post = get_post( $event_id );
+            
+            if ( $event_post && ! is_wp_error( $event_post ) ) {
+                // Display the event title. You can format this as needed.
+                echo '<p>Event: ' . esc_html( $event_post->post_title ) . '</p>';
+            }
         }
     }
 }
 
-add_action('woocommerce_order_details_after_order_table_items', 'display_event_id_in_orders', 10, 1);
+add_action( 'woocommerce_order_details_after_order_table_items', 'display_event_info_in_orders', 10, 1 );
 
 
 
