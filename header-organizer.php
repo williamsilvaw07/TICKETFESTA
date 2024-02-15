@@ -2475,7 +2475,8 @@ position: relative!important;
 
 .overlay h3 {
     font-size: 15px;
-    font-weight:300!important
+    font-weight:300!important;
+    margin-top:10px
 }
 .overlay h2{
     font-size: 18px;
