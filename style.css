@@ -428,6 +428,9 @@ color: black!important;
 
 
 /***my account page***/
+.woocommerce-orders-table__cell-order-total .item-count {
+    display: none;
+}
 
 /* Add icons to My Account menu items */
 .woocommerce-MyAccount-navigation-link--dashboard:before {
