@@ -370,7 +370,7 @@ function category_image_gallery_shortcode($atts) {
             $category_images = explode(',', $category_images);
 
             echo '<div class="category-item">';
-            echo '<h2><a href="' . esc_url($category_link) . '">' . esc_html($category_name) . '</a> (Created by: ' . esc_html($category_author_name) . ')</h2>';
+            echo '<h2><a href="' . esc_url($category_link) . '">' . esc_html($category_name) . '</a></h2>';
             echo '<h2> (Organiser : ' . esc_html($cat_organiser) . ')</h2>';
             if (!empty($category_images)) {
                 $attachment_id = attachment_url_to_postid($category_images[0]);
