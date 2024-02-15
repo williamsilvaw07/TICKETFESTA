@@ -506,5 +506,8 @@ color: black!important;
 
 
 
-
-
+/* hiding create new adviser from edit event page */
+.select2-results__option:first-child
+{
+    display: none;
+}

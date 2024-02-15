@@ -1,6 +1,5 @@
 <?php
 
-// test commit
 function enqueue_custom_styles_for_orders() {
     wp_enqueue_style( 'custom-orders-style', get_stylesheet_directory_uri() . '/css/custom-orders-style.css' );
 }
