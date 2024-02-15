@@ -489,3 +489,8 @@ color: black!important;
     margin-bottom: 20px;
     text-align: center;
 }
+
+
+.woocommerce-MyAccount-orders thead{
+    display: none;
+}

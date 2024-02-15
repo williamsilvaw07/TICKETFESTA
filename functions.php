@@ -5,11 +5,28 @@
 function add_username_above_account_navigation() {
     $current_user = wp_get_current_user();
     if ($current_user->display_name) {
-        // Customize the welcome message as you like
-        echo '<p class="my-account-welcome-message">Welcome, ' . esc_html($current_user->display_name) . '!</p>';
+        // Echo the welcome message with a container that has an ID for easy targeting
+        echo '<div id="custom-welcome-message" class="my-account-welcome-message">Welcome, ' . esc_html($current_user->display_name) . '!</div>';
     }
 }
 add_action('woocommerce_before_account_navigation', 'add_username_above_account_navigation');
+
+function move_custom_welcome_message_script() {
+    if (is_account_page()) {
+        // Add inline JavaScript to move the welcome message
+        ?>
+        <script type="text/javascript">
+        jQuery(document).ready(function($) {
+            // Move the welcome message to just above the <ul> inside the navigation
+            $('#custom-welcome-message').prependTo('.woocommerce-MyAccount-navigation');
+        });
+        </script>
+        <?php
+    }
+}
+add_action('wp_footer', 'move_custom_welcome_message_script');
+
+
 
 
 function customize_my_account_menu_items( $items ) {
