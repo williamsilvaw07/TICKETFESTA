@@ -1,6 +1,13 @@
 <?php
 
 // Function to customize My Account page tabs
+
+function enqueue_font_awesome() {
+    wp_enqueue_style( 'font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css' );
+}
+add_action( 'wp_enqueue_scripts', 'enqueue_font_awesome' );
+
+
 function customize_my_account_menu_items( $items ) {
     // Remove unwanted sections
     unset($items['downloads']); // Remove "Downloads"
