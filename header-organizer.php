@@ -2446,6 +2446,8 @@ position: relative!important;
   display: block;
   width: 100%;
   height: auto;
+  max-width: 400px;
+
 }
 
 .overlay {
@@ -2471,7 +2473,13 @@ position: relative!important;
 }
 
 
-
+.overlay h3 {
+    font-size: 15px;
+    font-weight:300!important
+}
+.overlay h2{
+    font-size: 18px;
+}
 
 
 
