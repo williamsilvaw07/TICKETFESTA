@@ -2436,6 +2436,39 @@ position: relative!important;
 .elementor-button-link_custom span {
     color:black!important
 }
+.category-item {
+  position: relative;
+  display: inline-block;
+  margin: 10px;
+}
+
+.category-item img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.overlay {
+  position: absolute;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5); /* Dark overlay */
+  color: #ffffff; /* Text color */
+  width: 100%;
+  transition: .5s ease;
+  opacity:0;
+  color: white;
+  text-align: center;
+  padding: 20px;
+}
+
+.category-item:hover .overlay {
+  opacity: 1;
+}
+
+.overlay h2, .overlay h3 {
+  margin: 0;
+  padding: 0;
+}
 
 
 
