@@ -521,6 +521,9 @@ color: black!important;
     align-items: center!important;
     padding: 10px 0!important;
     border-bottom: 1px solid #444!important;
+    font-size: 14px!important;
+    color: #fff!important;
+    font-weight: 300!important;
 }
 .woocommerce-account .woocommerce{
     display: flex;
