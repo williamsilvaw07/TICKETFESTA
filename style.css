@@ -512,7 +512,11 @@ color: black!important;
     flex-direction: column;
 }
 
-
+.woocommerce-account thead{
+    margin-bottom: 10px;
+    border-bottom: 1px solid #444;
+    padding-bottom: 12px;
+}
 .woocommerce-account .woocommerce{
     display: flex;
 
@@ -523,5 +527,6 @@ color: black!important;
     color: #aaa!important;
     text-transform: capitalize!important;
     padding-left: 6px!important;
+    font-weight: 400;
 
 }
