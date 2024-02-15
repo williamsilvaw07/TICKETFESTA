@@ -495,9 +495,9 @@ color: black!important;
     text-align: left;
 }
 .woocommerce-MyAccount-orders  .woocommerce-button{line-height: inherit;
-    padding: 7px 15px;
-    border-radius: 5px;
-    font-size: 14px;
+    padding: 7px 15px!important;
+    border-radius: 5px!important;
+    font-size: 14px!important;
     background: #d5d5d5!important;
     color: black!important;
 }
