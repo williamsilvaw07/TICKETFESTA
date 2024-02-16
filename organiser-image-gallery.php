@@ -15,7 +15,7 @@ function organiser_image_gallery_shortcode() {
             <h2>Upload Images</h2>
             <div id="drop-zone">
                 Drag & drop images here or click to select images.
-            </div>
+         
             <form id="image-upload-form" enctype="multipart/form-data">
                 <input type="file" id="file-input" name="files[]" multiple>
                 <select id="organiser-selector" name='organiser' >
@@ -33,6 +33,7 @@ function organiser_image_gallery_shortcode() {
                     }
                     ?>
                 </select>
+                </div>
                 <input type="text" id="category-name" name="category" placeholder="Enter category name" style="margin-bottom: 10px;" required>
                 <input type="submit" id="upload-button" value="Upload">
                 <span id="upload-count"></span>
