@@ -650,10 +650,13 @@ function create_tec_organizer_category_with_images($category_name, $image_urls, 
 
 <script>
 jQuery(document).ready(function($) {
+    console.log("Script running");
     if (window.location.search.indexOf('category_id') > -1) {
+        console.log("Category ID found in URL");
         $('.hide_gallery_upper_section').hide();
         $('.hide_back_btn_gallery').show();
+    } else {
+        console.log("Category ID not found in URL");
     }
 });
 </script>
-
