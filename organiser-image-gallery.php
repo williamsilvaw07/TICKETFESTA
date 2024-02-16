@@ -18,7 +18,7 @@ function organiser_image_gallery_shortcode() {
                 Drag & drop images here or click to select images.
          
             <form id="image-upload-form" enctype="multipart/form-data">
-                <input type="file" id="file-input" name="files[]" multiple>
+                <input type="file" id="file-input" name="files[]" multiple>dcdcd
                 </div>
                 <select id="organiser-selector" name='organiser' >
                     <?php
