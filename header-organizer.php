@@ -2535,7 +2535,10 @@ position: relative!important;
     position: relative; /* Position overlay relative to its container */
     background: transparent; /* Optional: make the background transparent */
   }
-
+  .category-item {
+        flex-basis: 50%;
+        width: 50%;
+    }
   .overlay h2, .overlay h3 {
     color: #000; /* Change text color for better visibility */
   }
