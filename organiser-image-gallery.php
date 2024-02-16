@@ -266,6 +266,21 @@ function organiser_image_gallery_shortcode() {
                 uploadModal.show();
             }
         });
+
+
+
+
+
+        // JavaScript to update label text when a file is chosen
+document.getElementById('file-input').addEventListener('change', function() {
+    var fileLabelText = document.getElementById('file-input-text');
+    if (this.files && this.files.length > 1) {
+        fileLabelText.textContent = this.files.length + ' files selected';
+    } else {
+        fileLabelText.textContent = this.value.split('\\').pop() || 'Drag & drop any file here or browse file from device';
+    }
+});
+
     </script>
 
     <?php
