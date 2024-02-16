@@ -741,7 +741,7 @@ function create_tec_organizer_category_with_images($category_name, $image_urls, 
     color: #d3fa16;
 }
 #drop-zone:hover .drag-drop_text {
-    color: #d3fa16;
+    color: #d3fa16!important;
 }
 
 .primary-icon {
