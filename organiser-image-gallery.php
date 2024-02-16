@@ -659,4 +659,5 @@ if(window.location.href.indexOf('category_id') !== -1) {
     document.head.appendChild(style);
 }
 
+
 </script>
