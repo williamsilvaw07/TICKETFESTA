@@ -271,15 +271,7 @@ function organiser_image_gallery_shortcode() {
 
 
 
-        // JavaScript to update label text when a file is chosen
-document.getElementById('file-input').addEventListener('change', function() {
-    var fileLabelText = document.getElementById('file-input');
-    if (this.files && this.files.length > 1) {
-        fileLabelText.textContent = this.files.length + ' files selected';
-    } else {
-        fileLabelText.textContent = this.value.split('\\').pop() || 'Drag & drop any file here or browse file from device';
-    }
-});
+
 
     </script>
 
@@ -687,5 +679,10 @@ function create_tec_organizer_category_with_images($category_name, $image_urls, 
 
 #inputFile::-webkit-file-upload-button {
   visibility: hidden;
+}
+
+
+.drag-drop_text{
+    margin:15px 0;
 }
 </style>
