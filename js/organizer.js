@@ -223,9 +223,22 @@ parentElements.forEach(parentElement => {
 
 // Check if the URL contains 'category_id'
 $(document).ready(function() {
+  console.log("Document ready.");
+
   // Check if the URL contains 'category_id'
   if(window.location.href.indexOf('category_id') !== -1) {
+      console.log("URL contains 'category_id'.");
+
+      // Check how many elements are selected before applying the style change
+      var elements = $('.elementor .hide_back_btn_gallery');
+      console.log(elements.length + " elements found with the class 'hide_back_btn_gallery'.");
+
       // Override the CSS for '.elementor .hide_back_btn_gallery'
-      $('.elementor .hide_back_btn_gallery').css('display', 'block');
+      elements.css('display', 'block');
+
+      // Confirm the style change was attempted
+      console.log("Attempted to change display to 'block'.");
+  } else {
+      console.log("URL does not contain 'category_id'.");
   }
 });
