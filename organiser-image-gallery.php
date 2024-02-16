@@ -18,6 +18,7 @@ function organiser_image_gallery_shortcode() {
          
             <form id="image-upload-form" enctype="multipart/form-data">
                 <input type="file" id="file-input" name="files[]" multiple>
+                </div>
                 <select id="organiser-selector" name='organiser' >
                     <?php
                     // Get list of organizers created by the current user
@@ -33,7 +34,7 @@ function organiser_image_gallery_shortcode() {
                     }
                     ?>
                 </select>
-                </div>
+               
                 <input type="text" id="category-name" name="category" placeholder="Enter category name" style="margin-bottom: 10px;" required>
                 <input type="submit" id="upload-button" value="Upload">
                 <span id="upload-count"></span>
