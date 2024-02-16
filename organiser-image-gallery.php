@@ -649,14 +649,24 @@ function create_tec_organizer_category_with_images($category_name, $image_urls, 
 
 
 <script>
-jQuery(document).ready(function($) {
-    console.log("Script running");
-    if (window.location.search.indexOf('category_id') > -1) {
-        console.log("Category ID found in URL");
-        $('.hide_gallery_upper_section').hide();
-        $('.hide_back_btn_gallery').show();
-    } else {
-        console.log("Category ID not found in URL");
+document.addEventListener("DOMContentLoaded", function() {
+    // Check if the URL has the 'category_id' parameter
+    var urlParams = new URLSearchParams(window.location.search);
+    var categoryId = urlParams.get('category_id');
+
+    if (categoryId) {
+        // If 'category_id' is present, hide the gallery upper section
+        var galleryUpperSection = document.querySelector('.hide_gallery_upper_section');
+        if (galleryUpperSection) {
+            galleryUpperSection.style.display = 'none';
+        }
+
+        // Show the back button for the gallery
+        var backBtnGallery = document.querySelector('.hide_back_btn_gallery');
+        if (backBtnGallery) {
+            backBtnGallery.style.display = 'block';
+        }
     }
 });
+
 </script>
