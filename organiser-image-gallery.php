@@ -649,38 +649,35 @@ function create_tec_organizer_category_with_images($category_name, $image_urls, 
 
 
 <style>
-#drop-zone {
-    border: 2px dashed #CCCCCC;
+#image-upload {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f8f8;
     border-radius: 5px;
     padding: 20px;
+    width: 500px; /* You can adjust the width as needed */
+    margin: auto;
+}
+
+#image-upload h2 {
+    color: #333;
     text-align: center;
-    font-family: 'Arial', sans-serif;
-    color: #555555;
-    margin-bottom: 10px;
-    position: relative;
-    background-color: #FFFFFF;
+    margin-bottom: 20px;
 }
 
-#drop-zone::before {
-    content: '⇪';
-    font-size: 24px;
-    position: absolute;
-    top: -35px;
-    left: 50%;
-    transform: translateX(-50%);
-}
-
-#drop-zone a {
-    color: #0000EE;
-    text-decoration: underline;
+#drop-zone {
+    border: 2px dashed #ccc;
+    border-radius: 5px;
+    text-align: center;
+    padding: 20px;
+    margin-bottom: 20px;
     cursor: pointer;
+    background-color: #fff;
 }
 
-#drop-zone a:hover {
-    text-decoration: none;
+#drop-zone:hover {
+    background-color: #f4f4f4;
 }
 
-/* Styles for the rest of the form elements */
 #file-input {
     display: none; /* Hidden, as the drop zone will be used for input */
 }
@@ -725,5 +722,5 @@ function create_tec_organizer_category_with_images($category_name, $image_urls, 
     margin-top: 10px;
 }
 
-/* Ensure that your actual HTML reflects this structure for these styles to apply correctly. */
+
 </style>
