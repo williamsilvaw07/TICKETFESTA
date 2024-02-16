@@ -652,17 +652,19 @@ function create_tec_organizer_category_with_images($category_name, $image_urls, 
 document.addEventListener('DOMContentLoaded', function () {
     const urlParams = new URLSearchParams(window.location.search);
     const categoryId = urlParams.get('category_id');
-    const backBtnGallery = document.getElementById('backBtnGallery'); // Adjust this ID to match your element
+    const backBtnGallery = document.getElementById('backBtnGallery'); // Adjust if necessary
 
     if (categoryId) {
-        // Assuming 'hide_gallery_upper_section' is a class, adjust if it's an ID
-        document.querySelectorAll('.hide_gallery_upper_section').forEach(element => {
-            element.classList.add('hide_back_btn_gallery'); // Hides the section
-        });
-
-        // Show the 'backBtnGallery' by adding 'force-display' class
+        // When category_id is present, ensure backBtnGallery is shown
         if (backBtnGallery) {
-            backBtnGallery.classList.add('force-display'); // Ensures it's displayed
+            backBtnGallery.classList.remove('hide_back_btn_gallery'); // Remove hide class
+            backBtnGallery.classList.add('force-display'); // Add show class
+        }
+    } else {
+        // Optional: Define behavior when category_id is not present
+        if (backBtnGallery) {
+            backBtnGallery.classList.add('hide_back_btn_gallery'); // Re-add hide class if needed
+            backBtnGallery.classList.remove('force-display'); // Remove show class if needed
         }
     }
 });
