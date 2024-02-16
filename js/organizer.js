@@ -214,3 +214,22 @@ parentElements.forEach(parentElement => {
   });
   
 });
+
+
+
+
+
+
+
+// Check if the URL contains 'category_id'
+if(window.location.href.indexOf('category_id') !== -1) {
+    // Create a style element
+    var style = document.createElement('style');
+    // Add CSS rule to the style element with !important
+    style.innerHTML = '.hide_back_btn_gallery { display: block !important; }';
+    // Append the style element to the head of the document
+    document.head.appendChild(style);
+}
+
+
+
