@@ -539,3 +539,8 @@ color: black!important;
     font-weight: 400;
 
 }
+
+
+.hide_back_btn_gallery{
+    display: none;
+}
