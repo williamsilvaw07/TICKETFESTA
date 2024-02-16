@@ -2536,8 +2536,10 @@ position: relative!important;
     background: transparent; /* Optional: make the background transparent */
   }
   .category-images img {
-    flex: 1 1 50%;
-    max-width: 50%;
+    display:grid;
+    grid-template-columns: 50% 50%;
+
+
     }
   .overlay h2, .overlay h3 {
     color: #000; /* Change text color for better visibility */
