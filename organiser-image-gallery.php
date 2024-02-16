@@ -693,8 +693,8 @@ function create_tec_organizer_category_with_images($category_name, $image_urls, 
 }
 
 #drop-zone:hover {
-    border-color: #73ff77!important;
-    background-color:#9aff9d!important;
+    border-color: #0AC6A6!important;
+    background-color:#75ffe7!important;
     color:black!important
 }
 
