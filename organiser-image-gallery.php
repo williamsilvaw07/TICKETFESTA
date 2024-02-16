@@ -723,6 +723,7 @@ function create_tec_organizer_category_with_images($category_name, $image_urls, 
 
 .drag-drop_text{
     margin:15px 0;
+    font-weight: 600;
 }
 
 #drop-zone {
@@ -734,10 +735,12 @@ function create_tec_organizer_category_with_images($category_name, $image_urls, 
 #drop-zone:hover,
 #drop-zone.dragover {
     border-color: #d3fa16 !important;
-    color: black !important;
 }
 
 #drop-zone:hover .fa-image:before {
+    color: #d3fa16;
+}
+#drop-zone:hover .drag-drop_text {
     color: #d3fa16;
 }
 
