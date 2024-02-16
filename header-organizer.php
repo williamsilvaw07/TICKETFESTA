@@ -2530,13 +2530,13 @@ position: relative!important;
   }
 }
 
-@media (max-width: 480px) { /* Adjustments for mobile phones */
+@media (max-width: 550px) { /* Adjustments for mobile phones */
   .overlay {
     position: relative; /* Position overlay relative to its container */
     background: transparent; /* Optional: make the background transparent */
   }
   .category-images img {
-        flex-basis: 50%;
+        flex-basis: 50%!important;
         width: 50%;
     }
   .overlay h2, .overlay h3 {
