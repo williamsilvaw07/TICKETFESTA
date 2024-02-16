@@ -642,3 +642,18 @@ function create_tec_organizer_category_with_images($category_name, $image_urls, 
     }
 }
     
+
+
+
+?>
+
+
+<script>
+jQuery(document).ready(function($) {
+    if (window.location.search.indexOf('category_id') > -1) {
+        $('.hide_gallery_upper_section').hide();
+        $('.hide_back_btn_gallery').show();
+    }
+});
+</script>
+
