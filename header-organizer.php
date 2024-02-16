@@ -2535,7 +2535,7 @@ position: relative!important;
     position: relative; /* Position overlay relative to its container */
     background: transparent; /* Optional: make the background transparent */
   }
-  .category-item {
+  .category-images img {
         flex-basis: 50%;
         width: 50%;
     }
