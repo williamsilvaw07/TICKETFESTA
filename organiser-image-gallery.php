@@ -685,4 +685,23 @@ function create_tec_organizer_category_with_images($category_name, $image_urls, 
 .drag-drop_text{
     margin:15px 0;
 }
+
+#drop-zone {
+    /* Existing styles */
+    border: 2px dashed #cccccc;
+    /* Other styles */
+}
+
+#drop-zone:hover {
+    border-color: green; /* Change the border to green on hover */
+}
+
+#drop-zone:hover .primary-icon {
+    color: green; /* Change the icon color to green on hover */
+}
+
+.primary-icon {
+    /* Other styles if any */
+    transition: color 0.3s; /* Smooth transition for color change */
+}
 </style>
