@@ -693,7 +693,7 @@ function create_tec_organizer_category_with_images($category_name, $image_urls, 
 }
 
 #drop-zone:hover {
-    border-color: green; /* Change the border to green on hover */
+    border-color: green!important;
 }
 
 #drop-zone:hover .primary-icon {
