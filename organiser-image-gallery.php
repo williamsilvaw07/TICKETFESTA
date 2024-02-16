@@ -340,6 +340,32 @@ function category_image_gallery_shortcode($atts) {
                     } 
                 });
             });
+
+
+
+
+
+
+
+            var dropZone = document.getElementById('drop-zone');
+
+// Add event listeners for drag & drop functionality
+dropZone.addEventListener('dragover', function(e) {
+    e.preventDefault(); // This is necessary to allow a drop event
+    this.classList.add('dragover');
+});
+
+dropZone.addEventListener('dragleave', function(e) {
+    this.classList.remove('dragover');
+});
+
+dropZone.addEventListener('drop', function(e) {
+    this.classList.remove('dragover');
+
+});
+
+
+
         </script>
         <?php
 
