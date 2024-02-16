@@ -657,7 +657,9 @@ function create_tec_organizer_category_with_images($category_name, $image_urls, 
 }
 #drop-zone{
     position: relative;
-    border: 2px dashed #7b2cbf!important;
+    border: 2px dashed #ffff!important;
+    text-align: center;
+    border-radius: 17px;
 }
 #drop-zone::before {
     content: '⇪';
