@@ -2498,7 +2498,7 @@ position: relative!important;
     flex: 1 1 22%;
 
 }
-#delete-category-form{
+#delete-category-form input{
     width:100%;
     max-width:250px;
     margin:0 auto;
