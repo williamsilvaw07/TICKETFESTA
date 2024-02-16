@@ -14,6 +14,7 @@ function organiser_image_gallery_shortcode() {
         <div id="image-upload">
             <h2>Upload Images</h2>
             <div id="drop-zone">
+            <span class="primary-icon fas fa-image fa-stack-2x"></span>
                 Drag & drop images here or click to select images.
          
             <form id="image-upload-form" enctype="multipart/form-data">
@@ -659,9 +660,11 @@ function create_tec_organizer_category_with_images($category_name, $image_urls, 
 }
 #drop-zone{
     position: relative;
-    border: 2px dashed #ffff!important;
+    border: 2px dashed #dee2e6!important;
     text-align: center;
     border-radius: 17px;
+    max-width: 800px;
+    padding: 82px;
 }
 #drop-zone::before {
     content: '⇪';
