@@ -687,6 +687,17 @@ function create_tec_organizer_category_with_images($category_name, $image_urls, 
 
 
 <style>
+    #image-upload{
+        background-color: rgb(26, 26, 26);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    padding: 33px;
+    border-radius: 10px;
+    width: fit-content;
+
+    }
 #image-gallery {
     display: flex;
     justify-content: space-around;
