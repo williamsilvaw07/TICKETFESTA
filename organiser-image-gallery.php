@@ -666,13 +666,6 @@ function create_tec_organizer_category_with_images($category_name, $image_urls, 
     max-width: 800px;
     padding: 82px;
 }
-#drop-zone::before {
-    content: '⇪';
-    font-size: 24px;
-    position: absolute;
-    top: -35px;
-    left: 50%;
-    transform: translateX(-50%);
-}
+
 
 </style>
