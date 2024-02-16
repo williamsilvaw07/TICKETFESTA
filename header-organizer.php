@@ -2487,7 +2487,7 @@ position: relative!important;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    gap:5px;
+    gap:10px;
 }
 
 .category-images img{
