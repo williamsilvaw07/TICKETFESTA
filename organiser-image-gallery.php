@@ -15,7 +15,7 @@ function organiser_image_gallery_shortcode() {
             <h2>Upload Images</h2>
             <div id="drop-zone">
             <span class="primary-icon fas fa-image fa-stack-2x"></span>
-            <span class="drag-drop_text">  Drag & drop images here or click to select images.</span>
+            <p class="drag-drop_text">  Drag & drop images here or click to select images.</p>
          
             <form id="image-upload-form" enctype="multipart/form-data">
                 <input type="file" id="file-input" name="files[]" multiple>
