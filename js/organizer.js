@@ -222,14 +222,10 @@ parentElements.forEach(parentElement => {
 
 
 // Check if the URL contains 'category_id'
-if(window.location.href.indexOf('category_id') !== -1) {
-    // Create a style element
-    var style = document.createElement('style');
-    // Add CSS rule to the style element with !important
-    style.innerHTML = '.hide_back_btn_gallery { display: block !important; }';
-    // Append the style element to the head of the document
-    document.head.appendChild(style);
-}
-
-
-
+$(document).ready(function() {
+  // Check if the URL contains 'category_id'
+  if(window.location.href.indexOf('category_id') !== -1) {
+      // Override the CSS for '.elementor .hide_back_btn_gallery'
+      $('.elementor .hide_back_btn_gallery').css('display', 'block');
+  }
+});
