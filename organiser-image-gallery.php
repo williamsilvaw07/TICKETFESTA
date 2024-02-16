@@ -664,7 +664,7 @@ function create_tec_organizer_category_with_images($category_name, $image_urls, 
     text-align: center;
     border-radius: 17px;
     max-width: 800px;
-    padding: 82px;
+    padding: 82px!important;
 }
 
 
