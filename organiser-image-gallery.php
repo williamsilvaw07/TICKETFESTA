@@ -733,13 +733,12 @@ function create_tec_organizer_category_with_images($category_name, $image_urls, 
 
 #drop-zone:hover,
 #drop-zone.dragover {
-    border-color: #09c7a6 !important;
-    background-color: #e6f9f6 !important;
+    border-color: #d3fa16 !important;
     color: black !important;
 }
 
-#drop-zone:hover .primary-icon {
-    color: green; /* Change the icon color to green on hover */
+#drop-zone:hover .fa-image:before {
+    color: #d3fa16;
 }
 
 .primary-icon {
