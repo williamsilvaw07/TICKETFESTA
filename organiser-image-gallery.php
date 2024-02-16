@@ -18,7 +18,7 @@ function organiser_image_gallery_shortcode() {
                 Drag & drop images here or click to select images.
          
             <form id="image-upload-form" enctype="multipart/form-data">
-                <input type="file" id="file-input" name="files[]" multiple>dcdcd
+                <input type="file" id="file-input" name="files[]" multiple>
                 </div>
                 <select id="organiser-selector" name='organiser' >
                     <?php
@@ -273,7 +273,7 @@ function organiser_image_gallery_shortcode() {
 
         // JavaScript to update label text when a file is chosen
 document.getElementById('file-input').addEventListener('change', function() {
-    var fileLabelText = document.getElementById('file-input-text');
+    var fileLabelText = document.getElementById('file-input');
     if (this.files && this.files.length > 1) {
         fileLabelText.textContent = this.files.length + ' files selected';
     } else {
