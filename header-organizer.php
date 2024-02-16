@@ -2536,8 +2536,8 @@ position: relative!important;
     background: transparent; /* Optional: make the background transparent */
   }
   .category-images img {
-        flex-basis: 50%!important;
-        width: 50%;
+    flex: 1 1 50%;
+    max-width: 50%;
     }
   .overlay h2, .overlay h3 {
     color: #000; /* Change text color for better visibility */
