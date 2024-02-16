@@ -11,8 +11,9 @@ function organiser_image_gallery_shortcode() {
             <h2>Image Preview</h2>
             <div id="image-preview-container"></div>
         </div>
+        <h2 class="tribe-community-events-list-title">Upload Images</h2>
         <div id="image-upload">
-            <h2>Upload Images</h2>
+            
             <div id="drop-zone">
             <span class="primary-icon fas fa-image fa-stack-2x"></span>
             <p class="drag-drop_text">  Drag & drop images here or click to select images.</p>
