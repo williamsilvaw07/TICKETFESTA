@@ -649,6 +649,20 @@ function create_tec_organizer_category_with_images($category_name, $image_urls, 
 
 
 <style>
+#image-gallery {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+    flex-direction: column-reverse!important;
+}
 
+#drop-zone::before {
+    content: '⇪';
+    font-size: 24px;
+    position: absolute;
+    top: -35px;
+    left: 50%;
+    transform: translateX(-50%);
+}
 
 </style>
