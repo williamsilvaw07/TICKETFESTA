@@ -649,40 +649,16 @@ function create_tec_organizer_category_with_images($category_name, $image_urls, 
 
 
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-    // Obtain the URL parameters
-    const urlParams = new URLSearchParams(window.location.search);
-    const categoryId = urlParams.get('category_id');
+// Check if the URL contains 'category_id'
+if(window.location.href.indexOf('category_id') !== -1) {
+    // Select all elements with the class 'hide_back_btn_gallery'
+    var elements = document.querySelectorAll('.hide_back_btn_gallery');
 
-    // Select the elements by their ID or class
-    const backBtnGallery = document.getElementById('backBtnGallery'); // Ensure this ID matches your back button element
-    const galleryUpperSection = document.querySelector('.hide_gallery_upper_section'); // Adjust if your class name is different
-
-    // Check if 'category_id' is present in the URL parameters
-    if (categoryId) {
-        // If 'category_id' is present, perform the following actions:
-
-        // Ensure 'backBtnGallery' is shown by removing any classes that hide it and adding 'force-display'
-        if (backBtnGallery) {
-            backBtnGallery.classList.remove('hide_back_btn_gallery'); // Remove any class that might be hiding the element
-            backBtnGallery.classList.add('force-display'); // Force the element to be displayed
-        }
-
-        // Hide 'galleryUpperSection' by adding 'hide_back_btn_gallery'
-        if (galleryUpperSection) {
-            galleryUpperSection.classList.add('hide_back_btn_gallery'); // This class will hide the element
-        }
-    } else {
-        // Optional: Define behavior when 'category_id' is not present
-        if (backBtnGallery) {
-            backBtnGallery.classList.add('hide_back_btn_gallery'); // Add the hiding class back if it was removed
-            backBtnGallery.classList.remove('force-display'); // Remove the force display class to allow it to be hidden
-        }
-        if (galleryUpperSection) {
-            galleryUpperSection.classList.remove('hide_back_btn_gallery'); // Ensure the gallery section is visible when 'category_id' isn't present
-        }
-    }
-});
+    // Loop through the NodeList and change the display style to 'block'
+    elements.forEach(function(element) {
+        element.style.display = 'block';
+    });
+}
 
 
 </script>
