@@ -2499,7 +2499,7 @@ position: relative!important;
 
 }
 
-#delete-category-form i{
+#delete-category-form{
     width:100%;
     max-width:250px;
     margin:0 auto;
