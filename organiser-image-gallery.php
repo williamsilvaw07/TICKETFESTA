@@ -653,21 +653,33 @@ document.addEventListener('DOMContentLoaded', function () {
     const urlParams = new URLSearchParams(window.location.search);
     const categoryId = urlParams.get('category_id');
     const backBtnGallery = document.getElementById('backBtnGallery'); // Adjust if necessary
+    const galleryUpperSection = document.querySelector('.hide_gallery_upper_section'); // Use querySelector for class
 
+    // Check if categoryId is present in the URL
     if (categoryId) {
-        // When category_id is present, ensure backBtnGallery is shown
+        // Show backBtnGallery by removing 'hide_back_btn_gallery' class and adding 'force-display'
         if (backBtnGallery) {
-            backBtnGallery.classList.remove('hide_back_btn_gallery'); // Remove hide class
-            backBtnGallery.classList.add('force-display'); // Add show class
+            backBtnGallery.classList.remove('hide_back_btn_gallery');
+            backBtnGallery.classList.add('force-display');
+        }
+
+        // Hide galleryUpperSection by adding 'hide_back_btn_gallery' class
+        if (galleryUpperSection) {
+            galleryUpperSection.classList.add('hide_back_btn_gallery');
         }
     } else {
-        // Optional: Define behavior when category_id is not present
+        // By default, ensure backBtnGallery is hidden and galleryUpperSection is visible
+        // This might be redundant if your CSS already hides backBtnGallery by default
         if (backBtnGallery) {
-            backBtnGallery.classList.add('hide_back_btn_gallery'); // Re-add hide class if needed
-            backBtnGallery.classList.remove('force-display'); // Remove show class if needed
+            backBtnGallery.classList.add('hide_back_btn_gallery');
+        }
+
+        // Ensure galleryUpperSection is visible by removing 'hide_back_btn_gallery'
+        // This might be redundant if your CSS shows galleryUpperSection by default
+        if (galleryUpperSection) {
+            galleryUpperSection.classList.remove('hide_back_btn_gallery');
         }
     }
 });
-
 
 </script>
