@@ -662,25 +662,26 @@ document.addEventListener('DOMContentLoaded', function () {
     if (categoryId) {
         // If 'category_id' is present, perform the following actions:
 
-        // Check if 'backBtnGallery' exists and ensure it is displayed
+        // Ensure 'backBtnGallery' is shown by removing any classes that hide it and adding 'force-display'
         if (backBtnGallery) {
-            backBtnGallery.classList.add('force-display'); // This class will force the element to be displayed
+            backBtnGallery.classList.remove('hide_back_btn_gallery'); // Remove any class that might be hiding the element
+            backBtnGallery.classList.add('force-display'); // Force the element to be displayed
         }
 
-        // Check if 'galleryUpperSection' exists and ensure it is hidden
+        // Hide 'galleryUpperSection' by adding 'hide_back_btn_gallery'
         if (galleryUpperSection) {
             galleryUpperSection.classList.add('hide_back_btn_gallery'); // This class will hide the element
         }
+    } else {
+        // Optional: Define behavior when 'category_id' is not present
+        if (backBtnGallery) {
+            backBtnGallery.classList.add('hide_back_btn_gallery'); // Add the hiding class back if it was removed
+            backBtnGallery.classList.remove('force-display'); // Remove the force display class to allow it to be hidden
+        }
+        if (galleryUpperSection) {
+            galleryUpperSection.classList.remove('hide_back_btn_gallery'); // Ensure the gallery section is visible when 'category_id' isn't present
+        }
     }
-    // Optional: Else block can be used to define behavior when 'category_id' is not present
-    // else {
-    //     if (backBtnGallery) {
-    //         backBtnGallery.classList.remove('force-display'); // Assuming you might want to ensure it's hidden when 'category_id' isn't present
-    //     }
-    //     if (galleryUpperSection) {
-    //         galleryUpperSection.classList.remove('hide_back_btn_gallery'); // Assuming you might want to ensure it's visible when 'category_id' isn't present
-    //     }
-    // }
 });
 
 
