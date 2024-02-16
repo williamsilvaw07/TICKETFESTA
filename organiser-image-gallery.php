@@ -714,7 +714,7 @@ function create_tec_organizer_category_with_images($category_name, $image_urls, 
 
 #drop-zone {
     /* Existing styles */
-    border: 2px dashed #cccccc;
+    border: 3px dashed #cccccc;
     /* Other styles */
 }
 
