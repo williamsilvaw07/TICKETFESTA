@@ -649,15 +649,23 @@ function create_tec_organizer_category_with_images($category_name, $image_urls, 
 
 
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    var urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.has('category_id')) {
-      document.querySelectorAll('.hide_gallery_upper_section').forEach(function(el) {
-        el.style.display = 'none';
-      });
-      document.querySelectorAll('.hide_back_btn_gallery').forEach(function(el) {
-        el.style.display = 'block';
-      });
+document.addEventListener('DOMContentLoaded', function () {
+    const urlParams = new URLSearchParams(window.location.search);
+    const categoryId = urlParams.get('category_id');
+    const backBtnGallery = document.getElementById('backBtnGallery'); // Adjust this ID to match your element
+
+    if (categoryId) {
+        // Assuming 'hide_gallery_upper_section' is a class, adjust if it's an ID
+        document.querySelectorAll('.hide_gallery_upper_section').forEach(element => {
+            element.classList.add('hide_back_btn_gallery'); // Hides the section
+        });
+
+        // Show the 'backBtnGallery' by adding 'force-display' class
+        if (backBtnGallery) {
+            backBtnGallery.classList.add('force-display'); // Ensures it's displayed
+        }
     }
-  });
+});
+
+
 </script>
