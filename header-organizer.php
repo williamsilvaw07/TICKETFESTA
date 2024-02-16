@@ -2535,9 +2535,9 @@ position: relative!important;
     position: relative; /* Position overlay relative to its container */
     background: transparent; /* Optional: make the background transparent */
   }
-  .category-images img {
-    display:grid;
-    grid-template-columns: 50% 50%;
+  .category-images {
+    display:grid!important;
+    grid-template-columns: 50% 50%!important;
 
 
     }
