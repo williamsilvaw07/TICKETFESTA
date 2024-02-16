@@ -650,36 +650,38 @@ function create_tec_organizer_category_with_images($category_name, $image_urls, 
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
+    // Obtain the URL parameters
     const urlParams = new URLSearchParams(window.location.search);
     const categoryId = urlParams.get('category_id');
-    const backBtnGallery = document.getElementById('backBtnGallery'); // Adjust if necessary
-    const galleryUpperSection = document.querySelector('.hide_gallery_upper_section'); // Use querySelector for class
 
-    // Check if categoryId is present in the URL
+    // Select the elements by their ID or class
+    const backBtnGallery = document.getElementById('backBtnGallery'); // Ensure this ID matches your back button element
+    const galleryUpperSection = document.querySelector('.hide_gallery_upper_section'); // Adjust if your class name is different
+
+    // Check if 'category_id' is present in the URL parameters
     if (categoryId) {
-        // Show backBtnGallery by removing 'hide_back_btn_gallery' class and adding 'force-display'
+        // If 'category_id' is present, perform the following actions:
+
+        // Check if 'backBtnGallery' exists and ensure it is displayed
         if (backBtnGallery) {
-            backBtnGallery.classList.remove('hide_back_btn_gallery');
-            backBtnGallery.classList.add('force-display');
+            backBtnGallery.classList.add('force-display'); // This class will force the element to be displayed
         }
 
-        // Hide galleryUpperSection by adding 'hide_back_btn_gallery' class
+        // Check if 'galleryUpperSection' exists and ensure it is hidden
         if (galleryUpperSection) {
-            galleryUpperSection.classList.add('hide_back_btn_gallery');
-        }
-    } else {
-        // By default, ensure backBtnGallery is hidden and galleryUpperSection is visible
-        // This might be redundant if your CSS already hides backBtnGallery by default
-        if (backBtnGallery) {
-            backBtnGallery.classList.add('hide_back_btn_gallery');
-        }
-
-        // Ensure galleryUpperSection is visible by removing 'hide_back_btn_gallery'
-        // This might be redundant if your CSS shows galleryUpperSection by default
-        if (galleryUpperSection) {
-            galleryUpperSection.classList.remove('hide_back_btn_gallery');
+            galleryUpperSection.classList.add('hide_back_btn_gallery'); // This class will hide the element
         }
     }
+    // Optional: Else block can be used to define behavior when 'category_id' is not present
+    // else {
+    //     if (backBtnGallery) {
+    //         backBtnGallery.classList.remove('force-display'); // Assuming you might want to ensure it's hidden when 'category_id' isn't present
+    //     }
+    //     if (galleryUpperSection) {
+    //         galleryUpperSection.classList.remove('hide_back_btn_gallery'); // Assuming you might want to ensure it's visible when 'category_id' isn't present
+    //     }
+    // }
 });
+
 
 </script>
