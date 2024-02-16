@@ -666,6 +666,8 @@ function create_tec_organizer_category_with_images($category_name, $image_urls, 
     max-width: 800px;
     padding: 82px!important;
 }
-
+.fa-image {
+    margin-bottom:50px
+}
 
 </style>
