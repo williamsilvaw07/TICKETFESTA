@@ -542,7 +542,7 @@ color: black!important;
 
 
 .hide_back_btn_gallery {
-    display: none 
+    display: none !important;
 }
 
 .force-display {
