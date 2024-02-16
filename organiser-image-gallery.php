@@ -655,7 +655,9 @@ function create_tec_organizer_category_with_images($category_name, $image_urls, 
     margin-top: 20px;
     flex-direction: column-reverse!important;
 }
-
+#drop-zone{
+    position: relative;
+}
 #drop-zone::before {
     content: '⇪';
     font-size: 24px;
