@@ -6,12 +6,13 @@ function organiser_image_gallery_shortcode() {
     ob_start(); ?>
 
     <!-- HTML structure for the image gallery -->
+    <h2 class="tribe-community-events-list-title">Upload Images</h2>
     <div id="image-gallery">
         <div id="image-preview">
             <h2>Image Preview</h2>
             <div id="image-preview-container"></div>
         </div>
-        <h2 class="tribe-community-events-list-title">Upload Images</h2>
+     
         <div id="image-upload">
             
             <div id="drop-zone">
