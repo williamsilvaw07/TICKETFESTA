@@ -541,7 +541,9 @@ color: black!important;
 }
 
 
-
+.elementor .hide_back_btn_gallery {
+    display: none;
+}
 
 #select2-saved_tribe_organizer-results li:first-child {
     display: none!important;
