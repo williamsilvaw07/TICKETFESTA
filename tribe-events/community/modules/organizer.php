@@ -86,7 +86,7 @@ Event Organizer
 	<div id="event_tribe_status" class="tribe-section tribe-section-status hover_section_content_show">
 		<div class="tribe-section-header">
 			<select name="event_status" id="event_status">
-				<option value="publish">publish</option>
+				<option value="publish">published</option>
 				<option value="draft">draft</option>
 			</select>
 		</div>
