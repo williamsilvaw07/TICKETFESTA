@@ -722,6 +722,12 @@ html .page-id-1921 .tribe-scrollable-table tbody tr td{
     font-size: 14px!important; 
 }
 
+.page-id-1925 .welcome-panel-last  .tec-tickets__admin-attendees-attendance-type-heading-total-amount , 
+.page-id-1925 .welcome-panel-last .tec-tickets__admin-attendees-attendance-type-heading-total-amount , 
+.page-id-1925 .welcome-panel-last  .tec-tickets__admin-attendees-attendance-type-cancelled-amount
+{
+font-size: 14px!important;
+}
 
 
 .image-upload-div{
