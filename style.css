@@ -656,7 +656,7 @@ font-size: 14px!important;
     padding-left: 0!important;
 }
 
- .page-id-1921 .tribe-scrollable-table{
+ .page-id-1921 .tribe-scrollable-table , .page-id-1925 .tec-tickets__admin-table-attendees{
     background-color: rgb(26, 26, 26)!important;
     position: relative!important;
     padding: 17px!important;
