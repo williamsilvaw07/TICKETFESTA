@@ -388,28 +388,27 @@ dropZone.addEventListener('drop', function(e) {
 
 
 // Function to check the content of the image preview container
-document.addEventListener('DOMContentLoaded', function() { // Ensure DOM is fully loaded
-    function toggleImagePreview() {
-        var container = document.getElementById('image-preview-container');
-        var header = document.querySelector('#image-preview h3');
-        var uploadDiv = document.getElementById('main-selector-image-upload-div');
+document.addEventListener('DOMContentLoaded', function() {
+    function checkThumbnailContent() {
+        var containers = document.querySelectorAll('.thumbnail-container');
 
-        // Check if the container has any element child nodes
-        if (container && container.children.length > 0) {
-            // If there is content, display the header and the upload div
-            if (header) header.style.display = 'block';
-            if (uploadDiv) uploadDiv.style.display = 'block'; // Show the upload div
-        } else {
-            // If there is no content, hide the header and the upload div
-            if (header) header.style.display = 'none';
-            if (uploadDiv) uploadDiv.style.display = 'none'; // Hide the upload div
-        }
+        containers.forEach(function(container) {
+            if (container.children.length > 0) {
+                // If there is content (e.g., an image), ensure the container is visible
+                container.style.display = 'block';
+            } else {
+                // If there is no content, hide the container
+                container.style.display = 'none';
+            }
+        });
     }
 
-    // Call the function initially to set the correct display state
-    toggleImagePreview();
+    // Initially check for content
+    checkThumbnailContent();
 
-    // Add more event listeners here if needed, for example, to call toggleImagePreview after images are added or removed
+    // Example: If content is added dynamically, call checkThumbnailContent() after content is added
+    // addContentToThumbnailContainer();
+    // checkThumbnailContent();
 });
 
         </script>
