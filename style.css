@@ -653,7 +653,7 @@ color:#aaa!important
 }
 
 
-.tribe-community-tickets-shortcode .tribe-scrollable-table table{
+html .tribe-community-tickets-shortcode .tribe-scrollable-table table{
     background-color: rgb(26, 26, 26)!important;
     position: relative!important;
     padding: 17px!important;
