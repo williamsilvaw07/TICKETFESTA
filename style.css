@@ -684,7 +684,7 @@ font-size: 14px!important;
     padding-bottom: 12px!important;
  }
 
- .page-id-1921  .wp-list-table a , .page-id-1925 .column-security {
+ .page-id-1921  .wp-list-table a , .page-id-1925 .column-security a {
     transition: none;
     display: flex!important;
 }
