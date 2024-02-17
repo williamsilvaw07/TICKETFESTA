@@ -14,13 +14,14 @@ function organiser_image_gallery_shortcode() {
         </div>
      
         <div id="image-upload">
-            
+            <div class="image-upload-div">
             <div id="drop-zone">
             <span class="primary-icon fas fa-image fa-stack-2x"></span>
             <p class="drag-drop_text">  Drag & drop images here or click to select images.</p>
          
             <form id="image-upload-form" enctype="multipart/form-data">
                 <input type="file" id="file-input" name="files[]" multiple>
+                </div>
                 </div>
                 <select id="organiser-selector" name='organiser' >
                     <?php
@@ -102,40 +103,6 @@ function organiser_image_gallery_shortcode() {
 
     <!-- Inline JavaScript for functionality -->
     <script>
-
-
-
-document.addEventListener('DOMContentLoaded', (event) => {
-    var dropZone = document.getElementById('drop-zone-id'); // Replace with your actual drop zone ID
-
-    if (dropZone) {
-        // Add event listeners for drag & drop functionality
-        dropZone.addEventListener('dragover', function(e) {
-            e.preventDefault(); // Prevent default browser behavior
-            e.stopPropagation(); // Stop the event from propagating
-            this.classList.add('dragover');
-        });
-
-        dropZone.addEventListener('dragleave', function(e) {
-            this.classList.remove('dragover');
-        });
-
-        dropZone.addEventListener('drop', function(e) {
-            e.preventDefault(); // Prevent default browser behavior
-            e.stopPropagation(); // Stop the event from propagating
-            this.classList.remove('dragover');
-            
-            // Handle the files that are dropped
-            // e.dataTransfer.files contains the list of files
-        });
-    } else {
-        console.error('Drop zone element not found');
-    }
-});
-
-
-
-
         document.addEventListener("DOMContentLoaded", function() {
             var dropZone = document.getElementById('drop-zone');
             var fileInput = document.getElementById('file-input');
@@ -383,6 +350,22 @@ function category_image_gallery_shortcode($atts) {
 
 
 
+            var dropZone = document.getElementById('drop-zone');
+
+// Add event listeners for drag & drop functionality
+dropZone.addEventListener('dragover', function(e) {
+    e.preventDefault(); // This is necessary to allow a drop event
+    this.classList.add('dragover');
+});
+
+dropZone.addEventListener('dragleave', function(e) {
+    this.classList.remove('dragover');
+});
+
+dropZone.addEventListener('drop', function(e) {
+    this.classList.remove('dragover');
+
+});
 
 
 
@@ -705,8 +688,19 @@ function create_tec_organizer_category_with_images($category_name, $image_urls, 
 
 
 <style>
+
+.image-upload-div{
+    background-color: rgb(26, 26, 26);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    padding: 33px;
+    border-radius: 10px;
+    width: fit-content;
+}
     #image-upload{
-    
+
 
     }
 #image-gallery {
@@ -738,16 +732,9 @@ function create_tec_organizer_category_with_images($category_name, $image_urls, 
 }
 
 #drop-zone {
-
+    /* Existing styles */
     border: 3px dashed #cccccc;
-    background-color: rgb(26, 26, 26);
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    position: relative;
-   margin: 33px;
-    border-radius: 10px;
-    width: fit-content;
+    /* Other styles */
 }
 
 #drop-zone:hover,
@@ -767,7 +754,3 @@ function create_tec_organizer_category_with_images($category_name, $image_urls, 
     transition: color 0.3s; /* Smooth transition for color change */
 }
 </style>
-
-
-
-
