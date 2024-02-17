@@ -387,30 +387,6 @@ dropZone.addEventListener('drop', function(e) {
 
 
 
-// Function to check the content of the image preview container
-document.addEventListener('DOMContentLoaded', function() {
-    function checkThumbnailContent() {
-        var containers = document.querySelectorAll('.thumbnail-container');
-
-        containers.forEach(function(container) {
-            if (container.children.length > 0) {
-                // If there is content (e.g., an image), ensure the container is visible
-                container.style.display = 'block';
-            } else {
-                // If there is no content, hide the container
-                container.style.display = 'none';
-            }
-        });
-    }
-
-    // Initially check for content
-    checkThumbnailContent();
-
-    // Example: If content is added dynamically, call checkThumbnailContent() after content is added
-    // addContentToThumbnailContainer();
-    // checkThumbnailContent();
-});
-
         </script>
         <?php
 
