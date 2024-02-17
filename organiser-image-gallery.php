@@ -344,7 +344,7 @@ function category_image_gallery_shortcode($atts) {
         // Display delete button for the category
         echo '<form id="delete-category-form" method="post">';
         echo '<input type="hidden" name="delete_category_id" value="' . esc_attr($category_id) . '" />';
-        echo '<input type="submit" name="delete_category" value="Delete Category and Images" />';
+        echo '<input type="submit" name="delete_category" id="delete-all-button" value="Delete Category" />';
         echo '</form>';
 
         // JavaScript functionality to handle category deletion and clear URL
@@ -747,6 +747,10 @@ function create_tec_organizer_category_with_images($category_name, $image_urls, 
   visibility: hidden;
 }
 
+
+.elementor .hide_back_btn_gallery {
+    display: none;
+}
 
 .drag-drop_text{
     margin:15px 0;
