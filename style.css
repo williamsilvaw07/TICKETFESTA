@@ -681,6 +681,11 @@ color:#aaa!important
     padding-bottom: 12px;
  }
 
+ .page-id-1921  .wp-list-table a {
+    transition: none;
+    display: flex!important;
+}
+
 
 
 
