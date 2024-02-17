@@ -626,6 +626,12 @@ html body .tribe-report-page .event-actions a{
 font-weight: 500!important;
 color:#aaa!important
 }
+.venue-name a {
+    pointer-events: none; 
+    cursor: default;
+    color: black; 
+    text-decoration: none; 
+}
 
 
 
