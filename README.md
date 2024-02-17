@@ -30,6 +30,9 @@ Shows recent activity related to the current user's events, including sales and 
 ### [dynamic_edit_event]
  Create the edit event form 
 
+ 
+[organiser_image_gallery]
+
 
 
 ### [custom_image_gallery]
