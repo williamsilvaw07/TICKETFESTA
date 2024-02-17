@@ -102,6 +102,40 @@ function organiser_image_gallery_shortcode() {
 
     <!-- Inline JavaScript for functionality -->
     <script>
+
+
+
+document.addEventListener('DOMContentLoaded', (event) => {
+    var dropZone = document.getElementById('drop-zone-id'); // Replace with your actual drop zone ID
+
+    if (dropZone) {
+        // Add event listeners for drag & drop functionality
+        dropZone.addEventListener('dragover', function(e) {
+            e.preventDefault(); // Prevent default browser behavior
+            e.stopPropagation(); // Stop the event from propagating
+            this.classList.add('dragover');
+        });
+
+        dropZone.addEventListener('dragleave', function(e) {
+            this.classList.remove('dragover');
+        });
+
+        dropZone.addEventListener('drop', function(e) {
+            e.preventDefault(); // Prevent default browser behavior
+            e.stopPropagation(); // Stop the event from propagating
+            this.classList.remove('dragover');
+            
+            // Handle the files that are dropped
+            // e.dataTransfer.files contains the list of files
+        });
+    } else {
+        console.error('Drop zone element not found');
+    }
+});
+
+
+
+
         document.addEventListener("DOMContentLoaded", function() {
             var dropZone = document.getElementById('drop-zone');
             var fileInput = document.getElementById('file-input');
@@ -349,22 +383,6 @@ function category_image_gallery_shortcode($atts) {
 
 
 
-            var dropZone = document.getElementById('drop-zone');
-
-// Add event listeners for drag & drop functionality
-dropZone.addEventListener('dragover', function(e) {
-    e.preventDefault(); // This is necessary to allow a drop event
-    this.classList.add('dragover');
-});
-
-dropZone.addEventListener('dragleave', function(e) {
-    this.classList.remove('dragover');
-});
-
-dropZone.addEventListener('drop', function(e) {
-    this.classList.remove('dragover');
-
-});
 
 
 
@@ -749,3 +767,7 @@ function create_tec_organizer_category_with_images($category_name, $image_urls, 
     transition: color 0.3s; /* Smooth transition for color change */
 }
 </style>
+
+
+
+
