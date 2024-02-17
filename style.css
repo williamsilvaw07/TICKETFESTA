@@ -1,0 +1,868 @@
+/**
+ * Theme Name:     Ticket Festa
+ * Author:        William Silva
+ * Template:       generatepress
+ * Text Domain:	   
+ * Description:    GeneratePress is a lightweight WordPress theme built with a focus on speed and usability. Performance is important to us, which is why a fresh GeneratePress install adds less than 10kb (gzipped) to your page size. We take full advantage of the block editor (Gutenberg), which gives you more control over creating your content. If you use page builders, GeneratePress is the right theme for you. It is completely compatible with all major page builders, including Beaver Builder and Elementor. Thanks to our emphasis on WordPress coding standards, we can boast full compatibility with all well-coded plugins, including WooCommerce. GeneratePress is fully responsive, uses valid HTML/CSS, and is translated into over 25 languages by our amazing community of users. A few of our many features include 60+ color controls, powerful dynamic typography, 5 navigation locations, 5 sidebar layouts, dropdown menus (click or hover), and 9 widget areas. Learn more and check out our powerful premium version at https://generatepress.com
+ */
+
+
+
+ /*****GLOBO CSS****/
+ body {
+    overflow-x: hidden;
+}
+ .grid-container {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 100%;
+}
+.separate-containers .inside-article{
+    padding: inherit!important;
+}
+ .content-wrapper {
+    background-color:#0d0e0e;
+}
+ body {
+    font-family: "Plus Jakarta Sans", Sans-serif;
+    background-color:#282828;
+    color: white!important;
+
+  }
+  .entry-content .alignwide, body:not(.no-sidebar) .entry-content .alignfull{
+    margin-left:inherit!important;
+    width: inherit!important;
+    max-width:inherit!important;
+  }
+  .entry-content{
+    background-color:black;
+
+  }
+
+  html h1 {
+    font-size: 31px;
+    font-weight: bold;
+    line-height: 35px;
+  }
+  
+  .tribe-ui-datepicker.ui-datepicker body, .ui-datepicker-title span , .tribe-ui-datepicker.ui-datepicker button, .tribe-ui-datepicker.ui-datepicker input, .tribe-ui-datepicker.ui-datepicker select, .tribe-ui-datepicker.ui-datepicker textarea {
+   font-family: "Plus Jakarta Sans", Sans-serif!important;
+    font-size: 12px!important;
+  }
+body h1 ,body h2,body h3,body h4,body h5,body h6,html p,html a,body span,dd,dt, .main-navigation .main-nav ul li a{
+color:white!important;
+font-family: "Plus Jakarta Sans", Sans-serif;
+}
+#tribe-events-pg-template {
+    max-width: 1800px;
+    padding: 0 3%;
+}
+
+/*****END***/
+/***HEADER***/
+
+.site-header {
+    --base-3: transparent; /* or use rgba(255, 255, 255, 0) for a white color with 0 opacity */
+    background-color: var(--base-3);
+    color: white!important;
+}
+.inside-header {
+    padding: 9px 40px;
+}
+
+
+
+/****END***/
+
+
+
+/*******COLOR CSS FOR GOBE******/
+.main_custom_container_second .tribe-button-primary {
+    background: #d3fa16!important;
+    color: #000000!important;
+    text-transform: capitalize!important;
+}
+a.tribe-button.tribe-button-primary.add-new , .organizers_add_new_btn{
+    background: #d3fa16!important;
+    color: #000000!important;
+    text-transform: capitalize!important;
+    text-decoration: none;
+    white-space: nowrap;
+}
+.organizers_add_new_btn{
+    background: #d3fa16!important;
+    color: #000000!important;
+    text-transform: capitalize!important;
+    text-decoration: none;
+    white-space: nowrap;
+    border-radius: 3px;
+    line-height: 1;
+    padding: 9px 12px;
+    font-size: 12px;
+    height: fit-content;
+    margin-bottom: 0!important;
+}
+.tribe-upcoming{
+    background-color: #3d3d3f!important;
+    text-transform: capitalize!important;
+    font-family: "Plus Jakarta Sans", Sans-serif!important;
+    letter-spacing: 1px!important;
+    font-weight: 200!important;
+}
+
+.tribe-ui-datepicker.ui-datepicker a.ui-state-active {
+    background: #d3fa16!important;
+    color: #000000!important;
+}
+/**********************END***********************************/
+
+/****INPUTS MAIN GLOBE***/
+.page-template-organizer-template-php input[type="text"], .page-template-organizer-template-php input[type="email"], .page-template-organizer-template-php input[type="url"], .page-template-organizer-template-php input[type="password"], .page-template-organizer-template-php input[type="search"],.page-template-organizer-template-php  input[type="tel"], .page-template-organizer-template-php input[type="number"],.page-template-organizer-template-php textarea, .page-template-organizer-template-php select {
+    color: white!important;
+    background-color: #3F3F3F!important;
+    border-color: #888888!important;
+    border-radius: 4px;
+
+}
+.mce-container, .mce-container *, .mce-widget, .mce-widget *, .mce-reset {
+
+    background: #3F3F3F!important;
+    color: #ffffff!important;  
+}
+
+#tinymce p{
+    font-family: "Plus Jakarta Sans", Sans-serif!important;  
+
+}
+
+/****END***/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/***********FRONTEND ALL EVENTS*****/
+
+
+.tribe-events-view {
+    background-color: #0d0e0e!important;
+}
+html .elementor-widget-tec_elementor_widget_events_view{
+    padding: 0!important;
+}
+.entry-header , .tribe-events-c-events-bar__views , html .tribe-common--breakpoint-medium.tribe-events .tribe-events-c-top-bar__today-button , .tribe-events-c-top-bar__nav-list{
+    display: none!important;
+}
+.entry-content{
+    margin-top: 0;
+}
+
+body .tribe-events-l-container {
+    padding-top:30px!important;
+}
+.tribe-events-header__events-bar{
+    max-width: 900px;
+    margin: 0 auto!important;
+margin-bottom: 60px!important;
+border-radius: 5px;
+
+}
+.tribe-events-c-search__input-group {
+    border-radius: 5px;
+}
+.tribe-events-c-search__button{
+   
+
+    letter-spacing: 1px!important;
+    font-size: 13px!important;
+    padding: 10px!important;
+}
+
+.tribe-common--breakpoint-medium.tribe-common .tribe-common-c-btn-border-small, .tribe-common--breakpoint-medium.tribe-common a.tribe-common-c-btn-border-small {
+
+    color: black!important;
+}
+.tribe-events .tribe-events-header--has-event-search .tribe-events-c-events-bar__filter-button-text {
+    color: var(--tec-color-text-events-bar-input)!important;
+}
+.tribe-common .tribe-common-c-svgicon__svg-fill {
+    fill: #ffffff!important;
+}
+
+
+.tribe-events-pro-photo__event{
+    border: 2px solid black;
+    border-radius: 7px!important;
+    background: white!important;
+    color: black!important;
+    padding: 0!important;
+    position: relative!important;
+ 
+
+}
+
+.tribe-common .tribe-common-g-row {
+    display: flex!important;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.tribe-events-pro-photo__event {
+    flex: 0 1 calc(33.33% - 10px); 
+    margin: 5px; 
+    max-width: calc(33.33% - 10px); 
+}
+.tribe-events-pro-photo__event-featured-image-wrapper{
+    margin-bottom: 0!important;
+} 
+
+.tribe-events-pro .tribe-events-pro-photo__event-details-wrapper {
+    display: flex;
+    color: black;
+    padding: 12px 17px;
+}
+
+.tribe-common--breakpoint-medium.tribe-common .tribe-common-h4--min-medium {
+    font-size: 24px!important;
+    line-height: var(--tec-line-height-1);
+
+}
+
+.tribe-events-pro .tribe-events-pro-photo__event-date-tag-month , .tribe-events-status-label__text , .tribe-events-pro-photo__event-title-link  , .tribe-events-c-small-cta__price ,.tribe-common--breakpoint-medium.tribe-common .tribe-common-h4--min-medium , .tribe-common--breakpoint-medium.tribe-common .tribe-common-b3 , .tribe-common--breakpoint-medium.tribe-common .tribe-common-h6 {
+
+    color: black!important;
+}
+
+
+
+.event-actions {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    align-content: center;
+    justify-content: flex-start;
+    margin-top: 10px!important;
+    gap: 10px!important;
+   
+}
+
+.event_actions_inner{
+    gap: 7px;
+    display: flex;
+    flex-direction: row-reverse;
+    align-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+body .event-actions a {
+    text-decoration: none;
+    background: #d3fa16!important;
+    color: black!important;
+    padding: 10px 13px;
+    width: fit-content;
+    font-size: 14px;
+    border-radius: 5px;
+    display: block;
+    text-align: center;
+    margin-top: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    gap: 6px;
+    font-size: 14px!important;
+    font-weight: 600!important;
+    border: 2px solid #d3fa16;
+    transition: border 0.3s ease-in-out;
+}
+body .event-actions a:hover{
+   border: 2px solid black ;
+}
+.event-actions span {
+    white-space: nowrap;
+    font-weight: 800;
+}
+.btn-get-tickets img {
+    max-width: 23px!important;
+    position: relative;
+    top: 0px;
+}
+
+.tribe-events-pro-photo__event-date-tag {
+    display: none;
+}
+.tribe-events-pro-photo__event-cost{
+
+    margin-top: 0!important;
+    font-size: 15px!important;
+    font-weight: 500!important;
+
+}
+
+html .event-venue-city-organizer{
+    font-size: 13px;
+    text-transform: capitalize!important;
+    margin-top: 5px!important;
+    font-weight: 300;
+}
+
+.tribe-events-pro-photo__event-title {
+    margin-bottom: 6px!important;
+    line-height: 22px!important;
+}
+
+.event-day{
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.share_btn img{
+    border-radius: 100px!important;
+    padding: 7px!important;
+    max-width: 33px!important;
+    background-color: white;
+    border: 1px solid #334AFF!important;
+
+}
+
+.share_btn{
+    position: absolute;
+    top:10px!important;
+    right: 15px!important;
+    display: none;
+}
+
+
+
+.tribe-events-pro-photo__event-featured-image:hover , .tribe-events-pro-photo__event-featured-image-wrapper a:hover{
+    content: none !important;
+    background-color: transparent !important; 
+    opacity: 1!important;
+}
+/*******end*****/
+
+
+
+/* Hide the share button by default */
+.share_btn {
+    display: none;
+}
+
+/* Display the share button when hovering over the image wrapper anchor */
+.tribe-events-pro-photo__event-featured-image-wrapper a:hover + .share_btn,
+.tribe-events-pro-photo__event-featured-image-wrapper a:hover ~ .share_btn {
+    display: block!important;
+}
+
+/* Keep the share button displayed when hovering over the button itself */
+.share_btn:hover {
+    display: block!important;
+}
+
+
+.close_popup{
+    position: absolute;
+    right: 10px;
+
+}
+
+
+.share_event_url{
+    display: flex;
+    flex-direction: column;
+    align-content: flex-start;
+    border: 1px solid #a7a7a7!important;
+    padding: 4px 15px!important;
+    border-radius: 4px;
+
+}
+.share_event_url span{
+    width: fit-content;
+    color: black!important;
+}
+.share_event_url .share_popup_box_title{
+    font-size: 11px;
+    font-weight: normal;
+    color: #39364f!important;
+}
+.share_event_url_inner{
+    display: flex;
+    align-content: center;
+    align-items: center;
+    gap: 21px;
+}
+
+.tribe-events-c-subscribe-dropdown__container{
+    display: none!important;
+}
+
+body .tribe-filter-bar__filters-slide span {
+color: black!important;
+}
+.tribe-common--breakpoint-medium.tribe-events .tribe-events-c-messages__message {
+
+    color: white;
+    font-size: 20px;
+}
+
+.tribe-common--breakpoint-medium.tribe-events .tribe-events-c-nav {
+    display: none;
+}
+
+
+
+
+/***my account page***/
+.woocommerce-orders-table__cell-order-total .item-count {
+    display: none;
+}
+
+/* Add icons to My Account menu items */
+.woocommerce-MyAccount-navigation-link--dashboard:before {
+    content: '\f015'; /* FontAwesome icon for Dashboard */
+    font-family: 'Font Awesome 5 Free';
+    padding-right: 8px;
+}
+
+.woocommerce-MyAccount-navigation-link--orders:before {
+    content: '\f07a'; /* FontAwesome icon for Tickets (uses cart icon) */
+    font-family: 'Font Awesome 5 Free';
+    padding-right: 8px;
+}
+
+/* Repeat for each menu item, using the appropriate FontAwesome icon unicode */
+
+.woocommerce-MyAccount-navigation-link--coupons:before {
+    content: '\f145'; /* FontAwesome icon for Coupons */
+    font-family: 'Font Awesome 5 Free';
+    padding-right: 8px;
+}
+
+.woocommerce-MyAccount-navigation-link--edit-account:before {
+    content: '\f4ff'; /* FontAwesome icon for Account Details */
+    font-family: 'Font Awesome 5 Free';
+    padding-right: 8px;
+}
+
+.woocommerce-MyAccount-navigation-link--customer-logout:before {
+    content: '\f2f5'; /* FontAwesome icon for Logout */
+    font-family: 'Font Awesome 5 Free';
+    padding-right: 8px;
+}
+
+
+ .woocommerce-orders-table__cell-order-total  , .woocommerce-orders-table__header-order-total{
+ display: none;
+}
+.woocommerce-MyAccount-navigation{
+    min-height: 100%;
+    position: absolute;
+    top: 143px;
+    max-width: 200px;
+    height: 100vh;
+    background-color: rgb(26, 26, 26);
+    overflow: auto;
+    padding-left: 15px;
+}
+.my-account-welcome-message {
+    /* Add your custom styles here */
+    font-size: 1.2em;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+
+
+#custom-welcome-message{
+    margin-top: 20px;
+    text-align: left;
+}
+.woocommerce-MyAccount-orders  .woocommerce-button{line-height: inherit;
+    padding: 7px 15px!important;
+    border-radius: 5px!important;
+    font-size: 14px!important;
+    background: #d5d5d5!important;
+    color: black!important;
+}
+
+.woocommerce-MyAccount-content{
+    background-color: rgb(26, 26, 26);
+    position: relative;
+    padding: 17px;
+    border-radius: 10px;
+    /* width: 100%; */
+    /* max-width: 500px; */
+    margin: 38px auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.woocommerce-account thead tr th{
+    margin-bottom: 10px!important;
+    border-bottom: 1px solid #444!important;
+    padding-bottom: 12px!important;
+    padding-left: 0!important;
+}
+.woocommerce-account tbody tr td {
+    align-items: center!important;
+    padding: 18px 0!important;
+    border-bottom: 1px solid #444!important;
+    font-size: 14px!important;
+    color: #fff!important;
+    font-weight: 300!important;
+}
+.woocommerce-account .woocommerce{
+    display: flex;
+
+}
+
+.woocommerce-account .account-orders-table .nobr{
+    font-size: 14px!important;
+    color: #aaa!important;
+    text-transform: capitalize!important;
+    padding-left: 6px!important;
+    font-weight: 400;
+
+}
+
+
+#select2-saved_tribe_organizer-results li:first-child {
+    display: none!important;
+}
+input.select2-search__field[aria-owns='select2-saved_tribe_organizer-results'] {
+    display: none!important;
+}
+
+
+
+
+
+
+
+
+/********sales and atendde rports page **** */
+
+#tribe-tickets-plus-woocommerce-orders-report , .page-id-1921 #tribe-tickets-attendance-report , .page-id-1921 .tribe-event-meta-total-site-fees , .page-id-1921 .tribe-report-page .welcome-panel-column  .tec-tickets__admin-orders-report-overview-ticket-type{
+    display: none!important;
+}
+
+#tribe-tickets-attendance-report:after{
+    content:"Report";
+    font-size: 13px;
+}
+
+#tribe-tickets-attendance-report{
+    font-size: 13px;
+    padding: 11px 15px!important;
+    background: #d5d5d5;
+    border-radius: 4px;
+    font-weight: 400;
+    color: black!important;
+    text-decoration: none!important;
+}
+.nav-tab-wrapper{
+    margin-bottom:0!important;
+}
+.tribe-report-panel .welcome-panel-content{
+    border: 0px!important;
+}
+
+.tribe-report-panel .welcome-panel-column-container {
+    display: flex!important;
+    gap: 20px!important;
+    margin-top: 0px;
+    padding: 0px;
+    position: initial;
+    flex-direction: row;
+    border-width: 0!important;
+}
+
+
+.tribe-report-page .welcome-panel-column {
+    background-color: rgb(26, 26, 26)!important;
+    position: relative;
+    padding: 17px!important;
+    border-radius: 10px;
+    width: 100%;
+  
+}
+.tribe-report-page .welcome-panel-column h3  , .tec-tickets__admin-attendees-attendance-type-heading-label{
+    font-size: 17px;
+    font-weight: 600;
+    margin-bottom: 11px;
+}
+.tribe-report-page .welcome-panel-column ul , .tribe-report-page .welcome-panel-column ul li div{
+    margin:0!important;
+    color: white!important;
+}
+
+html body .tribe-report-page .event-actions a{
+    font-size: 13px!important;
+    padding: 7px 13px!important;
+    background: #d5d5d5!important;
+    border-radius: 4px!important;
+    font-weight: 400!important;
+    color: black!important;
+    text-decoration: none!important;
+    border: 0px!important;
+}
+html body .tribe-report-page .event-actions a:first-child{
+    display: none!important;
+}
+.tribe-report-page .welcome-panel-column strong{
+font-weight: 500!important;
+color:#aaa!important;
+font-size: 14px!important;
+}
+.tribe-report-page  .venue-name a {
+    pointer-events: none; 
+    cursor: default;
+    color: black; 
+    text-decoration: none; 
+}
+
+.tribe-report-page .welcome-panel-column  .tec-tickets__admin-orders-report-overview-ticket-type-list-item-ticket-name{
+    text-transform: uppercase;
+    font-size: 11px;
+    color: #aaa!important;
+    border-top: 1px solid #444
+}
+
+.tec-tickets__admin-orders-report-overview-ticket-type-list-item {
+	display: flex!important;
+	justify-content: flex-start!important;
+	margin-right: 0;
+	align-items: flex-start;
+	align-content: center;
+	gap: 7px;
+	flex-direction: column!important;
+}
+.page-id-1921  .tec-tickets__admin-orders-report-overview-ticket-type-list{
+    padding-left: 0!important;
+}
+
+ .page-id-1921 .tribe-scrollable-table , .page-id-1925 .tec-tickets__admin-table-attendees{
+    background-color: rgb(26, 26, 26)!important;
+    position: relative!important;
+    padding: 17px!important;
+    border-radius: 10px!important;
+    width: 100%!important;
+}
+ .tribe-scrollable-table thead th{
+
+    font-size: 14px;
+    color: #aaa;
+    text-transform: capitalize;
+    font-weight: 300;
+    padding-left: 6px;
+ }
+ .tribe-scrollable-table thead th span ,  .tribe-scrollable-table tfoot th span{
+    font-size: 14px!important;
+    color: #aaa!important;
+    text-transform: capitalize!important;
+    font-weight: 300!important;
+    padding-left: 6px!important;
+ }
+.tribe-scrollable-table thead th ,  .tribe-scrollable-table tfoot th{
+    margin-bottom: 10px!important;
+    border-bottom: 1px solid #444!important;
+    padding-bottom: 12px!important;
+ }
+
+ .page-id-1921  .wp-list-table a , .page-id-1925 .column-security a {
+    transition: none;
+    display: flex!important;
+}
+
+html .tribe-scrollable-table tbody tr td{
+
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #444;
+    font-size: 14px;
+    color: #fff;
+    font-weight: 300;
+    text-decoration: none!important;
+
+ }
+ html .page-id-1921 .row-actions{
+    display: block!important;
+ }
+ html .page-id-1921 .tribe-report-page .tickets_checkin  {
+    background-color: #d3fa16!important;
+    color:  black!important;
+ }
+ .page-id-1921 .order .order-status{
+    display: none;
+ }
+.tec-tickets__admin-attendees-attendance-type-complete , .tec-tickets__admin-attendees-attendance-type-cancelled  , .tec-tickets__admin-attendees-attendance-totals-row{
+    display: flex;
+    gap: 6px;
+}
+.tec-tickets__admin-attendees-attendance-type-heading-total-label:before{
+    content: "Tickets";
+}
+.attendees.striped > tbody > :nth-child(4n+2), .attendees.striped > tbody > :nth-child(4n-3) , .attendees.striped > tbody > :nth-child(4n), .attendees.striped > tbody > :nth-child(4n-1) {
+    background-color: inherit!important;
+}
+.page-id-1925 .welcome-panel-last .tec-tickets__admin-attendees-attendance-type-cancelled-label ,
+.page-id-1925 .welcome-panel-last .tec-tickets__admin-attendees-attendance-type-complete-label  , 
+.page-id-1925 .welcome-panel-last .tec-tickets__admin-attendees-attendance-type-heading-total-label ,
+.page-id-1925 .welcome-panel-last .tec-tickets__admin-attendees-attendance-totals-title , 
+.page-id-1925 .welcome-panel-last .tec-tickets__admin-attendees-attendance-totals-amount
+ {
+    font-weight: 500!important;
+    color: #aaa!important;
+    font-size: 14px!important; 
+}
+.page-id-1925 .column-status , .page-id-1925 .column-status , .page-id-1925 .column-meta_details , .page-id-1925 .column-meta_details ,
+ .column-check_in a {
+    display: none;
+
+}
+.page-id-1925  .wrap.tribe-report-page #topics-filter .tablenav input.button {
+    background: none;
+    color: #fff;
+    font-size: 100%;
+    font-weight: 700;
+    line-height: 1;
+    padding: 0;
+    text-decoration: none;
+}
+.page-id-1925 .wrap.tribe-report-page #topics-filter .bulkactions select {
+    height: 36px;
+    font-size: 13px;
+    padding: 5px;
+}
+.page-id-1925 .welcome-panel-last  .tec-tickets__admin-attendees-attendance-type-heading-total-amount , 
+.page-id-1925 .welcome-panel-last .tec-tickets__admin-attendees-attendance-type-complete-amount, 
+.page-id-1925 .welcome-panel-last  .tec-tickets__admin-attendees-attendance-type-cancelled-amount
+{
+font-size: 14px!important;
+}
+
+
+.image-upload-div{
+    background-color: rgb(26, 26, 26);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    padding: 33px;
+    border-radius: 10px;
+    width: fit-content;
+}
+    #image-upload{
+
+
+    }
+#image-gallery {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+    flex-direction: column;
+    gap: 20px;
+}
+#drop-zone{
+    position: relative;
+    border: 2px dashed #dee2e6!important;
+    text-align: center;
+    border-radius: 17px;
+    max-width: 800px;
+    padding: 82px!important;
+}
+.fa-image {
+    margin-top:-30px
+}
+
+#inputFile::-webkit-file-upload-button {
+  visibility: hidden;
+}
+
+
+.elementor .hide_back_btn_gallery {
+    display: none;
+}
+
+.drag-drop_text{
+    margin:15px 0;
+    font-weight: 600;
+}
+
+#drop-zone {
+    /* Existing styles */
+    border: 3px dashed #cccccc;
+    /* Other styles */
+}
+
+#drop-zone:hover,
+#drop-zone.dragover {
+    border-color: #d3fa16 !important;
+}
+
+#drop-zone:hover .fa-image:before {
+    color: #d3fa16;
+}
+#drop-zone:hover .drag-drop_text {
+    color: #d3fa16!important;
+}
+
+.primary-icon {
+    /* Other styles if any */
+    transition: color 0.3s; /* Smooth transition for color change */
+}
+
+.Organizer-image-upload-div{
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+    gap: 11px;
+
+}
+
+#upload-button{
+    background-color:#d3fa16!important;
+    color:black!important;
+    border-radius: 3px!important;
+    line-height: 1!important;
+    margin: 10px!important;
+    padding: 9px 12px!important;
+    font-size: 13px!important;
+}
+
+
+.delete-all-button {
+  background-color: #ff4747!important;
+  color: white!important;
+  border-radius: 3px!important;
+    line-height: 1!important;
+    margin: 10px!important;
+    padding: 9px 12px!important;
+    font-size: 13px!important;
+}
+.Organizer-image-upload-div p {
+    margin-bottom:0!important;
+    margin-top:10px!important
+}
+
+#image-preview h3{
+display:none
+}
+
+/*********end*** */
+
