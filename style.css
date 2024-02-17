@@ -582,7 +582,7 @@ input.select2-search__field[aria-owns='select2-saved_tribe_organizer-results'] {
 }
 
 .tribe-report-panel .welcome-panel-column-container {
-    display: flex;
+    display: flex!important;
     gap: 15px;
     margin-top: 0px;
     padding: 0px;
@@ -593,15 +593,12 @@ input.select2-search__field[aria-owns='select2-saved_tribe_organizer-results'] {
 
 
 .tribe-report-page .welcome-panel-colum {
-    background-color: rgb(26, 26, 26);
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+    background-color: rgb(26, 26, 26)!important;
     position: relative;
-    padding: 17px;
+    padding: 17px!important;
     border-radius: 10px;
     width: 100%;
-    max-width: 320px;
+  
 }
 
 
