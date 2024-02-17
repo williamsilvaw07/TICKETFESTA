@@ -388,27 +388,29 @@ dropZone.addEventListener('drop', function(e) {
 
 
 // Function to check the content of the image preview container
-function toggleImagePreview() {
-    var container = document.getElementById('image-preview-container');
-    var header = document.querySelector('#image-preview h3');
-    var uploadDiv = document.getElementById('main-selector-image-upload-div');
+document.addEventListener('DOMContentLoaded', function() { // Ensure DOM is fully loaded
+    function toggleImagePreview() {
+        var container = document.getElementById('image-preview-container');
+        var header = document.querySelector('#image-preview h3');
+        var uploadDiv = document.getElementById('main-selector-image-upload-div');
 
-    // Check if the container has any child nodes
-    if (container.hasChildNodes()) {
-        // If there is content, display the header and the upload div
-        header.style.display = 'block';
-        uploadDiv.style.display = 'block'; // Show the upload div
-    } else {
-        // If there is no content, hide the header and the upload div
-        header.style.display = 'none';
-        uploadDiv.style.display = 'none'; // Hide the upload div
+        // Check if the container has any element child nodes
+        if (container && container.children.length > 0) {
+            // If there is content, display the header and the upload div
+            if (header) header.style.display = 'block';
+            if (uploadDiv) uploadDiv.style.display = 'block'; // Show the upload div
+        } else {
+            // If there is no content, hide the header and the upload div
+            if (header) header.style.display = 'none';
+            if (uploadDiv) uploadDiv.style.display = 'none'; // Hide the upload div
+        }
     }
-}
 
-// Call the function initially to set the correct display state
-toggleImagePreview();
+    // Call the function initially to set the correct display state
+    toggleImagePreview();
 
-
+    // Add more event listeners here if needed, for example, to call toggleImagePreview after images are added or removed
+});
 
         </script>
         <?php
