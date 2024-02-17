@@ -691,6 +691,10 @@ html .page-id-1921 .tribe-scrollable-table tbody tr td{
     align-items: center;
     padding: 10px 0;
     border-bottom: 1px solid #444;
+    font-size: 14px;
+    color: #fff;
+    font-weight: 300;
+    text-decoration: none!important;
 
  }
 
