@@ -391,19 +391,23 @@ dropZone.addEventListener('drop', function(e) {
 function toggleImagePreview() {
     var container = document.getElementById('image-preview-container');
     var header = document.querySelector('#image-preview h3');
+    var uploadDiv = document.getElementById('main-selector-image-upload-div');
 
     // Check if the container has any child nodes
     if (container.hasChildNodes()) {
-        // If there is content, display the header
+        // If there is content, display the header and the upload div
         header.style.display = 'block';
+        uploadDiv.style.display = 'block'; // Show the upload div
     } else {
-        // If there is no content, hide the header
+        // If there is no content, hide the header and the upload div
         header.style.display = 'none';
+        uploadDiv.style.display = 'none'; // Hide the upload div
     }
 }
 
 // Call the function initially to set the correct display state
 toggleImagePreview();
+
 
 
         </script>
@@ -802,6 +806,9 @@ function create_tec_organizer_category_with_images($category_name, $image_urls, 
     gap: 11px;
 
 }
+.main-selector-image-upload-div{
+    display:none
+}
 #upload-button{
     background-color:#d3fa16!important;
     color:black!important;
@@ -830,4 +837,6 @@ function create_tec_organizer_category_with_images($category_name, $image_urls, 
 #image-preview h3{
 display:none
 }
+
+
 </style>
