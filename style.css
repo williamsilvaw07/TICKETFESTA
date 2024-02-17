@@ -725,7 +725,7 @@ html .tribe-scrollable-table tbody tr td{
 }
 .page-id-1925 .column-status , .page-id-1925 .column-status , .page-id-1925 .column-meta_details , .page-id-1925 .column-meta_details ,
  .column-check_in a {
- 
+    display: none;
 
 }
 .page-id-1925  .wrap.tribe-report-page #topics-filter .tablenav input.button {
