@@ -12,6 +12,87 @@ function parseQueryString(queryString) {
 
   return params;
 }
+
+function addCreateEventForm() {
+  var eventId = $("#post_ID").val();
+  //var responseData = xhr.responseText;
+
+  var htmlOutputStart = `
+    <div class="tribe-section tribe-section-terms">
+        <div class="tribe-section-header">
+          <h3>Coupon</h3>
+          <div id="couponList"></div>
+        </div>
+        <div class="tribe-section-content">
+          <span class="coupon_title_section">Code</span>
+          <input type="text" class="event-terms-description" id="coupon_code" name="coupon_code"/>
+          <br>
+          <span class="coupon_title_section">Amount</span>
+          <input type="text" class="event-terms-description" id="amount" name="amount"/>
+          <br>
+          <span class="coupon_title_section">Discount Type</span> 
+          <select name="discount_type" id="discount_type">
+          <option value="percent">Percent</option>
+          <option value="fixed">Fixed</option>
+          </select>
+          <br/>
+          <span class="coupon_title_section">usage limit</span> 
+          <input type="text" class="event-terms-description" id="usage_limit" name="usage_limit"/>
+          <br>
+          <span class="coupon_title_section tribe-datepicke">start date</span> 
+          <input type="text" class="tribe-datepicker tribe-field-start_date ticket_field hasDatepicker" id="start_date" name="start_date"/>
+          <br>
+          <span class="coupon_title_section">start time</span>
+          <input type="text" class="event-terms-description" id="start_time" name="start_time"/>
+          <br>
+          <span class="coupon_title_section">expire date</span> 
+          <input type="text" class="event-terms-description" id="expire_date" name="expire_date"/>
+          <br>
+          <span class="coupon_title_section">expire time</span> 
+          <input type="text" class="event-terms-description" id="expire_time" name="expire_time"/>
+          <br>`;
+
+  var htmlOutputEnd = `<br/>
+          <input type="button" id="coupon_form_save" class="button-primary tribe-dependent tribe-validation-submit tribe-active" name="ticket_form_save" value="Save ticket">
+        </div>
+    </div>
+  `;
+
+  $.ajax({
+    url: iam00_ajax_object.ajax_url, // AJAX URL set by WordPress
+    type: "post",
+    data: {
+      action: "get_event_ticket_action", // Custom AJAX action
+      nonce: iam00_ajax_object.nonce,
+      event_id: eventId,
+    },
+    success: function (response) {
+      // Handle the response from the server
+      var options = "";
+
+      if (response.success) {
+        Object.entries(response.data).forEach(([key, value]) => {
+          options +=
+            `<label class="coupon_ticket_list" for="option` +
+            key +
+            `">
+            <input type="checkbox" name="product_ids[]" id="option` +
+            key +
+            `" value="` +
+            key +
+            `"> ` +
+            value +
+            `
+        </label><br/>`;
+        });
+
+        $("#eventCouponForm").html(htmlOutputStart + options + htmlOutputEnd);
+      }
+    },
+  });
+}
+
+
 jQuery(document).ready(function ($) {
 	
 	
@@ -121,107 +202,43 @@ parentElements.forEach(parentElement => {
     });
   });
 
-  // $("#your_button_id").on("click", function () {
-  //   $.ajax({
-  //     url: iam00_ajax_object.ajax_url, // AJAX URL set by WordPress
-  //     type: "post",
-  //     data: {
-  //       action: "add_event", // Custom AJAX action
-  //       nonce: iam00_ajax_object.nonce,
-  //       event_id: 1742,
-  //       product_ids: [1743],
-  //       coupon_code: "CUSTOMCODE",
-  //       discount_type: "percent",
-  //     },
-  //     success: function (response) {
-  //       // Handle the response from the server
-  //       console.log(response);
-  //     },
-  //   });
-  // });
+  addCreateEventForm();
 
   $(document).ajaxSuccess(function (event, xhr, settings) {
-    var eventId = $("#post_ID").val();
-    //console.log("AJAX request successfully completed:", event, xhr, settings);
-    var responseData = xhr.responseText;
     var paramsObject = parseQueryString(settings.data);
-
     if (paramsObject.action !== "tribe-ticket-add") {
       return;
     }
-
-    var htmlOutputStart = `
-      <div class="tribe-section tribe-section-terms">
-          <div class="tribe-section-header">
-            <h3>Coupon</h3>
-            <div id="couponList"></div>
-          </div>
-          <div class="tribe-section-content">
-            <span class="coupon_title_section">Code</span>
-            <input type="text" class="event-terms-description" id="coupon_code" name="coupon_code"/>
-            <br>
-            <span class="coupon_title_section">Amount</span>
-            <input type="text" class="event-terms-description" id="amount" name="amount"/>
-            <br>
-            <span class="coupon_title_section">Discount Type</span> 
-            <select name="discount_type" id="discount_type">
-            <option value="percent">Percent</option>
-            <option value="fixed">Fixed</option>
-            </select>
-            <br/>
-            <span class="coupon_title_section">usage limit</span> 
-            <input type="text" class="event-terms-description" id="usage_limit" name="usage_limit"/>
-            <br>
-            <span class="coupon_title_section">start date</span> 
-            <input type="text" class="tribe-datepicker tribe-field-start_date ticket_field hasDatepicker" id="start_date" name="start_date"/>
-            <br>
-            <span class="coupon_title_section">start time</span>
-            <input type="text" class="event-terms-description" id="start_time" name="start_time"/>
-            <br>
-            <span class="coupon_title_section">expire date</span> 
-            <input type="text" class="event-terms-description" id="expire_date" name="expire_date"/>
-            <br>
-            <span class="coupon_title_section">expire time</span> 
-            <input type="text" class="event-terms-description" id="expire_time" name="expire_time"/>
-            <br>`;
-
-    var htmlOutputEnd = `<br/>
-            <input type="button" id="coupon_form_save" class="button-primary tribe-dependent tribe-validation-submit tribe-active" name="ticket_form_save" value="Save ticket">
-          </div>
-      </div>
-    `;
-
-    $.ajax({
-      url: iam00_ajax_object.ajax_url, // AJAX URL set by WordPress
-      type: "post",
-      data: {
-        action: "get_event_ticket_action", // Custom AJAX action
-        nonce: iam00_ajax_object.nonce,
-        event_id: eventId,
-      },
-      success: function (response) {
-        // Handle the response from the server
-        var options = "";
-
-        if (response.success) {
-          Object.entries(response.data).forEach(([key, value]) => {
-            options +=
-              `<label class="coupon_ticket_list" for="option` +
-              key +
-              `">
-              <input type="checkbox" name="product_ids[]" id="option` +
-              key +
-              `" value="` +
-              key +
-              `"> ` +
-              value +
-              `
-          </label><br/>`;
-          });
-
-          $("#eventCouponForm").html(htmlOutputStart + options + htmlOutputEnd);
-        }
-      },
-    });
+    
+    addCreateEventForm();
   });
+  
+});
+
+
+
+
+
+
+
+// Check if the URL contains 'category_id'
+$(document).ready(function() {
+  console.log("Document ready.");
+
+  // Check if the URL contains 'category_id'
+  if(window.location.href.indexOf('category_id') !== -1) {
+      console.log("URL contains 'category_id'.");
+
+      // Check how many elements are selected before applying the style change
+      var elements = $('.elementor .hide_back_btn_gallery');
+      console.log(elements.length + " elements found with the class 'hide_back_btn_gallery'.");
+
+      // Override the CSS for '.elementor .hide_back_btn_gallery'
+      elements.css('display', 'block');
+
+      // Confirm the style change was attempted
+      console.log("Attempted to change display to 'block'.");
+  } else {
+      console.log("URL does not contain 'category_id'.");
+  }
 });

@@ -466,7 +466,7 @@ color: black!important;
 }
 
 
- .woocommerce-orders-table__cell-order-status , .woocommerce-orders-table__cell-order-total{
+ .woocommerce-orders-table__cell-order-total  , .woocommerce-orders-table__header-order-total{
  display: none;
 }
 .woocommerce-MyAccount-navigation{
@@ -487,9 +487,7 @@ color: black!important;
 }
 
 
-.woocommerce-MyAccount-orders thead{
-    display: none;
-}
+
 #custom-welcome-message{
     margin-top: 20px;
     text-align: left;
@@ -502,9 +500,50 @@ color: black!important;
     color: black!important;
 }
 
+.woocommerce-MyAccount-content{
+    background-color: rgb(26, 26, 26);
+    position: relative;
+    padding: 17px;
+    border-radius: 10px;
+    /* width: 100%; */
+    /* max-width: 500px; */
+    margin: 38px auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.woocommerce-account thead tr th{
+    margin-bottom: 10px!important;
+    border-bottom: 1px solid #444!important;
+    padding-bottom: 12px!important;
+    padding-left: 0!important;
+}
+.woocommerce-account tbody tr td {
+    align-items: center!important;
+    padding: 18px 0!important;
+    border-bottom: 1px solid #444!important;
+    font-size: 14px!important;
+    color: #fff!important;
+    font-weight: 300!important;
+}
+.woocommerce-account .woocommerce{
+    display: flex;
+
+}
+
+.woocommerce-account .account-orders-table .nobr{
+    font-size: 14px!important;
+    color: #aaa!important;
+    text-transform: capitalize!important;
+    padding-left: 6px!important;
+    font-weight: 400;
+
+}
 
 
-
+.elementor .hide_back_btn_gallery {
+    display: none;
+}
 
 #select2-saved_tribe_organizer-results li:first-child {
     display: none!important;

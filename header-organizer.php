@@ -2433,6 +2433,118 @@ position: relative!important;
 }
 
 
+.elementor-button-link_custom span {
+    color:black!important
+}
+.category-item {
+  position: relative;
+  display: inline-block;
+  margin: 10px;
+}
+
+.category-item img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 400px;
+
+}
+
+.overlay {
+  position: absolute;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5); /* Dark overlay */
+  color: #ffffff; /* Text color */
+  width: 100%;
+  opacity:1;
+  color: white;
+  text-align: center;
+  padding: 20px;
+  transition: .5s ease;
+}
+
+.category-item:hover .overlay {
+  opacity: 0;
+}
+
+.overlay h2, .overlay h3 {
+  margin: 0;
+  padding: 0;
+}
+
+
+.overlay h3 {
+    font-size: 15px;
+    font-weight:300!important;
+    margin-top:10px
+}
+.overlay h2{
+    font-size: 18px;
+}
+
+
+.category-images{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap:10px;
+}
+
+.category-images img{
+    max-width: 250px;
+    object-fit: cover;
+    width: 100%!important;
+    
+    flex: 1 1 22%;
+
+}
+
+#delete-category-form{
+    width:100%;
+    max-width:250px;
+    margin:0 auto;
+}
+#delete-category-form input{
+    width:100%;
+    max-width:250px;
+    margin:0 auto;
+    margin-top:40px;
+    padding: 7px 0px;
+    background: #d5d5d5!important;
+    border-radius: 4px;
+    color: black!important;
+    font-size: 13px;
+
+}
+
+
+
+@media (max-width: 768px) { /* Adjustments for tablets */
+  .overlay {
+    position: relative; /* Position overlay relative to its container */
+    background: transparent; /* Optional: make the background transparent */
+  }
+
+  .overlay h2, .overlay h3 {
+    color: #000; /* Change text color for better visibility */
+  }
+}
+
+@media (max-width: 550px) { /* Adjustments for mobile phones */
+  .overlay {
+    position: relative; /* Position overlay relative to its container */
+    background: transparent; /* Optional: make the background transparent */
+  }
+  .category-images {
+    display:grid!important;
+    grid-template-columns: 50% 50%!important;
+
+
+    }
+  .overlay h2, .overlay h3 {
+    color: #000; /* Change text color for better visibility */
+  }
+}
 /****END*****/
 
 /****MEIDA QURRYS***/

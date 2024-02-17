@@ -6,19 +6,24 @@ function organiser_image_gallery_shortcode() {
     ob_start(); ?>
 
     <!-- HTML structure for the image gallery -->
+    <h2 class="tribe-community-events-list-title">Upload Images</h2>
     <div id="image-gallery">
-        <div id="image-preview">
-            <h2>Image Preview</h2>
-            <div id="image-preview-container"></div>
-        </div>
+     
+     
         <div id="image-upload">
-            <h2>Upload Images</h2>
+            <div class="image-upload-div">
             <div id="drop-zone">
-                Drag & drop images here or click to select images.
-            </div>
+            <span class="primary-icon fas fa-image fa-stack-2x"></span>
+            <p class="drag-drop_text">  Drag & drop images here or click to select images.</p>
+         
             <form id="image-upload-form" enctype="multipart/form-data">
                 <input type="file" id="file-input" name="files[]" multiple>
-                <select id="organiser-selector" name='organiser' >
+                </div>
+                </div>
+ </div> 
+ <div class="main-selector-image-upload-div">
+                <div class="Organizer-image-upload-div">
+                <p>Select Organizer Profile:</p><select id="organiser-selector" name='organiser'> </div>
                     <?php
                     // Get list of organizers created by the current user
                     $organisers = get_posts(array(
@@ -33,14 +38,24 @@ function organiser_image_gallery_shortcode() {
                     }
                     ?>
                 </select>
-                <input type="text" id="category-name" name="category" placeholder="Enter category name" style="margin-bottom: 10px;" required>
+                <p>Category Title:</p>
+                <input type="text" id="category-name" name="category" placeholder="London 20-02-24" style="margin-bottom: 10px;" required>
+                
+                
+                <div id="image-upload-function-btn-div">
+
                 <input type="submit" id="upload-button" value="Upload">
                 <span id="upload-count"></span>
                 <button id="delete-all-button">Delete All Images</button>
+                </div>
+                </div>
             </form>
         </div>
     </div>
-
+    <div id="image-preview">
+        <h3>Image Preview</h3>
+        <div id="image-preview-container"></div>
+    </div>
     <!-- Modal for showing upload status -->
     <div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -76,6 +91,9 @@ function organiser_image_gallery_shortcode() {
             margin-bottom: 10px;
             cursor: pointer;
         }
+        #upload-count{
+            font-size:13px!important
+        }
         .thumbnail-container {
             position: relative;
             display: inline-block;
@@ -83,16 +101,18 @@ function organiser_image_gallery_shortcode() {
         }
         .delete-button {
             position: absolute;
-            top: 5px;
-            right: 5px;
-            background-color: #f44336;
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            cursor: pointer;
-        }
+    top: 8px;
+    right: 14px;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 33px;
+    height: 33px;
+    cursor: pointer;
+    font-weight: 700;
+    padding: 0;
+}
     </style>
 
     <!-- Inline JavaScript for functionality -->
@@ -263,6 +283,13 @@ function organiser_image_gallery_shortcode() {
                 uploadModal.show();
             }
         });
+
+
+
+
+
+
+
     </script>
 
     <?php
@@ -330,6 +357,60 @@ function category_image_gallery_shortcode($atts) {
                     } 
                 });
             });
+
+
+
+
+
+
+
+            var dropZone = document.getElementById('drop-zone');
+
+// Add event listeners for drag & drop functionality
+dropZone.addEventListener('dragover', function(e) {
+    e.preventDefault(); // This is necessary to allow a drop event
+    this.classList.add('dragover');
+});
+
+dropZone.addEventListener('dragleave', function(e) {
+    this.classList.remove('dragover');
+});
+
+dropZone.addEventListener('drop', function(e) {
+    this.classList.remove('dragover');
+
+});
+
+
+
+
+
+
+
+// Function to check the content of the image preview container
+document.addEventListener('DOMContentLoaded', function() {
+    function checkThumbnailContent() {
+        var containers = document.querySelectorAll('.thumbnail-container');
+
+        containers.forEach(function(container) {
+            if (container.children.length > 0) {
+                // If there is content (e.g., an image), ensure the container is visible
+                container.style.display = 'block';
+            } else {
+                // If there is no content, hide the container
+                container.style.display = 'none';
+            }
+        });
+    }
+
+    // Initially check for content
+    checkThumbnailContent();
+
+    // Example: If content is added dynamically, call checkThumbnailContent() after content is added
+    // addContentToThumbnailContainer();
+    // checkThumbnailContent();
+});
+
         </script>
         <?php
 
@@ -361,27 +442,29 @@ function category_image_gallery_shortcode($atts) {
         foreach ($categories as $category) {
             $category_id = $category->term_id;
             $category_name = $category->name;
-            $category_author_id = get_term_meta($category_id, 'category_owner_id', true); // User ID of the category creator
-            $category_author_name = $category_author_id ? get_userdata($category_author_id)->display_name : 'Unknown'; // Display name of the category creator
-            $category_link = add_query_arg('category_id', $category_id, get_permalink()); // Add category_id parameter to category link
-            $category_images = get_term_meta($category_id, 'category_images', true); // get category images
-            $cat_organiser = get_term_meta($category_id, 'category_organiser', true); // get category organiser 
+            $category_link = add_query_arg('category_id', $category_id, get_permalink());
+            $category_images = get_term_meta($category_id, 'category_images', true);
+            $cat_organiser = get_term_meta($category_id, 'category_organiser', true);
             $cat_organiser = get_post($cat_organiser)->post_title; 
             $category_images = explode(',', $category_images);
-
+        
             echo '<div class="category-item">';
-            echo '<h2><a href="' . esc_url($category_link) . '">' . esc_html($category_name) . '</a> (Created by: ' . esc_html($category_author_name) . ')</h2>';
-            echo '<h2> (Organiser : ' . esc_html($cat_organiser) . ')</h2>';
+            echo '<a href="' . esc_url($category_link) . '">';
             if (!empty($category_images)) {
                 $attachment_id = attachment_url_to_postid($category_images[0]);
-                $attachment_src = wp_get_attachment_image_src($attachment_id, 'thumbnail')[0];
-                echo '<a href="' . esc_url($category_link) . '"><img src="' . esc_url($attachment_src) . '" alt="' . esc_attr($category_name) . '" /></a>';
+                $attachment_src = wp_get_attachment_image_src($attachment_id, 'large')[0];
+                echo '<img src="' . esc_url($attachment_src) . '" alt="' . esc_attr($category_name) . '" />';
+                echo '<div class="overlay">';
+                echo '<h2>' . esc_html($category_name) . '</h2>';
+                echo '<h3>Organiser: ' . esc_html($cat_organiser) . '</h3>';
+                echo '</div>'; // Close overlay div
             } else {
                 echo '<p>No thumbnail available</p>';
             }
-            echo '</div>';
+            echo '</a>';
+            echo '</div>'; // Close category-item div
         }
-        echo '</div>';
+        echo '</div>'; // Close category-gallery div
     }
     wp_reset_query();
     return ob_get_clean();
@@ -640,3 +723,121 @@ function create_tec_organizer_category_with_images($category_name, $image_urls, 
     }
 }
     
+
+
+
+?>
+
+
+
+
+
+<style>
+
+.image-upload-div{
+    background-color: rgb(26, 26, 26);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    padding: 33px;
+    border-radius: 10px;
+    width: fit-content;
+}
+    #image-upload{
+
+
+    }
+#image-gallery {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+    flex-direction: column;
+    gap: 20px;
+}
+#drop-zone{
+    position: relative;
+    border: 2px dashed #dee2e6!important;
+    text-align: center;
+    border-radius: 17px;
+    max-width: 800px;
+    padding: 82px!important;
+}
+.fa-image {
+    margin-top:-30px
+}
+
+#inputFile::-webkit-file-upload-button {
+  visibility: hidden;
+}
+
+
+.drag-drop_text{
+    margin:15px 0;
+    font-weight: 600;
+}
+
+#drop-zone {
+    /* Existing styles */
+    border: 3px dashed #cccccc;
+    /* Other styles */
+}
+
+#drop-zone:hover,
+#drop-zone.dragover {
+    border-color: #d3fa16 !important;
+}
+
+#drop-zone:hover .fa-image:before {
+    color: #d3fa16;
+}
+#drop-zone:hover .drag-drop_text {
+    color: #d3fa16!important;
+}
+
+.primary-icon {
+    /* Other styles if any */
+    transition: color 0.3s; /* Smooth transition for color change */
+}
+
+.Organizer-image-upload-div{
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+    gap: 11px;
+
+}
+.main-selector-image-upload-div{
+    display:none
+}
+#upload-button{
+    background-color:#d3fa16!important;
+    color:black!important;
+    border-radius: 3px!important;
+    line-height: 1!important;
+    margin: 10px!important;
+    padding: 9px 12px!important;
+    font-size: 13px!important;
+}
+
+
+#delete-all-button {
+  background-color: #ff4747!important;
+  color: white!important;
+  border-radius: 3px!important;
+    line-height: 1!important;
+    margin: 10px!important;
+    padding: 9px 12px!important;
+    font-size: 13px!important;
+}
+.Organizer-image-upload-div p {
+    margin-bottom:0!important;
+    margin-top:10px!important
+}
+
+#image-preview h3{
+display:none
+}
+
+
+</style>
