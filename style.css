@@ -701,7 +701,7 @@ html .tribe-scrollable-table tbody tr td{
 
  }
 
- .attendees-actions input{
+ .attendees-actions input , .attendees-filter  input ,  .attendees-actions a{
     font-size: 13px!important;
     padding: 7px 13px!important;
     background: #d5d5d5!important;
