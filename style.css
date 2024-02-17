@@ -686,7 +686,7 @@ color:#aaa!important
     display: flex!important;
 }
 
-.page-id-1921 .tribe-scrollable-table tbody th td{
+html .page-id-1921 .tribe-scrollable-table tbody td{
     border-bottom: 1px solid #e6e6e6!important;
 
  }
