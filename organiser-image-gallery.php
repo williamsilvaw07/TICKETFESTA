@@ -778,18 +778,18 @@ function create_tec_organizer_category_with_images($category_name, $image_urls, 
     line-height: 1!important;
     margin: 10px!important;
     padding: 9px 12px!important;
-    font-size: 12px!important;
+    font-size: 13px!important;
 }
 
 
 #delete-all-button {
   background-color: #ff4747!important;
-  color: black!important;
+  color: white!important;
   border-radius: 3px!important;
     line-height: 1!important;
     margin: 10px!important;
     padding: 9px 12px!important;
-    font-size: 12px!important;
+    font-size: 13px!important;
 }
   
 </style>
