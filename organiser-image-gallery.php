@@ -53,7 +53,7 @@ function organiser_image_gallery_shortcode() {
         </div>
     </div>
     <div id="image-preview">
-        <h2>Image Preview</h2>
+        <h3>Image Preview</h3>
         <div id="image-preview-container"></div>
     </div>
     <!-- Modal for showing upload status -->
