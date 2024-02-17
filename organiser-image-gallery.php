@@ -827,6 +827,6 @@ toggleImagePreview();
 }
 
 .image-preview h3{
-display:nonel
+display:none
 }
 </style>
