@@ -727,6 +727,12 @@ html .page-id-1921 .tribe-scrollable-table tbody tr td{
     display: none;
 
 }
+
+.page-id-1925 .wrap.tribe-report-page #topics-filter .bulkactions select {
+    height: 36px;
+    font-size: 13px;
+    padding: 5px;
+}
 .page-id-1925 .welcome-panel-last  .tec-tickets__admin-attendees-attendance-type-heading-total-amount , 
 .page-id-1925 .welcome-panel-last .tec-tickets__admin-attendees-attendance-type-complete-amount, 
 .page-id-1925 .welcome-panel-last  .tec-tickets__admin-attendees-attendance-type-cancelled-amount
