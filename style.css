@@ -557,7 +557,7 @@ input.select2-search__field[aria-owns='select2-saved_tribe_organizer-results'] {
 
 /********sales and atendde rports page **** */
 
-#tribe-tickets-plus-woocommerce-orders-report ,  .tribe-event-meta-total-site-fees , .tribe-report-page .welcome-panel-column  .tec-tickets__admin-orders-report-overview-ticket-type{
+#tribe-tickets-plus-woocommerce-orders-report , .page-id-1921 #tribe-tickets-attendance-report , .page-id-1921 .tribe-event-meta-total-site-fees , .page-id-1921 .tribe-report-page .welcome-panel-column  .tec-tickets__admin-orders-report-overview-ticket-type{
     display: none!important;
 }
 
