@@ -700,8 +700,8 @@ html .tribe-scrollable-table tbody tr td{
     text-decoration: none!important;
 
  }
- .page-id-1921 .tribe-report-page .tickets_checkin  {
-    background: #d3fa16!important;
+ html .page-id-1921 .tribe-report-page .tickets_checkin  {
+    background-color: #d3fa16!important;
     color:  black!important;
  }
  .page-id-1921 .order .order-status{
