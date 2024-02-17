@@ -606,7 +606,7 @@ input.select2-search__field[aria-owns='select2-saved_tribe_organizer-results'] {
     font-weight: 600;
     margin-bottom: 11px;
 }
-.tribe-report-page .welcome-panel-column ul{
+.tribe-report-page .welcome-panel-column ul , .tribe-report-page .welcome-panel-column ul li{
     margin:0!important;
     color: white!important;
 }
