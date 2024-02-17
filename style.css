@@ -723,7 +723,8 @@ html .page-id-1921 .tribe-scrollable-table tbody tr td{
     color: #aaa!important;
     font-size: 14px!important; 
 }
-.page-id-1925 .column-status , .page-id-1925 .column-status , .page-id-1925 .column-meta_details , .page-id-1925 .column-meta_details {
+.page-id-1925 .column-status , .page-id-1925 .column-status , .page-id-1925 .column-meta_details , .page-id-1925 .column-meta_details ,
+ .column-check_in a {
     display: none;
 
 }
