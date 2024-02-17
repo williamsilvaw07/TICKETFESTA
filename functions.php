@@ -1969,7 +1969,6 @@ add_shortcode('event_submission_response', 'my_event_submission_response_shortco
 function dynamic_tribe_edit_event_shortcode() {
     // Check if the 'event_id' query parameter is set in the URL
     $event_id = isset($_GET['event_id']) ? intval($_GET['event_id']) : 0;
-    die('checking right page');
     // You can add additional views and handle them here
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (!empty($_POST['event_status'])) {
