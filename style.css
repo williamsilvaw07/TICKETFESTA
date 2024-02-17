@@ -639,8 +639,17 @@ color:#aaa!important
     text-transform: uppercase;
     font-size: 11px;
     color: #aaa!important;
+    border-top: 1px solid #444
 }
 
-
+.tec-tickets__admin-orders-report-overview-ticket-type-list-item {
+	display: flex!important;
+	justify-content: flex-start!important;
+	margin-right: 0;
+	align-items: flex-start;
+	align-content: center;
+	gap: 7px;
+	flex-direction: column!important;
+}
 /*********end*** */
 
