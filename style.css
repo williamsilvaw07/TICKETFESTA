@@ -713,7 +713,10 @@ html .page-id-1921 .tribe-scrollable-table tbody tr td{
 
 .page-id-1925 .welcome-panel-last .tec-tickets__admin-attendees-attendance-type-cancelled-label ,
 .page-id-1925 .welcome-panel-last .tec-tickets__admin-attendees-attendance-type-complete-label  , 
-.page-id-1925 .welcome-panel-last .tec-tickets__admin-attendees-attendance-type-cancelled-label {
+.page-id-1925 .welcome-panel-last .tec-tickets__admin-attendees-attendance-type-heading-total-label ,
+.page-id-1925 .welcome-panel-last .tec-tickets__admin-attendees-attendance-totals-title , 
+.page-id-1925 .welcome-panel-last .tec-tickets__admin-attendees-attendance-totals-amount
+ {
     font-weight: 500!important;
     color: #aaa!important;
     font-size: 14px!important; 
