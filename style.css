@@ -601,7 +601,7 @@ input.select2-search__field[aria-owns='select2-saved_tribe_organizer-results'] {
     width: 100%;
   
 }
-.tribe-report-page .welcome-panel-column h3 {
+.tribe-report-page .welcome-panel-column h3  , .tec-tickets__admin-attendees-attendance-type-heading-label{
     font-size: 17px;
     font-weight: 600;
     margin-bottom: 11px;
