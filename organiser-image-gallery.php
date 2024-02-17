@@ -711,7 +711,7 @@ function create_tec_organizer_category_with_images($category_name, $image_urls, 
     display: flex;
     justify-content: space-around;
     margin-top: 20px;
-    flex-direction: column-reverse!important;
+  
 }
 #drop-zone{
     position: relative;
