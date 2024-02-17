@@ -23,7 +23,7 @@ function organiser_image_gallery_shortcode() {
                 <input type="file" id="file-input" name="files[]" multiple>
                 </div>
                 </div>
-                <select id="organiser-selector" name='organiser' >Selete Organizer Profile
+                <p>Selete Organizer Profile</p><select id="organiser-selector" name='organiser' >
                     <?php
                     // Get list of organizers created by the current user
                     $organisers = get_posts(array(
