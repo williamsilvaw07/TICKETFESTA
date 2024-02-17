@@ -660,5 +660,120 @@ html .tribe-community-tickets-shortcode table{
     border-radius: 10px!important;
     width: 100%!important;
 }
+
+
+
+
+
+
+
+
+.image-upload-div{
+    background-color: rgb(26, 26, 26);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    padding: 33px;
+    border-radius: 10px;
+    width: fit-content;
+}
+    #image-upload{
+
+
+    }
+#image-gallery {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+    flex-direction: column;
+    gap: 20px;
+}
+#drop-zone{
+    position: relative;
+    border: 2px dashed #dee2e6!important;
+    text-align: center;
+    border-radius: 17px;
+    max-width: 800px;
+    padding: 82px!important;
+}
+.fa-image {
+    margin-top:-30px
+}
+
+#inputFile::-webkit-file-upload-button {
+  visibility: hidden;
+}
+
+
+.elementor .hide_back_btn_gallery {
+    display: none;
+}
+
+.drag-drop_text{
+    margin:15px 0;
+    font-weight: 600;
+}
+
+#drop-zone {
+    /* Existing styles */
+    border: 3px dashed #cccccc;
+    /* Other styles */
+}
+
+#drop-zone:hover,
+#drop-zone.dragover {
+    border-color: #d3fa16 !important;
+}
+
+#drop-zone:hover .fa-image:before {
+    color: #d3fa16;
+}
+#drop-zone:hover .drag-drop_text {
+    color: #d3fa16!important;
+}
+
+.primary-icon {
+    /* Other styles if any */
+    transition: color 0.3s; /* Smooth transition for color change */
+}
+
+.Organizer-image-upload-div{
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+    gap: 11px;
+
+}
+
+#upload-button{
+    background-color:#d3fa16!important;
+    color:black!important;
+    border-radius: 3px!important;
+    line-height: 1!important;
+    margin: 10px!important;
+    padding: 9px 12px!important;
+    font-size: 13px!important;
+}
+
+
+.delete-all-button {
+  background-color: #ff4747!important;
+  color: white!important;
+  border-radius: 3px!important;
+    line-height: 1!important;
+    margin: 10px!important;
+    padding: 9px 12px!important;
+    font-size: 13px!important;
+}
+.Organizer-image-upload-div p {
+    margin-bottom:0!important;
+    margin-top:10px!important
+}
+
+#image-preview h3{
+display:none
+}
+
 /*********end*** */
 
