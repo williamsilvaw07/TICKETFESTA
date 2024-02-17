@@ -700,6 +700,17 @@ html .tribe-scrollable-table tbody tr td{
     text-decoration: none!important;
 
  }
+
+ .attendees-actions input{
+    font-size: 13px!important;
+    padding: 7px 13px!important;
+    background: #d5d5d5!important;
+    border-radius: 4px!important;
+    font-weight: 400!important;
+    color: black!important;
+    text-decoration: none!important;
+    border: 0px!important;
+ }
  html .page-template-organizer-template  .column-ticket  .row-actions{
     display: block!important;
  }
