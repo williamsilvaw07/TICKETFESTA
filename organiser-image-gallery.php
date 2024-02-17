@@ -23,7 +23,10 @@ function organiser_image_gallery_shortcode() {
                 <input type="file" id="file-input" name="files[]" multiple>
                 </div>
                 </div>
-                <p>Selete Organizer Profile</p><select id="organiser-selector" name='organiser' >
+ </div> 
+ <div class="main-selector-image-upload-div">
+                <div class="Organizer-image-upload-div">
+                <p>Selete Organizer Profile</p><select id="organiser-selector" name='organiser' placeholder="fdfdfd" > </div>
                     <?php
                     // Get list of organizers created by the current user
                     $organisers = get_posts(array(
@@ -43,6 +46,7 @@ function organiser_image_gallery_shortcode() {
                 <input type="submit" id="upload-button" value="Upload">
                 <span id="upload-count"></span>
                 <button id="delete-all-button">Delete All Images</button>
+                </div>
             </form>
         </div>
     </div>
