@@ -611,7 +611,7 @@ input.select2-search__field[aria-owns='select2-saved_tribe_organizer-results'] {
     color: white!important;
 }
 
-html body .tribe-report-page .welcome-panel-column .event-actions a{
+html body .tribe-report-page .event-actions a{
     font-size: 13px;
     padding: 11px 15px!important;
     background: #d5d5d5;
