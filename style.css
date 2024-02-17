@@ -622,7 +622,10 @@ html body .tribe-report-page .event-actions a{
     border: 0px!important;
 }
 
-
+.tribe-report-page .welcome-panel-column strong{
+font-weight: 500!important;
+color:#aaa!important
+}
 
 
 
