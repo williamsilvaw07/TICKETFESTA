@@ -711,6 +711,10 @@ html .tribe-scrollable-table tbody tr td{
     text-decoration: none!important;
     border: 0px!important;
  }
+
+ .attendees-actions .email{
+    display: none!important;
+ }
  html .page-template-organizer-template  .column-ticket  .row-actions{
     display: block!important;
  }
