@@ -98,16 +98,18 @@ function organiser_image_gallery_shortcode() {
         }
         .delete-button {
             position: absolute;
-            top: 5px;
-            right: 5px;
-            background-color: #f44336;
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            cursor: pointer;
-        }
+    top: 8px;
+    right: 14px;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 33px;
+    height: 33px;
+    cursor: pointer;
+    font-weight: 700;
+    padding: 0;
+}
     </style>
 
     <!-- Inline JavaScript for functionality -->
