@@ -783,8 +783,8 @@ function create_tec_organizer_category_with_images($category_name, $image_urls, 
 
 
 #delete-all-button {
-  background-color: red!important;
-  color: white!important;
+  background-color: #ff4747!important;
+  color: black!important;
   border-radius: 3px!important;
     line-height: 1!important;
     margin: 10px!important;
