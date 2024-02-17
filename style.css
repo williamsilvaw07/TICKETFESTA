@@ -621,12 +621,14 @@ html body .tribe-report-page .event-actions a{
     text-decoration: none!important;
     border: 0px!important;
 }
-
+html body .tribe-report-page .event-actions a:first-child{
+    display: none!important;
+}
 .tribe-report-page .welcome-panel-column strong{
 font-weight: 500!important;
 color:#aaa!important
 }
-.venue-name a {
+.tribe-report-page  .venue-name a {
     pointer-events: none; 
     cursor: default;
     color: black; 
