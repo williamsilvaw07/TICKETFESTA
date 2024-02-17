@@ -506,8 +506,9 @@ color: black!important;
 
 
 
-/* hiding create new adviser from edit event page */
-.select2-results__option:first-child
-{
-    display: none;
+#select2-saved_tribe_organizer-results li:first-child {
+    display: none!important;
+}
+input.select2-search__field[aria-owns='select2-saved_tribe_organizer-results'] {
+    display: none!important;
 }
