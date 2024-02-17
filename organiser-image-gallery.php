@@ -46,7 +46,7 @@ function organiser_image_gallery_shortcode() {
 
                 <input type="submit" id="upload-button" value="Upload">
                 <span id="upload-count"></span>
-                <button id="delete-all-button">Delete All Images</button>
+                <button id="delete-all-button" class="delete-all-button">Delete All Images</button>
                 </div>
                 </div>
             </form>
@@ -344,7 +344,7 @@ function category_image_gallery_shortcode($atts) {
         // Display delete button for the category
         echo '<form id="delete-category-form" method="post">';
         echo '<input type="hidden" name="delete_category_id" value="' . esc_attr($category_id) . '" />';
-        echo '<input type="submit" name="delete_category" id="delete-all-button" value="Delete Category" />';
+        echo '<input type="submit" name="delete_category" class="delete-all-button" value="Delete Category" />';
         echo '</form>';
 
         // JavaScript functionality to handle category deletion and clear URL
@@ -799,7 +799,7 @@ function create_tec_organizer_category_with_images($category_name, $image_urls, 
 }
 
 
-#delete-all-button {
+.delete-all-button {
   background-color: #ff4747!important;
   color: white!important;
   border-radius: 3px!important;
