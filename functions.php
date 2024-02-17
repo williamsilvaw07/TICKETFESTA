@@ -1174,7 +1174,7 @@ function my_events_shortcode($atts) {
     if ($a['view'] === 'my_events') {
         return get_my_events(); // Call the function to get the events
     }
-
+    die('checking right page');
     // You can add additional views and handle them here
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (!empty($_POST['event_status'])) {
