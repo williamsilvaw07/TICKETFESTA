@@ -600,7 +600,11 @@ input.select2-search__field[aria-owns='select2-saved_tribe_organizer-results'] {
     width: 100%;
   
 }
-
+.welcome-panel-column h3 {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 11px;
+}
 
 
 
