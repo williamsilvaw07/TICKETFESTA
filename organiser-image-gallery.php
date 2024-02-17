@@ -825,4 +825,8 @@ toggleImagePreview();
     margin-bottom:0!important;
     margin-top:10px!important
 }
+
+.image-preview h3{
+display:nonel
+}
 </style>
