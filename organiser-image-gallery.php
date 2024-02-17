@@ -696,6 +696,36 @@ function create_tec_organizer_category_with_images($category_name, $image_urls, 
 ?>
 
 
+
+<script>
+// Function to check the content of the image preview container
+function toggleImagePreview() {
+    var container = document.getElementById('image-preview-container');
+    var header = document.querySelector('#image-preview h3');
+
+    // Check if the container has any child nodes
+    if (container.hasChildNodes()) {
+        // If there is content, display the header
+        header.style.display = 'block';
+    } else {
+        // If there is no content, hide the header
+        header.style.display = 'none';
+    }
+}
+
+// Call the function initially to set the correct display state
+toggleImagePreview();
+
+// You would also call this function whenever images are added or removed from the container.
+// For example:
+// addImageToPreview(); // Function that adds an image
+// toggleImagePreview(); // Update the display of the header
+
+// deleteImageFromPreview(); // Function that deletes an image
+// toggleImagePreview(); // Update the display of the header
+</script>
+
+
 <style>
 
 .image-upload-div{
