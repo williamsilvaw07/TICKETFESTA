@@ -75,3 +75,20 @@ Event Organizer
 	?>
 </div>
 </div>
+
+<!-- Event Status -->
+
+<div class="event_decp_div hover_section">
+	<h2>
+	Select Event Status
+	</h2>
+
+	<div id="event_tribe_status" class="tribe-section tribe-section-status hover_section_content_show">
+		<div class="tribe-section-header">
+			<select name="event_status" id="event_status">
+				<option value="publish">publish</option>
+				<option value="draft">draft</option>
+			</select>
+		</div>
+	</div>
+</div>
