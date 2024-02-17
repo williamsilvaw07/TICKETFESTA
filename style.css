@@ -653,7 +653,7 @@ color:#aaa!important
 }
 
 
-html .tribe-community-tickets-shortcode table{
+html .tribe-community-tickets-shortcode .wp-list-table{
     background-color: rgb(26, 26, 26)!important;
     position: relative!important;
     padding: 17px!important;
