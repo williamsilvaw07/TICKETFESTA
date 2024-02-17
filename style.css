@@ -710,7 +710,9 @@ html .page-id-1921 .tribe-scrollable-table tbody tr td{
 .tec-tickets__admin-attendees-attendance-type-heading-total-label:before{
     content: "Tickets";
 }
-
+.attendees.striped > tbody > :nth-child(4n+2), .attendees.striped > tbody > :nth-child(4n-3) {
+    background-color: inherit!important;
+}
 .page-id-1925 .welcome-panel-last .tec-tickets__admin-attendees-attendance-type-cancelled-label ,
 .page-id-1925 .welcome-panel-last .tec-tickets__admin-attendees-attendance-type-complete-label  , 
 .page-id-1925 .welcome-panel-last .tec-tickets__admin-attendees-attendance-type-heading-total-label ,
