@@ -91,6 +91,9 @@ function organiser_image_gallery_shortcode() {
             margin-bottom: 10px;
             cursor: pointer;
         }
+        #upload-count{
+            font-size:13px!important
+        }
         .thumbnail-container {
             position: relative;
             display: inline-block;
