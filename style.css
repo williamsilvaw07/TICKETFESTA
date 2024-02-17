@@ -557,7 +557,7 @@ input.select2-search__field[aria-owns='select2-saved_tribe_organizer-results'] {
 
 /********sales and atendde rports page **** */
 
-#tribe-tickets-plus-woocommerce-orders-report{
+#tribe-tickets-plus-woocommerce-orders-report , .tribe-report-page .welcome-panel-column  .tec-tickets__admin-orders-report-overview-ticket-type{
     display: none!important;
 }
 
@@ -633,7 +633,9 @@ color:#aaa!important
     text-decoration: none; 
 }
 
+.tribe-report-page .welcome-panel-column  .tec-tickets__admin-orders-report-overview-ticket-type{
 
+}
 
 
 /*********end*** */
