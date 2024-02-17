@@ -686,7 +686,11 @@ color:#aaa!important
     display: flex!important;
 }
 
-
+.page-id-1921 .tribe-scrollable-table tbody th{
+    margin-bottom: 10px!important;
+    border-bottom: 1px solid #444!important;
+    padding-bottom: 12px!important;
+ }
 
 
 
