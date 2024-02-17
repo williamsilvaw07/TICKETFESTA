@@ -1176,7 +1176,15 @@ function my_events_shortcode($atts) {
     }
 
     // You can add additional views and handle them here
-
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if (!empty($_POST['event_status'])) {
+          // Processing continues as the `event_status` field has a value
+          echo "Event status: " . $_POST['event_status'];
+        } else {
+          // Handle the case where `event_status` is missing
+          echo "Error: Please select an event status.";
+        }
+      }
     return 'Invalid view specified.';
 }
 
