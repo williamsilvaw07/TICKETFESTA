@@ -40,9 +40,14 @@ function organiser_image_gallery_shortcode() {
                 </select>
                
                 <input type="text" id="category-name" name="category" placeholder="Enter category name" style="margin-bottom: 10px;" required>
+                
+                
+                <div id="image-upload-function-btn-div">
+
                 <input type="submit" id="upload-button" value="Upload">
                 <span id="upload-count"></span>
                 <button id="delete-all-button">Delete All Images</button>
+                </div>
                 </div>
             </form>
         </div>
@@ -757,5 +762,13 @@ function create_tec_organizer_category_with_images($category_name, $image_urls, 
 .primary-icon {
     /* Other styles if any */
     transition: color 0.3s; /* Smooth transition for color change */
+}
+
+.Organizer-image-upload-div{
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+    gap: 11px;
+
 }
 </style>
