@@ -577,5 +577,30 @@ input.select2-search__field[aria-owns='select2-saved_tribe_organizer-results'] {
 .nav-tab-wrapper{
     margin-bottom:0!important;
 }
+.tribe-report-panel .welcome-panel-content{
+    border: 0px!important;
+}
+
+.tribe-report-panel .welcome-panel-column-container {
+    display: flex;
+    gap: 15px;
+    margin-top: 0px;
+    padding: 0px;
+    position: initial;
+    flex-direction: row;
+    border-width: 0!important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
 /*********end*** */
 
