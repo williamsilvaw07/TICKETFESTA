@@ -723,11 +723,19 @@ html .page-id-1921 .tribe-scrollable-table tbody tr td{
     color: #aaa!important;
     font-size: 14px!important; 
 }
-.page-id-1925 .column-status , .page-id-1925 .column-status {
+.page-id-1925 .column-status , .page-id-1925 .column-status , .page-id-1925 .column-meta_details , .page-id-1925 .column-meta_details {
     display: none;
 
 }
-
+.page-id-1925  .wrap.tribe-report-page #topics-filter .tablenav input.button {
+    background: none;
+    color: #fff;
+    font-size: 100%;
+    font-weight: 700;
+    line-height: 1;
+    padding: 0;
+    text-decoration: none;
+}
 .page-id-1925 .wrap.tribe-report-page #topics-filter .bulkactions select {
     height: 36px;
     font-size: 13px;
