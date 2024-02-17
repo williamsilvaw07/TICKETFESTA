@@ -2508,12 +2508,10 @@ position: relative!important;
     width:100%;
     max-width:250px;
     margin:0 auto;
-    margin-top:40px;
+    margin-top:40px!important;
     padding: 7px 0px;
-    background: #d5d5d5!important;
     border-radius: 4px;
     color: black!important;
-    font-size: 13px;
 
 }
 
