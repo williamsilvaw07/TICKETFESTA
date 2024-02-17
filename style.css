@@ -700,6 +700,9 @@ html .tribe-scrollable-table tbody tr td{
     text-decoration: none!important;
 
  }
+ html .page-id-1921.row-actions{
+    display: block!important;
+ }
  html .page-id-1921 .tribe-report-page .tickets_checkin  {
     background-color: #d3fa16!important;
     color:  black!important;
