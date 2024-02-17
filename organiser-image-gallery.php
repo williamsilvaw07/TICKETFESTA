@@ -26,7 +26,7 @@ function organiser_image_gallery_shortcode() {
  </div> 
  <div class="main-selector-image-upload-div">
                 <div class="Organizer-image-upload-div">
-                <p>Selete Organizer Profile</p><select id="organiser-selector" name='organiser'> </div>
+                <p>Select Organizer Profile</p><select id="organiser-selector" name='organiser'> </div>
                     <?php
                     // Get list of organizers created by the current user
                     $organisers = get_posts(array(
