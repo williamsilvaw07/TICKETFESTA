@@ -783,9 +783,7 @@ function create_tec_organizer_category_with_images($category_name, $image_urls, 
     gap: 11px;
 
 }
-.main-selector-image-upload-div{
-    display:none
-}
+
 #upload-button{
     background-color:#d3fa16!important;
     color:black!important;
