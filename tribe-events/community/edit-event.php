@@ -50,7 +50,7 @@ $event_url = esc_attr( $event_url );
 <?php do_action( 'tribe_events_community_form_before_template', $tribe_event_id ); ?>
 
 
-<div class="event-section__form_link testing">
+<div class="event-section__form_link">
     <a href="#basic-section" class="section-toggle" data-target="basic-section">Basic Details</a>
     <a href="#venue-and-organizer-section" class="section-toggle" data-target="venue-and-organizer-section">Advanced Details</a>
     <a href="#cost-section" class="section-toggle" data-target="cost-section">Tickets</a>
