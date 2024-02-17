@@ -745,7 +745,7 @@ function create_tec_organizer_category_with_images($category_name, $image_urls, 
     background-position: center;
     background-repeat: no-repeat;
     position: relative;
-    padding: 33px;
+   margin: 33px;
     border-radius: 10px;
     width: fit-content;
 }
