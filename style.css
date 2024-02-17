@@ -712,7 +712,7 @@ html .tribe-scrollable-table tbody tr td{
     border: 0px!important;
  }
 
- .attendees-actions .email , .welcome-panel-column .post-type{
+ .attendees-actions .email , .welcome-panel-column .post-type , .tec-tickets__admin-table-attendees .column-meta_details {
     display: none!important;
  }
  html .page-template-organizer-template  .column-ticket  .row-actions{
