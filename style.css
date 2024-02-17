@@ -574,5 +574,8 @@ input.select2-search__field[aria-owns='select2-saved_tribe_organizer-results'] {
     color: black!important;
     text-decoration: none!important;
 }
+.nav-tab-wrapper{
+    margin-bottom:0!important;
+}
 /*********end*** */
 
