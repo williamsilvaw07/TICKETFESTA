@@ -705,6 +705,7 @@ html .page-id-1921 .tribe-scrollable-table tbody tr td{
  }
 .tec-tickets__admin-attendees-attendance-type-complete , .tec-tickets__admin-attendees-attendance-type-cancelled , .tec-tickets__admin-attendees-attendance-type-heading{
     display: flex;
+    gap: 6px;
 }
 
 
