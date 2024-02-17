@@ -703,7 +703,9 @@ html .page-id-1921 .tribe-scrollable-table tbody tr td{
  .page-id-1921 .order .order-status{
     display: none;
  }
-
+.tec-tickets__admin-attendees-attendance-type-complete , .tec-tickets__admin-attendees-attendance-type-cancelled , .tec-tickets__admin-attendees-attendance-type-heading{
+    display: flex;
+}
 
 
 
