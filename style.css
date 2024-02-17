@@ -703,7 +703,7 @@ html .tribe-scrollable-table tbody tr td{
  html .page-template-organizer-template  .column-ticket  .row-actions{
     display: block!important;
  }
- html .page-id-1921 .tribe-report-page .tickets_checkin  {
+ html .page-id-1921 .tribe-report-page .components-button.is-primary  {
     background-color: #d3fa16!important;
     color:  black!important;
  }
