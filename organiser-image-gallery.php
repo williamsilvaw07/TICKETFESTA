@@ -8,10 +8,7 @@ function organiser_image_gallery_shortcode() {
     <!-- HTML structure for the image gallery -->
     <h2 class="tribe-community-events-list-title">Upload Images</h2>
     <div id="image-gallery">
-        <div id="image-preview">
-            <h2>Image Preview</h2>
-            <div id="image-preview-container"></div>
-        </div>
+     
      
         <div id="image-upload">
             <div class="image-upload-div">
@@ -50,7 +47,10 @@ function organiser_image_gallery_shortcode() {
             </form>
         </div>
     </div>
-
+    <div id="image-preview">
+        <h2>Image Preview</h2>
+        <div id="image-preview-container"></div>
+    </div>
     <!-- Modal for showing upload status -->
     <div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
         <div class="modal-dialog">
