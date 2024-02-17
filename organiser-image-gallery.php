@@ -38,8 +38,8 @@ function organiser_image_gallery_shortcode() {
                     }
                     ?>
                 </select>
-               
-                <input type="text" id="category-name" name="category" placeholder="Enter category name" style="margin-bottom: 10px;" required>
+                <p>Category Title:</p>
+                <input type="text" id="category-name" name="category" placeholder="London 20-02-24" style="margin-bottom: 10px;" required>
                 
                 
                 <div id="image-upload-function-btn-div">
@@ -792,6 +792,7 @@ function create_tec_organizer_category_with_images($category_name, $image_urls, 
     font-size: 13px!important;
 }
 .Organizer-image-upload-div p {
-    margin-bottom:0!important
+    margin-bottom:0!important;
+    margin-top:10px!important
 }
 </style>
