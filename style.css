@@ -653,14 +653,20 @@ color:#aaa!important
 }
 
 
-html .page-id-1921 .tribe-scrollable-table{
+ .page-id-1921 .tribe-scrollable-table{
     background-color: rgb(26, 26, 26)!important;
     position: relative!important;
     padding: 17px!important;
     border-radius: 10px!important;
     width: 100%!important;
 }
+ .page-id-1921 .tribe-scrollable-table thead{
 
+    font-size: 14px;
+    color: #aaa;
+    text-transform: capitalize;
+    padding-left: 6px;
+ }
 
 
 
