@@ -583,7 +583,7 @@ input.select2-search__field[aria-owns='select2-saved_tribe_organizer-results'] {
 
 .tribe-report-panel .welcome-panel-column-container {
     display: flex!important;
-    gap: 15px;
+    gap: 15px!important;
     margin-top: 0px;
     padding: 0px;
     position: initial;
