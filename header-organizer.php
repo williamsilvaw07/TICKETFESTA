@@ -2517,6 +2517,30 @@ position: relative!important;
 
 
 
+/********sales and atendde rports page **** */
+
+#tribe-tickets-plus-woocommerce-orders-report{
+    
+}
+
+
+
+
+/*********end*** */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 @media (max-width: 768px) { /* Adjustments for tablets */
   .overlay {
     position: relative; /* Position overlay relative to its container */
