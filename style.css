@@ -592,6 +592,17 @@ input.select2-search__field[aria-owns='select2-saved_tribe_organizer-results'] {
 }
 
 
+.tribe-report-page .welcome-panel-colum {
+    background-color: rgb(26, 26, 26);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    padding: 17px;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 320px;
+}
 
 
 
