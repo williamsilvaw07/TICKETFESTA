@@ -156,6 +156,7 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
                     unset( $following_array[$key] );
                     $following_array = array_values( $following_array ); // Re-index array after removal
                 } 
+                $follower_text = 'follow';
             }
             $follower_count = count($followers_array);
             update_user_meta( $user_id, 'following', json_encode($following_array ));
