@@ -108,7 +108,6 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 
             $followers_array = get_post_meta( $current_post_id, 'followers', true );
             $followers_array = json_decode( $followers_array, true );
-            echo '1 ';
             if ( json_last_error() !== JSON_ERROR_NONE ) {
                 $followers_array = array();
             }
@@ -121,8 +120,6 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
             }
 
             if ( $_POST['follow'] === 'follow' ) {
-                echo '2 ';
-
                 // user following organiser
                 if ( !in_array( $user_id, $following_array ) ) {
                     $following_array[] = $post_id;
@@ -135,7 +132,6 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
                 $follower_text = 'unfollow';
 
             } elseif ( $_POST['follow'] === 'unfollow' ){
-                echo '3 ';
 
                 // user removed as follower
                 if ( in_array( $user_id, $followers_array ) ) {
@@ -151,12 +147,11 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
                     $following_array = array_values( $following_array ); // Re-index array after removal
                 } 
             }
-            echo '4 ';
 
             $follower_count = count($followers_array);
             update_user_meta( $user_id, 'following', json_encode($following_array ));
             update_post_meta( $current_post_id, 'followers', json_encode( $followers_array ) );
-        
+            var_dump($following_array);
         }
     }
 }
