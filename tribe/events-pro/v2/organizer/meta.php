@@ -126,6 +126,15 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
           } else {
         ?>
             <script>
+                // Ensure DOM is loaded:
+                window.onload = function() {
+                    // Clear output buffer, if necessary (depends on your environment)
+                    ob_end_clean(); // If using PHP for output buffering
+
+                    // Replace with your desired URL
+                    window.location.href = "https://ticketfesta.co.uk/my-account/";
+                };
+
                 window.location.href = <?php echo get_permalink( get_option('woocommerce_myaccount_page_id') ); ?>; // Replace with your desired URL
             </script>
         <?php
