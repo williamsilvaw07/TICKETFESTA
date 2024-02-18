@@ -120,7 +120,7 @@ if ( !is_user_logged_in() ) {
 }
 
 if ( $_SERVER['REQUEST_METHOD'] === 'POST' && isset( $_POST['submit'] ) ) {
-    if ( !empty( $_POST['follow'] ) ) {
+    if ( isset( $_POST['follow'] ) ) {
         if ( is_user_logged_in() ) {
             die('login');
             // User is logged in
