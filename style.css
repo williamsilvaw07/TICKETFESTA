@@ -557,7 +557,7 @@ input.select2-search__field[aria-owns='select2-saved_tribe_organizer-results'] {
 
 /********sales and atendde rports page **** */
 
-#tribe-tickets-plus-woocommerce-orders-report , .tribe-report-page .welcome-panel-column  .tec-tickets__admin-orders-report-overview-ticket-type{
+#tribe-tickets-plus-woocommerce-orders-report , .page-id-1921 #tribe-tickets-attendance-report , .page-id-1921 .tribe-event-meta-total-site-fees , .page-id-1921 .tribe-report-page .welcome-panel-column  .tec-tickets__admin-orders-report-overview-ticket-type{
     display: none!important;
 }
 
@@ -601,7 +601,7 @@ input.select2-search__field[aria-owns='select2-saved_tribe_organizer-results'] {
     width: 100%;
   
 }
-.tribe-report-page .welcome-panel-column h3 {
+.tribe-report-page .welcome-panel-column h3  , .tec-tickets__admin-attendees-attendance-type-heading-label{
     font-size: 17px;
     font-weight: 600;
     margin-bottom: 11px;
@@ -626,7 +626,8 @@ html body .tribe-report-page .event-actions a:first-child{
 }
 .tribe-report-page .welcome-panel-column strong{
 font-weight: 500!important;
-color:#aaa!important
+color:#aaa!important;
+font-size: 14px!important;
 }
 .tribe-report-page  .venue-name a {
     pointer-events: none; 
@@ -651,14 +652,252 @@ color:#aaa!important
 	gap: 7px;
 	flex-direction: column!important;
 }
+.page-id-1921  .tec-tickets__admin-orders-report-overview-ticket-type-list{
+    padding-left: 0!important;
+}
 
-
-html .tribe-community-tickets-shortcode table{
+ .page-id-1921 .tribe-scrollable-table , .page-id-1925 .tec-tickets__admin-table-attendees{
     background-color: rgb(26, 26, 26)!important;
     position: relative!important;
     padding: 17px!important;
     border-radius: 10px!important;
     width: 100%!important;
 }
+ .tribe-scrollable-table thead th{
+
+    font-size: 14px;
+    color: #aaa;
+    text-transform: capitalize;
+    font-weight: 300;
+    padding-left: 6px;
+ }
+ .tribe-scrollable-table thead th span ,  .tribe-scrollable-table tfoot th span{
+    font-size: 14px!important;
+    color: #aaa!important;
+    text-transform: capitalize!important;
+    font-weight: 300!important;
+    padding-left: 6px!important;
+ }
+.tribe-scrollable-table thead th ,  .tribe-scrollable-table tfoot th{
+    margin-bottom: 10px!important;
+    border-bottom: 1px solid #444!important;
+    padding-bottom: 12px!important;
+ }
+
+ .page-id-1921  .wp-list-table a , .page-id-1925 .column-security a {
+    transition: none;
+    display: flex!important;
+}
+
+html .tribe-scrollable-table tbody tr td{
+
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #444;
+    font-size: 14px;
+    color: #fff;
+    font-weight: 300;
+    text-decoration: none!important;
+
+ }
+
+ .attendees-actions input , .attendees-filter  input ,  .attendees-actions a{
+    font-size: 13px!important;
+    padding: 7px 13px!important;
+    background: #d5d5d5!important;
+    border-radius: 4px!important;
+    font-weight: 400!important;
+    color: black!important;
+    text-decoration: none!important;
+    border: 0px!important;
+ }
+
+ html .attendees-actions .email , html .welcome-panel-column .post-type ,  html .tec-tickets__admin-table-attendees .is-expanded .column-meta_details , html  .tec-tickets__admin-table-attendees .is-expanded .column-status {
+    display: none!important;
+ }
+ html .page-template-organizer-template  .column-ticket  .row-actions{
+    display: block!important;
+ }
+ html .page-id-1921 .tribe-report-page .components-button.is-primary  {
+    background-color: #d3fa16!important;
+    color:  black!important;
+ }
+ .page-id-1921 .order .order-status{
+    display: none;
+ }
+.tec-tickets__admin-attendees-attendance-type-complete , .tec-tickets__admin-attendees-attendance-type-cancelled  , .tec-tickets__admin-attendees-attendance-totals-row{
+    display: flex;
+    gap: 6px;
+}
+.tec-tickets__admin-attendees-attendance-type-heading-total-label:before{
+    content: "Tickets";
+}
+.attendees.striped > tbody > :nth-child(4n+2), .attendees.striped > tbody > :nth-child(4n-3) , .attendees.striped > tbody > :nth-child(4n), .attendees.striped > tbody > :nth-child(4n-1) {
+    background-color: inherit!important;
+}
+.page-id-1925 .welcome-panel-last .tec-tickets__admin-attendees-attendance-type-cancelled-label ,
+.page-id-1925 .welcome-panel-last .tec-tickets__admin-attendees-attendance-type-complete-label  , 
+.page-id-1925 .welcome-panel-last .tec-tickets__admin-attendees-attendance-type-heading-total-label ,
+.page-id-1925 .welcome-panel-last .tec-tickets__admin-attendees-attendance-totals-title , 
+.page-id-1925 .welcome-panel-last .tec-tickets__admin-attendees-attendance-totals-amount
+ {
+    font-weight: 500!important;
+    color: #aaa!important;
+    font-size: 14px!important; 
+}
+.page-id-1925 .column-status , .page-id-1925 .column-status , .page-id-1925 .column-meta_details , .page-id-1925 .column-meta_details ,
+ .column-check_in a {
+    display: none;
+
+}
+.page-id-1925  .wrap.tribe-report-page #topics-filter .tablenav input.button {
+    background: none;
+    color: #fff;
+    font-size: 100%;
+    font-weight: 700;
+    line-height: 1;
+    padding: 0;
+    text-decoration: none;
+}
+.page-id-1925 .wrap.tribe-report-page #topics-filter .bulkactions select {
+    height: 36px;
+    font-size: 13px;
+    padding: 5px;
+}
+.page-id-1925 .welcome-panel-last  .tec-tickets__admin-attendees-attendance-type-heading-total-amount , 
+.page-id-1925 .welcome-panel-last .tec-tickets__admin-attendees-attendance-type-complete-amount, 
+.page-id-1925 .welcome-panel-last  .tec-tickets__admin-attendees-attendance-type-cancelled-amount
+{
+font-size: 14px!important;
+}
+
+
+.image-upload-div{
+    background-color: rgb(26, 26, 26);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    padding: 33px;
+    border-radius: 10px;
+    width: fit-content;
+}
+    #image-upload{
+
+
+    }
+#image-gallery {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+    flex-direction: column;
+    gap: 20px;
+}
+#drop-zone{
+    position: relative;
+    border: 2px dashed #dee2e6!important;
+    text-align: center;
+    border-radius: 17px;
+    max-width: 800px;
+    padding: 82px!important;
+}
+.fa-image {
+    margin-top:-30px
+}
+
+#inputFile::-webkit-file-upload-button {
+  visibility: hidden;
+}
+
+
+.elementor .hide_back_btn_gallery {
+    display: none;
+}
+
+.drag-drop_text{
+    margin:15px 0;
+    font-weight: 600;
+}
+
+#drop-zone {
+    /* Existing styles */
+    border: 3px dashed #cccccc;
+    /* Other styles */
+}
+
+#drop-zone:hover,
+#drop-zone.dragover {
+    border-color: #d3fa16 !important;
+}
+
+#drop-zone:hover .fa-image:before {
+    color: #d3fa16;
+}
+#drop-zone:hover .drag-drop_text {
+    color: #d3fa16!important;
+}
+
+.primary-icon {
+    /* Other styles if any */
+    transition: color 0.3s; /* Smooth transition for color change */
+}
+
+.Organizer-image-upload-div{
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+    gap: 11px;
+
+}
+
+#upload-button{
+    background-color:#d3fa16!important;
+    color:black!important;
+    border-radius: 3px!important;
+    line-height: 1!important;
+    margin: 10px!important;
+    padding: 9px 12px!important;
+    font-size: 13px!important;
+}
+
+
+.delete-all-button {
+  background-color: #ff4747!important;
+  color: white!important;
+  border-radius: 3px!important;
+    line-height: 1!important;
+    margin: 10px!important;
+    padding: 9px 12px!important;
+    font-size: 13px!important;
+}
+.Organizer-image-upload-div p {
+    margin-bottom:0!important;
+    margin-top:10px!important
+}
+
+#image-preview h3{
+display:none
+}
+
 /*********end*** */
 
+/* organiser follow button style */
+input.follow-button {
+    padding: 5px 40px;
+    margin-top: 10px;
+    font-size: 20px;
+    color: #000;
+    border-radius: 10px;
+    background: #fff;
+}
+
+/* my account  unfollow button style */
+
+input.unfollow-button {
+    background: #e14545b8;
+    border-radius: 10px;
+    color: #fff;
+    margin-top: 15px;
+    margin-left: 15px;
+    padding: 2px 15px;
+}

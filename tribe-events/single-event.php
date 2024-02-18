@@ -1076,7 +1076,7 @@ background-position: center top;
 
   }
   .tribe-events-single-event-title {
-    margin-top:10px!important
+    margin-top:20px!important
   }
 .tribe-events-event-image img {
     display: block;

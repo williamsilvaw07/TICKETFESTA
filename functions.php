@@ -2404,7 +2404,7 @@ include get_stylesheet_directory() . '/organiser-image-gallery.php';
 
 
 // Add shortcode to display organiser account settings 
-// include get_stylesheet_directory() . '/organiser-all-gallery.php';
+//include get_stylesheet_directory() . '/organiser-all-gallery.php';
 
 
 
@@ -2452,3 +2452,109 @@ function add_inline_custom_admin_css() {
     <?php
 }
 add_action('admin_head', 'add_inline_custom_admin_css');
+
+
+/**
+ * @snippet       WooCommerce Add New Tab @ My Account
+ */
+  
+// ------------------
+// 1. Register new endpoint (URL) for My Account page
+// Note: Re-save Permalinks or it will give 404 error
+  
+function ticketfeasta_add_following_endpoint() {
+    add_rewrite_endpoint( 'following', EP_ROOT | EP_PAGES );
+}
+  
+add_action( 'init', 'ticketfeasta_add_following_endpoint' );
+  
+// ------------------
+// 2. Add new query var
+  
+function ticketfeasta_following_query_vars( $vars ) {
+    $vars[] = 'following';
+    return $vars;
+}
+  
+add_filter( 'query_vars', 'ticketfeasta_following_query_vars', 0 );
+  
+// ------------------
+// 3. Insert the new endpoint into the My Account menu
+  
+function ticketfeasta_following_link_my_account( $items ) {
+    $items['following'] = 'Following';
+    return $items;
+}
+  
+add_filter( 'woocommerce_account_menu_items', 'ticketfeasta_following_link_my_account' );
+  
+// ------------------
+// 4. Add content to the new tab
+  
+function ticketfeasta_following() {
+    $user_id = wp_get_current_user()->id; 
+
+    if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
+        if ( isset( $_POST['following_id'] ) ) {
+            $organiser_to_unfollow = $_POST['following_id'];
+            ticketfeasta_remove_follower($organiser_to_unfollow, $user_id);
+            ticketfeasta_unfollow($organiser_to_unfollow, $user_id);
+        }
+    }
+
+   echo '<h3>Following List:</h3>';
+   $user_id = wp_get_current_user()->id; 
+   $following_array = get_user_meta( $user_id, 'following', true );
+   $following_array = json_decode( $following_array, true );
+   if ( json_last_error() !== JSON_ERROR_NONE ) {
+       $following_array = array();
+   }
+   if(count($following_array) === 0){
+        echo "<p class='empty-following'>You are not following anyone.</p>";
+    }
+
+   foreach($following_array as $following){
+    $organiser_name = get_the_title($following);
+   ?>
+    <form method="POST">
+        <input type="hidden" name="following_id" value="<?php echo $following;?>">
+        <label> <?php echo $organiser_name ; ?> </label>
+        <input type="submit" value="<?php echo "Unfollow"; ?>" nanme="submit" class="unfollow-button"> 
+    </form>
+   <?php
+   }
+}
+
+function ticketfeasta_remove_follower($organizer_id, $user_id){
+    $followers_array = get_post_meta( $organizer_id, 'followers', true );
+    $followers_array = json_decode( $followers_array, true );
+    if ( json_last_error() !== JSON_ERROR_NONE ) {
+        $followers_array = array();
+    }
+     // user removed as follower
+     if ( in_array( $user_id, $followers_array ) ) {
+        $key = array_search( $user_id, $followers_array );
+        unset( $followers_array[$key] );
+        $followers_array = array_values( $followers_array ); // Re-index array after removal
+    }
+    update_post_meta( $organizer_id, 'followers', json_encode( $followers_array ) );
+}
+
+function ticketfeasta_unfollow($organizer_id, $user_id){
+    $following_array = get_user_meta( $user_id, 'following', true );
+    $following_array = json_decode( $following_array, true );
+
+    if ( json_last_error() !== JSON_ERROR_NONE ) {
+        $following_array = array();
+    }
+    // user unfollowing as organiser
+    if ( in_array( $organizer_id, $following_array ) ) {
+        $key = array_search( $organizer_id, $following_array );
+        unset( $following_array[$key] );
+        $following_array = array_values( $following_array ); // Re-index array after removal
+    } 
+    update_user_meta( $user_id, 'following', json_encode($following_array ));
+}
+  
+  
+add_action( 'woocommerce_account_following_endpoint', 'ticketfeasta_following' );
