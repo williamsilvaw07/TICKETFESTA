@@ -117,7 +117,7 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
             $following_array = json_decode( $following_array, true );
 
             if ( json_last_error() !== JSON_ERROR_NONE ) {
-                $followers_array = array();
+                $following_array = array();
             }
 
             if ( $_POST['follow'] === 'follow' ) {
