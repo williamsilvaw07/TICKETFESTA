@@ -105,7 +105,9 @@ if ( json_last_error() !== JSON_ERROR_NONE ) {
     $followers_array = array();
 }
 
-
+if ( in_array( $user_id, $followers_array ) ) {
+    $follower_text = 'unfollow';
+}
 
 if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
     if ( isset( $_POST['follow'] ) ) {
