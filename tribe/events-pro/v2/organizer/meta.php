@@ -96,11 +96,20 @@ if ($banner_image_id) {
     <?php 
 $follower_text = 'follow';
 $follower_count = 0;
+$current_post_id = get_the_ID();
+$user_id = wp_get_current_user()->id; 
+
+$followers_array = get_post_meta( $current_post_id, 'followers', true );
+$followers_array = json_decode( $followers_array, true );
+if ( json_last_error() !== JSON_ERROR_NONE ) {
+    $followers_array = array();
+}
+
+
 
 if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
     if ( isset( $_POST['follow'] ) ) {
         if ( is_user_logged_in() ) {
-            $current_post_id = get_the_ID();
             $user_id = wp_get_current_user()->id; 
 
             $followers_array = get_post_meta( $current_post_id, 'followers', true );
@@ -150,7 +159,7 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
         }
     }
 }
-
+$follower_count = count($followers_array);
 ?>
 	<!-- organizer name -->
 <div class="organizer_title_name">
