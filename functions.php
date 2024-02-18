@@ -2495,4 +2495,4 @@ function ticketfeasta_following() {
    echo '<h3>Premium WooCommerce Support</h3><p>Welcome to the WooCommerce support area. As a premium customer, you can submit a ticket should you have any WooCommerce issues with your website, snippets or customization. <i>Please contact your theme/plugin developer for theme/plugin-related support.</i></p>';
 }
   
-add_action( 'woocommerce_account_following', 'ticketfeasta_following' );
+add_action( 'woocommerce_account_following_endpoint', 'ticketfeasta_following' );
