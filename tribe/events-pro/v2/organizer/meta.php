@@ -113,7 +113,15 @@ if ($banner_image_id) {
         </form>
 </div>
 <?php 
-wp_redirect(esc_url("https://www.google.com/") ,  301 ); exit;
+ob_end_clean(); // Clear output buffer, if necessary
+
+// Ensure your server allows external redirects
+if (function_exists('wp_redirect')) {
+    wp_redirect(esc_url("https://www.google.com/"));
+    exit; // Stop further code execution
+} else {
+    echo "Error: WordPress function 'wp_redirect' not found.";
+}
 echo "<pre>";
 var_dump($_POST);
 echo "</pre>";
