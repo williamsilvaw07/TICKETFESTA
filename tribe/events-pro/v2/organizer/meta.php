@@ -121,8 +121,8 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 
             if ( $_POST['follow'] === 'follow' ) {
                 // user following organiser
-                if ( !in_array( $user_id, $following_array ) ) {
-                    $following_array[] = $post_id;
+                if ( !in_array( $current_post_id, $following_array ) ) {
+                    $following_array[] = $current_post_id;
                 }
 
                 // user added as follower
@@ -147,7 +147,6 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
                     $following_array = array_values( $following_array ); // Re-index array after removal
                 } 
             }
-            $following_array = array();
             $follower_count = count($followers_array);
             update_user_meta( $user_id, 'following', json_encode($following_array ));
             update_post_meta( $current_post_id, 'followers', json_encode( $followers_array ) );
