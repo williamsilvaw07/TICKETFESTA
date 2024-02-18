@@ -114,9 +114,6 @@ if ($banner_image_id) {
 </div>
 <?php 
 
-echo "<pre>";
-var_dump($_POST);
-echo "</pre>";
 if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
     if ( isset( $_POST['follow'] ) ) {
         if ( is_user_logged_in() ) {
