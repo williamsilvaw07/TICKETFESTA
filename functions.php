@@ -2462,37 +2462,37 @@ add_action('admin_head', 'add_inline_custom_admin_css');
 // 1. Register new endpoint (URL) for My Account page
 // Note: Re-save Permalinks or it will give 404 error
   
-function ticketfeasta_add_premium_support_endpoint() {
+function ticketfeasta_add_following_endpoint() {
     add_rewrite_endpoint( 'following', EP_ROOT | EP_PAGES );
 }
   
-add_action( 'init', 'ticketfeasta_add_premium_support_endpoint' );
+add_action( 'init', 'ticketfeasta_add_following_endpoint' );
   
 // ------------------
 // 2. Add new query var
   
-function ticketfeasta_premium_support_query_vars( $vars ) {
+function ticketfeasta_following_query_vars( $vars ) {
     $vars[] = 'following';
     return $vars;
 }
   
-add_filter( 'query_vars', 'ticketfeasta_premium_support_query_vars', 0 );
+add_filter( 'query_vars', 'ticketfeasta_following_query_vars', 0 );
   
 // ------------------
 // 3. Insert the new endpoint into the My Account menu
   
-function ticketfeasta_add_premium_support_link_my_account( $items ) {
+function ticketfeasta_following_link_my_account( $items ) {
     $items['following'] = 'Following';
     return $items;
 }
   
-add_filter( 'woocommerce_account_menu_items', 'ticketfeasta_add_premium_support_link_my_account' );
+add_filter( 'woocommerce_account_menu_items', 'ticketfeasta_following_link_my_account' );
   
 // ------------------
 // 4. Add content to the new tab
   
-function ticketfeasta_premium_support_content() {
+function ticketfeasta_following() {
    echo '<h3>Premium WooCommerce Support</h3><p>Welcome to the WooCommerce support area. As a premium customer, you can submit a ticket should you have any WooCommerce issues with your website, snippets or customization. <i>Please contact your theme/plugin developer for theme/plugin-related support.</i></p>';
 }
   
-add_action( 'woocommerce_account_premium-following', 'ticketfeasta_premium_support_content' );
+add_action( 'woocommerce_account_following', 'ticketfeasta_following' );
