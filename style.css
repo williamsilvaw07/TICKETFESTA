@@ -881,3 +881,12 @@ display:none
 
 /*********end*** */
 
+/* organiser follow button style */
+input.follow-button {
+    padding: 5px 40px;
+    margin-top: 10px;
+    font-size: 20px;
+    color: #000;
+    border-radius: 10px;
+    background: #fff;
+}
