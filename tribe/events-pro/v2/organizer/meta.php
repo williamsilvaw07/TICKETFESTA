@@ -93,7 +93,42 @@ if ($banner_image_id) {
 
 	<!-- IMAGE END-->
 
+    <?php 
 
+if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
+    if ( isset( $_POST['follow'] ) ) {
+        if ( is_user_logged_in() ) {
+            // User is logged in
+            echo "Welcome back, " . wp_get_current_user()->id;
+
+            $current_post_id = get_the_ID();
+            $user_id = wp_get_current_user()->id; 
+
+            $followers = get_post_meta( $current_post_id, 'followers', true );
+            $followers_array = json_decode( $followers, true );
+            if ( json_last_error() !== JSON_ERROR_NONE ) {
+                $followers_array = array();
+            }
+            $follower_text = 'follow';
+            if ( $_POST['follow'] === 'follow' ) {
+               
+                if ( !in_array( $user_id, $followers_array ) ) {
+                    $followers_array[] = $user_id;
+                }
+                $follower_text = 'unfollow';
+            } elseif ( $_POST['follow'] === 'unfollow' ){
+            
+                if ( in_array( $user_id, $followers_array ) ) {
+                    $key = array_search( $user_id, $followers_array );
+                    unset( $followers_array[$key] );
+                }
+            }
+            update_post_meta( $current_post_id, 'followers', json_encode( $followers_array ) );
+            var_dump($followers_array);
+        }
+    }
+}
+?>
 	<!-- organizer name -->
 <div class="organizer_title_name">
     <?php
@@ -108,37 +143,15 @@ if ($banner_image_id) {
 			<p class="organizer_tagline">Tag Link of the type of events</p>
 			<p class="organizer_tagline followers">Followers: <span class="followers-count">123</span> </p>
         <form method="POST">
-            <input type="hidden" name="follow" value="follow">
-            <input type="submit" value="Follow" nanme="submit" class="follow-button"> 
+            <input type="hidden" name="follow" value="<?php echo $follower_text;?>">
+            <input type="submit" value="<?php echo ucfirst($follower_text); ?>" nanme="submit" class="follow-button"> 
         </form>
 </div>
 <?php 
 
 if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
     if ( isset( $_POST['follow'] ) ) {
-        if ( is_user_logged_in() ) {
-            // User is logged in
-            echo "Welcome back, " . wp_get_current_user()->id;
-            if ( $_POST['follow'] === 'follow' ) {
-                $current_post_id = get_the_ID();
-
-                $followers = get_post_meta( $current_post_id, 'followers', true );
-                $followers_array = json_decode( $followers, true );
-                var_dump($followers_array);
-                if ( json_last_error() !== JSON_ERROR_NONE ) {
-                    $followers_array = array();
-                }
-
-                $new_id = wp_get_current_user()->id; 
-                if ( !in_array( $new_id, $followers_array ) ) {
-                    $followers_array[] = $new_id;
-                    update_post_meta( $current_post_id, 'followers', json_encode( $followers_array ) );
-                }
-
-            } elseif ( $_POST['follow'] === 'unfollow' ){
-            
-            }
-          } else {
+        if (!is_user_logged_in() )  {
             $my_account_url = esc_url(get_permalink( get_option('woocommerce_myaccount_page_id') ));
             echo "<a href='$my_account_url' class='login-first'> Please login first. </a>" ;
         }
