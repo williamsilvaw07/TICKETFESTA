@@ -2452,3 +2452,22 @@ function add_inline_custom_admin_css() {
     <?php
 }
 add_action('admin_head', 'add_inline_custom_admin_css');
+
+
+// my account following list
+add_filter( 'woocommerce_account_menu_items', 'add_following_tab', 10 );
+function add_following_tab( $items ) {
+    $items['following'] = array(
+        'name'      => 'Following',
+        'url'       => wc_get_account_endpoint_url( 'following' ), // Create a new endpoint
+        'priority' => 20, // Set desired position (10=first, 20=second, etc.)
+    );
+    return $items;
+}
+
+add_action( 'init', 'add_following_endpoint' );
+function add_following_endpoint() {
+    add_rewrite_endpoint( 'following', EP_ROOT | EP_PAGES );
+}
+
+add_template_part( 'content', 'following' ); // Create a template file for the tab content
