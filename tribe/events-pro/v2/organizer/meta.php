@@ -150,7 +150,6 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
             $follower_count = count($followers_array);
             update_user_meta( $user_id, 'following', json_encode($following_array ));
             update_post_meta( $current_post_id, 'followers', json_encode( $followers_array ) );
-            var_dump($following_array);
         }
     }
 }
