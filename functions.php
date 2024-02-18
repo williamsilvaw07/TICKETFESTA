@@ -2492,11 +2492,13 @@ add_filter( 'woocommerce_account_menu_items', 'ticketfeasta_following_link_my_ac
 // 4. Add content to the new tab
   
 function ticketfeasta_following() {
+    $user_id = wp_get_current_user()->id; 
 
     if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
         if ( isset( $_POST['following_id'] ) ) {
             $organiser_to_unfollow = $_POST['following_id'];
-            var_dump($organiser_to_unfollow);
+            ticketfeasta_remove_follower($organiser_to_unfollow, $user_id);
+            ticketfeasta_unfollow($organiser_to_unfollow, $user_id);
         }
     }
 
@@ -2510,7 +2512,6 @@ function ticketfeasta_following() {
    if(count($following_array) === 0){
         echo "<p class='empty-following'>You are not following anyone.</p>";
     }
-   var_dump($following_array);
 
    foreach($following_array as $following){
     $organiser_name = get_the_title($following);
@@ -2523,5 +2524,37 @@ function ticketfeasta_following() {
    <?php
    }
 }
+
+function ticketfeasta_remove_follower($organizer_id, $user_id){
+    $followers_array = get_post_meta( $organizer_id, 'followers', true );
+    $followers_array = json_decode( $followers_array, true );
+    if ( json_last_error() !== JSON_ERROR_NONE ) {
+        $followers_array = array();
+    }
+     // user removed as follower
+     if ( in_array( $user_id, $followers_array ) ) {
+        $key = array_search( $user_id, $followers_array );
+        unset( $followers_array[$key] );
+        $followers_array = array_values( $followers_array ); // Re-index array after removal
+    }
+    update_post_meta( $organizer_id, 'followers', json_encode( $followers_array ) );
+}
+
+function ticketfeasta_unfollow($organizer_id, $user_id){
+    $following_array = get_user_meta( $user_id, 'following', true );
+    $following_array = json_decode( $following_array, true );
+
+    if ( json_last_error() !== JSON_ERROR_NONE ) {
+        $following_array = array();
+    }
+    // user unfollowing as organiser
+    if ( in_array( $organizer_id, $following_array ) ) {
+        $key = array_search( $organizer_id, $following_array );
+        unset( $following_array[$key] );
+        $following_array = array_values( $following_array ); // Re-index array after removal
+    } 
+    update_user_meta( $user_id, 'following', json_encode($following_array ));
+}
+  
   
 add_action( 'woocommerce_account_following_endpoint', 'ticketfeasta_following' );
