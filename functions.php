@@ -2492,7 +2492,14 @@ add_filter( 'woocommerce_account_menu_items', 'ticketfeasta_following_link_my_ac
 // 4. Add content to the new tab
   
 function ticketfeasta_following() {
-   echo '<h3>Premium WooCommerce Support</h3><p>Welcome to the WooCommerce support area. As a premium customer, you can submit a ticket should you have any WooCommerce issues with your website, snippets or customization. <i>Please contact your theme/plugin developer for theme/plugin-related support.</i></p>';
+   echo '<h3>Following List:</h3>';
+   $user_id = wp_get_current_user()->id; 
+   $following_array = get_user_meta( $user_id, 'following', true );
+   $following_array = json_decode( $following_array, true );
+   if ( json_last_error() !== JSON_ERROR_NONE ) {
+       $following_array = array();
+   }
+   var_dump($following_array);
 }
   
 add_action( 'woocommerce_account_following_endpoint', 'ticketfeasta_following' );
