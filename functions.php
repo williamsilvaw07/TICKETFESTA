@@ -2454,20 +2454,51 @@ function add_inline_custom_admin_css() {
 add_action('admin_head', 'add_inline_custom_admin_css');
 
 
-// my account following list
-add_filter( 'woocommerce_account_menu_items', 'add_following_tab', 10 );
-function add_following_tab( $items ) {
-    $items['following'] = array(
-        'name'      => 'Following',
-        'url'       => wc_get_account_endpoint_url( 'following' ), // Create a new endpoint
-        'priority' => 20, // Set desired position (10=first, 20=second, etc.)
-    );
+/**
+ * @snippet       WooCommerce Add New Tab @ My Account
+ * @how-to        Get CustomizeWoo.com FREE
+ * @author        Rodolfo Melogli
+ * @compatible    WooCommerce 5.0
+ * @community     https://businessbloomer.com/club/
+ */
+  
+// ------------------
+// 1. Register new endpoint (URL) for My Account page
+// Note: Re-save Permalinks or it will give 404 error
+  
+function bbloomer_add_premium_support_endpoint() {
+    add_rewrite_endpoint( 'premium-support', EP_ROOT | EP_PAGES );
+}
+  
+add_action( 'init', 'bbloomer_add_premium_support_endpoint' );
+  
+// ------------------
+// 2. Add new query var
+  
+function bbloomer_premium_support_query_vars( $vars ) {
+    $vars[] = 'premium-support';
+    return $vars;
+}
+  
+add_filter( 'query_vars', 'bbloomer_premium_support_query_vars', 0 );
+  
+// ------------------
+// 3. Insert the new endpoint into the My Account menu
+  
+function bbloomer_add_premium_support_link_my_account( $items ) {
+    $items['premium-support'] = 'Premium Support';
     return $items;
 }
-
-add_action( 'init', 'add_following_endpoint' );
-function add_following_endpoint() {
-    add_rewrite_endpoint( 'following', EP_ROOT | EP_PAGES );
+  
+add_filter( 'woocommerce_account_menu_items', 'bbloomer_add_premium_support_link_my_account' );
+  
+// ------------------
+// 4. Add content to the new tab
+  
+function bbloomer_premium_support_content() {
+   echo '<h3>Premium WooCommerce Support</h3><p>Welcome to the WooCommerce support area. As a premium customer, you can submit a ticket should you have any WooCommerce issues with your website, snippets or customization. <i>Please contact your theme/plugin developer for theme/plugin-related support.</i></p>';
+   echo do_shortcode( ' /* your shortcode here */ ' );
 }
-
-add_template_part( 'content', 'following' ); // Create a template file for the tab content
+  
+add_action( 'woocommerce_account_premium-support_endpoint', 'bbloomer_premium_support_content' );
+// Note: add_action must follow 'woocommerce_account_{your-endpoint-slug}_endpoint' format
