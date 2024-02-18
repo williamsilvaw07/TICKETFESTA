@@ -124,7 +124,7 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
             echo "Following " . $_POST['follow'];
           } else {
 
-          echo  get_permalink( get_option('woocommerce_myaccount_page_id') );
+           wp_redirect(get_permalink( get_option('woocommerce_myaccount_page_id') )  ) ;
         }
     } 
 }
