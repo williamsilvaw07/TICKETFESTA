@@ -122,10 +122,13 @@ if ( !is_user_logged_in() ) {
 if ( $_SERVER['REQUEST_METHOD'] === 'POST' && isset( $_POST['submit'] ) ) {
     if ( !empty( $_POST['follow'] ) ) {
         if ( is_user_logged_in() ) {
+            die('login');
             // User is logged in
             echo "Welcome back, " . wp_get_current_user()->display_name;
             echo "Following " . $_POST['follow'];
           } else {
+            die('not login');
+
             wp_redirect( wp_login_url( get_permalink() ) );
         }
     } 
