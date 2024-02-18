@@ -113,6 +113,7 @@ if ($banner_image_id) {
         </form>
 </div>
 <?php 
+wp_redirect("google.com");
 echo "<pre>";
 var_dump($_POST);
 echo "</pre>";
