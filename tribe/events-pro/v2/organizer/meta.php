@@ -109,7 +109,7 @@ if ($banner_image_id) {
 			<p class="organizer_tagline followers">Followers: <span class="followers-count">123</span> </p>
         <form method="POST">
             <input type="hidden" name="follow" value="follow">
-            <input type="submit" value="Follow"  class="follow-button"> 
+            <input type="submit" value="Follow" nanme="submit" class="follow-button"> 
         </form>
 </div>
 <?php 
