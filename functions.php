@@ -2492,6 +2492,14 @@ add_filter( 'woocommerce_account_menu_items', 'ticketfeasta_following_link_my_ac
 // 4. Add content to the new tab
   
 function ticketfeasta_following() {
+
+    if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
+        if ( isset( $_POST['following_id'] ) ) {
+            $organiser_to_unfollow = $_POST['following_id'];
+            var_dump($organiser_to_unfollow);
+        }
+    }
+
    echo '<h3>Following List:</h3>';
    $user_id = wp_get_current_user()->id; 
    $following_array = get_user_meta( $user_id, 'following', true );
@@ -2503,6 +2511,17 @@ function ticketfeasta_following() {
         echo "<p class='empty-following'>You are not following anyone.</p>";
     }
    var_dump($following_array);
+
+   foreach($following_array as $following){
+    $organiser_name = get_the_title($following);
+   ?>
+    <form method="POST">
+        <input type="hidden" name="following_id" value="<?php echo $following;?>">
+        <label> <?php echo $organiser_name ; ?> </label>
+        <input type="submit" value="<?php echo "Unfollow"; ?>" nanme="submit" class="unfollow-button"> 
+    </form>
+   <?php
+   }
 }
   
 add_action( 'woocommerce_account_following_endpoint', 'ticketfeasta_following' );
