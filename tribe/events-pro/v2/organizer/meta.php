@@ -107,7 +107,7 @@ if ($banner_image_id) {
 		<div class="organizer_text_dec">
 			<p class="organizer_tagline">Tag Link of the type of events</p>
 			<p class="organizer_tagline followers">Followers: <span class="followers-count">123</span> </p>
-        <form action="post">
+        <form action="self" method="POST">
             <input type="hidden" name="follow" value="follow">
             <input type="submit" value="follow"  class="follow-button"> 
         </form>
