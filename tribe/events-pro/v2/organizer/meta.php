@@ -100,9 +100,6 @@ $follower_count = 0;
 if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
     if ( isset( $_POST['follow'] ) ) {
         if ( is_user_logged_in() ) {
-            // User is logged in
-            echo "Welcome back, " . wp_get_current_user()->id;
-
             $current_post_id = get_the_ID();
             $user_id = wp_get_current_user()->id; 
 
