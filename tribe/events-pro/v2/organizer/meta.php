@@ -113,15 +113,7 @@ if ($banner_image_id) {
         </form>
 </div>
 <?php 
-ob_end_clean(); // Clear output buffer, if necessary
 
-// Ensure your server allows external redirects
-if (function_exists('wp_redirect')) {
-    wp_redirect(esc_url("https://www.google.com/"));
-    exit; // Stop further code execution
-} else {
-    echo "Error: WordPress function 'wp_redirect' not found.";
-}
 echo "<pre>";
 var_dump($_POST);
 echo "</pre>";
@@ -132,8 +124,11 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
             echo "Welcome back, " . wp_get_current_user()->display_name;
             echo "Following " . $_POST['follow'];
           } else {
-
-           wp_redirect(get_permalink( get_option('woocommerce_myaccount_page_id') )  ) ;
+        ?>
+            <script>
+                window.location.href = <?php echo get_permalink( get_option('woocommerce_myaccount_page_id') ); ?>; // Replace with your desired URL
+            </script>
+        <?php
         }
     } 
 }
