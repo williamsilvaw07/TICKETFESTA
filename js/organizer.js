@@ -16,6 +16,7 @@ function parseQueryString(queryString) {
 function addCreateEventForm() {
   var eventId = $("#post_ID").val();
   //var responseData = xhr.responseText;
+  if(!eventId) return;
 
   var htmlOutputStart = `
     <div class="tribe-section tribe-section-terms">
@@ -202,7 +203,7 @@ parentElements.forEach(parentElement => {
     });
   });
 
-  addCreateEventForm();
+  // addCreateEventForm();
 
   $(document).ajaxSuccess(function (event, xhr, settings) {
     var paramsObject = parseQueryString(settings.data);

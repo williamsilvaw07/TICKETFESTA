@@ -700,14 +700,7 @@ function create_tec_organizer_category_with_images($category_name, $image_urls, 
 }
     
 
-
-
-?>
-
-
-
-
-
+/*
 <style>
 
 .image-upload-div{
@@ -758,9 +751,9 @@ function create_tec_organizer_category_with_images($category_name, $image_urls, 
 }
 
 #drop-zone {
-    /* Existing styles */
+    
     border: 3px dashed #cccccc;
-    /* Other styles */
+    
 }
 
 #drop-zone:hover,
@@ -776,8 +769,8 @@ function create_tec_organizer_category_with_images($category_name, $image_urls, 
 }
 
 .primary-icon {
-    /* Other styles if any */
-    transition: color 0.3s; /* Smooth transition for color change */
+    
+    transition: color 0.3s; 
 }
 
 .Organizer-image-upload-div{
@@ -819,3 +812,5 @@ display:none
 
 
 </style>
+
+*/
