@@ -124,20 +124,8 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
             echo "Welcome back, " . wp_get_current_user()->display_name;
             echo "Following " . $_POST['follow'];
           } else {
-        ?>
-            <script>
-                // Ensure DOM is loaded:
-                window.onload = function() {
-                    // Clear output buffer, if necessary (depends on your environment)
-                    ob_end_clean(); // If using PHP for output buffering
-
-                    // Replace with your desired URL
-                    window.location.href = "https://ticketfesta.co.uk/my-account/";
-                };
-
-                window.location.href = <?php echo get_permalink( get_option('woocommerce_myaccount_page_id') ); ?>; // Replace with your desired URL
-            </script>
-        <?php
+            $my_account_url = esc_url(get_permalink( get_option('woocommerce_myaccount_page_id') ));
+            echo "<a href='$my_account_url' class='login-first'> Please login first. </a>" ;
         }
     } 
 }
