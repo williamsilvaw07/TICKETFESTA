@@ -107,12 +107,30 @@ if ($banner_image_id) {
 		<div class="organizer_text_dec">
 			<p class="organizer_tagline">Tag Link of the type of events</p>
 			<p class="organizer_tagline followers">Followers: <span class="followers-count">123</span> </p>
-        <form  method="POST">
+        <form method="POST">
             <input type="hidden" name="follow" value="follow">
-            <input type="submit" value="follow"  class="follow-button"> 
+            <input type="submit" value="Follow"  class="follow-button"> 
         </form>
 </div>
+<?php 
+if ( !is_user_logged_in() ) {
+    // User not logged in, redirect to login page
+    wp_redirect( wp_login_url( $_SERVER['REQUEST_URI'] ) );
+    exit;
+}
 
+if ( $_SERVER['REQUEST_METHOD'] === 'POST' && isset( $_POST['submit'] ) ) {
+    if ( !empty( $_POST['follow'] ) ) {
+        if ( is_user_logged_in() ) {
+            // User is logged in
+            echo "Welcome back, " . wp_get_current_user()->display_name;
+            echo "Following " . $_POST['follow'];
+          } else {
+            wp_redirect( wp_login_url( get_permalink() ) );
+        }
+    } 
+}
+?>
 </div>
 <!-- organizer name end -->
 </div>
