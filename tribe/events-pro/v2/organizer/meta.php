@@ -118,8 +118,26 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
     if ( isset( $_POST['follow'] ) ) {
         if ( is_user_logged_in() ) {
             // User is logged in
-            echo "Welcome back, " . wp_get_current_user()->display_name;
-            echo "Following " . $_POST['follow'];
+            echo "Welcome back, " . wp_get_current_user()->id;
+            if ( $_POST['follow'] === 'follow' ) {
+                $current_post_id = get_the_ID();
+
+                $followers = get_post_meta( $current_post_id, 'followers', true );
+                $followers_array = json_decode( $followers, true );
+                var_dump($followers_array);
+                if ( json_last_error() !== JSON_ERROR_NONE ) {
+                    $followers_array = array();
+                }
+
+                $new_id = wp_get_current_user()->id; 
+                if ( !in_array( $new_id, $followers_array ) ) {
+                    $followers_array[] = $new_id;
+                    update_post_meta( $current_post_id, 'followers', json_encode( $followers_array ) );
+                }
+
+            } elseif ( $_POST['follow'] === 'unfollow' ){
+            
+            }
           } else {
             $my_account_url = esc_url(get_permalink( get_option('woocommerce_myaccount_page_id') ));
             echo "<a href='$my_account_url' class='login-first'> Please login first. </a>" ;
