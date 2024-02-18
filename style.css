@@ -890,3 +890,14 @@ input.follow-button {
     border-radius: 10px;
     background: #fff;
 }
+
+/* my account  unfollow button style */
+
+input.unfollow-button {
+    background: #fff;
+    border-radius: 10px;
+    color: #000;
+    margin-top: 15px;
+    margin-left: 15px;
+    padding: 2px 30px;
+}
