@@ -2499,6 +2499,9 @@ function ticketfeasta_following() {
    if ( json_last_error() !== JSON_ERROR_NONE ) {
        $following_array = array();
    }
+   if(count($following_array) === 0){
+        echo "<p class='empty-following'>You are not following anyone.</p>";
+    }
    var_dump($following_array);
 }
   
