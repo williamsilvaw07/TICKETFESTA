@@ -94,6 +94,7 @@ if ($banner_image_id) {
 	<!-- IMAGE END-->
 
     <?php 
+$follower_text = 'follow';
 
 if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
     if ( isset( $_POST['follow'] ) ) {
@@ -109,7 +110,6 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
             if ( json_last_error() !== JSON_ERROR_NONE ) {
                 $followers_array = array();
             }
-            $follower_text = 'follow';
             if ( $_POST['follow'] === 'follow' ) {
                
                 if ( !in_array( $user_id, $followers_array ) ) {
