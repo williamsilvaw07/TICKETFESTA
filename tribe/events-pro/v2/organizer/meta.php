@@ -124,7 +124,7 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
             echo "Following " . $_POST['follow'];
           } else {
 
-            wp_redirect( wp_login_url( get_permalink() ) );
+          echo  wp_login_url();
         }
     } 
 }
