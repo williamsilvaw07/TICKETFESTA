@@ -95,6 +95,7 @@ if ($banner_image_id) {
 
     <?php 
 $follower_text = 'follow';
+$follower_count = 0;
 
 if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
     if ( isset( $_POST['follow'] ) ) {
@@ -105,29 +106,57 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
             $current_post_id = get_the_ID();
             $user_id = wp_get_current_user()->id; 
 
-            $followers = get_post_meta( $current_post_id, 'followers', true );
-            $followers_array = json_decode( $followers, true );
+            $followers_array = get_post_meta( $current_post_id, 'followers', true );
+            $followers_array = json_decode( $followers_array, true );
+
             if ( json_last_error() !== JSON_ERROR_NONE ) {
                 $followers_array = array();
             }
+
+            $following_array = get_user_meta( $user_id, 'following', true );
+            $following_array = json_decode( $following_array, true );
+
+            if ( json_last_error() !== JSON_ERROR_NONE ) {
+                $followers_array = array();
+            }
+
             if ( $_POST['follow'] === 'follow' ) {
                
+                // user following organiser
+                if ( !in_array( $user_id, $following_array ) ) {
+                    $following_array[] = $post_id;
+                }
+
+                // user added as follower
                 if ( !in_array( $user_id, $followers_array ) ) {
                     $followers_array[] = $user_id;
                 }
                 $follower_text = 'unfollow';
+
             } elseif ( $_POST['follow'] === 'unfollow' ){
             
+                // user removed as follower
                 if ( in_array( $user_id, $followers_array ) ) {
                     $key = array_search( $user_id, $followers_array );
                     unset( $followers_array[$key] );
+                    $followers_array = array_values( $followers_array ); // Re-index array after removal
                 }
+                
+                // user unfollowing as organiser
+                if ( in_array( $current_post_id, $following_array ) ) {
+                    $key = array_search( $current_post_id, $following_array );
+                    unset( $following_array[$key] );
+                    $following_array = array_values( $following_array ); // Re-index array after removal
+                } 
             }
+            $follower_count = count($followers_array);
+            update_user_meta( $user_id, 'following', json_encode($following_array ));
             update_post_meta( $current_post_id, 'followers', json_encode( $followers_array ) );
-            var_dump($followers_array);
+        
         }
     }
 }
+
 ?>
 	<!-- organizer name -->
 <div class="organizer_title_name">
@@ -141,7 +170,7 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
     ?>
 		<div class="organizer_text_dec">
 			<p class="organizer_tagline">Tag Link of the type of events</p>
-			<p class="organizer_tagline followers">Followers: <span class="followers-count">123</span> </p>
+			<p class="organizer_tagline followers">Followers: <span class="followers-count"><?php echo $follower_count;?></span> </p>
         <form method="POST">
             <input type="hidden" name="follow" value="<?php echo $follower_text;?>">
             <input type="submit" value="<?php echo ucfirst($follower_text); ?>" nanme="submit" class="follow-button"> 
