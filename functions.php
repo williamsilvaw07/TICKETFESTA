@@ -106,6 +106,7 @@ add_filter( 'gettext', 'change_my_account_orders_title', 20, 3 );
 
 
 ///Redirect right to checkout page
+/*
 add_filter('woocommerce_add_to_cart_validation', 'custom_redirect_after_add_to_cart', 10, 3);
 
 function custom_redirect_after_add_to_cart($passed, $product_id, $quantity) {
@@ -115,7 +116,7 @@ function custom_redirect_after_add_to_cart($passed, $product_id, $quantity) {
     }
     return $passed;
 }
-
+*/
 
 
 // $custom_post = get_post(1742);
