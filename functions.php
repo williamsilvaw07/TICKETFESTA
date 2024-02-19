@@ -2568,8 +2568,16 @@ function ticketfeasta_publish_tribe_events_on_first_update($post_id, $post, $upd
 add_action('save_post', 'ticketfeasta_publish_tribe_events_on_first_update', 10, 3);
 
 add_action( 'wp', function(){
-    echo "<pre>";
-    var_dump( get_post_meta( '3802')['_community_tickets_order_fees']);
-    echo "</pre>";
+    $ticket_datas = get_post_meta( '3802');
+    $tickets = [];
+    if(isset($ticket_datas['_community_tickets_order_fees'])){
+        foreach($ticket_datas['_community_tickets_order_fees'] as $item){
+            $item_data  = unserialize($item);
+            echo "<pre>";
+            var_dump($item_data);
+            echo "</pre>";
+        }        
+    }
+   
     die();
 } );
