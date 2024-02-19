@@ -2566,3 +2566,10 @@ function ticketfeasta_publish_tribe_events_on_first_update($post_id, $post, $upd
 }
 
 add_action('save_post', 'ticketfeasta_publish_tribe_events_on_first_update', 10, 3);
+
+add_action( 'wp', function(){
+    echo "<pre>";
+    var_dump( get_post_meta( '3802') );
+    echo "</pre>";
+    die();
+} );
