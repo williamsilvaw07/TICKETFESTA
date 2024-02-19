@@ -2479,6 +2479,7 @@ function ticketfeasta_following() {
     }
 
    foreach($following_array as $following){
+     echo $following;
     $organiser_name = get_the_title($following);
    ?>
     <form method="POST">
@@ -2523,3 +2524,134 @@ function ticketfeasta_unfollow($organizer_id, $user_id){
   
   
 add_action( 'woocommerce_account_following_endpoint', 'ticketfeasta_following' );
+
+
+
+function get_follower_by_organiser_id($organizer_id){
+    $followers_array = get_post_meta( $organizer_id, 'followers', true );
+    $followers_array = json_decode( $followers_array, true );
+    if ( json_last_error() !== JSON_ERROR_NONE ) {
+        $followers_array = array();
+    }
+    return $followers_array;
+}
+
+function ticketfeasta_publish_tribe_events_on_first_update($post_id, $post, $update) {
+    if ($post->post_type == 'tribe_events') {
+            $published_date = strtotime($post->post_date);
+            $current_date = strtotime(current_time('mysql'));
+            // if ($published_date == $current_date) {
+                
+                $organizer_id = get_post_meta( $post_id, '_EventOrganizerID', true);
+                $followers = get_follower_by_organiser_id($organizer_id);
+                $organizer_name = get_the_title($organizer_id);
+                $event_link = get_the_permalink ($post_id);
+                $event_name = get_the_title ($post_id);
+                foreach($followers as $follower){
+                    $user_data = get_userdata($follower);
+                    if ($user_data) {
+                        $to = $user_data->user_email;
+                        $subject = 'Check Out this new event.';
+                        $message = "Check out this event <a href='$event_link'> $event_name </a> published by $organizer_name."; 
+                    
+                        $headers = array(
+                            'Content-Type: text/html; charset=UTF-8',
+                        );
+                    
+                        wp_mail($to, $subject, $message, $headers);
+                    }
+                }
+            // }
+        
+    }
+}
+
+add_action('save_post', 'ticketfeasta_publish_tribe_events_on_first_update', 10, 3);
+
+ function ticketfeasta_order_update_follower($post_id, $post, $update){
+    if ($post->post_type == 'shop_order') {
+        $ticket_datas = get_post_meta( $post_id);
+        $user_email = $ticket_datas['_billing_email'][0];
+
+        $user = get_user_by('email', $user_email);
+
+        $user_id = false;
+        if ($user) {
+            $user_id = $user->ID;
+        } 
+        if($user_id !== false & isset($ticket_datas['_community_tickets_order_fees']) && is_array($ticket_datas['_community_tickets_order_fees'])){
+            foreach($ticket_datas['_community_tickets_order_fees'] as $item){
+                $item_data  = unserialize($item);
+                $fees = $item_data['breakdown']['fees'];
+                if(is_array($fees)){
+                    foreach($fees as $fee){
+                        $fee_items = $fee;
+                        if(is_array($fee_items)){
+                            foreach($fee_items as $fee_item){
+                                $event_id = $fee_item['event_id'];
+                                $organizer_id = get_post_meta( $event_id, '_EventOrganizerID', true);
+                                ticketfeasta_follow($organizer_id, $user_id);
+                                ticketfeasta_add_follower($organizer_id, $user_id);
+                            }
+                        }
+                    }
+                }
+            }        
+        }
+    }
+
+}
+
+add_action( 'save_post', 'ticketfeasta_order_update_follower',  10, 3);
+
+
+function ticketfeasta_add_follower($organizer_id, $user_id){
+    $followers_array = get_post_meta( $organizer_id, 'followers', true );
+    $followers_array = json_decode( $followers_array, true );
+    if ( json_last_error() !== JSON_ERROR_NONE ) {
+        $followers_array = array();
+    }
+    if (!in_array( $user_id, $followers_array ) ) {
+        $followers_array[] = $user_id;
+    }
+    update_post_meta( $organizer_id, 'followers', json_encode( $followers_array ) );
+}
+
+function ticketfeasta_follow($organizer_id, $user_id){
+    $following_array = get_user_meta( $user_id, 'following', true );
+    $following_array = json_decode( $following_array, true );
+
+    if ( json_last_error() !== JSON_ERROR_NONE ) {
+        $following_array = array();
+    }
+    // user unfollowing as organiser
+    if (!in_array( $organizer_id, $following_array ) ) {
+        $following_array[] = $organizer_id;
+
+    } 
+    update_user_meta( $user_id, 'following', json_encode($following_array ));
+}
+
+
+// Add a custom checkbox field to the checkout page
+add_action( 'woocommerce_after_order_notes', 'add_subscribed_organiser_checkbox' );
+function add_subscribed_organiser_checkbox( $checkout ) {
+    echo '<div id="subscribed_organiser_checkbox">';
+    woocommerce_form_field( 'subscribed_organiser', array(
+        'type' => 'checkbox',
+        'class' => array( 'input-checkbox' ),
+        'label' => __('Subscribe to organiser'),
+        'required' => false,
+    ), $checkout->get_value( 'subscribed_organiser' ));
+    echo '</div>';
+}
+
+// Save the checkbox value to the order meta
+add_action( 'woocommerce_checkout_update_order_meta', 'save_subscribed_organiser_checkbox' );
+function save_subscribed_organiser_checkbox( $order_id ) {
+    if ( ! empty( $_POST['subscribed_organiser'] ) ) {
+        var_dump( $_POST['subscribed_organiser']);
+        die();
+        update_post_meta( $order_id, 'subscribed_organiser', sanitize_text_field( $_POST['subscribed_organiser'] ) );
+    }
+}
