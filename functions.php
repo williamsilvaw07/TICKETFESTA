@@ -2569,7 +2569,7 @@ add_action('save_post', 'ticketfeasta_publish_tribe_events_on_first_update', 10,
 
 add_action( 'wp', function(){
     echo "<pre>";
-    var_dump( get_post_meta( '3802') )['_community_tickets_order_fees'];
+    var_dump( get_post_meta( '3802')['_community_tickets_order_fees']);
     echo "</pre>";
     die();
 } );
