@@ -2579,6 +2579,7 @@ add_action('save_post', 'ticketfeasta_publish_tribe_events_on_first_update', 10,
             $user_id = $user->ID;
         } 
         var_dump($user_id);
+        die('sds');
         if($user_id !== false & isset($ticket_datas['_community_tickets_order_fees']) && is_array($ticket_datas['_community_tickets_order_fees'])){
             foreach($ticket_datas['_community_tickets_order_fees'] as $item){
                 $item_data  = unserialize($item);
