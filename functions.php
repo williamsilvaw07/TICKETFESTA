@@ -2571,9 +2571,10 @@ add_action( 'wp', function(){
     $ticket_datas = get_post_meta( '3802');
     $user_email = $ticket_datas['_billing_email'][0];
     $tickets = [];
- var_dump($user_email);
 
     $user = get_user_by('email', 'armondal.am@gmail.com');
+    var_dump($user);
+
     $user_id = false;
     if ($user) {
         $user_id = $user->ID;
