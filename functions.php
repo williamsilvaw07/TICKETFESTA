@@ -2541,6 +2541,7 @@ add_action( 'woocommerce_account_following_endpoint', 'ticketfeasta_following' )
 
 add_action('init', function(){
     echo "<pre>";
+    echo get_the_ID(  );
     var_dump(get_post_meta( get_the_ID(  )));
     echo "</pre>";
     die(); //tribe_organizer
