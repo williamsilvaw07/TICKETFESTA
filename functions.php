@@ -376,6 +376,11 @@ function generatepress_child_style()
             'ajax_url' => admin_url('admin-ajax.php'),
             'nonce'    => wp_create_nonce('add-coupon-nonce'),
         ));
+
+        if (is_checkout()) {
+            // Enqueue your custom script
+            wp_enqueue_script('checkout-script', get_template_directory_uri() . '/js/custom-script.js', array('jquery'), '1.0', true);
+        }
       
     } else {
         /** Call regular enqueue */
