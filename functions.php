@@ -2573,13 +2573,15 @@ add_action( 'wp', function(){
     $tickets = [];
 
     $user = get_user_by('email', 'armondal.am@gmail.com');
-    var_dump($user);
 
     $user_id = false;
     if ($user) {
         $user_id = $user->ID;
     } 
+    var_dump($user_id);
+
     if($user_id & isset($ticket_datas['_community_tickets_order_fees']) && is_array($ticket_datas['_community_tickets_order_fees'])){
+        echo "sadf";
         foreach($ticket_datas['_community_tickets_order_fees'] as $item){
             $item_data  = unserialize($item);
             $fees = $item_data['breakdown']['fees'];
