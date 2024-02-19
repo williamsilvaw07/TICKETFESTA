@@ -2631,3 +2631,27 @@ function ticketfeasta_follow($organizer_id, $user_id){
     } 
     update_user_meta( $user_id, 'following', json_encode($following_array ));
 }
+
+
+// Add a custom checkbox field to the checkout page
+add_action( 'woocommerce_after_order_notes', 'add_subscribed_organiser_checkbox' );
+function add_subscribed_organiser_checkbox( $checkout ) {
+    echo '<div id="subscribed_organiser_checkbox">';
+    woocommerce_form_field( 'subscribed_organiser', array(
+        'type' => 'checkbox',
+        'class' => array( 'input-checkbox' ),
+        'label' => __('Subscribe to organiser'),
+        'required' => false,
+    ), $checkout->get_value( 'subscribed_organiser' ));
+    echo '</div>';
+}
+
+// Save the checkbox value to the order meta
+add_action( 'woocommerce_checkout_update_order_meta', 'save_subscribed_organiser_checkbox' );
+function save_subscribed_organiser_checkbox( $order_id ) {
+    if ( ! empty( $_POST['subscribed_organiser'] ) ) {
+        var_dump( $_POST['subscribed_organiser']);
+        die();
+        update_post_meta( $order_id, 'subscribed_organiser', sanitize_text_field( $_POST['subscribed_organiser'] ) );
+    }
+}
