@@ -2539,7 +2539,7 @@ function ticketfeasta_unfollow($organizer_id, $user_id){
   
 add_action( 'woocommerce_account_following_endpoint', 'ticketfeasta_following' );
 
-add_action('init', function(){
+add_action('wp', function(){
     echo "<pre>";
     echo get_the_ID(  );
     var_dump(get_post_meta( get_the_ID(  )));
