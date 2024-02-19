@@ -1,5 +1,19 @@
 <?php
 
+
+add_action( 'woocommerce_payment_complete', 'custom_woocommerce_auto_complete_order' );
+function custom_woocommerce_auto_complete_order( $order_id ) {
+    if ( ! $order_id ) {
+        return;
+    }
+
+    $order = wc_get_order( $order_id );
+    $order->update_status( 'completed' );
+}
+
+
+
+
 function enqueue_custom_styles_for_orders() {
     wp_enqueue_style( 'custom-orders-style', get_stylesheet_directory_uri() . '/css/custom-orders-style.css' );
 }
@@ -973,7 +987,7 @@ function custom_user_registration_form() {
         return 'You are already logged in.';
     }
 
-    $html = '<form action="' . esc_url($_SERVER['REQUEST_URI']) . '" method="post">';
+    $html = '<form action="' . esc_url($_SERVER['REQUEST_URI']) . '" method="post" id="custom-registration-form">';
     $html .= '<p><label for="first_name">First Name <strong>*</strong></label>';
     $html .= '<input type="text" name="first_name" id="first_name" required></p>';
     $html .= '<p><label for="last_name">Last Name <strong>*</strong></label>';
@@ -982,8 +996,11 @@ function custom_user_registration_form() {
     $html .= '<input type="email" name="email" id="email" required></p>';
     $html .= '<p><label for="password">Password <strong>*</strong></label>';
     $html .= '<input type="password" name="password" id="password" required></p>';
+    $html .= '<p><input type="checkbox" name="is_organizer" id="is_organizer"> Register as an Organizer</p>';
+    $html .= '<div id="organizer_fields" style="display:none;">';
     $html .= '<p><label for="organizer_title">Organizer Title <strong>*</strong></label>';
-    $html .= '<input type="text" name="organizer_title" id="organizer_title" required></p>';
+    $html .= '<input type="text" name="organizer_title" id="organizer_title"></p>';
+    $html .= '</div>';
     $html .= '<p><input type="submit" name="submit" value="Register"></p>';
     $html .= '</form>';
     $html .= '<p>Already have an account? <a href="' . home_url('/custom-login') . '">Login here</a>.</p>';
