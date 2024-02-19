@@ -2578,8 +2578,6 @@ add_action('save_post', 'ticketfeasta_publish_tribe_events_on_first_update', 10,
         if ($user) {
             $user_id = $user->ID;
         } 
-        var_dump($user_id);
-        die('sds');
         if($user_id !== false & isset($ticket_datas['_community_tickets_order_fees']) && is_array($ticket_datas['_community_tickets_order_fees'])){
             foreach($ticket_datas['_community_tickets_order_fees'] as $item){
                 $item_data  = unserialize($item);
@@ -2593,6 +2591,10 @@ add_action('save_post', 'ticketfeasta_publish_tribe_events_on_first_update', 10,
                                 $organizer_id = get_post_meta( $event_id, '_EventOrganizerID', true);
                                 ticketfeasta_follow($organizer_id, $user_id);
                                 ticketfeasta_add_follower($organizer_id, $user_id);
+
+                                var_dump($user_id);
+                                var_dump($organizer_id);
+                                die();
                             }
                         }
                     }
@@ -2600,6 +2602,7 @@ add_action('save_post', 'ticketfeasta_publish_tribe_events_on_first_update', 10,
             }        
         }
     }
+
 }
 
 add_action( 'save_post', 'ticketfeasta_order_update_follower',  10, 3);
