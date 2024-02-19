@@ -1,6 +1,52 @@
 <?php
 
 
+//* Do NOT include the opening php tag
+ 
+add_filter(
+    'rest_request_after_callbacks',
+    'tec_tickets_maybe_disable_events_for_app',
+    10,
+    3
+);
+ 
+/**
+ * Maybe disable events for the ET+ APP.
+ *
+ * @param WP_REST_Response|WP_HTTP_Response|WP_Error|mixed $response Result to send to the client.
+ *                                                                   Usually a WP_REST_Response or WP_Error.
+ * @param array                                            $handler  Route handler used for the request.
+ * @param WP_REST_Request                                  $request  Request used to generate the response.
+ *
+ * @return WP_REST_Response|WP_HTTP_Response|WP_Error|mixed $response Result to send to the client.
+ *                                                                   Usually a WP_REST_Response or WP_Error.
+ */
+function tec_tickets_maybe_disable_events_for_app( $response, array $handler, \WP_REST_Request $request ) {
+    if ( empty( $request->get_header( 'App-version' ) ) ) {
+        return $response;
+    }
+ 
+    if ( '/tribe/events/v1/events' !== $request->get_route() ) {
+        return $response;
+    }
+ 
+    $response = new WP_REST_Response(
+        [
+            'code'    => 'rest_no_route',
+            'message' => 'No route was found matching the URL and request method.',
+        ]
+    );
+ 
+    $response->set_status( 404 );
+ 
+    return $response;
+}
+
+
+
+
+
+
 add_action( 'woocommerce_payment_complete', 'custom_woocommerce_auto_complete_order' );
 function custom_woocommerce_auto_complete_order( $order_id ) {
     if ( ! $order_id ) {
