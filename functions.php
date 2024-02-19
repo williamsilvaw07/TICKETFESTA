@@ -2571,7 +2571,7 @@ add_action( 'wp', function(){
     $ticket_datas = get_post_meta( '3802');
     $tickets = [];
     echo "<pre>";
-    var_dump($ticket_datas['_billing_email']);
+    var_dump($ticket_datas['_billing_email'][0]);
     echo "</pre>";
     if(isset($ticket_datas['_community_tickets_order_fees']) && is_array($ticket_datas['_community_tickets_order_fees'])){
         foreach($ticket_datas['_community_tickets_order_fees'] as $item){
