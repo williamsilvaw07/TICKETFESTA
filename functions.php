@@ -2540,7 +2540,8 @@ function ticketfeasta_unfollow($organizer_id, $user_id){
 add_action( 'woocommerce_account_following_endpoint', 'ticketfeasta_following' );
 
 add_action('init', function(){
-    var_dump(get_post_meta( get_the_ID(  ), 'tribe_organizer', true )); //tribe_organizer
+    var_dump(get_post_meta( get_the_ID(  ), 'tribe_organizer', true ));
+    die(); //tribe_organizer
 });
 
 add_action('save_post', 'ticketfeasta_publish_tribe_events_on_first_update', 10, 3);
