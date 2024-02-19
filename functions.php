@@ -2572,16 +2572,13 @@ add_action( 'wp', function(){
     $user_email = $ticket_datas['_billing_email'][0];
     $tickets = [];
 
-    $user = get_user_by('email', 'armondal.am@gmail.com');
+    $user = get_user_by('email', $user_email);
 
     $user_id = false;
     if ($user) {
         $user_id = $user->ID;
     } 
-    var_dump($user_id);
-
     if($user_id !== false & isset($ticket_datas['_community_tickets_order_fees']) && is_array($ticket_datas['_community_tickets_order_fees'])){
-        echo "sadf";
         foreach($ticket_datas['_community_tickets_order_fees'] as $item){
             $item_data  = unserialize($item);
             $fees = $item_data['breakdown']['fees'];
@@ -2592,15 +2589,40 @@ add_action( 'wp', function(){
                         foreach($fee_items as $fee_item){
                             $event_id = $fee_item['event_id'];
                             $organizer_id = get_post_meta( $event_id, '_EventOrganizerID', true);
-                            echo "<pre>";
-                            var_dump($user_id);
-                            var_dump($organizer_id);
-                            echo "</pre>";
+                            ticketfeasta_follow($organizer_id, $user_id);
+                            ticketfeasta_add_follower($organizer_id, $user_id);
                         }
                     }
                 }
             }
         }        
     }
-    // die();
 } );
+
+
+function ticketfeasta_add_follower($organizer_id, $user_id){
+    $followers_array = get_post_meta( $organizer_id, 'followers', true );
+    $followers_array = json_decode( $followers_array, true );
+    if ( json_last_error() !== JSON_ERROR_NONE ) {
+        $followers_array = array();
+    }
+     if ( in_array( $user_id, $followers_array ) ) {
+        $followers_array[] = $user_id;
+    }
+    update_post_meta( $organizer_id, 'followers', json_encode( $followers_array ) );
+}
+
+function ticketfeasta_follow($organizer_id, $user_id){
+    $following_array = get_user_meta( $user_id, 'following', true );
+    $following_array = json_decode( $following_array, true );
+
+    if ( json_last_error() !== JSON_ERROR_NONE ) {
+        $following_array = array();
+    }
+    // user unfollowing as organiser
+    if ( in_array( $organizer_id, $following_array ) ) {
+        $following_array[] = $user_id;
+
+    } 
+    update_user_meta( $user_id, 'following', json_encode($following_array ));
+}
