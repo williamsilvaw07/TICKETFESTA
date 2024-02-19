@@ -2573,7 +2573,7 @@ add_action( 'wp', function(){
     $tickets = [];
 
 
-    $user = get_user_by('email', $user_email);
+    $user = get_user_by('email', 'armondal.am@gmail.com');
     $user_id = false;
     if ($user) {
         $user_id = $user->ID;
