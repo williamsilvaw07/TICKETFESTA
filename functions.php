@@ -378,8 +378,32 @@ function generatepress_child_style()
         ));
 
         if (is_checkout()) {
+            ?>
+                <script>
+                    var termsWrapper = document.querySelector('.woocommerce-terms-and-conditions-wrapper');
+
+                    if (termsWrapper) {
+                        // Create a checkbox input field
+                        var checkbox = document.createElement('input');
+                        checkbox.type = 'checkbox';
+                        checkbox.name = 'subscribed_organiser';
+                        checkbox.id = 'subscribed_organiser';
+                        checkbox.value = 'checked'; 
+
+                        checkbox.checked = true;
+                        var label = document.createElement('label');
+                        label.htmlFor = 'subscribed_organiser';
+                        label.appendChild(document.createTextNode('Subscribe to event organizer.'));
+
+                        // Append the checkbox and label to the terms wrapper
+                        termsWrapper.appendChild(checkbox);
+                        termsWrapper.appendChild(label);
+                    }
+
+                </script>
+            <?php
             // Enqueue your custom script
-            wp_enqueue_script('checkout-script', get_stylesheet_directory_uri() . '/js/custom-script.js', array('jquery'), '1.0', true);
+            // wp_enqueue_script('checkout-script', get_stylesheet_directory_uri() . '/js/custom-script.js', array('jquery'), '1.0', true);
         }
       
     } else {
