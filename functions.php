@@ -2569,7 +2569,6 @@ add_action('save_post', 'ticketfeasta_publish_tribe_events_on_first_update', 10,
 
  function ticketfeasta_order_update_follower($post_id, $post, $update){
     if ($post->post_type == 'shop_order') {
-        die('die test');
         $ticket_datas = get_post_meta( $post_id);
         $user_email = $ticket_datas['_billing_email'][0];
 
@@ -2579,6 +2578,7 @@ add_action('save_post', 'ticketfeasta_publish_tribe_events_on_first_update', 10,
         if ($user) {
             $user_id = $user->ID;
         } 
+        var_dump($user_id);
         if($user_id !== false & isset($ticket_datas['_community_tickets_order_fees']) && is_array($ticket_datas['_community_tickets_order_fees'])){
             foreach($ticket_datas['_community_tickets_order_fees'] as $item){
                 $item_data  = unserialize($item);
