@@ -2580,7 +2580,7 @@ add_action( 'wp', function(){
     } 
     var_dump($user_id);
 
-    if($user_id & isset($ticket_datas['_community_tickets_order_fees']) && is_array($ticket_datas['_community_tickets_order_fees'])){
+    if($user_id !== false & isset($ticket_datas['_community_tickets_order_fees']) && is_array($ticket_datas['_community_tickets_order_fees'])){
         echo "sadf";
         foreach($ticket_datas['_community_tickets_order_fees'] as $item){
             $item_data  = unserialize($item);
