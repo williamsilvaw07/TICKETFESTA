@@ -379,7 +379,7 @@ function generatepress_child_style()
 
         if (is_checkout()) {
             // Enqueue your custom script
-            wp_enqueue_script('checkout-script', get_template_directory_uri() . '/js/custom-script.js', array('jquery'), '1.0', true);
+            wp_enqueue_script('checkout-script', get_stylesheet_directory_uri() . '/js/custom-script.js', array('jquery'), '1.0', true);
         }
       
     } else {
