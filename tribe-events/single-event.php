@@ -1107,7 +1107,7 @@ background-position: center top;
     flex-direction: column;
     gap: 30px;
     margin-top: 47px!important;
-    max-width: 800px;
+    max-width: 900px;
     margin: 0 auto;
 }
 .top_flex_section_single_event .type-tribe_events{
