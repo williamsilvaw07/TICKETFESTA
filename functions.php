@@ -2570,22 +2570,26 @@ add_action('save_post', 'ticketfeasta_publish_tribe_events_on_first_update', 10,
 add_action( 'wp', function(){
     $ticket_datas = get_post_meta( '3802');
     $tickets = [];
-    if(isset($ticket_datas['_community_tickets_order_fees'])){
+    echo "<pre>";
+    var_dump($ticket_datas);
+    echo "</pre>";
+    if(isset($ticket_datas['_community_tickets_order_fees']) && is_array($ticket_datas['_community_tickets_order_fees'])){
         foreach($ticket_datas['_community_tickets_order_fees'] as $item){
             $item_data  = unserialize($item);
             $fees = $item_data['breakdown']['fees'];
-            foreach($fees as $fee){
-                $fee_items = $fee;
-                foreach($fee_items as $fee_item){
-                    echo "<pre>";
-                    var_dump($fee_item);
-                    echo "</pre>";
+            if(is_array($fees)){
+                foreach($fees as $fee){
+                    $fee_items = $fee;
+                    if(is_array($fee_items)){
+                        foreach($fee_items as $fee_item){
+                            $event_id = $fee_item['event_id'];
+                            $organizer_id = get_post_meta( $event_id, '_EventOrganizerID', true);
+
+                        }
+                    }
                 }
-            
             }
-           
         }        
     }
-   
     die();
 } );
