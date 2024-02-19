@@ -2554,7 +2554,7 @@ function ticketfeasta_publish_tribe_events_on_first_update($post_id, $post, $upd
             $published_date = strtotime($post->post_date);
             $current_date = strtotime(current_time('mysql'));
 
-            if ($published_date == $current_date) {
+            // if ($published_date == $current_date) {
                 $organizer_id = get_post_meta( $post_id, '_EventOrganizerID', true);
                 $followers = get_follower_by_organiser_id($organizer_id);
                 $organizer_name = get_the_title($organizer_id);
@@ -2574,7 +2574,7 @@ function ticketfeasta_publish_tribe_events_on_first_update($post_id, $post, $upd
                         wp_mail($to, $subject, $message, $headers);
                     }
                 }
-            }
+            // }
         }
     }
 }
