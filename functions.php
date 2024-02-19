@@ -2591,10 +2591,6 @@ add_action('save_post', 'ticketfeasta_publish_tribe_events_on_first_update', 10,
                                 $organizer_id = get_post_meta( $event_id, '_EventOrganizerID', true);
                                 ticketfeasta_follow($organizer_id, $user_id);
                                 ticketfeasta_add_follower($organizer_id, $user_id);
-
-                                var_dump($user_id);
-                                var_dump($organizer_id);
-                                die();
                             }
                         }
                     }
@@ -2614,7 +2610,7 @@ function ticketfeasta_add_follower($organizer_id, $user_id){
     if ( json_last_error() !== JSON_ERROR_NONE ) {
         $followers_array = array();
     }
-     if ( in_array( $user_id, $followers_array ) ) {
+    if (!in_array( $user_id, $followers_array ) ) {
         $followers_array[] = $user_id;
     }
     update_post_meta( $organizer_id, 'followers', json_encode( $followers_array ) );
@@ -2628,7 +2624,7 @@ function ticketfeasta_follow($organizer_id, $user_id){
         $following_array = array();
     }
     // user unfollowing as organiser
-    if ( in_array( $organizer_id, $following_array ) ) {
+    if (!in_array( $organizer_id, $following_array ) ) {
         $following_array[] = $user_id;
 
     } 
