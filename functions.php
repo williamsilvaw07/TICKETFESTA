@@ -2601,7 +2601,7 @@ add_action('save_post', 'ticketfeasta_publish_tribe_events_on_first_update', 10,
     }
 }
 
-add_action( 'wp', 'ticketfeasta_order_update_follower',  10, 3);
+add_action( 'save_post', 'ticketfeasta_order_update_follower',  10, 3);
 
 
 function ticketfeasta_add_follower($organizer_id, $user_id){
