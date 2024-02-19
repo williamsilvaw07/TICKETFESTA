@@ -2536,12 +2536,17 @@ function ticketfeasta_unfollow($organizer_id, $user_id){
     update_user_meta( $user_id, 'following', json_encode($following_array ));
 }
   
-  
+function get_follower_by_organiser_id($organizer_id){
+    $followers_array = get_post_meta( $organizer_id, 'followers', true );
+    $followers_array = json_decode( $followers_array, true );
+    if ( json_last_error() !== JSON_ERROR_NONE ) {
+        $followers_array = array();
+    }
+    return $followers_array;
+}
+
 add_action( 'woocommerce_account_following_endpoint', 'ticketfeasta_following' );
 
-    // var_dump(get_post_meta( get_the_ID(  ), '_EventOrganizerID', true));
-
-add_action('save_post', 'ticketfeasta_publish_tribe_events_on_first_update', 10, 3);
 
 function ticketfeasta_publish_tribe_events_on_first_update($post_id, $post, $update) {
     if ($post->post_type == 'tribe_events') {
@@ -2550,20 +2555,27 @@ function ticketfeasta_publish_tribe_events_on_first_update($post_id, $post, $upd
             $current_date = strtotime(current_time('mysql'));
 
             if ($published_date == $current_date) {
-                
-                
-                
-
-                // $to = $user_data->user_email;
-                // $subject = 'Your Subject Here';
-                // $message = 'Your Email Template Here'; // You can use HTML for email template
-            
-                // $headers = array(
-                //     'Content-Type: text/html; charset=UTF-8',
-                // );
-            
-                // $mail_sent = wp_mail($to, $subject, $message, $headers);
+                $organizer_id = get_post_meta( $post_id, '_EventOrganizerID', true);
+                $followers = get_follower_by_organiser_id($organizer_id);
+                $organizer_name = get_the_title($organizer_id);
+                $event_link = get_the_permalink ($post_id);
+                $event_name = get_the_title ($post_id);
+                foreach($followers as $follower){
+                    $user_data = get_userdata($follower);
+                    if ($user_data) {
+                        $to = $user_data->user_email;
+                        $subject = 'Check Out this new event.';
+                        $message = "Check out this event <a href='$event_link'> $event_name </a> published by $organizer_name."; 
+                    
+                        $headers = array(
+                            'Content-Type: text/html; charset=UTF-8',
+                        );
+                    
+                        wp_mail($to, $subject, $message, $headers);
+                    }
+                }
             }
         }
     }
 }
+add_action('save_post', 'ticketfeasta_publish_tribe_events_on_first_update', 10, 3);
