@@ -2567,37 +2567,41 @@ function ticketfeasta_publish_tribe_events_on_first_update($post_id, $post, $upd
 
 add_action('save_post', 'ticketfeasta_publish_tribe_events_on_first_update', 10, 3);
 
-add_action( 'wp', function(){
-    $ticket_datas = get_post_meta( '3802');
-    $user_email = $ticket_datas['_billing_email'][0];
-    $tickets = [];
+ function ticketfeasta_order_update_follower($post_id, $post, $update){
+    if ($post->post_type == 'shop_order') {
 
-    $user = get_user_by('email', $user_email);
+        $ticket_datas = get_post_meta( $post_id);
+        $user_email = $ticket_datas['_billing_email'][0];
 
-    $user_id = false;
-    if ($user) {
-        $user_id = $user->ID;
-    } 
-    if($user_id !== false & isset($ticket_datas['_community_tickets_order_fees']) && is_array($ticket_datas['_community_tickets_order_fees'])){
-        foreach($ticket_datas['_community_tickets_order_fees'] as $item){
-            $item_data  = unserialize($item);
-            $fees = $item_data['breakdown']['fees'];
-            if(is_array($fees)){
-                foreach($fees as $fee){
-                    $fee_items = $fee;
-                    if(is_array($fee_items)){
-                        foreach($fee_items as $fee_item){
-                            $event_id = $fee_item['event_id'];
-                            $organizer_id = get_post_meta( $event_id, '_EventOrganizerID', true);
-                            ticketfeasta_follow($organizer_id, $user_id);
-                            ticketfeasta_add_follower($organizer_id, $user_id);
+        $user = get_user_by('email', $user_email);
+
+        $user_id = false;
+        if ($user) {
+            $user_id = $user->ID;
+        } 
+        if($user_id !== false & isset($ticket_datas['_community_tickets_order_fees']) && is_array($ticket_datas['_community_tickets_order_fees'])){
+            foreach($ticket_datas['_community_tickets_order_fees'] as $item){
+                $item_data  = unserialize($item);
+                $fees = $item_data['breakdown']['fees'];
+                if(is_array($fees)){
+                    foreach($fees as $fee){
+                        $fee_items = $fee;
+                        if(is_array($fee_items)){
+                            foreach($fee_items as $fee_item){
+                                $event_id = $fee_item['event_id'];
+                                $organizer_id = get_post_meta( $event_id, '_EventOrganizerID', true);
+                                ticketfeasta_follow($organizer_id, $user_id);
+                                ticketfeasta_add_follower($organizer_id, $user_id);
+                            }
                         }
                     }
                 }
-            }
-        }        
+            }        
+        }
     }
-} );
+}
+
+add_action( 'wp', 'ticketfeasta_order_update_follower',  10, 3);
 
 
 function ticketfeasta_add_follower($organizer_id, $user_id){
