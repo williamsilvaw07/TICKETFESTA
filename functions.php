@@ -2573,9 +2573,17 @@ add_action( 'wp', function(){
     if(isset($ticket_datas['_community_tickets_order_fees'])){
         foreach($ticket_datas['_community_tickets_order_fees'] as $item){
             $item_data  = unserialize($item);
-            echo "<pre>";
-            var_dump($item_data);
-            echo "</pre>";
+            $fees = $item_data['breakdown']['fees'];
+            foreach($fees as $fee){
+                $fee_items = $fee;
+                foreach($fee_items as $fee_item){
+                    echo "<pre>";
+                    var_dump($fee_item);
+                    echo "</pre>";
+                }
+            
+            }
+           
         }        
     }
    
