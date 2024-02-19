@@ -1000,6 +1000,9 @@ html body .single_event_sections {
  margin-bottom: 40px;
     font-weight: 400!important;
   font-size: 15px!important;
+  width: 100%;
+  margin-left: 0;
+    margin-right: 0;
    
     }
     
