@@ -2538,3 +2538,34 @@ function ticketfeasta_unfollow($organizer_id, $user_id){
   
   
 add_action( 'woocommerce_account_following_endpoint', 'ticketfeasta_following' );
+
+add_action('init', function(){
+    var_dump(get_post_meta( get_the_ID(  ), 'tribe_organizer', true )); //tribe_organizer
+});
+
+add_action('save_post', 'ticketfeasta_publish_tribe_events_on_first_update', 10, 3);
+
+function ticketfeasta_publish_tribe_events_on_first_update($post_id, $post, $update) {
+    if ($post->post_type == 'tribe_events') {
+        if ($update && $post->post_status == 'publish') {
+            $published_date = strtotime($post->post_date);
+            $current_date = strtotime(current_time('mysql'));
+
+            if ($published_date == $current_date) {
+                
+                
+                
+
+                // $to = $user_data->user_email;
+                // $subject = 'Your Subject Here';
+                // $message = 'Your Email Template Here'; // You can use HTML for email template
+            
+                // $headers = array(
+                //     'Content-Type: text/html; charset=UTF-8',
+                // );
+            
+                // $mail_sent = wp_mail($to, $subject, $message, $headers);
+            }
+        }
+    }
+}
