@@ -861,6 +861,11 @@ $(document).ready(function() {
 
 <style>
 
+#tribe-events-pg-template{
+    width: 100%;
+
+}
+
 .location_div_js span , .time_text span {
     font-size: 18px!important; 
 }
@@ -1091,6 +1096,8 @@ background-position: center top;
 .main_single_event_div{
     display: flex;
     flex-direction: column;
+    max-width: 900px;
+    margin: 0 auto;
 }
 .top_flex_section_single_event{
     display: flex;
