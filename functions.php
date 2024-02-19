@@ -2479,6 +2479,7 @@ function ticketfeasta_following() {
     }
 
    foreach($following_array as $following){
+     echo $following;
     $organiser_name = get_the_title($following);
    ?>
     <form method="POST">
@@ -2625,7 +2626,7 @@ function ticketfeasta_follow($organizer_id, $user_id){
     }
     // user unfollowing as organiser
     if (!in_array( $organizer_id, $following_array ) ) {
-        $following_array[] = $user_id;
+        $following_array[] = $organizer_id;
 
     } 
     update_user_meta( $user_id, 'following', json_encode($following_array ));
