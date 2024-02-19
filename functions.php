@@ -2599,5 +2599,5 @@ add_action( 'wp', function(){
             }
         }        
     }
-    die();
+    // die();
 } );
