@@ -2523,3 +2523,46 @@ function ticketfeasta_unfollow($organizer_id, $user_id){
   
   
 add_action( 'woocommerce_account_following_endpoint', 'ticketfeasta_following' );
+
+
+
+function get_follower_by_organiser_id($organizer_id){
+    $followers_array = get_post_meta( $organizer_id, 'followers', true );
+    $followers_array = json_decode( $followers_array, true );
+    if ( json_last_error() !== JSON_ERROR_NONE ) {
+        $followers_array = array();
+    }
+    return $followers_array;
+}
+
+function ticketfeasta_publish_tribe_events_on_first_update($post_id, $post, $update) {
+    if ($post->post_type == 'tribe_events') {
+            $published_date = strtotime($post->post_date);
+            $current_date = strtotime(current_time('mysql'));
+            // if ($published_date == $current_date) {
+                
+                $organizer_id = get_post_meta( $post_id, '_EventOrganizerID', true);
+                $followers = get_follower_by_organiser_id($organizer_id);
+                $organizer_name = get_the_title($organizer_id);
+                $event_link = get_the_permalink ($post_id);
+                $event_name = get_the_title ($post_id);
+                foreach($followers as $follower){
+                    $user_data = get_userdata($follower);
+                    if ($user_data) {
+                        $to = $user_data->user_email;
+                        $subject = 'Check Out this new event.';
+                        $message = "Check out this event <a href='$event_link'> $event_name </a> published by $organizer_name."; 
+                    
+                        $headers = array(
+                            'Content-Type: text/html; charset=UTF-8',
+                        );
+                    
+                        wp_mail($to, $subject, $message, $headers);
+                    }
+                }
+            // }
+        
+    }
+}
+
+add_action('save_post', 'ticketfeasta_publish_tribe_events_on_first_update', 10, 3);
