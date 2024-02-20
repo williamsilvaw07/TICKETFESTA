@@ -1140,25 +1140,6 @@ add_action('init', 'custom_user_login');
 
 
 
-///FUNCTION FOR ADMIN ORGANIZER LOGIN FORM
-function restrict_access_and_show_login_form() {
-    if (is_page_template('organizer-template.php')) {
-        if (!is_user_logged_in()) {
-            wp_redirect(home_url('/custom-login'));
-            exit;
-        }
-
-        $user = wp_get_current_user();
-        if (!in_array('organiser', (array) $user->roles) && !in_array('administrator', (array) $user->roles)) {
-            wp_redirect(home_url('/custom-login'));
-            exit;
-        }
-    }
-}
-add_action('template_redirect', 'restrict_access_and_show_login_form');
-//////END
-
-
 
 
 
