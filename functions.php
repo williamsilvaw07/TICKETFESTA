@@ -1,5 +1,65 @@
 <?php
 
+
+//* Do NOT include the opening php tag
+ 
+add_filter(
+    'rest_request_after_callbacks',
+    'tec_tickets_maybe_disable_events_for_app',
+    10,
+    3
+);
+ 
+/**
+ * Maybe disable events for the ET+ APP.
+ *
+ * @param WP_REST_Response|WP_HTTP_Response|WP_Error|mixed $response Result to send to the client.
+ *                                                                   Usually a WP_REST_Response or WP_Error.
+ * @param array                                            $handler  Route handler used for the request.
+ * @param WP_REST_Request                                  $request  Request used to generate the response.
+ *
+ * @return WP_REST_Response|WP_HTTP_Response|WP_Error|mixed $response Result to send to the client.
+ *                                                                   Usually a WP_REST_Response or WP_Error.
+ */
+function tec_tickets_maybe_disable_events_for_app( $response, array $handler, \WP_REST_Request $request ) {
+    if ( empty( $request->get_header( 'App-version' ) ) ) {
+        return $response;
+    }
+ 
+    if ( '/tribe/events/v1/events' !== $request->get_route() ) {
+        return $response;
+    }
+ 
+    $response = new WP_REST_Response(
+        [
+            'code'    => 'rest_no_route',
+            'message' => 'No route was found matching the URL and request method.',
+        ]
+    );
+ 
+    $response->set_status( 404 );
+ 
+    return $response;
+}
+
+
+
+
+
+
+add_action( 'woocommerce_payment_complete', 'custom_woocommerce_auto_complete_order' );
+function custom_woocommerce_auto_complete_order( $order_id ) {
+    if ( ! $order_id ) {
+        return;
+    }
+
+    $order = wc_get_order( $order_id );
+    $order->update_status( 'completed' );
+}
+
+
+
+
 function enqueue_custom_styles_for_orders() {
     wp_enqueue_style( 'custom-orders-style', get_stylesheet_directory_uri() . '/css/custom-orders-style.css' );
 }
@@ -105,27 +165,8 @@ add_filter( 'gettext', 'change_my_account_orders_title', 20, 3 );
 
 
 
-///FUNCTION TO ADD EVENT IMAGE TO TICKETS 
-
-function set_ticket_product_image_from_event_featured_image($product_id) {
-    // Assuming you can get the event ID associated with this product/ticket
-    $event_id = get_event_id_from_ticket_product($product_id); // You'll need to replace this with the actual function or method to get the event ID
-
-    if ($event_id) {
-        $thumbnail_id = get_post_thumbnail_id($event_id);
-
-        if ($thumbnail_id) {
-            set_post_thumbnail($product_id, $thumbnail_id);
-        }
-    }
-}
-
-// Hook into product creation and update - you might need to adjust these hooks
-add_action('woocommerce_new_product', 'set_ticket_product_image_from_event_featured_image');
-add_action('woocommerce_update_product', 'set_ticket_product_image_from_event_featured_image');
-
-
 ///Redirect right to checkout page
+/*
 add_filter('woocommerce_add_to_cart_validation', 'custom_redirect_after_add_to_cart', 10, 3);
 
 function custom_redirect_after_add_to_cart($passed, $product_id, $quantity) {
@@ -135,7 +176,7 @@ function custom_redirect_after_add_to_cart($passed, $product_id, $quantity) {
     }
     return $passed;
 }
-
+*/
 
 
 // $custom_post = get_post(1742);
@@ -569,22 +610,6 @@ function set_default_product_virtual( $defaults, $product_type ) {
 
 
 
-add_filter( 'woocommerce_checkout_fields' , 'custom_override_checkout_fields' );
-
-function custom_override_checkout_fields( $fields ) {
-    unset($fields['billing']['billing_address_1']);
-    unset($fields['billing']['billing_address_2']);
-    unset($fields['billing']['billing_city']);
-    unset($fields['billing']['billing_postcode']);
-    unset($fields['billing']['billing_country']);
-    unset($fields['billing']['billing_state']);
-
-    // Add any other fields you want to remove
-
-    return $fields;
-}
-
-
 
 
 
@@ -1008,7 +1033,7 @@ function custom_user_registration_form() {
         return 'You are already logged in.';
     }
 
-    $html = '<form action="' . esc_url($_SERVER['REQUEST_URI']) . '" method="post">';
+    $html = '<form action="' . esc_url($_SERVER['REQUEST_URI']) . '" method="post" id="custom-registration-form">';
     $html .= '<p><label for="first_name">First Name <strong>*</strong></label>';
     $html .= '<input type="text" name="first_name" id="first_name" required></p>';
     $html .= '<p><label for="last_name">Last Name <strong>*</strong></label>';
@@ -1017,8 +1042,11 @@ function custom_user_registration_form() {
     $html .= '<input type="email" name="email" id="email" required></p>';
     $html .= '<p><label for="password">Password <strong>*</strong></label>';
     $html .= '<input type="password" name="password" id="password" required></p>';
+    $html .= '<p><input type="checkbox" name="is_organizer" id="is_organizer"> Register as an Organizer</p>';
+    $html .= '<div id="organizer_fields" style="display:none;">';
     $html .= '<p><label for="organizer_title">Organizer Title <strong>*</strong></label>';
-    $html .= '<input type="text" name="organizer_title" id="organizer_title" required></p>';
+    $html .= '<input type="text" name="organizer_title" id="organizer_title"></p>';
+    $html .= '</div>';
     $html .= '<p><input type="submit" name="submit" value="Register"></p>';
     $html .= '</form>';
     $html .= '<p>Already have an account? <a href="' . home_url('/custom-login') . '">Login here</a>.</p>';
@@ -2514,6 +2542,7 @@ function ticketfeasta_following() {
     }
 
    foreach($following_array as $following){
+     echo $following;
     $organiser_name = get_the_title($following);
    ?>
     <form method="POST">
@@ -2558,3 +2587,168 @@ function ticketfeasta_unfollow($organizer_id, $user_id){
   
   
 add_action( 'woocommerce_account_following_endpoint', 'ticketfeasta_following' );
+
+
+
+function get_follower_by_organiser_id($organizer_id){
+    $followers_array = get_post_meta( $organizer_id, 'followers', true );
+    $followers_array = json_decode( $followers_array, true );
+    if ( json_last_error() !== JSON_ERROR_NONE ) {
+        $followers_array = array();
+    }
+    return $followers_array;
+}
+
+function ticketfeasta_publish_tribe_events_on_first_update($post_id, $post, $update) {
+    if ($post->post_type == 'tribe_events') {
+            $published_date = strtotime($post->post_date);
+            $current_date = strtotime(current_time('mysql'));
+            // if ($published_date == $current_date) {
+                
+                $organizer_id = get_post_meta( $post_id, '_EventOrganizerID', true);
+                $followers = get_follower_by_organiser_id($organizer_id);
+                $organizer_name = get_the_title($organizer_id);
+                $event_link = get_the_permalink ($post_id);
+                $event_name = get_the_title ($post_id);
+                foreach($followers as $follower){
+                    $user_data = get_userdata($follower);
+                    if ($user_data) {
+                        $to = $user_data->user_email;
+                        $subject = 'Check Out this new event.';
+                        $message = "Check out this event <a href='$event_link'> $event_name </a> published by $organizer_name."; 
+                    
+                        $headers = array(
+                            'Content-Type: text/html; charset=UTF-8',
+                        );
+                    
+                        wp_mail($to, $subject, $message, $headers);
+                    }
+                }
+            // }
+        
+    }
+}
+
+add_action('save_post', 'ticketfeasta_publish_tribe_events_on_first_update', 10, 3);
+
+ function ticketfeasta_order_update_follower($post_id, $post, $update){
+    if ($post->post_type == 'shop_order') {
+        $ticket_datas = get_post_meta( $post_id);
+        $user_email = $ticket_datas['_billing_email'][0];
+
+        $user = get_user_by('email', $user_email);
+
+        $user_id = false;
+        if ($user) {
+            $user_id = $user->ID;
+        } 
+        if($user_id !== false & isset($ticket_datas['_community_tickets_order_fees']) && is_array($ticket_datas['_community_tickets_order_fees'])){
+            foreach($ticket_datas['_community_tickets_order_fees'] as $item){
+                $item_data  = unserialize($item);
+                $fees = $item_data['breakdown']['fees'];
+                if(is_array($fees)){
+                    foreach($fees as $fee){
+                        $fee_items = $fee;
+                        if(is_array($fee_items)){
+                            foreach($fee_items as $fee_item){
+                                $event_id = $fee_item['event_id'];
+                                $organizer_id = get_post_meta( $event_id, '_EventOrganizerID', true);
+                                ticketfeasta_follow($organizer_id, $user_id);
+                                ticketfeasta_add_follower($organizer_id, $user_id);
+                            }
+                        }
+                    }
+                }
+            }        
+        }
+    }
+
+}
+
+add_action( 'save_post', 'ticketfeasta_order_update_follower',  10, 3);
+
+
+function ticketfeasta_add_follower($organizer_id, $user_id){
+    $followers_array = get_post_meta( $organizer_id, 'followers', true );
+    $followers_array = json_decode( $followers_array, true );
+    if ( json_last_error() !== JSON_ERROR_NONE ) {
+        $followers_array = array();
+    }
+    if (!in_array( $user_id, $followers_array ) ) {
+        $followers_array[] = $user_id;
+    }
+    update_post_meta( $organizer_id, 'followers', json_encode( $followers_array ) );
+}
+
+function ticketfeasta_follow($organizer_id, $user_id){
+    $following_array = get_user_meta( $user_id, 'following', true );
+    $following_array = json_decode( $following_array, true );
+
+    if ( json_last_error() !== JSON_ERROR_NONE ) {
+        $following_array = array();
+    }
+    // user unfollowing as organiser
+    if (!in_array( $organizer_id, $following_array ) ) {
+        $following_array[] = $organizer_id;
+
+    } 
+    update_user_meta( $user_id, 'following', json_encode($following_array ));
+}
+
+
+// Add a custom checkbox field to the checkout page
+// add_action( 'woocommerce_after_order_notes', 'add_subscribed_organiser_checkbox' );
+// function add_subscribed_organiser_checkbox( $checkout ) {
+//     echo '<div id="subscribed_organiser_checkbox">';
+//     woocommerce_form_field( 'subscribed_organiser', array(
+//         'type' => 'checkbox',
+//         'class' => array( 'input-checkbox' ),
+//         'label' => __('Subscribe to organiser'),
+//         'required' => false,
+//     ), $checkout->get_value( 'subscribed_organiser' ));
+//     echo '</div>';
+// }
+
+// Save the checkbox value to the order meta
+// add_action( 'woocommerce_checkout_update_order_meta', 'save_subscribed_organiser_checkbox' );
+// function save_subscribed_organiser_checkbox( $order_id ) {
+//     if ( ! empty( $_POST['subscribed_organiser'] ) ) {
+//         var_dump( $_POST['subscribed_organiser']);
+//         die();
+//         update_post_meta( $order_id, 'subscribed_organiser', sanitize_text_field( $_POST['subscribed_organiser'] ) );
+//     }
+// }
+
+
+
+// function ticketfeasta_inline_js(){
+//     
+//     <script type="text/javascript">
+//         document.addEventListener('DOMContentLoaded', function() {
+
+//             var termsWrapper = document.querySelector('.woocommerce-terms-and-conditions-wrapper');
+
+//             if (termsWrapper) {
+//                 // Create a checkbox input field
+//                 var checkbox = document.createElement('input');
+//                 checkbox.type = 'checkbox';
+//                 checkbox.name = 'subscribed_organiser';
+//                 checkbox.id = 'subscribed_organiser';
+//                 checkbox.value = 'checked'; 
+
+//                 checkbox.checked = true;
+//                 var label = document.createElement('label');
+//                 label.htmlFor = 'subscribed_organiser';
+//                 label.appendChild(document.createTextNode('Subscribe to event organizer.'));
+
+//                 // Append the checkbox and label to the terms wrapper
+//                 termsWrapper.appendChild(checkbox);
+//                 termsWrapper.appendChild(label);
+//             }
+//         });
+
+//     </script>
+// 
+
+// }
+// add_action('wp_footer', 'ticketfeasta_inline_js');

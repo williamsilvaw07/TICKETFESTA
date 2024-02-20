@@ -861,6 +861,11 @@ $(document).ready(function() {
 
 <style>
 
+#tribe-events-pg-template{
+    width: 100%;
+
+}
+
 .location_div_js span , .time_text span {
     font-size: 18px!important; 
 }
@@ -995,6 +1000,9 @@ html body .single_event_sections {
  margin-bottom: 40px;
     font-weight: 400!important;
   font-size: 15px!important;
+  width: 100%;
+  margin-left: 0;
+    margin-right: 0;
    
     }
     
@@ -1091,13 +1099,15 @@ background-position: center top;
 .main_single_event_div{
     display: flex;
     flex-direction: column;
+    max-width: 900px;
+    margin: 0 auto;
 }
 .top_flex_section_single_event{
     display: flex;
     flex-direction: column;
     gap: 30px;
     margin-top: 47px!important;
-    max-width: 800px;
+    max-width: 900px;
     margin: 0 auto;
 }
 .top_flex_section_single_event .type-tribe_events{

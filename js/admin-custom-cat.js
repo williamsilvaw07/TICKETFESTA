@@ -18,3 +18,14 @@ jQuery(document).ready(function($) {
         });
     });
 });
+
+
+jQuery(document).ready(function($) {
+    $('#is_organizer').change(function() {
+        if ($(this).is(':checked')) {
+            $('#organizer_fields').show();
+        } else {
+            $('#organizer_fields').hide();
+        }
+    });
+});
