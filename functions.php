@@ -1109,7 +1109,6 @@ add_action('init', 'register_custom_registration_shortcode');
 add_action('init', 'custom_user_registration');
 //////END
 
-add_shortcode('custom_registration_form', 'custom_user_registration_form');
 
 
 
@@ -1131,6 +1130,7 @@ function restrict_access_and_show_login_form() {
 }
 add_action('template_redirect', 'restrict_access_and_show_login_form');
 //////END
+
 
 
 
