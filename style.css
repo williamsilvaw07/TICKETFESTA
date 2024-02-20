@@ -76,7 +76,13 @@ font-family: "Plus Jakarta Sans", Sans-serif;
 
 /****END***/
 
+/*****menu******/
 
+.menu_btn_border{
+    border:1px solid white
+}
+
+/****end****/
 
 /*******COLOR CSS FOR GOBE******/
 .main_custom_container_second .tribe-button-primary {
