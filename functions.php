@@ -1088,7 +1088,7 @@ function custom_user_registration() {
                 update_user_meta($user_id, '_tribe_organizer_id', $organizer_id);
 
                 // Redirect to the specified page
-                wp_redirect('https://thaynna-william.co.uk/dashboard');
+                wp_redirect('/dashboard');
                 exit;
             } else {
                 echo 'Error creating organizer.';
