@@ -1079,7 +1079,7 @@ function custom_user_registration_form() {
     $html .= '<div id="login_register_popup" style="display:none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 9999;">';
     $html .= '<div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #fff; padding: 20px; border-radius: 10px;">';
     $html .= '<a href="#" class="close_popup" style="position: absolute; top: 5px; right: 10px;">Close</a>';
-    $html .= custom_user_login_form(); // Include login form
+    $html .= custom_user_login_fordm(); // Include login form
     $html .= '</div>';
     $html .= '</div>';
 
@@ -1087,7 +1087,7 @@ function custom_user_registration_form() {
 }
 
 // Function to display the custom login form
-function custom_user_login_form() {
+function custom_user_login_fordm() {
     $html = '<form action="' . esc_url($_SERVER['REQUEST_URI']) . '" method="post" id="custom_login_form">';
     $html .= '<p><label for="username">Username</label>';
     $html .= '<input type="text" name="username" id="username"></p>';
@@ -1138,6 +1138,25 @@ add_action('init', 'custom_user_login');
 
 
 
+
+
+///FUNCTION FOR ADMIN ORGANIZER LOGIN FORM
+function restrict_access_and_show_login_form() {
+    if (is_page_template('organizer-template.php')) {
+        if (!is_user_logged_in()) {
+            wp_redirect(home_url('/custom-login'));
+            exit;
+        }
+
+        $user = wp_get_current_user();
+        if (!in_array('organiser', (array) $user->roles) && !in_array('administrator', (array) $user->roles)) {
+            wp_redirect(home_url('/custom-login'));
+            exit;
+        }
+    }
+}
+add_action('template_redirect', 'restrict_access_and_show_login_form');
+//////END
 
 
 
