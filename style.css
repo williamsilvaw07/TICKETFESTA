@@ -78,8 +78,10 @@ font-family: "Plus Jakarta Sans", Sans-serif;
 
 /*****menu******/
 
-.menu_btn_border{
-    border:1px solid white
+.menu_btn_border a{
+    border: 1px solid;
+    padding: 10px 22px;
+    border-radius: 3px;
 }
 
 /****end****/
