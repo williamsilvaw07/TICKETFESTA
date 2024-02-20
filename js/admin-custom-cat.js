@@ -23,9 +23,9 @@ jQuery(document).ready(function($) {
 jQuery(document).ready(function($) {
     $('#is_organizer').change(function() {
         if ($(this).is(':checked')) {
-            $('#organizer_fields').show();
+            $('#organizer_fields').show(); // Show the organizer specific fields
         } else {
-            $('#organizer_fields').hide();
+            $('#organizer_fields').hide(); // Hide the organizer specific fields
         }
     });
 });
