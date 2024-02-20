@@ -1027,6 +1027,9 @@ add_action('wp_ajax_nopriv_check_organizer_name', 'ajax_check_organizer_name'); 
 ///////////////////NEW FUNCTION ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
+
+
+
 ////////FUNCTION TO CREATE A SIGN UP FORM FOR USERS WITH OPTIONAL ORGANIZER REGISTRATION
 // Function to display the custom registration form
 function custom_user_registration_form() {
@@ -1079,7 +1082,7 @@ function custom_user_registration_form() {
     $html .= '<div id="login_register_popup" style="display:none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 9999;">';
     $html .= '<div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #fff; padding: 20px; border-radius: 10px;">';
     $html .= '<a href="#" class="close_popup" style="position: absolute; top: 5px; right: 10px;">Close</a>';
-    $html .= custom_user_login_fordm(); // Include login form
+    $html .= custom_user_login_form(); // Include login form
     $html .= '</div>';
     $html .= '</div>';
 
@@ -1087,7 +1090,7 @@ function custom_user_registration_form() {
 }
 
 // Function to display the custom login form
-function custom_user_login_fordm() {
+function custom_user_login_form() {
     $html = '<form action="' . esc_url($_SERVER['REQUEST_URI']) . '" method="post" id="custom_login_form">';
     $html .= '<p><label for="username">Username</label>';
     $html .= '<input type="text" name="username" id="username"></p>';
@@ -1134,9 +1137,6 @@ function register_custom_registration_shortcode() {
 add_action('init', 'register_custom_registration_shortcode');
 add_action('init', 'custom_user_registration');
 add_action('init', 'custom_user_login');
-
-
-
 
 
 
