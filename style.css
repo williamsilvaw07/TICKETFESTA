@@ -64,7 +64,7 @@ font-family: "Plus Jakarta Sans", Sans-serif;
 /***HEADER***/
 
 .site-header {
-    --base-3: transparent; /* or use rgba(255, 255, 255, 0) for a white color with 0 opacity */
+    --base-3: transparent;
     background-color: var(--base-3);
     color: white!important;
 }
@@ -79,7 +79,7 @@ font-family: "Plus Jakarta Sans", Sans-serif;
 /*****menu******/
 
 .elementor-3943 .elementor-element.elementor-element-68a8c479 .elementor-nav-menu--main  .menu_btn_border{
-    border: 1px solid;
+    border: 1px solid white;
     padding: 10px 22px!important;
     border-radius: 3px;
 }
