@@ -333,10 +333,15 @@ function category_image_gallery_shortcode($atts) {
         $cat_organiser      = get_term_meta($category_id, 'category_organiser', true);
         $cat_organiser      = get_post($cat_organiser);
 
-        echo "<pre>";
-        var_dump('user_id: ', $current_user_id);
-        var_dump('cat_organiser: ', $cat_organiser);
-        echo "</pre>";
+        if($current_user_id  != $cat_organiser->post_author){
+            echo wc_get_account_endpoint_url('dashboard');
+            wp_redirect(wc_get_account_endpoint_url('dashboard'));
+            exit;
+        }
+        // echo "<pre>";
+        // var_dump('user_id: ', $current_user_id);
+        // var_dump('cat_organiser: ', $cat_organiser->post_author);
+        // echo "</pre>";
         // Display images
         if (!empty($category_images) ) {
             echo '<div class="category-images">';
