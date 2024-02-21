@@ -72,7 +72,7 @@ if (!defined('ABSPATH')) {
                                 <i class="feather icon-lock"></i> Lock Screen
                             </a>
                         </li>
-                        <li>
+                        <li> 
                             <a href="auth-sign-in-social.html">
                                 <i class="feather icon-log-out"></i> Logout
                             </a>
@@ -82,14 +82,14 @@ if (!defined('ABSPATH')) {
 
             </ul>
         </nav>
-        <!-- /.navbar -->
+        <!-- /.navb ar --> 
 
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="https://thaynna-william.co.uk/dashboard/" class="brand-link">
-        <img src="dist/img/AdminLTELogo.png" alt="" class="brand-image img-circle elevation-3" style="opacity: .8">
-        <span class="brand-text font-weight-light">Logo</span>
+        <img src="https://ticketfesta.co.uk/wp-content/uploads/2024/02/Group-195-2.png" alt="" class="brand-image img-circle elevation-3" style="opacity: .8">
+        <span class="brand-text font-weight-light"></span>
     </a>
 
     <!-- Sidebar -->
