@@ -204,6 +204,9 @@ jQuery(document).ready(function($) {
 
 <style>
 
+body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .main-footer {
+    display:none!important
+}
 /******EDIT ORFANIZSER****/
 .main-sidebar .img-circle {
     border-radius: inherit;
