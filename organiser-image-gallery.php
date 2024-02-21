@@ -334,7 +334,8 @@ function category_image_gallery_shortcode($atts) {
         $cat_organiser      = get_post($cat_organiser);
 
         echo "<pre>";
-        var_dump($cat_organiser);
+        var_dump('user_id: ', $current_user_id);
+        var_dump('cat_organiser: ', $cat_organiser);
         echo "</pre>";
         // Display images
         if (!empty($category_images) ) {
