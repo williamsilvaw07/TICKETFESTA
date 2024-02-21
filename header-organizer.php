@@ -2234,7 +2234,7 @@ top: -2px;
 
 
 #tribe-community-events-shortcode{
-    margin-bottom: 50px;
+    padding-bottom: 50px;
 }
 .payout_stutes{
     display: none;
