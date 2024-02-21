@@ -1027,7 +1027,6 @@ add_action('wp_ajax_nopriv_check_organizer_name', 'ajax_check_organizer_name'); 
 ///////////////////NEW FUNCTION ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-////////FUNCTION TO CREATE A SIGN UP FORM FOR THE ORGANIZER
 // Function to display the custom registration form
 function custom_user_registration_form() {
     if (is_user_logged_in()) {
@@ -1043,8 +1042,11 @@ function custom_user_registration_form() {
     $html .= '<input type="email" name="email" id="email" required></p>';
     $html .= '<p><label for="password">Password <strong>*</strong></label>';
     $html .= '<input type="password" name="password" id="password" required></p>';
+    $html .= '<p><input type="checkbox" name="create_organizer_account" id="create_organizer_account"> Create Organizer Account</p>';
+    $html .= '<div id="organizer_title_section" style="display:none;">'; // Hidden by default
     $html .= '<p><label for="organizer_title">Organizer Title <strong>*</strong></label>';
     $html .= '<input type="text" name="organizer_title" id="organizer_title" required></p>';
+    $html .= '</div>';
     $html .= '<p><input type="submit" name="submit" value="Register"></p>';
     $html .= '</form>';
     $html .= '<p>Already have an account? <a href="' . home_url('/custom-login') . '">Login here</a>.</p>';
@@ -1059,7 +1061,15 @@ function custom_user_registration() {
         $last_name = sanitize_text_field($_POST['last_name']);
         $email = sanitize_email($_POST['email']);
         $password = $_POST['password'];
-        $organizer_title = sanitize_text_field($_POST['organizer_title']);
+        $create_organizer_account = isset($_POST['create_organizer_account']) ? true : false;
+
+        if ($create_organizer_account) {
+            $organizer_title = isset($_POST['organizer_title']) ? sanitize_text_field($_POST['organizer_title']) : '';
+
+            $user_role = 'organiser'; // Set user role to 'organiser' if creating an organizer account
+        } else {
+            $user_role = 'customer'; // Set user role to 'customer' if not creating an organizer account
+        }
 
         $user_id = wp_create_user($email, $password, $email); // Username is set to email
 
@@ -1068,32 +1078,35 @@ function custom_user_registration() {
             update_user_meta($user_id, 'first_name', $first_name);
             update_user_meta($user_id, 'last_name', $last_name);
 
-            // Assign the 'organiser' role to the user
+            // Assign the user role
             $user = new WP_User($user_id);
-            $user->set_role('organiser');
+            $user->set_role($user_role);
 
             // Automatically log the user in
             wp_set_current_user($user_id);
             wp_set_auth_cookie($user_id);
 
-            // Create the organizer post
-            $organizer_data = array(
-                'post_title'   => $organizer_title, // Use the organizer title for the post title
-                'post_content' => '',
-                'post_status'  => 'publish',
-                'post_type'    => 'tribe_organizer',
-                'post_author'  => $user_id
-            );
-            $organizer_id = wp_insert_post($organizer_data);
+            if ($create_organizer_account) {
+                // Create the organizer post
+                $organizer_data = array(
+                    'post_title'   => $organizer_title, // Use the organizer title for the post title
+                    'post_content' => '',
+                    'post_status'  => 'publish',
+                    'post_type'    => 'tribe_organizer',
+                    'post_author'  => $user_id
+                );
+                $organizer_id = wp_insert_post($organizer_data);
 
-            if (!is_wp_error($organizer_id)) {
-                update_user_meta($user_id, '_tribe_organizer_id', $organizer_id);
-
-                // Redirect to the specified page
-                wp_redirect('/dashboard');
-                exit;
+                if (!is_wp_error($organizer_id)) {
+                    update_user_meta($user_id, '_tribe_organizer_id', $organizer_id);
+                    wp_redirect('/dashboard'); // Redirect to the dashboard if an organizer account is created
+                    exit;
+                } else {
+                    echo 'Error creating organizer.';
+                }
             } else {
-                echo 'Error creating organizer.';
+                wp_redirect('/my-account'); // Redirect to my account page if not creating an organizer account
+                exit;
             }
         } else {
             echo 'Error creating user.';
@@ -1101,15 +1114,32 @@ function custom_user_registration() {
     }
 }
 
-// Function to register the shortcode
-function register_custom_registration_shortcode() {
-    add_shortcode('custom_registration_form', 'custom_user_registration_form');
+// Function to enqueue JavaScript
+function custom_registration_scripts() {
+    ?>
+    <script type="text/javascript">
+        jQuery(document).ready(function($) {
+            $('#create_organizer_account').change(function() {
+                if (this.checked) {
+                    $('#organizer_title_section').show();
+                } else {
+                    $('#organizer_title_section').hide();
+                }
+            });
+        });
+    </script>
+    <?php
 }
 
-// Hooking up the functions to WordPress
+// Function to register the shortcode and actions
+function register_custom_registration_shortcode() {
+    add_shortcode('custom_registration_form', 'custom_user_registration_form');
+    add_action('init', 'custom_user_registration');
+    add_action('wp_footer', 'custom_registration_scripts');
+}
+
+// Hooking up the function to WordPress
 add_action('init', 'register_custom_registration_shortcode');
-add_action('init', 'custom_user_registration');
-//////END
 
 
 
