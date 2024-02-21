@@ -333,7 +333,7 @@ function category_image_gallery_shortcode($atts) {
         $cat_organiser      = get_term_meta($category_id, 'category_organiser', true);
         $cat_organiser      = get_post($cat_organiser);
 
-        if($current_user_id  == $cat_organiser->post_author){
+        if($current_user_id  != $cat_organiser->post_author){
             echo wc_get_account_endpoint_url('dashboard');
             wp_redirect(wc_get_account_endpoint_url('dashboard'));
             exit;
