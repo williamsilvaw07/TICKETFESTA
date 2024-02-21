@@ -1028,8 +1028,6 @@ add_action('wp_ajax_nopriv_check_organizer_name', 'ajax_check_organizer_name'); 
 
 
 
-
-
 // Function to display the custom registration form
 function custom_user_registration_form() {
     if (is_user_logged_in()) {
@@ -1081,22 +1079,9 @@ function custom_user_registration_form() {
     $html .= '<div id="login_register_popup" style="display:none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 9999;">';
     $html .= '<div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #fff; padding: 20px; border-radius: 10px;">';
     $html .= '<a href="#" class="close_popup" style="position: absolute; top: 5px; right: 10px;">Close</a>';
-    $html .= custom_user_login_form(); // Include login form
+    $html .= custom_user_registration_form(); // Include registration form
     $html .= '</div>';
     $html .= '</div>';
-
-    return $html;
-}
-
-// Function to display the custom login form
-function custom_user_login_form() {
-    $html = '<form action="' . esc_url($_SERVER['REQUEST_URI']) . '" method="post" id="custom_login_form">';
-    $html .= '<p><label for="username">Username</label>';
-    $html .= '<input type="text" name="username" id="username"></p>';
-    $html .= '<p><label for="password">Password</label>';
-    $html .= '<input type="password" name="password" id="password"></p>';
-    $html .= '<p><input type="submit" name="submit" value="Login"></p>';
-    $html .= '</form>';
 
     return $html;
 }
@@ -1159,32 +1144,6 @@ function custom_user_registration() {
     }
 }
 
-// Function to handle the login process
-function custom_user_login() {
-    if (isset($_POST['username'], $_POST['password'])) {
-        $username = $_POST['username'];
-        $password = $_POST['password'];
-
-        $user = wp_authenticate($username, $password);
-
-        if (!is_wp_error($user)) {
-            wp_set_current_user($user->ID);
-            wp_set_auth_cookie($user->ID);
-
-            // Redirect based on user type
-            $user_type = get_user_meta($user->ID, 'is_organizer', true) ? 'organizer' : 'customer';
-            if ($user_type === 'organizer') {
-                wp_redirect('/dashboard');
-            } else {
-                wp_redirect('/my-account');
-            }
-            exit;
-        } else {
-            echo 'Invalid username or password.';
-        }
-    }
-}
-
 // Function to register the shortcode
 function register_custom_registration_shortcode() {
     add_shortcode('custom_registration_form', 'custom_user_registration_form');
@@ -1193,11 +1152,6 @@ function register_custom_registration_shortcode() {
 // Hooking up the functions to WordPress
 add_action('init', 'register_custom_registration_shortcode');
 add_action('init', 'custom_user_registration');
-add_action('init', 'custom_user_login');
-
-
-
-
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
