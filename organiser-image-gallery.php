@@ -332,6 +332,10 @@ function category_image_gallery_shortcode($atts) {
         $category_images = explode(',', $category_images);
         $cat_organiser   = get_term_meta($category_id, 'category_organiser', true);
         $cat_organiser   = get_post($cat_organiser)->post_title;
+
+        echo "<pre>";
+        var_dump($cat_organiser);
+        echo "</pre>";
         // Display images
         if (!empty($category_images) ) {
             echo '<div class="category-images">';
