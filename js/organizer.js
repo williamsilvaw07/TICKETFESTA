@@ -15,7 +15,7 @@ function parseQueryString(queryString) {
 }
 
 function addCreateEventForm() {
-  var eventId = $("#post_ID").val();
+  var eventId = jQuery("#post_ID").val();
   //var responseData = xhr.responseText;
   if (!eventId) return;
 
@@ -89,8 +89,8 @@ function addCreateEventForm() {
         </label><br/>`;
         });
 
-        $("#eventCouponForm").html(htmlOutputStart + options + htmlOutputEnd);
-        $("#eventCouponForm").find("#start_date").datepicker();
+        jQuery("#eventCouponForm").html(htmlOutputStart + options + htmlOutputEnd);
+        jQuery("#eventCouponForm").find("#start_date").datepicker();
       }
     },
   });
@@ -126,8 +126,8 @@ jQuery(document).ready(function ($) {
 
   // Function to parse the query string into a JavaScript object
   // AJAX request when the button is clicked
-  $(document).on("click", "#coupon_form_save", function () {
-    var eventId = $("#post_ID").val();
+  jQuery(document).on("click", "#coupon_form_save", function () {
+    var eventId = jQuery("#post_ID").val();
 
     var checkboxes = document.querySelectorAll(
       'input[name="product_ids[]"]:checked'
@@ -178,7 +178,7 @@ jQuery(document).ready(function ($) {
               </tr>
         `;
 
-        $(document).find("#couponListBody").append(html);
+        jQuery(document).find("#couponListBody").append(html);
 
         coupon_code.value = '';
         discount_type.value = '';
@@ -192,9 +192,9 @@ jQuery(document).ready(function ($) {
     });
   });
 
-  addCreateEventForm();
+  
 
-  $(document).ajaxSuccess(function (event, xhr, settings) {
+  jQuery(document).ajaxSuccess(function (event, xhr, settings) {
     var paramsObject = parseQueryString(settings.data);
     if (paramsObject.action !== "tribe-ticket-add") {
       return;
@@ -206,7 +206,7 @@ jQuery(document).ready(function ($) {
 
   function getCoupons() {
 
-    var eventId = $("#post_ID").val();
+    var eventId = jQuery("#post_ID").val();
     $.ajax({
       url: iam00_ajax_object.ajax_url, // AJAX URL set by WordPress
       type: "post",
@@ -253,7 +253,7 @@ jQuery(document).ready(function ($) {
             </tbody>
           </table>
         `;
-        $(document).find("#couponList").append(html + body + htmlEnd);
+        jQuery(document).find("#couponList").append(html + body + htmlEnd);
           // console.log(html + body + htmlEnd);
         }
       },
@@ -266,12 +266,12 @@ jQuery(document).ready(function ($) {
 
 
 
-
+addCreateEventForm();
 
 
 
 // Check if the URL contains 'category_id'
-$(document).ready(function () {
+jQuery(document).ready(function () {
   console.log("Document ready.");
 
   // Check if the URL contains 'category_id'
@@ -279,7 +279,7 @@ $(document).ready(function () {
     console.log("URL contains 'category_id'.");
 
     // Check how many elements are selected before applying the style change
-    var elements = $('.elementor .hide_back_btn_gallery');
+    var elements = jQuery('.elementor .hide_back_btn_gallery');
     console.log(elements.length + " elements found with the class 'hide_back_btn_gallery'.");
 
     // Override the CSS for '.elementor .hide_back_btn_gallery'
