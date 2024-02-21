@@ -43,6 +43,11 @@ Shows recent activity related to the current user's events, including sales and 
  form for user to add the bank details 
 
 
+### [custom_registration_form]
+ user sign up from and event orginserrs 
+
+
+
 ### [event_submission_response]
 
 To use the [event_submission_response] shortcode, simply place it on the page you've designated for post-submission messages (e.g., event-submission-received). Make sure that the redirection URL after event submission includes the event_id query parameter to ensure the shortcode functions correctly.
