@@ -1027,145 +1027,6 @@ add_action('wp_ajax_nopriv_check_organizer_name', 'ajax_check_organizer_name'); 
 ///////////////////NEW FUNCTION ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-
-
-
-
-// Function to display the custom registration form
-function custom_user_registration_form() {
-    if (is_user_logged_in()) {
-        return 'You are already logged in.';
-    }
-
-    $html = '<form action="' . esc_url($_SERVER['REQUEST_URI']) . '" method="post" id="customRegistrationForm">';
-    $html .= wp_nonce_field('custom_user_registration_nonce', 'custom_user_registration_nonce_field', true, false);
-    $html .= '<p><label for="first_name">First Name <strong>*</strong></label>';
-    $html .= '<input type="text" name="first_name" id="first_name" required></p>';
-    $html .= '<p><label for="last_name">Last Name <strong>*</strong></label>';
-    $html .= '<input type="text" name="last_name" id="last_name" required></p>';
-    $html .= '<p><label for="email">Email <strong>*</strong></label>';
-    $html .= '<input type="email" name="email" id="email" required></p>';
-    $html .= '<p><label for="password">Password <strong>*</strong></label>';
-    $html .= '<input type="password" name="password" id="password" required></p>';
-    $html .= '<p><input type="checkbox" name="create_organizer_account" id="create_organizer_account"> Create Organizer Account</p>';
-    $html .= '<div id="organizer_title_section" style="display:none;">'; // Hidden by default
-    $html .= '<p><label for="organizer_title">Organizer Title <strong>*</strong></label>';
-    $html .= '<input type="text" name="organizer_title" id="organizer_title"></p>';
-    $html .= '</div>';
-    $html .= '<p><input type="submit" value="Register"></p>';
-    $html .= '</form>';
-    $html .= '<p>Already have an account? <a href="' . home_url('/custom-login') . '">Login here</a>.</p>';
-
-    return $html;
-}
-
-// Function to handle the registration process with frontend debugging
-function custom_user_registration() {
-    // Check if this is a form submission
-    if ('POST' == $_SERVER['REQUEST_METHOD']) {
-        if (isset($_POST['custom_user_registration_nonce_field']) && wp_verify_nonce($_POST['custom_user_registration_nonce_field'], 'custom_user_registration_nonce')) {
-            if (isset($_POST['first_name'], $_POST['last_name'], $_POST['email'], $_POST['password']) && !is_user_logged_in()) {
-                $first_name = sanitize_text_field($_POST['first_name']);
-                $last_name = sanitize_text_field($_POST['last_name']);
-                $email = sanitize_email($_POST['email']);
-                $password = $_POST['password'];
-                $create_organizer_account = isset($_POST['create_organizer_account']) ? true : false;
-
-                $user_id = wp_create_user($email, $password, $email); // Username is set to email
-
-                if (is_wp_error($user_id)) {
-                    echo '<script>alert("Error creating user: ' . esc_js($user_id->get_error_message()) . '");</script>';
-                    return;
-                }
-
-                update_user_meta($user_id, 'first_name', $first_name);
-                update_user_meta($user_id, 'last_name', $last_name);
-
-                $user_role = $create_organizer_account ? 'organiser' : 'customer';
-                $user = new WP_User($user_id);
-                $user->set_role($user_role);
-
-                if ($create_organizer_account) {
-                    $organizer_title = isset($_POST['organizer_title']) ? sanitize_text_field($_POST['organizer_title']) : '';
-                    if (empty($organizer_title)) {
-                        echo '<script>alert("Organizer title is required.");</script>';
-                        return;
-                    }
-
-                    $organizer_data = [
-                        'post_title'   => $organizer_title,
-                        'post_content' => '',
-                        'post_status'  => 'publish',
-                        'post_type'    => 'tribe_organizer',
-                        'post_author'  => $user_id
-                    ];
-                    $organizer_id = wp_insert_post($organizer_data);
-
-                    if (is_wp_error($organizer_id)) {
-                        echo '<script>alert("Error creating organizer: ' . esc_js($organizer_id->get_error_message()) . '");</script>';
-                        return;
-                    }
-
-                    update_user_meta($user_id, '_tribe_organizer_id', $organizer_id);
-                    echo '<script>alert("Registration successful!"); window.location.href = "/dashboard";</script>';
-                    exit;
-                } else {
-                    echo '<script>alert("Registration successful!"); window.location.href = "/my-account";</script>';
-                    exit;
-                }
-            } else {
-                echo '<script>alert("Required fields are missing or user is already logged in.");</script>';
-            }
-        } else {
-            echo '<script>alert("Nonce verification failed.");</script>';
-        }
-    }
-}
-
-// Function to enqueue JavaScript for showing/hiding organizer title section and form submission
-function custom_registration_scripts() {
-    ?>
-    <script type="text/javascript">
-        document.addEventListener('DOMContentLoaded', function () {
-            var form = document.getElementById('customRegistrationForm');
-            var checkbox = document.getElementById('create_organizer_account');
-            var organizerTitleSection = document.getElementById('organizer_title_section');
-            var organizerTitle = document.getElementById('organizer_title');
-
-            checkbox.addEventListener('change', function () {
-                if (this.checked) {
-                    organizerTitleSection.style.display = 'block';
-                    organizerTitle.required = true;
-                } else {
-                    organizerTitleSection.style.display = 'none';
-                    organizerTitle.required = false;
-                }
-            });
-
-            form.onsubmit = function (e) {
-                e.preventDefault(); // Prevent the form from submitting normally
-                console.log('Form submission intercepted for debugging.');
-
-                // Submit the form programmatically using dispatchEvent
-                form.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
-            };
-        });
-    </script>
-    <?php
-}
-
-// Function to register the shortcode and actions
-function register_custom_registration_shortcode() {
-    add_shortcode('custom_registration_form', 'custom_user_registration_form');
-    add_action('wp_enqueue_scripts', 'custom_registration_scripts');
-    add_action('init', 'custom_user_registration');
-}
-
-// Hooking up the function to WordPress
-add_action('init', 'register_custom_registration_shortcode');
-
-
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////NEW FUNCTION ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2778,3 +2639,178 @@ function ticketfeasta_follow($organizer_id, $user_id){
 
 // }
 // add_action('wp_footer', 'ticketfeasta_inline_js');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////END////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////NEW FUNCTION ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+// Function to display the custom registration form
+function custom_user_registration_form() {
+    if (is_user_logged_in()) {
+        return 'You are already logged in.';
+    }
+
+    $html = '<form action="' . esc_url($_SERVER['REQUEST_URI']) . '" method="post" id="customRegistrationForm">';
+    $html .= wp_nonce_field('custom_user_registration_nonce', 'custom_user_registration_nonce_field', true, false);
+    $html .= '<p><label for="first_name">First Name <strong>*</strong></label>';
+    $html .= '<input type="text" name="first_name" id="first_name" required></p>';
+    $html .= '<p><label for="last_name">Last Name <strong>*</strong></label>';
+    $html .= '<input type="text" name="last_name" id="last_name" required></p>';
+    $html .= '<p><label for="email">Email <strong>*</strong></label>';
+    $html .= '<input type="email" name="email" id="email" required></p>';
+    $html .= '<p><label for="password">Password <strong>*</strong></label>';
+    $html .= '<input type="password" name="password" id="password" required></p>';
+    $html .= '<p><input type="checkbox" name="create_organizer_account" id="create_organizer_account"> Create Organizer Account</p>';
+    $html .= '<div id="organizer_title_section" style="display:none;">'; // Hidden by default
+    $html .= '<p><label for="organizer_title">Organizer Title <strong>*</strong></label>';
+    $html .= '<input type="text" name="organizer_title" id="organizer_title"></p>';
+    $html .= '</div>';
+    $html .= '<p><input type="submit" value="Register"></p>';
+    $html .= '</form>';
+    $html .= '<p>Already have an account? <a href="' . home_url('/custom-login') . '">Login here</a>.</p>';
+
+    return $html;
+}
+
+// Function to handle the registration process with frontend debugging
+function custom_user_registration() {
+    // Check if this is a form submission
+    if ('POST' == $_SERVER['REQUEST_METHOD']) {
+        if (isset($_POST['custom_user_registration_nonce_field']) && wp_verify_nonce($_POST['custom_user_registration_nonce_field'], 'custom_user_registration_nonce')) {
+            if (isset($_POST['first_name'], $_POST['last_name'], $_POST['email'], $_POST['password']) && !is_user_logged_in()) {
+                $first_name = sanitize_text_field($_POST['first_name']);
+                $last_name = sanitize_text_field($_POST['last_name']);
+                $email = sanitize_email($_POST['email']);
+                $password = $_POST['password'];
+                $create_organizer_account = isset($_POST['create_organizer_account']) ? true : false;
+
+                $user_id = wp_create_user($email, $password, $email); // Username is set to email
+
+                if (is_wp_error($user_id)) {
+                    echo '<script>alert("Error creating user: ' . esc_js($user_id->get_error_message()) . '");</script>';
+                    return;
+                }
+
+                update_user_meta($user_id, 'first_name', $first_name);
+                update_user_meta($user_id, 'last_name', $last_name);
+
+                $user_role = $create_organizer_account ? 'organiser' : 'customer';
+                $user = new WP_User($user_id);
+                $user->set_role($user_role);
+
+                if ($create_organizer_account) {
+                    $organizer_title = isset($_POST['organizer_title']) ? sanitize_text_field($_POST['organizer_title']) : '';
+                    if (empty($organizer_title)) {
+                        echo '<script>alert("Organizer title is required.");</script>';
+                        return;
+                    }
+
+                    $organizer_data = [
+                        'post_title'   => $organizer_title,
+                        'post_content' => '',
+                        'post_status'  => 'publish',
+                        'post_type'    => 'tribe_organizer',
+                        'post_author'  => $user_id
+                    ];
+                    $organizer_id = wp_insert_post($organizer_data);
+
+                    if (is_wp_error($organizer_id)) {
+                        echo '<script>alert("Error creating organizer: ' . esc_js($organizer_id->get_error_message()) . '");</script>';
+                        return;
+                    }
+
+                    update_user_meta($user_id, '_tribe_organizer_id', $organizer_id);
+                    echo '<script>alert("Registration successful!"); window.location.href = "/dashboard";</script>';
+                    exit;
+                } else {
+                    echo '<script>alert("Registration successful!"); window.location.href = "/my-account";</script>';
+                    exit;
+                }
+            } else {
+                echo '<script>alert("Required fields are missing or user is already logged in.");</script>';
+            }
+        } else {
+            echo '<script>alert("Nonce verification failed.");</script>';
+        }
+    }
+}
+
+// Function to enqueue JavaScript for showing/hiding organizer title section and form submission
+function custom_registration_scripts() {
+    ?>
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function () {
+            var form = document.getElementById('customRegistrationForm');
+            var checkbox = document.getElementById('create_organizer_account');
+            var organizerTitleSection = document.getElementById('organizer_title_section');
+            var organizerTitle = document.getElementById('organizer_title');
+
+            checkbox.addEventListener('change', function () {
+                if (this.checked) {
+                    organizerTitleSection.style.display = 'block';
+                    organizerTitle.required = true;
+                } else {
+                    organizerTitleSection.style.display = 'none';
+                    organizerTitle.required = false;
+                }
+            });
+
+            form.onsubmit = function (e) {
+                e.preventDefault(); // Prevent the form from submitting normally
+                console.log('Form submission intercepted for debugging.');
+
+                // Submit the form programmatically using dispatchEvent
+                form.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
+            };
+        });
+    </script>
+    <?php
+}
+
+// Function to register the shortcode and actions
+function register_custom_registration_shortcode() {
+    add_shortcode('custom_registration_form', 'custom_user_registration_form');
+    add_action('wp_enqueue_scripts', 'custom_registration_scripts');
+    add_action('init', 'custom_user_registration');
+}
+
+// Hooking up the function to WordPress
+add_action('init', 'register_custom_registration_shortcode');
+
+
