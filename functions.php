@@ -1025,7 +1025,6 @@ add_action('wp_ajax_nopriv_check_organizer_name', 'ajax_check_organizer_name'); 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////NEW FUNCTION ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 ////////FUNCTION TO CREATE A SIGN UP FORM FOR THE ORGANIZER
 // Function to display the custom registration form
 function custom_user_registration_form() {
@@ -1033,7 +1032,7 @@ function custom_user_registration_form() {
         return 'You are already logged in.';
     }
 
-    $html = '<form action="' . esc_url($_SERVER['REQUEST_URI']) . '" method="post" id="custom-registration-form">';
+    $html = '<form action="' . esc_url($_SERVER['REQUEST_URI']) . '" method="post">';
     $html .= '<p><label for="first_name">First Name <strong>*</strong></label>';
     $html .= '<input type="text" name="first_name" id="first_name" required></p>';
     $html .= '<p><label for="last_name">Last Name <strong>*</strong></label>';
@@ -1042,11 +1041,8 @@ function custom_user_registration_form() {
     $html .= '<input type="email" name="email" id="email" required></p>';
     $html .= '<p><label for="password">Password <strong>*</strong></label>';
     $html .= '<input type="password" name="password" id="password" required></p>';
-    $html .= '<p><input type="checkbox" name="is_organizer" id="is_organizer"> Register as an Organizer</p>';
-    $html .= '<div id="organizer_fields" style="display:none;">';
     $html .= '<p><label for="organizer_title">Organizer Title <strong>*</strong></label>';
-    $html .= '<input type="text" name="organizer_title" id="organizer_title"></p>';
-    $html .= '</div>';
+    $html .= '<input type="text" name="organizer_title" id="organizer_title" required></p>';
     $html .= '<p><input type="submit" name="submit" value="Register"></p>';
     $html .= '</form>';
     $html .= '<p>Already have an account? <a href="' . home_url('/custom-login') . '">Login here</a>.</p>';
@@ -1092,7 +1088,7 @@ function custom_user_registration() {
                 update_user_meta($user_id, '_tribe_organizer_id', $organizer_id);
 
                 // Redirect to the specified page
-                wp_redirect('https://thaynna-william.co.uk/dashboard');
+                wp_redirect('/dashboard');
                 exit;
             } else {
                 echo 'Error creating organizer.';
@@ -1134,6 +1130,7 @@ function restrict_access_and_show_login_form() {
 }
 add_action('template_redirect', 'restrict_access_and_show_login_form');
 //////END
+
 
 
 
