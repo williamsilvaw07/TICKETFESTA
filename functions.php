@@ -996,13 +996,44 @@ add_filter('wp_unique_post_slug', 'customize_organizer_slug', 10, 4);
 ///////////////////NEW FUNCTION ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
+
+///FUNCTION TO CHECK IF ORGANIZE NAME IS UNIQE
+function ajax_check_organizer_name() {
+    $organizer_name = sanitize_text_field( $_POST['organizer_name'] );
+
+    $existing_organizers = get_posts(array(
+        'post_type' => 'tribe_organizer',
+        'post_status' => 'publish',
+        'title' => $organizer_name,
+        'posts_per_page' => 1,
+    ));
+
+    if (count($existing_organizers) > 0) {
+        echo 'An organizer with this name already exists.';
+    }
+    wp_die();
+}
+
+add_action('wp_ajax_check_organizer_name', 'ajax_check_organizer_name');
+add_action('wp_ajax_nopriv_check_organizer_name', 'ajax_check_organizer_name'); // If needed for non-logged in users
+
+
+//////////////////////END////////////////////////
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////NEW FUNCTION ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+////////FUNCTION TO CREATE A SIGN UP FORM FOR THE ORGANIZER
 // Function to display the custom registration form
 function custom_user_registration_form() {
     if (is_user_logged_in()) {
         return 'You are already logged in.';
     }
 
-    $html = '<form action="' . esc_url($_SERVER['REQUEST_URI']) . '" method="post" id="custom_registration_form">';
+    $html = '<form action="' . esc_url($_SERVER['REQUEST_URI']) . '" method="post" id="custom-registration-form">';
     $html .= '<p><label for="first_name">First Name <strong>*</strong></label>';
     $html .= '<input type="text" name="first_name" id="first_name" required></p>';
     $html .= '<p><label for="last_name">Last Name <strong>*</strong></label>';
@@ -1011,27 +1042,26 @@ function custom_user_registration_form() {
     $html .= '<input type="email" name="email" id="email" required></p>';
     $html .= '<p><label for="password">Password <strong>*</strong></label>';
     $html .= '<input type="password" name="password" id="password" required></p>';
-    $html .= '<p><input type="checkbox" name="is_organizer" id="is_organizer"> Sign up as an organizer</p>';
+    $html .= '<p><input type="checkbox" name="is_organizer" id="is_organizer"> Register as an Organizer</p>';
     $html .= '<div id="organizer_fields" style="display:none;">';
     $html .= '<p><label for="organizer_title">Organizer Title <strong>*</strong></label>';
     $html .= '<input type="text" name="organizer_title" id="organizer_title"></p>';
     $html .= '</div>';
     $html .= '<p><input type="submit" name="submit" value="Register"></p>';
     $html .= '</form>';
-    $html .= '<p>Already have an account? <a href="#" id="login_register_link">Login here</a>.</p>';
+    $html .= '<p>Already have an account? <a href="' . home_url('/custom-login') . '">Login here</a>.</p>';
 
     return $html;
 }
 
 // Function to handle the registration process
-function custom_process_user_registration() {
-    if (isset($_POST['submit'])) {
-        // Registration process code here
+function custom_user_registration() {
+    if (isset($_POST['first_name']) && isset($_POST['last_name']) && isset($_POST['email']) && isset($_POST['password']) && !is_user_logged_in()) {
         $first_name = sanitize_text_field($_POST['first_name']);
         $last_name = sanitize_text_field($_POST['last_name']);
         $email = sanitize_email($_POST['email']);
         $password = $_POST['password'];
-        $user_role = isset($_POST['is_organizer']) ? 'organizer' : 'customer'; // Default role is 'customer'
+        $organizer_title = sanitize_text_field($_POST['organizer_title']);
 
         $user_id = wp_create_user($email, $password, $email); // Username is set to email
 
@@ -1039,52 +1069,75 @@ function custom_process_user_registration() {
             // Update user meta for first name and last name
             update_user_meta($user_id, 'first_name', $first_name);
             update_user_meta($user_id, 'last_name', $last_name);
-            update_user_meta($user_id, 'is_organizer', isset($_POST['is_organizer']) ? true : false); // Store organizer status
 
-            // Assign role to the user
+            // Assign the 'organiser' role to the user
             $user = new WP_User($user_id);
-            $user->set_role($user_role);
+            $user->set_role('organiser');
 
             // Automatically log the user in
             wp_set_current_user($user_id);
             wp_set_auth_cookie($user_id);
 
-            if ($user_role === 'organizer' && isset($_POST['organizer_title'])) {
-                $organizer_title = sanitize_text_field($_POST['organizer_title']);
+            // Create the organizer post
+            $organizer_data = array(
+                'post_title'   => $organizer_title, // Use the organizer title for the post title
+                'post_content' => '',
+                'post_status'  => 'publish',
+                'post_type'    => 'tribe_organizer',
+                'post_author'  => $user_id
+            );
+            $organizer_id = wp_insert_post($organizer_data);
 
-                // Create the organizer post
-                $organizer_data = array(
-                    'post_title'    => $organizer_title,
-                    'post_content'  => '',
-                    'post_status'   => 'publish',
-                    'post_type'     => 'tribe_organizer',
-                    'post_author'   => $user_id
-                );
-                $organizer_id = wp_insert_post($organizer_data);
+            if (!is_wp_error($organizer_id)) {
+                update_user_meta($user_id, '_tribe_organizer_id', $organizer_id);
 
-                if (!is_wp_error($organizer_id)) {
-                    update_user_meta($user_id, '_tribe_organizer_id', $organizer_id);
-                } else {
-                    echo 'Error creating organizer.';
-                }
-            }
-
-            // Redirect to the specified page
-            if ($user_role === 'organizer') {
-                wp_redirect('/dashboard');
+                // Redirect to the specified page
+                wp_redirect('https://thaynna-william.co.uk/dashboard');
+                exit;
             } else {
-                wp_redirect('/my-account');
+                echo 'Error creating organizer.';
             }
-            exit;
         } else {
             echo 'Error creating user.';
         }
     }
 }
 
+// Function to register the shortcode
+function register_custom_registration_shortcode() {
+    add_shortcode('custom_registration_form', 'custom_user_registration_form');
+}
+
 // Hooking up the functions to WordPress
-add_shortcode('custom_registration_form', 'custom_user_registration_form');
-add_action('init', 'custom_process_user_registration');
+add_action('init', 'register_custom_registration_shortcode');
+add_action('init', 'custom_user_registration');
+//////END
+
+
+
+
+
+///FUNCTION FOR ADMIN ORGANIZER LOGIN FORM
+function restrict_access_and_show_login_form() {
+    if (is_page_template('organizer-template.php')) {
+        if (!is_user_logged_in()) {
+            wp_redirect(home_url('/custom-login'));
+            exit;
+        }
+
+        $user = wp_get_current_user();
+        if (!in_array('organiser', (array) $user->roles) && !in_array('administrator', (array) $user->roles)) {
+            wp_redirect(home_url('/custom-login'));
+            exit;
+        }
+    }
+}
+add_action('template_redirect', 'restrict_access_and_show_login_form');
+//////END
+
+
+
+
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
