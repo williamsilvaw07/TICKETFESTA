@@ -2494,9 +2494,13 @@ position: relative!important;
     max-width: 250px;
     object-fit: cover;
     width: 100%!important;
-    
     flex: 1 1 22%;
-
+}
+.category-images .img-container img{
+    max-width: 250px;
+    object-fit: cover;
+    width: 100%!important;
+    flex: 1 1 22%;
 }
 
 #delete-category-form{
