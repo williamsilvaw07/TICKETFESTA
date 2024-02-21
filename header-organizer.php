@@ -265,6 +265,12 @@ jQuery(document).ready(function($) {
     border-radius: inherit;
 }
 
+.brand-link {
+    position: fixed;
+    border-bottom: 1px solid #e4e4e4;
+}
+
+
 /***MAIN LAYOUT***/
 .page-template-organizer-template-php .content-wrapper , .main-header{
     background: #0d0e0e!important;
@@ -731,10 +737,7 @@ body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .content-w
     top: 119px;
 }
 
-.brand-link {
-    position: fixed;
-    border-bottom: 0!important;
-}
+
 /* List Styles */
 .admin_dashboard-sidebar-list {
     list-style-type: none;
