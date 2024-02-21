@@ -331,7 +331,7 @@ function category_image_gallery_shortcode($atts) {
         $category_images = get_term_meta($category_id, 'category_images', true); // get category images
         $category_images = explode(',', $category_images);
         $cat_organiser   = get_term_meta($category_id, 'category_organiser', true);
-        $cat_organiser   = get_post($cat_organiser)->post_title;
+        $cat_organiser_name   = get_post($cat_organiser)->post_title;
 
         echo "<pre>";
         var_dump($cat_organiser);
@@ -344,7 +344,7 @@ function category_image_gallery_shortcode($atts) {
                 echo '<img src="' . esc_url($category_image) . '" alt="" />';
                 echo '<div class="meta">';
                 echo "<div class='category'> $term->name </div>";
-                echo "<div class='organizer'>Organizer: $cat_organiser</div>";
+                echo "<div class='organizer'>Organizer: $cat_organiser_name</div>";
                 echo '</div>';
                 echo '</div>';
             }
