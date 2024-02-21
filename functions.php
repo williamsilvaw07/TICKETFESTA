@@ -1027,7 +1027,6 @@ add_action('wp_ajax_nopriv_check_organizer_name', 'ajax_check_organizer_name'); 
 ///////////////////NEW FUNCTION ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Function to display the custom registration form
-// Function to display the custom registration form
 function custom_user_registration_form() {
     if (is_user_logged_in()) {
         return 'You are already logged in.';
