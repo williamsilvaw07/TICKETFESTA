@@ -1030,28 +1030,170 @@ add_action('wp_ajax_nopriv_check_organizer_name', 'ajax_check_organizer_name'); 
 
 
 
+// Function to display the custom registration form
+function custom_user_registration_form() {
+    if (is_user_logged_in()) {
+        return 'You are already logged in.';
+    }
 
+    $html = '<form action="' . esc_url($_SERVER['REQUEST_URI']) . '" method="post" id="custom_registration_form">';
+    $html .= '<p><label for="first_name">First Name <strong>*</strong></label>';
+    $html .= '<input type="text" name="first_name" id="first_name" required></p>';
+    $html .= '<p><label for="last_name">Last Name <strong>*</strong></label>';
+    $html .= '<input type="text" name="last_name" id="last_name" required></p>';
+    $html .= '<p><label for="email">Email <strong>*</strong></label>';
+    $html .= '<input type="email" name="email" id="email" required></p>';
+    $html .= '<p><label for="password">Password <strong>*</strong></label>';
+    $html .= '<input type="password" name="password" id="password" required></p>';
+    $html .= '<p><input type="checkbox" name="is_organizer" id="is_organizer"> Sign up as an organizer</p>';
+    $html .= '<div id="organizer_fields" style="display:none;">';
+    $html .= '<p><label for="organizer_title">Organizer Title <strong>*</strong></label>';
+    $html .= '<input type="text" name="organizer_title" id="organizer_title"></p>';
+    $html .= '</div>';
+    $html .= '<p><input type="submit" name="submit" value="Register"></p>';
+    $html .= '</form>';
+    $html .= '<p>Already have an account? <a href="#" id="login_register_link">Login here</a>.</p>';
 
+    // JavaScript to show/hide organizer fields and handle popup
+    $html .= '<script type="text/javascript">
+        jQuery(document).ready(function($) {
+            $("#is_organizer").change(function() {
+                if(this.checked) {
+                    $("#organizer_fields").show();
+                } else {
+                    $("#organizer_fields").hide();
+                }
+            });
 
-///FUNCTION FOR ADMIN ORGANIZER LOGIN FORM
-function restrict_access_and_show_login_form() {
-    if (is_page_template('organizer-template.php')) {
-        if (!is_user_logged_in()) {
-            wp_redirect(home_url('/custom-login'));
+            $("#login_register_link").click(function(e) {
+                e.preventDefault();
+                $("#login_register_popup").show();
+            });
+
+            $(".close_popup").click(function(e) {
+                e.preventDefault();
+                $("#login_register_popup").hide();
+            });
+        });
+    </script>';
+
+    // Popup for login and registration
+    $html .= '<div id="login_register_popup" style="display:none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 9999;">';
+    $html .= '<div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #fff; padding: 20px; border-radius: 10px;">';
+    $html .= '<a href="#" class="close_popup" style="position: absolute; top: 5px; right: 10px;">Close</a>';
+    $html .= custom_user_login_form(); // Include login form
+    $html .= '</div>';
+    $html .= '</div>';
+
+    return $html;
+}
+
+// Function to display the custom login form
+function custom_user_login_form() {
+    $html = '<form action="' . esc_url($_SERVER['REQUEST_URI']) . '" method="post" id="custom_login_form">';
+    $html .= '<p><label for="username">Username</label>';
+    $html .= '<input type="text" name="username" id="username"></p>';
+    $html .= '<p><label for="password">Password</label>';
+    $html .= '<input type="password" name="password" id="password"></p>';
+    $html .= '<p><input type="submit" name="submit" value="Login"></p>';
+    $html .= '</form>';
+
+    return $html;
+}
+
+// Function to handle the registration process
+function custom_user_registration() {
+    if (isset($_POST['first_name'], $_POST['last_name'], $_POST['email'], $_POST['password']) && !is_user_logged_in()) {
+        $first_name = sanitize_text_field($_POST['first_name']);
+        $last_name = sanitize_text_field($_POST['last_name']);
+        $email = sanitize_email($_POST['email']);
+        $password = $_POST['password'];
+        $user_role = isset($_POST['is_organizer']) ? 'organiser' : 'customer'; // Default role is 'customer'
+
+        $user_id = wp_create_user($email, $password, $email); // Username is set to email
+
+        if (!is_wp_error($user_id)) {
+            // Update user meta for first name and last name
+            update_user_meta($user_id, 'first_name', $first_name);
+            update_user_meta($user_id, 'last_name', $last_name);
+            update_user_meta($user_id, 'is_organizer', isset($_POST['is_organizer']) ? true : false); // Store organizer status
+
+            // Assign role to the user
+            $user = new WP_User($user_id);
+            $user->set_role($user_role);
+
+            // Automatically log the user in
+            wp_set_current_user($user_id);
+            wp_set_auth_cookie($user_id);
+
+            if ($user_role === 'organiser' && isset($_POST['organizer_title'])) {
+                $organizer_title = sanitize_text_field($_POST['organizer_title']);
+
+                // Create the organizer post
+                $organizer_data = array(
+                    'post_title'    => $organizer_title,
+                    'post_content'  => '',
+                    'post_status'   => 'publish',
+                    'post_type'     => 'tribe_organizer',
+                    'post_author'   => $user_id
+                );
+                $organizer_id = wp_insert_post($organizer_data);
+
+                if (!is_wp_error($organizer_id)) {
+                    update_user_meta($user_id, '_tribe_organizer_id', $organizer_id);
+                } else {
+                    echo 'Error creating organizer.';
+                }
+            }
+
+            // Redirect to the specified page
+            if ($user_role === 'organiser') {
+                wp_redirect('/dashboard');
+            } else {
+                wp_redirect('/my-account');
+            }
             exit;
-        }
-
-        $user = wp_get_current_user();
-        if (!in_array('organiser', (array) $user->roles) && !in_array('administrator', (array) $user->roles)) {
-            wp_redirect(home_url('/custom-login'));
-            exit;
+        } else {
+            echo 'Error creating user.';
         }
     }
 }
-add_action('template_redirect', 'restrict_access_and_show_login_form');
-//////END
 
+// Function to handle the login process
+function custom_user_login() {
+    if (isset($_POST['username'], $_POST['password'])) {
+        $username = $_POST['username'];
+        $password = $_POST['password'];
 
+        $user = wp_authenticate($username, $password);
+
+        if (!is_wp_error($user)) {
+            wp_set_current_user($user->ID);
+            wp_set_auth_cookie($user->ID);
+
+            // Redirect based on user type
+            $user_type = get_user_meta($user->ID, 'is_organizer', true) ? 'organizer' : 'customer';
+            if ($user_type === 'organizer') {
+                wp_redirect('/dashboard');
+            } else {
+                wp_redirect('/my-account');
+            }
+            exit;
+        } else {
+            echo 'Invalid username or password.';
+        }
+    }
+}
+
+// Function to register the shortcode
+function register_custom_registration_shortcode() {
+    add_shortcode('custom_registration_form', 'custom_user_registration_form');
+}
+
+// Hooking up the functions to WordPress
+add_action('init', 'register_custom_registration_shortcode');
+add_action('init', 'custom_user_registration');
+add_action('init', 'custom_user_login');
 
 
 
