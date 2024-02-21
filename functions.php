@@ -1026,7 +1026,6 @@ add_action('wp_ajax_nopriv_check_organizer_name', 'ajax_check_organizer_name'); 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////NEW FUNCTION ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
 // Function to display the custom registration form
 function custom_user_registration_form() {
     if (is_user_logged_in()) {
@@ -1140,35 +1139,6 @@ function register_custom_registration_shortcode() {
 
 // Hooking up the function to WordPress
 add_action('init', 'register_custom_registration_shortcode');
-
-// Function to enqueue JavaScript
-function custom_registration_scripts() {
-    ?>
-    <script type="text/javascript">
-        jQuery(document).ready(function($) {
-            $('#create_organizer_account').change(function() {
-                if (this.checked) {
-                    $('#organizer_title_section').show();
-                } else {
-                    $('#organizer_title_section').hide();
-                }
-            });
-        });
-    </script>
-    <?php
-}
-
-// Function to register the shortcode and actions
-function register_custom_registration_shortcode() {
-    add_shortcode('custom_registration_form', 'custom_user_registration_form');
-    add_action('init', 'custom_user_registration');
-    add_action('wp_footer', 'custom_registration_scripts');
-}
-
-// Hooking up the function to WordPress
-add_action('init', 'register_custom_registration_shortcode');
-
-
 
 
 
