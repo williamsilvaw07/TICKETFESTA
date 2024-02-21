@@ -2492,6 +2492,21 @@ position: relative!important;
 
 .img-container {
     display: flex;
+    position: relative;
+}
+.img-container:hover .meta {
+    visibility: hidden;
+}
+.img-container .meta  .category{
+    font-weight: 600;
+}
+.img-container .meta {
+    position: absolute;
+    bottom: 0;
+    background: #0000008a;
+    padding: 20px;
+    width: 100%;
+    text-align: center;
 }
 .category-images img{
     max-width: 250px;
