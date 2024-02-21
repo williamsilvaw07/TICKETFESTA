@@ -1025,6 +1025,12 @@ add_action('wp_ajax_nopriv_check_organizer_name', 'ajax_check_organizer_name'); 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////NEW FUNCTION ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
 // Function to display the custom registration form
 function custom_user_registration_form() {
     if (is_user_logged_in()) {
@@ -1046,7 +1052,7 @@ function custom_user_registration_form() {
     $html .= '<p><label for="organizer_title">Organizer Title <strong>*</strong></label>';
     $html .= '<input type="text" name="organizer_title" id="organizer_title"></p>';
     $html .= '</div>';
-    $html .= '<p><input type="submit" name="submit" value="Register" id="registerButton"></p>';
+    $html .= '<p><input type="submit" value="Register"></p>';
     $html .= '</form>';
     $html .= '<p>Already have an account? <a href="' . home_url('/custom-login') . '">Login here</a>.</p>';
 
@@ -1116,7 +1122,7 @@ function custom_user_registration() {
     }
 }
 
-// Function to enqueue JavaScript for showing/hiding organizer title section
+// Function to enqueue JavaScript for showing/hiding organizer title section and form submission
 function custom_registration_scripts() {
     ?>
     <script type="text/javascript">
@@ -1125,7 +1131,6 @@ function custom_registration_scripts() {
             var checkbox = document.getElementById('create_organizer_account');
             var organizerTitleSection = document.getElementById('organizer_title_section');
             var organizerTitle = document.getElementById('organizer_title');
-            var registerButton = document.getElementById('registerButton');
 
             checkbox.addEventListener('change', function () {
                 if (this.checked) {
@@ -1137,15 +1142,13 @@ function custom_registration_scripts() {
                 }
             });
 
-            form.addEventListener('submit', function (e) {
+            form.onsubmit = function (e) {
                 e.preventDefault(); // Prevent the form from submitting normally
-                registerButton.value = 'Processing...';
                 console.log('Form submission intercepted for debugging.');
 
-                // You can add more debug statements here if needed
-
-                this.submit(); // Submit the form programmatically
-            });
+                // Submit the form programmatically using dispatchEvent
+                form.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
+            };
         });
     </script>
     <?php
@@ -1160,6 +1163,9 @@ function register_custom_registration_shortcode() {
 
 // Hooking up the function to WordPress
 add_action('init', 'register_custom_registration_shortcode');
+
+
+
 
 
 
