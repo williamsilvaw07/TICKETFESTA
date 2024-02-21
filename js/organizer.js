@@ -20,6 +20,7 @@ function addCreateEventForm() {
   if (!eventId) return;
 
   var htmlOutputStart = `
+  
     <div class="tribe-section tribe-section-terms">
         <div class="tribe-section-header">
           <h3>Coupon</h3>
@@ -42,10 +43,10 @@ function addCreateEventForm() {
           <input type="text" class="event-terms-description" id="usage_limit" name="usage_limit"/>
           <br>
           <span class="coupon_title_section tribe-datepicke">start date</span> 
-          <input type="text" class="tribe-datepicker tribe-field-start_date ticket_field hasDatepicker" id="start_date" name="start_date"/>
+          <input type="text" class="hasDatepicker" id="start_date" name="start_date"/>
           <br>
           <span class="coupon_title_section">start time</span>
-          <input type="text" class="event-terms-description" id="start_time" name="start_time"/>
+          <input type="text" class="event-terms-description tribe-datepicker tribe-field-start_date ticket_field hasDatepicker" id="start_time" name="start_time"/>
           <br>
           <span class="coupon_title_section">expire date</span> 
           <input type="text" class="event-terms-description" id="expire_date" name="expire_date"/>
@@ -89,6 +90,7 @@ function addCreateEventForm() {
         });
 
         $("#eventCouponForm").html(htmlOutputStart + options + htmlOutputEnd);
+        $("#eventCouponForm").find("#start_date").datepicker();
       }
     },
   });
@@ -97,6 +99,7 @@ function addCreateEventForm() {
 
 jQuery(document).ready(function ($) {
 
+  jQuery( "#datepicker" ).datepicker();
 
   // Select the parent element with class .tribe-community-notice.tribe-community-notice-update
   // Find all elements with the class .tribe-community-notice.tribe-community-notice-update

@@ -72,7 +72,7 @@ function add_custom_class_to_order_rows()
 {
     ?>
     <script type="text/javascript">
-        jQuery(document).ready(func tion($) {
+        jQuery(document).ready(function($) {
                 $('.woocommerce-orders-table__row').each(function () {
                     $(this).addClass('coupon-style');
                 });
@@ -293,7 +293,8 @@ function iam00_return_coupon_associate_with_event()
             'meta_query' => array(
                 array(
                     'key' => 'product_ids',
-                    'compare' => 'EXISTS', // Check if the meta key exists
+                    'value' => $product_ids,
+                    'compare' => 'IN',
                 ),
             ),
         );
