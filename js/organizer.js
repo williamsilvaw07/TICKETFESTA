@@ -61,7 +61,7 @@ function addCreateEventForm() {
     </div>
   `;
 
-  $.ajax({
+  jQuery.ajax({
     url: iam00_ajax_object.ajax_url, // AJAX URL set by WordPress
     type: "post",
     data: {
@@ -97,7 +97,7 @@ function addCreateEventForm() {
 }
 
 
-jQuery(document).ready(function ($) {
+jQuery(document).ready(function (jQuery) {
 
   jQuery( "#datepicker" ).datepicker();
 
@@ -147,7 +147,7 @@ jQuery(document).ready(function ($) {
       selectedValues.push(parseInt(checkbox.value));
     });
 
-    $.ajax({
+    jQuery.ajax({
       url: iam00_ajax_object.ajax_url, // AJAX URL set by WordPress
       type: "post",
       data: {
@@ -192,7 +192,7 @@ jQuery(document).ready(function ($) {
     });
   });
 
-  
+  addCreateEventForm();
 
   jQuery(document).ajaxSuccess(function (event, xhr, settings) {
     var paramsObject = parseQueryString(settings.data);
@@ -207,7 +207,7 @@ jQuery(document).ready(function ($) {
   function getCoupons() {
 
     var eventId = jQuery("#post_ID").val();
-    $.ajax({
+    jQuery.ajax({
       url: iam00_ajax_object.ajax_url, // AJAX URL set by WordPress
       type: "post",
       data: {
@@ -266,7 +266,7 @@ jQuery(document).ready(function ($) {
 
 
 
-addCreateEventForm();
+
 
 
 
