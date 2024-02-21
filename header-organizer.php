@@ -261,7 +261,9 @@ jQuery(document).ready(function($) {
 <style>
 
 /******EDIT ORFANIZSER****/
-
+.main-sidebar .img-circle {
+    border-radius: inherit;
+}
 
 /***MAIN LAYOUT***/
 .page-template-organizer-template-php .content-wrapper , .main-header{
