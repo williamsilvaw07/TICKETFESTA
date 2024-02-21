@@ -336,6 +336,12 @@ function category_image_gallery_shortcode($atts) {
             foreach($category_images  as $category_image){
                 echo '<div class="img-container">';
                 echo '<img src="' . esc_url($category_image) . '" alt="" />';
+                echo '<div class="meta">';
+                echo '<div class="category"> London';
+                echo '<div class="organizer"> New Organizer';
+                echo '</div>';
+                echo '</div>';
+                echo '</div>';
                 echo '</div>';
             }
             echo '</div>';

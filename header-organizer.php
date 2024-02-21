@@ -2490,6 +2490,9 @@ position: relative!important;
     gap:10px;
 }
 
+.img-container {
+    display: flex;
+}
 .category-images img{
     max-width: 250px;
     object-fit: cover;
