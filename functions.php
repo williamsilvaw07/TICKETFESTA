@@ -1029,59 +1029,7 @@ add_action('wp_ajax_nopriv_check_organizer_name', 'ajax_check_organizer_name'); 
 
 
 
-// Function to display the custom dual form for registration and login
-function custom_dual_user_form() {
-    if (is_user_logged_in()) {
-        return 'You are already logged in.';
-    }
 
-    // Container for both forms
-    $html = '<div class="custom-form-container">';
-    
-    // Tabs for switching forms
-    $html .= '<div class="form-tabs">';
-    $html .= '<span class="tab" onclick="showForm(\'login\')">Sign In</span>';
-    $html .= '<span class="tab" onclick="showForm(\'register\')">New Account</span>';
-    $html .= '</div>';
-    
-    // Login Form
-    $html .= '<div id="loginForm" style="display:none;">';
-    $html .= '<form method="post" action="' . esc_url(admin_url('admin-post.php')) . '">';
-    $html .= '<p><input type="email" name="log" placeholder="E-mail"></p>';
-    $html .= '<p><input type="password" name="pwd" placeholder="Password"></p>';
-    $html .= '<p><input type="submit" value="Login"></p>';
-    $html .= '</form>';
-    $html .= '</div>';
-    
-    // Registration Form
-    $html .= '<div id="registrationForm" style="display:none;">';
-    $html .= '<form action="' . esc_url($_SERVER['REQUEST_URI']) . '" method="post" id="customRegistrationForm">';
-    // Add nonce for security
-    $html .= wp_nonce_field('custom_user_registration_nonce', 'custom_user_registration_nonce_field', true, false);
-    // Add the rest of your registration form fields here...
-    $html .= '<p><input type="submit" value="Register"></p>';
-    $html .= '</form>';
-    $html .= '</div>';
-    
-    $html .= '</div>'; // Close container
-
-    // JavaScript to switch forms
-    $html .= "<script>
-    function showForm(form) {
-        if (form === 'login') {
-            document.getElementById('loginForm').style.display = 'block';
-            document.getElementById('registrationForm').style.display = 'none';
-        } else {
-            document.getElementById('loginForm').style.display = 'none';
-            document.getElementById('registrationForm').style.display = 'block';
-        }
-    }
-    // Initially show the login form
-    showForm('login');
-    </script>";
-
-    return $html;
-}
 
 // Function to display the custom registration form
 function custom_user_registration_form() {
