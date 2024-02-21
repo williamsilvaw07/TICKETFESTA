@@ -82,7 +82,7 @@ if (!defined('ABSPATH')) {
 
             </ul>
         </nav>
-        <!-- /.navb ar --> 
+        <!-- /.navbar --> 
 
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
@@ -2490,35 +2490,13 @@ position: relative!important;
     gap:10px;
 }
 
-.img-container {
-    display: flex;
-    position: relative;
-}
-.img-container:hover .meta {
-    visibility: hidden;
-}
-.img-container .meta  .category{
-    font-weight: 600;
-}
-.img-container .meta {
-    position: absolute;
-    bottom: 0;
-    background: #0000008a;
-    padding: 20px;
-    width: 100%;
-    text-align: center;
-}
 .category-images img{
     max-width: 250px;
     object-fit: cover;
     width: 100%!important;
+    
     flex: 1 1 22%;
-}
-.category-images .img-container img{
-    max-width: 250px;
-    object-fit: cover;
-    width: 100%!important;
-    flex: 1 1 22%;
+
 }
 
 #delete-category-form{
