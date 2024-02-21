@@ -334,9 +334,9 @@ function category_image_gallery_shortcode($atts) {
         if (!empty($category_images) ) {
             echo '<div class="category-images">';
             foreach($category_images  as $category_image){
-                echo '<div class="img-container">';
+                // echo '<div class="img-container">';
                 echo '<img src="' . esc_url($category_image) . '" alt="" />';
-                echo '</div>';
+                // echo '</div>';
             }
             echo '</div>';
         } else {
