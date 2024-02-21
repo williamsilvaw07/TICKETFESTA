@@ -1031,7 +1031,7 @@ function custom_user_registration_form() {
         return 'You are already logged in.';
     }
 
-    $html = '<form action="' . esc_url($_SERVER['REQUEST_URI']) . '" method="post">';
+    $html = '<form action="' . esc_url($_SERVER['REQUEST_URI']) . '" method="post" id="customRegistrationForm">';
     $html .= wp_nonce_field('custom_user_registration_nonce', 'custom_user_registration_nonce_field', true, false);
     $html .= '<p><label for="first_name">First Name <strong>*</strong></label>';
     $html .= '<input type="text" name="first_name" id="first_name" required></p>';
@@ -1046,26 +1046,19 @@ function custom_user_registration_form() {
     $html .= '<p><label for="organizer_title">Organizer Title <strong>*</strong></label>';
     $html .= '<input type="text" name="organizer_title" id="organizer_title"></p>';
     $html .= '</div>';
-    $html .= '<p><input type="submit" name="submit" value="Register"></p>';
+    $html .= '<p><input type="submit" name="submit" value="Register" id="registerButton"></p>';
     $html .= '</form>';
     $html .= '<p>Already have an account? <a href="' . home_url('/custom-login') . '">Login here</a>.</p>';
 
     return $html;
 }
 
-// Function to handle the registration process with debug statements
+// Function to handle the registration process with frontend debugging
 function custom_user_registration() {
-    error_log('custom_user_registration function called'); // Debug
-
+    // Check if this is a form submission
     if ('POST' == $_SERVER['REQUEST_METHOD']) {
-        error_log('Form method is POST'); // Debug
-
         if (isset($_POST['custom_user_registration_nonce_field']) && wp_verify_nonce($_POST['custom_user_registration_nonce_field'], 'custom_user_registration_nonce')) {
-            error_log('Nonce verified'); // Debug
-
             if (isset($_POST['first_name'], $_POST['last_name'], $_POST['email'], $_POST['password']) && !is_user_logged_in()) {
-                error_log('Required fields are set and user is not logged in'); // Debug
-
                 $first_name = sanitize_text_field($_POST['first_name']);
                 $last_name = sanitize_text_field($_POST['last_name']);
                 $email = sanitize_email($_POST['email']);
@@ -1075,12 +1068,9 @@ function custom_user_registration() {
                 $user_id = wp_create_user($email, $password, $email); // Username is set to email
 
                 if (is_wp_error($user_id)) {
-                    error_log('Error creating user: ' . $user_id->get_error_message()); // Debug
-                    echo 'Error creating user: ' . $user_id->get_error_message();
+                    echo '<script>alert("Error creating user: ' . esc_js($user_id->get_error_message()) . '");</script>';
                     return;
                 }
-
-                error_log('User created successfully: ' . $user_id); // Debug
 
                 update_user_meta($user_id, 'first_name', $first_name);
                 update_user_meta($user_id, 'last_name', $last_name);
@@ -1092,7 +1082,7 @@ function custom_user_registration() {
                 if ($create_organizer_account) {
                     $organizer_title = isset($_POST['organizer_title']) ? sanitize_text_field($_POST['organizer_title']) : '';
                     if (empty($organizer_title)) {
-                        echo 'Organizer title is required.';
+                        echo '<script>alert("Organizer title is required.");</script>';
                         return;
                     }
 
@@ -1106,25 +1096,23 @@ function custom_user_registration() {
                     $organizer_id = wp_insert_post($organizer_data);
 
                     if (is_wp_error($organizer_id)) {
-                        echo 'Error creating organizer: ' . $organizer_id->get_error_message();
+                        echo '<script>alert("Error creating organizer: ' . esc_js($organizer_id->get_error_message()) . '");</script>';
                         return;
                     }
 
                     update_user_meta($user_id, '_tribe_organizer_id', $organizer_id);
-                    wp_redirect('/dashboard');
+                    echo '<script>alert("Registration successful!"); window.location.href = "/dashboard";</script>';
                     exit;
                 } else {
-                    wp_redirect('/my-account');
+                    echo '<script>alert("Registration successful!"); window.location.href = "/my-account";</script>';
                     exit;
                 }
             } else {
-                error_log('Required fields are missing or user is already logged in'); // Debug
+                echo '<script>alert("Required fields are missing or user is already logged in.");</script>';
             }
         } else {
-            error_log('Nonce verification failed'); // Debug
+            echo '<script>alert("Nonce verification failed.");</script>';
         }
-    } else {
-        error_log('Form method is not POST'); // Debug
     }
 }
 
@@ -1133,9 +1121,11 @@ function custom_registration_scripts() {
     ?>
     <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', function () {
+            var form = document.getElementById('customRegistrationForm');
             var checkbox = document.getElementById('create_organizer_account');
             var organizerTitleSection = document.getElementById('organizer_title_section');
             var organizerTitle = document.getElementById('organizer_title');
+            var registerButton = document.getElementById('registerButton');
 
             checkbox.addEventListener('change', function () {
                 if (this.checked) {
@@ -1145,6 +1135,16 @@ function custom_registration_scripts() {
                     organizerTitleSection.style.display = 'none';
                     organizerTitle.required = false;
                 }
+            });
+
+            form.addEventListener('submit', function (e) {
+                e.preventDefault(); // Prevent the form from submitting normally
+                registerButton.value = 'Processing...';
+                console.log('Form submission intercepted for debugging.');
+
+                // You can add more debug statements here if needed
+
+                this.submit(); // Submit the form programmatically
             });
         });
     </script>
