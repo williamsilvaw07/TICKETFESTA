@@ -1115,14 +1115,18 @@ function custom_user_registration() {
 function custom_registration_scripts() {
     ?>
     <script type="text/javascript">
-        jQuery(document).ready(function($) {
-            $('#create_organizer_account').change(function() {
+         document.addEventListener('DOMContentLoaded', function () {
+            var checkbox = document.getElementById('create_organizer_account');
+            var organizerTitleSection = document.getElementById('organizer_title_section');
+            var organizerTitle = document.getElementById('organizer_title');
+
+            checkbox.addEventListener('change', function () {
                 if (this.checked) {
-                    $('#organizer_title_section').show();
-                    $('#organizer_title').prop('required', true);
+                    organizerTitleSection.style.display = 'block';
+                    organizerTitle.required = true;
                 } else {
-                    $('#organizer_title_section').hide();
-                    $('#organizer_title').prop('required', false);
+                    organizerTitleSection.style.display = 'none';
+                    organizerTitle.required = false;
                 }
             });
         });
