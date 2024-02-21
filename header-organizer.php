@@ -600,7 +600,9 @@ border:5px solid white
     right: 10px;
 
 }
-
+.container-fluid{
+    padding-top:50px
+}
 .container-fluid h2 {
     padding-bottom: 11px;
     padding-top: 13px;
