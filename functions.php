@@ -1027,6 +1027,7 @@ add_action('wp_ajax_nopriv_check_organizer_name', 'ajax_check_organizer_name'); 
 ///////////////////NEW FUNCTION ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Function to display the custom registration form
+// Function to display the custom registration form
 function custom_user_registration_form() {
     if (is_user_logged_in()) {
         return 'You are already logged in.';
@@ -1073,6 +1074,7 @@ function custom_user_registration() {
             $user_role = 'organiser'; // Set user role to 'organiser' if creating an organizer account
         } else {
             $user_role = 'customer'; // Set user role to 'customer' if not creating an organizer account
+            $organizer_title = ''; // Set organizer title to empty if not creating an organizer account
         }
 
         $user_id = wp_create_user($email, $password, $email); // Username is set to email
@@ -1146,8 +1148,6 @@ function register_custom_registration_shortcode() {
 
 // Hooking up the function to WordPress
 add_action('init', 'register_custom_registration_shortcode');
-
-
 
 
 
