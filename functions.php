@@ -1078,20 +1078,7 @@ function custom_user_registration_form() {
     $html .= '</form>';
     $html .= '<p>Already have an account? <a href="#" id="login_register_link">Login here</a>.</p>';
 
-    // JavaScript to handle popup
-    $html .= '<script type="text/javascript">
-        jQuery(document).ready(function($) {
-            $("#login_register_link").click(function(e) {
-                e.preventDefault();
-                $("#login_register_popup").show();
-            });
 
-            $(".close_popup").click(function(e) {
-                e.preventDefault();
-                $("#login_register_popup").hide();
-            });
-        });
-    </script>';
 
     // Popup for login and registration
     $html .= '<div id="login_register_popup" style="display:none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 9999;">';
