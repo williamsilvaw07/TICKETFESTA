@@ -25,63 +25,7 @@ if (!defined('ABSPATH')) {
     <div class="wrapper">
         
         <!-- Navbar -->
-        <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-            <!-- Left navbar links -->
-            <ul class="navbar-nav ml-0 d-block d-md-none">
-                <li class="nav-item">
-                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-                </li>
-            </ul>
-
-            <!-- Right navbar links -->
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item dropdown show">
-                    <!-- <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="true">
-                        <i class="far fa-comments"></i>
-                        <span class="badge badge-danger navbar-badge">3</span>
-                    </a> -->
-
-                    <div class="user-panel d-flex" data-toggle="dropdown" aria-expanded="true">
-                        <div class="image">
-                            <img src="https://demo.dashboardpack.com/admindek-html/files/assets/images/avatar-4.jpg" class="img-round" alt="User Image">
-                        </div>
-                        <div class="info d-flex">
-                            <span role="button">Alexander</span>
-                            <i class="fas fa-angle-down mt-1 ml-2"></i>
-                        </div>
-                    </div>
-
-                    <ul class="show-notification profile-notification dropdown-menu" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
-                        <li>
-                            <a href="#!">
-                                <i class="feather icon-settings"></i> Settings
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="feather icon-user"></i> Profile
-                            </a>
-                        </li>
-                        <li>
-                            <a href="email-inbox.html">
-                                <i class="feather icon-mail"></i> My Messages
-                            </a>
-                        </li>
-                        <li>
-                            <a href="auth-lock-screen.html">
-                                <i class="feather icon-lock"></i> Lock Screen
-                            </a>
-                        </li>
-                        <li> 
-                            <a href="auth-sign-in-social.html">
-                                <i class="feather icon-log-out"></i> Logout
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-
-            </ul>
-        </nav>
+      
         <!-- /.navbar --> 
 
         <!-- Main Sidebar Container -->
