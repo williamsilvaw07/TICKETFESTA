@@ -1027,6 +1027,33 @@ add_action('wp_ajax_nopriv_check_organizer_name', 'ajax_check_organizer_name'); 
 ///////////////////NEW FUNCTION ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
+// Function to display the custom registration form
+function custom_user_registration_form() {
+    if (is_user_logged_in()) {
+        return 'You are already logged in.';
+    }
+
+    $html = '<form action="' . esc_url($_SERVER['REQUEST_URI']) . '" method="post">';
+    $html .= '<p><label for="first_name">First Name <strong>*</strong></label>';
+    $html .= '<input type="text" name="first_name" id="first_name" required></p>';
+    $html .= '<p><label for="last_name">Last Name <strong>*</strong></label>';
+    $html .= '<input type="text" name="last_name" id="last_name" required></p>';
+    $html .= '<p><label for="email">Email <strong>*</strong></label>';
+    $html .= '<input type="email" name="email" id="email" required></p>';
+    $html .= '<p><label for="password">Password <strong>*</strong></label>';
+    $html .= '<input type="password" name="password" id="password" required></p>';
+    $html .= '<p><input type="checkbox" name="create_organizer_account" id="create_organizer_account"> Create Organizer Account</p>';
+    $html .= '<div id="organizer_title_section" style="display:none;">'; // Hidden by default
+    $html .= '<p><label for="organizer_title">Organizer Title <strong>*</strong></label>';
+    $html .= '<input type="text" name="organizer_title" id="organizer_title" required></p>';
+    $html .= '</div>';
+    $html .= '<p><input type="submit" name="submit" value="Register"></p>';
+    $html .= '</form>';
+    $html .= '<p>Already have an account? <a href="' . home_url('/custom-login') . '">Login here</a>.</p>';
+
+    return $html;
+}
+
 // Function to handle the registration process
 function custom_user_registration() {
     if (isset($_POST['first_name']) && isset($_POST['last_name']) && isset($_POST['email']) && isset($_POST['password']) && !is_user_logged_in()) {
@@ -1086,6 +1113,33 @@ function custom_user_registration() {
         }
     }
 }
+
+// Function to enqueue JavaScript
+function custom_registration_scripts() {
+    ?>
+    <script type="text/javascript">
+        jQuery(document).ready(function($) {
+            $('#create_organizer_account').change(function() {
+                if (this.checked) {
+                    $('#organizer_title_section').show();
+                } else {
+                    $('#organizer_title_section').hide();
+                }
+            });
+        });
+    </script>
+    <?php
+}
+
+// Function to register the shortcode and actions
+function register_custom_registration_shortcode() {
+    add_shortcode('custom_registration_form', 'custom_user_registration_form');
+    add_action('init', 'custom_user_registration');
+    add_action('wp_footer', 'custom_registration_scripts');
+}
+
+// Hooking up the function to WordPress
+add_action('init', 'register_custom_registration_shortcode');
 
 // Function to enqueue JavaScript
 function custom_registration_scripts() {
