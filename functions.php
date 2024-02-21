@@ -1044,7 +1044,7 @@ function custom_user_registration_form() {
     $html .= '<p><input type="checkbox" name="create_organizer_account" id="create_organizer_account"> Create Organizer Account</p>';
     $html .= '<div id="organizer_title_section" style="display:none;">'; // Hidden by default
     $html .= '<p><label for="organizer_title">Organizer Title <strong>*</strong></label>';
-    $html .= '<input type="text" name="organizer_title" id="organizer_title" required></p>';
+    $html .= '<input type="text" name="organizer_title" id="organizer_title"></p>';
     $html .= '</div>';
     $html .= '<p><input type="submit" name="submit" value="Register"></p>';
     $html .= '</form>';
@@ -1064,6 +1064,11 @@ function custom_user_registration() {
 
         if ($create_organizer_account) {
             $organizer_title = isset($_POST['organizer_title']) ? sanitize_text_field($_POST['organizer_title']) : '';
+
+            if (empty($organizer_title)) {
+                echo 'Organizer title is required.';
+                return;
+            }
 
             $user_role = 'organiser'; // Set user role to 'organiser' if creating an organizer account
         } else {
@@ -1121,8 +1126,10 @@ function custom_registration_scripts() {
             $('#create_organizer_account').change(function() {
                 if (this.checked) {
                     $('#organizer_title_section').show();
+                    $('#organizer_title').prop('required', true); // Make organizer title required
                 } else {
                     $('#organizer_title_section').hide();
+                    $('#organizer_title').prop('required', false); // Remove required attribute
                 }
             });
         });
@@ -1139,27 +1146,6 @@ function register_custom_registration_shortcode() {
 
 // Hooking up the function to WordPress
 add_action('init', 'register_custom_registration_shortcode');
-
-
-
-///FUNCTION FOR ADMIN ORGANIZER LOGIN FORM
-function restrict_access_and_show_login_form() {
-    if (is_page_template('organizer-template.php')) {
-        if (!is_user_logged_in()) {
-            wp_redirect(home_url('/custom-login'));
-            exit;
-        }
-
-        $user = wp_get_current_user();
-        if (!in_array('organiser', (array) $user->roles) && !in_array('administrator', (array) $user->roles)) {
-            wp_redirect(home_url('/custom-login'));
-            exit;
-        }
-    }
-}
-add_action('template_redirect', 'restrict_access_and_show_login_form');
-//////END
-
 
 
 
