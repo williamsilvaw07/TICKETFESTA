@@ -1029,6 +1029,8 @@ add_action('wp_ajax_nopriv_check_organizer_name', 'ajax_check_organizer_name'); 
 
 
 
+
+
 // Function to display the custom registration form
 function custom_user_registration_form() {
     if (is_user_logged_in()) {
@@ -1161,7 +1163,6 @@ function register_custom_registration_shortcode() {
 
 // Hooking up the function to WordPress
 add_action('init', 'register_custom_registration_shortcode');
-
 
 
 
