@@ -108,7 +108,7 @@ if ( json_last_error() !== JSON_ERROR_NONE ) {
 }
 
 if ( in_array( $user_id, $followers_array ) ) {
-    $follower_text = 'unfollow';
+    $follower_text = 'following';
 }else{
     $follower_text = 'follow';
 }
@@ -1372,6 +1372,10 @@ width: fit-content!important;
 }
 .organizer_text_dec p{
     text-transform: capitalize!important;
+}
+.organizer_text_dec{
+    text-align: center;
+
 }
 
 
