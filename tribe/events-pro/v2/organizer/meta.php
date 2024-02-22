@@ -58,6 +58,8 @@ $template_vars = array_merge( [ 'organizer' => $organizer, ], $conditionals )
 <div <?php tribe_classes( $classes ); ?>>
 
 
+<div class="organizer_profile_main">
+
 <div class="organizer_profile_bk">
 
 <?php
@@ -198,7 +200,7 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 </div>
 <!-- organizer name end -->
 </div>
-
+</div>
 
 
 <!-- organizer profile nav -->
@@ -921,6 +923,12 @@ jQuery(document).ready(function($) {
 
 
 <style>
+
+
+
+.organizer_profile_main{
+    position: relative;
+}
     .event-day , .event-month , .event-title , .event-title a,  .event-actions , .event-actions span , .event-location , .event-time
 {
     color: black!important;
