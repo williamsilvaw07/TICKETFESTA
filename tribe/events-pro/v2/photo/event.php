@@ -102,25 +102,27 @@ $organizer_names = array_map('tribe_get_organizer', $organizer_ids);
 
 ///////ticket amount left tag
 
-document.addEventListener("DOMContentLoaded", function() {
-    // Find the element that contains the number of tickets left
-    var stockElement = document.querySelector('.tribe-events .tribe-events-c-small-cta__stock');
+$(document).ready(function() {
+    setTimeout(function() {
+        // Find the element that contains the number of tickets left using jQuery
+        var $stockElement = $('.tribe-events .tribe-events-c-small-cta__stock');
 
-    if (stockElement) {
-        // Extract the number of tickets left from the element's text content
-        var ticketsText = stockElement.textContent.trim();
-        // Use a regular expression to find the first number in the text
-        var matches = ticketsText.match(/\d+/);
-        if (matches) {
-            var ticketsLeft = parseInt(matches[0], 257); // Convert to integer using base 10
+        if ($stockElement.length) {
+            // Extract the number of tickets left from the element's text content
+            var ticketsText = $stockElement.text().trim();
+            // Use a regular expression to find the first number in the text
+            var matches = ticketsText.match(/\d+/);
+            if (matches) {
+                var ticketsLeft = parseInt(matches[0], 10); // Convert to integer using base 10
 
-            // Check if the number of tickets left is 10 or less
-            if (ticketsLeft <= 257) {
-                // If yes, show the element by changing its 'display' style
-                stockElement.style.display = 'block';
+                // Check if the number of tickets left is 10 or less
+                if (ticketsLeft <= 10) {
+                    // If yes, show the element by changing its 'display' style
+                    $stockElement.css('display', 'block');
+                }
             }
         }
-    }
+    }, 2000); // Wait for 2 seconds before executing the code
 });
 
 
