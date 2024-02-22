@@ -48,10 +48,16 @@ if (!defined('ABSPATH')) {
 
                 </li>
                 <li class="admin_dashboard-sidebar-item">
-                    <a href="/organizer-events/"><i class="fas fa-calendar-alt"></i><span class="nav-text"> Event</span> <span class="admin_dashboard-notification">2</span></a>
+                    <a href="/organizer-events/"><i class="fas fa-calendar-alt"></i><span class="nav-text">Event</span> <span class="admin_dashboard-notification">2</span></a>
                 </li>
+
                 <li class="admin_dashboard-sidebar-item">
-                    <a href="/dashboard/organisers-list/"><i class="fas fa-users"></i><span class="nav-text"> Organizers</span></a>
+    <a href="/dashboard/organisers-list/"><i class="fas fa-ticket-alt"></i><span class="nav-text">Coupons</span></a>
+</li>
+
+
+                <li class="admin_dashboard-sidebar-item">
+                    <a href="/dashboard/organisers-list/"><i class="fas fa-users"></i><span class="nav-text">Organizers</span></a>
                 </li>
                 <li class="admin_dashboard-sidebar-item">
                 <a href="/organizer-finance/">
@@ -60,7 +66,7 @@ if (!defined('ABSPATH')) {
 
                 </li>
                 <li class="admin_dashboard-sidebar-item">
-                    <a href="/organiser-gallery/"><i class="fas fa-image"></i><span class="nav-text"> Gallery</span></a>
+                    <a href="/organiser-gallery/"><i class="fas fa-image"></i><span class="nav-text">Gallery</span></a>
                 </li>
                 <li class="admin_dashboard-sidebar-item admin_dashboard-coming-soon">
                     <a href="https://thaynna-william.co.uk/organizer-eventsdd"><i class="fas fa-bullhorn"></i><span class="nav-text"> Affiliate Marketing</span></a>
@@ -75,10 +81,10 @@ if (!defined('ABSPATH')) {
         <nav class="lower_admin_dashboard-sidebar">
             <ul class="admin_dashboard-sidebar-list lower_admin_dashboard-sidebar-list">
                 <li class="admin_dashboard-sidebar-item">
-                    <a href="/organiser-settings/"><i class="fas fa-cog"></i><span class="nav-text"> Settings</span></a>
+                    <a href="/organiser-settings/"><i class="fas fa-cog"></i><span class="nav-text">Settings</span></a>
                 </li>
                 <li class="admin_dashboard-sidebar-item">
-                    <a href="#"><i class="fas fa-sign-out-alt"></i><span class="nav-text"> Logout</span></a>
+                    <a href="#"><i class="fas fa-sign-out-alt"></i><span class="nav-text">Logout</span></a>
                 </li>
             </ul>
         </nav>
@@ -210,6 +216,7 @@ body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .main-foot
 /******EDIT ORFANIZSER****/
 .main-sidebar .img-circle {
     border-radius: inherit;
+    opacity: 1;
 }
 
 .brand-link {
