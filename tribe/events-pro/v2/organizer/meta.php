@@ -1009,6 +1009,8 @@ background-position: center top;
 }
 .tribe-events-view--organizer .tribe-common-l-container{
     padding-top: 5px!important;
+    padding: 0!important;
+    margin: 0!important;
 }
 .organizer_profile_bk_img{
     border-radius: 6px;
