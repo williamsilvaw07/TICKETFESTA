@@ -445,70 +445,54 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 
 
 
-
-
 <!-- Event Gallery -->
 <div class="organizer_gallery_main organizer_main_div organizer_Gallery_content">
-<h3>Gallery</h3>
-<?php 
-    $categories = get_categories(array(
-        'taxonomy' => 'tec_organizer_category',
-        'hide_empty' => false,
-        'meta_query' => array(
-            array(
-                'key' => 'category_owner_id',
-                'value' => get_post_field('post_author', $organizer->ID)                ,
-                'compare' => '='
-            ),
-            array(
-                'key' => 'category_organiser',
-                'value' => $organizer->ID,
-                'compare' => '='
+    <h3>Gallery</h3>
+    <?php 
+        $categories = get_categories(array(
+            'taxonomy' => 'tec_organizer_category',
+            'hide_empty' => false,
+            'meta_query' => array(
+                array(
+                    'key' => 'category_owner_id',
+                    'value' => get_post_field('post_author', $organizer->ID),
+                    'compare' => '='
+                ),
+                array(
+                    'key' => 'category_organiser',
+                    'value' => $organizer->ID,
+                    'compare' => '='
+                )
             )
-        )
-    ));
+        ));
+    ?>
 
-    // category_organiser
-
-?>
     <!-- Event Gallery Category -->
     <div class="organizer_gallery_category">
-        <?php foreach($categories as $category){ 
-            $cat_title = $category->name;
-            $category_image_array = get_term_meta($category->term_id, 'category_images', true); // get category images
-            $category_images = explode(',', $category_image_array);
-            $attachment_id = attachment_url_to_postid($category_images[0]);
-            $attachment_src = wp_get_attachment_image_src($attachment_id, 'medium')[0];
-            ?>
-          
-            <div class="organizer_gallery_category_inner" data-category="<?php echo $category->slug ?>">
-                <h6 class="organizer_gallery_category_inner_title"><?php echo  $title; ?></h6>
-                <img class="organizer_gallery_category_inner_image" src="<?php echo esc_url( $attachment_src ); ?>" >
-            </div>
-        <?php } ?>
-
         <?php 
-        
-        echo '<script>';
-        echo "const imageData = {";
-        foreach ($categories as $category) {
-            $cat_title = $category->name;
-            $category_image_array = get_term_meta($category->term_id, 'category_images', true); // get category images
-            $category_images = explode(',', $category_image_array);
+            $hasImages = false; // Flag to track if any category has images
+            foreach ($categories as $category) {
+                $cat_title = $category->name;
+                $category_image_array = get_term_meta($category->term_id, 'category_images', true); // Get category images
+                $category_images = explode(',', $category_image_array);
 
-            echo "'$category->slug': [";
-            foreach ($category_images as $image) {
-                echo "'$image',";
+                if (!empty($category_images[0])) { // Check if there's at least one image
+                    $hasImages = true;
+                    $attachment_id = attachment_url_to_postid($category_images[0]);
+                    $attachment_src = wp_get_attachment_image_src($attachment_id, 'medium')[0];
+                    ?>
+                    <div class="organizer_gallery_category_inner" data-category="<?php echo $category->slug ?>">
+                        <h6 class="organizer_gallery_category_inner_title"><?php echo $cat_title; ?></h6>
+                        <img class="organizer_gallery_category_inner_image" src="<?php echo esc_url($attachment_src); ?>" >
+                    </div>
+                    <?php
+                }
             }
-        
-            echo "],";
-        }
-        echo "};";
-        echo "</script>";
 
+            if (!$hasImages) { // Display message if no images found
+                echo "<p>No images found in the gallery.</p>";
+            }
         ?>
-
-        <!-- Additional categories as needed -->
     </div>
     <!-- Event Gallery Category END -->
 
