@@ -112,7 +112,7 @@ document.addEventListener("DOMContentLoaded", function() {
         var ticketsLeft = parseInt(ticketsText, 10); // Convert to integer
 
         // Check if the number of tickets left is 10 or less
-        if (ticketsLeft <= 250) {
+        if (ticketsLeft <= 256) {
             // If yes, show the element by changing its 'display' style
             stockElement.style.display = 'block';
         }
