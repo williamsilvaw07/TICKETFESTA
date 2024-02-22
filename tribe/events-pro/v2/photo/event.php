@@ -114,12 +114,12 @@ jQuery(document).ready(function($) {
                 // Log the number of tickets left for debugging
                 console.log('Tickets left:', ticketsLeft);
 
-                // Check the number of tickets left and update the display property accordingly
-                if (ticketsLeft > 0) {
-                    // Show the ticket info if tickets are available
+                // Check if the number of tickets left is 259 or fewer
+                if (ticketsLeft <= 259) {
+                    // Show the ticket info if there are 259 or fewer tickets left
                     $(this).css('display', 'block');
                 } else {
-                    // Hide the ticket info if no tickets are left
+                    // Hide the ticket info if there are more than 259 tickets left
                     $(this).css('display', 'none');
                 }
             }
@@ -132,7 +132,6 @@ jQuery(document).ready(function($) {
     // Example: To re-check the ticket info after 2 seconds (you can adjust or remove this part based on your needs)
     setTimeout(checkAndUpdateTicketInfo, 2000);
 });
-
 
 
 
