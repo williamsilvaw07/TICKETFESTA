@@ -101,11 +101,10 @@ $organizer_names = array_map('tribe_get_organizer', $organizer_ids);
 
 
 ///////ticket amount left tag
-
 jQuery(document).ready(function($) {
     setTimeout(function() {
         console.log('Timeout function executed');
-        // Find the element that contains the number of tickets left using jQuery
+        // Find the element that contains the number of tickets left
         var $stockElement = $('.tribe-events .tribe-events-c-small-cta__stock');
 
         if ($stockElement.length) {
@@ -120,22 +119,29 @@ jQuery(document).ready(function($) {
                 var ticketsLeft = parseInt(matches[0], 10); // Convert to integer using base 10
                 console.log('Tickets left:', ticketsLeft);
 
-                // Check if the number of tickets left is less than 259
-                if (ticketsLeft < 459) {
-                    console.log('Less than 259 tickets left, showing element');
+                // Define your dynamic condition or threshold here
+                // For example, let's say you want to compare against a dynamic threshold
+                var dynamicThreshold = 259; // You can adjust this based on your application's logic
+
+                // Check if the number of tickets left is less than the dynamic threshold
+                if (ticketsLeft < dynamicThreshold) {
+                    console.log(`Less than ${dynamicThreshold} tickets left, showing element`);
                     // If yes, show the element by changing its 'display' style
                     $stockElement.css('display', 'block');
                 } else {
-                    console.log('259 or more tickets left, element remains hidden');
+                    console.log(`${dynamicThreshold} or more tickets left, element remains hidden`);
+                    // Optionally, you can hide the element if the condition is not met
+                    $stockElement.css('display', 'none');
                 }
             } else {
-                console.log('No matches found in tickets text');
+                console.log('No numerical matches found in tickets text');
             }
         } else {
             console.log('Stock element not found');
         }
     }, 2000); // Wait for 2 seconds before executing the code
 });
+
 
 
 
