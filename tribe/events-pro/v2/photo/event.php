@@ -115,7 +115,7 @@ jQuery(document).ready(function($) {
                 console.log('Tickets left:', ticketsLeft);
 
                 // Check if the number of tickets left is 259 or fewer
-                if (ticketsLeft <= 259) {
+                if (ticketsLeft <= 10) {
                     // Show the ticket info if there are 259 or fewer tickets left
                     $(this).css('display', 'block');
                 } else {
