@@ -1039,14 +1039,19 @@ width: fit-content!important;
 .single-tribe_organizer .image_profile_text_main_continer{
     display: flex;
     align-content: center;
-    justify-content: flex-start;
-    align-items: center;
+    justify-content: center;
     gap: 27px;
     width: 100%;
+
+}
+
+.single-tribe_organizer .tec-events-c-view-box-border{
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    flex-direction: column;
+    align-items: center;
 }
 .single-tribe_organizer  .tribe-events-pro-organizer__meta .tec-events-c-view-box-border {
     display: flex;
