@@ -1013,8 +1013,8 @@ background-position: center top;
     margin: 0!important;
     max-width: 2500px!important;
 }
-.organizer_profile_bk_img{
-    border-radius: 6px;
+.organizer_profile_bk{
+   width:100%;
 }
 
 
