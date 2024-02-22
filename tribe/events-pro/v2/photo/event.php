@@ -100,6 +100,26 @@ $organizer_names = array_map('tribe_get_organizer', $organizer_ids);
 
 
 
+///////ticket amount left tag
+
+document.addEventListener("DOMContentLoaded", function() {
+    // Find the element that contains the number of tickets left
+    var stockElement = document.querySelector('.tribe-events-c-small-cta__stock');
+
+    if (stockElement) {
+        // Extract the number of tickets left from the element's text content
+        var ticketsText = stockElement.textContent.trim(); // "255 tickets left"
+        var ticketsLeft = parseInt(ticketsText, 10); // Convert to integer
+
+        // Check if the number of tickets left is 10 or less
+        if (ticketsLeft <= 10) {
+            // If yes, show the element by changing its 'display' style
+            stockElement.style.display = 'block';
+        }
+    }
+});
+
+
 
 
 
@@ -249,6 +269,25 @@ jQuery(document).ready(function($) {
 
 <style>
 
+/****Tags */
+.tribe-events .tribe-events-c-small-cta__stock {
+    color: #ffffff!important;
+    position: absolute;
+    top: 6px;
+    z-index: 9;
+    left: 6px;
+    letter-spacing: 0.2px;
+    font-size: 12px;
+    font-weight: 400;
+    background: #00000099;
+    padding: 6px 12px;
+    border-radius: 3px;
+    border: 1px solid red!important;
+    display:none;
+}
+
+
+/*******END */
 .tribe-events-pro-photo__event-featured-image-link img{
     height: 200px;
     max-height: 220px;
