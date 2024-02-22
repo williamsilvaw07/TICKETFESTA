@@ -942,6 +942,20 @@ jQuery(document).ready(function($) {
 
 
 <style>
+    .past-event-tag{
+        position: absolute;
+    background: #f8f8f8;
+    z-index: 9;
+    color: black;
+    letter-spacing: 0.2px;
+    font-size: 12px;
+    font-weight: 400;
+    padding: 6px 12px;
+    border-radius: 9px 9px 0 0;
+    width: 100%;
+    max-width: 300px;
+    text-align: center;
+    }
 
     .event-listing-main-div{
         margin: 0 auto!important;
