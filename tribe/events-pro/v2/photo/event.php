@@ -99,20 +99,6 @@ $organizer_names = array_map('tribe_get_organizer', $organizer_ids);
 
 
 
-document.addEventListener('DOMContentLoaded', function() {
-            var eventCostElements = document.querySelectorAll('.tribe-events-pro-photo__event-cost');
-
-            eventCostElements.forEach(function(element) {
-                var priceText = element.textContent.trim();
-                var prices = priceText.split(' – '); // Split prices by the dash
-
-                // Check if "From" is already present
-                if (!priceText.startsWith('From') && prices.length > 1) {
-                    element.textContent = 'From ' + priceText; // Add "From" before the price range
-                }
-            });
-        });
-
 
 
 
