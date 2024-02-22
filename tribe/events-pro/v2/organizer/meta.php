@@ -15,6 +15,38 @@
  * @var WP_Post $organizer The organizer post object.
  *
  */
+
+
+
+
+
+ // Get the ID of the organizer
+$organizer_id = $organizer->ID;
+
+// Set up the arguments for WP_Query to find all published events by this organizer
+$args = array(
+    'post_type'      => 'tribe_events',
+    'posts_per_page' => -1,  // -1 to fetch all events
+    'post_status'    => 'publish',
+    'meta_query'     => array(
+        array(
+            'key'   => '_EventOrganizerID',
+            'value' => $organizer_id,
+        ),
+    ),
+);
+
+// Perform the query
+$organizer_events = new WP_Query($args);
+
+// Count the number of events
+$event_count = $organizer_events->found_posts;
+
+// Reset the WP_Query because we're done with it
+wp_reset_query();
+
+
+
 $organizer_facebook = get_post_meta($organizer->ID, '_organizer_facebook', true);
 $organizer_instagram = get_post_meta($organizer->ID, '_organizer_instagram', true);
 
@@ -179,12 +211,17 @@ $follower_count = count($followers_array);
     echo '<h1>' . esc_html( $organizer_title ) . '</h1>';
     ?>
 		<div class="organizer_text_dec">
-			<p class="organizer_tagline">Tag Link of the type of events</p>
+			<p class="organizer_tagline"></p>
+
+            <div class="organizer_text_dec_info">
+
 			<p class="organizer_tagline followers">Followers: <span class="followers-count"><?php echo $follower_count;?></span> </p>
         <form method="POST">
             <input type="hidden" name="follow" value="<?php echo $follower_text;?>">
             <input type="submit" value="<?php echo ucfirst($follower_text); ?>" nanme="submit" class="follow-button"> 
         </form>
+        <p class="organizer_event_count">Event: <span class="event-count"><?php echo $event_count; ?></span> </p>
+        </div>
 </div>
 <?php 
 
@@ -1470,7 +1507,7 @@ font-weight: 600;
     object-fit: cover;
 }
 .organizer_tagline{
-  
+  display:none
 }
 .organizer_about_main_inner{
     text-align: center;
