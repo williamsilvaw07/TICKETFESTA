@@ -108,7 +108,7 @@ if ( json_last_error() !== JSON_ERROR_NONE ) {
 }
 
 if ( in_array( $user_id, $followers_array ) ) {
-    $follower_text = 'following';
+    $follower_text = 'unfollow';
 }else{
     $follower_text = 'follow';
 }
