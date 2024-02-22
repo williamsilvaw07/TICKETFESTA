@@ -968,7 +968,11 @@ jQuery(document).ready(function($) {
     justify-content: center;
     }
     .spancer{
-border-right:2px solid white;
+        display: inline-block;
+    border-right: 2px solid white; 
+    height: 20px;
+    width: 0;
+    margin-right: 10px;
     }
     .organizer_text_dec_info p{
         display: flex;
