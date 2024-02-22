@@ -961,7 +961,8 @@ jQuery(document).ready(function($) {
 <style>
     .followers-count , .event-count{
         font-size:18px!important;
-        font-weight:600
+        font-weight:600;
+        margin-bottom:-5px
     }
     
     .organizer_text_dec_info{
