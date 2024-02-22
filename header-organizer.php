@@ -216,7 +216,7 @@ body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .main-foot
 /******EDIT ORFANIZSER****/
 .main-sidebar .img-circle {
     border-radius: inherit;
-    opacity: 1;
+    opacity: 1!important;
 }
 
 .brand-link {
