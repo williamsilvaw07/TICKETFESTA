@@ -1008,7 +1008,7 @@ background-position: center top;
     display: none!important;
 }
 .tribe-events-view--organizer .tribe-common-l-container{
-    padding-top: 5px!important;
+    padding-top: px!important;
     padding: 0!important;
     margin: 0!important;
     max-width: 2500px!important;
