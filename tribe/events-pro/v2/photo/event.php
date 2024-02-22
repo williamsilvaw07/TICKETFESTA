@@ -121,7 +121,7 @@ jQuery(document).ready(function($) {
                 console.log('Tickets left:', ticketsLeft);
 
                 // Check if the number of tickets left is less than 259
-                if (ticketsLeft < 259) {
+                if (ticketsLeft < 459) {
                     console.log('Less than 259 tickets left, showing element');
                     // If yes, show the element by changing its 'display' style
                     $stockElement.css('display', 'block');
