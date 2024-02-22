@@ -968,7 +968,7 @@ jQuery(document).ready(function($) {
     justify-content: center;
     }
     .organizer_text_dec_info p:first-child{
-border-left:2px solid red
+border-right:2px solid white
     }
     .organizer_text_dec_info p{
         display: flex;
