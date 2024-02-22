@@ -31,7 +31,7 @@ if (!defined('ABSPATH')) {
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="https://thaynna-william.co.uk/dashboard/" class="brand-link">
+    <a href="/dashboard/" class="brand-link">
         <img src="https://ticketfesta.co.uk/wp-content/uploads/2024/02/Group-195-2.png" alt="" class="brand-image img-circle elevation-3">
         <span class="brand-text font-weight-light"></span>
     </a>
@@ -59,6 +59,7 @@ if (!defined('ABSPATH')) {
                 <li class="admin_dashboard-sidebar-item">
                     <a href="/dashboard/organisers-list/"><i class="fas fa-users"></i><span class="nav-text">Organizers</span></a>
                 </li>
+
                 <li class="admin_dashboard-sidebar-item">
                 <a href="/organizer-finance/">
     <i class="fas fa-university"></i><span class="nav-text"> Finance</span>
