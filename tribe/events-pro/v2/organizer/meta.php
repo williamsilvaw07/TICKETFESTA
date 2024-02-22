@@ -282,13 +282,9 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 
 <!-- Event past -->
 <div class="event-listing past_event_listing_div">
-
     <div class="event-listing">
         <?php
-        // Replace this with your method of obtaining the current organizer's ID
         $current_organizer_id = get_the_ID(); // Example: get_the_ID() or another method
-
-        // Current date and time
         $current_time = current_time('Y-m-d H:i:s');
 
         // Define the query arguments to get past events for the current organizer
@@ -314,15 +310,11 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
             'order'          => 'DESC',
         );
 
-        // Perform the query for past events
         $past_events = new WP_Query($past_events_args);
 
-        // Check if there are past events for the current organizer
         if ($past_events->have_posts()) :
             while ($past_events->have_posts()) : $past_events->the_post();
                 $event_url = get_the_permalink();
-                $ticket_price = tribe_get_cost(null, true);
-                $button_text = !empty($ticket_price) ? esc_html($ticket_price) : '';
                 ?>
                 <div class="event-card">
                     <?php if (has_post_thumbnail()) : ?>
@@ -334,33 +326,30 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
                     <?php endif; ?>
                     
                     <div class="event-details">
-                 
-                     
+                        <div class="past-event-tag">Past Event</div>
+
                         <div class="event-content">
                             <h2 class="event-title">
                                 <a href="<?php echo esc_url($event_url); ?>"><?php the_title(); ?></a>
                             </h2>
                             <div class="event-day">
-    <?php echo tribe_get_start_date(null, false, 'D, d M, H:i'); ?>
-</div>
+                                <?php echo tribe_get_start_date(null, false, 'D, d M, H:i'); ?>
+                            </div>
                             <div class="event-time-location">
                                 <span class="event-time"><?php echo tribe_get_start_date(null, false, 'g:i a'); ?> - <?php echo tribe_get_end_date(null, false, 'g:i a'); ?></span>
                                 <span class="event-location"><?php echo tribe_get_venue(); ?></span>
                             </div>
                             <div class="event-actions">
                                 <a href="<?php echo esc_url($event_url); ?>" class="btn-get-tickets">View Event</a>
-                             
                             </div>
                         </div>
                     </div>
                 </div>
                 <?php
             endwhile;
-
-            // Reset post data to avoid conflicts with the main query
             wp_reset_postdata();
         else :
-            echo '<p>No events found.</p>';
+            echo '<p>No past events found.</p>';
         endif;
         ?>
     </div>
