@@ -967,8 +967,19 @@ jQuery(document).ready(function($) {
 
 
 <style>
-    .tribe-common .tribe-common-g-row {
 
+    .event-listing-main-div{
+        margin: 0 auto;
+    padding: 40px;
+    max-width: 1700px;
+    width: 100%;
+
+    }
+    .tribe-common .tribe-common-g-row {
+        display: flex!important;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    flex-direction: column;
        }
           .followers-count , .event-count{
         font-size: 24px!important;
@@ -1145,6 +1156,7 @@ width: fit-content!important;
     background-color: #262626;
     border-radius: 10px;
     color: rgb(255, 255, 255);
+    max-width: 300px;
 }
 .event-card .event-title{
     color: rgb(255, 255, 255)!important;
@@ -1188,6 +1200,9 @@ width: fit-content!important;
     margin: 5px 0px;
     margin-top: 5px!important;
 
+}
+.event-time{
+    display:none
 }
 
 .event-actions a{
