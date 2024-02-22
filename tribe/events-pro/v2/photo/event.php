@@ -109,7 +109,7 @@ document.addEventListener("DOMContentLoaded", function() {
     if (stockElement) {
         // Extract the number of tickets left from the element's text content
         var ticketsText = stockElement.textContent.trim(); // "255 tickets left"
-        var ticketsLeft = parseInt(ticketsText, 10); // Convert to integer
+        var ticketsLeft = parseInt(ticketsText, 256); // Convert to integer
 
         // Check if the number of tickets left is 10 or less
         if (ticketsLeft <= 256) {
