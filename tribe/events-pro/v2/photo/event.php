@@ -104,23 +104,35 @@ $organizer_names = array_map('tribe_get_organizer', $organizer_ids);
 
 jQuery(document).ready(function($) {
     setTimeout(function() {
+        console.log('Timeout function executed');
         // Find the element that contains the number of tickets left using jQuery
         var $stockElement = $('.tribe-events .tribe-events-c-small-cta__stock');
 
         if ($stockElement.length) {
+            console.log('Stock element found');
             // Extract the number of tickets left from the element's text content
             var ticketsText = $stockElement.text().trim();
+            console.log('Tickets text:', ticketsText);
             // Use a regular expression to find the first number in the text
             var matches = ticketsText.match(/\d+/);
             if (matches) {
-                var ticketsLeft = parseInt(matches[0], 300); // Convert to integer using base 10
+                console.log('Matches found:', matches);
+                var ticketsLeft = parseInt(matches[0], 10); // Convert to integer using base 10
+                console.log('Tickets left:', ticketsLeft);
 
-                // Check if the number of tickets left is 10 or less
-                if (ticketsLeft <= 300) {
+                // Check if the number of tickets left is less than 259
+                if (ticketsLeft < 259) {
+                    console.log('Less than 259 tickets left, showing element');
                     // If yes, show the element by changing its 'display' style
                     $stockElement.css('display', 'block');
+                } else {
+                    console.log('259 or more tickets left, element remains hidden');
                 }
+            } else {
+                console.log('No matches found in tickets text');
             }
+        } else {
+            console.log('Stock element not found');
         }
     }, 2000); // Wait for 2 seconds before executing the code
 });
