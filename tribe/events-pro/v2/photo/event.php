@@ -258,7 +258,7 @@ jQuery(document).ready(function($) {
 
 
     
-.tribe-events-c-small-cta__link , .tribe-events-c-small-cta__stock , .tribe-events-c-subscribe-dropdown__container , .tribe-events-pro-photo-nav{
+.tribe-events-c-small-cta__link , .tribe-events-c-subscribe-dropdown__container , .tribe-events-pro-photo-nav{
     display:none!important
 }
     .copyButton img{
