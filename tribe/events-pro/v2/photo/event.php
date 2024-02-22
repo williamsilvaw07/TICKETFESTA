@@ -102,7 +102,7 @@ $organizer_names = array_map('tribe_get_organizer', $organizer_ids);
 
 ///////ticket amount left tag
 
-$(document).ready(function() {
+jQuery(document).ready(function($) {
     setTimeout(function() {
         // Find the element that contains the number of tickets left using jQuery
         var $stockElement = $('.tribe-events .tribe-events-c-small-cta__stock');
