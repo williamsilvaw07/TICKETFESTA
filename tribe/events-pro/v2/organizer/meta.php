@@ -967,7 +967,10 @@ jQuery(document).ready(function($) {
 
 
 <style>
-    .followers-count , .event-count{
+    .tribe-common .tribe-common-g-row {
+
+       }
+          .followers-count , .event-count{
         font-size: 24px!important;
     font-weight: 600;
     margin-bottom: -5px!important;
@@ -1263,7 +1266,7 @@ width: fit-content!important;
 .organizer_navbar {
     font-size: 14px;
     gap: 38px;
-    background-color: #2C2C2C;
+    background-color: #1A1A1A;
     display: flex;
     justify-content: center; /* Adjusted to center to bring items closer */
     align-items: center;
