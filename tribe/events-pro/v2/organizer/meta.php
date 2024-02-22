@@ -19,31 +19,28 @@
 
 
 
+ $organizer_id = $organizer->ID;
 
- // Get the ID of the organizer
-$organizer_id = $organizer->ID;
-
-// Set up the arguments for WP_Query to find all published events by this organizer
-$args = array(
-    'post_type'      => 'tribe_events',
-    'posts_per_page' => -1,  // -1 to fetch all events
-    'post_status'    => 'publish',
-    'meta_query'     => array(
-        array(
-            'key'   => '_EventOrganizerID',
-            'value' => $organizer_id,
-        ),
-    ),
-);
-
-// Perform the query
-$organizer_events = new WP_Query($args);
-
-// Count the number of events
-$event_count = $organizer_events->found_posts;
-
-// Reset the WP_Query because we're done with it
-wp_reset_query();
+ // Set up the arguments for WP_Query to find all events by this organizer
+ $args = array(
+     'post_type'      => 'tribe_events', // The post type for The Events Calendar events
+     'posts_per_page' => -1,  // -1 to fetch all events associated with the organizer
+     'post_status'    => 'publish', // Only fetch published events
+     'meta_query'     => array(
+         array(
+             'key'   => '_EventOrganizerID', // The meta key that stores the organizer ID for an event
+             'value' => $organizer_id, // The ID of the organizer you're interested in
+         ),
+     ),
+     // No date query included, so it fetches events regardless of their date
+ );
+ 
+ // Perform the query
+ $organizer_events = new WP_Query($args);
+ 
+ // Count the number of events
+ $event_count = $organizer_events->found_posts;
+ 
 
 
 
@@ -216,11 +213,13 @@ $follower_count = count($followers_array);
             <div class="organizer_text_dec_info">
 
 			<p class=" followers">Followers: <span class="followers-count"><?php echo $follower_count;?></span> </p>
+            <span>|</span>
+            <p class="organizer_event_count">Event: <span class="event-count"><?php echo $event_count; ?></span> </p>
         <form method="POST">
             <input type="hidden" name="follow" value="<?php echo $follower_text;?>">
             <input type="submit" value="<?php echo ucfirst($follower_text); ?>" nanme="submit" class="follow-button"> 
         </form>
-<p class="organizer_event_count">Event: <span class="event-count"><?php echo $event_count; ?></span> </p>
+
         </div>
 </div>
 <?php 
