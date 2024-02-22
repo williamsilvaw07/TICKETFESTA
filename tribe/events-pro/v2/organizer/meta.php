@@ -1045,7 +1045,8 @@ width: fit-content!important;
     width: 100%;
     position: absolute;
     top: 50%;
-    transform: translateY(-50%);
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 .single-tribe_organizer  .tribe-events-pro-organizer__meta .tec-events-c-view-box-border {
     display: flex;
