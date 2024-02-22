@@ -1011,6 +1011,7 @@ background-position: center top;
     padding-top: 5px!important;
     padding: 0!important;
     margin: 0!important;
+    max-width: 2500px!important;
 }
 .organizer_profile_bk_img{
     border-radius: 6px;
@@ -1473,7 +1474,7 @@ font-weight: 600;
 
     .organizer_profile_bk img{
         max-height: 470px;
-        width: 1400px;
+        width: 100%;
         object-fit: cover;
     }
     
