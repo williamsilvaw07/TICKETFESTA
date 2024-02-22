@@ -1465,9 +1465,7 @@ font-weight: 600;
     height: 180px;
     object-fit: cover;
 }
-.organizer_tagline{
-    display:none
-}
+.organizer_tagline{}
 .organizer_about_main_inner{
     text-align: center;
     max-width: 900px;
