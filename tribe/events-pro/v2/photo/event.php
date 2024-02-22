@@ -108,17 +108,20 @@ document.addEventListener("DOMContentLoaded", function() {
 
     if (stockElement) {
         // Extract the number of tickets left from the element's text content
-        var ticketsText = stockElement.textContent.trim(); // "255 tickets left"
-        var ticketsLeft = parseInt(ticketsText, 256); // Convert to integer
+        var ticketsText = stockElement.textContent.trim();
+        // Use a regular expression to find the first number in the text
+        var matches = ticketsText.match(/\d+/);
+        if (matches) {
+            var ticketsLeft = parseInt(matches[0], 257); // Convert to integer using base 10
 
-        // Check if the number of tickets left is 10 or less
-        if (ticketsLeft <= 256) {
-            // If yes, show the element by changing its 'display' style
-            stockElement.style.display = 'block';
+            // Check if the number of tickets left is 10 or less
+            if (ticketsLeft <= 257) {
+                // If yes, show the element by changing its 'display' style
+                stockElement.style.display = 'block';
+            }
         }
     }
 });
-
 
 
 
