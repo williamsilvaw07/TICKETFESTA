@@ -283,7 +283,7 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 <!-- Event past -->
 <div class="event-listing past_event_listing_div">
     <div class="event-listing">
-    <div class="past-event-tag">Past Event</div>
+
         <?php
         $current_organizer_id = get_the_ID(); // Example: get_the_ID() or another method
         $current_time = current_time('Y-m-d H:i:s');
@@ -318,6 +318,7 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
                 $event_url = get_the_permalink();
                 ?>
                 <div class="event-card">
+                <div class="past-event-tag">Past Event</div>
                     <?php if (has_post_thumbnail()) : ?>
                         <div class="event-image">
                             <a href="<?php echo esc_url($event_url); ?>">
