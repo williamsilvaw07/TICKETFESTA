@@ -201,7 +201,7 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 <!-- organizer name end -->
 </div>
 </div>
-
+</div>
 
 <!-- organizer profile nav -->
 <div class="organizer_navbar">
@@ -533,7 +533,7 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 
 
 
-
+	
 
 
 
