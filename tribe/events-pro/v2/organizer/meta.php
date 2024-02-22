@@ -1303,7 +1303,7 @@ width: fit-content!important;
     display:block!important
 }
 .organizer_nav-item{
-    width:130px
+    
 }
 .past_event_listing_div {
     display: none;
