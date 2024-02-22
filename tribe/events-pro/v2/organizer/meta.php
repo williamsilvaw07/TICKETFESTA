@@ -18,29 +18,40 @@
 
 
 
+// Get the ID of the organizer
+$organizer_id = $organizer->ID;
 
- $organizer_id = $organizer->ID;
+// Set up the arguments for WP_Query
+$args = array(
+    'post_type'      => 'tribe_events', // The Events Calendar post type
+    'posts_per_page' => -1, // Retrieve all events
+    'post_status'    => 'publish', // Only published events
+    'meta_query'     => array(
+        array(
+            'key'   => '_EventOrganizerID', // Meta key for the organizer ID
+            'value' => $organizer_id, // The actual organizer ID
+        ),
+    ),
+    'orderby' => 'meta_value', // Order by meta value (event start date)
+    'meta_key' => '_EventStartDate', // Meta key for event start date
+    'order' => 'ASC', // Order ascending (earliest first)
+    // Custom 'date_query' to include all events regardless of date
+    'date_query' => array(
+        'inclusive' => true // Include all dates
+    ),
+);
 
- // Set up the arguments for WP_Query to find all events by this organizer
- $args = array(
-     'post_type'      => 'tribe_events', // The post type for The Events Calendar events
-     'posts_per_page' => -1,  // -1 to fetch all events associated with the organizer
-     'post_status'    => 'publish', // Only fetch published events
-     'meta_query'     => array(
-         array(
-             'key'   => '_EventOrganizerID', // The meta key that stores the organizer ID for an event
-             'value' => $organizer_id, // The ID of the organizer you're interested in
-         ),
-     ),
-     // No date query included, so it fetches events regardless of their date
- );
- 
- // Perform the query
- $organizer_events = new WP_Query($args);
- 
- // Count the number of events
- $event_count = $organizer_events->found_posts;
- 
+// Perform the query
+$organizer_events = new WP_Query($args);
+
+// Count the number of events
+$event_count = $organizer_events->found_posts;
+
+// Display the event count
+echo "<p class='organizer_event_count'>Event: <span class='event-count'>{$event_count}</span></p>";
+
+// Reset post data
+wp_reset_postdata();
 
 
 
