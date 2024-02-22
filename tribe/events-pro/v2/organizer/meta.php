@@ -1042,9 +1042,10 @@ width: fit-content!important;
     justify-content: flex-start;
     align-items: center;
     gap: 27px;
-    margin-top: -67px;
-    margin-bottom: 20px;
     width: 100%;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
 }
 .single-tribe_organizer  .tribe-events-pro-organizer__meta .tec-events-c-view-box-border {
     display: flex;
