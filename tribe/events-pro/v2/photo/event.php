@@ -309,7 +309,7 @@ jQuery(document).ready(function($) {
     padding: 6px 12px;
     border-radius: 3px;
     border: 1px solid red!important;
-    display:none;
+  
 }
 
 
