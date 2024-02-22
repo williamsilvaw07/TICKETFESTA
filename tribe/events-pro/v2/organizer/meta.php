@@ -1042,8 +1042,8 @@ width: fit-content!important;
     justify-content: center;
     gap: 27px;
     width: 100%;
-    align-items: center;
     flex-direction: column;
+    align-items: center;
 
 }
 
@@ -1372,10 +1372,6 @@ width: fit-content!important;
 }
 .organizer_text_dec p{
     text-transform: capitalize!important;
-}
-.organizer_text_dec{
-    text-align: center;
-
 }
 
 
