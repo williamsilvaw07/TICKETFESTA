@@ -212,8 +212,8 @@ $follower_count = count($followers_array);
 
             <div class="organizer_text_dec_info">
 
-			<p class=" followers">Followers: <span class="followers-count"><?php echo $follower_count;?></span> </p>
-            <span>|</span>
+			<p class="followers">Followers: <span class="followers-count"><?php echo $follower_count;?></span> </p>
+            
             <p class="organizer_event_count">Event: <span class="event-count"><?php echo $event_count; ?></span> </p>
        
 
@@ -959,6 +959,12 @@ jQuery(document).ready(function($) {
 
 
 <style>
+    .organizer_text_dec_info{
+        display: flex;
+    gap: 20px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    }
 .organizer_profile_main_div{
     width:100%;
     position: relative;
