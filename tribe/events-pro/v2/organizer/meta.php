@@ -963,6 +963,7 @@ jQuery(document).ready(function($) {
         font-size:18px!important;
         font-weight:600
     }
+    
     .organizer_text_dec_info{
         display: flex;
     gap: 20px;
@@ -970,6 +971,7 @@ jQuery(document).ready(function($) {
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
+    font-size:13px!important
     }
     .spancer{
         display: inline-block;
