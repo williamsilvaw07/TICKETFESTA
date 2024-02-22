@@ -636,6 +636,46 @@ jQuery(document).ready(function($) {
 
 ////TABS NAV
 
+jQuery(document).ready(function($) {
+  // Initially hide all content
+  $('.organizer_events_content, .organizer_Gallery_content, .organizer_about_content').hide();
+
+  // Function to remove active class from all items and hide their spans
+  function resetActive() {
+    $('.organizer_nav-item').removeClass('active').css('background-color', ''); // Reset background
+    $('.organizer_nav-item span').hide(); // Hide all spans
+  }
+
+  // Click event for Events nav item
+  $('.organizer_events').on('click', function() {
+    resetActive();
+    $(this).addClass('active').css('background-color', 'red'); // Set background to red for active
+    $(this).find('span').show(); // Show span for this tab
+    $('.organizer_events_content').show();
+    $('.organizer_Gallery_content, .organizer_about_content').hide();
+  });
+
+  // Click event for Gallery nav item
+  $('.organizer_Gallery').on('click', function() {
+    resetActive();
+    $(this).addClass('active').css('background-color', 'red');
+    $(this).find('span').show(); // Show span for this tab
+    $('.organizer_Gallery_content').show();
+    $('.organizer_events_content, .organizer_about_content').hide();
+  });
+
+  // Click event for About nav item
+  $('.organizer_about').on('click', function() {
+    resetActive();
+    $(this).addClass('active').css('background-color', 'red');
+    $(this).find('span').show(); // Show span for this tab
+    $('.organizer_about_content').show();
+    $('.organizer_events_content, .organizer_Gallery_content').hide();
+  });
+
+  // Trigger the 'click' event on the first tab to set it as the default open tab
+  $('.organizer_events').trigger('click');
+});
 
 
 
