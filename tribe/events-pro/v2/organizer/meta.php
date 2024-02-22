@@ -969,7 +969,7 @@ jQuery(document).ready(function($) {
     }
     .spancer{
         display: inline-block;
-    border-right: 2px solid white; 
+    border-right: 2px solid white!important;
     height: 20px;
     width: 0;
     margin-right: 10px;
