@@ -58,6 +58,7 @@ $template_vars = array_merge( [ 'organizer' => $organizer, ], $conditionals )
 <div <?php tribe_classes( $classes ); ?>>
 
 
+    <div class="organizer_profile_main_div">
 
 <div class="organizer_profile_bk">
 
@@ -199,8 +200,8 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 </div>
 <!-- organizer name end -->
 </div>
-
-
+</div>
+</div>
 
 <!-- organizer profile nav -->
 <div class="organizer_navbar">
@@ -533,7 +534,6 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 
 
 	
-</div>
 
 
 
