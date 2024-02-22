@@ -950,7 +950,7 @@ jQuery(document).ready(function($) {
     letter-spacing: 0.2px;
     font-size: 12px;
     font-weight: 400;
-    padding: 6px 12px;
+    padding: 6px 12px!important;
     border-radius: 9px 9px 0 0;
     width: 100%;
     max-width: 300px;
