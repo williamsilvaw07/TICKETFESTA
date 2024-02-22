@@ -283,6 +283,7 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 <!-- Event past -->
 <div class="event-listing past_event_listing_div">
     <div class="event-listing">
+    <div class="past-event-tag">Past Event</div>
         <?php
         $current_organizer_id = get_the_ID(); // Example: get_the_ID() or another method
         $current_time = current_time('Y-m-d H:i:s');
@@ -326,7 +327,7 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
                     <?php endif; ?>
                     
                     <div class="event-details">
-                        <div class="past-event-tag">Past Event</div>
+                        
 
                         <div class="event-content">
                             <h2 class="event-title">
