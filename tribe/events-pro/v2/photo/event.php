@@ -102,49 +102,36 @@ $organizer_names = array_map('tribe_get_organizer', $organizer_ids);
 
 ///////ticket amount left tag
 jQuery(document).ready(function($) {
-    setTimeout(function() {
-        console.log('Timeout function executed');
-        // Find the element that contains the number of tickets left
-        var $stockElement = $('.tribe-events .tribe-events-c-small-cta__stock');
+    // Function to check and update ticket info based on the number of tickets left
+    function checkAndUpdateTicketInfo() {
+        $('.tribe-events-c-small-cta__stock').each(function() {
+            var ticketInfo = $(this).text().trim(); // Example: "255 tickets left"
+            var matches = ticketInfo.match(/\d+/); // Use regex to extract the first number found
 
-        if ($stockElement.length) {
-            console.log('Stock element found');
-            // Extract the text that contains the tickets information
-            var ticketsText = $stockElement.text().trim();
-            console.log('Tickets text:', ticketsText);
-            // Use a regular expression to find the first number in the text, which represents the tickets left
-            var matches = ticketsText.match(/\d+/);
             if (matches && matches.length > 0) {
-                console.log('Matches found:', matches);
-                var ticketsLeft = parseInt(matches[0], 10); // Convert to integer using base 10
+                var ticketsLeft = parseInt(matches[0], 10); // Convert the extracted string to an integer
+
+                // Log the number of tickets left for debugging
                 console.log('Tickets left:', ticketsLeft);
 
-                // Assuming the dynamic threshold is represented by the tickets left
-                var dynamicThreshold = ticketsLeft;
-
-                // Here, instead of comparing ticketsLeft < dynamicThreshold, you might want to use this dynamic value in a different logic
-                // For example, you might want to check if ticketsLeft is less than a certain percentage of the dynamicThreshold
-                // Adjust the logic here based on your specific requirements
-
-                // Example logic: Show the element if the number of tickets left is less than 90% of the dynamicThreshold
-                if (ticketsLeft < dynamicThreshold * 0.9) {
-                    console.log(`Less than 90% of ${dynamicThreshold} tickets left, showing element`);
-                    // If yes, show the element by changing its 'display' style
-                    $stockElement.css('display', 'block');
+                // Check the number of tickets left and update the display property accordingly
+                if (ticketsLeft > 0) {
+                    // Show the ticket info if tickets are available
+                    $(this).css('display', 'block');
                 } else {
-                    console.log(`More than 90% of ${dynamicThreshold} tickets left, element remains hidden`);
-                    // Optionally, you can hide the element if the condition is not met
-                    $stockElement.css('display', 'none');
+                    // Hide the ticket info if no tickets are left
+                    $(this).css('display', 'none');
                 }
-            } else {
-                console.log('No numerical matches found in tickets text');
             }
-        } else {
-            console.log('Stock element not found');
-        }
-    }, 2000); // Wait for 2 seconds before executing the code
-});
+        });
+    }
 
+    // Call the function initially and whenever necessary (e.g., after loading new event data dynamically)
+    checkAndUpdateTicketInfo();
+
+    // Example: To re-check the ticket info after 2 seconds (you can adjust or remove this part based on your needs)
+    setTimeout(checkAndUpdateTicketInfo, 2000);
+});
 
 
 
@@ -309,7 +296,7 @@ jQuery(document).ready(function($) {
     padding: 6px 12px;
     border-radius: 3px;
     border: 1px solid red!important;
-  
+    display:none;
 }
 
 
