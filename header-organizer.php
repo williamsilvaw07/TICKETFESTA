@@ -32,7 +32,7 @@ if (!defined('ABSPATH')) {
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="https://thaynna-william.co.uk/dashboard/" class="brand-link">
-        <img src="https://ticketfesta.co.uk/wp-content/uploads/2024/02/Group-195-2.png" alt="" class="brand-image img-circle elevation-3" style="opacity: .8">
+        <img src="https://ticketfesta.co.uk/wp-content/uploads/2024/02/Group-195-2.png" alt="" class="brand-image img-circle elevation-3">
         <span class="brand-text font-weight-light"></span>
     </a>
 
@@ -43,7 +43,7 @@ if (!defined('ABSPATH')) {
             <ul class="admin_dashboard-sidebar-list">
                 <li class="admin_dashboard-sidebar-item">
                 <a href="https://thaynna-william.co.uk/dashboard/">
-    <i class="fas fa-home"></i><span class="nav-text"> Dashboard</span>
+    <i class="fas fa-home"></i><span class="nav-text">Dashboard</span>
 </a>
 
                 </li>
@@ -52,7 +52,7 @@ if (!defined('ABSPATH')) {
                 </li>
 
                 <li class="admin_dashboard-sidebar-item">
-    <a href="/dashboard/organisers-list/"><i class="fas fa-ticket-alt"></i><span class="nav-text">Coupons</span></a>
+    <a href="/dashboard/organizer-coupons/"><i class="fas fa-ticket-alt"></i><span class="nav-text">Coupons</span></a>
 </li>
 
 
@@ -216,7 +216,7 @@ body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .main-foot
 /******EDIT ORFANIZSER****/
 .main-sidebar .img-circle {
     border-radius: inherit;
-    opacity: 1!important;
+
 }
 
 .brand-link {
