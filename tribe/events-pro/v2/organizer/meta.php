@@ -969,10 +969,10 @@ jQuery(document).ready(function($) {
 <style>
 
     .event-listing-main-div{
-        margin: 0 auto;
-    padding: 40px;
-    max-width: 1700px;
-    width: 100%;
+        margin: 0 auto!important;
+    padding: 40px!important;
+    max-width: 1700px!important;
+    width: 100%!important;
 
     }
     .tribe-common .tribe-common-g-row {
