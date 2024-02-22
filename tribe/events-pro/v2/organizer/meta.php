@@ -251,15 +251,15 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 <!-- organizer profile nav -->
 <div class="organizer_navbar">
 	<div class="organizer_nav-item organizer_events">
-	  <img src="https://thaynna-william.co.uk/wp-content/uploads/2023/12/calendar-1.png" alt="Events Icon" class="organizer_nav-icon" width="30">
+	  <img src="https://thaynna-william.co.uk/wp-content/uploads/2023/12/calendar-1.png" alt="Events Icon" class="organizer_nav-icon" width="21">
 	  <span>Events</span>
 	</div>
 	<div class="organizer_nav-item organizer_Gallery">
-	  <img src="https://thaynna-william.co.uk/wp-content/uploads/2023/12/image-gallery-1.png" alt="Gallery Icon" class="organizer_nav-icon" width="30">
+	  <img src="https://thaynna-william.co.uk/wp-content/uploads/2023/12/image-gallery-1.png" alt="Gallery Icon" class="organizer_nav-icon" width="21">
 	  <span>Gallery</span>
 	</div>
 	<div class="organizer_nav-item organizer_about">
-	  <img src="https://thaynna-william.co.uk/wp-content/uploads/2023/12/user-1-1.png" alt="About Icon" class="organizer_nav-icon profile_icon_nav" width="30">
+	  <img src="https://thaynna-william.co.uk/wp-content/uploads/2023/12/user-1-1.png" alt="About Icon" class="organizer_nav-icon profile_icon_nav" width="21">
 	  <span>About</span>
 	</div>
   </div>
@@ -1261,6 +1261,8 @@ width: fit-content!important;
     font-weight: 400!important;
 }
 .organizer_navbar {
+    font-size: 14px;
+    gap: 38px;
     background-color: #2C2C2C;
     display: flex;
     justify-content: center; /* Adjusted to center to bring items closer */
