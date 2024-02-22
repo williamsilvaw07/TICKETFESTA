@@ -113,10 +113,10 @@ jQuery(document).ready(function($) {
             // Use a regular expression to find the first number in the text
             var matches = ticketsText.match(/\d+/);
             if (matches) {
-                var ticketsLeft = parseInt(matches[0], 10); // Convert to integer using base 10
+                var ticketsLeft = parseInt(matches[0], 300); // Convert to integer using base 10
 
                 // Check if the number of tickets left is 10 or less
-                if (ticketsLeft <= 10) {
+                if (ticketsLeft <= 300) {
                     // If yes, show the element by changing its 'display' style
                     $stockElement.css('display', 'block');
                 }
