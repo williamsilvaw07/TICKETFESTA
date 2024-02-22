@@ -47,9 +47,6 @@ $organizer_events = new WP_Query($args);
 // Count the number of events
 $event_count = $organizer_events->found_posts;
 
-// Display the event count
-echo "<p class='organizer_event_count'>Event: <span class='event-count'>{$event_count}</span></p>";
-
 // Reset post data
 wp_reset_postdata();
 
@@ -223,9 +220,9 @@ $follower_count = count($followers_array);
 
             <div class="organizer_text_dec_info">
 
-			<p class="followers">Followers: <span class="followers-count"><?php echo $follower_count;?></span> </p>
+			<p class="followers">Followers <span class="followers-count"><?php echo $follower_count;?></span> </p>
             <span class="spancer"></span>
-            <p class="organizer_event_count">Event: <span class="event-count"><?php echo $event_count; ?></span> </p>
+            <p class="organizer_event_count">Total events<span class="event-count"><?php echo $event_count; ?></span> </p>
        
 
         </div>
