@@ -215,12 +215,13 @@ $follower_count = count($followers_array);
 			<p class=" followers">Followers: <span class="followers-count"><?php echo $follower_count;?></span> </p>
             <span>|</span>
             <p class="organizer_event_count">Event: <span class="event-count"><?php echo $event_count; ?></span> </p>
+       
+
+        </div>
         <form method="POST">
             <input type="hidden" name="follow" value="<?php echo $follower_text;?>">
             <input type="submit" value="<?php echo ucfirst($follower_text); ?>" nanme="submit" class="follow-button"> 
         </form>
-
-        </div>
 </div>
 <?php 
 
