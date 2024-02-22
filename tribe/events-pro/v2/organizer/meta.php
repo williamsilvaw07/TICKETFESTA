@@ -213,7 +213,7 @@ $follower_count = count($followers_array);
             <div class="organizer_text_dec_info">
 
 			<p class="followers">Followers: <span class="followers-count"><?php echo $follower_count;?></span> </p>
-            
+            <span class="spancer"></span>
             <p class="organizer_event_count">Event: <span class="event-count"><?php echo $event_count; ?></span> </p>
        
 
@@ -967,8 +967,8 @@ jQuery(document).ready(function($) {
     align-items: center;
     justify-content: center;
     }
-    .organizer_text_dec_info p:first-child{
-border-right:2px solid white
+    .spancer{
+border-right:2px solid white;
     }
     .organizer_text_dec_info p{
         display: flex;
