@@ -108,7 +108,7 @@ if ( json_last_error() !== JSON_ERROR_NONE ) {
 }
 
 if ( in_array( $user_id, $followers_array ) ) {
-    $follower_text = 'unfollow';
+    $follower_text = 'following';
 }else{
     $follower_text = 'follow';
 }
@@ -1042,8 +1042,8 @@ width: fit-content!important;
     justify-content: center;
     gap: 27px;
     width: 100%;
-    flex-direction: column;
     align-items: center;
+    flex-direction: column;
 
 }
 
@@ -1373,6 +1373,10 @@ width: fit-content!important;
 .organizer_text_dec p{
     text-transform: capitalize!important;
 }
+.organizer_text_dec{
+    text-align: center;
+
+}
 
 
 .organizer_main_div h3{
@@ -1465,7 +1469,9 @@ font-weight: 600;
     height: 180px;
     object-fit: cover;
 }
-.organizer_tagline{}
+.organizer_tagline{
+  
+}
 .organizer_about_main_inner{
     text-align: center;
     max-width: 900px;
