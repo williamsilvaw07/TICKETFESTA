@@ -1260,14 +1260,13 @@ width: fit-content!important;
     font-size: 13px!important;
     font-weight: 400!important;
 }
-.organizer_navbar{
+.organizer_navbar {
     background-color: #2C2C2C;
     display: flex;
-    justify-content: space-evenly;
-    align-content: center;
+    justify-content: center; /* Adjusted to center to bring items closer */
+    align-items: center;
     padding: 0 9px!important;
     width: 100%;
-    align-items: center;
     border-radius: 0px;
     margin: 0 auto!important;
     margin-top: -8px!important;
