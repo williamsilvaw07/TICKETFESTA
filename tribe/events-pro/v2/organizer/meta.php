@@ -922,6 +922,10 @@ jQuery(document).ready(function($) {
 
 
 <style>
+.organizer_profile_main_div{
+    width:100%;
+    position: relative;
+}
     .event-day , .event-month , .event-title , .event-title a,  .event-actions , .event-actions span , .event-location , .event-time
 {
     color: black!important;
