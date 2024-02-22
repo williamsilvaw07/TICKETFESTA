@@ -130,7 +130,7 @@ jQuery(document).ready(function($) {
     checkAndUpdateTicketInfo();
 
     // Example: To re-check the ticket info after 2 seconds (you can adjust or remove this part based on your needs)
-    setTimeout(checkAndUpdateTicketInfo, 2000);
+    setTimeout(checkAndUpdateTicketInfo, 500);
 });
 
 
