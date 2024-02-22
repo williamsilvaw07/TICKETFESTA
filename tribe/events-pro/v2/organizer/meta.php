@@ -964,6 +964,15 @@ jQuery(document).ready(function($) {
     gap: 20px;
     flex-direction: row;
     flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    }
+    .organizer_text_dec_info p:first-child{
+border-left:2px solid red
+    }
+    .organizer_text_dec_info p{
+        display: flex;
+    flex-direction: column-reverse;
     }
 .organizer_profile_main_div{
     width:100%;
