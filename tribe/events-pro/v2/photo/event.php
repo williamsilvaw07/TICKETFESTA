@@ -104,7 +104,7 @@ $organizer_names = array_map('tribe_get_organizer', $organizer_ids);
 
 document.addEventListener("DOMContentLoaded", function() {
     // Find the element that contains the number of tickets left
-    var stockElement = document.querySelector('.tribe-events-c-small-cta__stock');
+    var stockElement = document.querySelector('.tribe-events .tribe-events-c-small-cta__stock');
 
     if (stockElement) {
         // Extract the number of tickets left from the element's text content
