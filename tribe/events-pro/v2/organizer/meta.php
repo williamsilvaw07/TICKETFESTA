@@ -1299,7 +1299,9 @@ width: fit-content!important;
     background-color: #767676; 
     transition: background-color 0.2s ease;
 }
-
+.organizer_nav-item span{
+    display:block!important
+}
 
 .past_event_listing_div {
     display: none;
