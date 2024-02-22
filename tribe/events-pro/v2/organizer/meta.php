@@ -1042,6 +1042,8 @@ width: fit-content!important;
     justify-content: center;
     gap: 27px;
     width: 100%;
+    align-items: center;
+    flex-direction: column;
 
 }
 
@@ -1458,12 +1460,14 @@ font-weight: 600;
 }
 .single-tribe_organizer .image_profile_text_main_continer img {
     border-radius: 100px;
-    max-width: 200px;
-    width: 200px;
-    height: 200px;
+    max-width: 180px;
+    width: 100%;
+    height: 180px;
     object-fit: cover;
 }
-
+.organizer_tagline{
+    display:none
+}
 .organizer_about_main_inner{
     text-align: center;
     max-width: 900px;
