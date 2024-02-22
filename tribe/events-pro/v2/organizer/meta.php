@@ -1104,7 +1104,7 @@ width: fit-content!important;
     display: flex;
     align-content: center;
     justify-content: center;
-    gap: 27px;
+    gap: 9px;
     width: 100%;
     align-items: center;
     flex-direction: column;
