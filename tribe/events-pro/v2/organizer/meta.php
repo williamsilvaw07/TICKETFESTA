@@ -1255,13 +1255,14 @@ width: fit-content!important;
 .organizer_navbar{
     background-color: #2C2C2C;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-evenly;
     align-content: center;
-    padding: 0 20px!important;
+    padding: 0 9px!important;
     width: 100%;
     align-items: center;
-    border-radius: 8px;
+    border-radius: 0px;
     margin: 0 auto!important;
+    margin-top: -8px!important;
 }
 .organizer_nav-item{
     display: flex;
