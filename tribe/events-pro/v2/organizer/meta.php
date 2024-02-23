@@ -362,7 +362,7 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 
 
 <!-- Event live -->
-<div class="event-listing live_event_listing_div">
+<div class="live_event_listing_div">
 
 <div class="event-listing">
     
