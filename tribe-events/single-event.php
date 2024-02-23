@@ -994,14 +994,12 @@ text-transform: capitalize!important;
 
 .tribe-tickets__tickets-item-quantity-unavailable{
     color: red;
-    font-weight: 600;
+    font-weight: 600!important;
     opacity: 1;
     z-index: 9;
-    display: block;
-    position: relative;
-    font-size: 17px;
+    position: relative!important;
+    font-size: 17px!important;
 }
-
 .event-tickets .tribe-tickets__tickets-item-details-content, .entry .entry-content .event-tickets .tribe-tickets__tickets-item-details-content {
     color: #878787!important;
     font-size: 13px!important;
