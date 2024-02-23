@@ -1613,16 +1613,15 @@ text-align: left;
 }
 
 
-@media (max-width: 839px) {
-
-   
-    .single-tribe_organizer .image_profile_text_main_continer img {
-        height: auto;
-    max-width: 131px;
-    width: 100%;
-    border: 3px solid white;
+@media (max-width: 890px) {
+    .event-listing {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    justify-content: space-evenly;
+    align-items: start;
+    justify-items: start;
 }
-    
+
 }
 
 
