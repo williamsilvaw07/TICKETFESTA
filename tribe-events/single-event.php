@@ -1962,7 +1962,11 @@ html .single-tribe_events .tribe-tickets__tickets-footer{
 }
 .tribe-tickets__tickets-item-extra-price {
     text-align: left;
-    font-size: 10px!important;
+    
+}
+.popup-content .tribe-currency-symbol, .popup-content  .tribe-amount, .popup-content .btn_price_span {
+    color: #d3fa16!important;
+    font-size: 19px!important;
 }
   }
 
