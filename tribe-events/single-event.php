@@ -1952,6 +1952,9 @@ html .single-tribe_events .tribe-tickets__tickets-footer{
     text-transform: capitalize;
     font-size: 23px;
 }
+.tribe-events-event-meta {
+    margin-top: -25px;
+}
   }
 
   @media screen and (max-width: 450px) {
