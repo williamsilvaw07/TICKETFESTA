@@ -97,27 +97,28 @@ $template_vars = array_merge( [ 'organizer' => $organizer, ], $conditionals )
 
     <div class="organizer_profile_main_div">
 
-<div class="organizer_profile_bk">
+    <div class="organizer_profile_bk" style="
+    <?php
+    // Ensure that $organizer_id is defined. Use $organizer->ID if available.
+    if ( isset( $organizer ) && isset( $organizer->ID ) ) {
+        $organizer_id = $organizer->ID;
+    } else {
+        // Handle the case where $organizer or $organizer->ID is not available
+        $organizer_id = get_the_ID(); // Fallback to get current post ID
+    }
 
-<?php
-// Ensure that $organizer_id is defined. Use $organizer->ID if available.
-if ( isset( $organizer ) && isset( $organizer->ID ) ) {
-    $organizer_id = $organizer->ID;
-} else {
-    // Handle the case where $organizer or $organizer->ID is not available
-    $organizer_id = get_the_ID(); // Fallback to get current post ID
-}
-
-$banner_image_id = get_post_meta($organizer_id, 'banner_image_id', true);
-if ($banner_image_id) {
-    $banner_image_url = wp_get_attachment_image_url($banner_image_id, 'full');
-    echo '<img class="organizer_profile_bk_img" src="' . esc_url($banner_image_url) . '">';
-} else {
-    // Display default image or nothing
-    echo '<img class="organizer_profile_bk_img" src="https://thaynna-william.co.uk/wp-content/uploads/2024/01/Group-189-5.jpg">';
-}
-?>
+    $banner_image_id = get_post_meta($organizer_id, 'banner_image_id', true);
+    if ($banner_image_id) {
+        $banner_image_url = wp_get_attachment_image_url($banner_image_id, 'full');
+    } else {
+        // Use default image if no specific image is set
+        $banner_image_url = 'https://thaynna-william.co.uk/wp-content/uploads/2024/01/Group-189-5.jpg';
+    }
+    echo 'background-image: url(' . esc_url($banner_image_url) . ');';
+    ?>
+    background-size: cover; background-position: center;">
 </div>
+
 	<div class="tec-events-c-view-box-border">
 
 
@@ -1676,7 +1677,13 @@ input.follow-button {
 }
 
 @media (max-width: 599px) {
- 
+
+    .organizer_profile_bk{
+        min-height: 443px;
+    }
+    .organizer_profile_bk img {
+    height: 443px;
+}
     .single-tribe_organizer .image_profile_text_main_continer img {
         border-radius: 100px;
         max-width: 106px;
@@ -1687,7 +1694,7 @@ input.follow-button {
         object-fit: cover;
     }
     .single-tribe_organizer .image_profile_text_main_continer {
-        margin-top: -52px;
+        margin-top: inherit;
         gap: 2px;
         flex-direction: column;
 
@@ -1720,7 +1727,6 @@ input.follow-button {
     }
    
 .single-tribe_organizer .image_profile_text_main_continer {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2)!important;
     padding-bottom: 28px;
     margin-bottom: 6px;
     
