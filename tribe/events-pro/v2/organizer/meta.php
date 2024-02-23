@@ -933,6 +933,10 @@ jQuery(document).ready(function($) {
 
 
 <style>
+
+    .tribe-events-c-messages__message--notice{
+        display:none
+    }
     .past-event-tag{
         position: absolute;
     background: #f8f8f8;
