@@ -947,11 +947,12 @@ jQuery(document).ready(function($) {
     text-align: center;
     }
 
-    .event-listing-main-div , .organizer_gallery_main {
+    .event-listing-main-div , .organizer_gallery_main  , .organizer_about_main{
         margin: 0 auto!important;
     padding: 40px!important;
     max-width: 1700px!important;
     width: 100%!important;
+    min-height: 400px;
 
     }
     .tribe-common .tribe-common-g-row {
@@ -1473,6 +1474,7 @@ width: fit-content!important;
 padding-bottom: 15px;
 font-size: 26px;
 font-weight: 600;
+text-align: left;
 }
 .organizer_about_content h3{
     padding-bottom: 0!important 
