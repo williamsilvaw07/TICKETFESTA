@@ -947,7 +947,7 @@ jQuery(document).ready(function($) {
     text-align: center;
     }
 
-    .event-listing-main-div{
+    .event-listing-main-div , .organizer_events_content{
         margin: 0 auto!important;
     padding: 40px!important;
     max-width: 1700px!important;
@@ -1391,6 +1391,8 @@ width: fit-content!important;
     display: flex;
     flex-direction: column;
     gap: 10px;
+    align-items: center;
+    width: 100%;
 
 }
 .no-images-message{
