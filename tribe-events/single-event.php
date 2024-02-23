@@ -118,7 +118,14 @@ $cost  = tribe_get_formatted_cost( $event_id );
 
 <?php if ( tribe_get_venue_id( $event_id ) ): // Check if there's a venue ID associated with the event ?>
   <div class="location_div_js">
-    📍<span class="location_name"><?php echo tribe_get_venue( $event_id ); ?></span> - <span class="location_postcode"><?php echo tribe_get_venue_zip( $event_id ); ?></span>
+    📍<span class="location_name"><?php echo tribe_get_venue( $event_id ); ?></span>
+    - 
+    <?php 
+    $venue_details = tribe_get_venue_details( $event_id );
+    if ( ! empty( $venue_details['zip'] ) ): // Check if the postal code is available
+    ?>
+      <span class="location_postcode"><?php echo esc_html( $venue_details['zip'] ); ?></span>
+    <?php endif; ?>
   </div>
 <?php endif; ?>
 
