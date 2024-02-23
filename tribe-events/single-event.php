@@ -468,7 +468,7 @@ jQuery(document).ready(function($) {
     var element = $('.buttonticket_for_mobile'); // Your target element
     var originalOffset = element.offset().top; // Original offset top position
 
-    $(window).scroll(function() {
+    jQuery(window).scroll(function() {
         var scrollPos = $(window).scrollTop(); // Current scroll position
 
         if (scrollPos > originalOffset + element.height()) {
