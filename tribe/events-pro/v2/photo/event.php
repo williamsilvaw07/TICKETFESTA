@@ -34,65 +34,79 @@ $organizer_names = array_map('tribe_get_organizer', $organizer_ids);
 
    
 
-    <!-- Overlay Background -->
-    <div class="overlay" style="display: none;"></div>
+ <!-- Overlay Background -->
+<div class="overlay" style="display: none;"></div>
 
-    <!-- Popup div for sharing link -->
-    <div class="share_btn_event" style="display: none;">
-    <button class="close_popup" aria-label="Close">
-    &times;
-</button>
-
-<h3>Share with friends</h3>
-<div class="share_event_url">
-    <span class="share_popup_box_title">Event URL</span>
-    <div class="share_event_url_inner">
-  <span class="eventUrl"><?php echo esc_url( tribe_get_event_link($event) ); ?></span>
-  <button class="copyButton"><img src="https://thaynna-william.co.uk/wp-content/uploads/2024/02/copy.png" alt="Copy URL"></button></div>
-
-</div>
-<span class="copyMessage" style="display: none;">Link copied!</span>
-
-</div>
-    <div class="tribe-events-pro-photo__event-details-wrapper">
-        <?php $this->template( 'photo/event/date-tag', [ 'event' => $event ] ); ?>
-
-        <div class="tribe-events-pro-photo__event-details">
-            <?php $this->template( 'photo/event/title', [ 'event' => $event ] ); ?>
-
-            <!-- Event Day and Time -->
-            <div class="event-day">
-                <?php echo tribe_get_start_date( $event, true, 'D, j M, H:i' ); ?>
-            </div>
-
-            <!-- Venue, City, and Organizer Name -->
-            <div class="event-venue-city-organizer">
-                <?php
-                if ( ! empty( $venue_name ) && ! empty( $venue_city ) ) {
-                    echo esc_html( $venue_name ) . ' - ' . esc_html( $venue_city );
-                } elseif ( ! empty( $venue_name ) ) {
-                    echo esc_html( $venue_name );
-                } elseif ( ! empty( $venue_city ) ) {
-                    echo esc_html( $venue_city );
-                }
-                ?>
-                <br>
-                <?php echo esc_html( implode(', ', $organizer_names) ); ?>
-            </div>
-
-            <!-- Get Tickets Button -->
-            <div class="event-actions">
-    <div class="event_actions_inner">
-    <?php $this->template( 'photo/event/cost', [ 'event' => $event ] ); ?>
-        <a href="<?php echo esc_url( tribe_get_event_link($event) ); ?>" class="btn-get-tickets">
-            <img src="https://thaynna-william.co.uk/wp-content/uploads/2023/12/Group-188.png" alt="Get Tickets" style="vertical-align: middle;">
-            Get Tickets
-        </a>
-    </div>
-</div>
-            <!-- End Get Tickets Button -->
+<!-- Popup div for sharing link -->
+<div class="share_btn_event" style="display: none;">
+    <button class="close_popup" aria-label="Close">&times;</button>
+    <h3>Share with friends</h3>
+    <div class="share_event_url">
+        <span class="share_popup_box_title">Event URL</span>
+        <div class="share_event_url_inner">
+            <span class="eventUrl"><?php echo esc_url( tribe_get_event_link($event) ); ?></span>
+            <button class="copyButton"><img src="https://thaynna-william.co.uk/wp-content/uploads/2024/02/copy.png" alt="Copy URL"></button>
         </div>
     </div>
+    <span class="copyMessage" style="display: none;">Link copied!</span>
+</div>
+
+<div class="tribe-events-pro-photo__event-details-wrapper">
+    <?php $this->template( 'photo/event/date-tag', [ 'event' => $event ] ); ?>
+
+    <div class="tribe-events-pro-photo__event-details">
+        <?php $this->template( 'photo/event/title', [ 'event' => $event ] ); ?>
+
+        <!-- Event Image or Placeholder -->
+        <?php if ( has_post_thumbnail( $event->ID ) ) : ?>
+            <div class="event-image">
+                <?php echo get_the_post_thumbnail( $event->ID, 'medium' ); ?>
+            </div>
+        <?php else : ?>
+            <div class="event-image">
+                <img src="https://ticketfesta.co.uk/wp-content/uploads/2024/02/placeholder-4.png" alt="Placeholder Image" style="width: 100%; height: auto;">
+            </div>
+        <?php endif; ?>
+
+        <!-- Event Day and Time -->
+        <div class="event-day">
+            <?php echo tribe_get_start_date( $event, true, 'D, j M, H:i' ); ?>
+        </div>
+
+        <!-- Venue, City, and Organizer Name -->
+        <div class="event-venue-city-organizer">
+            <?php
+            $venue_name = tribe_get_venue( $event );
+            $venue_city = tribe_get_city( $event );
+            $organizer_names = tribe_get_organizer_ids( $event );
+            $organizer_names = array_map( 'tribe_get_organizer', $organizer_names );
+
+            if ( ! empty( $venue_name ) && ! empty( $venue_city ) ) {
+                echo esc_html( $venue_name ) . ' - ' . esc_html( $venue_city );
+            } elseif ( ! empty( $venue_name ) ) {
+                echo esc_html( $venue_name );
+            } elseif ( ! empty( $venue_city ) ) {
+                echo esc_html( $venue_city );
+            }
+
+            if ( ! empty( $organizer_names ) ) {
+                echo '<br>' . esc_html( implode( ', ', $organizer_names ) );
+            }
+            ?>
+        </div>
+
+        <!-- Get Tickets Button -->
+        <div class="event-actions">
+            <div class="event_actions_inner">
+                <?php $this->template( 'photo/event/cost', [ 'event' => $event ] ); ?>
+                <a href="<?php echo esc_url( tribe_get_event_link($event) ); ?>" class="btn-get-tickets">
+                    <img src="https://thaynna-william.co.uk/wp-content/uploads/2023/12/Group-188.png" alt="Get Tickets" style="vertical-align: middle;"> Get Tickets
+                </a>
+            </div>
+        </div>
+        <!-- End Get Tickets Button -->
+    </div>
+</div>
 
     <script>
 
