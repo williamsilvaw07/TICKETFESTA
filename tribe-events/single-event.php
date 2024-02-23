@@ -116,11 +116,8 @@ $cost  = tribe_get_formatted_cost( $event_id );
 <!-- Event Location &  date and time  -->
 <div class="single_event_page_location ">
 
-<?php if ( tribe_get_venue_id( $event_id ) ): // Check if there's a venue ID associated with the event ?>
-  <div class="location_div_js">
-    📍<span class="location_name"><?php echo tribe_get_venue( $event_id ); ?></span> - <span class="location_postcode"><?php echo tribe_get_venue_zip( $event_id ); ?></span>
-  </div>
-<?php endif; ?>
+<div class="location_div_js">📍<span class="location_name"></span> - <span class="location_postcode"></span></div>
+  
 
 <?php if ( tribe_get_venue_id( $event_id ) ): // Check if there's a venue ID associated with the event ?>
   <div class="time_div emoji_div_main">
