@@ -1599,23 +1599,6 @@ text-align: left;
 
 
 
-
-@media (max-width: 839px) {
-
-    .organizer_profile_bk img{
-        max-height: 650px;
-        width: 100%;
-        object-fit: cover;
-    }
-    
-    
-}
-
-
-
-
-
-
 @media (max-width: 1000px) {
     .single-tribe_organizer .image_profile_text_main_continer img {
         border-radius: 100px;
@@ -1632,6 +1615,28 @@ text-align: left;
 }
 
 
+@media (max-width: 839px) {
+
+    .organizer_profile_bk img{
+        max-height: 650px;
+        width: 100%;
+        object-fit: cover;
+    }
+    .single-tribe_organizer .image_profile_text_main_continer img {
+
+    max-width: 131px;
+    width: 100%;
+    border: 3px solid white;
+}
+    
+}
+
+
+
+
+
+
+
 
 
 @media (max-width: 750px) {
@@ -1643,7 +1648,23 @@ text-align: left;
 .organizer_navbar span{
     font-size: 14px;
 }
-    
+.single-tribe_organizer .image_profile_text_main_continer img {
+    max-width: 101px;
+}
+.organizer_title_name h1 {
+    padding-bottom: 5px;
+    font-size: 25px;
+}
+.followers-count, .event-count {
+    font-size: 20px!important;
+
+}
+input.follow-button {
+    padding: 2px 40px;
+    font-size: 14px;
+    border-radius: 3px;
+
+}
 }
 
 @media (max-width: 550px) {
