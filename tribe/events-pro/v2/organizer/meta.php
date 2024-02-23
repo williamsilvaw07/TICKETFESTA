@@ -1814,7 +1814,11 @@ input.follow-button {
     height: auto;
     max-height: 264px;
 }
-
+body .event-actions a {
+    padding: 8px 13px;
+    font-size: 13px!important;
+ 
+}
 }
   /****END***/
 
