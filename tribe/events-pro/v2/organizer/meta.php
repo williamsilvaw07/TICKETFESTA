@@ -1344,6 +1344,7 @@ width: fit-content!important;
 }
 .event-listing_type p{
     cursor: pointer;
+    font-size: 15px;
 }
 .organizer_gallery_category_inner_image{
     max-width: 300px!important;
