@@ -10,5 +10,11 @@ document.addEventListener('DOMContentLoaded', function() {
     searchIcon.addEventListener('click', function() {
         console.log('Search icon clicked.');
         searchPopup.style.display = 'block'; // Ensure the search popup is displayed
+
+        // Select all .tt-dataset elements within the searchPopup and set them to display: block
+        var datasets = searchPopup.querySelectorAll('.tt-dataset');
+        datasets.forEach(function(dataset) {
+            dataset.style.display = 'block';
+        });
     });
 });
