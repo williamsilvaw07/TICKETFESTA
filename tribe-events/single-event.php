@@ -988,6 +988,31 @@ text-transform: capitalize!important;
     font-size: 26px;
     font-weight: 600;
 
+
+
+}
+.tribe-events-notices{
+    font-size: 26px;
+    list-style: none;
+    background: #1A1A1A;
+    color: #d3fa16;
+    line-height: 34px;
+    margin-bottom: 39px;
+    padding: 20px 10px 13px 20px;
+    border-radius: 3px;
+    text-align: center;
+ 
+}
+.tribe-events-notices li{
+    list-style: none;
+}
+.tribe-tickets__tickets-item-quantity-unavailable{
+    color: red;
+    font-weight: 600!important;
+    opacity: 1;
+    z-index: 9;
+    position: relative!important;
+    font-size: 17px!important;
 }
 .event-tickets .tribe-tickets__tickets-item-details-content, .entry .entry-content .event-tickets .tribe-tickets__tickets-item-details-content {
     color: #878787!important;

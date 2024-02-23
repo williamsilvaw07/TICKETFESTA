@@ -30,30 +30,32 @@ $organizer_names = array_map('tribe_get_organizer', $organizer_ids);
 <article <?php tribe_classes( $classes ) ?>>
  <!-- Share Button -->
  <button class="share_btn"><img src="https://thaynna-william.co.uk/wp-content/uploads/2024/02/share-ios-chunky_svg__eds-icon-share-ios-chunky_svg-1.png"></button>
-    <?php $this->template( 'photo/event/featured-image', [ 'event' => $event ] ); ?>
-
-   
+    
+    <?php if ( has_post_thumbnail($event->ID) ) : ?>
+        <?php $this->template( 'photo/event/featured-image', [ 'event' => $event ] ); ?>
+    <?php else : ?>
+        <div class="event-featured-image-placeholder">
+            <img src="https://ticketfesta.co.uk/wp-content/uploads/2024/02/placeholder-4-e1708647807620.png" alt="Placeholder Image">
+        </div>
+    <?php endif; ?>
 
     <!-- Overlay Background -->
     <div class="overlay" style="display: none;"></div>
 
     <!-- Popup div for sharing link -->
     <div class="share_btn_event" style="display: none;">
-    <button class="close_popup" aria-label="Close">
-    &times;
-</button>
+        <button class="close_popup" aria-label="Close">&times;</button>
+        <h3>Share with friends</h3>
+        <div class="share_event_url">
+            <span class="share_popup_box_title">Event URL</span>
+            <div class="share_event_url_inner">
+                <span class="eventUrl"><?php echo esc_url( tribe_get_event_link($event) ); ?></span>
+                <button class="copyButton"><img src="https://thaynna-william.co.uk/wp-content/uploads/2024/02/copy.png" alt="Copy URL"></button>
+            </div>
+        </div>
+        <span class="copyMessage" style="display: none;">Link copied!</span>
+    </div>
 
-<h3>Share with friends</h3>
-<div class="share_event_url">
-    <span class="share_popup_box_title">Event URL</span>
-    <div class="share_event_url_inner">
-  <span class="eventUrl"><?php echo esc_url( tribe_get_event_link($event) ); ?></span>
-  <button class="copyButton"><img src="https://thaynna-william.co.uk/wp-content/uploads/2024/02/copy.png" alt="Copy URL"></button></div>
-
-</div>
-<span class="copyMessage" style="display: none;">Link copied!</span>
-
-</div>
     <div class="tribe-events-pro-photo__event-details-wrapper">
         <?php $this->template( 'photo/event/date-tag', [ 'event' => $event ] ); ?>
 
@@ -82,14 +84,13 @@ $organizer_names = array_map('tribe_get_organizer', $organizer_ids);
 
             <!-- Get Tickets Button -->
             <div class="event-actions">
-    <div class="event_actions_inner">
-    <?php $this->template( 'photo/event/cost', [ 'event' => $event ] ); ?>
-        <a href="<?php echo esc_url( tribe_get_event_link($event) ); ?>" class="btn-get-tickets">
-            <img src="https://thaynna-william.co.uk/wp-content/uploads/2023/12/Group-188.png" alt="Get Tickets" style="vertical-align: middle;">
-            Get Tickets
-        </a>
-    </div>
-</div>
+                <div class="event_actions_inner">
+                    <?php $this->template( 'photo/event/cost', [ 'event' => $event ] ); ?>
+                    <a href="<?php echo esc_url( tribe_get_event_link($event) ); ?>" class="btn-get-tickets">
+                        <img src="https://thaynna-william.co.uk/wp-content/uploads/2023/12/Group-188.png" alt="Get Tickets" style="vertical-align: middle;"> Get Tickets
+                    </a>
+                </div>
+            </div>
             <!-- End Get Tickets Button -->
         </div>
     </div>
@@ -99,21 +100,39 @@ $organizer_names = array_map('tribe_get_organizer', $organizer_ids);
 
 
 
-document.addEventListener('DOMContentLoaded', function() {
-            var eventCostElements = document.querySelectorAll('.tribe-events-pro-photo__event-cost');
 
-            eventCostElements.forEach(function(element) {
-                var priceText = element.textContent.trim();
-                var prices = priceText.split(' – '); // Split prices by the dash
+///////ticket amount left tag
+jQuery(document).ready(function($) {
+    // Function to check and update ticket info based on the number of tickets left
+    function checkAndUpdateTicketInfo() {
+        $('.tribe-events-c-small-cta__stock').each(function() {
+            var ticketInfo = $(this).text().trim(); // Example: "255 tickets left"
+            var matches = ticketInfo.match(/\d+/); // Use regex to extract the first number found
 
-                // Check if "From" is already present
-                if (!priceText.startsWith('From') && prices.length > 1) {
-                    element.textContent = 'From ' + priceText; // Add "From" before the price range
+            if (matches && matches.length > 0) {
+                var ticketsLeft = parseInt(matches[0], 10); // Convert the extracted string to an integer
+
+                // Log the number of tickets left for debugging
+                console.log('Tickets left:', ticketsLeft);
+
+                // Check if the number of tickets left is 259 or fewer
+                if (ticketsLeft <= 10) {
+                    // Show the ticket info if there are 259 or fewer tickets left
+                    $(this).css('display', 'block');
+                } else {
+                    // Hide the ticket info if there are more than 259 tickets left
+                    $(this).css('display', 'none');
                 }
-            });
+            }
         });
+    }
 
+    // Call the function initially and whenever necessary (e.g., after loading new event data dynamically)
+    checkAndUpdateTicketInfo();
 
+    // Example: To re-check the ticket info after 2 seconds (you can adjust or remove this part based on your needs)
+    setTimeout(checkAndUpdateTicketInfo, 500);
+});
 
 
 
@@ -263,6 +282,25 @@ jQuery(document).ready(function($) {
 
 <style>
 
+/****Tags */
+.tribe-events .tribe-events-c-small-cta__stock {
+    color: #ffffff!important;
+    position: absolute;
+    top: 6px;
+    z-index: 9;
+    left: 6px;
+    letter-spacing: 0.2px;
+    font-size: 12px;
+    font-weight: 400;
+    background: #00000099;
+    padding: 6px 12px;
+    border-radius: 3px;
+    border: 1px solid red!important;
+    display:none;
+}
+
+
+/*******END */
 .tribe-events-pro-photo__event-featured-image-link img{
     height: 200px;
     max-height: 220px;
@@ -270,9 +308,15 @@ jQuery(document).ready(function($) {
     object-fit: contain;
 }
 
+.event-featured-image-placeholder img{
+    max-height: 200px;
+    max-width: 400px!important;
+    width: 100%;
+    object-fit: cover;
+}
 
     
-.tribe-events-c-small-cta__link , .tribe-events-c-small-cta__stock , .tribe-events-c-subscribe-dropdown__container , .tribe-events-pro-photo-nav{
+.tribe-events-c-small-cta__link , .tribe-events-c-subscribe-dropdown__container , .tribe-events-pro-photo-nav{
     display:none!important
 }
     .copyButton img{

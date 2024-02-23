@@ -893,11 +893,11 @@ display:none
 
 /* organiser follow button style */
 input.follow-button {
-    padding: 5px 40px;
-    margin-top: 10px;
-    font-size: 20px;
+    padding: 2px 40px;
+    margin-top: 11px;
+    font-size: 15px;
     color: #000;
-    border-radius: 10px;
+    border-radius: 6px;
     background: #fff;
 }
 

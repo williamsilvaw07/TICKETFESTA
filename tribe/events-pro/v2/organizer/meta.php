@@ -15,6 +15,43 @@
  * @var WP_Post $organizer The organizer post object.
  *
  */
+
+
+
+// Get the ID of the organizer
+$organizer_id = $organizer->ID;
+
+// Set up the arguments for WP_Query
+$args = array(
+    'post_type'      => 'tribe_events', // The Events Calendar post type
+    'posts_per_page' => -1, // Retrieve all events
+    'post_status'    => 'publish', // Only published events
+    'meta_query'     => array(
+        array(
+            'key'   => '_EventOrganizerID', // Meta key for the organizer ID
+            'value' => $organizer_id, // The actual organizer ID
+        ),
+    ),
+    'orderby' => 'meta_value', // Order by meta value (event start date)
+    'meta_key' => '_EventStartDate', // Meta key for event start date
+    'order' => 'ASC', // Order ascending (earliest first)
+    // Custom 'date_query' to include all events regardless of date
+    'date_query' => array(
+        'inclusive' => true // Include all dates
+    ),
+);
+
+// Perform the query
+$organizer_events = new WP_Query($args);
+
+// Count the number of events
+$event_count = $organizer_events->found_posts;
+
+// Reset post data
+wp_reset_postdata();
+
+
+
 $organizer_facebook = get_post_meta($organizer->ID, '_organizer_facebook', true);
 $organizer_instagram = get_post_meta($organizer->ID, '_organizer_instagram', true);
 
@@ -58,27 +95,30 @@ $template_vars = array_merge( [ 'organizer' => $organizer, ], $conditionals )
 <div <?php tribe_classes( $classes ); ?>>
 
 
-<div class="organizer_profile_bk">
+    <div class="organizer_profile_main_div">
 
-<?php
-// Ensure that $organizer_id is defined. Use $organizer->ID if available.
-if ( isset( $organizer ) && isset( $organizer->ID ) ) {
-    $organizer_id = $organizer->ID;
-} else {
-    // Handle the case where $organizer or $organizer->ID is not available
-    $organizer_id = get_the_ID(); // Fallback to get current post ID
-}
+    <div class="organizer_profile_bk" style="
+    <?php
+    // Ensure that $organizer_id is defined. Use $organizer->ID if available.
+    if ( isset( $organizer ) && isset( $organizer->ID ) ) {
+        $organizer_id = $organizer->ID;
+    } else {
+        // Handle the case where $organizer or $organizer->ID is not available
+        $organizer_id = get_the_ID(); // Fallback to get current post ID
+    }
 
-$banner_image_id = get_post_meta($organizer_id, 'banner_image_id', true);
-if ($banner_image_id) {
-    $banner_image_url = wp_get_attachment_image_url($banner_image_id, 'full');
-    echo '<img class="organizer_profile_bk_img" src="' . esc_url($banner_image_url) . '">';
-} else {
-    // Display default image or nothing
-    echo '<img class="organizer_profile_bk_img" src="https://thaynna-william.co.uk/wp-content/uploads/2024/01/Group-189-5.jpg">';
-}
-?>
+    $banner_image_id = get_post_meta($organizer_id, 'banner_image_id', true);
+    if ($banner_image_id) {
+        $banner_image_url = wp_get_attachment_image_url($banner_image_id, 'full');
+    } else {
+        // Use default image if no specific image is set
+        $banner_image_url = 'https://thaynna-william.co.uk/wp-content/uploads/2024/01/Group-189-5.jpg';
+    }
+    echo 'background-image: url(' . esc_url($banner_image_url) . ');';
+    ?>
+    background-size: cover; background-position: center;">
 </div>
+
 	<div class="tec-events-c-view-box-border">
 
 
@@ -106,7 +146,7 @@ if ( json_last_error() !== JSON_ERROR_NONE ) {
 }
 
 if ( in_array( $user_id, $followers_array ) ) {
-    $follower_text = 'unfollow';
+    $follower_text = 'following';
 }else{
     $follower_text = 'follow';
 }
@@ -177,8 +217,16 @@ $follower_count = count($followers_array);
     echo '<h1>' . esc_html( $organizer_title ) . '</h1>';
     ?>
 		<div class="organizer_text_dec">
-			<p class="organizer_tagline">Tag Link of the type of events</p>
-			<p class="organizer_tagline followers">Followers: <span class="followers-count"><?php echo $follower_count;?></span> </p>
+			<p class="organizer_tagline"></p>
+
+            <div class="organizer_text_dec_info">
+
+			<p class="followers">Followers <span class="followers-count"><?php echo $follower_count;?></span> </p>
+            <span class="spancer"></span>
+            <p class="organizer_event_count">Total events<span class="event-count"><?php echo $event_count; ?></span> </p>
+       
+
+        </div>
         <form method="POST">
             <input type="hidden" name="follow" value="<?php echo $follower_text;?>">
             <input type="submit" value="<?php echo ucfirst($follower_text); ?>" nanme="submit" class="follow-button"> 
@@ -198,21 +246,21 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 </div>
 <!-- organizer name end -->
 </div>
-
-
+</div>
+</div>
 
 <!-- organizer profile nav -->
 <div class="organizer_navbar">
 	<div class="organizer_nav-item organizer_events">
-	  <img src="https://thaynna-william.co.uk/wp-content/uploads/2023/12/calendar-1.png" alt="Events Icon" class="organizer_nav-icon" width="30">
+	  <img src="https://thaynna-william.co.uk/wp-content/uploads/2023/12/calendar-1.png" alt="Events Icon" class="organizer_nav-icon" width="21">
 	  <span>Events</span>
 	</div>
 	<div class="organizer_nav-item organizer_Gallery">
-	  <img src="https://thaynna-william.co.uk/wp-content/uploads/2023/12/image-gallery-1.png" alt="Gallery Icon" class="organizer_nav-icon" width="30">
+	  <img src="https://thaynna-william.co.uk/wp-content/uploads/2023/12/image-gallery-1.png" alt="Gallery Icon" class="organizer_nav-icon" width="21">
 	  <span>Gallery</span>
 	</div>
 	<div class="organizer_nav-item organizer_about">
-	  <img src="https://thaynna-william.co.uk/wp-content/uploads/2023/12/user-1-1.png" alt="About Icon" class="organizer_nav-icon profile_icon_nav" width="30">
+	  <img src="https://thaynna-william.co.uk/wp-content/uploads/2023/12/user-1-1.png" alt="About Icon" class="organizer_nav-icon profile_icon_nav" width="21">
 	  <span>About</span>
 	</div>
   </div>
@@ -235,13 +283,10 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 
 <!-- Event past -->
 <div class="event-listing past_event_listing_div">
-
     <div class="event-listing">
-        <?php
-        // Replace this with your method of obtaining the current organizer's ID
-        $current_organizer_id = get_the_ID(); // Example: get_the_ID() or another method
 
-        // Current date and time
+        <?php
+        $current_organizer_id = get_the_ID(); // Example: get_the_ID() or another method
         $current_time = current_time('Y-m-d H:i:s');
 
         // Define the query arguments to get past events for the current organizer
@@ -267,17 +312,14 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
             'order'          => 'DESC',
         );
 
-        // Perform the query for past events
         $past_events = new WP_Query($past_events_args);
 
-        // Check if there are past events for the current organizer
         if ($past_events->have_posts()) :
             while ($past_events->have_posts()) : $past_events->the_post();
                 $event_url = get_the_permalink();
-                $ticket_price = tribe_get_cost(null, true);
-                $button_text = !empty($ticket_price) ? esc_html($ticket_price) : '';
                 ?>
                 <div class="event-card">
+                <div class="past-event-tag">Past Event</div>
                     <?php if (has_post_thumbnail()) : ?>
                         <div class="event-image">
                             <a href="<?php echo esc_url($event_url); ?>">
@@ -287,33 +329,30 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
                     <?php endif; ?>
                     
                     <div class="event-details">
-                 
-                     
+                        
+
                         <div class="event-content">
                             <h2 class="event-title">
                                 <a href="<?php echo esc_url($event_url); ?>"><?php the_title(); ?></a>
                             </h2>
                             <div class="event-day">
-    <?php echo tribe_get_start_date(null, false, 'D, d M, H:i'); ?>
-</div>
+                                <?php echo tribe_get_start_date(null, false, 'D, d M, H:i'); ?>
+                            </div>
                             <div class="event-time-location">
                                 <span class="event-time"><?php echo tribe_get_start_date(null, false, 'g:i a'); ?> - <?php echo tribe_get_end_date(null, false, 'g:i a'); ?></span>
                                 <span class="event-location"><?php echo tribe_get_venue(); ?></span>
                             </div>
                             <div class="event-actions">
                                 <a href="<?php echo esc_url($event_url); ?>" class="btn-get-tickets">View Event</a>
-                             
                             </div>
                         </div>
                     </div>
                 </div>
                 <?php
             endwhile;
-
-            // Reset post data to avoid conflicts with the main query
             wp_reset_postdata();
         else :
-            echo '<p>No events found.</p>';
+            echo '<p>No past events found.</p>';
         endif;
         ?>
     </div>
@@ -326,7 +365,7 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 <div class="event-listing live_event_listing_div">
 
 <div class="event-listing">
-	
+    
     <?php
     // Define the query arguments to get events for this organizer.
     $organizer_events_args = array(
@@ -365,6 +404,12 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
                             <?php the_post_thumbnail('medium'); ?>
                         </a>
                     </div>
+                <?php else: ?>
+                    <div class="event-image">
+                        <a href="<?php echo esc_url( $event_url ); ?>">
+                            <img src="https://ticketfesta.co.uk/wp-content/uploads/2024/02/placeholder-4.png" alt="Placeholder" style="width: 100%; height: auto;">
+                        </a>
+                    </div>
                 <?php endif; ?>
                 
                 <div class="event-details">
@@ -374,8 +419,8 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
                             <a href="<?php echo esc_url( $event_url ); ?>"><?php the_title(); ?></a>
                         </h2>
                         <div class="event-day">
-    <?php echo tribe_get_start_date(null, false, 'D, d M, H:i'); ?>
-</div>
+                            <?php echo tribe_get_start_date(null, false, 'D, d M, H:i'); ?>
+                        </div>
                         <div class="event-time-location">
                             <span class="event-time"><?php echo tribe_get_start_date( null, false, 'g:i a' ); ?> - <?php echo tribe_get_end_date( null, false, 'g:i a' ); ?></span>
                             <span class="event-location"><?php echo tribe_get_venue(); ?></span>
@@ -413,66 +458,38 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 
 <!-- Event Gallery -->
 <div class="organizer_gallery_main organizer_main_div organizer_Gallery_content">
-<h3>Gallery</h3>
-<?php 
-    $categories = get_categories(array(
-        'taxonomy' => 'tec_organizer_category',
-        'hide_empty' => false,
-        'meta_query' => array(
-            array(
-                'key' => 'category_owner_id',
-                'value' => get_post_field('post_author', $organizer->ID)                ,
-                'compare' => '='
-            ),
-            array(
-                'key' => 'category_organiser',
-                'value' => $organizer->ID,
-                'compare' => '='
-            )
-        )
-    ));
-
-    // category_organiser
-
-?>
+    <h3>Gallery</h3>
     <!-- Event Gallery Category -->
     <div class="organizer_gallery_category">
-        <?php foreach($categories as $category){ 
-            $cat_title = $category->name;
-            $category_image_array = get_term_meta($category->term_id, 'category_images', true); // get category images
-            $category_images = explode(',', $category_image_array);
-            $attachment_id = attachment_url_to_postid($category_images[0]);
-            $attachment_src = wp_get_attachment_image_src($attachment_id, 'medium')[0];
-            ?>
-          
-            <div class="organizer_gallery_category_inner" data-category="<?php echo $category->slug ?>">
-                <h6 class="organizer_gallery_category_inner_title"><?php echo  $title; ?></h6>
-                <img class="organizer_gallery_category_inner_image" src="<?php echo esc_url( $attachment_src ); ?>" >
-            </div>
-        <?php } ?>
-
         <?php 
-        
-        echo '<script>';
-        echo "const imageData = {";
-        foreach ($categories as $category) {
-            $cat_title = $category->name;
-            $category_image_array = get_term_meta($category->term_id, 'category_images', true); // get category images
-            $category_images = explode(',', $category_image_array);
+            $hasImages = false; // Flag to track if any category has images
+            foreach ($categories as $category) {
+                $cat_title = $category->name;
+                $category_image_array = get_term_meta($category->term_id, 'category_images', true); // Get category images
+                $category_images = explode(',', $category_image_array);
 
-            echo "'$category->slug': [";
-            foreach ($category_images as $image) {
-                echo "'$image',";
+                if (!empty($category_images[0])) { // Check if there's at least one image
+                    $hasImages = true;
+                    $attachment_id = attachment_url_to_postid($category_images[0]);
+                    $attachment_src = wp_get_attachment_image_src($attachment_id, 'medium')[0];
+                    ?>
+                    <div class="organizer_gallery_category_inner" data-category="<?php echo $category->slug ?>">
+                        <h6 class="organizer_gallery_category_inner_title"><?php echo $cat_title; ?></h6>
+                        <img class="organizer_gallery_category_inner_image" src="<?php echo esc_url($attachment_src); ?>" >
+                    </div>
+                    <?php
+                }
             }
-        
-            echo "],";
-        }
-        echo "};";
-        echo "</script>";
 
+            if (!$hasImages) { // Display custom message if no images found in a div with the specified class
+                // Get the organizer's name
+                $organizer_name = get_the_title($organizer->ID); // Assuming $organizer->ID contains the ID of the current organizer
+                echo "<div class='organizer_gallery_category_inner_no_image'>";
+                echo "<p class='no-images-message'>{$organizer_name} hasn't published any Images.</p>";
+                echo "<p class='follow-message'>Follow {$organizer_name} to get notified about news and updates, first.</p>";
+                echo "</div>";
+            }
         ?>
-
-        <!-- Additional categories as needed -->
     </div>
     <!-- Event Gallery Category END -->
 
@@ -481,9 +498,6 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 
 </div>
 <!-- Event Gallery END -->
-
-
-
 
 
 
@@ -532,7 +546,6 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 
 
 	
-</div>
 
 
 
@@ -921,6 +934,69 @@ jQuery(document).ready(function($) {
 
 
 <style>
+
+    .tribe-events-c-messages__message--notice{
+        display:none
+    }
+    .past-event-tag{
+        position: absolute;
+    background: #f8f8f8;
+    z-index: 9;
+    color: black;
+    letter-spacing: 0.2px;
+    font-size: 12px;
+    font-weight: 400;
+    padding: 6px 12px!important;
+    border-radius: 8px 0px 0 0;
+ 
+    text-align: center;
+    }
+
+    .event-listing-main-div , .organizer_gallery_main  , .organizer_about_main{
+        margin: 0 auto!important;
+    padding: 40px!important;
+    max-width: 1700px!important;
+    width: 100%!important;
+    min-height: 400px;
+
+    }
+    .tribe-common .tribe-common-g-row {
+        display: flex!important;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    flex-direction: column;
+       }
+          .followers-count , .event-count{
+        font-size: 24px!important;
+    font-weight: 600;
+    margin-bottom: -5px!important;
+
+    }
+    
+    .organizer_text_dec_info{
+        display: flex;
+    gap: 20px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    font-size:13px!important
+    }
+    .spancer{
+        display: inline-block;
+    border-right: 1px solid white!important;
+    height: 25px;
+    width: 0;
+    margin-right: 10px;
+    }
+    .organizer_text_dec_info p{
+        display: flex;
+    flex-direction: column-reverse;
+    }
+.organizer_profile_main_div{
+    width:100%;
+    position: relative;
+}
     .event-day , .event-month , .event-title , .event-title a,  .event-actions , .event-actions span , .event-location , .event-time
 {
     color: black!important;
@@ -1008,10 +1084,14 @@ background-position: center top;
     display: none!important;
 }
 .tribe-events-view--organizer .tribe-common-l-container{
-    padding-top: 5px!important;
+    padding-top: px!important;
+    padding: 0!important;
+    margin: 0!important;
+    max-width: 2500px!important;
 }
-.organizer_profile_bk_img{
-    border-radius: 6px;
+.organizer_profile_bk{
+   width:100%;
+   min-height:450px;
 }
 
 
@@ -1031,12 +1111,21 @@ width: fit-content!important;
 .single-tribe_organizer .image_profile_text_main_continer{
     display: flex;
     align-content: center;
-    justify-content: flex-start;
-    align-items: center;
-    gap: 27px;
-    margin-top: -67px;
-    margin-bottom: 20px;
+    justify-content: center;
+    gap: 9px;
     width: 100%;
+    align-items: center;
+    flex-direction: column;
+
+}
+
+.single-tribe_organizer .tec-events-c-view-box-border{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    flex-direction: column;
+    align-items: center;
 }
 .single-tribe_organizer  .tribe-events-pro-organizer__meta .tec-events-c-view-box-border {
     display: flex;
@@ -1053,6 +1142,7 @@ width: fit-content!important;
     background-color: #262626;
     border-radius: 10px;
     color: rgb(255, 255, 255);
+    max-width: 300px;
 }
 .event-card .event-title{
     color: rgb(255, 255, 255)!important;
@@ -1096,6 +1186,9 @@ width: fit-content!important;
     margin: 5px 0px;
     margin-top: 5px!important;
 
+}
+.event-time{
+    display:none
 }
 
 .event-actions a{
@@ -1171,16 +1264,18 @@ width: fit-content!important;
     font-size: 13px!important;
     font-weight: 400!important;
 }
-.organizer_navbar{
-    background-color: #2C2C2C;
+.organizer_navbar {
+    font-size: 14px;
+    gap: 38px;
+    background-color: #1A1A1A;
     display: flex;
-    justify-content: space-around;
-    align-content: center;
-    padding: 0 20px!important;
-    width: 100%;
+    justify-content: center; /* Adjusted to center to bring items closer */
     align-items: center;
-    border-radius: 8px;
+    padding: 0 9px!important;
+    width: 100%;
+    border-radius: 0px;
     margin: 0 auto!important;
+    margin-top: -8px!important;
 }
 .organizer_nav-item{
     display: flex;
@@ -1217,8 +1312,12 @@ width: fit-content!important;
     background-color: #767676; 
     transition: background-color 0.2s ease;
 }
-
-
+.organizer_nav-item span{
+    display:block!important
+}
+.organizer_nav-item{
+    
+}
 .past_event_listing_div {
     display: none;
 }
@@ -1243,6 +1342,7 @@ width: fit-content!important;
 }
 .event-listing_type p{
     cursor: pointer;
+    font-size: 15px;
 }
 .organizer_gallery_category_inner_image{
     max-width: 300px!important;
@@ -1291,6 +1391,20 @@ width: fit-content!important;
 
 .organizer_gallery_category_inner:hover .organizer_gallery_category_inner_title {
     opacity: 0;
+}
+
+
+.organizer_gallery_category_inner_no_image{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    width: 100%;
+
+}
+.no-images-message{
+    font-size: 21px;
+    font-weight: 600;
 }
 .organizer_gallery_category_inner_title{
     position: absolute!important;
@@ -1356,12 +1470,17 @@ width: fit-content!important;
 .organizer_text_dec p{
     text-transform: capitalize!important;
 }
+.organizer_text_dec{
+    text-align: center;
+
+}
 
 
 .organizer_main_div h3{
 padding-bottom: 15px;
 font-size: 26px;
 font-weight: 600;
+text-align: left;
 }
 .organizer_about_content h3{
     padding-bottom: 0!important 
@@ -1443,15 +1562,16 @@ font-weight: 600;
 }
 .single-tribe_organizer .image_profile_text_main_continer img {
     border-radius: 100px;
-    max-width: 200px;
-    width: 200px;
-    height: 200px;
+    max-width: 180px;
+    width: 100%;
+    height: 180px;
     object-fit: cover;
 }
-
+.organizer_tagline{
+  display:none
+}
 .organizer_about_main_inner{
     text-align: center;
-    max-width: 900px;
     margin: 0 auto!important;
     display: flex;
     flex-direction: column;
@@ -1469,31 +1589,9 @@ font-weight: 600;
   /****media responsive ***/
   @media (min-width: 840px) {
 
-    .organizer_profile_bk img{
-        max-height: 470px;
-        width: 1400px;
-        object-fit: cover;
-    }
     
     
 }
-
-
-
-
-
-@media (max-width: 839px) {
-
-    .organizer_profile_bk img{
-        max-height: 650px;
-        width: 100%;
-        object-fit: cover;
-    }
-    
-    
-}
-
-
 
 
 
@@ -1514,6 +1612,24 @@ font-weight: 600;
 }
 
 
+@media (max-width: 839px) {
+
+   
+    .single-tribe_organizer .image_profile_text_main_continer img {
+        height: auto;
+    max-width: 131px;
+    width: 100%;
+    border: 3px solid white;
+}
+    
+}
+
+
+
+
+
+
+
 
 
 @media (max-width: 750px) {
@@ -1525,11 +1641,39 @@ font-weight: 600;
 .organizer_navbar span{
     font-size: 14px;
 }
-    
+.single-tribe_organizer .image_profile_text_main_continer img {
+    max-width: 101px;
+    height: auto;
+}
+.organizer_title_name h1 {
+    padding-bottom: 5px;
+    font-size: 25px;
+}
+.followers-count, .event-count {
+    font-size: 20px!important;
+
+}
+input.follow-button {
+    padding: 2px 40px;
+    font-size: 14px;
+    border-radius: 3px;
+
+}
+.organizer_nav-item {
+
+    padding: 8px 14px!important;
+}
+.profile_icon_nav {
+    max-width: 18px!important;
+}
 }
 
-@media (max-width: 550px) {
- 
+@media (max-width: 599px) {
+
+
+    .organizer_profile_bk {
+        min-height: 340px;
+}
     .single-tribe_organizer .image_profile_text_main_continer img {
         border-radius: 100px;
         max-width: 106px;
@@ -1540,7 +1684,7 @@ font-weight: 600;
         object-fit: cover;
     }
     .single-tribe_organizer .image_profile_text_main_continer {
-        margin-top: -52px;
+        margin-top: inherit;
         gap: 2px;
         flex-direction: column;
 
@@ -1573,7 +1717,6 @@ font-weight: 600;
     }
    
 .single-tribe_organizer .image_profile_text_main_continer {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2)!important;
     padding-bottom: 28px;
     margin-bottom: 6px;
     
@@ -1620,9 +1763,7 @@ font-weight: 600;
     gap: 5px;
 
 }
-.organizer_profile_bk img{
-    border-radius: 0;
-}
+
 
 #galleryDisplayArea button {
    
