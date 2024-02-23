@@ -460,27 +460,28 @@ if (!empty($sponsor_logos_ids)) : ?>
 
 
 <script>
-
 jQuery(document).ready(function($) {
     var element = $('.buttonticket_for_mobile'); // Your target element
     var originalOffset = element.offset().top; // Original offset top position
     var elementHeight = element.outerHeight(); // Height of the element
     var earlyShowOffset = 100; // Offset value to show the element earlier (in pixels)
 
-    // Function to check if the element is in the viewport
-    function isInViewport() {
+    // Function to check if the element is above the viewport and needs to be fixed
+    function needsFixing() {
         var scrollPos = $(window).scrollTop(); // Current scroll position
         var windowHeight = $(window).height(); // Window height
-        var elementTopPos = originalOffset - earlyShowOffset; // Adjusted top position of the element
 
-        // Element is considered out of viewport if its adjusted top position is less than the scroll position
-        return elementTopPos > scrollPos;
+        // Check if the bottom of the element is above the bottom of the viewport (considering earlyShowOffset)
+        var elementBottom = originalOffset + elementHeight - earlyShowOffset;
+        var viewportBottom = scrollPos + windowHeight;
+
+        return elementBottom < viewportBottom;
     }
 
-    // Function to apply or remove fixed style based on element's visibility
+    // Function to apply or remove fixed style based on the element's position
     function updateElementStyle() {
-        if (!isInViewport()) {
-            // Apply fixed style if the element is not in the viewport
+        if (needsFixing()) {
+            // Apply fixed style if the element needs fixing
             element.css({
                 position: 'fixed',
                 bottom: '0',
@@ -491,7 +492,7 @@ jQuery(document).ready(function($) {
                 'padding-bottom': '31px'
             });
         } else {
-            // Remove fixed style if the element is back in the viewport
+            // Remove fixed style if the element is back in its original position
             element.removeAttr('style');
         }
     }
@@ -509,6 +510,7 @@ jQuery(document).ready(function($) {
         updateElementStyle();
     });
 });
+
 
 
 
