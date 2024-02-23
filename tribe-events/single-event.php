@@ -1110,7 +1110,7 @@ text-transform: capitalize!important;
 }
 .tribe-tickets__tickets-item-extra-price{
     text-align: center;
-    font-size: 20px;
+    font-size: 20px!important;
 }
 html body .single_event_sections {
  padding-bottom: 40px;
