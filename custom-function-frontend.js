@@ -8,9 +8,14 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('Search icon clicked');
         searchPopup.style.display = 'block';
 
+        // Clear any existing interval to avoid multiple intervals running simultaneously
+        if (clickInterval) {
+            clearInterval(clickInterval);
+        }
+
         // Start trying to "click" the input every 1 second
         clickInterval = setInterval(function() {
-            if (searchInput && searchPopup.style.display === 'block') {
+            if (searchInput) {
                 console.log('Attempting to click on the input');
 
                 // Focus before click might help some UI components recognize the interaction
@@ -27,11 +32,10 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 1000); // Repeat every 1 second
     });
 
-    // Consider stopping the interval when the popup is closed or when the user starts interacting with the input
-    searchPopup.addEventListener('click', function(event) {
-        if (event.target === searchInput || event.target.id === 'closePopup') {
-            clearInterval(clickInterval);
-            console.log('Stopped repeating clicks');
-        }
+    // Optional: Add a way to stop the interval if needed
+    // For example, you can stop it when the close button is clicked
+    document.getElementById('closePopup').addEventListener('click', function() {
+        clearInterval(clickInterval);
+        console.log('Close button clicked. Stopping repeating clicks.');
     });
 });
