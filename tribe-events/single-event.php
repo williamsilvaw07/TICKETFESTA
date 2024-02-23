@@ -114,6 +114,11 @@ $cost  = tribe_get_formatted_cost( $event_id );
 
 
 <!-- Event Location &  date and time  -->
+<div class="single_event_page_location ">
+
+<div class="location_div_js">📍<span class="location_name"></span> - <span class="location_postcode"></span></div>
+  
+
 <?php if ( tribe_get_venue_id( $event_id ) ): // Check if there's a venue ID associated with the event ?>
   <div class="time_div emoji_div_main">
     <span class="time_emoji">⏰</span>
@@ -127,13 +132,10 @@ $cost  = tribe_get_formatted_cost( $event_id );
           $event_start_date = tribe_get_start_date($event_id, false, $date_format);
           $event_start_time = tribe_get_start_time($event_id, false, $time_format);
 
-          // Get the event's timezone abbreviation
-          $timezone = Tribe__Events__Timezones::get_event_timezone_abbr( $event_id );
+          // Combine the date, time, and a simple "GMT" label
+          $event_date_time = $event_start_date . ' - ' . $event_start_time . ' GMT';
 
-          // Combine the date, time, and the dynamic timezone abbreviation
-          $event_date_time = $event_start_date . ' - ' . $event_start_time . ' ' . $timezone;
-
-          // Output the date, time, and the dynamic timezone abbreviation
+          // Output the date, time, and "GMT" label
           echo $event_date_time;
         ?>
       </h2>
