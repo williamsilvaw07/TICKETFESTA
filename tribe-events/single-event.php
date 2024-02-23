@@ -462,21 +462,21 @@ if (!empty($sponsor_logos_ids)) : ?>
 <script>
 
 
-
 jQuery(document).ready(function($) {
     var element = $('.buttonticket_for_mobile'); // Your target element
     var originalOffset = element.offset().top; // Original offset top position
     console.log('Original Offset:', originalOffset); // Log original offset
 
-    jQuery(window).scroll(function() {
+    function checkElementPosition() {
         var scrollPos = $(window).scrollTop(); // Current scroll position
+        var windowHeight = $(window).height(); // Window height
         var elementBottom = originalOffset + element.outerHeight(); // Bottom position of the element
+
         console.log('Scroll Position:', scrollPos); // Log current scroll position
 
         // Check if the bottom of the element is above the viewport (element is not in view)
-        if (scrollPos + $(window).height() < elementBottom) {
+        if (scrollPos + windowHeight < elementBottom) {
             console.log('Applying fixed style'); // Log when applying fixed style
-            // If scrolled and the element is not in view, make it fixed
             element.css({
                 position: 'fixed',
                 bottom: '0',
@@ -487,10 +487,15 @@ jQuery(document).ready(function($) {
             });
         } else {
             console.log('Removing fixed style'); // Log when reverting to default
-            // If the element is in view, revert to default
             element.removeAttr('style');
         }
-    });
+    }
+
+    // Check position on page load
+    checkElementPosition();
+
+    // Check position on scroll
+    jQuery(window).scroll(checkElementPosition);
 });
 
 
