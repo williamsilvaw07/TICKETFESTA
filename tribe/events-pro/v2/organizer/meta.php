@@ -1619,7 +1619,10 @@ text-align: left;
     align-items: start;
     justify-items: start;
 }
+.event-card {
 
+    max-width: inherit;
+    width: 100%;
 }
 
 
