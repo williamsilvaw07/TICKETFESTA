@@ -462,20 +462,28 @@ if (!empty($sponsor_logos_ids)) : ?>
 <script>
 
 
+
 jQuery(document).ready(function($) {
     var element = $('.buttonticket_for_mobile'); // Your target element
     var originalOffset = element.offset().top; // Original offset top position
     var elementHeight = element.outerHeight(); // Height of the element
 
-    // Function to check the element's position and apply styles accordingly
-    function checkPosition() {
+    // Function to check if the element is in the viewport
+    function isInViewport() {
         var scrollPos = $(window).scrollTop(); // Current scroll position
         var windowHeight = $(window).height(); // Window height
+        var elementTopPos = originalOffset; // Top position of the element
         var elementBottomPos = originalOffset + elementHeight; // Bottom position of the element
 
-        // Check if the bottom of the element is above the top of the viewport
-        if (scrollPos + windowHeight < elementBottomPos) {
-            // Apply fixed style
+        // Element is in viewport if its bottom is greater than the scroll position
+        // and its top is less than the scroll position plus the window height
+        return elementBottomPos > scrollPos && elementTopPos < (scrollPos + windowHeight);
+    }
+
+    // Function to apply or remove fixed style based on element's visibility
+    function updateElementStyle() {
+        if (!isInViewport()) {
+            // Apply fixed style if the element is not in the viewport
             element.css({
                 position: 'fixed',
                 bottom: '0',
@@ -485,17 +493,22 @@ jQuery(document).ready(function($) {
                 'padding-bottom': '31px'
             });
         } else {
-            // Revert to default style
+            // Remove fixed style if the element is back in the viewport
             element.removeAttr('style');
         }
     }
 
-    // Initial check on page load
-    checkPosition();
-
-    // Check on scroll
-    $(window).scroll(checkPosition);
+    // Check and update element style on page load and on scroll
+    updateElementStyle();
+    $(window).scroll(updateElementStyle);
 });
+
+
+
+
+
+
+
 
 
 
