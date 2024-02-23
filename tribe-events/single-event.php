@@ -684,29 +684,26 @@ jQuery(document).ready(function($) {
 
 
 
-
 jQuery(document).ready(function($) {
     // Process each '.tribe-event-date-start' element within '.top_flex_section_single_event'
     $('.top_flex_section_single_event .tribe-event-date-start').each(function() {
-        // This will fetch the current text, which includes date, time, and timezone
+        // Fetch the current text, which includes date, time, and timezone
         var dateTimeText = $(this).text();
-        
-        // Split the text into date/time and timezone parts
-        var parts = dateTimeText.split(' ');
-        if (parts.length > 1) {
-            // The last part should be the timezone, separate it from the rest
-            var timezone = parts.pop();
-            var dateTimeWithoutTimezone = parts.join(' ');
 
-            // Reconstruct the text with an additional span for the timezone
-            var formattedDateTime = dateTimeWithoutTimezone + ' <span class="time-zone">' + timezone + '</span>';
-            $(this).html(formattedDateTime);
+        // Regular expression to match the time format 'HH:mm TZ' where 'TZ' is the timezone
+        // This assumes the timezone is a series of uppercase letters, which is common for timezones like 'BST', 'EST', 'PST', etc.
+        var regex = /(\d{1,2}:\d{2})\s([A-Z]+)/;
+        var matches = dateTimeText.match(regex);
+
+        if (matches && matches.length === 3) {
+            // Replace the original time and timezone with the time wrapped in a span and the timezone in another span
+            var formattedTimeWithTimezone = dateTimeText.replace(regex, '<span class="event-time">' + matches[1] + '</span> <span class="event-timezone">' + matches[2] + '</span>');
+            $(this).html(formattedTimeWithTimezone);
         }
     });
 
-    // Style adjustments for the h2 elements if needed
+    // Ensure h2 elements are displayed, adjust as needed
     $('.top_flex_section_single_event h2').each(function() {
-        // Ensure h2 elements are displayed
         $(this).css('display', 'block');
     });
 });
