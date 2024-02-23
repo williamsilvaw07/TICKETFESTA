@@ -951,7 +951,7 @@ jQuery(document).ready(function($) {
     font-size: 12px;
     font-weight: 400;
     padding: 6px 12px!important;
-    border-radius: 9px 9px 0 0;
+    border-radius: 8px 0px 0 0;
  
     text-align: center;
     }
