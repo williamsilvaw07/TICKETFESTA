@@ -1107,7 +1107,9 @@ html body .single_event_sections {
         max-width: 700px!important;
     width: 100%!important;
     }
-  
+    .tribe-events-event-meta_venue .tribe-events-meta-group-details , .tribe-events-meta-group-organizer  , .tribe-events-meta-group-organizer{
+display:none!important
+    }
 
 
 .single_event_sections h2{
