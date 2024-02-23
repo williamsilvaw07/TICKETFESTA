@@ -453,27 +453,7 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 
 
 
-<!-- Event Gallery -->
-<div class="organizer_gallery_main organizer_main_div organizer_Gallery_content">
-    <h3>Gallery</h3>
-    <?php 
-        $categories = get_categories(array(
-            'taxonomy' => 'tec_organizer_category',
-            'hide_empty' => false,
-            'meta_query' => array(
-                array(
-                    'key' => 'category_owner_id',
-                    'value' => get_post_field('post_author', $organizer->ID),
-                    'compare' => '='
-                ),
-                array(
-                    'key' => 'category_organiser',
-                    'value' => $organizer->ID,
-                    'compare' => '='
-                )
-            )
-        ));
-    ?>
+
 
 <!-- Event Gallery -->
 <div class="organizer_gallery_main organizer_main_div organizer_Gallery_content">
