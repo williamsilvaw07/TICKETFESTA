@@ -12,22 +12,13 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('Search icon clicked.');
         searchPopup.style.display = 'block'; // Make the popup visible
 
-        // Additional styles for #ecsa-search .tt-menu can be applied here if needed
-        var ttMenu = searchPopup.querySelector('#ecsa-search .tt-menu');
+        // Find the .tt-menu element within the popup and add the tt-open class
+        var ttMenu = searchPopup.querySelector('.tt-menu');
         if (ttMenu) {
-            ttMenu.style.width = '100%';
-            ttMenu.style.display = 'inline-block';
-            ttMenu.style.maxHeight = '300px';
-            ttMenu.style.overflowX = 'hidden';
-            ttMenu.style.overflowY = 'auto';
-            ttMenu.style.marginTop = '5px';
-            ttMenu.style.padding = '0';
-            ttMenu.style.backgroundColor = '#fff';
-            ttMenu.style.border = '1px solid rgba(0,0,0,.2)';
-            ttMenu.style.borderRadius = '2px';
-            ttMenu.style.boxShadow = '0 2px 5px rgba(0,0,0,.15)';
-            ttMenu.style.position = 'relative';
-            ttMenu.style.top = '0';
+            ttMenu.classList.add('tt-open');
+            console.log('.tt-menu class tt-open added');
+        } else {
+            console.error('.tt-menu element not found within the popup.');
         }
     });
 });
