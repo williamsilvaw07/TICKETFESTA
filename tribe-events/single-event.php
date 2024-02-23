@@ -1842,6 +1842,7 @@ html .single-tribe_events .tribe-tickets__tickets-footer{
     padding-left: 4px;
 }
 
+}
 @media screen and (max-width: 670px) {
     .about_event_inner {
         flex-direction: column;
@@ -1857,6 +1858,11 @@ html .single-tribe_events .tribe-tickets__tickets-footer{
     .tribe-events-event-image img{
         max-height: 500px!important;
     }
+    html h1 {
+    font-size: 27px;
+    font-weight: bold;
+    line-height: 32px;
+}
   }
 
   @media screen and (max-width: 450px) {
