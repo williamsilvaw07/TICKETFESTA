@@ -1811,6 +1811,9 @@ html .single-tribe_events .tribe-tickets__tickets-footer{
     text-align: left;
     width: 100%;
 }
+.btn_price_span {
+    font-size: 20px;
+    padding-left: 4px;
 }
 
 @media screen and (max-width: 670px) {
