@@ -308,7 +308,7 @@ jQuery(document).ready(function($) {
     object-fit: contain;
 }
 
-.event-featured-image-placeholder{
+.event-featured-image-placeholder img{
     max-height: 200px;
     max-width: 400px!important;
     width: 100%;
