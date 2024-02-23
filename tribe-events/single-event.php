@@ -1105,6 +1105,7 @@ text-transform: capitalize!important;
     color: #878787!important;
     font-size: 13px!important;
     letter-spacing: 1px;
+    font-weight: 300;
 
 }
 html body .single_event_sections {
