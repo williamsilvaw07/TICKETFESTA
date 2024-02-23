@@ -1404,6 +1404,18 @@ width: fit-content!important;
 .organizer_gallery_category_inner:hover .organizer_gallery_category_inner_title {
     opacity: 0;
 }
+
+
+.organizer_gallery_category_inner{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+}
+.no-images-message{
+    font-size: 21px;
+    font-weight: 600;
+}
 .organizer_gallery_category_inner_title{
     position: absolute!important;
     bottom: 0!important;
