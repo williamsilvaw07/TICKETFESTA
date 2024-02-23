@@ -1817,7 +1817,7 @@ input.follow-button {
 body .event-actions a {
     padding: 8px 13px;
     font-size: 13px!important;
- 
+    border-radius: 3px;
 }
 }
   /****END***/
