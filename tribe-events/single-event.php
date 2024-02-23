@@ -991,7 +991,21 @@ text-transform: capitalize!important;
 
 
 }
-
+.tribe-events-notices{
+    font-size: 26px;
+    list-style: none;
+    background: #1A1A1A;
+    color: #d3fa16;
+    line-height: 34px;
+    margin-bottom: 39px;
+    padding: 20px 10px 13px 20px;
+    border-radius: 3px;
+    text-align: center;
+ 
+}
+.tribe-events-notices li{
+    list-style: none;
+}
 .tribe-tickets__tickets-item-quantity-unavailable{
     color: red;
     font-weight: 600!important;
