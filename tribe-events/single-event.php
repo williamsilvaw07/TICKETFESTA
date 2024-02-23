@@ -1949,8 +1949,8 @@ html .single-tribe_events .tribe-tickets__tickets-footer{
     font-size: 20px;
 }
 .tribe-events-single-event-description h2 {
-    text-transform: capitalize;
-    font-size: 23px;
+    text-transform: none;
+    font-size: 22px;
 }
 .tribe-events-event-meta {
     margin-top: -25px;
