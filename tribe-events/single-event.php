@@ -1042,7 +1042,11 @@ html .organizer-profile-link:hover {
     flex-direction: row;
 }
 .single_event_page_location .emoji_div_main{
-margin: 15px 0;
+    margin: 15px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
 }
 html .location_div_js.single_event_sections {
     border:0px solid rgba(255, 255, 255, 0.2)!important
