@@ -837,7 +837,7 @@ jQuery(document).ready(function($) {
 
 ///STICKY BUY TICKET FUNCTION FOR MOBILE 
 
-$(document).ready(function() {
+jQuery(document).ready(function() {
     function isElementInView(element) {
         var elementTop = element.offset().top;
         var elementBottom = elementTop + element.outerHeight();
