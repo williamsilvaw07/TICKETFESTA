@@ -1,6 +1,25 @@
 <?php
 
 
+
+
+////FONTASWER
+
+
+
+
+
+function enqueue_font_awesome() {
+    wp_enqueue_style('font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css');
+}
+add_action('wp_enqueue_scripts', 'enqueue_font_awesome');
+
+////END
+
+
+
+
+
 //* Do NOT include the opening php tag
 
 add_filter(
@@ -3031,7 +3050,29 @@ add_action('template_redirect', 'restrict_access_and_show_login_form');
 
 
 
-function enqueue_font_awesome() {
-    wp_enqueue_style('font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css');
+
+
+
+function custom_search_popup() {
+    ?>
+    <div id="searchPopup" style="display:none;">
+        <div id="searchOverlay" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:9999;"></div>
+        <div id="searchContent" style="position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); z-index:10000; background:#fff; padding:20px;">
+            <?php echo do_shortcode('[events-calendar-search placeholder="Search Events" show-events="5" disable-past-events="false" layout="medium" content-type="advance"]'); ?>
+            <button id="closePopup" style="display:block; margin-top:20px;">Close</button>
+        </div>
+    </div>
+    <?php
 }
-add_action('wp_enqueue_scripts', 'enqueue_font_awesome');
+add_action('wp_footer', 'custom_search_popup');
+
+function enqueue_custom_frontend_js() {
+    // Get the version of your script file to ensure the browser doesn't cache old versions.
+    $script_version = filemtime(get_stylesheet_directory() . '/custom-function-frontend.js');
+
+    // Enqueue your custom script, the 'get_stylesheet_directory_uri()' function points to your child theme's root directory.
+    wp_enqueue_script('custom-frontend-js', get_stylesheet_directory_uri() . '/custom-function-frontend.js', array('jquery'), $script_version, true);
+}
+
+// Hook your custom function into 'wp_enqueue_scripts' action.
+add_action('wp_enqueue_scripts', 'enqueue_custom_frontend_js');

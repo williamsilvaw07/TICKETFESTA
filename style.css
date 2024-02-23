@@ -72,8 +72,18 @@ font-family: "Plus Jakarta Sans", Sans-serif;
     padding: 9px 40px;
 }
 .header_search_icon:before {
-    content: '\f002'; /* FontAwesome search icon */
+    content: '\f002';
     font-family: FontAwesome;
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+    background: white;
+    color: black;
+    width: 33px;
+    border-radius: 100px;
+    height: 32px;
+    text-align: center;
+    justify-content: center;
 }
 .header_search_icon a{
     display: none!important;
