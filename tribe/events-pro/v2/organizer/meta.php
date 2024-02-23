@@ -1623,7 +1623,7 @@ text-align: left;
         object-fit: cover;
     }
     .single-tribe_organizer .image_profile_text_main_continer img {
-
+        height: auto;
     max-width: 131px;
     width: 100%;
     border: 3px solid white;
