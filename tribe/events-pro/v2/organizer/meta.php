@@ -1666,6 +1666,13 @@ input.follow-button {
     border-radius: 3px;
 
 }
+.organizer_nav-item {
+
+    padding: 8px 14px!important;
+}
+.profile_icon_nav {
+    max-width: 18px!important;
+}
 }
 
 @media (max-width: 550px) {
