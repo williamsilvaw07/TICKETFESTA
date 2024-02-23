@@ -1410,9 +1410,9 @@ html .single-tribe_events .tribe-events-gmap{
 }
 
 .popup-content {
-    background-color:rgb(26, 26, 26);
-    padding: 20px;
-    border-radius: 5px;
+    background-color: #1A1A1A;
+    padding: 8px;
+    border-radius: 0px;
     position: relative;
     width: 100%;
 }
@@ -1430,7 +1430,7 @@ html .single-tribe_events .tribe-events-gmap{
 #tribe-tickets__tickets-form{
     border: 0;
     color: white;
-    background-color: rgb(26, 26, 26)!important;
+    background-color: #1A1A1A!important;
     width: 100%;
     margin: 0;
 max-width:900px
