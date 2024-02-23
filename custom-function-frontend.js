@@ -1,24 +1,31 @@
 document.addEventListener('DOMContentLoaded', function() {
     var searchIcon = document.querySelector('.header_search_icon');
-    var searchInput = document.getElementById('ecsa-search-box'); // Adjust this selector to target your input
+    var searchInput = document.getElementById('ecsa-search-box');
 
     searchIcon.addEventListener('click', function() {
         console.log('Search icon clicked');
-        // Directly show the search popup without waiting
-        document.getElementById('searchPopup').style.display = 'block';
 
-        // Focus on the input field
-        if (searchInput) {
-            console.log('Focusing on search input');
-            searchInput.focus(); // Focus on the input
-        }
+        // Wait a bit to ensure any initialization or display changes have been completed
+        setTimeout(function() {
+            if (searchInput) {
+                console.log('Focusing on search input');
+                searchInput.focus(); // Focus on the input field
+
+                // Simulate a keydown event to mimic typing
+                var event = new KeyboardEvent('keydown', {
+                    key: ' ', // Using space to minimally interact with the input
+                    keyCode: 32, // Keycode for spacebar
+                    code: 'Space', // Code for spacebar
+                    which: 32,
+                    shiftKey: false,
+                    ctrlKey: false,
+                    metaKey: false
+                });
+
+                // Dispatch the keydown event
+                searchInput.dispatchEvent(event);
+                console.log('Keydown event dispatched on search input');
+            }
+        }, 1000); // Adjust this delay as needed
     });
-
-    // If you still want the close button to hide the popup, you can keep this listener
-    document.getElementById('closePopup').addEventListener('click', function() {
-        console.log('Close button clicked');
-        document.getElementById('searchPopup').style.display = 'none';
-    });
-
-    // Removed the listener for clicking outside the popup to close it
 });
