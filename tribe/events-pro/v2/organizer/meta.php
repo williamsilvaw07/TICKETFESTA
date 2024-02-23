@@ -1275,7 +1275,6 @@ width: fit-content!important;
     width: 100%;
     border-radius: 0px;
     margin: 0 auto!important;
-    margin-top: -8px!important;
     position: relative!important;
 }
 .organizer_nav-item{
