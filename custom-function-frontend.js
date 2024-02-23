@@ -2,48 +2,29 @@ document.addEventListener('DOMContentLoaded', function() {
     var searchIcon = document.querySelector('.header_search_icon');
     var searchPopup = document.getElementById('searchPopup');
     var closePopup = document.getElementById('closePopup');
-    var searchInput = document.querySelector('.tt-hint'); // Adjust this selector to target your specific input
-    var typingInterval;
-
-    function simulateTyping() {
-        if (searchInput && searchPopup.style.display === 'block') {
-            console.log('Simulating typing "t"');
-
-            searchInput.focus();
-
-            var event = new KeyboardEvent('keydown', {
-                key: 't', // Simulate "t" key
-                keyCode: 84, // KeyCode for "t"
-                code: 'KeyT', // Code for "t"
-                which: 84,
-                shiftKey: false,
-                ctrlKey: false,
-                metaKey: false
-            });
-
-            searchInput.dispatchEvent(event);
-        }
-    }
+    var searchInput = document.getElementById('ecsa-search-box');
 
     searchIcon.addEventListener('click', function() {
-        console.log('Search icon clicked. Starting to simulate typing every 1 second.');
+        console.log('Search icon clicked');
         searchPopup.style.display = 'block';
 
-        // Start the interval to simulate typing every 1 second
-        typingInterval = setInterval(simulateTyping, 1000);
+        setTimeout(function() {
+            if (searchInput) {
+                console.log('Focusing on search input');
+                searchInput.focus(); // Focus on the input
+            }
+        }, 1000); // Delay to ensure the popup is fully visible
     });
 
     closePopup.addEventListener('click', function() {
-        console.log('Close button clicked. Stopping the typing simulation.');
+        console.log('Close button clicked');
         searchPopup.style.display = 'none';
-        clearInterval(typingInterval); // Stop the typing simulation when the popup is closed
     });
 
     window.addEventListener('click', function(e) {
         if (e.target === document.getElementById('searchOverlay')) {
-            console.log('Clicked outside the popup. Stopping the typing simulation.');
+            console.log('Clicked outside the popup');
             searchPopup.style.display = 'none';
-            clearInterval(typingInterval); // Stop the typing simulation when clicking outside the popup
         }
     });
 });
