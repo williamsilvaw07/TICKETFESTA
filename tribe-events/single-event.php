@@ -118,22 +118,7 @@ $cost  = tribe_get_formatted_cost( $event_id );
 
 <div class="location_div_js">📍<span class="location_name"></span> - <span class="location_postcode"></span></div>
   
-<div class="time_div emoji_div_main">
-  <span class="time_emoji">⏰</span>
-  <span class="tribe-event-date-start">
-    <?php 
-      // Specify your custom format for the date, including the day of the week
-      $custom_format = 'l, j F Y'; // e.g., "Monday, 16 April 2024"
-      // Get the start date in the custom format
-      $event_start_date = tribe_get_start_date( $event_id, false, $custom_format );
-      // Get the start time
-      $event_start_time = tribe_get_start_time( $event_id, 'H:i T' ); // e.g., "20:00 BST"
-
-      // Output the formatted start date and time wrapped in <h2> tags
-      echo '<h2>' . $event_start_date . ' @ ' . $event_start_time . '</h2>';
-    ?>
-  </span>
-</div>
+<div class="time_div emoji_div_main "><span class="time_emoji">⏰<span class="time_text"> <?php echo tribe_events_event_schedule_details( $event_id, '<h2>', '</h2>' ); ?></span></div>
 <!--  <div class="door_open_time__div emoji_div_main"><span class="door_open_time__emoji">🚪</span> <span class="door_open_time__text">Doors open </span><span class="door_open_time_number"></span></div> -->
        
 </div>
