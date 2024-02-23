@@ -988,7 +988,20 @@ text-transform: capitalize!important;
     font-size: 26px;
     font-weight: 600;
 
+
+
 }
+
+.tribe-tickets__tickets-item-quantity-unavailable{
+    color: red;
+    font-weight: 600;
+    opacity: 1;
+    z-index: 9;
+    display: block;
+    position: relative;
+    font-size: 17px;
+}
+
 .event-tickets .tribe-tickets__tickets-item-details-content, .entry .entry-content .event-tickets .tribe-tickets__tickets-item-details-content {
     color: #878787!important;
     font-size: 13px!important;
