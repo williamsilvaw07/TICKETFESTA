@@ -12,19 +12,35 @@ document.addEventListener('DOMContentLoaded', function() {
             if (searchInput) {
                 console.log('Focusing on search input');
                 searchInput.focus(); // Focus on the input
+
+                // Optionally, add visual cues to indicate the field is active
+                searchInput.style.boxShadow = '0 0 0 2px #007bff'; // Example: blue glow effect
+                searchInput.style.border = '1px solid #007bff'; // Example: blue border
             }
-        }, 1000); // Delay to ensure the popup is fully visible
+        }, 1000); // Adjust the timeout as needed to ensure the popup is fully visible
     });
 
     closePopup.addEventListener('click', function() {
         console.log('Close button clicked');
         searchPopup.style.display = 'none';
+
+        // Reset any visual cues when closing the popup
+        if (searchInput) {
+            searchInput.style.boxShadow = '';
+            searchInput.style.border = '';
+        }
     });
 
     window.addEventListener('click', function(e) {
         if (e.target === document.getElementById('searchOverlay')) {
             console.log('Clicked outside the popup');
             searchPopup.style.display = 'none';
+
+            // Reset any visual cues when closing the popup
+            if (searchInput) {
+                searchInput.style.boxShadow = '';
+                searchInput.style.border = '';
+            }
         }
     });
 });
