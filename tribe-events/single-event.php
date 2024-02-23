@@ -1288,7 +1288,10 @@ background: #2C2C2C!important;
     margin-bottom: -16px;
     
 }
-
+.tribe-events-single-event-description h2 {
+    text-transform: capitalize;
+    font-size: 23px;
+}
 .tribe-common .tribe-common-h7{
     color: white!important;
 }
@@ -1873,6 +1876,10 @@ html .single-tribe_events .tribe-tickets__tickets-footer{
 }
 .tribe-events-notices li{
     font-size: 20px;
+}
+.tribe-events-single-event-description h2 {
+    text-transform: capitalize;
+    font-size: 23px;
 }
   }
 
