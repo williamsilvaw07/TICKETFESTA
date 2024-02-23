@@ -685,37 +685,27 @@ jQuery(document).ready(function($) {
 
 
 jQuery(document).ready(function($) {
-    // Process each '.tribe-event-date-start' element within '.top_flex_section_single_event'
     $('.top_flex_section_single_event .tribe-event-date-start').each(function() {
-        // Fetch the current text, which includes date, time, and should include the timezone
-        var dateTimeText = $(this).text();
-        console.log("Original dateTimeText:", dateTimeText); // Log the original text
+        var dateTimeText = $(this).text().trim(); // Trim to remove any trailing whitespace
+        console.log("Original dateTimeText:", dateTimeText); 
 
-        // Use a regular expression to find the timezone pattern (assuming it's something like 'BST', 'EST', 'UTC', etc.)
-        // This pattern looks for any uppercase letters following a space and at the end of the string
-        var regex = / [A-Z]{2,4}$/;
+        // Adjusted regex to match the time part 'HH:MM'
+        var regex = /\d{1,2}:\d{2}$/;
 
-        // Test and log if the regex matches the timezone
         var regexTestResult = regex.test(dateTimeText);
         console.log("Regex Test Result:", regexTestResult);
 
-        // Check if the timezone is found in the string
         if (regexTestResult) {
-            // Replace the timezone with a span that wraps the timezone
             var formattedDateTime = dateTimeText.replace(regex, function(match) {
-                console.log("Matched Timezone:", match.trim()); // Log the matched timezone
-                return ' <span class="time-zone">' + match.trim() + '</span>';
+                console.log("Matched Time:", match); // Log the matched time
+                return '<span class="time-part">' + match + '</span>';
             });
 
-            // Log the formatted date-time string
             console.log("Formatted dateTimeText:", formattedDateTime);
-
-            // Update the HTML with the formatted string
             $(this).html(formattedDateTime);
         }
     });
 
-    // Ensure h2 elements are displayed, adjust if needed
     $('.top_flex_section_single_event h2').css('display', 'block');
 });
 
