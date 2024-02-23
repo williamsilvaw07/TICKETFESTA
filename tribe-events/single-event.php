@@ -1797,9 +1797,7 @@ border-radius: 9px;
     display: none;
 }
 
-.time_div , .door_open_time__div{
-    display: none;
-}
+
 .single_event_background {
     background-size: 300% auto;
 }
