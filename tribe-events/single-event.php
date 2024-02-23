@@ -119,7 +119,6 @@ $cost  = tribe_get_formatted_cost( $event_id );
 <div class="location_div_js">📍<span class="location_name"></span> - <span class="location_postcode"></span></div>
   
 
-
 <div class="time_div emoji_div_main">
   <span class="time_emoji">⏰</span>
   <span class="time_text">
@@ -128,14 +127,20 @@ $cost  = tribe_get_formatted_cost( $event_id );
         // Format for the date including the day of the week
         $date_format = 'l, j F Y'; 
         // Specify the time format
-        $time_format = 'H:i T'; // 24-hour format with timezone, adjust as needed
+        $time_format = 'H:i'; // 24-hour format without timezone
+
         // Get the start date in the desired format
         $event_start_date = tribe_get_start_date( $event_id, false, $date_format );
         // Get the start time in the specified format
         $event_start_time = tribe_get_start_time( $event_id, false, $time_format );
-        // Combine the date and time
-        $event_date_time = $event_start_date . ' @ ' . $event_start_time;
-        // Output the date and time
+
+        // Get the timezone abbreviation for the event
+        $timezone_abbr = Tribe__Events__Timezones::get_event_timezone_abbr($event_id);
+
+        // Combine the date, time, and timezone abbreviation
+        $event_date_time = $event_start_date . ' @ ' . $event_start_time . ' ' . $timezone_abbr;
+
+        // Output the date, time, and timezone
         echo $event_date_time;
       ?>
     </h2>
