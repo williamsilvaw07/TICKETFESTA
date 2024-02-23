@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
     var searchIcon = document.querySelector('.header_search_icon');
     var searchPopup = document.getElementById('searchPopup');
     var closePopup = document.getElementById('closePopup');
-    var searchInput = document.querySelector('.tt-hint');
+    var searchInput = document.querySelector('.tt-hint'); // Ensure this selector targets the correct input
 
     searchIcon.addEventListener('click', function() {
         console.log('Search icon clicked');
@@ -10,15 +10,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
         setTimeout(function() {
             if (searchInput && searchPopup.style.display === 'block') {
-                console.log('Focusing on the input and simulating keydown event');
+                console.log('Focusing on the input and simulating keydown event for "t"');
                 searchInput.focus(); // Focus on the input field
 
-                // Create a new 'keydown' event
+                // Create a new 'keydown' event for the "t" key
                 var event = new KeyboardEvent('keydown', {
-                    key: 'a', // You can use any character here
-                    keyCode: 65, // KeyCode for 'a'
-                    code: 'KeyA', // Code for 'a'
-                    which: 65,
+                    key: 't', // Simulate "t" key
+                    keyCode: 84, // KeyCode for "t"
+                    code: 'KeyT', // Code for "t"
+                    which: 84,
                     shiftKey: false,
                     ctrlKey: false,
                     metaKey: false
@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 // Dispatch the event
                 searchInput.dispatchEvent(event);
-                console.log('Keydown event dispatched');
+                console.log('Keydown event for "t" dispatched');
             }
         }, 2000); // Delay of 2 seconds
     });
