@@ -1566,7 +1566,6 @@ text-align: left;
 }
 .organizer_about_main_inner{
     text-align: center;
-    max-width: 900px;
     margin: 0 auto!important;
     display: flex;
     flex-direction: column;
