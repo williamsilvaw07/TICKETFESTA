@@ -1708,7 +1708,7 @@ input.follow-button {
         max-width: 21px;
     }
     .profile_icon_nav {
-        max-width: 17px!important;
+        max-width: 15px!important;
     }
     .images-container_main {
       
