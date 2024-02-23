@@ -1624,7 +1624,7 @@ text-align: left;
     max-width: inherit;
     width: 100%;
 }
-
+}
 
 
 
@@ -1810,6 +1810,11 @@ input.follow-button {
     grid-template-columns: 100%;
    
 }
+.event-image img {
+    height: auto;
+    max-height: 264px;
+}
+
 }
   /****END***/
 
