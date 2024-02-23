@@ -1960,6 +1960,10 @@ html .single-tribe_events .tribe-tickets__tickets-footer{
     margin-top: 35px!important;
     font-size: 27px;
 }
+.tribe-tickets__tickets-item-extra-price {
+    text-align: left;
+    font-size: 10px!important;
+}
   }
 
   @media screen and (max-width: 450px) {
