@@ -119,7 +119,7 @@ $cost  = tribe_get_formatted_cost( $event_id );
 <div class="location_div_js">📍<span class="location_name"></span> - <span class="location_postcode"></span></div>
   
 
-Copy code
+
 <div class="time_div emoji_div_main">
   <span class="time_emoji">⏰</span>
   <span class="time_text">
