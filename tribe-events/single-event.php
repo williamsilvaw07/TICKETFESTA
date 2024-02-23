@@ -1768,6 +1768,7 @@ width: 100%;
 .sponsors_inner img {
     max-width: 150px;
     width: 100%;
+    max
 }
 
 
@@ -1931,7 +1932,7 @@ html .single-tribe_events .tribe-tickets__tickets-footer{
         margin-bottom: 10px!important;
     }
     .tribe-events-single-event-title{
-        margin-top: -10px;
+        margin-top: 10px;
     }
     body .single_event_sections {
         padding-bottom: 30px;
