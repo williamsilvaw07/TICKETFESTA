@@ -492,7 +492,7 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
                     $attachment_id = attachment_url_to_postid($category_images[0]);
                     $attachment_src = wp_get_attachment_image_src($attachment_id, 'medium')[0];
                     ?>
-                    <div class="organizer_gallery_category_inner" data-category="<?php echo $category->slug ?>">
+                    <div class="organizer_gallery_category_inner_no_image" data-category="<?php echo $category->slug ?>">
                         <h6 class="organizer_gallery_category_inner_title"><?php echo $cat_title; ?></h6>
                         <img class="organizer_gallery_category_inner_image" src="<?php echo esc_url($attachment_src); ?>" >
                     </div>
@@ -1406,7 +1406,7 @@ width: fit-content!important;
 }
 
 
-.organizer_gallery_category_inner{
+.organizer_gallery_category_inner_no_image{
     display: flex;
     flex-direction: column;
     gap: 10px;
