@@ -1276,6 +1276,7 @@ width: fit-content!important;
     border-radius: 0px;
     margin: 0 auto!important;
     margin-top: -8px!important;
+    position: relative!important;
 }
 .organizer_nav-item{
     display: flex;
@@ -1286,7 +1287,7 @@ width: fit-content!important;
     align-items: center;
     gap: 10px;
     padding: 16px 19px 9px 19px!important;
-    position: relative!important;
+ 
 }
 .profile_icon_nav{
     max-width: 25px!important;
