@@ -1786,15 +1786,14 @@ input.follow-button {
     position: fixed;
     bottom: 0;
     left: 0;
-    height: 65px;
-    border-top: 2px solid white!important;
     z-index: 3;
     padding: 10px 20px!important;
 
 }
 .organizer_nav-item.active {
-    background: rgba(255, 163, 0, 0.40)!important;
-    border-radius: 20px;
+   
+    border-radius: 2px;
+    color: black!important;
 }
 .organizer_nav-item.organizer_events.active span {
     font-size: 13px;
