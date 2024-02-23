@@ -484,7 +484,7 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
                 // Get the organizer's name
                 $organizer_name = get_the_title($organizer->ID); // Assuming $organizer->ID contains the ID of the current organizer
                 echo "<div class='organizer_gallery_category_inner_no_image'>";
-                echo "<p class='no-images-message'>{$organizer_name} hasn't published any Posts.</p>";
+                echo "<p class='no-images-message'>{$organizer_name} hasn't published any Images.</p>";
                 echo "<p class='follow-message'>Follow {$organizer_name} to get notified about news and updates, first.</p>";
                 echo "</div>";
             }
