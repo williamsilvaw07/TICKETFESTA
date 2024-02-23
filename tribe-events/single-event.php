@@ -461,6 +461,36 @@ if (!empty($sponsor_logos_ids)) : ?>
 
 <script>
 
+
+
+
+jQuery(document).ready(function($) {
+    var element = $('.buttonticket_for_mobile'); // Your target element
+    var originalOffset = element.offset().top; // Original offset top position
+
+    $(window).scroll(function() {
+        var scrollPos = $(window).scrollTop(); // Current scroll position
+
+        if (scrollPos > originalOffset + element.height()) {
+            // If scrolled below the original position, make it fixed
+            element.css({
+                position: 'fixed',
+                bottom: '0',
+                width: '100%',
+                'z-index': '999'
+            });
+        } else {
+            // If scrolled back to original position, revert to default
+            element.removeAttr('style');
+        }
+    });
+});
+
+
+
+
+
+
 jQuery(document).ready(function() {
     var btns = jQuery('.getticketbtn, #scroll-to-tickets');  // Selecting elements with class 'getticketbtn' and the ID 'scroll-to-tickets'
     var linkViewAttendee = jQuery('.tribe-link-view-attendee');
@@ -1537,20 +1567,12 @@ body .tribe-tickets__tickets-buy{
 
 
 /****STICKY BUTTON FOR BUY TICKET****/
-#sticky-button-container {
+.fixed-position {
     position: fixed;
-    bottom: 10px; 
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 1000; 
-    background-color: rgb(26, 26, 26)!important;
-    padding: 12px 30px;
+    bottom: 0;
     width: 100%;
-    margin: 0 auto;
-    text-align: center;
-    height: 79px;
-    bottom: 0px;
-   visibility: hidden!important
+    background-color: white; /* Or any other color */
+    z-index: 10; /* Ensure it's above other content */
 }
 
 
@@ -1782,7 +1804,10 @@ html .single-tribe_events .tribe-tickets__tickets-footer{
 #sticky-button-container {
    visibility: visible!important
 }
-
+.single_event_page_location {
+    text-align: left;
+    width: 100%;
+}
 }
 
 @media screen and (max-width: 670px) {
@@ -1798,11 +1823,14 @@ html .single-tribe_events .tribe-tickets__tickets-footer{
         margin-bottom: 19px;
     }
     .tribe-events-event-image img{
-        max-height: inherit!important;
+        max-height: 500px!important;
     }
   }
 
   @media screen and (max-width: 450px) {
+    .tribe-events-event-image img{
+        max-height: 350px!important;
+    }
     .tribe-tickets__tickets-title , .single_event_sections h3{
         font-size: 20px!important;
         font-weight: 600!important;
@@ -1874,6 +1902,7 @@ html .single-tribe_events .tribe-tickets__tickets-footer{
 
     gap: 15px;
 }
+
   }
 
 
