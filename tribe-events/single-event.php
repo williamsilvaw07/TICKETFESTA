@@ -131,19 +131,10 @@ $cost  = tribe_get_formatted_cost( $event_id );
         $event_start_date = tribe_get_start_date($event_id, false, $date_format);
         $event_start_time = tribe_get_start_time($event_id, false, $time_format);
 
-        // Get the event timezone string (e.g., 'Europe/London')
-        $event_timezone_string = Tribe__Events__Timezones::get_event_timezone_string($event_id);
+        // Combine the date, time, and a simple "GMT" label
+        $event_date_time = $event_start_date . ' @ ' . $event_start_time . ' GMT';
 
-        // Create a DateTime object for the event start date/time in the event's timezone
-        $datetime = new DateTime($event_start_date . ' ' . $event_start_time, new DateTimeZone($event_timezone_string));
-
-        // Convert the timezone to the GMT offset format
-        $timezone_gmt_offset = $datetime->format('P'); // Outputs the offset from GMT (e.g., '+01:00')
-
-        // Combine the date, time, and GMT offset
-        $event_date_time = $event_start_date . ' @ ' . $event_start_time . ' GMT' . $timezone_gmt_offset;
-
-        // Output the date, time, and GMT offset
+        // Output the date, time, and "GMT" label
         echo $event_date_time;
       ?>
     </h2>
