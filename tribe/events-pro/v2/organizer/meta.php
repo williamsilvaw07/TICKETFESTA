@@ -1650,6 +1650,7 @@ text-align: left;
 }
 .single-tribe_organizer .image_profile_text_main_continer img {
     max-width: 101px;
+    height: auto;
 }
 .organizer_title_name h1 {
     padding-bottom: 5px;
