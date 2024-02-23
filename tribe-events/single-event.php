@@ -1971,7 +1971,7 @@ html .single-tribe_events .tribe-tickets__tickets-footer{
     }
     html .single-tribe_events .tribe-events-gmap {
         width: 100%;
-        max-width: 102px;
+    max-width: 111px;
     }
     html h1 {
         font-size: 30px;
