@@ -688,14 +688,13 @@ jQuery(document).ready(function($) {
 jQuery(document).ready(function($) {
     // Process each '.tribe-event-date-start' element within '.top_flex_section_single_event'
     $('.top_flex_section_single_event .tribe-event-date-start').each(function() {
-        // This will fetch the current text, which includes both date and time
+        // This will fetch the current text, which includes date, time, and time zone
         var dateTimeText = $(this).text();
         
-        // If you want to make any specific text adjustments or styling, you can do it here
-        // For example, wrapping date and time in separate spans for styling
+        // Split the text into date and time parts, assuming the time zone is part of the time part
         var dateTimeParts = dateTimeText.split(' @ ');
         if (dateTimeParts.length === 2) {
-            // Reconstruct the text with additional spans for styling
+            // Reconstruct the text with additional spans for styling, including the time zone
             var formattedDateTime = '<span class="date-part">' + dateTimeParts[0] + '</span>' + ' @ ' + '<span class="time-part">' + dateTimeParts[1] + '</span>';
             $(this).html(formattedDateTime);
         }
@@ -706,11 +705,9 @@ jQuery(document).ready(function($) {
         // Ensure h2 elements are displayed
         $(this).css('display', 'block');
 
-        // If there are specific adjustments or styling needed for h2, add them here
-        // For example, changing the font size, color, etc.
+        // Additional style adjustments for h2 elements can be added here
     });
 });
-
 
 
 
