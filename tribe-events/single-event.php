@@ -490,7 +490,7 @@ jQuery(document).ready(function($) {
                 right: '0', // Ensure the element spans the full width to the right
                 'z-index': '999',
                 'border-radius': '0',
-                'padding-bottom': '31px'
+                'padding-bottom': '48px'
             });
             isSticky = true; // Set the flag to true as sticky styling is applied
         } else if (isInViewport() && isSticky) {
