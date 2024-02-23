@@ -92,6 +92,21 @@ font-family: "Plus Jakarta Sans", Sans-serif;
 .tt-menu{
     display: block!important;
 }
+#ecsa-search .tt-menu {
+    background-color: #1A1A1A;
+    border: 1px solid rgba(0,0,0,.2);
+  
+
+}
+#ecsa-search .empty-message, #ecsa-search h3.ecsa-heading {
+    font-family: inherit;
+    font-size: 1.15em;
+    padding: 0;
+    padding-top: 29px;
+    margin: 15px 8px 10px;
+    color: #222;
+    font-weight: 700;
+}
 /****END***/
 
 /*****menu******/
