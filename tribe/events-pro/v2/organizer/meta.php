@@ -1091,7 +1091,7 @@ background-position: center top;
 }
 .organizer_profile_bk{
    width:100%;
-   min-height:600px
+   min-height:450px;
 }
 
 
