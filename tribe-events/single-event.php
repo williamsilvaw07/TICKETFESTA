@@ -945,9 +945,9 @@ jQuery(document).ready(function() {
 
 <style>
 
-.tribe-currency-symbol , .tribe-amount{
+.tribe-currency-symbol , .tribe-amount , .btn_price_span {
     color: #d3fa16!important;
-    font-size:20px!important;
+    font-size:22px!important;
 }
 
 #tribe-events-pg-template{
