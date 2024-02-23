@@ -1285,11 +1285,11 @@ width: fit-content!important;
     justify-content: center;
     align-items: center;
     gap: 10px;
-    padding: 16px 19px 9px 19px!important;
+    padding: 12px 19px 12px 19px!important;
  
 }
 .profile_icon_nav{
-    max-width: 25px!important;
+    max-width: 17px!important;
 }
 
 
