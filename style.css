@@ -76,7 +76,7 @@ font-family: "Plus Jakarta Sans", Sans-serif;
     font-family: FontAwesome;
 }
 .header_search_icon a{
-    display: none;
+    display: none!important;
 }
 /****END***/
 
