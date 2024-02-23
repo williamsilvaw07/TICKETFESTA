@@ -118,7 +118,16 @@ $cost  = tribe_get_formatted_cost( $event_id );
 
 <div class="location_div_js">📍<span class="location_name"></span> - <span class="location_postcode"></span></div>
   
-<div class="time_div emoji_div_main "><span class="time_emoji">⏰<span class="time_text"> <?php echo tribe_events_event_schedule_details( $event_id, '<h2>', '</h2>' ); ?></span></div>
+<div class="time_div emoji_div_main">
+  <span class="time_emoji">⏰</span>
+  <span class="time_text">
+    <?php 
+      $format = '<h2>%s @ %s</h2>'; // Define the format with placeholders for date and time
+      $date_with_time = tribe_events_event_schedule_details( $event_id, $format ); 
+      echo $date_with_time; // Output the date and time
+    ?>
+  </span>
+</div>
 <!--  <div class="door_open_time__div emoji_div_main"><span class="door_open_time__emoji">🚪</span> <span class="door_open_time__text">Doors open </span><span class="door_open_time_number"></span></div> -->
        
 </div>
@@ -1107,6 +1116,41 @@ html body .single_event_sections {
         max-width: 700px!important;
     width: 100%!important;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    .tribe-events-event-meta_venue .tribe-events-meta-group-details , .tribe-events-meta-group-organizer  , .tribe-events-meta-group-organizer{
+display:none!important
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 .single_event_sections h2{
