@@ -1955,6 +1955,11 @@ html .single-tribe_events .tribe-tickets__tickets-footer{
 .tribe-events-event-meta {
     margin-top: -25px;
 }
+
+.tribe-events-single-event-title {
+    margin-top: 35px!important;
+    font-size: 27px;
+}
   }
 
   @media screen and (max-width: 450px) {
