@@ -119,27 +119,30 @@ $cost  = tribe_get_formatted_cost( $event_id );
 <div class="location_div_js">📍<span class="location_name"></span> - <span class="location_postcode"></span></div>
   
 
-<div class="time_div emoji_div_main">
-  <span class="time_emoji">⏰</span>
-  <span class="time_text">
-    <h2 class="tribe-event-date-start">
-      <?php 
-        $date_format = 'l, j F Y'; // Format for the date including the day of the week
-        $time_format = 'H:i'; // 24-hour format without timezone
+<?php if ( tribe_get_venue_id( $event_id ) ): // Check if there's a venue ID associated with the event ?>
+  <div class="time_div emoji_div_main">
+    <span class="time_emoji">⏰</span>
+    <span class="time_text">
+      <h2 class="tribe-event-date-start">
+        <?php 
+          $date_format = 'l, j F Y'; // Format for the date including the day of the week
+          $time_format = 'H:i'; // 24-hour format without timezone
 
-        // Get the start date and time in the desired format
-        $event_start_date = tribe_get_start_date($event_id, false, $date_format);
-        $event_start_time = tribe_get_start_time($event_id, false, $time_format);
+          // Get the start date and time in the desired format
+          $event_start_date = tribe_get_start_date($event_id, false, $date_format);
+          $event_start_time = tribe_get_start_time($event_id, false, $time_format);
 
-        // Combine the date, time, and a simple "GMT" label
-        $event_date_time = $event_start_date . ' @ ' . $event_start_time . ' GMT';
+          // Combine the date, time, and a simple "GMT" label
+          $event_date_time = $event_start_date . ' @ ' . $event_start_time . ' GMT';
 
-        // Output the date, time, and "GMT" label
-        echo $event_date_time;
-      ?>
-    </h2>
-  </span>
-</div>
+          // Output the date, time, and "GMT" label
+          echo $event_date_time;
+        ?>
+      </h2>
+    </span>
+  </div>
+<?php endif; ?>
+
 
 <!--  <div class="door_open_time__div emoji_div_main"><span class="door_open_time__emoji">🚪</span> <span class="door_open_time__text">Doors open </span><span class="door_open_time_number"></span></div> -->
        
