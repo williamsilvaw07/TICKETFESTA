@@ -470,25 +470,28 @@ jQuery(document).ready(function($) {
 
     jQuery(window).scroll(function() {
         var scrollPos = $(window).scrollTop(); // Current scroll position
+        var elementBottom = originalOffset + element.outerHeight(); // Bottom position of the element
         console.log('Scroll Position:', scrollPos); // Log current scroll position
 
-        if (scrollPos > originalOffset + element.height()) {
+        // Check if the bottom of the element is above the viewport (element is not in view)
+        if (scrollPos + $(window).height() < elementBottom) {
             console.log('Applying fixed style'); // Log when applying fixed style
-            // If scrolled below the original position, make it fixed
+            // If scrolled and the element is not in view, make it fixed
             element.css({
                 position: 'fixed',
                 bottom: '0',
                 width: '100%',
-                'z-index': '999'
+                'border-radius': '0',
+                'z-index': '999',
+                'padding-bottom': '31px'
             });
         } else {
             console.log('Removing fixed style'); // Log when reverting to default
-            // If scrolled back to original position, revert to default
+            // If the element is in view, revert to default
             element.removeAttr('style');
         }
     });
 });
-
 
 
 
