@@ -2,22 +2,33 @@ document.addEventListener('DOMContentLoaded', function() {
     var searchIcon = document.querySelector('.header_search_icon');
     var searchPopup = document.getElementById('searchPopup');
     var closePopup = document.getElementById('closePopup');
-    // Selecting the input using its class 'tt-hint'
-    var searchInput = document.querySelector('.typeahead'); 
+    var searchInput = document.querySelector('.tt-hint');
 
     searchIcon.addEventListener('click', function() {
         console.log('Search icon clicked');
         searchPopup.style.display = 'block';
 
-        // Wait for the popup to fully open and content to be ready
         setTimeout(function() {
             if (searchInput && searchPopup.style.display === 'block') {
-                console.log('Attempting to click on the input');
-                // Programmatically triggering a 'click' event on the input field
-                searchInput.click(); 
-                console.log('Clicked on the input after 2 seconds');
+                console.log('Focusing on the input and simulating keydown event');
+                searchInput.focus(); // Focus on the input field
+
+                // Create a new 'keydown' event
+                var event = new KeyboardEvent('keydown', {
+                    key: 'a', // You can use any character here
+                    keyCode: 65, // KeyCode for 'a'
+                    code: 'KeyA', // Code for 'a'
+                    which: 65,
+                    shiftKey: false,
+                    ctrlKey: false,
+                    metaKey: false
+                });
+
+                // Dispatch the event
+                searchInput.dispatchEvent(event);
+                console.log('Keydown event dispatched');
             }
-        }, 2000); // 2000 milliseconds = 2 seconds delay
+        }, 2000); // Delay of 2 seconds
     });
 
     closePopup.addEventListener('click', function() {
