@@ -1829,6 +1829,7 @@ border-radius: 9px;
 html .single-tribe_events .tribe-tickets__tickets-footer{
     grid-template-columns: 1fr 1fr;
     display: grid;
+    grid-gap: 7px;
 
 }
 
