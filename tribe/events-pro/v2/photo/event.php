@@ -308,6 +308,9 @@ jQuery(document).ready(function($) {
     object-fit: contain;
 }
 
+.event-featured-image-placeholder{
+    max-width:390px
+}
 
     
 .tribe-events-c-small-cta__link , .tribe-events-c-subscribe-dropdown__container , .tribe-events-pro-photo-nav{
