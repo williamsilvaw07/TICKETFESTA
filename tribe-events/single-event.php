@@ -1869,6 +1869,10 @@ html .single-tribe_events .tribe-tickets__tickets-footer{
     font-weight: bold;
     line-height: 32px;
 }
+.tribe-events-content h1{
+    font-size: 26px;
+    line-height: 28px;
+}
   }
 
   @media screen and (max-width: 450px) {
