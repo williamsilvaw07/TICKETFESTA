@@ -462,58 +462,59 @@ if (!empty($sponsor_logos_ids)) : ?>
 <script>
 
 jQuery(document).ready(function($) {
-    // Target element that you want to make sticky
-    var element = $('.buttonticket_for_mobile');
-    // Calculate the original offset top position of the element
-    var originalOffset = element.offset().top;
-    // Get the height of the element
-    var elementHeight = element.outerHeight();
+    var element = $('.buttonticket_for_mobile'); // Your target element
+    var originalOffset = element.offset().top; // Original offset top position
+    var elementHeight = element.outerHeight(); // Height of the element
+    var isSticky = false; // Flag to track if sticky styling is applied
 
-    // Function to check if the element is currently in the viewport
+    // Function to check if the element is in the viewport
     function isInViewport() {
-        var scrollPos = $(window).scrollTop(); // Current scroll position of the window
-        var windowHeight = $(window).height(); // Height of the viewport
-        var elementTopPos = element.offset().top; // Dynamic top position of the element
-        var elementBottomPos = elementTopPos + elementHeight; // Dynamic bottom position of the element
+        var scrollPos = $(window).scrollTop(); // Current scroll position
+        var windowHeight = $(window).height(); // Window height
+        var elementTopPos = originalOffset; // Top position of the element
+        var elementBottomPos = originalOffset + elementHeight; // Bottom position of the element
 
-        // Check if element is outside the viewport (above or below)
+        // Element is in viewport if its bottom is greater than the scroll position
+        // and its top is less than the scroll position plus the window height
         return elementBottomPos > scrollPos && elementTopPos < (scrollPos + windowHeight);
     }
 
-    // Function to update the style of the element based on its visibility
+    // Function to apply or remove fixed style based on element's visibility
     function updateElementStyle() {
-        if (!isInViewport()) {
-            // If the element is not in the viewport, make it sticky at the bottom
+        if (!isInViewport() && !isSticky) {
+            // Apply fixed style if the element is not in the viewport and sticky styling hasn't been applied yet
             element.css({
-                position: 'fixed', // Stick to the bottom
-                bottom: '0', // Align to the bottom
-                left: '0', // Stretch to the left edge
-                right: '0', // Stretch to the right edge
-                'z-index': '999', // Ensure it's on top of other content
-                'border-radius': '0', // Optional: reset border-radius
-                'padding-bottom': '31px' // Optional: add padding
+                position: 'fixed',
+                bottom: '0',
+                left: '0', // Ensure the element spans the full width from the left
+                right: '0', // Ensure the element spans the full width to the right
+                'z-index': '999',
+                'border-radius': '0',
+                'padding-bottom': '31px'
             });
-        } else {
-            // If the element is back in the viewport, remove the fixed positioning
+            isSticky = true; // Set the flag to true as sticky styling is applied
+        } else if (isInViewport() && isSticky) {
+            // Remove fixed style if the element is back in the viewport and sticky styling has been applied
             element.removeAttr('style');
+            isSticky = false; // Reset the flag as sticky styling is removed
         }
     }
 
-    // Initial check and update when the page loads
+    // Initial check to update element style on page load
     updateElementStyle();
 
-    // Update the element's style whenever the user scrolls
+    // Update element style on scroll
     $(window).scroll(updateElementStyle);
 
-    // Also update the element's style when the window is resized
+    // Update element style on window resize to account for changes in layout
     $(window).resize(function() {
-        // Recalculate the original offset in case the layout has changed
+        // Recalculate original offset in case the layout has changed
         originalOffset = element.offset().top;
-        // Update the element's style based on its new position
+        // Reset isSticky flag to ensure correct behavior after layout change
+        isSticky = false;
         updateElementStyle();
     });
 });
-
 
 
 
