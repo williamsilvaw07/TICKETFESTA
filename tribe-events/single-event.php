@@ -465,17 +465,16 @@ jQuery(document).ready(function($) {
     var element = $('.buttonticket_for_mobile'); // Your target element
     var originalOffset = element.offset().top; // Original offset top position
     var elementHeight = element.outerHeight(); // Height of the element
+    var earlyShowOffset = 100; // Offset value to show the element earlier (in pixels)
 
     // Function to check if the element is in the viewport
     function isInViewport() {
         var scrollPos = $(window).scrollTop(); // Current scroll position
         var windowHeight = $(window).height(); // Window height
-        var elementTopPos = originalOffset; // Top position of the element
-        var elementBottomPos = originalOffset + elementHeight; // Bottom position of the element
+        var elementTopPos = originalOffset - earlyShowOffset; // Adjusted top position of the element
 
-        // Element is in viewport if its bottom is greater than the scroll position
-        // and its top is less than the scroll position plus the window height
-        return elementBottomPos > scrollPos && elementTopPos < (scrollPos + windowHeight);
+        // Element is considered out of viewport if its adjusted top position is less than the scroll position
+        return elementTopPos > scrollPos;
     }
 
     // Function to apply or remove fixed style based on element's visibility
@@ -510,7 +509,6 @@ jQuery(document).ready(function($) {
         updateElementStyle();
     });
 });
-
 
 
 
