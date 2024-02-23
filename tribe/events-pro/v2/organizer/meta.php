@@ -318,13 +318,14 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
                 $event_url = get_the_permalink();
                 ?>
                 <div class="event-card">
-                <div class="past-event-tag">Past Event</div>
+                
                     <?php if (has_post_thumbnail()) : ?>
                         <div class="event-image">
                             <a href="<?php echo esc_url($event_url); ?>">
                                 <?php the_post_thumbnail('medium'); ?>
                             </a>
                         </div>
+                        <div class="past-event-tag">Past Event</div>
                     <?php endif; ?>
                     
                     <div class="event-details">
