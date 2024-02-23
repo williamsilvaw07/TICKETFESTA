@@ -282,7 +282,7 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 
 
 <!-- Event past -->
-<div class="event-listing past_event_listing_div">
+<div class=" past_event_listing_div">
     <div class="event-listing">
 
         <?php
