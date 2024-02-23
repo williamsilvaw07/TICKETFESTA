@@ -309,7 +309,10 @@ jQuery(document).ready(function($) {
 }
 
 .event-featured-image-placeholder{
-    max-width:390px
+    max-height: 200px;
+    max-width: 400px!important;
+    width: 100%;
+    object-fit: cover;
 }
 
     
