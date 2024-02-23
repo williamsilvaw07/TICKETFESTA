@@ -15,57 +15,33 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-
 document.addEventListener('DOMContentLoaded', function() {
-    // Function to check if an element is visible in the viewport
-    function isInViewport(element) {
-        const rect = element.getBoundingClientRect();
-        return (
-            rect.top >= 0 &&
-            rect.left >= 0 &&
-            rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-            rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-        );
-    }
-
-    // Function to dispatch keyup event
-    function dispatchKeyupEvent() {
+    // Set an interval to check and trigger the event every 1 second
+    setInterval(function() {
         var searchInput = document.getElementById('ecsa-search-box');
 
-        if (searchInput) {
-            if (isInViewport(searchInput)) {
-                console.log('#ecsa-search-box is visible.');
+        // Check if the input exists and is visible to the user
+        if (searchInput && searchInput.offsetParent !== null) {
+            console.log('Input is visible, triggering keyup event.');
 
-                // Create and dispatch a keyup event
-                var event = new KeyboardEvent('keyup', {
-                    key: 'a',
-                    keyCode: 65,
-                    code: 'KeyA',
-                    which: 65,
-                    shiftKey: false,
-                    ctrlKey: false,
-                    altKey: false,
-                    metaKey: false,
-                    bubbles: true,
-                    cancelable: true
-                });
+            // Create a keyup event
+            var event = new KeyboardEvent('keyup', {
+                key: 'a', // Simulating 'a' key, change as needed
+                keyCode: 65, // KeyCode for 'a'
+                code: 'KeyA', // Code for 'a'
+                which: 65,
+                shiftKey: false,
+                ctrlKey: false,
+                altKey: false,
+                metaKey: false,
+                bubbles: true,
+                cancelable: true
+            });
 
-                searchInput.dispatchEvent(event);
-                console.log('Keyup event dispatched to #ecsa-search-box.');
-            } else {
-                console.log('#ecsa-search-box is not visible yet.');
-            }
+            // Dispatch the event to the input element
+            searchInput.dispatchEvent(event);
         } else {
-            console.error('Input element #ecsa-search-box not found.');
+            console.log('Input is not visible or does not exist.');
         }
-    }
-
-    // Option to repeatedly check visibility and dispatch event when visible
-    var checkVisibilityInterval = setInterval(function() {
-        var searchInput = document.getElementById('ecsa-search-box');
-        if (searchInput && isInViewport(searchInput)) {
-            dispatchKeyupEvent();
-            clearInterval(checkVisibilityInterval); // Stop checking once the event is dispatched
-        }
-    }, 1000); // Check every second
+    }, 1000); // 1000 milliseconds = 1 second
 });
