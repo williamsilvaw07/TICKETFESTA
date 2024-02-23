@@ -127,10 +127,12 @@ $cost  = tribe_get_formatted_cost( $event_id );
       <?php 
         // Format for the date including the day of the week
         $date_format = 'l, j F Y'; 
+        // Specify the time format
+        $time_format = 'H:i T'; // 24-hour format with timezone, adjust as needed
         // Get the start date in the desired format
         $event_start_date = tribe_get_start_date( $event_id, false, $date_format );
-        // Get the start time
-        $event_start_time = tribe_get_start_time( $event_id ); // This will include the time
+        // Get the start time in the specified format
+        $event_start_time = tribe_get_start_time( $event_id, false, $time_format );
         // Combine the date and time
         $event_date_time = $event_start_date . ' @ ' . $event_start_time;
         // Output the date and time
