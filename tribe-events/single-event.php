@@ -465,39 +465,37 @@ if (!empty($sponsor_logos_ids)) : ?>
 jQuery(document).ready(function($) {
     var element = $('.buttonticket_for_mobile'); // Your target element
     var originalOffset = element.offset().top; // Original offset top position
-    console.log('Original Offset:', originalOffset); // Log original offset
+    var elementHeight = element.outerHeight(); // Height of the element
 
-    function checkElementPosition() {
+    // Function to check the element's position and apply styles accordingly
+    function checkPosition() {
         var scrollPos = $(window).scrollTop(); // Current scroll position
         var windowHeight = $(window).height(); // Window height
-        var elementBottom = originalOffset + element.outerHeight(); // Bottom position of the element
+        var elementBottomPos = originalOffset + elementHeight; // Bottom position of the element
 
-        console.log('Scroll Position:', scrollPos); // Log current scroll position
-
-        // Check if the bottom of the element is above the viewport (element is not in view)
-        if (scrollPos + windowHeight < elementBottom) {
-            console.log('Applying fixed style'); // Log when applying fixed style
+        // Check if the bottom of the element is above the top of the viewport
+        if (scrollPos + windowHeight < elementBottomPos) {
+            // Apply fixed style
             element.css({
                 position: 'fixed',
                 bottom: '0',
                 width: '100%',
-                'border-radius': '0',
                 'z-index': '999',
+                'border-radius': '0',
                 'padding-bottom': '31px'
             });
         } else {
-            console.log('Removing fixed style'); // Log when reverting to default
+            // Revert to default style
             element.removeAttr('style');
         }
     }
 
-    // Check position on page load
-    checkElementPosition();
+    // Initial check on page load
+    checkPosition();
 
-    // Check position on scroll
-    jQuery(window).scroll(checkElementPosition);
+    // Check on scroll
+    $(window).scroll(checkPosition);
 });
-
 
 
 
