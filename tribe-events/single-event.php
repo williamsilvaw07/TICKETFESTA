@@ -122,16 +122,15 @@ $cost  = tribe_get_formatted_cost( $event_id );
   <span class="time_emoji">⏰</span>
   <span class="time_text">
     <?php 
-      // This will retrieve the event start date and time in the specified format
-      $event_start_date = tribe_get_start_date( $event_id, false, 'j F' ); // For date, e.g., "16 April"
-      $event_start_time = tribe_get_start_time( $event_id, 'H:i T' ); // For time, e.g., "20:00 BST"
+      // Specify your custom format for the date and time
+      $custom_format = 'j F Y @ H:i T'; // e.g., "16 April 2024 @ 20:00 BST"
+      $event_start = tribe_get_start_date( $event_id, true, $custom_format );
 
-      // Output the formatted date and time
-      echo '<h2>' . $event_start_date . ' @ ' . $event_start_time . '</h2>';
+      // Output the formatted start date and time
+      echo '<h2>' . $event_start . '</h2>';
     ?>
   </span>
 </div>
-
 <!--  <div class="door_open_time__div emoji_div_main"><span class="door_open_time__emoji">🚪</span> <span class="door_open_time__text">Doors open </span><span class="door_open_time_number"></span></div> -->
        
 </div>
