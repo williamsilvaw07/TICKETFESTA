@@ -1666,7 +1666,7 @@ input.follow-button {
 }
 }
 
-@media (max-width: 599px) {
+@media (max-width: 605px) {
 
 
     .organizer_profile_bk {
@@ -1802,6 +1802,11 @@ input.follow-button {
 .organizer_main_div h3{
     font-size: 23px;
     }
+    .event-listing {
+
+    grid-template-columns: 100%;
+   
+}
 }
   /****END***/
 
