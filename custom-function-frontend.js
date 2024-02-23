@@ -5,17 +5,26 @@ document.addEventListener('DOMContentLoaded', function() {
     var closePopup = document.getElementById('closePopup');
     var searchInput = document.getElementById('ecsa-search-box'); // Assuming this is the ID of your search input
 
-    // Display the search popup and focus on the input field when the search icon is clicked
+    // Display the search popup when the search icon is clicked
     searchIcon.addEventListener('click', function() {
         console.log('Search icon clicked'); // Debugging log
         searchPopup.style.display = 'block';
 
-        // Check if the search input exists and is visible
-        if (searchInput && searchPopup.style.display === 'block') {
-            console.log('Focusing on search input'); // Debugging log
-            searchInput.focus(); // Focus on the input to bring up the keyboard on mobile devices
-            searchInput.click(); // Trigger a click event on the input
-        }
+        // Wait 2 seconds before focusing and clicking on the input field
+        setTimeout(function() {
+            if (searchInput && searchPopup.style.display === 'block') {
+                console.log('Focusing and clicking on search input after 2 seconds'); // Debugging log
+                searchInput.focus(); // Focus on the input
+
+                // Create and dispatch a new 'click' event to simulate a user click
+                var clickEvent = new MouseEvent('click', {
+                    'view': window,
+                    'bubbles': true,
+                    'cancelable': false
+                });
+                searchInput.dispatchEvent(clickEvent);
+            }
+        }, 2000); // 2000 milliseconds = 2 seconds
     });
 
     // Hide the search popup when the close button is clicked
