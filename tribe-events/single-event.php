@@ -687,30 +687,34 @@ jQuery(document).ready(function($) {
     // Process each '.tribe-event-date-start' element within '.top_flex_section_single_event'
     $('.top_flex_section_single_event .tribe-event-date-start').each(function() {
         var dateTimeText = $(this).text();
-        var dateParts = dateTimeText.split(' ');
-
-        // Check if there are enough parts to form the date
-        if (dateParts.length >= 4) {
-            var dateOnly = dateParts[0] + ' ' + dateParts[1] + ' ' + dateParts[2] + ' ' + dateParts[3];
-            $(this).text(dateOnly);
+        // Assuming the format is 'Day, Date Month Year @ Time Timezone'
+        // and you want to remove the time and timezone
+        var dateTimeParts = dateTimeText.split(' @ ');
+        
+        // Check if the split results in two parts, date and time
+        if (dateTimeParts.length === 2) {
+            // Set the text to the date part only
+            $(this).text(dateTimeParts[0]);
         }
     });
 
-    // Remove the "-" from the date in the h2 element and hide time and timezone elements
+    // Find the h2 element and make adjustments if needed
     $('.top_flex_section_single_event h2').each(function() {
+        // Your current code removes hyphens and hides elements, but it's commented out
+        // If you need specific changes here, you can uncomment and adapt the code below
+
         // Remove hyphen text nodes
         $(this).contents().filter(function() {
             return this.nodeType === 3 && $.trim(this.nodeValue) === '-';
         }).remove();
 
-        // Hide the time and timezone elements
-        //$(this).find('.tribe-event-time, .timezone').hide();
+        // Hide the time and timezone elements if they have specific classes
+        $(this).find('.tribe-event-time, .timezone').hide();
 
         // Show the h2 element after modifications
         $(this).css('display', 'block');
     });
 });
-
 
 
 
