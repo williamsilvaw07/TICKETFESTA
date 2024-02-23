@@ -1234,7 +1234,7 @@ background: #2C2C2C!important;
     gap: 14px;
     align-content: center;
     align-items: center;
-    background: #FFD700;
+    background: #d3fa16;
     color: black;
     font-size: 15px;
     font-style: normal;
