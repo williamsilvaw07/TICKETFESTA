@@ -384,9 +384,7 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 
     // Check if the organizer has events.
     if ( $organizer_events->have_posts() ) :
-        echo '<h3>Events by this Organizer</h3>';
-
-        while ( $organizer_events->have_posts() ) : $organizer_events->the_post();
+            while ( $organizer_events->have_posts() ) : $organizer_events->the_post();
             // Get the event URL
             $event_url = get_the_permalink();
 
