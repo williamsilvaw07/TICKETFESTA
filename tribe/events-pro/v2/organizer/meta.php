@@ -472,18 +472,21 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
                     $attachment_id = attachment_url_to_postid($category_images[0]);
                     $attachment_src = wp_get_attachment_image_src($attachment_id, 'medium')[0];
                     ?>
-                    <div class="organizer_gallery_category_inner_no_image" data-category="<?php echo $category->slug ?>">
+                    <div class="organizer_gallery_category_inner" data-category="<?php echo $category->slug ?>">
                         <h6 class="organizer_gallery_category_inner_title"><?php echo $cat_title; ?></h6>
                         <img class="organizer_gallery_category_inner_image" src="<?php echo esc_url($attachment_src); ?>" >
                     </div>
                     <?php
                 }
-            } 
-            if (!$hasImages) { // Display custom message if no images found
+            }
+
+            if (!$hasImages) { // Display custom message if no images found in a div with the specified class
                 // Get the organizer's name
                 $organizer_name = get_the_title($organizer->ID); // Assuming $organizer->ID contains the ID of the current organizer
+                echo "<div class='organizer_gallery_category_inner_no_image'>";
                 echo "<p class='no-images-message'>{$organizer_name} hasn't published any Posts.</p>";
                 echo "<p class='follow-message'>Follow {$organizer_name} to get notified about news and updates, first.</p>";
+                echo "</div>";
             }
         ?>
     </div>
@@ -494,7 +497,6 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 
 </div>
 <!-- Event Gallery END -->
-
 
 
 
