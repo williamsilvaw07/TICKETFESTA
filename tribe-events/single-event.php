@@ -688,24 +688,26 @@ jQuery(document).ready(function($) {
 jQuery(document).ready(function($) {
     // Process each '.tribe-event-date-start' element within '.top_flex_section_single_event'
     $('.top_flex_section_single_event .tribe-event-date-start').each(function() {
-        // This will fetch the current text, which includes date, time, and time zone
+        // This will fetch the current text, which includes date, time, and timezone
         var dateTimeText = $(this).text();
         
-        // Split the text into date and time parts, assuming the time zone is part of the time part
-        var dateTimeParts = dateTimeText.split(' @ ');
-        if (dateTimeParts.length === 2) {
-            // Reconstruct the text with additional spans for styling, including the time zone
-            var formattedDateTime = '<span class="date-part">' + dateTimeParts[0] + '</span>' + ' @ ' + '<span class="time-part">' + dateTimeParts[1] + '</span>';
+        // Split the text into date/time and timezone parts
+        var parts = dateTimeText.split(' ');
+        if (parts.length > 1) {
+            // The last part should be the timezone, separate it from the rest
+            var timezone = parts.pop();
+            var dateTimeWithoutTimezone = parts.join(' ');
+
+            // Reconstruct the text with an additional span for the timezone
+            var formattedDateTime = dateTimeWithoutTimezone + ' <span class="time-zone">' + timezone + '</span>';
             $(this).html(formattedDateTime);
         }
     });
 
-    // Adjustments to the h2 elements if needed
+    // Style adjustments for the h2 elements if needed
     $('.top_flex_section_single_event h2').each(function() {
         // Ensure h2 elements are displayed
         $(this).css('display', 'block');
-
-        // Additional style adjustments for h2 elements can be added here
     });
 });
 
