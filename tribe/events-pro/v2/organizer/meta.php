@@ -478,8 +478,7 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
                     </div>
                     <?php
                 }
-            }
-
+            } 
             if (!$hasImages) { // Display custom message if no images found
                 // Get the organizer's name
                 $organizer_name = get_the_title($organizer->ID); // Assuming $organizer->ID contains the ID of the current organizer
