@@ -88,6 +88,10 @@ font-family: "Plus Jakarta Sans", Sans-serif;
 .header_search_icon a{
     display: none!important;
 }
+
+.tt-menu{
+    display: block!important;
+}
 /****END***/
 
 /*****menu******/
