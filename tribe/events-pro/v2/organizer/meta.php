@@ -364,7 +364,7 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 <div class="event-listing live_event_listing_div">
 
 <div class="event-listing">
-	
+    
     <?php
     // Define the query arguments to get events for this organizer.
     $organizer_events_args = array(
@@ -403,6 +403,12 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
                             <?php the_post_thumbnail('medium'); ?>
                         </a>
                     </div>
+                <?php else: ?>
+                    <div class="event-image">
+                        <a href="<?php echo esc_url( $event_url ); ?>">
+                            <img src="https://ticketfesta.co.uk/wp-content/uploads/2024/02/placeholder-4.png" alt="Placeholder" style="width: 100%; height: auto;">
+                        </a>
+                    </div>
                 <?php endif; ?>
                 
                 <div class="event-details">
@@ -412,8 +418,8 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
                             <a href="<?php echo esc_url( $event_url ); ?>"><?php the_title(); ?></a>
                         </h2>
                         <div class="event-day">
-    <?php echo tribe_get_start_date(null, false, 'D, d M, H:i'); ?>
-</div>
+                            <?php echo tribe_get_start_date(null, false, 'D, d M, H:i'); ?>
+                        </div>
                         <div class="event-time-location">
                             <span class="event-time"><?php echo tribe_get_start_date( null, false, 'g:i a' ); ?> - <?php echo tribe_get_end_date( null, false, 'g:i a' ); ?></span>
                             <span class="event-location"><?php echo tribe_get_venue(); ?></span>
