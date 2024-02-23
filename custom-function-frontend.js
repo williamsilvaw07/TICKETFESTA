@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
     var searchPopup = document.getElementById('searchPopup');
     var closePopup = document.getElementById('closePopup');
     // Selecting the input using its class 'tt-hint'
-    var searchInput = document.querySelector('.tt-hint'); 
+    var searchInput = document.querySelector('.typeahead'); 
 
     searchIcon.addEventListener('click', function() {
         console.log('Search icon clicked');
