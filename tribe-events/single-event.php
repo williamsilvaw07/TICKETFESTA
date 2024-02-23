@@ -463,15 +463,17 @@ if (!empty($sponsor_logos_ids)) : ?>
 
 
 
-
 jQuery(document).ready(function($) {
     var element = $('.buttonticket_for_mobile'); // Your target element
     var originalOffset = element.offset().top; // Original offset top position
+    console.log('Original Offset:', originalOffset); // Log original offset
 
     jQuery(window).scroll(function() {
         var scrollPos = $(window).scrollTop(); // Current scroll position
+        console.log('Scroll Position:', scrollPos); // Log current scroll position
 
         if (scrollPos > originalOffset + element.height()) {
+            console.log('Applying fixed style'); // Log when applying fixed style
             // If scrolled below the original position, make it fixed
             element.css({
                 position: 'fixed',
@@ -480,6 +482,7 @@ jQuery(document).ready(function($) {
                 'z-index': '999'
             });
         } else {
+            console.log('Removing fixed style'); // Log when reverting to default
             // If scrolled back to original position, revert to default
             element.removeAttr('style');
         }
