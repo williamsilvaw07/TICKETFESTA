@@ -413,9 +413,11 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
                 <div class="event-details">
                     
                     <div class="event-content">
-                        <h2 class="event-title">
-                            <a href="<?php echo esc_url( $event_url ); ?>"><?php the_title(); ?></a>
-                        </h2>
+                    <h2 class="event-title">
+    <a href="<?php echo esc_url( $event_url ); ?>">
+        <?php echo mb_strimwidth(get_the_title(), 0, 50, '...'); ?>
+    </a>
+</h2>
                         <div class="event-day">
                             <?php echo tribe_get_start_date(null, false, 'D, d M, H:i'); ?>
                         </div>
