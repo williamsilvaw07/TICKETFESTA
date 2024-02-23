@@ -1,31 +1,25 @@
 document.addEventListener('DOMContentLoaded', function() {
-    var searchIcon = document.querySelector('.header_search_icon');
-    var searchInput = document.getElementById('ecsa-search-box');
+    var searchIcon = document.querySelector('.header_search_icon'); // Ensure this selector targets your search icon correctly
+    var searchPopup = document.getElementById('searchPopup'); // This should match the ID of your popup container
+
+    if (!searchIcon || !searchPopup) {
+        console.error('Search icon or popup element not found');
+        return;
+    }
 
     searchIcon.addEventListener('click', function() {
         console.log('Search icon clicked');
+        searchPopup.style.display = 'block'; // This should show the popup
 
-        // Wait a bit to ensure any initialization or display changes have been completed
+        // Optional: Focus on the search input after a slight delay to ensure it's ready
         setTimeout(function() {
+            var searchInput = document.getElementById('ecsa-search-box');
             if (searchInput) {
                 console.log('Focusing on search input');
-                searchInput.focus(); // Focus on the input field
-
-                // Simulate a keydown event to mimic typing
-                var event = new KeyboardEvent('keydown', {
-                    key: ' ', // Using space to minimally interact with the input
-                    keyCode: 32, // Keycode for spacebar
-                    code: 'Space', // Code for spacebar
-                    which: 32,
-                    shiftKey: false,
-                    ctrlKey: false,
-                    metaKey: false
-                });
-
-                // Dispatch the keydown event
-                searchInput.dispatchEvent(event);
-                console.log('Keydown event dispatched on search input');
+                searchInput.focus();
+            } else {
+                console.log('Search input not found');
             }
-        }, 1000); // Adjust this delay as needed
+        }, 500); // Adjust this delay as needed
     });
 });
