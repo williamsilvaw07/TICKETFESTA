@@ -124,28 +124,32 @@ $cost  = tribe_get_formatted_cost( $event_id );
   <span class="time_text">
     <h2 class="tribe-event-date-start">
       <?php 
-        // Format for the date including the day of the week
-        $date_format = 'l, j F Y'; 
-        // Specify the time format
+        $date_format = 'l, j F Y'; // Format for the date including the day of the week
         $time_format = 'H:i'; // 24-hour format without timezone
 
-        // Get the start date in the desired format
-        $event_start_date = tribe_get_start_date( $event_id, false, $date_format );
-        // Get the start time in the specified format
-        $event_start_time = tribe_get_start_time( $event_id, false, $time_format );
+        // Get the start date and time in the desired format
+        $event_start_date = tribe_get_start_date($event_id, false, $date_format);
+        $event_start_time = tribe_get_start_time($event_id, false, $time_format);
 
-        // Get the timezone abbreviation for the event
-        $timezone_abbr = Tribe__Events__Timezones::get_event_timezone_abbr($event_id);
+        // Get the event timezone string (e.g., 'Europe/London')
+        $event_timezone_string = Tribe__Events__Timezones::get_event_timezone_string($event_id);
 
-        // Combine the date, time, and timezone abbreviation
-        $event_date_time = $event_start_date . ' @ ' . $event_start_time . ' ' . $timezone_abbr;
+        // Create a DateTime object for the event start date/time in the event's timezone
+        $datetime = new DateTime($event_start_date . ' ' . $event_start_time, new DateTimeZone($event_timezone_string));
 
-        // Output the date, time, and timezone
+        // Convert the timezone to the GMT offset format
+        $timezone_gmt_offset = $datetime->format('P'); // Outputs the offset from GMT (e.g., '+01:00')
+
+        // Combine the date, time, and GMT offset
+        $event_date_time = $event_start_date . ' @ ' . $event_start_time . ' GMT' . $timezone_gmt_offset;
+
+        // Output the date, time, and GMT offset
         echo $event_date_time;
       ?>
     </h2>
   </span>
 </div>
+
 <!--  <div class="door_open_time__div emoji_div_main"><span class="door_open_time__emoji">🚪</span> <span class="door_open_time__text">Doors open </span><span class="door_open_time_number"></span></div> -->
        
 </div>
