@@ -107,6 +107,10 @@ font-family: "Plus Jakarta Sans", Sans-serif;
     color: #222;
     font-weight: 700;
 }
+#searchContent{
+    width: 100%;
+    max-width: 700px;
+}
 /****END***/
 
 /*****menu******/
