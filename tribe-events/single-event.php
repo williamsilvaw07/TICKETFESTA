@@ -461,44 +461,55 @@ if (!empty($sponsor_logos_ids)) : ?>
 
 <script>
 
-
 jQuery(document).ready(function($) {
     var element = $('.buttonticket_for_mobile'); // Your target element
     var originalOffset = element.offset().top; // Original offset top position
     var elementHeight = element.outerHeight(); // Height of the element
-    var offsetBuffer = 100; // Offset buffer in pixels
 
-    // Function to check the element's position and apply styles accordingly
-    function checkPosition() {
+    // Function to check if the element is in the viewport
+    function isInViewport() {
         var scrollPos = $(window).scrollTop(); // Current scroll position
         var windowHeight = $(window).height(); // Window height
+        var elementTopPos = originalOffset; // Top position of the element
         var elementBottomPos = originalOffset + elementHeight; // Bottom position of the element
 
-        // Check if the bottom of the element is above the top of the viewport plus the offset buffer
-        if (scrollPos + windowHeight < elementBottomPos + offsetBuffer) {
-            // Apply fixed style
+        // Element is in viewport if its bottom is greater than the scroll position
+        // and its top is less than the scroll position plus the window height
+        return elementBottomPos > scrollPos && elementTopPos < (scrollPos + windowHeight);
+    }
+
+    // Function to apply or remove fixed style based on element's visibility
+    function updateElementStyle() {
+        if (!isInViewport()) {
+            // Apply fixed style if the element is not in the viewport
             element.css({
                 position: 'fixed',
                 bottom: '0',
-                width: '100%',
+                left: '0', // Ensure the element spans the full width from the left
+                right: '0', // Ensure the element spans the full width to the right
                 'z-index': '999',
                 'border-radius': '0',
                 'padding-bottom': '31px'
             });
         } else {
-            // Revert to default style
+            // Remove fixed style if the element is back in the viewport
             element.removeAttr('style');
         }
     }
 
-    // Initial check on page load
-    checkPosition();
+    // Initial check to update element style on page load
+    updateElementStyle();
 
-    // Check on scroll
-    $(window).scroll(checkPosition);
+    // Update element style on scroll
+    $(window).scroll(updateElementStyle);
+
+    // Update element style on window resize to account for changes in layout
+    $(window).resize(function() {
+        // Recalculate original offset in case the layout has changed
+        originalOffset = element.offset().top;
+        updateElementStyle();
+    });
 });
-
-
 
 
 
