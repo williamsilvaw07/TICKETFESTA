@@ -12,11 +12,12 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('Search icon clicked.');
         searchPopup.style.display = 'block'; // Make the popup visible
 
-        // Find the .tt-menu element within the popup and add the tt-open class
+        // Find the .tt-menu element within the popup, add the tt-open class, and set aria-expanded to true
         var ttMenu = searchPopup.querySelector('.tt-menu');
         if (ttMenu) {
             ttMenu.classList.add('tt-open');
-            console.log('.tt-menu class tt-open added');
+            ttMenu.setAttribute('aria-expanded', 'true'); // Set aria-expanded to true
+            console.log('.tt-menu class tt-open added and aria-expanded set to true');
         } else {
             console.error('.tt-menu element not found within the popup.');
         }
