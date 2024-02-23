@@ -1675,7 +1675,7 @@ input.follow-button {
 }
 }
 
-@media (max-width: 550px) {
+@media (max-width: 590px) {
  
     .single-tribe_organizer .image_profile_text_main_continer img {
         border-radius: 100px;
