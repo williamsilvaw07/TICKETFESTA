@@ -1778,7 +1778,7 @@ width: 100%;
     }
    .top_flex_section_single_event .tribe-events-schedule{
     margin-top: -35px;
-    margin-bottom: 40px;
+
    }
    .ticket_form_sticky{
     position: inherit!important;
