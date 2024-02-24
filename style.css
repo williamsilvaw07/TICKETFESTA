@@ -89,9 +89,7 @@ font-family: "Plus Jakarta Sans", Sans-serif;
     display: none!important;
 }
 
-.tt-menu{
-    display: block!important;
-}
+
 #ecsa-search .tt-menu {
     background-color: #1A1A1A;
     border: 1px solid rgba(0,0,0,.2);
@@ -113,10 +111,7 @@ font-family: "Plus Jakarta Sans", Sans-serif;
 }
 #ecsa-search .tt-menu {
     width: 100%;
-    display: block!important;
     max-height: 300px;
-    overflow-x: hidden;
-    overflow-y: auto;
     margin-top: 5px;
     background-color: #1A1A1A!important;
     border: 1px solid rgba(0,0,0,.2);
