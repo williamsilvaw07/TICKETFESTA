@@ -113,7 +113,7 @@ jQuery(document).ready(function($) {
                 var ticketsLeft = parseInt(matches[0], 10); // Convert the extracted string to an integer
 
                 // Log the number of tickets left for debugging
-                console.log('Tickets left:', ticketsLeft);
+               // console.log('Tickets left:', ticketsLeft);
 
                 // Check if the number of tickets left is 259 or fewer
                 if (ticketsLeft <= 10) {
