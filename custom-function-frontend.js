@@ -1,23 +1,34 @@
 document.addEventListener('DOMContentLoaded', function() {
-    var searchIcon = document.querySelector('.header_search_icon'); // Selector for the search icon
-    var searchPopup = document.getElementById('searchPopup'); // The search popup element
+    var searchIcon = document.querySelector('.header_search_icon');
+    console.log('Search icon element:', searchIcon); // Check if the search icon is correctly identified
 
-    if (!searchIcon || !searchPopup) {
-        console.error('Search icon or popup not found.'); // Log error if elements are not found
+    if (!searchIcon) {
+        console.error('Search icon not found.');
         return;
     }
 
-    // Function to open the search popup
     function openSearchPopup() {
-        console.log('Opening search popup...'); // Log opening action
-        searchPopup.style.display = 'block'; // Change the display style to block to show the popup
-        console.log('Search popup is now visible.'); // Log visibility change
+        console.log('Attempting to open search popup...');
+        var searchPopup = document.getElementById('searchPopup');
+
+        if (!searchPopup) {
+            console.error('Search popup element not found.');
+            return;
+        }
+
+        searchPopup.style.display = 'block';
+        console.log('Search popup should now be visible.');
     }
 
-    // Event listeners for opening the popup on click or touch
     searchIcon.addEventListener('click', openSearchPopup);
-    searchIcon.addEventListener('touchstart', openSearchPopup);
+    searchIcon.addEventListener('touchend', function(event) {
+        event.preventDefault(); // Prevent the click event from firing after touchend
+        openSearchPopup();
+    });
+
+    console.log('Event listeners attached.'); // Confirm that event listeners are attached
 });
+
 
 
 
