@@ -213,7 +213,7 @@ font-family: "Plus Jakarta Sans", Sans-serif;
 
 @media (max-width: 743px) {
 .elementor-element-8546725{
-    width: 100%;
+    width: 100%!important;
     max-width: 553px!important;
 }
 .elementor-element-9d845b1 div{
