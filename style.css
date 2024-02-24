@@ -169,8 +169,8 @@ font-family: "Plus Jakarta Sans", Sans-serif;
     background: transparent;
     font-size: 24px; /* Adjust the size as needed */
     position: absolute;
-    right: 10px; /* Adjust the position as needed */
-    top: 10px; /* Adjust the position as needed */
+    right: 3px;
+    top: 0px;
 }
 
 
@@ -191,7 +191,7 @@ font-family: "Plus Jakarta Sans", Sans-serif;
     height: auto!important;  
     position: relative!important;  
     top: 19%!important;  
-    left: 16%!important;  
+    left: 0%!important;  
 }
 /****END***/
 
