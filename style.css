@@ -216,6 +216,9 @@ font-family: "Plus Jakarta Sans", Sans-serif;
     width: 100%;
     max-width: 553px!important;
 }
+.elementor-element-9d845b1 div{
+    width: fit-content;
+}
 
 }
 
