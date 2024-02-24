@@ -88,7 +88,7 @@ font-family: "Plus Jakarta Sans", Sans-serif;
 .header_search_icon_mobile:before {
     content: '\f002';
     font-family: FontAwesome;
-    display: flex;
+    display: flex; 
     align-items: center;
     margin-right: 10px;
     background: white;
