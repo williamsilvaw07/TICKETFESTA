@@ -1577,8 +1577,8 @@ text-align: left;
     opacity: 0.9;
 }
 .image-container img{
-    max-width: 350px!important;
-    max-height: 211px!important;
+    max-width: 300px!important;
+    max-height: 200px!important;
     object-fit: cover;
     margin: inherit!important;
 }
