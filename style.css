@@ -206,11 +206,18 @@ font-family: "Plus Jakarta Sans", Sans-serif;
 }
 
 
+.elementor-element-0630e16{
+    display: flex;
+}
 
 
+@media (max-width: 743px) {
+.elementor-element-8546725{
+    width: 100%;
+    max-width: 553px!important;
+}
 
-
-
+}
 
 
 /****END***/
