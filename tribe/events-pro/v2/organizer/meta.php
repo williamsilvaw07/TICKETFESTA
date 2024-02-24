@@ -365,91 +365,49 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 
 <!-- Event live -->
 <div class="live_event_listing_div">
+    <div class="event-listing">
+        <?php
+        // Ensure $organizer->ID contains the correct organizer ID
+        $organizer_name = get_the_title($organizer->ID);
 
-<div class="event-listing">
-    
-    <?php
-    // Define the query arguments to get events for this organizer.
-    $organizer_events_args = array(
-        'post_type'      => 'tribe_events',
-        'posts_per_page' => -1, // Retrieve all events; adjust as needed.
-        'meta_query'     => array(
-            array(
-                'key'   => '_EventOrganizerID',
-                'value' => $organizer->ID,
+        $organizer_events_args = array(
+            'post_type'      => 'tribe_events',
+            'posts_per_page' => -1,
+            'meta_query'     => array(
+                array(
+                    'key'   => '_EventOrganizerID',
+                    'value' => $organizer->ID,
+                ),
             ),
-        ),
-    );
+        );
 
-    // Perform the query.
-    $organizer_events = new WP_Query( $organizer_events_args );
+        $organizer_events = new WP_Query($organizer_events_args);
 
-    // Check if the organizer has events.
-    if ( $organizer_events->have_posts() ) :
-            while ( $organizer_events->have_posts() ) : $organizer_events->the_post();
-            // Get the event URL
-            $event_url = get_the_permalink();
-
-            // Get the cost of the event
-            $ticket_price = tribe_get_cost( null, true );
-
-            // Format the button text to include the price
-            $button_text = !empty($ticket_price) ? "" . esc_html($ticket_price) : "";
-
-            ?>
-            <div class="event-card">
-                <?php if ( has_post_thumbnail() ) : ?>
-                    <div class="event-image">
-                        <a href="<?php echo esc_url( $event_url ); ?>">
-                            <?php the_post_thumbnail('medium'); ?>
-                        </a>
-                    </div>
-                <?php else: ?>
-                    <div class="event-image">
-                        <a href="<?php echo esc_url( $event_url ); ?>">
-                            <img src="https://ticketfesta.co.uk/wp-content/uploads/2024/02/placeholder-4.png" alt="Placeholder" style="width: 100%; height: auto;">
-                        </a>
-                    </div>
-                <?php endif; ?>
-                
-                <div class="event-details">
-                    
-                    <div class="event-content">
-                    <h2 class="event-title">
-    <a href="<?php echo esc_url( $event_url ); ?>">
-        <?php echo mb_strimwidth(get_the_title(), 0, 60, '...'); ?>
-    </a>
-</h2>
-                        <div class="event-day">
-                            <?php echo tribe_get_start_date(null, false, 'D, d M, H:i'); ?>
-                        </div>
-                        <div class="event-time-location">
-                            <span class="event-time"><?php echo tribe_get_start_date( null, false, 'g:i a' ); ?> - <?php echo tribe_get_end_date( null, false, 'g:i a' ); ?></span>
-                            <span class="event-location"><?php echo tribe_get_venue(); ?></span>
-                        </div>
-                        <div class="event-actions">
-                            <a href="<?php echo esc_url( $event_url ); ?>" class="btn-get-tickets"><img src="https://thaynna-william.co.uk/wp-content/uploads/2023/12/Group-188.png">Get Tickets</a><span><?php echo $button_text; ?></span>
-                        </div>
-                    </div>
+        if ($organizer_events->have_posts()) :
+            while ($organizer_events->have_posts()) : $organizer_events->the_post();
+                $event_url = get_the_permalink();
+                $ticket_price = tribe_get_cost(null, true);
+                $button_text = !empty($ticket_price) ? esc_html($ticket_price) : "";
+                ?>
+                <!-- Event Card Markup -->
+                <div class="event-card">
+                    <!-- Event Image and Details -->
                 </div>
-            </div>
-            <?php
-        endwhile;
-
-        // Reset post data to avoid conflicts with the main query.
-        wp_reset_postdata();
-    else :
-        echo '<p>No events found.</p>';
-    endif;
-    ?>
+                <?php
+            endwhile;
+            wp_reset_postdata();
+        else :
+            // Customized no events message
+            echo "<div class='organizer_gallery_category_inner_no_image'>";
+            echo "<p class='no-images-message'>$organizer_name hasn't published any events.</p>";
+            echo "<p class='follow-message'>Follow $organizer_name to get notified about new events and updates.</p>";
+            echo "</div>";
+        endif;
+        ?>
+    </div>
 </div>
-</div>
-
 <!-- Event live end -->
-</div>
 
-
-<!-- Event LISTING END -->
 
 
 
