@@ -211,7 +211,7 @@ font-family: "Plus Jakarta Sans", Sans-serif;
 }
 
 
-@media (max-width: 743px) {
+@media (max-width: 767px) {
 .elementor-element-8546725{
     width: 100%!important;
     max-width: 553px!important;
@@ -219,7 +219,33 @@ font-family: "Plus Jakarta Sans", Sans-serif;
 .elementor-element-9d845b1 div{
     width: fit-content;
 }
-
+#ecsa-search.layout-medium input, #ecsa-search.layout-medium span.twitter-typeahead {
+    max-width: 607px;
+    height: 35px;
+    width: 100%;
+}
+#ecsa-search .icon-img {
+    z-index: 9;
+    height: auto;
+    width: 100%;
+    background: rgba(117,117,117,.12);
+    vertical-align: middle;
+    text-align: center;
+    display: inline-block;
+    cursor: pointer;
+    border-radius: 0 3px 3px 0;
+}
+#ecsa-search .icon-img img {
+    width: 100%!important;
+    vertical-align: middle;
+    display: flex;
+    opacity: 1!important;
+    max-width: 34px!important;
+    height: auto!important;
+    position: relative!important;
+    top: 37%!important;
+    left: 0%!important;
+}
 }
 
 
