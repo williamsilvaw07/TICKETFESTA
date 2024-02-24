@@ -15,33 +15,29 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
+
 document.addEventListener('DOMContentLoaded', function() {
-    // Set an interval to check and trigger the event every 1 second
-    setInterval(function() {
+    var typingInterval = setInterval(function() {
         var searchInput = document.getElementById('ecsa-search-box');
 
         // Check if the input exists and is visible to the user
         if (searchInput && searchInput.offsetParent !== null) {
-            console.log('Input is visible, triggering keyup event.');
+            console.log('Input is visible.');
 
-            // Create a keyup event
-            var event = new KeyboardEvent('keyup', {
-                key: 'a', // Simulating 'a' key, change as needed
-                keyCode: 65, // KeyCode for 'a'
-                code: 'KeyA', // Code for 'a'
-                which: 65,
-                shiftKey: false,
-                ctrlKey: false,
-                altKey: false,
-                metaKey: false,
-                bubbles: true,
-                cancelable: true
-            });
+            // Simulate typing by setting the input's value
+            var existingValue = searchInput.value;
+            searchInput.value = existingValue + 'a'; // Append 'a' to the current value to simulate typing
 
-            // Dispatch the event to the input element
+            // Create a new 'input' event since setting value doesn't trigger it
+            var event = new Event('input', { bubbles: true });
             searchInput.dispatchEvent(event);
+
+            console.log('Simulated typing into input.');
+
+            // Optional: Clear the interval if you only want to simulate typing once
+            // clearInterval(typingInterval);
         } else {
             console.log('Input is not visible or does not exist.');
         }
-    }, 1000); // 1000 milliseconds = 1 second
+    }, 1000); // 2000 milliseconds = 2 seconds
 });
