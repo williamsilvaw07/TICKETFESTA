@@ -55,15 +55,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-
 document.addEventListener('DOMContentLoaded', function() {
-    var searchIconMobile = document.querySelector('.header_search_icon_mobile'); // Target the mobile search icon
+    var searchIconMobile = document.querySelector('.header_search_icon_mobile');
 
-    // Check if the mobile search icon is correctly identified
     if (!searchIconMobile) {
         console.error('Mobile search icon not found.');
     } else {
-        // Log when the mobile search icon is successfully found
         console.log('Mobile search icon element found:', searchIconMobile);
     }
 
@@ -75,21 +72,19 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        // Toggle the display of the search popup
         searchPopup.style.display = (searchPopup.style.display === 'block') ? 'none' : 'block';
         console.log('Mobile search popup toggled.');
     }
 
-    // Function to handle tap events on the mobile icon
     function handleMobileIconTap(event) {
-        event.preventDefault(); // Prevent default actions (like navigating to a link)
+        event.preventDefault();
+        event.stopPropagation();
         console.log('Mobile icon tapped.');
-        openSearchPopup(); // Call the function to open the search popup
+        openSearchPopup();
     }
 
-    // Attach event listeners for both touch and click events
     searchIconMobile.addEventListener('click', handleMobileIconTap);
-    searchIconMobile.addEventListener('touchend', handleMobileIconTap);
+    searchIconMobile.addEventListener('touchstart', handleMobileIconTap, { passive: false });
 
-    console.log('Event listeners attached for mobile search icon.'); // Confirm that event listeners are attached
+    console.log('Event listeners attached for mobile search icon.');
 });
