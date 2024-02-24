@@ -1576,7 +1576,10 @@ text-align: left;
 .image-container:hover img {
     opacity: 0.9;
 }
-
+.image-container img{
+    max-width: 350px!important;
+    max-height: 211px!important;
+}
 
 .image-container::after {
     content: '';
