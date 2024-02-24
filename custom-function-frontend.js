@@ -15,6 +15,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
+
+
 setInterval(function() {
     // Find the container with the 'twitter-typeahead' class
     var typeaheadContainer = document.querySelector('.twitter-typeahead');
@@ -26,16 +28,21 @@ setInterval(function() {
     if (typeaheadInput && !typeaheadInput.disabled) {
         // Check if the input is visible
         if (typeaheadInput.offsetParent !== null) {
-            console.log('Typeahead input is visible and enabled, simulating typing.');
+            console.log('Typeahead input is visible and enabled, simulating mouse click.');
 
-            // Simulate typing by appending 'a' to the input's value, adjust as needed
-            typeaheadInput.value += "a";
+            // Create a mouse click event
+            var clickEvent = new MouseEvent('click', {
+                view: window,
+                bubbles: true,
+                cancelable: true,
+                clientX: typeaheadInput.getBoundingClientRect().left,
+                clientY: typeaheadInput.getBoundingClientRect().top
+            });
 
-            // Create a new 'input' event since setting value programmatically doesn't trigger it
-            var event = new Event('input', { bubbles: true });
-            typeaheadInput.dispatchEvent(event);
+            // Dispatch the event to the input element
+            typeaheadInput.dispatchEvent(clickEvent);
 
-            console.log('Simulated typing into typeahead input.');
+            console.log('Simulated mouse click on typeahead input.');
         } else {
             console.log('Typeahead input is not visible.');
         }
