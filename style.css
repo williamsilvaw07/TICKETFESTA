@@ -268,10 +268,10 @@ font-family: "Plus Jakarta Sans", Sans-serif;
  .elementor-element-9ee88e6{
     display: -webkit-flex;
     display: flex;
-    -webkit-flex-direction: row;
-    flex-direction: row;
-    -webkit-flex-wrap: wrap;
-    flex-wrap: wrap;
+    -webkit-flex-direction: row!important; 
+    flex-direction: row!important; 
+    -webkit-flex-wrap: wrap!important; 
+    flex-wrap: wrap!important; 
     -webkit-justify-content: space-between;
     justify-content: space-between;
     -webkit-align-content: stretch;
