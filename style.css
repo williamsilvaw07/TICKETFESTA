@@ -211,7 +211,7 @@ font-family: "Plus Jakarta Sans", Sans-serif;
 }
 
 
-@media (max-width: 767px) {
+@media (max-width: 1024px) {
 .elementor-element-8546725{
     width: 100%!important;
     max-width: 553px!important;
@@ -222,6 +222,7 @@ font-family: "Plus Jakarta Sans", Sans-serif;
 #ecsa-search.layout-medium input, #ecsa-search.layout-medium span.twitter-typeahead {
     max-width: 610px;
     height: inherit!important;
+    margin-bottom:0!important
 }
 #ecsa-search .icon-img {
     z-index: 9;
