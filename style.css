@@ -103,7 +103,7 @@ font-family: "Plus Jakarta Sans", Sans-serif;
 
 .header_search_icon_mobile
 {
-
+color: white;
     z-index: 999;
     position: relative;
 }
