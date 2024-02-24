@@ -118,7 +118,33 @@ $cost  = tribe_get_formatted_cost( $event_id );
 
 <div class="location_div_js">📍<span class="location_name"></span> - <span class="location_postcode"></span></div>
   
-<div class="time_div emoji_div_main "><span class="time_emoji">⏰<span class="time_text"> <?php echo tribe_events_event_schedule_details( $event_id, '<h2>', '</h2>' ); ?></span></div>
+<?php if ( tribe_get_venue_id( $event_id ) ): // Check if there's a venue ID associated with the event ?>
+  <div class="time_div emoji_div_main">
+    <span class="time_emoji">⏰</span>
+    <span class="time_text">
+      <h2 class="tribe-event-date-start">
+        <?php 
+          $date_format = 'l, j F Y'; // Format for the date including the day of the week
+          $time_format = 'H:i'; // 24-hour format without timezone
+
+          // Get the start date and time in the desired format
+          $event_start_date = tribe_get_start_date($event_id, false, $date_format);
+          $event_start_time = tribe_get_start_time($event_id, false, $time_format);
+
+          // Get the event's timezone abbreviation
+          $timezone = Tribe__Events__Timezones::get_event_timezone_abbr( $event_id );
+
+          // Combine the date, time, and the dynamic timezone abbreviation
+          $event_date_time = $event_start_date . ' - ' . $event_start_time . ' ' . $timezone;
+
+          // Output the date, time, and the dynamic timezone abbreviation
+          echo $event_date_time;
+        ?>
+      </h2>
+    </span>
+  </div>
+<?php endif; ?>
+
 <!--  <div class="door_open_time__div emoji_div_main"><span class="door_open_time__emoji">🚪</span> <span class="door_open_time__text">Doors open </span><span class="door_open_time_number"></span></div> -->
        
 </div>
@@ -461,6 +487,70 @@ if (!empty($sponsor_logos_ids)) : ?>
 
 <script>
 
+jQuery(document).ready(function($) {
+    var element = $('.buttonticket_for_mobile'); // Your target element
+    var originalOffset = element.offset().top; // Original offset top position
+    var elementHeight = element.outerHeight(); // Height of the element
+    var isSticky = false; // Flag to track if sticky styling is applied
+
+    // Function to check if the element is in the viewport
+    function isInViewport() {
+        var scrollPos = $(window).scrollTop(); // Current scroll position
+        var windowHeight = $(window).height(); // Window height
+        var elementTopPos = originalOffset; // Top position of the element
+        var elementBottomPos = originalOffset + elementHeight; // Bottom position of the element
+
+        // Element is in viewport if its bottom is greater than the scroll position
+        // and its top is less than the scroll position plus the window height
+        return elementBottomPos > scrollPos && elementTopPos < (scrollPos + windowHeight);
+    }
+
+    // Function to apply or remove fixed style based on element's visibility
+    function updateElementStyle() {
+        if (!isInViewport() && !isSticky) {
+            // Apply fixed style if the element is not in the viewport and sticky styling hasn't been applied yet
+            element.css({
+                position: 'fixed',
+                bottom: '0',
+                left: '0', // Ensure the element spans the full width from the left
+                right: '0', // Ensure the element spans the full width to the right
+                'z-index': '999',
+                'border-radius': '0',
+                'padding-bottom': '40px'
+            });
+            isSticky = true; // Set the flag to true as sticky styling is applied
+        } else if (isInViewport() && isSticky) {
+            // Remove fixed style if the element is back in the viewport and sticky styling has been applied
+            element.removeAttr('style');
+            isSticky = false; // Reset the flag as sticky styling is removed
+        }
+    }
+
+    // Initial check to update element style on page load
+    updateElementStyle();
+
+    // Update element style on scroll
+    $(window).scroll(updateElementStyle);
+
+    // Update element style on window resize to account for changes in layout
+    $(window).resize(function() {
+        // Recalculate original offset in case the layout has changed
+        originalOffset = element.offset().top;
+        // Reset isSticky flag to ensure correct behavior after layout change
+        isSticky = false;
+        updateElementStyle();
+    });
+});
+
+
+
+
+
+
+
+
+
+
 jQuery(document).ready(function() {
     var btns = jQuery('.getticketbtn, #scroll-to-tickets');  // Selecting elements with class 'getticketbtn' and the ID 'scroll-to-tickets'
     var linkViewAttendee = jQuery('.tribe-link-view-attendee');
@@ -598,36 +688,30 @@ jQuery(document).ready(function($) {
 
 
 
-
 jQuery(document).ready(function($) {
-    // Process each '.tribe-event-date-start' element within '.top_flex_section_single_event'
     $('.top_flex_section_single_event .tribe-event-date-start').each(function() {
-        var dateTimeText = $(this).text();
-        var dateParts = dateTimeText.split(' ');
+        var dateTimeText = $(this).text().trim(); // Trim to remove any trailing whitespace
+        console.log("Original dateTimeText:", dateTimeText); 
 
-        // Check if there are enough parts to form the date
-        if (dateParts.length >= 4) {
-            var dateOnly = dateParts[0] + ' ' + dateParts[1] + ' ' + dateParts[2] + ' ' + dateParts[3];
-            $(this).text(dateOnly);
+        // Adjusted regex to match the time part 'HH:MM'
+        var regex = /\d{1,2}:\d{2}$/;
+
+        var regexTestResult = regex.test(dateTimeText);
+        console.log("Regex Test Result:", regexTestResult);
+
+        if (regexTestResult) {
+            var formattedDateTime = dateTimeText.replace(regex, function(match) {
+                console.log("Matched Time:", match); // Log the matched time
+                return '<span class="time-part">' + match + '</span>';
+            });
+
+            console.log("Formatted dateTimeText:", formattedDateTime);
+            $(this).html(formattedDateTime);
         }
     });
 
-    // Remove the "-" from the date in the h2 element and hide time and timezone elements
-    $('.top_flex_section_single_event h2').each(function() {
-        // Remove hyphen text nodes
-        $(this).contents().filter(function() {
-            return this.nodeType === 3 && $.trim(this.nodeValue) === '-';
-        }).remove();
-
-        // Hide the time and timezone elements
-        //$(this).find('.tribe-event-time, .timezone').hide();
-
-        // Show the h2 element after modifications
-        $(this).css('display', 'block');
-    });
+    $('.top_flex_section_single_event h2').css('display', 'block');
 });
-
-
 
 
 
@@ -807,7 +891,7 @@ jQuery(document).ready(function($) {
 
 ///STICKY BUY TICKET FUNCTION FOR MOBILE 
 
-$(document).ready(function() {
+jQuery(document).ready(function() {
     function isElementInView(element) {
         var elementTop = element.offset().top;
         var elementBottom = elementTop + element.outerHeight();
@@ -860,6 +944,11 @@ $(document).ready(function() {
 
 
 <style>
+
+.tribe-currency-symbol , .tribe-amount , .btn_price_span {
+    color: #d3fa16!important;
+    font-size:22px!important;
+}
 
 #tribe-events-pg-template{
     width: 100%;
@@ -959,7 +1048,12 @@ html .organizer-profile-link:hover {
     flex-direction: row;
 }
 .single_event_page_location .emoji_div_main{
-margin: 15px 0;
+    margin: 15px 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
+
 }
 html .location_div_js.single_event_sections {
     border:0px solid rgba(255, 255, 255, 0.2)!important
@@ -1018,7 +1112,12 @@ text-transform: capitalize!important;
     color: #878787!important;
     font-size: 13px!important;
     letter-spacing: 1px;
+    font-weight: 300;
 
+}
+.tribe-tickets__tickets-item-extra-price{
+    text-align: center;
+    font-size: 20px!important;
 }
 html body .single_event_sections {
  padding-bottom: 40px;
@@ -1043,11 +1142,43 @@ html body .single_event_sections {
         max-width: 700px!important;
     width: 100%!important;
     }
-    .tribe-events-event-meta_venue .tribe-events-meta-group-details , .tribe-events-meta-group-organizer{
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    .tribe-events-event-meta_venue .tribe-events-meta-group-details , .tribe-events-meta-group-organizer  , .tribe-events-meta-group-organizer{
 display:none!important
     }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
 .single_event_sections h2{
     margin-bottom: 0px;
     line-height: 21px;
@@ -1224,7 +1355,13 @@ background: #2C2C2C!important;
     margin-bottom: -16px;
     
 }
-
+.tribe-events-single-event-description h2 {
+    text-transform: capitalize;
+    font-size: 23px;
+}
+.tribe-events-single-event-description p{
+    font-weight: 300;
+}
 .tribe-common .tribe-common-h7{
     color: white!important;
 }
@@ -1234,7 +1371,7 @@ background: #2C2C2C!important;
     gap: 14px;
     align-content: center;
     align-items: center;
-    background: #FFD700;
+    background: #d3fa16;
     color: black;
     font-size: 15px;
     font-style: normal;
@@ -1346,9 +1483,9 @@ html .single-tribe_events .tribe-events-gmap{
 }
 
 .popup-content {
-    background-color:rgb(26, 26, 26);
-    padding: 20px;
-    border-radius: 5px;
+    background-color: #1A1A1A;
+    padding: 8px;
+    border-radius: 0px;
     position: relative;
     width: 100%;
 }
@@ -1366,7 +1503,7 @@ html .single-tribe_events .tribe-events-gmap{
 #tribe-tickets__tickets-form{
     border: 0;
     color: white;
-    background-color: rgb(26, 26, 26)!important;
+    background-color: #1A1A1A!important;
     width: 100%;
     margin: 0;
 max-width:900px
@@ -1537,20 +1674,12 @@ body .tribe-tickets__tickets-buy{
 
 
 /****STICKY BUTTON FOR BUY TICKET****/
-#sticky-button-container {
+.fixed-position {
     position: fixed;
-    bottom: 10px; 
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 1000; 
-    background-color: rgb(26, 26, 26)!important;
-    padding: 12px 30px;
+    bottom: 0;
     width: 100%;
-    margin: 0 auto;
-    text-align: center;
-    height: 79px;
-    bottom: 0px;
-   visibility: hidden!important
+    background-color: white; /* Or any other color */
+    z-index: 10; /* Ensure it's above other content */
 }
 
 
@@ -1706,6 +1835,7 @@ width: 100%;
 .sponsors_inner img {
     max-width: 150px;
     width: 100%;
+    max
 }
 
 
@@ -1722,7 +1852,7 @@ width: 100%;
     }
    .top_flex_section_single_event .tribe-events-schedule{
     margin-top: -35px;
-    margin-bottom: 40px;
+
    }
    .ticket_form_sticky{
     position: inherit!important;
@@ -1741,9 +1871,7 @@ border-radius: 9px;
     display: none;
 }
 
-.time_div , .door_open_time__div{
-    display: none;
-}
+
 .single_event_background {
     background-size: 300% auto;
 }
@@ -1773,6 +1901,7 @@ border-radius: 9px;
 html .single-tribe_events .tribe-tickets__tickets-footer{
     grid-template-columns: 1fr 1fr;
     display: grid;
+    grid-gap: 7px;
 
 }
 
@@ -1782,9 +1911,16 @@ html .single-tribe_events .tribe-tickets__tickets-footer{
 #sticky-button-container {
    visibility: visible!important
 }
-
+.single_event_page_location {
+    text-align: left;
+    width: 100%;
+}
+.btn_price_span {
+    font-size: 20px;
+    padding-left: 4px;
 }
 
+}
 @media screen and (max-width: 670px) {
     .about_event_inner {
         flex-direction: column;
@@ -1798,11 +1934,46 @@ html .single-tribe_events .tribe-tickets__tickets-footer{
         margin-bottom: 19px;
     }
     .tribe-events-event-image img{
-        max-height: inherit!important;
+        max-height: 500px!important;
     }
+    html h1 {
+    font-size: 27px;
+    font-weight: bold;
+    line-height: 32px;
+}
+.tribe-events-content h1{
+    font-size: 26px;
+    line-height: 28px;
+}
+.tribe-events-notices li{
+    font-size: 20px;
+}
+.tribe-events-single-event-description h2 {
+    text-transform: none;
+    font-size: 22px;
+}
+.tribe-events-event-meta {
+    margin-top: -25px;
+}
+
+.tribe-events-single-event-title {
+    margin-top: 35px!important;
+    font-size: 27px;
+}
+.tribe-tickets__tickets-item-extra-price {
+    text-align: left;
+    
+}
+.popup-content .tribe-currency-symbol, .popup-content  .tribe-amount, .popup-content .btn_price_span {
+    color: #d3fa16!important;
+    font-size: 19px!important;
+}
   }
 
   @media screen and (max-width: 450px) {
+    .tribe-events-event-image img{
+        max-height: 350px!important;
+    }
     .tribe-tickets__tickets-title , .single_event_sections h3{
         font-size: 20px!important;
         font-weight: 600!important;
@@ -1816,7 +1987,7 @@ html .single-tribe_events .tribe-tickets__tickets-footer{
     }
     html .single-tribe_events .tribe-events-gmap {
         width: 100%;
-        max-width: 102px;
+    max-width: 111px;
     }
     html h1 {
         font-size: 30px;
@@ -1844,7 +2015,7 @@ html .single-tribe_events .tribe-tickets__tickets-footer{
         margin-bottom: 10px!important;
     }
     .tribe-events-single-event-title{
-        margin-top: -10px;
+        margin-top: 10px;
     }
     body .single_event_sections {
         padding-bottom: 30px;
@@ -1874,6 +2045,7 @@ html .single-tribe_events .tribe-tickets__tickets-footer{
 
     gap: 15px;
 }
+
   }
 
 

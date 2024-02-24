@@ -1,6 +1,25 @@
 <?php
 
 
+
+
+////FONTASWER
+
+
+
+
+
+function enqueue_font_awesome() {
+    wp_enqueue_style('font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css');
+}
+add_action('wp_enqueue_scripts', 'enqueue_font_awesome');
+
+////END
+
+
+
+
+
 //* Do NOT include the opening php tag
 
 add_filter(
@@ -3021,3 +3040,38 @@ add_action('template_redirect', 'restrict_access_and_show_login_form');
 //////END
 
 
+
+
+
+
+
+
+
+
+
+
+
+////SEARCH FUNCTION POP UP
+function custom_search_popup() {
+    ?>
+    <div id="searchPopup" class="search-popup">
+        <div id="searchOverlay" class="search-overlay"></div>
+        <div id="searchContent" class="search-content">
+            <!-- Close button with an "X" icon -->
+            <button id="closePopup" class="close-popup">&#10005;</button> <!-- &#10005; is the HTML entity for a heavy multiplication X used as a close icon -->
+            <?php echo do_shortcode('[events-calendar-search placeholder="Search Events" show-events="5" disable-past-events="true" layout="medium" content-type="advance"]'); ?>
+        </div>
+    </div>
+    <?php
+}
+add_action('wp_footer', 'custom_search_popup');
+function enqueue_custom_frontend_js() {
+    // Get the version of your script file to ensure the browser doesn't cache old versions.
+    $script_version = filemtime(get_stylesheet_directory() . '/custom-function-frontend.js');
+
+    // Enqueue your custom script, the 'get_stylesheet_directory_uri()' function points to your child theme's root directory.
+    wp_enqueue_script('custom-frontend-js', get_stylesheet_directory_uri() . '/custom-function-frontend.js', array('jquery'), $script_version, true);
+}
+
+// Hook your custom function into 'wp_enqueue_scripts' action.
+add_action('wp_enqueue_scripts', 'enqueue_custom_frontend_js');

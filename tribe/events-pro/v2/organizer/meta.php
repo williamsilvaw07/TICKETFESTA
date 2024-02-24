@@ -282,7 +282,7 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 
 
 <!-- Event past -->
-<div class="event-listing past_event_listing_div">
+<div class=" past_event_listing_div">
     <div class="event-listing">
 
         <?php
@@ -332,9 +332,11 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
                         
 
                         <div class="event-content">
-                            <h2 class="event-title">
-                                <a href="<?php echo esc_url($event_url); ?>"><?php the_title(); ?></a>
-                            </h2>
+                        <h2 class="event-title">
+    <a href="<?php echo esc_url( $event_url ); ?>">
+        <?php echo mb_strimwidth(get_the_title(), 0, 60, '...'); ?>
+    </a>
+</h2>
                             <div class="event-day">
                                 <?php echo tribe_get_start_date(null, false, 'D, d M, H:i'); ?>
                             </div>
@@ -362,7 +364,7 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 
 
 <!-- Event live -->
-<div class="event-listing live_event_listing_div">
+<div class="live_event_listing_div">
 
 <div class="event-listing">
     
@@ -384,9 +386,7 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 
     // Check if the organizer has events.
     if ( $organizer_events->have_posts() ) :
-        echo '<h3>Events by this Organizer</h3>';
-
-        while ( $organizer_events->have_posts() ) : $organizer_events->the_post();
+            while ( $organizer_events->have_posts() ) : $organizer_events->the_post();
             // Get the event URL
             $event_url = get_the_permalink();
 
@@ -415,9 +415,11 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
                 <div class="event-details">
                     
                     <div class="event-content">
-                        <h2 class="event-title">
-                            <a href="<?php echo esc_url( $event_url ); ?>"><?php the_title(); ?></a>
-                        </h2>
+                    <h2 class="event-title">
+    <a href="<?php echo esc_url( $event_url ); ?>">
+        <?php echo mb_strimwidth(get_the_title(), 0, 60, '...'); ?>
+    </a>
+</h2>
                         <div class="event-day">
                             <?php echo tribe_get_start_date(null, false, 'D, d M, H:i'); ?>
                         </div>
@@ -1275,7 +1277,7 @@ width: fit-content!important;
     width: 100%;
     border-radius: 0px;
     margin: 0 auto!important;
-    margin-top: -8px!important;
+    position: relative!important;
 }
 .organizer_nav-item{
     display: flex;
@@ -1285,10 +1287,11 @@ width: fit-content!important;
     justify-content: center;
     align-items: center;
     gap: 10px;
-    padding: 13px 20px!important;
+    padding: 12px 19px 12px 19px!important;
+ 
 }
 .profile_icon_nav{
-    max-width: 25px!important;
+    max-width: 17px!important;
 }
 
 
@@ -1612,18 +1615,20 @@ text-align: left;
 }
 
 
-@media (max-width: 839px) {
+@media (max-width: 890px) {
+    .event-listing {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    justify-content: space-evenly;
+    align-items: start;
+    justify-items: start;
+}
+.event-card {
 
-   
-    .single-tribe_organizer .image_profile_text_main_continer img {
-        height: auto;
-    max-width: 131px;
+    max-width: inherit;
     width: 100%;
-    border: 3px solid white;
 }
-    
 }
-
 
 
 
@@ -1668,7 +1673,7 @@ input.follow-button {
 }
 }
 
-@media (max-width: 599px) {
+@media (max-width: 605px) {
 
 
     .organizer_profile_bk {
@@ -1707,7 +1712,7 @@ input.follow-button {
         max-width: 21px;
     }
     .profile_icon_nav {
-        max-width: 17px!important;
+        max-width: 15px!important;
     }
     .images-container_main {
       
@@ -1785,15 +1790,14 @@ input.follow-button {
     position: fixed;
     bottom: 0;
     left: 0;
-    height: 65px;
-    border-top: 2px solid white!important;
     z-index: 3;
     padding: 10px 20px!important;
 
 }
 .organizer_nav-item.active {
-    background: rgba(255, 163, 0, 0.40)!important;
-    border-radius: 20px;
+   
+    border-radius: 2px;
+    color: black!important;
 }
 .organizer_nav-item.organizer_events.active span {
     font-size: 13px;
@@ -1805,6 +1809,20 @@ input.follow-button {
 .organizer_main_div h3{
     font-size: 23px;
     }
+    .event-listing {
+
+    grid-template-columns: 100%;
+   
+}
+.event-image img {
+    height: auto;
+    max-height: 264px;
+}
+body .event-actions a {
+    padding: 8px 13px;
+    font-size: 13px!important;
+    border-radius: 3px;
+}
 }
   /****END***/
 
