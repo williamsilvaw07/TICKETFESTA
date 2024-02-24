@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-    var searchIcon = document.querySelector('.elementor-element-cdf81b1');
+    var searchIcon = document.querySelector('.elementor-element-c698199');
     console.log('Search icon element:', searchIcon); // Check if the search icon is correctly identified
 
     if (!searchIcon) {
