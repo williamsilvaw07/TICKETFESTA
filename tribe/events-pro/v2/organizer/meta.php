@@ -1755,7 +1755,7 @@ input.follow-button {
       
         display: grid!important;
         grid-template-columns: repeat(2, 1fr);
-        grid-gap: 3px;
+        grid-gap: 3px 17px!important;
     }
    
 .single-tribe_organizer .image_profile_text_main_continer {
