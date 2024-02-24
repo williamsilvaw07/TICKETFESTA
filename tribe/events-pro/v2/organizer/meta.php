@@ -1820,6 +1820,7 @@ input.follow-button {
     bottom: 0;
     left: 0;
     z-index: 3;
+    justify-content: space-between;
     padding: 10px 20px!important;
     gap: 13px!important;
 
