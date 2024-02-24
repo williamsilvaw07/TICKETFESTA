@@ -644,8 +644,8 @@ body .event-actions a:hover{
 html .event-venue-city-organizer{
     font-size: 13px;
     text-transform: capitalize!important;
-    margin-top: 5px!important;
-    font-weight: 300;
+   
+    font-weight: 500!important;
 }
 
 .tribe-events-pro-photo__event-title {
@@ -654,8 +654,9 @@ html .event-venue-city-organizer{
 }
 
 .event-day{
-    font-size: 14px;
-    font-weight: 600;
+    font-size: 14px!important;
+    font-weight: 600!important;
+    margin-bottom: 5px!important;
 }
 
 .share_btn img{
