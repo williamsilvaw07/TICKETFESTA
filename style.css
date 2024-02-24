@@ -262,36 +262,36 @@ font-family: "Plus Jakarta Sans", Sans-serif;
 
 
 @media (max-width: 767px) {
-
+    /* Flex container */
     .e-con {
         display: flex;
-        justify-content: space-between; /* Align items with maximum space between them */
-        align-items: center; /* Vertically center items */
-      }
-      
-      .e-flex {
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    /* Flex items */
+    .e-flex {
         display: flex;
-        align-items: center; /* Vertically center items */
-      }
-      
-      .elementor-widget-image img {
-        max-width: 100%; /* Ensure the image doesn't exceed its container */
-        height: auto; /* Maintain aspect ratio */
-      }
-      
-      .ecsa-search-field {
-        flex: 1; /* Let the search field take as much space as possible */
-        margin: 0 20px; /* Add some margin for spacing */
-      }
-      
-      .elementor-nav-menu__container {
-        margin-left: auto; /* Push the menu to the right */
-      }
-      
-
+        align-items: center;
+    }
+    
+    /* Make the logo responsive */
+    .elementor-widget-image img {
+        max-width: 100%;
+        height: auto;
+    }
+    
+    /* Make the search field take as much space as possible */
+    .ecsa-search-field {
+        flex: 1;
+        margin: 0 20px;
+    }
+    
+    /* Push the menu to the right */
+    .elementor-nav-menu__container {
+        margin-left: auto;
+    }
 }
-
-
 
 
 
