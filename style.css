@@ -335,8 +335,18 @@ font-family: "Plus Jakarta Sans", Sans-serif;
 .elementor-element-1301f92 {
     text-align: left!important;
 }
-
-
+.search-content{
+    display: flex;
+    flex-direction: row-reverse;
+}
+.close-popup {
+    font-size: 17px;
+    position: relative;
+    right: 3px;
+    padding-right: 0;
+    position: relative;
+    top: -28px;
+}
 
 }
 
