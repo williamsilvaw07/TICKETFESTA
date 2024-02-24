@@ -1,36 +1,32 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Selectors for the search icon and search popup
     var searchIcon = document.querySelector('.header_search_icon');
     var searchPopup = document.getElementById('searchPopup');
+    var checkPopupInterval; // Declare the interval variable outside so it's accessible later
 
-    // Check if the required elements are present
     if (!searchIcon || !searchPopup) {
         console.error('Required elements not found.');
         return;
     }
 
-    // Event listener for the search icon click
     searchIcon.addEventListener('click', function() {
         console.log('Search icon clicked.');
-        // Display the search popup when the icon is clicked
-        searchPopup.style.display = 'block';
+        searchPopup.style.display = 'block'; // Display the search popup
 
-        // Set an interval to repeatedly check if the popup is visible
-        var checkPopupInterval = setInterval(function() {
-            // Check if the popup is currently visible
+        checkPopupInterval = setInterval(function() {
             if (searchPopup.style.display !== 'none') {
-                // Selector for the typeahead input within the twitter-typeahead container
                 var typeaheadContainer = document.querySelector('.twitter-typeahead');
                 var typeaheadInput = typeaheadContainer ? typeaheadContainer.querySelector('.typeahead.tt-input') : null;
 
-                // Check if the typeahead input exists and is not disabled
                 if (typeaheadInput && !typeaheadInput.disabled) {
-                    // Focus on the typeahead input to show the caret
-                    typeaheadInput.focus();
+                    typeaheadInput.focus(); // Focus on the input
                     console.log('Focused on typeahead input, caret should be visible.');
 
-                    // Optionally, clear the interval if you only want to focus once after the popup is visible
-                    // clearInterval(checkPopupInterval);
+                    // Event listener to stop the interval when the user starts typing
+                    typeaheadInput.addEventListener('input', function() {
+                        console.log('User started typing, stopping the interval.');
+                        clearInterval(checkPopupInterval);
+                    });
+
                 } else {
                     console.log('Typeahead input is not found or it is disabled.');
                 }
