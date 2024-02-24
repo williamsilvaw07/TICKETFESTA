@@ -486,35 +486,46 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 ?>
 <!-- Event Gallery Category -->
 <div class="organizer_gallery_category">
-    <?php foreach ($categories as $category) {
+    <?php 
+    $imageFound = false; // Flag to track if any images are found
+    foreach ($categories as $category) {
         $cat_title = $category->name;
         $category_image_array = get_term_meta($category->term_id, 'category_images', true); // Get category images
-        $category_images = explode(',', $category_image_array);
-
-        if (!empty($category_images[0])) { // Check if the first image exists
-            $attachment_id = attachment_url_to_postid($category_images[0]);
-            $attachment_src = wp_get_attachment_image_src($attachment_id, 'medium')[0];
-            ?>
-
-            <div class="organizer_gallery_category_inner" data-category="<?php echo $category->slug; ?>">
-                <h6 class="organizer_gallery_category_inner_title"><?php echo $cat_title; ?></h6>
-                <img class="organizer_gallery_category_inner_image" src="<?php echo esc_url($attachment_src); ?>">
-            </div>
-        <?php }
-    } ?>
+        if (!empty($category_image_array)) {
+            $category_images = explode(',', $category_image_array);
+            if (!empty($category_images[0])) { // Check if the first image exists
+                $imageFound = true; // Set flag to true as an image is found
+                $attachment_id = attachment_url_to_postid($category_images[0]);
+                $attachment_src = wp_get_attachment_image_src($attachment_id, 'medium')[0];
+                ?>
+                <div class="organizer_gallery_category_inner" data-category="<?php echo $category->slug; ?>">
+                    <h6 class="organizer_gallery_category_inner_title"><?php echo $cat_title; ?></h6>
+                    <img class="organizer_gallery_category_inner_image" src="<?php echo esc_url($attachment_src); ?>">
+                </div>
+                <?php
+            }
+        }
+    }
+    
+    if (!$imageFound) {
+        // Display message if no images are found after checking all categories
+        echo "<div class='no-images-message'>No images available.</div>";
+    }
+    ?>
 
     <script>
         const imageData = {
             <?php foreach ($categories as $category) {
                 $cat_title = $category->name;
                 $category_image_array = get_term_meta($category->term_id, 'category_images', true); // Get category images
-                $category_images = explode(',', $category_image_array);
-
-                echo "'" . esc_js($category->slug) . "': [";
-                foreach ($category_images as $image) {
-                    echo "'" . esc_js($image) . "',";
+                if (!empty($category_image_array)) {
+                    $category_images = explode(',', $category_image_array);
+                    echo "'" . esc_js($category->slug) . "': [";
+                    foreach ($category_images as $image) {
+                        echo "'" . esc_js($image) . "',";
+                    }
+                    echo "],";
                 }
-                echo "],";
             } ?>
         };
     </script>
@@ -523,6 +534,7 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 
 <!-- Image Display Area (Initially Hidden) -->
 <div id="galleryDisplayArea"></div>
+
 <!-- Event Gallery END -->
 
 
