@@ -234,7 +234,7 @@ jQuery(document).ready(function($) {
                 'background-image': 'url(' + imgSrc + ')',
                 'background-size': 'cover',
                 'background-position': 'center center',
-                'filter': 'blur(40px)',
+                'filter': 'blur(30px)',
                 'z-index': '0'
             });
 
@@ -390,7 +390,6 @@ jQuery(document).ready(function($) {
 .tribe-events-c-small-cta__stock{
     display:flex
 }
-
 
 
 
