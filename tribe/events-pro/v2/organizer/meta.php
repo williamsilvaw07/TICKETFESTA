@@ -458,7 +458,6 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 
 
 
-
 <!-- Event Gallery -->
 <div class="organizer_gallery_main organizer_main_div organizer_Gallery_content">
     <h3>Gallery</h3>
@@ -485,8 +484,11 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
             }
 
             if (!$hasImages) { // Display custom message if no images found
+                // Get the organizer's name
+                $organizer_name = get_the_title($organizer->ID); // Make sure $organizer->ID is defined and contains the correct ID
                 echo "<div class='organizer_gallery_category_inner_no_image'>";
-                echo "<p>No images available.</p>";
+                echo "<p class='no-images-message'>{$organizer_name} hasn't published any images.</p>";
+                echo "<p class='follow-message'>Follow {$organizer_name} to get notified about news and updates, first.</p>";
                 echo "</div>";
             }
         ?>
@@ -498,7 +500,6 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 
 </div>
 <!-- Event Gallery END -->
-
 
 
 
