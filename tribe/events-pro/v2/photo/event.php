@@ -392,6 +392,10 @@ jQuery(document).ready(function($) {
 }
 
 
+.event-featured-image-placeholder img , .tribe-events-pro-photo__event-featured-image-link img  {
+    border-radius: 7px 7px 0px 0px!important;
+
+}
 
 
 
