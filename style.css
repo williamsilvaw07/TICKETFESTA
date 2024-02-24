@@ -117,7 +117,7 @@ font-family: "Plus Jakarta Sans", Sans-serif;
 
 .ecsa-search-sugestions .ecsa-img:hover{
     background-color: #1A1A1A!important;
-    border: 10px solid blue!important;
+    border: 0px solid blue!important;
     padding: 0!important;
 }
 
