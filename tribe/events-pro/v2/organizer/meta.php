@@ -456,8 +456,34 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 
 
 
- <!-- Event Gallery Category -->
- <div class="organizer_gallery_category">
+
+
+<!-- Event Gallery -->
+<div class="organizer_gallery_main organizer_main_div organizer_Gallery_content">
+<h3>Gallery</h3>
+<?php 
+    $categories = get_categories(array(
+        'taxonomy' => 'tec_organizer_category',
+        'hide_empty' => false,
+        'meta_query' => array(
+            array(
+                'key' => 'category_owner_id',
+                'value' => get_post_field('post_author', $organizer->ID)                ,
+                'compare' => '='
+            ),
+            array(
+                'key' => 'category_organiser',
+                'value' => $organizer->ID,
+                'compare' => '='
+            )
+        )
+    ));
+
+    // category_organiser
+
+?>
+    <!-- Event Gallery Category -->
+    <div class="organizer_gallery_category">
         <?php foreach($categories as $category){ 
             $cat_title = $category->name;
             $category_image_array = get_term_meta($category->term_id, 'category_images', true); // get category images
@@ -502,8 +528,6 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 
 </div>
 <!-- Event Gallery END -->
-
-
 
 
 
