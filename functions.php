@@ -3051,20 +3051,20 @@ add_action('template_redirect', 'restrict_access_and_show_login_form');
 
 
 
-
-
+////SEARCH FUNCTION POP UP
 function custom_search_popup() {
     ?>
-    <div id="searchPopup" style="display:none;">
-        <div id="searchOverlay" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:9999;"></div>
-        <div id="searchContent" style="position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); z-index:10000; background:#fff; padding:20px;">
+    <div id="searchPopup" class="search-popup">
+        <div id="searchOverlay" class="search-overlay"></div>
+        <div id="searchContent" class="search-content">
             <?php echo do_shortcode('[events-calendar-search placeholder="Search Events" show-events="5" disable-past-events="true" layout="medium" content-type="advance"]'); ?>
-            <button id="closePopup" style="display:block; margin-top:20px;">Close</button>
+            <button id="closePopup" class="close-popup">Close</button>
         </div>
     </div>
     <?php
 }
 add_action('wp_footer', 'custom_search_popup');
+
 
 function enqueue_custom_frontend_js() {
     // Get the version of your script file to ensure the browser doesn't cache old versions.
