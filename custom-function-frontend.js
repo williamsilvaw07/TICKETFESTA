@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-    var searchIcon = document.querySelector('.header_search_icon');
+    var searchIcon = document.querySelector('.header_search_icon_new');
     var searchPopup = document.getElementById('searchPopup');
     var checkPopupInterval; // Declare the interval variable outside so it's accessible later
 
