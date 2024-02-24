@@ -52,13 +52,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-
 document.addEventListener('DOMContentLoaded', function() {
-    // Find the container where the span will be added
-    var navContainer = document.querySelector('.elementor-nav-menu__container');
+    // Find the .dynamic_div container where the span will be added
+    var dynamicDiv = document.querySelector('.dynamic_div');
 
-    if (!navContainer) {
-        console.error('Nav menu container not found.');
+    if (!dynamicDiv) {
+        console.error('Dynamic div container not found.');
         return;
     }
 
@@ -67,9 +66,9 @@ document.addEventListener('DOMContentLoaded', function() {
     searchIconMobile.classList.add('header_search_icon_mobile', 'jsclass');
     searchIconMobile.textContent = 'Search'; // Add text or you can append an icon/image
 
-    // Append the newly created span to the nav container
-    navContainer.appendChild(searchIconMobile);
-    console.log('Mobile search icon span added to the nav container.');
+    // Append the newly created span to the dynamic div
+    dynamicDiv.appendChild(searchIconMobile);
+    console.log('Mobile search icon span added to the dynamic div.');
 
     function openSearchPopup() {
         console.log('Attempting to open mobile search popup...');
