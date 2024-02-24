@@ -1231,3 +1231,14 @@ input.unfollow-button {
 
 color: #555!important;
 }
+
+
+
+
+@media (max-width: 767px) {
+    .tribe-events-header__events-bar {
+        margin-bottom: 0px!important;
+     
+    }
+
+}
