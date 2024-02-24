@@ -1544,9 +1544,9 @@ text-align: left;
 
 .lightbox-close {
     position: absolute;
-    top: 20px;
-    right: 20px;
-    font-size: 30px;
+    top: 0%;
+    right: 0;
+    font-size: 24px;
     color: white;
     background: none;
     border: none;
@@ -1555,7 +1555,7 @@ text-align: left;
 
 .lightbox-download {
     position: absolute;
-    bottom: 0px;
+    bottom: 137px;
     border: none;
     cursor: pointer;
     text-decoration: none;
