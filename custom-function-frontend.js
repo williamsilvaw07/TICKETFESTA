@@ -14,44 +14,24 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
-
 setInterval(function() {
-    // Find the container with the 'twitter-typeahead' class
     var typeaheadContainer = document.querySelector('.twitter-typeahead');
+    var typeaheadInput = typeaheadContainer ? typeaheadContainer.querySelector('.typeahead.tt-input') : null;
 
-    // Find the input with the 'typeahead' class within the container
-    var typeaheadInput = typeaheadContainer ? typeaheadContainer.querySelector('.typeahead') : null;
+    if (typeaheadInput && !typeaheadInput.disabled && typeaheadInput.offsetParent !== null) {
+        console.log('Typeahead input is visible and enabled, focusing.');
 
-    // Check if the input exists and is not disabled
-    if (typeaheadInput && !typeaheadInput.disabled) {
-        // Check if the input is visible
-        if (typeaheadInput.offsetParent !== null) {
-            console.log('Typeahead input is visible and enabled, simulating keyup event.');
+        typeaheadInput.focus(); // Focus on the input field to show the typing cursor
 
-            // Simulate a keyup event for the input
-            var keyupEvent = new KeyboardEvent('keyup', {
-                key: 'a', // Simulate 'a' key, change as needed
-                keyCode: 65, // KeyCode for 'a'
-                code: 'KeyA', // Code for 'a'
-                which: 65,
-                shiftKey: false,
-                ctrlKey: false,
-                altKey: false,
-                metaKey: false,
-                bubbles: true,
-                cancelable: true
-            });
+        // Optional: If you want to simulate the effect of typing, you can append characters
+        typeaheadInput.value += "|"; // Adding a character to simulate typing, you can choose any character
 
-            // Dispatch the keyup event to the input element
-            typeaheadInput.dispatchEvent(keyupEvent);
+        // Trigger the input event to notify any listeners that the value has changed
+        var event = new Event('input', { bubbles: true });
+        typeaheadInput.dispatchEvent(event);
 
-            console.log('Simulated keyup event for typeahead input.');
-        } else {
-            console.log('Typeahead input is not visible.');
-        }
-    } else if (typeaheadInput && typeaheadInput.disabled) {
-        console.log('Typeahead input is disabled.');
+        console.log('Focused on typeahead input and simulated typing effect.');
     } else {
-        console.log('Typeahead input not found.');
+        console.log('Typeahead input is not visible, disabled, or not found.');
     }
 }, 2000); // 2000 milliseconds = 2 seconds
