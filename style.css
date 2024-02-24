@@ -358,6 +358,11 @@ font-family: "Plus Jakarta Sans", Sans-serif;
     text-align: center;
     justify-content: center;
 }
+
+.search-content {
+    top: 14%;
+ 
+}
 }
 
 
