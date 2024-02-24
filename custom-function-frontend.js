@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 document.addEventListener('DOMContentLoaded', function() {
-    var searchIconMobile = document.querySelector('.elementor-element-faa62a2'); // Target the mobile search icon
+    var searchIconMobile = document.querySelector('.header_search_icon_mobile'); // Target the mobile search icon
     console.log('Mobile search icon element:', searchIconMobile); // Check if the mobile search icon is correctly identified
 
     if (!searchIconMobile) {
