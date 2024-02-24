@@ -478,6 +478,9 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
             )
         )
     ));
+
+    // Get the organizer's name
+    $organizer_name = get_the_title($organizer->ID);
     ?>
 
     <!-- Event Gallery Category -->
@@ -504,26 +507,13 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
         }
         
         if (!$imageFound) {
-            // Display message if no images are found after checking all categories
-            echo "<div class='no-images-message'>No images available.</div>";
+            // Display custom message if no images are found after checking all categories
+            echo "<div class='organizer_gallery_category_inner_no_image'>";
+            echo "<p class='no-images-message'>$organizer_name hasn't published any images.</p>";
+            echo "<p class='follow-message'>Follow $organizer_name to get notified about news and updates, first.</p>";
+            echo "</div>";
         }
         ?>
-
-        <script>
-            const imageData = {
-                <?php foreach ($categories as $category) {
-                    $category_image_array = get_term_meta($category->term_id, 'category_images', true); // Get category images
-                    if (!empty($category_image_array)) {
-                        $category_images = explode(',', $category_image_array);
-                        echo "'" . esc_js($category->slug) . "': [";
-                        foreach ($category_images as $image) {
-                            echo "'" . esc_js($image) . "',";
-                        }
-                        echo "],";
-                    }
-                } ?>
-            };
-        </script>
     </div>
     <!-- Event Gallery Category END -->
 
