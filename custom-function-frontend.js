@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Create the span element and add the required classes
     var searchIconMobile = document.createElement('span');
     searchIconMobile.classList.add('header_search_icon_mobile', 'jsclass');
-    searchIconMobile.textContent = 'Search'; // Add text or you can append an icon/image
+   
 
     // Append the newly created span to the dynamic div
     dynamicDiv.appendChild(searchIconMobile);
