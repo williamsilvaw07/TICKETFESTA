@@ -211,7 +211,7 @@ font-family: "Plus Jakarta Sans", Sans-serif;
 }
 
 #ecsa-search .ecsa-info strong.tt-highlight {
-    color: #d3fa16;
+    color: #d3fa16!important;  
 }
 
 
