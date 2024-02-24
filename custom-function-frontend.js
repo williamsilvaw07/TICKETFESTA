@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-    var searchIcon = document.querySelector('.header_search_icon_mobile');
+    var searchIcon = document.querySelector('.header_search_icon');
     console.log('Search icon element:', searchIcon); // Check if the search icon is correctly identified
 
     if (!searchIcon) {
@@ -50,15 +50,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 document.addEventListener('DOMContentLoaded', function() {
-    var searchIcon = document.querySelector('.header_search_icon a'); // Targeting the <a> tag inside .header_search_icon
+    var searchIconMobile = document.querySelector('.header_search_icon_mobile'); // Target the mobile search icon
+    console.log('Mobile search icon element:', searchIconMobile); // Check if the mobile search icon is correctly identified
 
-    if (!searchIcon) {
-        console.error('Search icon not found.');
+    if (!searchIconMobile) {
+        console.error('Mobile search icon not found.');
         return;
     }
 
     function openSearchPopup() {
-        console.log('Attempting to open search popup...');
+        console.log('Attempting to open mobile search popup...');
         var searchPopup = document.getElementById('searchPopup');
 
         if (!searchPopup) {
@@ -66,20 +67,19 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        // Toggle display logic for popup, adjust according to your needs
-        searchPopup.style.display = searchPopup.style.display === 'block' ? 'none' : 'block';
-        console.log('Search popup toggle action performed.');
+        searchPopup.style.display = 'block'; // Show the search popup
+        console.log('Mobile search popup should now be visible.');
     }
 
-    // Function to handle event
-    function handleIconTap(event) {
-        event.preventDefault(); // Prevent the default anchor action
-        openSearchPopup();
+    // Function to handle tap events on the mobile icon
+    function handleMobileIconTap(event) {
+        event.preventDefault(); // Prevent default actions (like navigating to a link)
+        openSearchPopup(); // Call the function to open the search popup
     }
 
-    // Attaching event listeners
-    searchIcon.addEventListener('click', handleIconTap);
-    searchIcon.addEventListener('touchend', handleIconTap);
+    // Attach event listeners for both touch and click events
+    searchIconMobile.addEventListener('click', handleMobileIconTap);
+    searchIconMobile.addEventListener('touchend', handleMobileIconTap);
 
-    console.log('Event listeners attached for both click and touchend.');
+    console.log('Event listeners attached for mobile search icon.'); // Confirm that event listeners are attached
 });
