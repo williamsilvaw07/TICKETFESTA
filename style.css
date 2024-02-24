@@ -110,7 +110,7 @@ font-family: "Plus Jakarta Sans", Sans-serif;
     padding: 0!important;
 }
 
-.ecsa-search-sugestions :hover{
+.ecsa-search-sugestions:hover{
     background-color: #1A1A1A!important;
     border: 10px solid red!important;
     padding: 0!important;
