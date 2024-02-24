@@ -89,7 +89,9 @@ font-family: "Plus Jakarta Sans", Sans-serif;
     display: none!important;
 }
 
-
+.header_search_icon{
+    cursor: pointer;
+}
 #ecsa-search .tt-menu {
     background-color: #1A1A1A;
   
@@ -312,11 +314,7 @@ font-family: "Plus Jakarta Sans", Sans-serif;
     text-align: left!important;
 }
 
-.header_search_icon{
-    z-index: 1000000!important;
-    position: relative!important;
-    display: block!important;
-}
+
 
 }
 
