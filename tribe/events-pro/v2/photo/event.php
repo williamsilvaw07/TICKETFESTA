@@ -177,17 +177,17 @@ jQuery(document).ready(function($) {
   // Copy to clipboard functionality
   $(document).on('click', '.copyButton', function() {
     var eventUrlText = $(this).siblings('.eventUrl').text();
-    console.log('Copy button clicked, text to copy:', eventUrlText);
+    //console.log('Copy button clicked, text to copy:', eventUrlText);
 
     var $button = $(this); // Save the reference to 'this' (the clicked button)
 
     navigator.clipboard.writeText(eventUrlText).then(function() {
-        console.log('Text successfully copied to the clipboard'); 
+        //console.log('Text successfully copied to the clipboard'); 
         $button.siblings('.copyMessage').text('Link copied!').css('display', 'block').delay(3000).fadeOut(400, function() {
-            console.log('Copy message should now be hidden');
+       //     console.log('Copy message should now be hidden');
         });
     }).catch(function(error) {
-        console.error('Error copying text to clipboard:', error);
+      //  console.error('Error copying text to clipboard:', error);
     });
 });
 
@@ -214,15 +214,15 @@ jQuery(document).ready(function($) {
 
 ///FUNCTION TO GET THE EVENT IMAGE AND USE AS A BACKEND IMAGE ON THE DIV CONTAISN 
 jQuery(document).ready(function($) {
-    console.log('Document ready, starting to process featured image wrappers...');
+    //console.log('Document ready, starting to process featured image wrappers...');
 
     $('.tribe-events-pro-photo__event-featured-image-wrapper').each(function(index) {
         var $wrapper = $(this); // Cache the current wrapper element
-        console.log('Processing wrapper #' + (index + 1));
+       // console.log('Processing wrapper #' + (index + 1));
 
         if ($wrapper.children('.blur-background').length === 0) { // Check if blur-background already exists
             var imgSrc = $wrapper.find('img').attr('src');
-            console.log('Image source for wrapper #' + (index + 1) + ':', imgSrc);
+           // console.log('Image source for wrapper #' + (index + 1) + ':', imgSrc);
 
             // Create a new div for the blurred background
             var blurDiv = $('<div class="blur-background"></div>').css({
@@ -240,9 +240,9 @@ jQuery(document).ready(function($) {
 
             // Insert the blur div as the first child of the wrapper
             $wrapper.prepend(blurDiv);
-            console.log('Blur background added to wrapper #' + (index + 1));
+            //console.log('Blur background added to wrapper #' + (index + 1));
         } else {
-            console.log('Blur background already exists for wrapper #' + (index + 1));
+          //  console.log('Blur background already exists for wrapper #' + (index + 1));
         }
 
         // Check if dark overlay already exists to avoid duplicates
@@ -260,7 +260,7 @@ jQuery(document).ready(function($) {
 
             // Insert the dark overlay div just after the blur background div
             $wrapper.prepend(darkOverlay);
-            console.log('Dark overlay added to wrapper #' + (index + 1));
+           // console.log('Dark overlay added to wrapper #' + (index + 1));
         }
 
         // Ensure the wrapper is positioned relatively and overflow is hidden
