@@ -96,6 +96,11 @@ font-family: "Plus Jakarta Sans", Sans-serif;
   
 
 }
+
+
+.ecsa-info:hover{
+    background-color: red!important;
+}
 #ecsa-search .empty-message, #ecsa-search h3.ecsa-heading {
     font-family: inherit;
     font-size: 1.15em;
