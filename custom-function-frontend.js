@@ -54,13 +54,22 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Attach the event listener to a parent container that exists at page load
+    // Find the container where the span will be added
     var navContainer = document.querySelector('.elementor-nav-menu__container');
 
     if (!navContainer) {
         console.error('Nav menu container not found.');
         return;
     }
+
+    // Create the span element and add the required classes
+    var searchIconMobile = document.createElement('span');
+    searchIconMobile.classList.add('header_search_icon_mobile', 'jsclass');
+    searchIconMobile.textContent = 'Search'; // Add text or you can append an icon/image
+
+    // Append the newly created span to the nav container
+    navContainer.appendChild(searchIconMobile);
+    console.log('Mobile search icon span added to the nav container.');
 
     function openSearchPopup() {
         console.log('Attempting to open mobile search popup...');
@@ -76,21 +85,16 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('Mobile search popup toggled.');
     }
 
-    // Function to handle tap events, checking if they originated from a .header_search_icon_mobile element
-    function handleNavTap(event) {
-        var target = event.target;
-        var searchIconMobile = target.closest('.header_search_icon_mobile');
-
-        if (searchIconMobile) {
-            event.preventDefault(); // Prevent default actions
-            console.log('Mobile search icon tapped.');
-            openSearchPopup(); // Call the function to open the search popup
-        }
+    // Function to handle click/tap events on the newly added span
+    function handleMobileIconTap(event) {
+        event.preventDefault(); // Prevent default actions
+        console.log('Mobile search icon span tapped.');
+        openSearchPopup(); // Call the function to open the search popup
     }
 
-    // Attach event listeners for both touch and click events using event delegation
-    navContainer.addEventListener('click', handleNavTap);
-    navContainer.addEventListener('touchend', handleNavTap);
+    // Attach event listeners for both click and touch events to the span
+    searchIconMobile.addEventListener('click', handleMobileIconTap);
+    searchIconMobile.addEventListener('touchend', handleMobileIconTap);
 
-    console.log('Event delegation set up for mobile search icon.');
+    console.log('Event listeners attached to the mobile search icon span.');
 });
