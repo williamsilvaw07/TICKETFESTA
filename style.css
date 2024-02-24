@@ -101,8 +101,9 @@ font-family: "Plus Jakarta Sans", Sans-serif;
 }
 
 
-.header_search_icon_mobile
+.header_search_icon_mobile a
 {
+    display: none;
     
 }
 .header_search_icon a{
