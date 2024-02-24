@@ -1580,6 +1580,7 @@ text-align: left;
     max-width: 350px!important;
     max-height: 211px!important;
     object-fit: cover;
+    margin: inherit!important;
 }
 
 .image-container::after {
