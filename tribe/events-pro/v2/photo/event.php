@@ -417,7 +417,7 @@ jQuery(document).ready(function($) {
     }
     body .tribe-events-pro-photo__event-featured-image-link img{
     height: inherit!important;
-    max-height:300px
+    max-height:200px
 
 }
 .tribe-common .tribe-common-g-row {
