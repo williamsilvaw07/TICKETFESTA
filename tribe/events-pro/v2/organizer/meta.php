@@ -1579,6 +1579,7 @@ text-align: left;
 .image-container img{
     max-width: 350px!important;
     max-height: 211px!important;
+    object-fit: cover;
 }
 
 .image-container::after {
