@@ -47,15 +47,24 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
+
+
+
+
+
+
+
+
+
 document.addEventListener('DOMContentLoaded', function() {
     var searchIconMobile = document.querySelector('.header_search_icon_mobile'); // Target the mobile search icon
 
     // Check if the mobile search icon is correctly identified
     if (!searchIconMobile) {
         console.error('Mobile search icon not found.');
-        return;
     } else {
-        console.log('Mobile search icon element:', searchIconMobile);
+        // Log when the mobile search icon is successfully found
+        console.log('Mobile search icon element found:', searchIconMobile);
     }
 
     function openSearchPopup() {
