@@ -100,6 +100,16 @@ font-family: "Plus Jakarta Sans", Sans-serif;
 
 .ecsa-search-sugestions a:hover{
     background-color: #1A1A1A!important;
+    border: 10px solid green!important;
+}
+
+.ecsa-search-sugestions .ecsa-img:hover{
+    background-color: #1A1A1A!important;
+    border: 10px solid blue!important;
+}
+
+.ecsa-search-sugestions :hover{
+    background-color: #1A1A1A!important;
     border: 10px solid red!important;
 }
 #ecsa-search .empty-message, #ecsa-search h3.ecsa-heading {
