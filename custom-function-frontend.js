@@ -43,17 +43,3 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
-
-
-
-document.addEventListener('DOMContentLoaded', function() {
-    // Close popup when clicking the close button
-    document.getElementById('closePopup').addEventListener('click', function() {
-        document.getElementById('searchPopup').style.display = 'none';
-    });
-
-    // Close popup when clicking outside of the popup content area
-    document.getElementById('searchOverlay').addEventListener('click', function() {
-        document.getElementById('searchPopup').style.display = 'none';
-    });
-});
