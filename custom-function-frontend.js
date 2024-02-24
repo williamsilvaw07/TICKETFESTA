@@ -8,9 +8,8 @@ document.addEventListener('DOMContentLoaded', function() {
         return;
     }
 
-    // Function to handle opening the search popup and setting focus
-    function openSearchPopup() {
-        console.log('Search icon activated.');
+    searchIcon.addEventListener('click', function() {
+        console.log('Search icon clicked.');
         searchPopup.style.display = 'block'; // Display the search popup
 
         checkPopupInterval = setInterval(function() {
@@ -35,13 +34,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.log('Waiting for searchPopup to be displayed...');
             }
         }, 1); // Check every 1 millisecond
-    }
-
-    // Add event listeners for both click and touchstart events
-    searchIcon.addEventListener('click', openSearchPopup);
-    searchIcon.addEventListener('touchstart', openSearchPopup);
+    });
 });
-
 
 
 
