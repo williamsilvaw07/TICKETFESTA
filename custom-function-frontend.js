@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         setTimeout(function() { // Add a slight delay before focusing
                             typeaheadInput.focus(); // Focus on the input field to show the caret
                             console.log('Focused on typeahead input, caret should be visible.');
-                        }, 1000); // 1000 milliseconds = 1 second
+                        }, 500); // 1000 milliseconds = 1 second
                         
                         clearInterval(checkPopupInterval); // Clear the interval to stop checking
                     } else {
