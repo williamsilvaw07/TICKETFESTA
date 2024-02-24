@@ -15,32 +15,32 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
+
 setInterval(function() {
     var searchInput = document.getElementById('ecsa-search-box');
 
     // Check if the input exists
     if (searchInput) {
-        // Check if the input is visible and not disabled
-        if (searchInput.offsetParent !== null && searchInput.disabled) {
-            console.log('Input is visible but disabled, enabling it now.');
-            searchInput.disabled = false; // Enable the input
+        // Explicitly enable the input if it's disabled
+        if (searchInput.disabled) {
+            console.log('Input is disabled, enabling it now.');
+            searchInput.disabled = false;
         }
 
-        // Check again if the input is visible and now enabled
-        if (searchInput.offsetParent !== null && !searchInput.disabled) {
+        // Now, check if the input is visible
+        if (searchInput.offsetParent !== null) {
             console.log('Input is visible and enabled, simulating typing.');
 
             // Simulate typing by setting the input's value
-            var simulatedText = "Hello"; // Change this to whatever you want to simulate typing
-            searchInput.value = simulatedText;
+            searchInput.value += "a"; // Append 'a' to simulate typing, adjust as needed
 
             // Create a new 'input' event since setting value programmatically doesn't trigger it
             var event = new Event('input', { bubbles: true });
             searchInput.dispatchEvent(event);
 
-            console.log('Simulated typing "' + simulatedText + '" into input.');
+            console.log('Simulated typing into input.');
         } else {
-            console.log('Input is not visible or still disabled.');
+            console.log('Input is not visible.');
         }
     } else {
         console.log('Input element #ecsa-search-box not found.');
