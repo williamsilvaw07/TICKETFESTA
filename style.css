@@ -96,7 +96,19 @@ font-family: "Plus Jakarta Sans", Sans-serif;
   
 
 }
+.ecsa-search-sugestions:hover {
+    /* Override background changes on hover */
+    background-color: initial!important;
 
+    /* Override color changes on hover */
+    color: initial!important;
+
+    /* Override any other property that might change on hover */
+    /* For example, if text-decoration changes on hover, reset it */
+    text-decoration: none!important;
+
+    /* Add any other properties that might change on hover and set them to their default or initial values */
+}
 
 .ecsa-search-sugestions a:hover{
     background-color: #1A1A1A!important;
