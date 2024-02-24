@@ -376,6 +376,11 @@ font-family: "Plus Jakarta Sans", Sans-serif;
 .menu-item-4043{
     display: none!important;
 }
+.elementor-nav-menu .sub-arrow .e-font-icon-svg {
+    height: 1em;
+    width: 1em;
+    fill: white!important;
+}
 }
 
 
