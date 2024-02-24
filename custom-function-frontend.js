@@ -15,24 +15,20 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-
 document.addEventListener('DOMContentLoaded', function() {
-    var searchIcon = document.querySelector('.header_search_icon'); // Assuming this is your trigger element
+    var searchIcon = document.querySelector('.header_search_icon'); // Selector for the search icon
 
     if (searchIcon) {
         searchIcon.addEventListener('click', function() {
-            // Delay the focus action by 5 seconds
-            setTimeout(function() {
-                var typeaheadContainer = document.querySelector('.twitter-typeahead');
-                var typeaheadInput = typeaheadContainer ? typeaheadContainer.querySelector('.typeahead.tt-input') : null;
+            var typeaheadContainer = document.querySelector('.twitter-typeahead');
+            var typeaheadInput = typeaheadContainer ? typeaheadContainer.querySelector('.typeahead.tt-input') : null;
 
-                if (typeaheadInput && !typeaheadInput.disabled) {
-                    typeaheadInput.focus(); // Focus on the input field to show the caret
-                    console.log('Focused on typeahead input, caret should be visible.');
-                } else {
-                    console.log('Typeahead input is not found or it is disabled.');
-                }
-            }, 5000); // 5000 milliseconds = 5 seconds
+            if (typeaheadInput && !typeaheadInput.disabled) {
+                typeaheadInput.focus(); // Focus on the input field to show the caret
+                console.log('Focused on typeahead input, caret should be visible.');
+            } else {
+                console.log('Typeahead input is not found or it is disabled.');
+            }
         });
     } else {
         console.log('Search icon not found.');
