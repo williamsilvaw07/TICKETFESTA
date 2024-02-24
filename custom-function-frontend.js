@@ -14,24 +14,22 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
-setInterval(function() {
-    var typeaheadContainer = document.querySelector('.twitter-typeahead');
-    var typeaheadInput = typeaheadContainer ? typeaheadContainer.querySelector('.typeahead.tt-input') : null;
+document.addEventListener('DOMContentLoaded', function() {
+    var searchIcon = document.querySelector('.header_search_icon'); // Assuming this is your trigger element
 
-    if (typeaheadInput && !typeaheadInput.disabled && typeaheadInput.offsetParent !== null) {
-        console.log('Typeahead input is visible and enabled, focusing.');
+    if (searchIcon) {
+        searchIcon.addEventListener('click', function() {
+            var typeaheadContainer = document.querySelector('.twitter-typeahead');
+            var typeaheadInput = typeaheadContainer ? typeaheadContainer.querySelector('.typeahead.tt-input') : null;
 
-        typeaheadInput.focus(); // Focus on the input field to show the typing cursor
-
-        // Optional: If you want to simulate the effect of typing, you can append characters
-        typeaheadInput.value += "|"; // Adding a character to simulate typing, you can choose any character
-
-        // Trigger the input event to notify any listeners that the value has changed
-        var event = new Event('input', { bubbles: true });
-        typeaheadInput.dispatchEvent(event);
-
-        console.log('Focused on typeahead input and simulated typing effect.');
+            if (typeaheadInput && !typeaheadInput.disabled) {
+                typeaheadInput.focus(); // Focus on the input field to show the caret
+                console.log('Focused on typeahead input, caret should be visible.');
+            } else {
+                console.log('Typeahead input is not found or it is disabled.');
+            }
+        });
     } else {
-        console.log('Typeahead input is not visible, disabled, or not found.');
+        console.log('Search icon not found.');
     }
-}, 2000); // 2000 milliseconds = 2 seconds
+});
