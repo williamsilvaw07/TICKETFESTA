@@ -480,7 +480,7 @@ a.tribe-button.tribe-button-primary.add-new , .organizers_add_new_btn{
 
 
 /***********FRONTEND ALL EVENTS*****/
-.home .entry-content:not(:first-child){
+.home .entry-content:not(:first-child) , .home .site-main{
     margin-top: 0em!important;
 }
 
