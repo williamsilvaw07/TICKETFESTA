@@ -484,51 +484,45 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
     // category_organiser
 
 ?>
-    <!-- Event Gallery Category -->
-    <div class="organizer_gallery_category">
-        <?php foreach($categories as $category){ 
-            $cat_title = $category->name;
-            $category_image_array = get_term_meta($category->term_id, 'category_images', true); // get category images
-            $category_images = explode(',', $category_image_array);
+<!-- Event Gallery Category -->
+<div class="organizer_gallery_category">
+    <?php foreach ($categories as $category) {
+        $cat_title = $category->name;
+        $category_image_array = get_term_meta($category->term_id, 'category_images', true); // Get category images
+        $category_images = explode(',', $category_image_array);
+
+        if (!empty($category_images[0])) { // Check if the first image exists
             $attachment_id = attachment_url_to_postid($category_images[0]);
             $attachment_src = wp_get_attachment_image_src($attachment_id, 'medium')[0];
             ?>
-          
-            <div class="organizer_gallery_category_inner" data-category="<?php echo $category->slug ?>">
-                <h6 class="organizer_gallery_category_inner_title"><?php echo  $title; ?></h6>
-                <img class="organizer_gallery_category_inner_image" src="<?php echo esc_url( $attachment_src ); ?>" >
+
+            <div class="organizer_gallery_category_inner" data-category="<?php echo $category->slug; ?>">
+                <h6 class="organizer_gallery_category_inner_title"><?php echo $cat_title; ?></h6>
+                <img class="organizer_gallery_category_inner_image" src="<?php echo esc_url($attachment_src); ?>">
             </div>
-        <?php } ?>
+        <?php }
+    } ?>
 
-        <?php 
-        
-        echo '<script>';
-        echo "const imageData = {";
-        foreach ($categories as $category) {
-            $cat_title = $category->name;
-            $category_image_array = get_term_meta($category->term_id, 'category_images', true); // get category images
-            $category_images = explode(',', $category_image_array);
+    <script>
+        const imageData = {
+            <?php foreach ($categories as $category) {
+                $cat_title = $category->name;
+                $category_image_array = get_term_meta($category->term_id, 'category_images', true); // Get category images
+                $category_images = explode(',', $category_image_array);
 
-            echo "'$category->slug': [";
-            foreach ($category_images as $image) {
-                echo "'$image',";
-            }
-        
-            echo "],";
-        }
-        echo "};";
-        echo "</script>";
-
-        ?>
-
-        <!-- Additional categories as needed -->
-    </div>
-    <!-- Event Gallery Category END -->
-
-    <!-- Image Display Area (Initially Hidden) -->
-    <div id="galleryDisplayArea"></div>
-
+                echo "'" . esc_js($category->slug) . "': [";
+                foreach ($category_images as $image) {
+                    echo "'" . esc_js($image) . "',";
+                }
+                echo "],";
+            } ?>
+        };
+    </script>
 </div>
+<!-- Event Gallery Category END -->
+
+<!-- Image Display Area (Initially Hidden) -->
+<div id="galleryDisplayArea"></div>
 <!-- Event Gallery END -->
 
 
