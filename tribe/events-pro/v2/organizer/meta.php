@@ -489,7 +489,7 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
             $category_image_array = get_term_meta($category->term_id, 'category_images', true); // get category images
             $category_images = explode(',', $category_image_array);
             $attachment_id = attachment_url_to_postid($category_images[0]);
-            $attachment_src = wp_get_attachment_image_src($attachment_id, 'medium')[0];
+            $attachment_src = wp_get_attachment_image_src($attachment_id, 'large')[0];
             ?>
           
             <div class="organizer_gallery_category_inner" data-category="<?php echo $category->slug ?>">
