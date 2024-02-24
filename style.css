@@ -363,6 +363,15 @@ font-family: "Plus Jakarta Sans", Sans-serif;
     top: 50%;
  
 }
+#ecsa-search-box {
+    font-size: 17px!important;
+}
+
+/* Style for the placeholder text */
+#ecsa-search-box::placeholder {
+    font-size: 13px!important;
+    color: #808080!important;
+}
 }
 
 
