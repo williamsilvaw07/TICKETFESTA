@@ -47,19 +47,18 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
-
-
 document.addEventListener('DOMContentLoaded', function() {
     var searchIconMobile = document.querySelector('.header_search_icon_mobile'); // Target the mobile search icon
-    console.log('Mobile search icon element:', searchIconMobile); // Check if the mobile search icon is correctly identified
 
+    // Check if the mobile search icon is correctly identified
     if (!searchIconMobile) {
         console.error('Mobile search icon not found.');
         return;
+    } else {
+        console.log('Mobile search icon element:', searchIconMobile);
     }
 
     function openSearchPopup() {
-        console.log('Attempting to open mobile search popup...');
         var searchPopup = document.getElementById('searchPopup');
 
         if (!searchPopup) {
@@ -67,13 +66,15 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        searchPopup.style.display = 'block'; // Show the search popup
-        console.log('Mobile search popup should now be visible.');
+        // Toggle the display of the search popup
+        searchPopup.style.display = (searchPopup.style.display === 'block') ? 'none' : 'block';
+        console.log('Mobile search popup toggled.');
     }
 
     // Function to handle tap events on the mobile icon
     function handleMobileIconTap(event) {
         event.preventDefault(); // Prevent default actions (like navigating to a link)
+        console.log('Mobile icon tapped.');
         openSearchPopup(); // Call the function to open the search popup
     }
 
