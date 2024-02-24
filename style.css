@@ -184,15 +184,14 @@ font-family: "Plus Jakarta Sans", Sans-serif;
 
 #ecsa-search .icon-img img {
     width: 100px!important;
-    height: 100%;
     vertical-align: middle;
     display: flex;
     opacity: 1;
-    max-width: 40px;
-    height: auto;
-    position: relative;
-    top: 19%;
-    left: 16%;
+    max-width: 40px!important;  
+    height: auto!important;  
+    position: relative!important;  
+    top: 19%!important;  
+    left: 16%!important;  
 }
 /****END***/
 
