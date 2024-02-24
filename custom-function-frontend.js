@@ -40,3 +40,18 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 1); // Check every 1 millisecond
     });
 });
+
+
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Close popup when clicking the close button
+    document.getElementById('closePopup').addEventListener('click', function() {
+        document.getElementById('searchPopup').style.display = 'none';
+    });
+
+    // Close popup when clicking outside of the popup content area
+    document.getElementById('searchOverlay').addEventListener('click', function() {
+        document.getElementById('searchPopup').style.display = 'none';
+    });
+});

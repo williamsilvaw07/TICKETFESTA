@@ -3057,15 +3057,14 @@ function custom_search_popup() {
     <div id="searchPopup" class="search-popup">
         <div id="searchOverlay" class="search-overlay"></div>
         <div id="searchContent" class="search-content">
+            <!-- Close button with an "X" icon -->
+            <button id="closePopup" class="close-popup">&#10005;</button> <!-- &#10005; is the HTML entity for a heavy multiplication X used as a close icon -->
             <?php echo do_shortcode('[events-calendar-search placeholder="Search Events" show-events="5" disable-past-events="true" layout="medium" content-type="advance"]'); ?>
-            <button id="closePopup" class="close-popup">Close</button>
         </div>
     </div>
     <?php
 }
 add_action('wp_footer', 'custom_search_popup');
-
-
 function enqueue_custom_frontend_js() {
     // Get the version of your script file to ensure the browser doesn't cache old versions.
     $script_version = filemtime(get_stylesheet_directory() . '/custom-function-frontend.js');

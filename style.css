@@ -164,8 +164,15 @@ font-family: "Plus Jakarta Sans", Sans-serif;
 
 .close-popup {
     display: block;
-    margin-top: 20px;
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    font-size: 24px; /* Adjust the size as needed */
+    position: absolute;
+    right: 10px; /* Adjust the position as needed */
+    top: 10px; /* Adjust the position as needed */
 }
+
 
 #ecsa-search-box{
     background:#3F3F3F !important;
