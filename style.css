@@ -298,8 +298,8 @@ font-family: "Plus Jakarta Sans", Sans-serif;
  .elementor-element-29d1679 {
     -webkit-order: 0!important; 
     order: 0!important; 
-    -webkit-flex: 0 1 auto!important; 
-    flex: 0 1 auto!important; 
+    -webkit-flex: 0 1 70%!important; 
+    flex: 0 1 70%!important; 
     -webkit-align-self: auto!important; 
     align-self: auto!important; 
 
@@ -318,8 +318,8 @@ font-family: "Plus Jakarta Sans", Sans-serif;
  .elementor-element-c50fbf7 {
     -webkit-order: 0;
     order: 0;
-    -webkit-flex: 0 1 13%!important; 
-    flex: 0 1 13%!important; 
+    -webkit-flex: 0 1 15%!important; 
+    flex: 0 1 15%!important; 
     -webkit-align-self: auto;
     align-self: auto;
     width: fit-content!important;
