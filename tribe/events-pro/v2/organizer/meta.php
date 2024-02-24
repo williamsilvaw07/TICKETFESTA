@@ -332,7 +332,7 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
                         
 
                         <div class="event-content">
-                                            <h2 class="event-title">
+                        <h2 class="event-title">
     <a href="<?php echo esc_url( $event_url ); ?>">
         <?php echo mb_strimwidth(get_the_title(), 0, 60, '...'); ?>
     </a>
@@ -456,8 +456,6 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 
 
 
-
-
 <!-- Event Gallery -->
 <div class="organizer_gallery_main organizer_main_div organizer_Gallery_content">
     <h3>Gallery</h3>
@@ -483,12 +481,9 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
                 }
             }
 
-            if (!$hasImages) { // Display custom message if no images found in a div with the specified class
-                // Get the organizer's name
-                $organizer_name = get_the_title($organizer->ID); // Assuming $organizer->ID contains the ID of the current organizer
+            if (!$hasImages) { // Display custom message if no images found
                 echo "<div class='organizer_gallery_category_inner_no_image'>";
-                echo "<p class='no-images-message'>{$organizer_name} hasn't published any Images.</p>";
-                echo "<p class='follow-message'>Follow {$organizer_name} to get notified about news and updates, first.</p>";
+                echo "<p>No images available.</p>";
                 echo "</div>";
             }
         ?>
