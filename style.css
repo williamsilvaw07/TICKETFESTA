@@ -307,6 +307,10 @@ font-family: "Plus Jakarta Sans", Sans-serif;
     -webkit-align-self: auto;
     align-self: auto;
  }
+
+ .elementor-element-c50fbf7 .elementor-icon-wrapper{
+    display: none;
+ }
 }
 
 
