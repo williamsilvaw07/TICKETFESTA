@@ -33,6 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
+
 document.addEventListener('DOMContentLoaded', function() {
     // Close popup when clicking the close button
     document.getElementById('closePopup').addEventListener('click', function() {
