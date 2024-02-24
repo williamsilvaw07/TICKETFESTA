@@ -332,7 +332,7 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
                         
 
                         <div class="event-content">
-                        <h2 class="event-title">
+                                            <h2 class="event-title">
     <a href="<?php echo esc_url( $event_url ); ?>">
         <?php echo mb_strimwidth(get_the_title(), 0, 60, '...'); ?>
     </a>
@@ -461,42 +461,45 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 <!-- Event Gallery -->
 <div class="organizer_gallery_main organizer_main_div organizer_Gallery_content">
     <h3>Gallery</h3>
+    <!-- Event Gallery Category -->
     <div class="organizer_gallery_category">
         <?php 
-            $hasImages = false;
+            $hasImages = false; // Flag to track if any category has images
             foreach ($categories as $category) {
                 $cat_title = $category->name;
-                $category_image_array = get_term_meta($category->term_id, 'category_images', true);
-                if (!empty($category_image_array)) { // Check if image array is not empty
-                    $category_images = explode(',', $category_image_array);
-                    foreach ($category_images as $image_url) {
-                        if (!empty($image_url)) {
-                            $attachment_id = attachment_url_to_postid($image_url);
-                            if ($attachment_id) { // Check if valid attachment ID was found
-                                $hasImages = true;
-                                $attachment_src = wp_get_attachment_image_src($attachment_id, 'medium')[0];
-                                ?>
-                                <div class="organizer_gallery_category_inner" data-category="<?php echo $category->slug ?>">
-                                    <h6 class="organizer_gallery_category_inner_title"><?php echo $cat_title; ?></h6>
-                                    <img class="organizer_gallery_category_inner_image" src="<?php echo esc_url($attachment_src); ?>">
-                                </div>
-                                <?php
-                                break; // Break the loop after finding the first valid image
-                            }
-                        }
-                    }
+                $category_image_array = get_term_meta($category->term_id, 'category_images', true); // Get category images
+                $category_images = explode(',', $category_image_array);
+
+                if (!empty($category_images[0])) { // Check if there's at least one image
+                    $hasImages = true;
+                    $attachment_id = attachment_url_to_postid($category_images[0]);
+                    $attachment_src = wp_get_attachment_image_src($attachment_id, 'medium')[0];
+                    ?>
+                    <div class="organizer_gallery_category_inner" data-category="<?php echo $category->slug ?>">
+                        <h6 class="organizer_gallery_category_inner_title"><?php echo $cat_title; ?></h6>
+                        <img class="organizer_gallery_category_inner_image" src="<?php echo esc_url($attachment_src); ?>" >
+                    </div>
+                    <?php
                 }
             }
 
-            if (!$hasImages) {
-                $organizer_name = get_the_title($organizer->ID);
+            if (!$hasImages) { // Display custom message if no images found in a div with the specified class
+                // Get the organizer's name
+                $organizer_name = get_the_title($organizer->ID); // Assuming $organizer->ID contains the ID of the current organizer
                 echo "<div class='organizer_gallery_category_inner_no_image'>";
-                echo "<p class='no-images-message'>{$organizer_name} hasn't published any images.</p>";
+                echo "<p class='no-images-message'>{$organizer_name} hasn't published any Images.</p>";
+                echo "<p class='follow-message'>Follow {$organizer_name} to get notified about news and updates, first.</p>";
                 echo "</div>";
             }
         ?>
     </div>
+    <!-- Event Gallery Category END -->
+
+    <!-- Image Display Area (Initially Hidden) -->
+    <div id="galleryDisplayArea"></div>
+
 </div>
+<!-- Event Gallery END -->
 
 
 
