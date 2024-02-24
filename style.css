@@ -278,6 +278,7 @@ font-family: "Plus Jakarta Sans", Sans-serif;
     align-content: stretch;
     -webkit-align-items: flex-start;
     align-items: flex-start;
+    padding: 5px 3%!important;
  }
  .elementor-element-29d1679 {
     -webkit-order: 0!important; 
