@@ -262,6 +262,9 @@ font-family: "Plus Jakarta Sans", Sans-serif;
 
 
 @media (max-width: 767px) {
+    .elementor-3943 .elementor-element.elementor-element-8546725 img {
+        height: 32px;
+    }
  .elementor-element-9d845b1{
     display: -webkit-flex;
     display: flex;
@@ -279,10 +282,11 @@ font-family: "Plus Jakarta Sans", Sans-serif;
  .elementor-element-cdf81b1 {
     -webkit-order: 0!important; 
     order: 0!important; 
-    -webkit-flex: 0 1 20%!important; 
-    flex: 0 1 20%!important; 
+    -webkit-flex: 0 1 auto!important; 
+    flex: 0 1 auto!important; 
     -webkit-align-self: auto!important; 
     align-self: auto!important; 
+    width: fit-content!important;
  }
 
  .elementor-element-1301f92 {
@@ -298,7 +302,7 @@ font-family: "Plus Jakarta Sans", Sans-serif;
  .elementor-element-b29010e{
     -webkit-order: 0;
     order: 0;
-    -webkit-flex: 0 1 70%!important; 
+    -webkit-flex: 0 1 50%!important; 
     flex: 0 1 60!important; 
     -webkit-align-self: auto;
     align-self: auto;
