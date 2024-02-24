@@ -480,7 +480,9 @@ a.tribe-button.tribe-button-primary.add-new , .organizers_add_new_btn{
 
 
 /***********FRONTEND ALL EVENTS*****/
-
+.home .entry-content:not(:first-child){
+    margin-top: 0em!important;
+}
 
 .tribe-events-view {
     background-color: #0d0e0e!important;
