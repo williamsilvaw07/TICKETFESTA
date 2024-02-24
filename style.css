@@ -312,9 +312,12 @@ font-family: "Plus Jakarta Sans", Sans-serif;
     text-align: left!important;
 }
 
-.elementor-element-c50fbf7  .elementor-heading-title{
-    
+.header_search_icon{
+    z-index: 1000000!important;
+    position: relative!important;
+    display: block!important;
 }
+
 }
 
 
