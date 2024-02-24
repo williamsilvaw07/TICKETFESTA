@@ -53,18 +53,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-
-
 document.addEventListener('DOMContentLoaded', function() {
-    var searchIconMobile = document.querySelector('.header_search_icon_mobile');
+    // Attach the event listener to a parent container that exists at page load
+    var navContainer = document.querySelector('.elementor-nav-menu__container');
 
-    if (!searchIconMobile) {
-        console.error('Mobile search icon not found.');
-    } else {
-        console.log('Mobile search icon element found:', searchIconMobile);
+    if (!navContainer) {
+        console.error('Nav menu container not found.');
+        return;
     }
 
     function openSearchPopup() {
+        console.log('Attempting to open mobile search popup...');
         var searchPopup = document.getElementById('searchPopup');
 
         if (!searchPopup) {
@@ -72,19 +71,26 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
+        // Toggle the display of the search popup
         searchPopup.style.display = (searchPopup.style.display === 'block') ? 'none' : 'block';
         console.log('Mobile search popup toggled.');
     }
 
-    function handleMobileIconTap(event) {
-        event.preventDefault();
-        event.stopPropagation();
-        console.log('Mobile icon tapped.');
-        openSearchPopup();
+    // Function to handle tap events, checking if they originated from a .header_search_icon_mobile element
+    function handleNavTap(event) {
+        var target = event.target;
+        var searchIconMobile = target.closest('.header_search_icon_mobile');
+
+        if (searchIconMobile) {
+            event.preventDefault(); // Prevent default actions
+            console.log('Mobile search icon tapped.');
+            openSearchPopup(); // Call the function to open the search popup
+        }
     }
 
-    searchIconMobile.addEventListener('click', handleMobileIconTap);
-    searchIconMobile.addEventListener('touchstart', handleMobileIconTap, { passive: false });
+    // Attach event listeners for both touch and click events using event delegation
+    navContainer.addEventListener('click', handleNavTap);
+    navContainer.addEventListener('touchend', handleNavTap);
 
-    console.log('Event listeners attached for mobile search icon.');
+    console.log('Event delegation set up for mobile search icon.');
 });
