@@ -276,10 +276,19 @@ font-family: "Plus Jakarta Sans", Sans-serif;
     -webkit-align-items: flex-start;
     align-items: flex-start;
  }
- .elementor-element-cdf81b1 , .elementor-element-1301f92{
+ .elementor-element-cdf81b1 {
     -webkit-order: 0!important; 
     order: 0!important; 
     -webkit-flex: 0 1 20%!important; 
+    flex: 0 1 20%!important; 
+    -webkit-align-self: auto!important; 
+    align-self: auto!important; 
+ }
+
+ .elementor-element-1301f92{
+    -webkit-order: 0!important; 
+    order: 0!important; 
+    -webkit-flex: 0 1 10%!important; 
     flex: 0 1 20%!important; 
     -webkit-align-self: auto!important; 
     align-self: auto!important; 
