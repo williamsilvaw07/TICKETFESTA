@@ -1,46 +1,36 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // Selectors for the search icon and search popup
     var searchIcon = document.querySelector('.header_search_icon');
     var searchPopup = document.getElementById('searchPopup');
 
+    // Check if the required elements are present
     if (!searchIcon || !searchPopup) {
         console.error('Required elements not found.');
         return;
     }
 
+    // Event listener for the search icon click
     searchIcon.addEventListener('click', function() {
         console.log('Search icon clicked.');
-        searchPopup.style.display = 'block'; // Display the search popup
+        // Display the search popup when the icon is clicked
+        searchPopup.style.display = 'block';
 
+        // Set an interval to repeatedly check if the popup is visible
         var checkPopupInterval = setInterval(function() {
+            // Check if the popup is currently visible
             if (searchPopup.style.display !== 'none') {
+                // Selector for the typeahead input within the twitter-typeahead container
                 var typeaheadContainer = document.querySelector('.twitter-typeahead');
                 var typeaheadInput = typeaheadContainer ? typeaheadContainer.querySelector('.typeahead.tt-input') : null;
 
+                // Check if the typeahead input exists and is not disabled
                 if (typeaheadInput && !typeaheadInput.disabled) {
-                    typeaheadInput.focus(); // Focus on the input to show the caret
+                    // Focus on the typeahead input to show the caret
+                    typeaheadInput.focus();
                     console.log('Focused on typeahead input, caret should be visible.');
 
-                    // Modify the DOM structure for .ecsa-search-sugestions elements
-                    document.querySelectorAll('.ecsa-search-sugestions').forEach(function(suggestion) {
-                        var anchor = suggestion.querySelector('a');
-                        var href = anchor.href; // Get the URL from the anchor
-
-                        // Create new anchors for .ecsa-img and .ecsa-info
-                        ['ecsa-img', 'ecsa-info'].forEach(function(className) {
-                            var element = suggestion.querySelector('.' + className);
-                            if (element) {
-                                var newAnchor = document.createElement('a');
-                                newAnchor.href = href; // Set the URL to the new anchor
-                                newAnchor.appendChild(element.cloneNode(true)); // Clone and append the element to the new anchor
-                                element.parentNode.replaceChild(newAnchor, element); // Replace the old element with the new anchor
-                            }
-                        });
-
-                        // Remove the original anchor element
-                        anchor.remove();
-                    });
-
-                    clearInterval(checkPopupInterval); // Optional: Clear the interval
+                    // Optionally, clear the interval if you only want to focus once after the popup is visible
+                    // clearInterval(checkPopupInterval);
                 } else {
                     console.log('Typeahead input is not found or it is disabled.');
                 }
