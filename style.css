@@ -263,13 +263,31 @@ font-family: "Plus Jakarta Sans", Sans-serif;
 
 @media (max-width: 767px) {
 
-    .elementor-element-8546725{
-        width: 100%!important;
-        max-width: 200px!important;
-    }
-    .elementor-element-9d845b1 div:last-child{
-        width: fit-content;
-    }
+    .e-con {
+        display: flex;
+        justify-content: space-between; /* Align items with maximum space between them */
+        align-items: center; /* Vertically center items */
+      }
+      
+      .e-flex {
+        display: flex;
+        align-items: center; /* Vertically center items */
+      }
+      
+      .elementor-widget-image img {
+        max-width: 100%; /* Ensure the image doesn't exceed its container */
+        height: auto; /* Maintain aspect ratio */
+      }
+      
+      .ecsa-search-field {
+        flex: 1; /* Let the search field take as much space as possible */
+        margin: 0 20px; /* Add some margin for spacing */
+      }
+      
+      .elementor-nav-menu__container {
+        margin-left: auto; /* Push the menu to the right */
+      }
+      
 
 }
 
