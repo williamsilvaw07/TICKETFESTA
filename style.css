@@ -175,9 +175,24 @@ font-family: "Plus Jakarta Sans", Sans-serif;
 
 
 #ecsa-search-box{
-    background:#3F3F3F !important;
-    
+    background:#3F3F3F !important;  
 
+}
+#ecsa-search.layout-medium span.twitter-typeahead{
+    height: 46px!important;
+}
+
+#ecsa-search .icon-img img {
+    width: 100px!important;
+    height: 100%;
+    vertical-align: middle;
+    display: flex;
+    opacity: 1;
+    max-width: 40px;
+    height: auto;
+    position: relative;
+    top: 19%;
+    left: 16%;
 }
 /****END***/
 
