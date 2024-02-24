@@ -285,14 +285,16 @@ font-family: "Plus Jakarta Sans", Sans-serif;
     align-self: auto!important; 
  }
 
- .elementor-element-1301f92{
+ .elementor-element-1301f92 {
     -webkit-order: 0!important; 
     order: 0!important; 
-    -webkit-flex: 0 1 10%!important; 
-    flex: 0 1 20%!important; 
+    -webkit-flex: 0 1 auto!important; 
+    flex: 0 1 auto!important; 
     -webkit-align-self: auto!important; 
     align-self: auto!important; 
- }
+    width: fit-content!important;
+}
+
  .elementor-element-b29010e{
     -webkit-order: 0;
     order: 0;
