@@ -193,6 +193,26 @@ font-family: "Plus Jakarta Sans", Sans-serif;
     top: 19%!important;  
     left: 0%!important;  
 }
+
+#ecsa-search .ecsa-info strong.tt-highlight {
+    color: #d3fa16;
+}
+
+
+
+#ecsa-search input[type=text] {
+    color: #fff;
+   
+}
+
+
+
+
+
+
+
+
+
 /****END***/
 
 /*****menu******/
