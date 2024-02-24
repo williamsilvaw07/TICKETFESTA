@@ -263,7 +263,7 @@ font-family: "Plus Jakarta Sans", Sans-serif;
 
 @media (max-width: 767px) {
     .elementor-3943 .elementor-element.elementor-element-29d1679 img {
-        height: 28px!important; 
+        height: 30px!important; 
     }
  .elementor-element-9ee88e6{
     display: -webkit-flex;
@@ -299,7 +299,7 @@ font-family: "Plus Jakarta Sans", Sans-serif;
     width: fit-content!important;
 }
 
- .elementor-element-29d1679{
+ .elementor-element-c50fbf7 {
     -webkit-order: 0;
     order: 0;
     -webkit-flex: 0 1 auto!important; 
