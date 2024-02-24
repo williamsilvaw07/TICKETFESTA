@@ -100,7 +100,7 @@ font-family: "Plus Jakarta Sans", Sans-serif;
 
 .ecsa-search-sugestions a:hover{
     background-color: #1A1A1A!important;
-    border: 0px solid!important;
+    border: 10px solid red!important;
 }
 #ecsa-search .empty-message, #ecsa-search h3.ecsa-heading {
     font-family: inherit;
