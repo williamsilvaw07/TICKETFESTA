@@ -225,14 +225,12 @@ font-family: "Plus Jakarta Sans", Sans-serif;
     background: rgba(117,117,117,.12);
     vertical-align: middle;
     text-align: center;
-    display: inline-block;
     cursor: pointer;
     border-radius: 0 3px 3px 0;
 }
 #ecsa-search .icon-img img {
     width: 100%!important;
     vertical-align: middle;
-    display: flex;
     opacity: 1!important;
     max-width: 26px!important;
     height: auto!important;
@@ -247,15 +245,7 @@ font-family: "Plus Jakarta Sans", Sans-serif;
     height: 41px!important; 
     max-width: 40px!important; 
 }
-.typeahead.tt-input {
-    color: white!important; 
-    font-size: 16px!important; 
-}
 
-.typeahead.tt-input::placeholder {
-    font-size: 14px!important; 
-    color: white!important; 
-}
 
 }
 
