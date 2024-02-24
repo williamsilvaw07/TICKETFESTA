@@ -1821,6 +1821,7 @@ input.follow-button {
     left: 0;
     z-index: 3;
     padding: 10px 20px!important;
+    gap: 13px!important;
 
 }
 .organizer_nav-item.active {
