@@ -15,34 +15,33 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-
 setInterval(function() {
-    var searchInput = document.getElementById('ecsa-search-box');
+    // Find the container with the 'twitter-typeahead' class
+    var typeaheadContainer = document.querySelector('.twitter-typeahead');
 
-    // Check if the input exists
-    if (searchInput) {
-        // Explicitly enable the input if it's disabled
-        if (searchInput.disabled) {
-            console.log('Input is disabled, enabling it now.');
-            searchInput.disabled = false;
-        }
+    // Find the input with the 'typeahead' class within the container
+    var typeaheadInput = typeaheadContainer ? typeaheadContainer.querySelector('.typeahead') : null;
 
-        // Now, check if the input is visible
-        if (searchInput.offsetParent !== null) {
-            console.log('Input is visible and enabled, simulating typing.');
+    // Check if the input exists and is not disabled
+    if (typeaheadInput && !typeaheadInput.disabled) {
+        // Check if the input is visible
+        if (typeaheadInput.offsetParent !== null) {
+            console.log('Typeahead input is visible and enabled, simulating typing.');
 
-            // Simulate typing by setting the input's value
-            searchInput.value += "a"; // Append 'a' to simulate typing, adjust as needed
+            // Simulate typing by appending 'a' to the input's value, adjust as needed
+            typeaheadInput.value += "a";
 
             // Create a new 'input' event since setting value programmatically doesn't trigger it
             var event = new Event('input', { bubbles: true });
-            searchInput.dispatchEvent(event);
+            typeaheadInput.dispatchEvent(event);
 
-            console.log('Simulated typing into input.');
+            console.log('Simulated typing into typeahead input.');
         } else {
-            console.log('Input is not visible.');
+            console.log('Typeahead input is not visible.');
         }
+    } else if (typeaheadInput && typeaheadInput.disabled) {
+        console.log('Typeahead input is disabled.');
     } else {
-        console.log('Input element #ecsa-search-box not found.');
+        console.log('Typeahead input not found.');
     }
 }, 2000); // 2000 milliseconds = 2 seconds
