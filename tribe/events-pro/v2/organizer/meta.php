@@ -399,7 +399,7 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
         else :
             // Customized no events message
             echo "<div class='organizer_gallery_category_inner_no_image'>";
-            echo "<p class='no-images-message'>$organizer_name hasn't published any events.</p>";
+            echo "<p class='no-images-message'>$organizer_name hasn't published any live events.</p>";
             echo "<p class='follow-message'>Follow $organizer_name to get notified about new events and updates.</p>";
             echo "</div>";
         endif;
