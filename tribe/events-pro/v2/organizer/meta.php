@@ -456,64 +456,44 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 
 
 
+ <!-- Event Gallery Category -->
+ <div class="organizer_gallery_category">
+        <?php foreach($categories as $category){ 
+            $cat_title = $category->name;
+            $category_image_array = get_term_meta($category->term_id, 'category_images', true); // get category images
+            $category_images = explode(',', $category_image_array);
+            $attachment_id = attachment_url_to_postid($category_images[0]);
+            $attachment_src = wp_get_attachment_image_src($attachment_id, 'medium')[0];
+            ?>
+          
+            <div class="organizer_gallery_category_inner" data-category="<?php echo $category->slug ?>">
+                <h6 class="organizer_gallery_category_inner_title"><?php echo  $title; ?></h6>
+                <img class="organizer_gallery_category_inner_image" src="<?php echo esc_url( $attachment_src ); ?>" >
+            </div>
+        <?php } ?>
 
-<!-- Event Gallery -->
-<div class="organizer_gallery_main organizer_main_div organizer_Gallery_content">
-    <h3>Gallery</h3>
-    <!-- Fetch categories associated with the organizer -->
-    <?php 
-    $categories = get_categories(array(
-        'taxonomy' => 'tec_organizer_category', // Make sure this is your correct taxonomy
-        'hide_empty' => false,
-        'meta_query' => array(
-            array(
-                'key' => 'category_owner_id',
-                'value' => get_post_field('post_author', $organizer->ID),
-                'compare' => '='
-            ),
-            array(
-                'key' => 'category_organiser',
-                'value' => $organizer->ID,
-                'compare' => '='
-            )
-        )
-    ));
-
-    // Get the organizer's name
-    $organizer_name = get_the_title($organizer->ID);
-    ?>
-
-    <!-- Event Gallery Category -->
-    <div class="organizer_gallery_category">
         <?php 
-        $imageFound = false; // Flag to track if any images are found
+        
+        echo '<script>';
+        echo "const imageData = {";
         foreach ($categories as $category) {
             $cat_title = $category->name;
-            $category_image_array = get_term_meta($category->term_id, 'category_images', true); // Get category images
-            if (!empty($category_image_array)) {
-                $category_images = explode(',', $category_image_array);
-                if (!empty($category_images[0])) { // Check if the first image exists
-                    $imageFound = true; // Set flag to true as an image is found
-                    $attachment_id = attachment_url_to_postid($category_images[0]);
-                    $attachment_src = wp_get_attachment_image_src($attachment_id, 'medium')[0];
-                    ?>
-                    <div class="organizer_gallery_category_inner" data-category="<?php echo $category->slug; ?>">
-                        <h6 class="organizer_gallery_category_inner_title"><?php echo $cat_title; ?></h6>
-                        <img class="organizer_gallery_category_inner_image" src="<?php echo esc_url($attachment_src); ?>">
-                    </div>
-                    <?php
-                }
+            $category_image_array = get_term_meta($category->term_id, 'category_images', true); // get category images
+            $category_images = explode(',', $category_image_array);
+
+            echo "'$category->slug': [";
+            foreach ($category_images as $image) {
+                echo "'$image',";
             }
-        }
         
-        if (!$imageFound) {
-            // Display custom message if no images are found after checking all categories
-            echo "<div class='organizer_gallery_category_inner_no_image'>";
-            echo "<p class='no-images-message'>$organizer_name hasn't published any images.</p>";
-            echo "<p class='follow-message'>Follow $organizer_name to get notified about news and updates, first.</p>";
-            echo "</div>";
+            echo "],";
         }
+        echo "};";
+        echo "</script>";
+
         ?>
+
+        <!-- Additional categories as needed -->
     </div>
     <!-- Event Gallery Category END -->
 
@@ -522,7 +502,6 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 
 </div>
 <!-- Event Gallery END -->
-
 
 
 
