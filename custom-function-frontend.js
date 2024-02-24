@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     var searchIcon = document.querySelector('.header_search_icon');
-    console.log('Search icon element:', searchIcon); // Check if the search icon is correctly identified
+    //console.log('Search icon element:', searchIcon); // Check if the search icon is correctly identified
 
     if (!searchIcon) {
         console.error('Search icon not found.');
@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function openSearchPopup() {
-        console.log('Attempting to open search popup...');
+        //console.log('Attempting to open search popup...');
         var searchPopup = document.getElementById('searchPopup');
 
         if (!searchPopup) {
@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         searchPopup.style.display = 'block';
-        console.log('Search popup should now be visible.');
+        //console.log('Search popup should now be visible.');
     }
 
     searchIcon.addEventListener('click', openSearchPopup);
@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
         openSearchPopup();
     });
 
-    console.log('Event listeners attached.'); // Confirm that event listeners are attached
+    //console.log('Event listeners attached.'); // Confirm that event listeners are attached
 });
 
 
