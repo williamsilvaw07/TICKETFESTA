@@ -86,7 +86,7 @@ font-family: "Plus Jakarta Sans", Sans-serif;
     justify-content: center;
 }
 .header_search_icon a{
-   z-index: 100000000!important;
+    display: none!important;
 }
 
 .header_search_icon{

@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-    var searchIcon = document.querySelector('.header_search_icon');
+    var searchIcon = document.querySelector('.header_search_icon_mobile');
     console.log('Search icon element:', searchIcon); // Check if the search icon is correctly identified
 
     if (!searchIcon) {
