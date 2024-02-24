@@ -1240,5 +1240,7 @@ color: #555!important;
         margin-bottom: 0px!important;
      
     }
-
+    .tribe-events .tribe-events-c-events-bar__search-button-icon-svg path , .tribe-events .tribe-events-c-events-bar__filter-button-icon path {
+        fill: #ffffff;
+    }
 }
