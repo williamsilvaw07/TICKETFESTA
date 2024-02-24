@@ -544,7 +544,9 @@ border-radius: 5px;
 .tribe-common .tribe-common-g-row {
     display: flex!important;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 15px;
 }
 
 .tribe-events-pro-photo__event {
