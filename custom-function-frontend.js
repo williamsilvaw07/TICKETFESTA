@@ -1,5 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
-
+    jQuery('.organizer-title').hide(); 
+    jQuery('.organizer-title').prop('required', false); 
+    jQuery('.organizer-title_cont').hide();
     jQuery('.create-organizer_cont').on('click', function() {
         if (jQuery('.create-organizer').is(':checked')) { 
             jQuery('.organizer-title').show(); 
