@@ -638,7 +638,9 @@ border-radius: 5px;
     color: black!important;
 }
 
-
+.tribe-events-c-small-cta__price{
+    margin-left: 0!important;
+}
 
 .event-actions {
     display: flex;
