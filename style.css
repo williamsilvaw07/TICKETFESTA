@@ -851,9 +851,13 @@ html .event-venue-city-organizer{
     }
     .container .site-content .content-area {
         width: auto;
-        margin-top: -33px!important;
+        margin-top: -34px!important;
         }
-    
+        .home header {
+            width: 100%!important;
+            margin: 0 auto;
+            }
+            
         .home .elementor-3943 .elementor-element.elementor-element-9d845b1:not(.elementor-motion-effects-element-type-background), .elementor-3943 .elementor-element.elementor-element-9ee88e6:not(.elementor-motion-effects-element-type-background),  header {
             background-color: #1A1A1A!important;
         }
