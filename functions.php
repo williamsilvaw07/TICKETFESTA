@@ -3112,7 +3112,7 @@ function ticketfesta_registration_success($new_customer){
 }
 
 
-add_action( 'xoo_el_login_redirect', 'ticketfesta_login_redirect', 10, 1 );
+add_action( 'xoo_el_login_redirect', 'ticketfesta_login_redirect', 10, 2 );
 
 function ticketfesta_login_redirect($redirect, $user){
     $current_organizer = get_user_meta( $user->ID, 'current_organizer', true );
