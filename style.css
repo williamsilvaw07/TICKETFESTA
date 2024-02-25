@@ -821,7 +821,7 @@ html .event-venue-city-organizer{
         height: 30vh!important;
     }
     html .tribe-events-pro-photo__event{
-        display: flex;
+        display: flex!important;
         justify-content: flex-start!important;
         align-items: center!important;
         flex-direction: row!important;
