@@ -762,7 +762,7 @@ function tec_check_account_upload_limit($organizer_id, $files){
         // Use $term_id as needed
         $images    = get_term_meta($term_id, 'category_images', true); // get category images
         $images    = explode(',', $category_images);
-        array_merge($category_images, $images);
+        // array_merge($category_images, $images);
     }
     var_dump($category_images);
     foreach($category_images as $category_image){
