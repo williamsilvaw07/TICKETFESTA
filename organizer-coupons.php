@@ -4,13 +4,14 @@ Template Name: Organizer Coupons
 */
 $events = tribe_get_events([
     'posts_per_page' => -1,
-    'post_author' => get_current_user_id()
+    'post_author' => get_current_user_id(),
+    'ends_after' => 'now'
 ]);
 
 //  foreach ($events as $event) {
-//     echo "<pre>";
-//     var_dump($event);
-//     echo "</pre>";
+// echo "<pre>";
+// var_dump($events[0]);
+// echo "</pre>";
 //  }
 // die();
 
@@ -92,26 +93,27 @@ get_header('organizer'); // Include the header
                     <input type="text" class="form-control" id="coupon_code" placeholder="Enter coupon code">
                 </div>
                 <div class="row">
-                <div class="col-md-6"></div>
-                <div class="col-md-6"></div>
-                <div class="form-group">
-                    <label for="coupon_code" name="discount_type">Amount</label>
-                    <select class="form-control">
-                        <option value="fixed">Fixed</option>
-                        <option value="percent">Percent</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="coupon_code" name="discount_type">Discount Type</label>
-                    <select class="form-control">
-                        <option value="fixed">Fixed</option>
-                        <option value="percent">Percent</option>
-                    </select>
-                </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="coupon_code" name="discount_type">Amount</label>
+                            <input type="text" class="form-control" id="coupon_code" placeholder="Enter coupon code">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="coupon_code" name="discount_type">Discount Type</label>
+                            <select class="form-control">
+                                <option value="fixed">Fixed</option>
+                                <option value="percent">Percent</option>
+                            </select>
+                        </div>
+                    </div>
+
+
                 </div>
                 <div class="form-group">
                     <label>Event</label>
-                    <select class="form-control select2" style="width: 100%;" name="event_id" required>
+                    <select class="form-control select2" style="width: 100%;" name="event_id" id="event_id" required>
                         <?php
                         foreach ($events as $event) {
                             ?>
@@ -122,6 +124,9 @@ get_header('organizer'); // Include the header
                         }
                         ?>
                     </select>
+                </div>
+                <div class="form-group" id="tickets">
+                    
                 </div>
 
             </div>
