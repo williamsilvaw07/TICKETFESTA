@@ -827,7 +827,7 @@ html .event-venue-city-organizer{
 @media (max-width: 500px) {
 
     .main_bk_home_main_div{
-        height: 20vh!important;
+        height: 0vh!important;
     
     }
     .home_main_heading {
@@ -851,7 +851,7 @@ html .event-venue-city-organizer{
     }
     .container .site-content .content-area {
         width: auto;
-        margin-top: -34px!important;
+        margin-top: -31px!important;
         }
         .home header {
             width: 100%!important;
