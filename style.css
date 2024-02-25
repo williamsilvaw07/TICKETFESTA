@@ -547,6 +547,10 @@ width:90%!important;
     margin-top: 0em!important;
 }
 
+.home_main_heading{
+    position: absolute;
+}
+
 .tribe-events-view {
     background-color: #1A1A1A!important
 }
