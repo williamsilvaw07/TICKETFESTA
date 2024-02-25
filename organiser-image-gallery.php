@@ -669,7 +669,7 @@ function upload_images_cat() {
         $upload_dir = wp_upload_dir();
         $success = false;
         $messages = '';
-
+        tec_check_account_upload_limit($organiser, $files);
         if ( ! empty( $upload_dir['basedir'] ) ) {
 
             $user_dirname = $upload_dir['basedir'].'/organiser-images/';
@@ -730,7 +730,40 @@ function create_tec_organizer_category_with_images($category_name, $image_urls, 
     }
 }
     
+function tec_check_account_upload_limit($organizer_id, $files){
+    var_dump($files);
+    $terms = get_terms( array(
+        'taxonomy' => 'tec_organizer_category',
+        'meta_query' => array(
+            array(
+                'key' => 'category_organiser',
+                'value' => $organizer_id,
+                'compare' => '=',
+            ),
+        ),
+    ) );
+    
+    $category_images = [];
+    $total_size_used_mb = 0;
+    if ( ! empty( $terms ) && ! is_wp_error( $terms ) ) {
+        $term_id = $terms[0]->term_id;
+        // Use $term_id as needed
+        $images    = get_term_meta($term_id, 'category_images', true); // get category images
+        $images    = explode(',', $category_images);
+        array_merge($category_images, $images);
+    }
 
+    foreach($category_images as $category_image){
+        $headers = get_headers( $category_image, 1 );
+
+        if ( isset( $headers['Content-Length'] ) ) {
+            $filesize_bytes = (int) $headers['Content-Length'];
+            $filesize_mb = round( $filesize_bytes / ( 1024 * 1024 ), 2 ); // Convert to MB
+            $total_size_used_mb += $filesize_mb;
+        } 
+    }
+    
+}
 
 
 ?>
