@@ -660,25 +660,7 @@ border-radius: 5px;
     flex-wrap: wrap;
 }
 .home .event-actions a {
-    text-decoration: none;
-    background: inherit!important;
-    color: black!important;
-    padding: 10px 13px;
-    width: fit-content;
-    font-size: 14px;
-    border-radius: 5px;
-    display: block;
-    text-align: center;
-    margin-top: 0px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    align-content: center;
-    gap: 6px;
-    font-size: 14px!important;
-    font-weight: 600!important;
-    border: inherit!important;
-    transition: border 0.3s ease-in-out;
+display: none;
 }
 body .event-actions a:hover{
    border: 2px solid black ;
