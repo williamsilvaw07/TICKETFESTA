@@ -471,10 +471,10 @@ a.tribe-button.tribe-button-primary.add-new , .organizers_add_new_btn{
 
 .home_bk_image_imga img
 {
-max-width: 903px;
-    border-radius: 7px;
-    margin: 10px;
-    margin-bottom: 100px;
+max-width: 903px!important;  
+    border-radius: 7px!important;  
+    margin: 10px!important;  
+    margin-bottom: 100px!important;  
 }
 
 
