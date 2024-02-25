@@ -602,16 +602,30 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 <script>
 
 
+document.addEventListener('DOMContentLoaded', function() {
+    // Locate the main product image element
+    var productImageElement = document.querySelector('.tribe-events-pro-organizer__meta-featured-image-wrapper img');
 
-	////JS TO ADD THE MAIN PRODUCT IMAGE ON THE BACKGROUND AND ADD THE LOCATION ON THE CUSTOM DIV 
-	document.addEventListener('DOMContentLoaded', function() {
-    var imageElement = document.querySelector('.tribe-events-pro-organizer__meta-featured-image-wrapper img');
-    var titleElement = document.querySelector('.tribe_organizer-template-default');
+    // Locate the organizer background element where the image will be set as background
+    var organizerBackgroundElement = document.querySelector('.organizer_profile_bk');
 
-    if (imageElement && titleElement) {
-        var imageUrl = imageElement.getAttribute('src');
-        titleElement.style.backgroundImage = 'url("' + imageUrl + '")';
-        titleElement.classList.add('organiser_background');
+    // Locate the custom div where location info will be added (replace '.custom-location-div' with your actual selector)
+    var locationElement = document.querySelector('.custom-location-div');
+
+    // Check if elements exist
+    if (productImageElement && organizerBackgroundElement) {
+        // Get the URL of the product image
+        var imageUrl = productImageElement.getAttribute('src');
+
+        // Set the product image as the background image of the organizer background element
+        organizerBackgroundElement.style.backgroundImage = 'url("' + imageUrl + '")';
+    }
+
+    // Example: Add location information to the custom div
+    // This is a placeholder example. Replace it with your actual logic for obtaining location data
+    if (locationElement) {
+        var locationInfo = 'London, UK'; // Example location info
+        locationElement.textContent = locationInfo; // Add location info to the custom div
     }
 });
 
