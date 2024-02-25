@@ -973,16 +973,21 @@ jQuery(document).ready(function($) {
 
 
 <style>
+.organizer_profile_bk {
+    position: relative; /* Ensure this element can contain absolutely positioned pseudo-elements */
+}
 
-.dark-glass-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5); /* Dark overlay */
-    backdrop-filter: blur(10px); /* Blur effect */
-    -webkit-backdrop-filter: blur(10px); /* For Safari */
+.organizer_profile_bk::before {
+    content: ''; /* Necessary for the pseudo-element to display */
+    position: absolute; /* Position the pseudo-element absolutely within its parent */
+    top: 0; /* Align to the top of the parent */
+    left: 0; /* Align to the left of the parent */
+    width: 100%; /* Span the full width of the parent */
+    height: 100%; /* Span the full height of the parent */
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background for the dark effect */
+    backdrop-filter: blur(10px); /* Apply a blur effect to the background behind the pseudo-element */
+    -webkit-backdrop-filter: blur(10px); /* For Safari compatibility */
+    z-index: 1; /* Ensure it's above the parent's content but below anything else you might want to overlay */
 }
 
     .tribe-events-c-messages__message--notice{
