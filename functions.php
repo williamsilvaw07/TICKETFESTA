@@ -3083,7 +3083,7 @@ add_action( 'xoo_el_created_customer', 'ticketfesta_organizer_register', 10, 2);
 
 function ticketfesta_organizer_register($customer_id, $new_customer_data){
     $create_organizer =  isset($_POST['create-organizer']) ? $_POST['create-organizer'] : '';
-    $organizer_title =  isset($_POST['organizer-title']) ? $_POST['organizer-title'] : $new_customer_data['user_login'];
+    $organizer_title  =  isset($_POST['organizer-title']) ? $_POST['organizer-title'] : $new_customer_data['user_login'];
     
     if($create_organizer !== ''){
         $post_data = array(
@@ -3094,6 +3094,7 @@ function ticketfesta_organizer_register($customer_id, $new_customer_data){
         );
         
         $post_id = wp_insert_post($post_data);
+        update_user_meta( $customer_id, 'current_organizer', $post_id );
     }
 
 }
@@ -3107,5 +3108,20 @@ function ticketfesta_registration_success($new_customer){
         $dashboard_url = trailingslashit( $site_url ) . 'dashboard/';
         wp_redirect( $dashboard_url );
     }
+
+}
+
+
+add_action( 'xoo_el_login_redirect', 'ticketfesta_login_redirect', 10, 1 );
+
+function ticketfesta_login_redirect($redirect, $user){
+    $current_organizer = get_user_meta( $user->ID, 'current_organizer', true );
+
+    if($current_organizer !== ''){
+        $site_url = home_url();
+        $dashboard_url = trailingslashit( $site_url ) . 'dashboard/';
+        $redirect = $dashboard_url;
+    }
+    return $redirect;
 
 }
