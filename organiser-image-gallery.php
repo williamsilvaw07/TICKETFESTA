@@ -346,7 +346,7 @@ function category_image_gallery_shortcode($atts) {
 
         echo "<div class='category'> $term->name </div>";
         echo "<div class='organizer'>Organizer: $cat_organiser->post_title</div>";
-        
+        echo "<br/>";
         if (!empty($category_images) ) {
             echo '<div class="category-images">';
             foreach($category_images  as $category_image){
