@@ -3083,7 +3083,7 @@ add_action( 'xoo_el_created_customer', 'ticketfesta_organizer_register', 10, 2);
 
 function ticketfesta_organizer_register($customer_id, $new_customer_data){
     $create_organizer =  isset($_POST['create-organizer']) ? $_POST['create-organizer'] : '';
-    $organizer_title  =  isset($_POST['organizer-title']) ? $_POST['organizer-title'] : $new_customer_data['user_login'];
+    $organizer_title  =  isset($_POST['organizer-title']) ? $_POST['organizer-title'] : str_replace('.', '-', $new_customer_data['user_login']);
     
     if($create_organizer !== ''){
         $post_data = array(
