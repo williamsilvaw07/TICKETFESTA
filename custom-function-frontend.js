@@ -1,8 +1,8 @@
 document.addEventListener('DOMContentLoaded', function() {
     setTimeout(function() {
         // Trigger click event and hide the element
-        jQuery('.xoo-el-action-sc.button.btn.xoo-el-login-tgr').trigger('click');
-    }, 2000); // 2000 milliseconds = 2 seconds
+        jQuery('.xoo-el-action-sc.button.btn.xoo-el-login-tgr').trigger('click').hide();
+    }, 1000); // 2000 milliseconds = 2 seconds
     jQuery('.organizer-title').hide(); 
     jQuery('.organizer-title').prop('required', false); 
     jQuery('.organizer-title_cont').hide();
