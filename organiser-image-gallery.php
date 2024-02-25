@@ -756,6 +756,12 @@ function tec_check_account_upload_limit($organizer_id, $files){
     
     $category_images = [];
     $total_size_used_mb = 0;
+    foreach($terms as $term ){
+        $term_id = $term->term_id;
+        $images    = get_term_meta($term_id, 'category_images', true); // get category images
+        $images    = explode(',', $category_images);
+        var_dump($images);
+    }
     if ( ! empty( $terms ) && ! is_wp_error( $terms ) ) {
         $term_id = $terms[0]->term_id;
         echo $term_id;
