@@ -746,13 +746,13 @@ function tec_check_account_upload_limit($organizer_id, $files){
     ));
     echo "<pre>";
     var_dump('organizer_id: ', $current_user );
-    var_dump('terms: ', $terms );
+    // var_dump('terms: ', $terms );
     echo "</pre>";
     $request_upload_kb = 0;
 
-    // foreach($sizes as  $size){
-    //     $request_upload_kb = $request_upload_kb + ($size / 1024);
-    // }
+    foreach($sizes as  $size){
+        $request_upload_kb = $request_upload_kb + ($size / 1024);
+    }
     
     $category_images = [];
     $total_size_used_mb = 0;
@@ -760,15 +760,7 @@ function tec_check_account_upload_limit($organizer_id, $files){
         $term_id   = $term->term_id;
         $images    = get_term_meta($term_id, 'category_images', true); // get category images
         $images    = explode(',', $images);
-        var_dump($images);
-    }
-    if ( ! empty( $terms ) && ! is_wp_error( $terms ) ) {
-        $term_id = $terms[0]->term_id;
-        echo $term_id;
-        // Use $term_id as needed
-        $images    = get_term_meta($term_id, 'category_images', true); // get category images
-        $images    = explode(',', $category_images);
-        // array_merge($category_images, $images);
+        array_merge($category_images, $images);
     }
     var_dump($category_images);
     foreach($category_images as $category_image){
