@@ -1022,7 +1022,7 @@ html .organizer-profile-link:hover {
     text-transform: uppercase;
 }
 .organizer-title{
-    display: flex;
+    display: flex!important;
     flex-direction: column;
     align-items: center;
     gap: 10px;
