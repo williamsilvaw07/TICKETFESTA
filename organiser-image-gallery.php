@@ -368,7 +368,7 @@ function category_image_gallery_shortcode($atts) {
         // JavaScript functionality to handle category deletion and clear URL
         ?>
         <style>
-            .elementor-heading-title.elementor-size-default{
+            .hide_gallery_upper_section{
                 display: none;
             }
         </style>
