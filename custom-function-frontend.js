@@ -1,6 +1,32 @@
 document.addEventListener('DOMContentLoaded', function() {
+
+    jQuery('.flux-checkout__login-button.login-button').each(function() {
+        // Add classes 'xoo-el-action-sc' and 'xoo-el-login-tgr'
+        jQuery(this).addClass('xoo-el-action-sc xoo-el-login-tgr');
+    });
+
+    jQuery('.xoo-el-action-sc.button.btn.xoo-el-login-tgr').css('visibility', 'hidden');
+    setTimeout(function() {
+        // Trigger click event and hide the element
+        jQuery('.xoo-el-action-sc.button.btn.xoo-el-login-tgr').trigger('click').hide();
+    }, 1000); // 2000 milliseconds = 2 seconds
+    jQuery('.organizer-title').hide(); 
+    jQuery('.organizer-title').prop('required', false); 
+    jQuery('.organizer-title_cont').hide();
+    jQuery('.create-organizer_cont').on('click', function() {
+        if (jQuery('.create-organizer').is(':checked')) { 
+            jQuery('.organizer-title').show(); 
+            jQuery('.organizer-title').prop('required', true); 
+            jQuery('.organizer-title_cont').show();
+        } else {
+            jQuery('.organizer-title').hide(); 
+            jQuery('.organizer-title').prop('required', false); 
+            jQuery('.organizer-title_cont').hide();
+        }
+    });
+
     var searchIcon = document.querySelector('.header_search_icon');
-    console.log('Search icon element:', searchIcon); // Check if the search icon is correctly identified
+    //console.log('Search icon element:', searchIcon); // Check if the search icon is correctly identified
 
     if (!searchIcon) {
         console.error('Search icon not found.');
@@ -8,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function openSearchPopup() {
-        console.log('Attempting to open search popup...');
+        //console.log('Attempting to open search popup...');
         var searchPopup = document.getElementById('searchPopup');
 
         if (!searchPopup) {
@@ -17,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         searchPopup.style.display = 'block';
-        console.log('Search popup should now be visible.');
+        //console.log('Search popup should now be visible.');
     }
 
     searchIcon.addEventListener('click', openSearchPopup);
@@ -26,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function() {
         openSearchPopup();
     });
 
-    console.log('Event listeners attached.'); // Confirm that event listeners are attached
+    //console.log('Event listeners attached.'); // Confirm that event listeners are attached
 });
 
 
@@ -49,14 +75,26 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-document.addEventListener('DOMContentLoaded', function() {
-    var searchIconMobile = document.querySelector('.elementor-element-faa62a2'); // Target the mobile search icon
-    console.log('Mobile search icon element:', searchIconMobile); // Check if the mobile search icon is correctly identified
 
-    if (!searchIconMobile) {
-        console.error('Mobile search icon not found.');
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Find the .dynamic_div container where the span will be added
+    var dynamicDiv = document.querySelector('.dynamic_div');
+
+    if (!dynamicDiv) {
+        console.error('Dynamic div container not found.');
         return;
     }
+
+    // Create the span element and add the required classes
+    var searchIconMobile = document.createElement('span');
+    searchIconMobile.classList.add('header_search_icon_mobile', 'jsclass');
+   
+
+    // Append the newly created span to the dynamic div
+    dynamicDiv.appendChild(searchIconMobile);
+    console.log('Mobile search icon span added to the dynamic div.');
 
     function openSearchPopup() {
         console.log('Attempting to open mobile search popup...');
@@ -67,19 +105,31 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        searchPopup.style.display = 'block'; // Show the search popup
-        console.log('Mobile search popup should now be visible.');
+        // Toggle the display of the search popup
+        searchPopup.style.display = (searchPopup.style.display === 'block') ? 'none' : 'block';
+        console.log('Mobile search popup toggled.');
     }
 
-    // Function to handle tap events on the mobile icon
+    // Function to handle click/tap events on the newly added span
     function handleMobileIconTap(event) {
-        event.preventDefault(); // Prevent default actions (like navigating to a link)
+        event.preventDefault(); // Prevent default actions
+        console.log('Mobile search icon span tapped.');
         openSearchPopup(); // Call the function to open the search popup
     }
 
-    // Attach event listeners for both touch and click events
+    // Attach event listeners for both click and touch events to the span
     searchIconMobile.addEventListener('click', handleMobileIconTap);
     searchIconMobile.addEventListener('touchend', handleMobileIconTap);
 
-    console.log('Event listeners attached for mobile search icon.'); // Confirm that event listeners are attached
+    console.log('Event listeners attached to the mobile search icon span.');
 });
+
+
+
+
+
+
+
+
+
+

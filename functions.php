@@ -3075,3 +3075,62 @@ function enqueue_custom_frontend_js() {
 
 // Hook your custom function into 'wp_enqueue_scripts' action.
 add_action('wp_enqueue_scripts', 'enqueue_custom_frontend_js');
+
+
+
+// for registration 
+add_action( 'xoo_el_created_customer', 'ticketfesta_organizer_register', 10, 2);
+
+function ticketfesta_organizer_register($customer_id, $new_customer_data){
+    $create_organizer =  isset($_POST['create-organizer']) ? $_POST['create-organizer'] : '';
+    $organizer_title  =  isset($_POST['organizer-title']) ? $_POST['organizer-title'] : str_replace('.', '-', $new_customer_data['user_login']);
+    
+    if($create_organizer !== ''){
+        $post_data = array(
+            'post_type'   => 'tribe_organizer',
+            'post_status' => 'publish',
+            'post_title'  => $organizer_title,
+            'post_author' => $customer_id
+        );
+        
+        $post_id = wp_insert_post($post_data);
+        $image_url = 'https://ticketfesta.co.uk/wp-content/uploads/2024/02/5034901-200.png';
+
+        // Get the attachment ID
+        $attachment_id = attachment_url_to_postid( $image_url );
+        set_post_thumbnail( $post_id, $attachment_id );
+        update_user_meta( $customer_id, 'current_organizer', $post_id );
+        $user = get_userdata( $customer_id );
+        $user->set_role( 'organiser' );
+    }
+
+}
+
+add_action( 'xoo_el_registration_redirect', 'ticketfesta_registration_redirect', 10, 2 );
+
+function ticketfesta_registration_redirect($redirect, $new_customer){
+    $create_organizer =  isset($_POST['create-organizer']) ? $_POST['create-organizer'] : '';
+    if($create_organizer !== ''){
+        $site_url = home_url();
+        $dashboard_url = trailingslashit( $site_url ) . 'dashboard/';
+        $redirect = $dashboard_url;
+    }
+
+    return $redirect;
+}
+
+
+add_action( 'xoo_el_login_redirect', 'ticketfesta_login_redirect', 10, 2 );
+
+function ticketfesta_login_redirect($redirect, $user){
+    $current_organizer = get_user_meta( $user->ID, 'current_organizer', true );
+
+    if($current_organizer !== ''){
+        $site_url = home_url();
+        $dashboard_url = trailingslashit( $site_url ) . 'dashboard/';
+        $redirect = $dashboard_url;
+    }
+    return $redirect;
+
+}
+

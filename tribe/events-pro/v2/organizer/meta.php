@@ -237,8 +237,13 @@ $follower_count = count($followers_array);
 if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
     if ( isset( $_POST['follow'] ) ) {
         if (!is_user_logged_in() )  {
-            $my_account_url = esc_url(get_permalink( get_option('woocommerce_myaccount_page_id') ));
-            echo "<a href='$my_account_url' class='login-first'> Please login first. </a>" ;
+            // $my_account_url = esc_url(get_permalink( get_option('woocommerce_myaccount_page_id') ));
+            // echo "<a href='$my_account_url' class='login-first'> Please login first. </a>" ;
+
+            $shortcode = '[xoo_el_action type="login" display="button"]';
+
+            // Execute the shortcode
+            echo do_shortcode( $shortcode );
         }
     } 
 }
@@ -460,38 +465,66 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 
 <!-- Event Gallery -->
 <div class="organizer_gallery_main organizer_main_div organizer_Gallery_content">
-    <h3>Gallery</h3>
+<h3>Gallery</h3>
+<?php 
+    $categories = get_categories(array(
+        'taxonomy' => 'tec_organizer_category',
+        'hide_empty' => false,
+        'meta_query' => array(
+            array(
+                'key' => 'category_owner_id',
+                'value' => get_post_field('post_author', $organizer->ID)                ,
+                'compare' => '='
+            ),
+            array(
+                'key' => 'category_organiser',
+                'value' => $organizer->ID,
+                'compare' => '='
+            )
+        )
+    ));
+
+    // category_organiser
+
+?>
     <!-- Event Gallery Category -->
     <div class="organizer_gallery_category">
+        <?php foreach($categories as $category){ 
+            $cat_title = $category->name;
+            $category_image_array = get_term_meta($category->term_id, 'category_images', true); // get category images
+            $category_images = explode(',', $category_image_array);
+            $attachment_id = attachment_url_to_postid($category_images[0]);
+            $attachment_src = wp_get_attachment_image_src($attachment_id, 'large')[0];
+            ?>
+          
+            <div class="organizer_gallery_category_inner" data-category="<?php echo $category->slug ?>">
+                <h6 class="organizer_gallery_category_inner_title"><?php echo  $title; ?></h6>
+                <img class="organizer_gallery_category_inner_image" src="<?php echo esc_url( $attachment_src ); ?>" >
+            </div>
+        <?php } ?>
+
         <?php 
-            $hasImages = false; // Flag to track if any category has images
-            foreach ($categories as $category) {
-                $cat_title = $category->name;
-                $category_image_array = get_term_meta($category->term_id, 'category_images', true); // Get category images
-                $category_images = explode(',', $category_image_array);
+        
+        echo '<script>';
+        echo "const imageData = {";
+        foreach ($categories as $category) {
+            $cat_title = $category->name;
+            $category_image_array = get_term_meta($category->term_id, 'category_images', true); // get category images
+            $category_images = explode(',', $category_image_array);
 
-                if (!empty($category_images[0])) { // Check if there's at least one image
-                    $hasImages = true;
-                    $attachment_id = attachment_url_to_postid($category_images[0]);
-                    $attachment_src = wp_get_attachment_image_src($attachment_id, 'medium')[0];
-                    ?>
-                    <div class="organizer_gallery_category_inner" data-category="<?php echo $category->slug ?>">
-                        <h6 class="organizer_gallery_category_inner_title"><?php echo $cat_title; ?></h6>
-                        <img class="organizer_gallery_category_inner_image" src="<?php echo esc_url($attachment_src); ?>" >
-                    </div>
-                    <?php
-                }
+            echo "'$category->slug': [";
+            foreach ($category_images as $image) {
+                echo "'$image',";
             }
+        
+            echo "],";
+        }
+        echo "};";
+        echo "</script>";
 
-            if (!$hasImages) { // Display custom message if no images found in a div with the specified class
-                // Get the organizer's name
-                $organizer_name = get_the_title($organizer->ID); // Assuming $organizer->ID contains the ID of the current organizer
-                echo "<div class='organizer_gallery_category_inner_no_image'>";
-                echo "<p class='no-images-message'>{$organizer_name} hasn't published any Images.</p>";
-                echo "<p class='follow-message'>Follow {$organizer_name} to get notified about news and updates, first.</p>";
-                echo "</div>";
-            }
         ?>
+
+        <!-- Additional categories as needed -->
     </div>
     <!-- Event Gallery Category END -->
 
@@ -500,6 +533,10 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 
 </div>
 <!-- Event Gallery END -->
+
+
+
+
 
 
 
@@ -1512,9 +1549,9 @@ text-align: left;
 
 .lightbox-close {
     position: absolute;
-    top: 20px;
-    right: 20px;
-    font-size: 30px;
+    top: 0%;
+    right: 0;
+    font-size: 24px;
     color: white;
     background: none;
     border: none;
@@ -1523,7 +1560,7 @@ text-align: left;
 
 .lightbox-download {
     position: absolute;
-    bottom: 0px;
+    bottom: 137px;
     border: none;
     cursor: pointer;
     text-decoration: none;
@@ -1544,7 +1581,12 @@ text-align: left;
 .image-container:hover img {
     opacity: 0.9;
 }
-
+.image-container img{
+    max-width: 300px!important;
+    max-height: 200px!important;
+    object-fit: cover;
+    margin: inherit!important;
+}
 
 .image-container::after {
     content: '';
@@ -1718,7 +1760,7 @@ input.follow-button {
       
         display: grid!important;
         grid-template-columns: repeat(2, 1fr);
-        grid-gap: 3px;
+        grid-gap: 3px 17px!important;
     }
    
 .single-tribe_organizer .image_profile_text_main_continer {
@@ -1791,7 +1833,9 @@ input.follow-button {
     bottom: 0;
     left: 0;
     z-index: 3;
+    justify-content: space-between;
     padding: 10px 20px!important;
+    gap: 13px!important;
 
 }
 .organizer_nav-item.active {
