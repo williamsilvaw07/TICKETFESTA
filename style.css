@@ -546,7 +546,9 @@ width:90%!important;
 .home .entry-content:not(:first-child) , .home .site-main{
     margin-top: 0em!important;
 }
-
+.elementor-1476 .elementor-element.elementor-element-0fdff56 .elementor-heading-title {
+    opacity: 0.7!important;
+}
 .home_main_heading{
     position: absolute!important;
 }
