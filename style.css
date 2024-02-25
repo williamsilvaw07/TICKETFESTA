@@ -853,6 +853,10 @@ html .event-venue-city-organizer{
         width: auto;
         margin-top: -33px!important;
         }
+    
+        header{
+            background-color: #1A1A1A!important;
+        }
 }
 /*******end*****/
 
