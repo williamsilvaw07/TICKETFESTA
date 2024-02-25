@@ -771,7 +771,7 @@ function tec_check_account_upload_limit($organizer_id, $files){
             $total_size_used_mb += $filesize_mb;
         } 
     }
-    var_dump('request_to_upload: ', $request_upload_kb);
+    var_dump('request_to_upload: ', (int)$request_upload_kb);
     var_dump('total_uploaded: ',$total_size_used_mb);
     die();
 }
