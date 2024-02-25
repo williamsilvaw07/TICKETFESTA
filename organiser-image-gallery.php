@@ -5,7 +5,7 @@ add_shortcode('organiser_image_gallery', 'organiser_image_gallery_shortcode');
 function organiser_image_gallery_shortcode() {
     $account_mb_used = get_user_meta( get_current_user_id(), '_total_upload', true );
     var_dump($account_mb_used);
-    $account_mb_used = isset($account_mb_used) ? $account_mb_used : 0;
+    $account_mb_used = $account_mb_used ? $account_mb_used : 0;
     ob_start(); ?>
 
     <!-- HTML structure for the image gallery -->
