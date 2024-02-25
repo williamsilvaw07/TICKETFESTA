@@ -669,7 +669,7 @@ function upload_images_cat() {
         $upload_dir = wp_upload_dir();
         $success = false;
         $messages = '';
-        if(!tec_check_account_upload_limit($organiser, $files)){
+        if(tec_check_account_upload_limit($organiser, $files)){
             wp_send_json_error('Image upload limit reached');
         }
         if ( ! empty( $upload_dir['basedir'] ) ) {
