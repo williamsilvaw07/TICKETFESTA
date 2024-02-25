@@ -97,3 +97,30 @@ document.addEventListener('DOMContentLoaded', function() {
 
     console.log('Event listeners attached to the mobile search icon span.');
 });
+
+
+
+
+
+
+
+
+
+
+// Select all <img> elements on the page
+document.querySelectorAll('img').forEach(function(img) {
+    // Add an event listener for mouseenter (hover) event
+    img.addEventListener('mouseenter', function() {
+        // Store the title in a data attribute and remove the title attribute
+        // This prevents the default browser tooltip from showing
+        this.setAttribute('data-title', this.title); // Store the title in 'data-title'
+        this.title = ''; // Remove the title attribute to disable the tooltip
+    });
+
+    // Add an event listener for mouseleave event
+    img.addEventListener('mouseleave', function() {
+        // Restore the title from the data attribute when the mouse leaves the image
+        // This ensures the title is available again for accessibility tools or other uses
+        this.title = this.getAttribute('data-title'); // Restore the title from 'data-title'
+    });
+});
