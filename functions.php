@@ -763,7 +763,7 @@ function set_default_organizer_featured_image($organizer_id)
     }
 
     // Path to your default image (Upload your default image to the media library and replace this URL)
-    $default_image_url = 'https://thaynna-william.co.uk/wp-content/uploads/2024/01/default-avatar-photo-placeholder-profile-icon-vector.jpg';
+    $default_image_url = '/wp-content/uploads/2024/01/default-avatar-photo-placeholder-profile-icon-vector.jpg';
 
     // Find the attachment ID of the image from the URL
     $default_image_id = attachment_url_to_postid($default_image_url);
@@ -860,7 +860,7 @@ function display_user_created_organizers()
 
                         if (data.success && data.data && data.data.organizer_id) {
                             console.log('Redirecting to organizer ID:', data.data.organizer_id); // Debugging line
-                            window.location.href = 'https://thaynna-william.co.uk/edit-organisers/?id=' + data.data.organizer_id;
+                            window.location.href = '/edit-organisers/?id=' + data.data.organizer_id;
                         } else {
                             console.error('Unexpected response:', data);
                             alert('Unexpected response received. Check console for details.');
@@ -938,7 +938,7 @@ function display_user_created_organizers()
             while ($organizer_query->have_posts()) {
                 $organizer_query->the_post();
                 $organizer_id = get_the_ID();
-                $edit_url = esc_url("https://thaynna-william.co.uk/edit-organisers/?id={$organizer_id}");
+                $edit_url = esc_url("/edit-organisers/?id={$organizer_id}");
                 $profile_url = tribe_get_organizer_link($organizer_id, false, false); // Get URL only
     
                 echo '<tr id="organizer-row-' . $organizer_id . '">'; // Unique ID for each row
@@ -3003,7 +3003,7 @@ function custom_user_registration() {
                 update_user_meta($user_id, '_tribe_organizer_id', $organizer_id);
 
                 // Redirect to the specified page
-                wp_redirect('https://thaynna-william.co.uk/dashboard');
+                wp_redirect('/dashboard');
                 exit;
             } else {
                 echo 'Error creating organizer.';
