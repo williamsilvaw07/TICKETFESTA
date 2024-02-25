@@ -796,6 +796,72 @@ html .event-venue-city-organizer{
     
     
     
+    @media (max-width: 767px) {
+        .home .tribe-events .tribe-events-l-container {
+            width: 90%!important;
+        }
+        .main_bk_home_main_div{
+            height: 52vh;
+        }
+        .elementor-3943 .elementor-element.elementor-element-518769c img {
+            height: 30px!important; 
+            width: auto!important;
+        }
+        body .home_bk_image_imga img {
+            width: 100%!important;
+            border-radius: 7px!important;
+            margin: 0px!important;
+            position: relative;
+        }
+        .home .tribe-events-header {
+        
+            margin: 0 auto!important;
+        }
+    }
+
+
+
+
+
+
+@media (max-width: 500px) {
+
+    .main_bk_home_main_div{
+        height: 0vh!important;
+    
+    }
+    .home_main_heading {
+        top: 37%;
+    } 
+
+    .home  .tribe-events .tribe-events-header {
+        align-items: center;
+        flex-direction: row-reverse;
+        flex-wrap: wrap;
+        position: relative;
+        width: 100%!important;
+        padding: 0!important;
+        padding-bottom: 26px!important;
+    }
+    .elementor-element-679702c{
+        margin-top: 30px!important;
+    }
+    .home .entry-header , .tribe-events-c-view-selector{
+        display: none!important;
+    }
+    .home .container .site-content .content-area {
+        width: auto;
+        margin-top: -31px!important;
+        }
+        .home header {
+            width: 100%!important;
+            margin: 0 auto;
+            }
+            
+        .home .elementor-3943 .elementor-element.elementor-element-9d845b1:not(.elementor-motion-effects-element-type-background), .elementor-3943 .elementor-element.elementor-element-9ee88e6:not(.elementor-motion-effects-element-type-background),  header {
+            background-color: #1A1A1A!important;
+        }
+}
 /*******end*****/
 
 
