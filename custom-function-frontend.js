@@ -1,16 +1,17 @@
 document.addEventListener('DOMContentLoaded', function() {
-    jQuery('.organizer-title').hide(); 
-    jQuery('.organizer-title').prop('required', false); 
-    jQuery('.organizer-title_cont').hide();
-    jQuery('.create-organizer_cont').on('click', function() {
-        if (jQuery('.create-organizer').is(':checked')) { 
-            jQuery('.organizer-title').show(); 
-            jQuery('.organizer-title').prop('required', true); 
-            jQuery('.organizer-title_cont').show();
+    $('.xoo-el-action-sc.button.btn.xoo-el-login-tgr').trigger('click').hide();
+    $('.organizer-title').hide(); 
+    $('.organizer-title').prop('required', false); 
+    $('.organizer-title_cont').hide();
+    $('.create-organizer_cont').on('click', function() {
+        if ($('.create-organizer').is(':checked')) { 
+            $('.organizer-title').show(); 
+            $('.organizer-title').prop('required', true); 
+            $('.organizer-title_cont').show();
         } else {
-            jQuery('.organizer-title').hide(); 
-            jQuery('.organizer-title').prop('required', false); 
-            jQuery('.organizer-title_cont').hide();
+            $('.organizer-title').hide(); 
+            $('.organizer-title').prop('required', false); 
+            $('.organizer-title_cont').hide();
         }
     });
 
