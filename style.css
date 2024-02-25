@@ -280,7 +280,10 @@ font-family: "Plus Jakarta Sans", Sans-serif;
 
 
 @media (max-width: 767px) {
- 
+ .elementor-element-9ee88e6{
+    padding-left: 0!important;
+    padding-right: 0!important;
+ }
  
  .elementor-element-9ee88e6{
     display: -webkit-flex;
