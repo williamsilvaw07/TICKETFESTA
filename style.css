@@ -813,6 +813,9 @@ html .event-venue-city-organizer{
             margin: 0px!important;
             position: relative;
         }
+        .home .tribe-events-header {
+            margin-top: -12px!important;
+        }
     }
 
 
