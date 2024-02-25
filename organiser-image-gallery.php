@@ -246,14 +246,17 @@ function organiser_image_gallery_shortcode() {
                         processData: false,
                         contentType: false,
                         success: function(response) {
-
-                            console.log('success',response); // Handle success response
-                            // location.reload();
+                            if(response.success){
+                                console.log('success',response); // Handle success response
+                                // location.reload();
+                            }else{
+                                $('.upload_limit').show();
+                                alert(error);
+                                console.log('error',error); 
+                            }
 
                         },
                         error: function(error) {
-                            $('.upload_limit').show();
-                            alert(error);
                             console.log('error',error); // Handle error
                         }
                     });
