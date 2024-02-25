@@ -12,17 +12,18 @@ function organiser_image_gallery_shortcode() {
      
         <div id="image-upload">
             <div class="image-upload-div">
-            <div id="drop-zone">
-            <span class="primary-icon fas fa-image fa-stack-2x"></span>
-            <p class="drag-drop_text">  Drag & drop images here or click to select images.</p>
+                <div id="drop-zone">
+                    <span class="primary-icon fas fa-image fa-stack-2x"></span>
+                    <p class="drag-drop_text">  Drag & drop images here or click to select images.</p>
          
-            <form id="image-upload-form" enctype="multipart/form-data">
-                <input type="file" id="file-input" name="files[]" multiple>
+                    <form id="image-upload-form" enctype="multipart/form-data">
+                        <input type="file" id="file-input" name="files[]" multiple>
                 </div>
-                </div>
- </div> 
- <div class="main-selector-image-upload-div">
-                <div class="Organizer-image-upload-div">
+            </div>
+            <span class='max-upload'> Account Maximum Upload Limit 3MB </span>
+        </div> 
+        <div class="main-selector-image-upload-div">
+            <div class="Organizer-image-upload-div">
                 <p>Select Organizer Profile:</p><select id="organiser-selector" name='organiser'> </div>
                     <?php
                     // Get list of organizers created by the current user
