@@ -1632,6 +1632,12 @@ text-align: left;
 
 
   /****media responsive ***/
+  @media (min-width: 840px) {
+
+    
+    
+}
+
 
 
 
