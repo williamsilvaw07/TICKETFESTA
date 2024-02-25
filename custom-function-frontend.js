@@ -1,4 +1,17 @@
 document.addEventListener('DOMContentLoaded', function() {
+
+    jQuery('.create-organizer_cont').on('click', function() {
+        if (jQuery('.create-organizer').is(':checked')) { 
+            jQuery('.organizer-title').show(); 
+            jQuery('.organizer-title').prop('required', true); 
+            jQuery('.organizer-title_cont').show();
+        } else {
+            jQuery('.organizer-title').hide(); 
+            jQuery('.organizer-title').prop('required', false); 
+            jQuery('.organizer-title_cont').hide();
+        }
+    });
+
     var searchIcon = document.querySelector('.header_search_icon');
     //console.log('Search icon element:', searchIcon); // Check if the search icon is correctly identified
 
