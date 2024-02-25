@@ -3095,6 +3095,8 @@ function ticketfesta_organizer_register($customer_id, $new_customer_data){
         
         $post_id = wp_insert_post($post_data);
         update_user_meta( $customer_id, 'current_organizer', $post_id );
+        $user = get_userdata( $customer_id );
+        $user->set_role( 'organiser' );
     }
 
 }
