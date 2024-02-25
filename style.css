@@ -543,7 +543,7 @@ width:90%!important;
 .tribe-events-view {
     background-color: #1A1A1A!important
 }
-.home.tribe-events-header {
+.home .tribe-events-header {
     margin-top: -64px!important
 }
 .tribe-events--filter-bar-horizontal.tribe-common--breakpoint-medium {
