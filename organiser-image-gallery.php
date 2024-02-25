@@ -433,6 +433,8 @@ dropZone.addEventListener('drop', function(e) {
     } else {
         // If category_id is not provided, display categories with titles and thumbnails
 
+        $account_mb_used = get_user_meta( $current_user_id, 'total_upload', true );
+        $account_mb_used = $account_mb_used ? $account_mb_used : 0;
         // Query categories created by the current user
         $categories = get_categories(array(
             'taxonomy' => 'tec_organizer_category',
@@ -454,6 +456,7 @@ dropZone.addEventListener('drop', function(e) {
 
         // HTML markup for displaying categories with titles and thumbnails
         echo '<div class="category-gallery">';
+        echo "<p class='used-memomy'> $account_mb_used/0 </p>";
         foreach ($categories as $category) {
             $category_id = $category->term_id;
             $category_name = $category->name;
@@ -479,7 +482,7 @@ dropZone.addEventListener('drop', function(e) {
             echo '</a>';
             echo '</div>'; // Close category-item div
         }
-        echo '</div>'; // Close category-gallery div
+        echo '</span>'; // Close category-gallery div
     }
     wp_reset_query();
     return ob_get_clean();
