@@ -244,7 +244,7 @@ function organiser_image_gallery_shortcode() {
                         contentType: false,
                         success: function(response) {
                             console.log(response); // Handle success response
-                            location.reload();
+                            // location.reload();
 
                         },
                         error: function(error) {
@@ -767,8 +767,6 @@ function tec_check_account_upload_limit($organizer_id, $files){
     var_dump($total_size_used_mb);
     die();
 }
-
-
 ?>
 
 
