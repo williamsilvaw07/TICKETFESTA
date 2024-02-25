@@ -643,7 +643,7 @@ border-radius: 5px;
 
 }
 
-.tribe-common .tribe-common-g-row {
+.home .tribe-common .tribe-common-g-row {
     display: flex!important;
     flex-wrap: wrap;
     justify-content: flex-start;
