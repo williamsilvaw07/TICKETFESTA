@@ -68,7 +68,7 @@ $organizer_names = array_map('tribe_get_organizer', $organizer_ids);
             </div>
 
          <!-- Venue and City -->
-<div class="event-venue-city">
+         <div class="event-venue-city-organizer">
     <?php
     if ( ! empty( $venue_name ) && ! empty( $venue_city ) ) {
         echo esc_html( $venue_name ) . ' - ' . esc_html( $venue_city );
