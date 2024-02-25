@@ -251,10 +251,8 @@ function organiser_image_gallery_shortcode() {
                                 // location.reload();
                             }else{
                                 $('.upload_limit').show();
-                                alert(error);
-                                console.log('error',error); 
+                                console.log('error',response); 
                             }
-
                         },
                         error: function(error) {
                             console.log('error',error); // Handle error
