@@ -22,7 +22,7 @@ function organiser_image_gallery_shortcode() {
             </div>
             <p class='max-upload'> Account Maximum Upload Limit 3MB </p>
             <p class='account-used'> Account mb used 1/3 </p>
-            <p class='upload_limit' style='display:none; color:red;'> Account Maximum Upload Limit Reached </p>
+            <p class='upload_limit' style='color:red!important; '> Account Maximum Upload Limit Reached </p>
         </div> 
         <div class="main-selector-image-upload-div">
             <div class="Organizer-image-upload-div">
@@ -234,6 +234,7 @@ function organiser_image_gallery_shortcode() {
             }
 
             jQuery(document).ready(function($) {
+                $('.upload_limit').hide();
                 $('#image-upload-form').on('submit', function(event) {
                     event.preventDefault();
                     var formData = new FormData(this);
