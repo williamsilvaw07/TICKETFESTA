@@ -754,16 +754,15 @@ function tec_check_account_upload_limit($organizer_id, $files){
         $request_upload_kb = $request_upload_kb + ($size / 1024);
     }
     
-    $category_images = [];
+    $category_images = '';
     $total_size_used_mb = 0;
     foreach($terms as $term ){
         $term_id   = $term->term_id;
         $images    = get_term_meta($term_id, 'category_images', true); // get category images
-        $images    = explode(',', $images);
-        var_dump('images:',$images);
-        array_merge($category_images, $images);
-        var_dump('category_images:',$category_images);
+        $category_images += $images;
     }
+    var_dump($category_images);
+    $category_images = explode(',', $category_images);
     var_dump($category_images);
     foreach($category_images as $category_image){
         $headers = get_headers( $category_image, 1 );
