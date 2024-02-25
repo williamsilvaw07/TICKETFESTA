@@ -536,6 +536,7 @@ width:90%!important;
 
 
 /***********FRONTEND ALL EVENTS*****/
+
 .tribe-events .tribe-events-c-search__button, .tribe-events button.tribe-events-c-search__button {
     background-color: #d3fa16!important;
     color: #0c0d0e!important;
@@ -580,7 +581,7 @@ width:90%!important;
 html .elementor-widget-tec_elementor_widget_events_view{
     padding: 0!important;
 }
-.entry-header , .tribe-events-c-events-bar__views , html .tribe-common--breakpoint-medium.tribe-events .tribe-events-c-top-bar__today-button , .tribe-events-c-top-bar__nav-list{
+.entry-header , .tribe-events-c-top-bar__datepicker ,.tribe-events-c-events-bar__views , html .tribe-common--breakpoint-medium.tribe-events .tribe-events-c-top-bar__today-button , .tribe-events-c-top-bar__nav-list{
     display: none!important;
 }
 .entry-content{
