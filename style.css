@@ -471,7 +471,9 @@ a.tribe-button.tribe-button-primary.add-new , .organizers_add_new_btn{
     background-color: transparent !important;
 }
 
-
+.main_bk_home_main_div{
+    margin-top: -64px;
+}
 
 .main_bk_home_main_div:before{
     backdrop-filter: blur(5px);
