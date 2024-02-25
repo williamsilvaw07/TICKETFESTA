@@ -69,6 +69,7 @@ $organizer_names = array_map('tribe_get_organizer', $organizer_ids);
 
          <!-- Venue and City -->
          <div class="event-venue-city-organizer">
+<div class="event-venue-city">
     <?php
     if ( ! empty( $venue_name ) && ! empty( $venue_city ) ) {
         echo esc_html( $venue_name ) . ' - ' . esc_html( $venue_city );
@@ -84,7 +85,7 @@ $organizer_names = array_map('tribe_get_organizer', $organizer_ids);
 <div class="event-organizer">
     <?php echo esc_html( implode(', ', $organizer_names) ); ?>
 </div>
-
+</div>
             <!-- Get Tickets Button -->
             <div class="event-actions">
                 <div class="event_actions_inner">
