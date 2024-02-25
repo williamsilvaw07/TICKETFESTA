@@ -761,18 +761,18 @@ function tec_check_account_upload_limit($organizer_id, $files){
         $images    = get_term_meta($term_id, 'category_images', true); // get category images
         $category_images .= $images . ',';
     }
-    $category_images .= $category_images;
-    var_dump($category_images);
     $category_images = explode(',', $category_images);
     var_dump($category_images);
     foreach($category_images as $category_image){
-        $headers = get_headers( $category_image, 1 );
+        if($category_image !== ''){
+            $headers = get_headers( $category_image, 1 );
 
-        if ( isset( $headers['Content-Length'] ) ) {
-            $filesize_bytes = (int) $headers['Content-Length'];
-            $filesize_mb = round( $filesize_bytes / ( 1024 * 1024 ), 2 ); // Convert to MB
-            $total_size_used_mb += $filesize_mb;
-        } 
+            if ( isset( $headers['Content-Length'] ) ) {
+                $filesize_bytes = (int) $headers['Content-Length'];
+                $filesize_mb = round( $filesize_bytes / ( 1024 * 1024 ), 2 ); // Convert to MB
+                $total_size_used_mb += $filesize_mb;
+            }
+        }
     }
     var_dump('request_to_upload: ', (int)$request_upload_kb);
     var_dump('total_uploaded: ',$total_size_used_mb);
