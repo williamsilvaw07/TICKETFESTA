@@ -599,7 +599,7 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 
 	////JS TO ADD THE MAIN PRODUCT IMAGE ON THE BACKGROUND AND ADD THE LOCATION ON THE CUSTOM DIV 
 	document.addEventListener('DOMContentLoaded', function() {
-    var imageElement = document.querySelector('.tribe-events-pro-organizer__meta-featured-image-wrapper img');
+    var imageElement = document.querySelector('.organizer_profile_bk');
     var titleElement = document.querySelector('.tribe_organizer-template-default');
 
     if (imageElement && titleElement) {
