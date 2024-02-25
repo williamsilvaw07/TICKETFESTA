@@ -818,7 +818,7 @@ html .event-venue-city-organizer{
 @media (max-width: 500px) {
 
     .main_bk_home_main_div{
-        height: 62vh;
+        height: 30vh!important;
     }
 }
 /*******end*****/
