@@ -846,7 +846,9 @@ html .event-venue-city-organizer{
     .elementor-element-679702c{
         margin-top: 37px!important;
     }
-    
+    .home .entry-header{
+        display: none!important;
+    }
 }
 /*******end*****/
 
