@@ -548,9 +548,24 @@ width:90%!important;
 }
 
 .home_main_heading{
+    position: absolute!important;
+}
+.home_bk_image_imga .elementor-widget-container:hover::after {
+    content: '';
+    display: block;
     position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5); /* black with 50% opacity */
+    pointer-events: none;
 }
 
+.home_bk_image_imga .elementor-widget-container {
+    position: relative;
+    overflow: hidden; /* Prevent the pseudo-element from going outside the container */
+}
 .tribe-events-view {
     background-color: #1A1A1A!important
 }
