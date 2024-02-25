@@ -828,6 +828,7 @@ html .event-venue-city-organizer{
 
     .main_bk_home_main_div{
         height: 40vh!important;
+        margin-top: -50px!important;
     }
     .home_main_heading {
         top: 39%;
