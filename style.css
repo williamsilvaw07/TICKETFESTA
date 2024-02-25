@@ -464,7 +464,10 @@ a.tribe-button.tribe-button-primary.add-new , .organizers_add_new_btn{
 
 
 /****HOME BANNER******/
-.home .elementor-3943 .elementor-element.elementor-element-9d845b1:not(.elementor-motion-effects-element-type-background){
+.home header{
+
+}
+.home .elementor-3943 .elementor-element.elementor-element-9d845b1:not(.elementor-motion-effects-element-type-background) , .home header{
     background-color: rgba(26, 26, 26, 0)!important;
 }
 
