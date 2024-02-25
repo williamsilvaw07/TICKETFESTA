@@ -3135,10 +3135,8 @@ function ticketfesta_login_redirect($redirect, $user){
 }
 
 function custom_checkout_scripts() {
-    // Check if it's the checkout page
-    if ( is_checkout() ) {
+
         // Enqueue jQuery script
-        wp_enqueue_script( 'custom-checkout-script', get_stylesheet_directory_uri() . '/custom-function-frontend.js', array( 'jquery' ), '1.0', true );
-    }
+    wp_enqueue_script( 'custom-checkout-script', get_stylesheet_directory_uri() . '/custom-function-frontend.js', array( 'jquery' ), '1.0', true );
 }
 add_action( 'woocommerce_checkout_enqueue_scripts', 'custom_checkout_scripts' );
