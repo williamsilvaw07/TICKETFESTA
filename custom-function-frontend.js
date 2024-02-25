@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Add classes 'xoo-el-action-sc' and 'xoo-el-login-tgr'
         $(this).addClass('xoo-el-action-sc xoo-el-login-tgr');
     });
+    
     jQuery('.xoo-el-action-sc.button.btn.xoo-el-login-tgr').css('visibility', 'hidden');
     setTimeout(function() {
         // Trigger click event and hide the element
