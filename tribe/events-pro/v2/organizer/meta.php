@@ -979,24 +979,37 @@ jQuery(document).ready(function($) {
 
 
 <style>
-.organizer_profile_bk_wrapper {
+
+.organizer_profile_bk {
     position: relative;
+    background-image: url('https://ticketfesta.co.uk/wp-content/uploads/2024/02/antoine-j-r3XvSBEQQLo-unsplash-2.jpg');
+    background-size: cover;
+    background-position: center;
+    overflow: hidden; /* Ensure the pseudo-element does not extend outside this container */
 }
 
-.glass_effect_overlay {
+.organizer_profile_bk::before {
+    content: '';
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    backdrop-filter: blur(10px);
-    background: rgba(0, 0, 0, 0.5); /* Adjust the black background opacity as needed */
+    right: 0;
+    bottom: 0;
+    backdrop-filter: blur(10px); /* Adjust the blur value as needed */
+    -webkit-backdrop-filter: blur(10px); /* For Safari */
+    background: rgba(0, 0, 0, 0.5); /* Dark overlay; adjust color and opacity as needed */
+    z-index: 0; /* Ensure this sits below the content */
 }
-/* Ensure the parent and any content on top have a higher z-index */
-.organizer_profile_main_div, .organizer_profile_main_div * {
+
+/* Ensure content inside .organizer_profile_bk is positioned above the pseudo-element */
+.organizer_profile_main_div, .tec-events-c-view-box-border, .image_profile_text_main_continer, .tribe-events-pro-organizer__meta-featured-image-wrapper, .organizer_title_name {
     position: relative;
-    z-index: 1;
+    z-index: 1; /* Higher than the pseudo-element to keep content above the overlay */
 }
+
+
+
+
 
     .tribe-events-c-messages__message--notice{
         display:none
