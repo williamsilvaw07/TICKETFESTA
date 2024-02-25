@@ -471,7 +471,7 @@ a.tribe-button.tribe-button-primary.add-new , .organizers_add_new_btn{
     width:90%!important;  
     margin: 0 auto;
 }
-.home .elementor-3943 .elementor-element.elementor-element-9d845b1:not(.elementor-motion-effects-element-type-background), .home header {
+.home .elementor-3943 .elementor-element.elementor-element-9d845b1:not(.elementor-motion-effects-element-type-background), .elementor-3943 .elementor-element.elementor-element-9ee88e6:not(.elementor-motion-effects-element-type-background) , .home header {
     background-color: transparent !important;
 }
 
