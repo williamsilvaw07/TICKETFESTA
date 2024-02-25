@@ -544,7 +544,7 @@ width:90%!important;
     background-color: #1A1A1A!important
 }
 .home.tribe-events-header {
-    margin-top: -64px;
+    margin-top: -64px!important
 }
 .tribe-events--filter-bar-horizontal.tribe-common--breakpoint-medium {
     overflow: visible;
