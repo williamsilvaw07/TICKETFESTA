@@ -820,26 +820,7 @@ html .event-venue-city-organizer{
     .main_bk_home_main_div{
         height: 30vh!important;
     }
-    html .tribe-events-pro-photo__event{
-        display: flex!important;
-        justify-content: flex-start!important;
-        align-items: center!important;
-        flex-direction: row!important;
-    }
-    body .tribe-events-pro-photo__event-featured-image-link img , body .event-featured-image-placeholder img  {
-max-width: 150px!important;
-min-height: 195px!important;
-object-fit: contain!important;
-}
-.tribe-events-pro .tribe-events-pro-photo__event-details-wrapper {
-    display: flex;
-    color: black;
-    padding: 7px 11px;
-}
-.tribe-events-pro-photo__event-title{
-    font-size: 15px!important;
-    line-height: 19px!important;
-}
+
 }
 /*******end*****/
 
