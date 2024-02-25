@@ -494,6 +494,13 @@ width:90%!important;
     overflow: hidden;
 }
 
+
+.main_bk_home_main_div {
+    background-image: url('https://ticketfesta.co.uk/wp-content/uploads/2024/02/yvette-de-wit-NYrVisodQ2M-unsplash-min.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
 .main_bk_home_main_div::before {
     content: '';
     position: absolute;
