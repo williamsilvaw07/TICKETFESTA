@@ -80,6 +80,7 @@ function organiser_image_gallery_shortcode() {
     <!-- Inline CSS for styling -->
     <style>
         .select-organizer, #organiser-selector{
+            height: 1px!important;
             visibility: hidden;
         }
         #image-gallery {
