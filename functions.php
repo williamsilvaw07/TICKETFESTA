@@ -3097,3 +3097,15 @@ function ticketfesta_organizer_register($customer_id, $new_customer_data){
     }
 
 }
+
+add_action( 'xoo_el_registration_success', 'ticketfesta_registration_success', 10, 1 );
+
+function ticketfesta_registration_success($new_customer){
+    $create_organizer =  isset($_POST['create-organizer']) ? $_POST['create-organizer'] : '';
+    if($create_organizer !== ''){
+        $site_url = home_url();
+        $dashboard_url = trailingslashit( $site_url ) . 'dashboard/';
+        wp_redirect( $dashboard_url );
+    }
+
+}
