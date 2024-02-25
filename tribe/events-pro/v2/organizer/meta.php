@@ -979,29 +979,19 @@ jQuery(document).ready(function($) {
 
 
 <style>
-.organizer_profile_bk::before {
-    content: ''; /* Necessary for the pseudo-element to display */
-    position: absolute; /* Position the pseudo-element absolutely within its parent */
-    top: 0; /* Align to the top of the parent */
-    left: 0; /* Align to the left of the parent */
-    width: 100%; /* Span the full width of the parent */
-    height: 100%; /* Span the full height of the parent */
-    background: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
-    /* Optional: Add a subtle texture or gradient to simulate frosted glass */
-    background-image: linear-gradient(
-        45deg,
-        rgba(255, 255, 255, 0.1) 25%,
-        transparent 25%,
-        transparent 50%,
-        rgba(255, 255, 255, 0.1) 50%,
-        rgba(255, 255, 255, 0.1) 75%,
-        transparent 75%,
-        transparent
-    );
-    background-size: 50px 50px; /* Adjust the size of the pattern */
-    z-index: 0; /* Ensure it's below the content */
+.organizer_profile_bk_wrapper {
+    position: relative;
 }
 
+.glass_effect_overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(10px);
+    background: rgba(0, 0, 0, 0.5); /* Adjust the black background opacity as needed */
+}
 /* Ensure the parent and any content on top have a higher z-index */
 .organizer_profile_main_div, .organizer_profile_main_div * {
     position: relative;
