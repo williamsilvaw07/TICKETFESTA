@@ -1420,17 +1420,3 @@ color: #555!important;
     color: #000!important;
 }
 
-@media (max-width: 767px) {
-    .tribe-events-header__events-bar {
-        margin-bottom: 0px!important;
-     
-    }
-    .tribe-events .tribe-events-c-events-bar__search-button-icon-svg path , .tribe-events .tribe-events-c-events-bar__filter-button-icon path {
-        fill: #ffffff!important;
-    }
-    .tribe-filter-bar.tribe-filter-bar--horizontal, .tribe-filter-bar.tribe-filter-bar--vertical {
-        background-color: #1A1A1A!important;
-        color: white!important;
-    }
-    
-}
