@@ -789,9 +789,7 @@ html .event-venue-city-organizer{
     
     
     @media (max-width: 767px) {
-        .tribe-events-header--has-event-search{
-            display: block!important;
-        }      
+     
         .main_bk_home_main_div{
             height: 52vh;
         }
