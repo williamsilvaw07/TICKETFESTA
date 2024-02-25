@@ -463,7 +463,22 @@ a.tribe-button.tribe-button-primary.add-new , .organizers_add_new_btn{
 
 
 
+/****HOME BANNER******/
 
+.main_bk_home_main_div{
+
+}
+
+.home_bk_image_imga img
+{
+max-width: 903px;
+    border-radius: 7px;
+    margin: 10px;
+    margin-bottom: 100px;
+}
+
+
+/******END*****/
 
 
 
@@ -576,9 +591,7 @@ border-radius: 5px;
     color: black!important;
 }
 
-main_bk_home_main_div
 
-home_bk_image_imga
 
 .event-actions {
     display: flex;
