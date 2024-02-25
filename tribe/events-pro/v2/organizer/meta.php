@@ -94,30 +94,36 @@ $template_vars = array_merge( [ 'organizer' => $organizer, ], $conditionals )
 
 <div <?php tribe_classes( $classes ); ?>>
 
+<div class="organizer_profile_main_div">
 
-    <div class="organizer_profile_main_div">
+    <!-- Background Wrapper with Overlay -->
+    <div class="organizer_profile_bk_wrapper">
+        <div class="organizer_profile_bk" style="
+        <?php
+        // Ensure that $organizer_id is defined. Use $organizer->ID if available.
+        if ( isset( $organizer ) && isset( $organizer->ID ) ) {
+            $organizer_id = $organizer->ID;
+        } else {
+            // Handle the case where $organizer or $organizer->ID is not available
+            $organizer_id = get_the_ID(); // Fallback to get current post ID
+        }
 
-    <div class="organizer_profile_bk" style="
-    <?php
-    // Ensure that $organizer_id is defined. Use $organizer->ID if available.
-    if ( isset( $organizer ) && isset( $organizer->ID ) ) {
-        $organizer_id = $organizer->ID;
-    } else {
-        // Handle the case where $organizer or $organizer->ID is not available
-        $organizer_id = get_the_ID(); // Fallback to get current post ID
-    }
+        $banner_image_id = get_post_meta($organizer_id, 'banner_image_id', true);
+        if ($banner_image_id) {
+            $banner_image_url = wp_get_attachment_image_url($banner_image_id, 'full');
+        } else {
+            // Use default image if no specific image is set
+            $banner_image_url = 'https://thaynna-william.co.uk/wp-content/uploads/2024/01/Group-189-5.jpg';
+        }
+        echo 'background-image: url(' . esc_url($banner_image_url) . ');';
+        ?>
+        background-size: cover; background-position: center;">
+        </div>
+        <div class="glass_effect_overlay"></div>
+    </div>
 
-    $banner_image_id = get_post_meta($organizer_id, 'banner_image_id', true);
-    if ($banner_image_id) {
-        $banner_image_url = wp_get_attachment_image_url($banner_image_id, 'full');
-    } else {
-        // Use default image if no specific image is set
-        $banner_image_url = 'https://thaynna-william.co.uk/wp-content/uploads/2024/01/Group-189-5.jpg';
-    }
-    echo 'background-image: url(' . esc_url($banner_image_url) . ');';
-    ?>
-    background-size: cover; background-position: center;">
-</div>
+
+
 
 	<div class="tec-events-c-view-box-border">
 
