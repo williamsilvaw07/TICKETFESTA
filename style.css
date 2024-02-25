@@ -465,8 +465,8 @@ a.tribe-button.tribe-button-primary.add-new , .organizers_add_new_btn{
 
 /****HOME BANNER******/
 
-.main_bk_home_main_div{
-
+.main_bk_home_main_div:before{
+    backdrop-filter: blur(5px);
 }
 
 .home_bk_image_imga img
