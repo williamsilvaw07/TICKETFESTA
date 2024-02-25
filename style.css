@@ -540,7 +540,10 @@ width:90%!important;
 
 
 /***********FRONTEND ALL EVENTS*****/
+#ecsa-search input[type=text] {
+    color: #fff!important;
 
+}
 .tribe-events .tribe-events-c-search__button, .tribe-events button.tribe-events-c-search__button {
     background-color: #d3fa16!important;
     color: #0c0d0e!important;

@@ -123,3 +123,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     console.log('Event listeners attached to the mobile search icon span.');
 });
+
+
+
+
+
+
+
+
+
+
