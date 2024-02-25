@@ -3,8 +3,7 @@
 add_shortcode('organiser_image_gallery', 'organiser_image_gallery_shortcode');
 
 function organiser_image_gallery_shortcode() {
-    $account_mb_used = get_user_meta( get_current_user_id(), '_total_upload', true );
-    var_dump($account_mb_used);
+    $account_mb_used = get_user_meta( get_current_user_id(), 'total_upload', true );
     $account_mb_used = $account_mb_used ? $account_mb_used : 0;
     ob_start(); ?>
 
@@ -678,7 +677,7 @@ function upload_images_cat() {
         $upload_dir = wp_upload_dir();
         $success = false;
         $messages = '';
-        if(tec_check_account_upload_limit($organiser, $files)){
+        if(!tec_check_account_upload_limit($organiser, $files)){
             wp_send_json_error('Image upload limit reached');
         }
         if ( ! empty( $upload_dir['basedir'] ) ) {
