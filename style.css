@@ -820,7 +820,7 @@ html .event-venue-city-organizer{
     .main_bk_home_main_div{
         height: 30vh!important;
     }
-    .tribe-events-pro-photo__event{
+    html .tribe-events-pro-photo__event{
         display: flex;
         justify-content: flex-start!important;
         align-items: center!important;
