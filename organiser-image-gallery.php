@@ -732,9 +732,7 @@ function create_tec_organizer_category_with_images($category_name, $image_urls, 
     
 function tec_check_account_upload_limit($organizer_id, $files){
     $sizes = $files['size'];
-    echo "<pre>";
-    var_dump($files);
-    echo "</pre>";
+   
     $terms = get_terms( array(
         'taxonomy' => 'tec_organizer_category',
         'meta_query' => array(
@@ -761,7 +759,9 @@ function tec_check_account_upload_limit($organizer_id, $files){
         $images    = explode(',', $category_images);
         array_merge($category_images, $images);
     }
-
+    echo "<pre>";
+    var_dump('terms: ', $terms );
+    echo "</pre>";
     foreach($category_images as $category_image){
         $headers = get_headers( $category_image, 1 );
 
