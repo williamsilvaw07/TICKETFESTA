@@ -31,9 +31,6 @@
     color: white!important;
 
   }
-  .tribe-events-c-events-bar__filter-button-text , html button{
-    font-family: "Plus Jakarta Sans", Sans-serif!important;
-  }
   .entry-content .alignwide, body:not(.no-sidebar) .entry-content .alignfull{
     margin-left:inherit!important;
     width: inherit!important;
@@ -280,10 +277,10 @@ font-family: "Plus Jakarta Sans", Sans-serif;
 
 
 @media (max-width: 767px) {
- .elementor-element-9ee88e6{
-    padding-
- }
- 
+    .elementor-3943 .elementor-element.elementor-element-518769c img {
+        height: 30px!important; 
+        width: auto!important;
+    }
  .elementor-element-9ee88e6{
     display: -webkit-flex;
     display: flex;
@@ -471,7 +468,7 @@ a.tribe-button.tribe-button-primary.add-new , .organizers_add_new_btn{
     width:90%!important;  
     margin: 0 auto;
 }
-.home .elementor-3943 .elementor-element.elementor-element-9d845b1:not(.elementor-motion-effects-element-type-background), .elementor-3943 .elementor-element.elementor-element-9ee88e6:not(.elementor-motion-effects-element-type-background) , .home header {
+.home .elementor-3943 .elementor-element.elementor-element-9d845b1:not(.elementor-motion-effects-element-type-background), .home header {
     background-color: transparent !important;
 }
 
@@ -539,41 +536,17 @@ width:90%!important;
 
 
 /***********FRONTEND ALL EVENTS*****/
-
 .tribe-events .tribe-events-c-search__button, .tribe-events button.tribe-events-c-search__button {
     background-color: #d3fa16!important;
     color: #0c0d0e!important;
 }
-.tribe-events-c-events-bar--border {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.9)!important;
+.tribe-common-form-control-text__input.tribe-events-c-search__input {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1)!important;
 }
 .home .entry-content:not(:first-child) , .home .site-main{
     margin-top: 0em!important;
 }
-.elementor-1476 .elementor-element.elementor-element-0fdff56 .elementor-heading-title {
-    opacity: 0.7!important;
-}
-.home_main_heading{
-    position: absolute!important;
-}
-.home_bk_image_imga .elementor-widget-container::after {
-    content: '';
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.4); /* black with 50% opacity */
-    pointer-events: none;
-}
 
-
-
-.home_bk_image_imga .elementor-widget-container {
-    position: relative;
-    overflow: hidden; /* Prevent the pseudo-element from going outside the container */
-}
 .tribe-events-view {
     background-color: #1A1A1A!important
 }
@@ -586,7 +559,7 @@ width:90%!important;
 html .elementor-widget-tec_elementor_widget_events_view{
     padding: 0!important;
 }
-.entry-header , .tribe-events-c-top-bar__datepicker ,.tribe-events-c-events-bar__views , html .tribe-common--breakpoint-medium.tribe-events .tribe-events-c-top-bar__today-button , .tribe-events-c-top-bar__nav-list{
+.entry-header , .tribe-events-c-events-bar__views , html .tribe-common--breakpoint-medium.tribe-events .tribe-events-c-top-bar__today-button , .tribe-events-c-top-bar__nav-list{
     display: none!important;
 }
 .entry-content{
@@ -764,50 +737,6 @@ html .event-venue-city-organizer{
     background-color: transparent !important; 
     opacity: 1!important;
 }
-
-
-
-
-
-
-
-
-
-
-@media (max-width: 1024px) {
-
-.tribe-events-header--has-event-search{
-    display: none!important;
-}
-    .home_main_heading{
-        top: 44%; 
-    }
-    .home_main_heading h1{
-        font-size: 35px!important;
-    }
-    }
-    
-    
-    
-    
-    @media (max-width: 767px) {
-        .tribe-events .tribe-events-l-container {
-            width: 90%!important;
-        }
-        .main_bk_home_main_div{
-            height: 52vh;
-        }
-        .elementor-3943 .elementor-element.elementor-element-518769c img {
-            height: 30px!important; 
-            width: auto!important;
-        }
-        body .home_bk_image_imga img {
-            width: 100%!important;
-            border-radius: 7px!important;
-            margin: 0px!important;
-            position: relative;
-        }
-    }
 /*******end*****/
 
 
