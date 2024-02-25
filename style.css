@@ -9,7 +9,7 @@
 
 
  /*****GLOBO CSS****/
-html body h1{
+html body h1 , .elementor-heading-title{
     display: none!important;
 }
  .content-wrapper {
