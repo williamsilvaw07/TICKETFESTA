@@ -797,7 +797,7 @@ html .event-venue-city-organizer{
     
     
     @media (max-width: 767px) {
-        .tribe-events .tribe-events-l-container {
+        .home .tribe-events .tribe-events-l-container {
             width: 90%!important;
         }
         .main_bk_home_main_div{
