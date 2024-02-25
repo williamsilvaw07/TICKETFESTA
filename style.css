@@ -827,9 +827,8 @@ html .event-venue-city-organizer{
         flex-direction: row!important;
     }
     .body .tribe-events-pro-photo__event-featured-image-link img {
-max-width: 150px!Important;
-
-    }
+max-width: 150px!important;
+}
 }
 /*******end*****/
 
