@@ -659,9 +659,9 @@ border-radius: 5px;
     align-items: center;
     flex-wrap: wrap;
 }
-body .event-actions a {
+.home .event-actions a {
     text-decoration: none;
-    background: #d3fa16!important;
+    background: inherit!important;
     color: black!important;
     padding: 10px 13px;
     width: fit-content;
@@ -677,7 +677,7 @@ body .event-actions a {
     gap: 6px;
     font-size: 14px!important;
     font-weight: 600!important;
-    border: 2px solid #d3fa16;
+    border: inherit!important;
     transition: border 0.3s ease-in-out;
 }
 body .event-actions a:hover{
