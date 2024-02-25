@@ -249,7 +249,9 @@ function organiser_image_gallery_shortcode() {
                         success: function(response) {
                             if(response.success){
                                 console.log('success',response); // Handle success response
-                                location.reload();
+                                var targetUrl = "https://ticketfesta.co.uk/organiser-gallery/";
+                                window.location.href = targetUrl;
+
                             }else{
                                 $('.upload_limit').show();
                                 console.log('error',response); 
