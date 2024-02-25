@@ -828,6 +828,12 @@ html .event-venue-city-organizer{
     }
     body .tribe-events-pro-photo__event-featured-image-link img {
 max-width: 150px!important;
+min-height: 195px!important;
+}
+.tribe-events-pro .tribe-events-pro-photo__event-details-wrapper {
+    display: flex;
+    color: black;
+    padding: 7px 11px;
 }
 }
 /*******end*****/
