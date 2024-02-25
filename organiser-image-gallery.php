@@ -669,7 +669,9 @@ function upload_images_cat() {
         $upload_dir = wp_upload_dir();
         $success = false;
         $messages = '';
-        tec_check_account_upload_limit($organiser, $files);
+        if(!tec_check_account_upload_limit($organiser, $files)){
+            wp_send_json_error('Image upload limit reached');
+        }
         if ( ! empty( $upload_dir['basedir'] ) ) {
 
             $user_dirname = $upload_dir['basedir'].'/organiser-images/';
@@ -732,22 +734,18 @@ function create_tec_organizer_category_with_images($category_name, $image_urls, 
     
 function tec_check_account_upload_limit($organizer_id, $files){
     $sizes = $files['size'];
-    $current_user = get_current_user_id();
+    $current_user_id = get_current_user_id();
     $terms = get_categories(array(
         'taxonomy' => 'tec_organizer_category',
         'hide_empty' => false,
         'meta_query' => array(
             array(
                 'key' => 'category_owner_id',
-                'value' => $current_user                ,
+                'value' => $current_user_id                ,
                 'compare' => '='
             )
         )
     ));
-    echo "<pre>";
-    var_dump('organizer_id: ', $current_user );
-    // var_dump('terms: ', $terms );
-    echo "</pre>";
     $request_upload_kb = 0;
 
     foreach($sizes as  $size){
@@ -755,28 +753,33 @@ function tec_check_account_upload_limit($organizer_id, $files){
     }
     
     $category_images = '';
-    $total_size_used_mb = 0;
+    $total_size_used_kb = 0;
     foreach($terms as $term ){
         $term_id   = $term->term_id;
         $images    = get_term_meta($term_id, 'category_images', true); // get category images
         $category_images .= $images . ',';
     }
     $category_images = explode(',', $category_images);
-    var_dump($category_images);
     foreach($category_images as $category_image){
         if($category_image !== ''){
             $headers = get_headers( $category_image, 1 );
-            var_dump($headers);
             if ( isset( $headers['Content-Length'] ) ) {
                 $filesize_bytes = (int) $headers['Content-Length'];
-                $filesize_mb = round( $filesize_bytes /1024  , 2 ); // Convert to MB
-                $total_size_used_mb += $filesize_mb;
+                $filesize_mb = round( $filesize_bytes /1024  , 2 ); // Convert to KB
+                $total_size_used_kb += $filesize_mb;
             }
         }
     }
-    var_dump('request_to_upload: ', (int)$request_upload_kb);
-    var_dump('total_uploaded: ',$total_size_used_mb);
-    die();
+    $total_size_used_kb = $total_size_used_kb + $request_upload_kb;
+    $limit_check = round( ($total_size_used_kb / 1024) , 2);
+    if($limit_check < 3){
+        update_user_meta( $current_user_id, 'total_upload', $limit_check );
+        return true;
+    }else{
+
+        return false;
+    }
+    return false;
 }
 ?>
 
