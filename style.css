@@ -508,13 +508,12 @@ width:90%!important;
     left: 0;
     right: 0;
     bottom: 0;
-    backdrop-filter: blur(10px); /* Adjust the blur value as needed */
-    -webkit-backdrop-filter: blur(10px); /* For Safari compatibility */
-    background: rgba(255, 255, 255, 0.5); /* Adjust the background color and opacity for the frosted glass effect */
-    z-index: 1; /* Ensure the overlay is above the background but below the content */
+    backdrop-filter: blur(70px);
+    -webkit-backdrop-filter: blur(70px); 
+    background: rgba(255, 255, 255, 0.5); 
+    z-index: 1; 
 }
 
-/* Ensure the content inside the container is above the frosted glass effect overlay */
 .main_bk_home_main_div > * {
     position: relative;
     z-index: 2; 
