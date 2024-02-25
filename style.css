@@ -590,9 +590,7 @@ width:90%!important;
 html .elementor-widget-tec_elementor_widget_events_view{
     padding: 0!important;
 }
-.entry-header , .tribe-events-c-top-bar__datepicker ,.tribe-events-c-events-bar__views , html .tribe-common--breakpoint-medium.tribe-events .tribe-events-c-top-bar__today-button , .tribe-events-c-top-bar__nav-list{
-    display: none!important;
-}
+
 .entry-content{
     margin-top: 0;
 }
