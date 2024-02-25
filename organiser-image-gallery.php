@@ -741,10 +741,13 @@ function tec_check_account_upload_limit($organizer_id, $files){
                 'key' => 'category_owner_id',
                 'value' => $current_user                ,
                 'compare' => '='
-            ),
+            )
         )
     ));
-
+    echo "<pre>";
+    var_dump('organizer_id: ', $current_user );
+    var_dump('terms: ', $terms );
+    echo "</pre>";
     $request_upload_kb = 0;
 
     foreach($sizes as  $size){
@@ -760,10 +763,7 @@ function tec_check_account_upload_limit($organizer_id, $files){
         $images    = explode(',', $category_images);
         array_merge($category_images, $images);
     }
-    echo "<pre>";
-    var_dump('organizer_id: ', $organizer_id );
-    var_dump('terms: ', $terms );
-    echo "</pre>";
+
     foreach($category_images as $category_image){
         $headers = get_headers( $category_image, 1 );
 
