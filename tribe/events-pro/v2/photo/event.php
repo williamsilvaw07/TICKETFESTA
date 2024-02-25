@@ -98,22 +98,30 @@ $organizer_names = array_map('tribe_get_organizer', $organizer_ids);
     <script>
 
 
-  // Make the entire event card clickable
-// Make the entire event card clickable
+// Make the entire event card clickable without affecting interactive elements like buttons and links
 document.addEventListener('DOMContentLoaded', function() {
-    var articles = document.querySelectorAll('article[data-href]');
+    var articles = document.querySelectorAll('.tribe-events-pro-photo__event');
+
     articles.forEach(function(article) {
+        // Add click event listener to each article
         article.addEventListener('click', function(e) {
-            // Prevent redirection if the click is on interactive elements or their children
-            if (e.target.tagName === 'A' || e.target.tagName === 'BUTTON' || e.target.closest('a, button')) {
+            // Check if the click was on interactive elements or their descendants
+            if (e.target.closest('a, button, .share_btn, .share_btn_event, .close_popup, .copyButton')) {
+                // Do nothing if the click is on interactive elements or their descendants
                 return;
             }
-            window.location.href = this.getAttribute('data-href');
+
+            // Redirect to the URL specified in the data-href attribute of the article
+            var url = article.querySelector('a').getAttribute('href');
+            if (url) {
+                window.location.href = url;
+            }
         });
+
+        // Change the cursor to pointer to indicate clickable area
         article.style.cursor = 'pointer';
     });
 });
-
 
 
 
