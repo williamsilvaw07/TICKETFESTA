@@ -731,7 +731,9 @@ function create_tec_organizer_category_with_images($category_name, $image_urls, 
 }
     
 function tec_check_account_upload_limit($organizer_id, $files){
+    echo "<pre>";
     var_dump($files);
+    echo "</pre>";
     $terms = get_terms( array(
         'taxonomy' => 'tec_organizer_category',
         'meta_query' => array(
@@ -762,7 +764,8 @@ function tec_check_account_upload_limit($organizer_id, $files){
             $total_size_used_mb += $filesize_mb;
         } 
     }
-    
+    var_dump($total_size_used_mb);
+    die();
 }
 
 
