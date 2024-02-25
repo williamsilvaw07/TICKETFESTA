@@ -550,7 +550,7 @@ width:90%!important;
 .home_main_heading{
     position: absolute!important;
 }
-.home_bk_image_imga .elementor-widget-container:hover::after {
+.home_bk_image_imga .elementor-widget-container::after {
     content: '';
     display: block;
     position: absolute;
