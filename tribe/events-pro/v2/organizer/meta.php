@@ -237,8 +237,13 @@ $follower_count = count($followers_array);
 if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
     if ( isset( $_POST['follow'] ) ) {
         if (!is_user_logged_in() )  {
-            $my_account_url = esc_url(get_permalink( get_option('woocommerce_myaccount_page_id') ));
-            echo "<a href='$my_account_url' class='login-first'> Please login first. </a>" ;
+            // $my_account_url = esc_url(get_permalink( get_option('woocommerce_myaccount_page_id') ));
+            // echo "<a href='$my_account_url' class='login-first'> Please login first. </a>" ;
+
+            $shortcode = '[xoo_el_action type="login" display="button"]';
+
+            // Execute the shortcode
+            echo do_shortcode( $shortcode );
         }
     } 
 }
