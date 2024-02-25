@@ -760,6 +760,7 @@ function tec_check_account_upload_limit($organizer_id, $files){
         array_merge($category_images, $images);
     }
     echo "<pre>";
+    var_dump('organizer_id: ', $organizer_id );
     var_dump('terms: ', $terms );
     echo "</pre>";
     foreach($category_images as $category_image){
