@@ -20,7 +20,9 @@ function organiser_image_gallery_shortcode() {
                         <input type="file" id="file-input" name="files[]" multiple>
                 </div>
             </div>
-            <span class='max-upload'> Account Maximum Upload Limit 3MB </span>
+            <p class='max-upload'> Account Maximum Upload Limit 3MB </p>
+            <p class='account-used'> Account mb used 1/3 </p>
+            <p class='upload_limit' style='display:none; color:red;'> Account Maximum Upload Limit Reached </p>
         </div> 
         <div class="main-selector-image-upload-div">
             <div class="Organizer-image-upload-div">
@@ -107,18 +109,18 @@ function organiser_image_gallery_shortcode() {
         }
         .delete-button {
             position: absolute;
-    top: 8px;
-    right: 14px;
-    background-color: #f44336;
-    color: white;
-    border: none;
-    border-radius: 50%;
-    width: 33px;
-    height: 33px;
-    cursor: pointer;
-    font-weight: 700;
-    padding: 0;
-}
+            top: 8px;
+            right: 14px;
+            background-color: #f44336;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 33px;
+            height: 33px;
+            cursor: pointer;
+            font-weight: 700;
+            padding: 0;
+        }
     </style>
 
     <!-- Inline JavaScript for functionality -->
@@ -248,6 +250,7 @@ function organiser_image_gallery_shortcode() {
 
                         },
                         error: function(error) {
+                            $('.upload_limit').show();
                             console.log(error); // Handle error
                         }
                     });
