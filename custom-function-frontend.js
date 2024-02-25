@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-    jQuery('.xoo-el-action-sc.button.btn.xoo-el-login-tgr').trigger('click').hide();
+    jQuery('.xoo-el-action-sc.button.btn.xoo-el-login-tgr').trigger('click');
     jQuery('.organizer-title').hide(); 
     jQuery('.organizer-title').prop('required', false); 
     jQuery('.organizer-title_cont').hide();
