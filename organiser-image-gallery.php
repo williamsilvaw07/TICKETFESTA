@@ -773,7 +773,7 @@ function tec_check_account_upload_limit($organizer_id, $files){
             $headers = get_headers( $category_image, 1 );
             if ( isset( $headers['Content-Length'] ) ) {
                 $filesize_bytes = (int) $headers['Content-Length'];
-                $filesize_mb = round( $filesize_bytes /1024  , 2 ); // Convert to KB
+                $filesize_mb = round( ( $filesize_bytes / 1024)  , 2 ); // Convert to KB
                 $total_size_used_kb += $filesize_mb;
             }
         }
