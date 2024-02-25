@@ -1378,7 +1378,9 @@ color: #555!important;
 }
 
 
-
+.xoo-el-main, .xoo-el-main span, .xoo-el-main a,span.xoo-el-close {
+    color: #000!important;
+}
 
 @media (max-width: 767px) {
     .tribe-events-header__events-bar {

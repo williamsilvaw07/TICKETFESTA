@@ -12,18 +12,20 @@ function organiser_image_gallery_shortcode() {
      
         <div id="image-upload">
             <div class="image-upload-div">
-            <div id="drop-zone">
-            <span class="primary-icon fas fa-image fa-stack-2x"></span>
-            <p class="drag-drop_text">  Drag & drop images here or click to select images.</p>
+                <div id="drop-zone">
+                    <span class="primary-icon fas fa-image fa-stack-2x"></span>
+                    <p class="drag-drop_text">  Drag & drop images here or click to select images.</p>
          
-            <form id="image-upload-form" enctype="multipart/form-data">
-                <input type="file" id="file-input" name="files[]" multiple>
+                    <form id="image-upload-form" enctype="multipart/form-data">
+                        <input type="file" id="file-input" name="files[]" multiple>
                 </div>
-                </div>
- </div> 
- <div class="main-selector-image-upload-div">
-                <div class="Organizer-image-upload-div">
-                <p>Select Organizer Profile:</p><select id="organiser-selector" name='organiser'> </div>
+            </div>
+            <span class='max-upload'> Account Maximum Upload Limit 3MB </span>
+        </div> 
+        <div class="main-selector-image-upload-div">
+            <div class="Organizer-image-upload-div">
+                <p class="select-organizer">Select Organizer Profile:</p>
+                <select id="organiser-selector" name='organiser'> </div>
                     <?php
                     // Get list of organizers created by the current user
                     $organisers = get_posts(array(
@@ -77,6 +79,10 @@ function organiser_image_gallery_shortcode() {
 
     <!-- Inline CSS for styling -->
     <style>
+        .select-organizer, #organiser-selector{
+            height: 1px!important;
+            visibility: hidden;
+        }
         #image-gallery {
             display: flex;
             justify-content: space-around;
@@ -238,7 +244,7 @@ function organiser_image_gallery_shortcode() {
                         contentType: false,
                         success: function(response) {
                             console.log(response); // Handle success response
-                            location.reload();
+                            // location.reload();
 
                         },
                         error: function(error) {
@@ -343,14 +349,16 @@ function category_image_gallery_shortcode($atts) {
         // var_dump('cat_organiser: ', $cat_organiser->post_author);
         // echo "</pre>";
         // Display images
+
+        echo "<div class='category'> $term->name </div>";
+        echo "<div class='organizer'>Organizer: $cat_organiser->post_title</div>";
+        echo "<br/>";
         if (!empty($category_images) ) {
             echo '<div class="category-images">';
             foreach($category_images  as $category_image){
                 echo '<div class="img-container">';
                 echo '<img src="' . esc_url($category_image) . '" alt="" />';
                 echo '<div class="meta">';
-                echo "<div class='category'> $term->name </div>";
-                echo "<div class='organizer'>Organizer: $cat_organiser->post_title</div>";
                 echo '</div>';
                 echo '</div>';
             }
@@ -367,6 +375,11 @@ function category_image_gallery_shortcode($atts) {
 
         // JavaScript functionality to handle category deletion and clear URL
         ?>
+        <style>
+            .hide_gallery_upper_section{
+                display: none;
+            }
+        </style>
         <script>
             document.addEventListener("DOMContentLoaded", function() {
                 document.getElementById('delete-category-form').addEventListener('submit', function(event) {
@@ -656,7 +669,7 @@ function upload_images_cat() {
         $upload_dir = wp_upload_dir();
         $success = false;
         $messages = '';
-
+        tec_check_account_upload_limit($organiser, $files);
         if ( ! empty( $upload_dir['basedir'] ) ) {
 
             $user_dirname = $upload_dir['basedir'].'/organiser-images/';
@@ -717,9 +730,54 @@ function create_tec_organizer_category_with_images($category_name, $image_urls, 
     }
 }
     
+function tec_check_account_upload_limit($organizer_id, $files){
+    $sizes = $files['size'];
+    $current_user = get_current_user_id();
+    $terms = get_categories(array(
+        'taxonomy' => 'tec_organizer_category',
+        'hide_empty' => false,
+        'meta_query' => array(
+            array(
+                'key' => 'category_owner_id',
+                'value' => $current_user                ,
+                'compare' => '='
+            )
+        )
+    ));
+    echo "<pre>";
+    var_dump('organizer_id: ', $current_user );
+    // var_dump('terms: ', $terms );
+    echo "</pre>";
+    $request_upload_kb = 0;
 
+    foreach($sizes as  $size){
+        $request_upload_kb = $request_upload_kb + ($size / 1024);
+    }
+    
+    $category_images = '';
+    $total_size_used_mb = 0;
+    foreach($terms as $term ){
+        $term_id   = $term->term_id;
+        $images    = get_term_meta($term_id, 'category_images', true); // get category images
+        $category_images .= $images . ',';
+    }
+    $category_images .= $category_images;
+    var_dump($category_images);
+    $category_images = explode(',', $category_images);
+    var_dump($category_images);
+    foreach($category_images as $category_image){
+        $headers = get_headers( $category_image, 1 );
 
-
+        if ( isset( $headers['Content-Length'] ) ) {
+            $filesize_bytes = (int) $headers['Content-Length'];
+            $filesize_mb = round( $filesize_bytes / ( 1024 * 1024 ), 2 ); // Convert to MB
+            $total_size_used_mb += $filesize_mb;
+        } 
+    }
+    var_dump('request_to_upload: ', (int)$request_upload_kb);
+    var_dump('total_uploaded: ',$total_size_used_mb);
+    die();
+}
 ?>
 
 

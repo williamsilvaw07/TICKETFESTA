@@ -1,4 +1,30 @@
 document.addEventListener('DOMContentLoaded', function() {
+
+    jQuery('.flux-checkout__login-button.login-button').each(function() {
+        // Add classes 'xoo-el-action-sc' and 'xoo-el-login-tgr'
+        jQuery(this).addClass('xoo-el-action-sc xoo-el-login-tgr');
+    });
+
+    jQuery('.xoo-el-action-sc.button.btn.xoo-el-login-tgr').css('visibility', 'hidden');
+    setTimeout(function() {
+        // Trigger click event and hide the element
+        jQuery('.xoo-el-action-sc.button.btn.xoo-el-login-tgr').trigger('click').hide();
+    }, 1000); // 2000 milliseconds = 2 seconds
+    jQuery('.organizer-title').hide(); 
+    jQuery('.organizer-title').prop('required', false); 
+    jQuery('.organizer-title_cont').hide();
+    jQuery('.create-organizer_cont').on('click', function() {
+        if (jQuery('.create-organizer').is(':checked')) { 
+            jQuery('.organizer-title').show(); 
+            jQuery('.organizer-title').prop('required', true); 
+            jQuery('.organizer-title_cont').show();
+        } else {
+            jQuery('.organizer-title').hide(); 
+            jQuery('.organizer-title').prop('required', false); 
+            jQuery('.organizer-title_cont').hide();
+        }
+    });
+
     var searchIcon = document.querySelector('.header_search_icon');
     //console.log('Search icon element:', searchIcon); // Check if the search icon is correctly identified
 
