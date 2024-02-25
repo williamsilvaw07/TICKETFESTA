@@ -3075,3 +3075,25 @@ function enqueue_custom_frontend_js() {
 
 // Hook your custom function into 'wp_enqueue_scripts' action.
 add_action('wp_enqueue_scripts', 'enqueue_custom_frontend_js');
+
+
+
+// for registration 
+add_action( 'xoo_el_created_customer', 'ticketfesta_organizer_register', 10, 2);
+
+function ticketfesta_organizer_register($customer_id, $new_customer_data){
+    $create_organizer =  isset($_POST['create-organizer']) ? $_POST['create-organizer'] : '';
+    $organizer_title =  isset($_POST['organizer-title']) ? $_POST['organizer-title'] : $new_customer_data['user_login'];
+    
+    if($create_organizer !== ''){
+        $post_data = array(
+            'post_type'   => 'tribe_organizer',
+            'post_status' => 'publish',
+            'post_title'  => $organizer_title,
+            'post_author' => $customer_id
+        );
+        
+        $post_id = wp_insert_post($post_data);
+    }
+
+}
