@@ -477,6 +477,28 @@ max-width: 903px!important;
     margin-bottom: 100px!important;  
 }
 
+.elementor-element-679702c {
+    position: relative;
+    overflow: hidden;
+}
+
+.elementor-element-679702c::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    backdrop-filter: blur(10px); /* Adjust the blur value as needed */
+    -webkit-backdrop-filter: blur(10px); /* For Safari compatibility */
+    background: rgba(255, 255, 255, 0.5); /* Adjust the background color and opacity for the frosted glass effect */
+    z-index: 1; /* Ensure the overlay is above the background but below the content */
+}
+
+.elementor-widget-container {
+    position: relative;
+    z-index: 2; /* Ensure the content is above the frosted glass effect overlay */
+}
 
 /******END*****/
 
