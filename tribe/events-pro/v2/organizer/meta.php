@@ -599,7 +599,7 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 
 	////JS TO ADD THE MAIN PRODUCT IMAGE ON THE BACKGROUND AND ADD THE LOCATION ON THE CUSTOM DIV 
 	document.addEventListener('DOMContentLoaded', function() {
-    var imageElement = document.querySelector('.organizer_profile_bk');
+    var imageElement = document.querySelector('.tribe-events-pro-organizer__meta-featured-image-wrapper img');
     var titleElement = document.querySelector('.tribe_organizer-template-default');
 
     if (imageElement && titleElement) {
@@ -973,6 +973,17 @@ jQuery(document).ready(function($) {
 
 
 <style>
+
+.dark-glass-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* Dark overlay */
+    backdrop-filter: blur(10px); /* Blur effect */
+    -webkit-backdrop-filter: blur(10px); /* For Safari */
+}
 
     .tribe-events-c-messages__message--notice{
         display:none
