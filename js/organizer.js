@@ -311,6 +311,13 @@ jQuery(document).ready(function () {
 
   $("#event_id").on('change', updateTicket);
 
+  $('#start_date').datetimepicker({
+    format: 'YYYY-MM-DD H:mm'
+  });
+
+  $('#end_date').datetimepicker({
+    format: 'YYYY-MM-DD H:mm'
+  });
 
   console.log("Document ready.");
 

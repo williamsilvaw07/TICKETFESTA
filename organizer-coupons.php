@@ -108,8 +108,38 @@ get_header('organizer'); // Include the header
                             </select>
                         </div>
                     </div>
-
-
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Start Date & time:</label>
+                            <div class="form-group">
+                                <div class="input-group date" id="start_date" data-target-input="nearest">
+                                    <input type="text" class="form-control datetimepicker-input"
+                                        data-target="#start_date" name="start_date"/>
+                                    <div class="input-group-append" data-target="#start_date"
+                                        data-toggle="datetimepicker">
+                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>End Date & time:</label>
+                            <div class="form-group">
+                                <div class="input-group date" id="end_date" data-target-input="nearest">
+                                    <input type="text" class="form-control datetimepicker-input"
+                                        data-target="#end_date" name="end_date"/>
+                                    <div class="input-group-append" data-target="#end_date"
+                                        data-toggle="datetimepicker">
+                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label>Event</label>
@@ -126,7 +156,7 @@ get_header('organizer'); // Include the header
                     </select>
                 </div>
                 <div class="form-group" id="tickets">
-                    
+
                 </div>
 
             </div>
@@ -139,6 +169,7 @@ get_header('organizer'); // Include the header
     </div>
 
 </div>
+
 
 <?php
 get_footer('organizer'); // Include the footer
