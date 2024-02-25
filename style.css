@@ -273,13 +273,18 @@ font-family: "Plus Jakarta Sans", Sans-serif;
     max-width: 40px!important; 
 }
 
-
+.tribe-events-header__events-bar{
+    display: none;
+}
 }
 
 
 
 
 @media (max-width: 767px) {
+    .tribe-events-header__events-bar{
+        display: block;
+    }
     .elementor-3943 .elementor-element.elementor-element-518769c img {
         height: 30px!important; 
         width: auto!important;
