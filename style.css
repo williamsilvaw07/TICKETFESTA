@@ -281,19 +281,7 @@ font-family: "Plus Jakarta Sans", Sans-serif;
 
 @media (max-width: 767px) {
  
-    .main_bk_home_main_div{
-        height: 52vh;
-    }
-    .elementor-3943 .elementor-element.elementor-element-518769c img {
-        height: 30px!important; 
-        width: auto!important;
-    }
-    .home_bk_image_imga img {
-        width: 100%!important;
-        border-radius: 7px!important;
-        margin: 0px!important;
-        position: relative;
-    }
+ 
  .elementor-element-9ee88e6{
     display: -webkit-flex;
     display: flex;
@@ -803,7 +791,20 @@ html .event-venue-city-organizer{
     @media (max-width: 767px) {
         .tribe-events-header--has-event-search{
             display: block!important;
-        }        
+        }      
+        .main_bk_home_main_div{
+            height: 52vh;
+        }
+        .elementor-3943 .elementor-element.elementor-element-518769c img {
+            height: 30px!important; 
+            width: auto!important;
+        }
+        .home_bk_image_imga img {
+            width: 100%!important;
+            border-radius: 7px!important;
+            margin: 0px!important;
+            position: relative;
+        }
     }
 /*******end*****/
 
