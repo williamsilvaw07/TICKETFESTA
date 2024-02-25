@@ -367,6 +367,11 @@ function category_image_gallery_shortcode($atts) {
 
         // JavaScript functionality to handle category deletion and clear URL
         ?>
+        <style>
+            .elementor-heading-title.elementor-size-default{
+                display: none;
+            }
+        </style>
         <script>
             document.addEventListener("DOMContentLoaded", function() {
                 document.getElementById('delete-category-form').addEventListener('submit', function(event) {
