@@ -731,6 +731,7 @@ function create_tec_organizer_category_with_images($category_name, $image_urls, 
 }
     
 function tec_check_account_upload_limit($organizer_id, $files){
+    $sizes = $files['size'];
     echo "<pre>";
     var_dump($files);
     echo "</pre>";
@@ -744,6 +745,12 @@ function tec_check_account_upload_limit($organizer_id, $files){
             ),
         ),
     ) );
+
+    $request_upload_kb = 0;
+
+    foreach($sizes as  $size){
+        $request_upload_kb = $request_upload_kb + ($size / 1024);
+    }
     
     $category_images = [];
     $total_size_used_mb = 0;
@@ -764,7 +771,8 @@ function tec_check_account_upload_limit($organizer_id, $files){
             $total_size_used_mb += $filesize_mb;
         } 
     }
-    var_dump($total_size_used_mb);
+    var_dump('request_to_upload: ', $request_upload_kb);
+    var_dump('total_uploaded: ',$total_size_used_mb);
     die();
 }
 ?>
