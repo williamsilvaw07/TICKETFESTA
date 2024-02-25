@@ -692,7 +692,8 @@ html .event-venue-city-organizer{
     font-size: 13px;
     text-transform: capitalize!important;
     font-weight: 500!important;
-    margin-top:0!important
+    margin-top:0!important;
+    color: #777777!important;
 }
 
 .tribe-events-pro-photo__event-title {
