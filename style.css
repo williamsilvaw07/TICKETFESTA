@@ -827,7 +827,7 @@ html .event-venue-city-organizer{
 @media (max-width: 500px) {
 
     .main_bk_home_main_div{
-        height: 40vh!important;
+        height: 30vh!important;
     
     }
     .home_main_heading {
@@ -854,7 +854,7 @@ html .event-venue-city-organizer{
         margin-top: -33px!important;
         }
     
-        .home .elementor-3943 .elementor-element.elementor-element-9d845b1:not(.elementor-motion-effects-element-type-background), .elementor-3943 .elementor-element.elementor-element-9ee88e6:not(.elementor-motion-effects-element-type-background), .home header {
+        .home .elementor-3943 .elementor-element.elementor-element-9d845b1:not(.elementor-motion-effects-element-type-background), .elementor-3943 .elementor-element.elementor-element-9ee88e6:not(.elementor-motion-effects-element-type-background),  header {
             background-color: #1A1A1A!important;
         }
 }
