@@ -849,6 +849,10 @@ html .event-venue-city-organizer{
     .home .entry-header{
         display: none!important;
     }
+    .container .site-content .content-area {
+        width: auto;
+        margin-top: -33px!important;
+        }
 }
 /*******end*****/
 
