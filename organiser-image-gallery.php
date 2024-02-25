@@ -3,6 +3,8 @@
 add_shortcode('organiser_image_gallery', 'organiser_image_gallery_shortcode');
 
 function organiser_image_gallery_shortcode() {
+    $account_mb_used = update_user_meta( get_current_user_id(), 'total_upload', true );
+    $account_mb_used = isset($account_mb_used) ? $account_mb_used : 0;
     ob_start(); ?>
 
     <!-- HTML structure for the image gallery -->
@@ -21,7 +23,7 @@ function organiser_image_gallery_shortcode() {
                 </div>
             </div>
             <p class='max-upload'> Account Maximum Upload Limit 3MB </p>
-            <p class='account-used'> Account mb used 1/3 </p>
+            <p class='account-used'> Account mb used <?php echo $account_mb_used; ?>/3 MB</p>
             <p class='upload_limit' style='color:red!important; display: none; '> Account Maximum Upload Limit Reached </p>
         </div> 
         <div class="main-selector-image-upload-div">
