@@ -543,6 +543,12 @@ width:90%!important;
 .tribe-events-view {
     background-color: #1A1A1A!important
 }
+.home.tribe-events-header {
+    margin-top: -64px;
+}
+.tribe-events--filter-bar-horizontal.tribe-common--breakpoint-medium {
+    overflow: visible;
+}
 html .elementor-widget-tec_elementor_widget_events_view{
     padding: 0!important;
 }
