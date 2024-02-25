@@ -796,28 +796,7 @@ html .event-venue-city-organizer{
     
     
     
-    @media (max-width: 767px) {
-
-        .main_bk_home_main_div{
-            height: 52vh;
-        }
-        .elementor-3943 .elementor-element.elementor-element-518769c img {
-            height: 30px!important; 
-            width: auto!important;
-        }
-        body .home_bk_image_imga img {
-            width: 100%!important;
-            border-radius: 7px!important;
-            margin: 0px!important;
-            position: relative;
-        }
-        .home .tribe-events-header {
-        
-            margin: 0 auto!important;
-        }
-    }
-
-
+ 
 
 
 
