@@ -750,14 +750,14 @@ function tec_check_account_upload_limit($organizer_id, $files){
     echo "</pre>";
     $request_upload_kb = 0;
 
-    foreach($sizes as  $size){
-        $request_upload_kb = $request_upload_kb + ($size / 1024);
-    }
+    // foreach($sizes as  $size){
+    //     $request_upload_kb = $request_upload_kb + ($size / 1024);
+    // }
     
     $category_images = [];
     $total_size_used_mb = 0;
     foreach($terms as $term ){
-        $term_id = $term->term_id;
+        $term_id   = $term->term_id;
         $images    = get_term_meta($term_id, 'category_images', true); // get category images
         $images    = explode(',', $category_images);
         var_dump($images);
