@@ -456,7 +456,7 @@ dropZone.addEventListener('drop', function(e) {
 
         // HTML markup for displaying categories with titles and thumbnails
         echo '<div class="category-gallery">';
-        echo "<p class='used-memomy'> $account_mb_used/0 </p>";
+        echo "<p class='used-memomy'> Account used $account_mb_used/0 MB</p>";
         foreach ($categories as $category) {
             $category_id = $category->term_id;
             $category_name = $category->name;
