@@ -541,7 +541,7 @@ width:90%!important;
     color: #0c0d0e!important;
 }
 .tribe-common-form-control-text__input.tribe-events-c-search__input {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1)!important;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.9)!important;
 }
 .home .entry-content:not(:first-child) , .home .site-main{
     margin-top: 0em!important;
