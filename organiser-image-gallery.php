@@ -249,7 +249,7 @@ function organiser_image_gallery_shortcode() {
                         success: function(response) {
                             if(response.success){
                                 console.log('success',response); // Handle success response
-                                // location.reload();
+                                location.reload();
                             }else{
                                 $('.upload_limit').show();
                                 console.log('error',response); 
