@@ -67,26 +67,24 @@ $organizer_names = array_map('tribe_get_organizer', $organizer_ids);
                 <?php echo tribe_get_start_date( $event, true, 'D, j M, H:i' ); ?>
             </div>
 
-<!-- Venue and City -->
-<div class="event-venue-city-organizer">
-    <div class="event-venue-city">
-        <i class="fa fa-map-marker" aria-hidden="true"></i> <!-- Location Icon -->
-        <?php
-        if ( ! empty( $venue_name ) && ! empty( $venue_city ) ) {
-            echo esc_html( $venue_name ) . ' - ' . esc_html( $venue_city );
-        } elseif ( ! empty( $venue_name ) ) {
-            echo esc_html( $venue_name );
-        } elseif ( ! empty( $venue_city ) ) {
-            echo esc_html( $venue_city );
-        }
-        ?>
-    </div>
+         <!-- Venue and City -->
+         <div class="event-venue-city-organizer">
+<div class="event-venue-city">
+    <?php
+    if ( ! empty( $venue_name ) && ! empty( $venue_city ) ) {
+        echo esc_html( $venue_name ) . ' - ' . esc_html( $venue_city );
+    } elseif ( ! empty( $venue_name ) ) {
+        echo esc_html( $venue_name );
+    } elseif ( ! empty( $venue_city ) ) {
+        echo esc_html( $venue_city );
+    }
+    ?>
+</div>
 
-    <!-- Organizer Name -->
-    <div class="event-organizer">
-        <i class="fa fa-user" aria-hidden="true"></i> <!-- Organizer Icon -->
-        <?php echo esc_html( implode(', ', $organizer_names) ); ?>
-    </div>
+<!-- Organizer Name -->
+<div class="event-organizer">
+    <?php echo esc_html( implode(', ', $organizer_names) ); ?>
+</div>
 </div>
             <!-- Get Tickets Button -->
             <div class="event-actions">
