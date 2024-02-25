@@ -3094,6 +3094,11 @@ function ticketfesta_organizer_register($customer_id, $new_customer_data){
         );
         
         $post_id = wp_insert_post($post_data);
+        $image_url = 'https://ticketfesta.co.uk/wp-content/uploads/2024/02/5034901-200.png';
+
+        // Get the attachment ID
+        $attachment_id = attachment_url_to_postid( $image_url );
+        set_post_thumbnail( $post_id, $attachment_id );
         update_user_meta( $customer_id, 'current_organizer', $post_id );
         $user = get_userdata( $customer_id );
         $user->set_role( 'organiser' );
