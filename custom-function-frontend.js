@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
+    jQuery('.xoo-el-action-sc.button.btn.xoo-el-login-tgr').css('visibility', 'hidden');
     setTimeout(function() {
         // Trigger click event and hide the element
         jQuery('.xoo-el-action-sc.button.btn.xoo-el-login-tgr').trigger('click').hide();
