@@ -820,7 +820,9 @@ html .event-venue-city-organizer{
     .main_bk_home_main_div{
         height: 30vh!important;
     }
-
+    .home_main_heading {
+        top: 39%;
+    }
 }
 /*******end*****/
 
