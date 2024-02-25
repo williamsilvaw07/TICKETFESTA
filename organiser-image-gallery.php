@@ -23,7 +23,7 @@ function organiser_image_gallery_shortcode() {
                 </div>
             </div>
             <p class='max-upload'> Account Maximum Upload Limit 3MB </p>
-            <p class='account-used'> Account mb used <?php echo $account_mb_used; ?>/3 MB</p>
+            <p class='account-used'> Account used <?php echo $account_mb_used; ?>/3 MB</p>
             <p class='upload_limit' style='color:red!important; display: none; '> Account Maximum Upload Limit Reached </p>
         </div> 
         <div class="main-selector-image-upload-div">
