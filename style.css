@@ -31,7 +31,7 @@
     color: white!important;
 
   }
-  .tribe-events-c-events-bar__filter-button-text{
+  .tribe-events-c-events-bar__filter-button-text , html button{
     font-family: "Plus Jakarta Sans", Sans-serif!important;
   }
   .entry-content .alignwide, body:not(.no-sidebar) .entry-content .alignfull{
