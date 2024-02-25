@@ -9,7 +9,9 @@
 
 
  /*****GLOBO CSS****/
-
+html body h1{
+    display: none!important;
+}
  .content-wrapper {
     background-color:#0d0e0e;
 }
