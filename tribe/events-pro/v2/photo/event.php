@@ -99,17 +99,22 @@ $organizer_names = array_map('tribe_get_organizer', $organizer_ids);
 
 
   // Make the entire event card clickable
-  document.addEventListener('DOMContentLoaded', function() {
-        var articles = document.querySelectorAll('article[data-href]');
-        articles.forEach(function(article) {
-            article.addEventListener('click', function() {
-                window.location.href = this.getAttribute('data-href');
-            });
-            article.style.cursor = 'pointer';
+// Make the entire event card clickable
+document.addEventListener('DOMContentLoaded', function() {
+    var articles = document.querySelectorAll('article[data-href]');
+    articles.forEach(function(article) {
+        article.addEventListener('click', function(e) {
+            // Prevent redirection if the click is on interactive elements or their children
+            if (e.target.tagName === 'A' || e.target.tagName === 'BUTTON' || e.target.closest('a, button')) {
+                return;
+            }
+            window.location.href = this.getAttribute('data-href');
         });
+        article.style.cursor = 'pointer';
     });
+});
 
-    
+
 
 
 ///////ticket amount left tag
