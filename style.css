@@ -532,32 +532,7 @@ width:90%!important;
 
 
 
-/* Define the background gradient for the main container */
-.home_main_heading {
-    --main-bg: linear-gradient(155deg, yellow, red);
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh; /* Adjust the height as needed */
-    width: 100%; /* Adjust the width as needed */
-    background: var(--main-bg);
-  }
-  
-  /* Style for the headline text */
-  .elementor-heading-title {
-    background: var(--main-bg);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    text-fill-color: transparent; /* Fallback for non-webkit browsers */
-    text-transform: uppercase;
-    font-weight: 900;
-    letter-spacing: 15px;
-    font-size: 5em; /* Adjust the size as needed */
-    margin: 0;
-    line-height: 1; /* Adjust the line height as needed */
-  }
+
 
 
 /***********FRONTEND ALL EVENTS*****/
