@@ -24,7 +24,8 @@ function organiser_image_gallery_shortcode() {
         </div> 
         <div class="main-selector-image-upload-div">
             <div class="Organizer-image-upload-div">
-                <p>Select Organizer Profile:</p><select id="organiser-selector" name='organiser'> </div>
+                <p class="select-organizer">Select Organizer Profile:</p>
+                <select id="organiser-selector" name='organiser'> </div>
                     <?php
                     // Get list of organizers created by the current user
                     $organisers = get_posts(array(
@@ -78,6 +79,9 @@ function organiser_image_gallery_shortcode() {
 
     <!-- Inline CSS for styling -->
     <style>
+        .select-organizer, #organiser-selector{
+            visibility: hidden;
+        }
         #image-gallery {
             display: flex;
             justify-content: space-around;
