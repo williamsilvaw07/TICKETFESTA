@@ -766,7 +766,7 @@ function tec_check_account_upload_limit($organizer_id, $files){
     foreach($category_images as $category_image){
         if($category_image !== ''){
             $headers = get_headers( $category_image, 1 );
-
+            var_dump($headers);
             if ( isset( $headers['Content-Length'] ) ) {
                 $filesize_bytes = (int) $headers['Content-Length'];
                 $filesize_mb = round( $filesize_bytes / ( 1024 * 1024 ), 2 ); // Convert to MB
