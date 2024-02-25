@@ -253,6 +253,7 @@ function organiser_image_gallery_shortcode() {
                         },
                         error: function(error) {
                             $('.upload_limit').show();
+                            alert(error);
                             console.log('error',error); // Handle error
                         }
                     });
