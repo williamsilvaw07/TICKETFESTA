@@ -477,12 +477,12 @@ max-width: 903px!important;
     margin-bottom: 100px!important;  
 }
 
-.elementor-element-679702c {
+.main_bk_home_main_div {
     position: relative;
     overflow: hidden;
 }
 
-.elementor-element-679702c::before {
+.main_bk_home_main_div::before {
     content: '';
     position: absolute;
     top: 0;
@@ -495,9 +495,10 @@ max-width: 903px!important;
     z-index: 1; /* Ensure the overlay is above the background but below the content */
 }
 
-.elementor-widget-container {
+/* Ensure the content inside the container is above the frosted glass effect overlay */
+.main_bk_home_main_div > * {
     position: relative;
-    z-index: 2; /* Ensure the content is above the frosted glass effect overlay */
+    z-index: 2; 
 }
 
 /******END*****/
