@@ -14,6 +14,42 @@ function parseQueryString(queryString) {
   return params;
 }
 
+function updateTicket() {
+  console.log('updateTicket');
+
+  var eventId = jQuery("#event_id").val();
+  //var responseData = xhr.responseText;
+  if (!eventId) return;
+
+
+  var htmlOutputStart = `<label>Tickets</label>`;
+
+
+  jQuery.ajax({
+    url: iam00_ajax_object.ajax_url, // AJAX URL set by WordPress
+    type: "post",
+    data: {
+      action: "get_event_ticket_action", // Custom AJAX action
+      nonce: iam00_ajax_object.nonce,
+      event_id: eventId,
+    },
+    success: function (response) {
+      // Handle the response from the server
+      if (response.success) {
+        Object.entries(response.data).forEach(([key, value]) => {
+          htmlOutputStart +=
+            `<div class="form-check">
+                <input class="form-check-input" id="product_ids_`+ key + `" type="checkbox" name="product_ids[]" value="`+ key + `">
+                <label class="form-check-label" for="product_ids_`+ key + `">`+ value + `</label>
+            </div>`;
+        });
+
+        jQuery("#tickets").html(htmlOutputStart);
+      }
+    },
+  });
+}
+
 function addCreateEventForm() {
   var eventId = jQuery("#post_ID").val();
   //var responseData = xhr.responseText;
@@ -90,7 +126,7 @@ function addCreateEventForm() {
         });
 
         jQuery("#eventCouponForm").html(htmlOutputStart + options + htmlOutputEnd);
-        jQuery("#eventCouponForm").find("#start_date").datepicker();
+        // jQuery("#eventCouponForm").find("#start_date").datepicker();
       }
     },
   });
@@ -98,9 +134,6 @@ function addCreateEventForm() {
 
 
 jQuery(document).ready(function (jQuery) {
-
-  jQuery( "#datepicker" ).datepicker();
-
   // Select the parent element with class .tribe-community-notice.tribe-community-notice-update
   // Find all elements with the class .tribe-community-notice.tribe-community-notice-update
   const parentElements = document.querySelectorAll('.tribe-community-notice.tribe-community-notice-update');
@@ -194,13 +227,16 @@ jQuery(document).ready(function (jQuery) {
 
   addCreateEventForm();
 
+
+  updateTicket();
+
   jQuery(document).ajaxSuccess(function (event, xhr, settings) {
     var paramsObject = parseQueryString(settings.data);
     if (paramsObject.action !== "tribe-ticket-add") {
       return;
     }
 
-    addCreateEventForm();
+    updateTicket();
   });
 
 
@@ -253,7 +289,7 @@ jQuery(document).ready(function (jQuery) {
             </tbody>
           </table>
         `;
-        jQuery(document).find("#couponList").append(html + body + htmlEnd);
+          jQuery(document).find("#couponList").append(html + body + htmlEnd);
           // console.log(html + body + htmlEnd);
         }
       },
@@ -272,6 +308,10 @@ jQuery(document).ready(function (jQuery) {
 
 // Check if the URL contains 'category_id'
 jQuery(document).ready(function () {
+
+  $("#event_id").on('change', updateTicket);
+
+
   console.log("Document ready.");
 
   // Check if the URL contains 'category_id'
@@ -291,3 +331,4 @@ jQuery(document).ready(function () {
     console.log("URL does not contain 'category_id'.");
   }
 });
+
