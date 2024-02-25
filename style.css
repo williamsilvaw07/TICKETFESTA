@@ -846,7 +846,7 @@ html .event-venue-city-organizer{
     .elementor-element-679702c{
         margin-top: 30px!important;
     }
-    .home .entry-header{
+    .home .entry-header , .tribe-events-c-view-selector{
         display: none!important;
     }
     .container .site-content .content-area {
