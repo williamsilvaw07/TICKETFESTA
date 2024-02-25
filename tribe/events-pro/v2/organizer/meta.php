@@ -973,10 +973,6 @@ jQuery(document).ready(function($) {
 
 
 <style>
-.organizer_profile_bk {
-    position: relative; /* Ensure this element can contain absolutely positioned pseudo-elements */
-}
-
 .organizer_profile_bk::before {
     content: ''; /* Necessary for the pseudo-element to display */
     position: absolute; /* Position the pseudo-element absolutely within its parent */
@@ -984,10 +980,26 @@ jQuery(document).ready(function($) {
     left: 0; /* Align to the left of the parent */
     width: 100%; /* Span the full width of the parent */
     height: 100%; /* Span the full height of the parent */
-    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background for the dark effect */
-    backdrop-filter: blur(10px); /* Apply a blur effect to the background behind the pseudo-element */
-    -webkit-backdrop-filter: blur(10px); /* For Safari compatibility */
-    z-index: 1; /* Ensure it's above the parent's content but below anything else you might want to overlay */
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
+    /* Optional: Add a subtle texture or gradient to simulate frosted glass */
+    background-image: linear-gradient(
+        45deg,
+        rgba(255, 255, 255, 0.1) 25%,
+        transparent 25%,
+        transparent 50%,
+        rgba(255, 255, 255, 0.1) 50%,
+        rgba(255, 255, 255, 0.1) 75%,
+        transparent 75%,
+        transparent
+    );
+    background-size: 50px 50px; /* Adjust the size of the pattern */
+    z-index: 0; /* Ensure it's below the content */
+}
+
+/* Ensure the parent and any content on top have a higher z-index */
+.organizer_profile_main_div, .organizer_profile_main_div * {
+    position: relative;
+    z-index: 1;
 }
 
     .tribe-events-c-messages__message--notice{
