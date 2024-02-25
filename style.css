@@ -385,8 +385,8 @@ font-family: "Plus Jakarta Sans", Sans-serif;
     width: 1em;
     fill: white!important;
 }
-}
 
+}
 
 
 
@@ -809,6 +809,18 @@ html .event-venue-city-organizer{
             position: relative;
         }
     }
+
+
+
+
+
+
+@media (max-width: 500px) {
+
+    .main_bk_home_main_div{
+        height: 62vh;
+    }
+}
 /*******end*****/
 
 
