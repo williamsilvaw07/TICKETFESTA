@@ -24,7 +24,8 @@
     // Apply the character limit.
     $event_title = mb_strimwidth( $event_title, 0, 10, '...' );
 }
-
+// Display the (possibly trimmed) title.
+echo esc_html( $event_title );
 
 $classes = get_post_class( [ 'tribe-common-g-col', 'tribe-events-pro-photo__event' ], $event->ID );
 if ( ! empty( $event->featured ) ) {
