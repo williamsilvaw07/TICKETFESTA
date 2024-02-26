@@ -980,7 +980,7 @@ jQuery(document).ready(function($) {
 
 // Make the entire event card clickable without affecting interactive elements like buttons and links
 document.addEventListener('DOMContentLoaded', function() {
-    var articles = document.querySelectorAll('.event-image s');
+    var articles = document.querySelectorAll('.event-image a');
 
     articles.forEach(function(article) {
         // Add click event listener to each article
