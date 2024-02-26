@@ -15,18 +15,19 @@
  * @see tribe_get_event() For the format of the event object.
  */
 
-// Check if we should trim the title.
- if ( ! empty( $template_args['trim_title'] ) ) {
-    // Get the event title, assuming $event is available and contains the title.
-    // You may need to adjust this line depending on how your event titles are stored or accessed.
+// Check if we need to trim the title
+if ( ! empty( $template_args['trim_title'] ) ) {
+    // Get the event title and trim it
+    $event_title = get_the_title( $event->ID ); // Make sure $event->ID is the correct way to get the ID
+    $event_title = mb_strimwidth( $event_title, 0, 60, '...' ); // Trim to 60 characters and add '...'
+} else {
+    // If not trimming, just get the full title
     $event_title = get_the_title( $event->ID );
-
-    // Apply the character limit.
-    $event_title = mb_strimwidth( $event_title, 0, 10, '...' );
 }
-// Display the (possibly trimmed) title.
-echo esc_html( $event_title );
 
+// Output the event title, ensuring it's properly escaped for HTML
+echo esc_html( $event_title );
+ 
 $classes = get_post_class( [ 'tribe-common-g-col', 'tribe-events-pro-photo__event' ], $event->ID );
 if ( ! empty( $event->featured ) ) {
     $classes[] = 'tribe-events-pro-photo__event--featured';
