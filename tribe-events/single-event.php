@@ -72,6 +72,32 @@ $after = apply_filters( 'tribe_events_single_event_title_html_after', '</h1>', $
 
 
 
+// Check if the Fee Handler class exists to prevent errors
+if ( class_exists( 'Tribe__Events__Community__Tickets__Fee_Handler' ) ) {
+    // Initialize the Fee Handler
+    $fee_handler = new Tribe__Events__Community__Tickets__Fee_Handler();
+
+    // Get the site fee data
+    $site_fee_data = $fee_handler->get_site_fee_data();
+
+    // Check if site fee data is available
+    if ( ! empty( $site_fee_data ) && is_array( $site_fee_data ) ) {
+        // Assuming 'amount' and 'type' are part of the site fee data
+        $fee_amount = isset( $site_fee_data['amount'] ) ? $site_fee_data['amount'] : '';
+        $fee_type = isset( $site_fee_data['type'] ) ? $site_fee_data['type'] : '';
+
+        // Display the site fee information
+        echo '<div class="single_event_page_location">';
+        echo '<p>Site Fee: ' . esc_html( $fee_amount ) . '</p>';
+        echo '<p>Fee Type: ' . esc_html( $fee_type ) . '</p>';
+        echo '</div>';
+    }
+}
+
+
+
+
+
 
  
 $title = apply_filters( 'tribe_events_single_event_title_html', the_title( $before, $after, false ), $event_id );
