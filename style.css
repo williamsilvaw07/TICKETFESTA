@@ -31,6 +31,10 @@
     color: white!important;
 
   }
+
+  .footer_main_div{
+    font-family: "Plus Jakarta Sans", Sans-serif!important;
+  }
   .tribe-events-c-events-bar__filter-button-text , html button{
     font-family: "Plus Jakarta Sans", Sans-serif!important;
   }
@@ -395,6 +399,19 @@ font-family: "Plus Jakarta Sans", Sans-serif;
 
 
 /****END***/
+
+
+/******FOOTER****/
+
+
+
+/*****END*****/
+
+
+
+
+
+
 
 /*****menu******/
 
@@ -867,6 +884,9 @@ html .event-venue-city-organizer{
         }
 }
 /*******end*****/
+
+
+
 
 
 
