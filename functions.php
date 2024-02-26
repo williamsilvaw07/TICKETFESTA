@@ -3146,9 +3146,3 @@ function ticketfesta_login_redirect($redirect, $user){
 
 
 
-ob_start(); // Start buffering output
-
-// Your code to generate the PDF with TCPDF
-
-ob_end_clean(); // Discard the buffer without printing it
-$pdf->Output('yourfile.pdf', 'I'); // Output the PDF
