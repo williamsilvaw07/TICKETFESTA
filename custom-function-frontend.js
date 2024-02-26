@@ -131,5 +131,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
+document.addEventListener('DOMContentLoaded', function() {
+    var imageElement = document.querySelector('.home_bk_image_imga img');
+    var targetElement = document.querySelector('.tribe-events-view--photo');
 
+    if (imageElement && targetElement) {
+        var imageUrl = imageElement.getAttribute('src');
+        targetElement.style.backgroundImage = 'url("' + imageUrl + '")';
+        targetElement.classList.add('custom-background-class'); // Add this class if you want to apply additional styles
+    }
+});
 
