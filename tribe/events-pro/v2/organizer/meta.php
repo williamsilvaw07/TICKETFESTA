@@ -1601,7 +1601,11 @@ width: fit-content!important;
     text-align: center;
 
 }
-
+.event-day{
+    display: flex;
+    gap: 6px;
+    align-items: center;
+}
 .event-timezone{
     display: block!important;
     font-size: 11px!important;
