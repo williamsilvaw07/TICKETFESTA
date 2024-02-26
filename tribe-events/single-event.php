@@ -157,7 +157,7 @@ $cost  = tribe_get_formatted_cost( $event_id );
 
  <!-- Render the ticket form  -->
  <?php if ( ! empty( $cost ) ) : ?>
-    <!-- Render the ticket form -->
+    <!-- Render the ticket form if there's a cost -->
     <div class="get_tickets_div_single_event_form_new"> 
     </div>
     <div class="get_tickets_div_single_event">
@@ -168,17 +168,30 @@ $cost  = tribe_get_formatted_cost( $event_id );
             </h5>
         </div>
     </div>
+<?php else : ?>
+    <!-- Show as free if there's no cost -->
+    <div class="get_tickets_div_single_event">
+        <div class="get_tickets_div_single_event_inner_left">
+            <h5 class="ticketpricebtnsection">
+                Free
+            </h5>
+        </div>
+    </div>
+<?php endif; ?>
 
-    <!-- MOBILE TICKET BUTTON -->
+<!-- MOBILE TICKET BUTTON -->
+<?php if ( ! empty( $cost ) ) : ?>
     <div class="buttonticket_for_mobile">
         <div class="buttonticket_for_mobile_text">
-            <span class="btn_from_span">From </span>
-            <span class="btn_price_span"><?php echo esc_html( $cost ); ?></span>
+            <span class="btn_from_span">From </span><span class="btn_price_span"><?php echo esc_html( $cost ); ?></span>
         </div>
-        <button id="getticketbtn1" class="getticketbtn">
-            <!-- SVG and other content for the button -->
-            Get Tickets
-        </button>
+        <button id="getticketbtn1" class="getticketbtn">Get Tickets</button>
+    </div>
+<?php else : ?>
+    <div class="buttonticket_for_mobile">
+        <div class="buttonticket_for_mobile_text">
+            Free
+        </div>
     </div>
 <?php endif; ?>
 
