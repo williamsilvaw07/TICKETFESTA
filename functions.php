@@ -265,6 +265,52 @@ function iam00_return_ticket_associate_with_event()
 }
 add_action('wp_ajax_get_event_ticket_action', 'iam00_return_ticket_associate_with_event'); // For logged-in users
 
+function dd($object){
+    echo "<pre>";
+    var_dump( $object);
+    echo "</pre>";
+    exit();
+}
+
+function iam00_get_coupon_associate_with_event($eventId){
+     // Set up query arguments
+     $args = array(
+        'post_type' => 'product',
+        'posts_per_page' => -1,
+        'meta_query' => array(
+            array(
+                'key' => '_tribe_wooticket_for_event',
+                'value' => $eventId,
+            ),
+        ),
+    );
+
+    // Query products
+    $query = new WP_Query($args);
+
+    // Get product IDs
+    $products = $query->posts;
+    $product_ids = [];
+    foreach ($products as $product) {
+        $product_ids[] = $product->ID;
+    }
+    
+    // Get all coupons
+    $args = array(
+        'post_type' => 'shop_coupon',
+        'posts_per_page' => -1,
+        'meta_query' => array(
+            array(
+                'key' => 'product_ids',
+                'value' => $product_ids,
+                'compare' => 'IN',
+            ),
+        ),
+    );
+    $query = new WP_Query($args);
+    return $query->posts;
+}
+
 function iam00_return_coupon_associate_with_event()
 {
     //check nonce
@@ -277,49 +323,7 @@ function iam00_return_coupon_associate_with_event()
     }
     if (isset($_POST['event_id'])) {
         $eventId = (int) $_POST['event_id'];
-
-        // Specify the product IDs you want to check for associated coupons
-        $product_ids = array(); // Example product IDs
-
-        // Set up query arguments
-        $args = array(
-            'post_type' => 'product',
-            'posts_per_page' => -1,
-            'meta_query' => array(
-                array(
-                    'key' => '_tribe_wooticket_for_event',
-                    'value' => $eventId,
-                ),
-            ),
-        );
-
-        // Query products
-        $query = new WP_Query($args);
-
-        // Get product IDs
-        $products = $query->posts;
-
-        foreach ($products as $product) {
-            $product_ids[] = $product->ID;
-        }
-
-        $response = [];
-
-        // Get all coupons
-        $args = array(
-            'post_type' => 'shop_coupon',
-            'posts_per_page' => -1,
-            'meta_query' => array(
-                array(
-                    'key' => 'product_ids',
-                    'value' => $product_ids,
-                    'compare' => 'IN',
-                ),
-            ),
-        );
-        $query = new WP_Query($args);
-        $coupons = $query->posts;
-
+        $coupons = iam00_get_coupon_associate_with_event($eventId);
         // Loop through each coupon
         foreach ($coupons as $coupon) {
             
@@ -347,8 +351,6 @@ function iam00_return_coupon_associate_with_event()
 
             $response[] = $response_data;
         }
-
-
         wp_send_json_success($response, 200);
         die();
     } else {
@@ -469,21 +471,15 @@ function iam00_create_woo_coupon_for_ticket()
         $coupon->set_usage_limit($usage_limit); // Change this to the maximum number of times the coupon can be used
 
         $expire_date = '';
-        if (isset($_POST['expire_date']) && $_POST['expire_date'] != '' && isset($_POST['expire_time']) && $_POST['expire_time'] != '') {
-            $expire_date = strtotime("{$_POST['expire_date']} {$_POST['expire_time']}");
+        if (isset($_POST['end_date_time']) && $_POST['end_date_time'] != '' ) {
+            $expire_date = strtotime($_POST['end_date_time']);
             $coupon->set_date_expires($expire_date);
         }
 
         $start_date = '';
-        if (isset($_POST['start_date']) && isset($_POST['start_time'])) {
-            $start_date = strtotime("{$_POST['start_date']} {$_POST['start_time']}");
+        if (isset($_POST['start_date_time'])) {
+            $start_date = strtotime($_POST['start_date_time']);
             $coupon->set_date_created($start_date);
-        }
-
-        $usage_limit = '';
-        if (isset($_POST['usage_limit']) && $_POST['usage_limit'] != '') {
-            $usage_limit = (int) $_POST['usage_limit'];
-            $coupon->set_usage_limit($usage_limit);
         }
 
         // Save the coupon

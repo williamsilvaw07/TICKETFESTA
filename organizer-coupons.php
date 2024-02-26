@@ -4,15 +4,14 @@ Template Name: Organizer Coupons
 */
 $events = tribe_get_events([
     'posts_per_page' => -1,
-    'post_author' => get_current_user_id(),
     'ends_after' => 'now'
 ]);
 
-//  foreach ($events as $event) {
+// //  foreach ($events as $event) {
 // echo "<pre>";
-// var_dump($events[0]);
+// var_dump($events);
 // echo "</pre>";
-//  }
+// //  }
 // die();
 
 get_header('organizer'); // Include the header
@@ -39,6 +38,16 @@ get_header('organizer'); // Include the header
                             </div>
                         </div>
                         <!-- /.card-header -->
+
+                        <?php 
+                            foreach ($events as $event) {
+                                $coupons = iam00_get_coupon_associate_with_event($event->ID);
+                                echo "<pre>";
+                                var_dump( $coupons);
+                                echo "</pre>";
+                            }
+                        ?>
+
                         <div class="card-body">
                             <table class="table table-bordered table-hover dataTable dtr-inline">
                                 <thead>
@@ -54,17 +63,30 @@ get_header('organizer'); // Include the header
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>
-                                        </td>
-                                        <td>Ticket</td>
-                                        <td>Event Name</td>
-                                        <td>Start Date</td>
-                                        <td>End Date</td>
-                                        <td>Value</td>
-                                        <td>Type</td>
-                                        <td>Action</td>
-                                    </tr>
+                                    
+                                    <?php
+                                    foreach ($events as $event) {
+                                        if( $event->post_author ==  get_current_user_id()){
+                                            $coupons = iam00_get_coupon_associate_with_event($event->ID);
+                                            foreach ($coupons as $coupon) {
+                                                $coupon = new WC_Coupon($coupon->ID);
+                                                ?>
+                                                <tr>
+                                                    <td>
+                                                    </td>
+                                                    <td>Ticket</td>
+                                                    <td>Event Name</td>
+                                                    <td>Start Date</td>
+                                                    <td>End Date</td>
+                                                    <td>Value</td>
+                                                    <td>Type</td>
+                                                    <td>Action</td>
+                                                </tr>
+                                                <?php
+                                            }
+                                        }
+                                    }
+                                    ?>
                                 </tbody>
                             </table>
                         </div>
@@ -95,14 +117,14 @@ get_header('organizer'); // Include the header
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="coupon_code" name="discount_type">Amount</label>
-                            <input type="text" class="form-control" id="coupon_code" placeholder="Enter coupon code">
+                            <label for="coupon_code" name="amount">Amount</label>
+                            <input type="text" class="form-control" id="amount" placeholder="">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="coupon_code" name="discount_type">Discount Type</label>
-                            <select class="form-control">
+                            <select class="form-control" id="discount_type">
                                 <option value="fixed">Fixed</option>
                                 <option value="percent">Percent</option>
                             </select>
@@ -116,7 +138,7 @@ get_header('organizer'); // Include the header
                             <div class="form-group">
                                 <div class="input-group date" id="start_date" data-target-input="nearest">
                                     <input type="text" class="form-control datetimepicker-input"
-                                        data-target="#start_date" name="start_date"/>
+                                        data-target="#start_date" name="start_date" id="start_date_time"/>
                                     <div class="input-group-append" data-target="#start_date"
                                         data-toggle="datetimepicker">
                                         <div class="input-group-text"><i class="fa fa-calendar"></i></div>
@@ -131,7 +153,7 @@ get_header('organizer'); // Include the header
                             <div class="form-group">
                                 <div class="input-group date" id="end_date" data-target-input="nearest">
                                     <input type="text" class="form-control datetimepicker-input"
-                                        data-target="#end_date" name="end_date"/>
+                                        data-target="#end_date" name="end_date" id="end_date_time"/>
                                     <div class="input-group-append" data-target="#end_date"
                                         data-toggle="datetimepicker">
                                         <div class="input-group-text"><i class="fa fa-calendar"></i></div>
@@ -146,11 +168,13 @@ get_header('organizer'); // Include the header
                     <select class="form-control select2" style="width: 100%;" name="event_id" id="event_id" required>
                         <?php
                         foreach ($events as $event) {
-                            ?>
-                            <option value="<?php echo $event->ID ?>">
-                                <?php echo $event->post_title ?>
-                            </option>
-                            <?php
+                            if( $event->post_author ==  get_current_user_id()){
+                                ?>
+                                <option value="<?php echo $event->ID ?>">
+                                    <?php echo $event->post_title ?>
+                                </option>
+                                <?php
+                            }
                         }
                         ?>
                     </select>
@@ -162,7 +186,7 @@ get_header('organizer'); // Include the header
             </div>
             <div class="modal-footer justify-content-between">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Create</button>
+                <button type="button" class="btn btn-primary" id="coupon_form_save">Create</button>
             </div>
         </div>
 
