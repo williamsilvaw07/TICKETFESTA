@@ -114,6 +114,7 @@ $cost  = tribe_get_formatted_cost( $event_id );
 
 
 <!-- Event Location &  date and time  -->
+<!-- Event Location & Date and Time -->
 <div class="single_event_page_location ">
 
 <div class="location_div_js">📍<span class="location_name"></span> - <span class="location_postcode"></span></div>
@@ -124,21 +125,11 @@ $cost  = tribe_get_formatted_cost( $event_id );
     <span class="time_text">
       <h2 class="tribe-event-date-start">
         <?php 
-          $date_format = 'l, j F Y'; // Format for the date including the day of the week
-          $time_format = 'H:i'; // 24-hour format without timezone
-
-          // Get the start date and time in the desired format
-          $event_start_date = tribe_get_start_date($event_id, false, $date_format);
-          $event_start_time = tribe_get_start_time($event_id, false, $time_format);
-
-          // Get the event's timezone abbreviation
-          $timezone = Tribe__Events__Timezones::get_event_timezone_abbr( $event_id );
-
-          // Combine the date, time, and the dynamic timezone abbreviation
-          $event_date_time = $event_start_date . ' - ' . $event_start_time . ' ' . $timezone;
-
-          // Output the date, time, and the dynamic timezone abbreviation
-          echo $event_date_time;
+          // Use the same format for consistency
+          $event_start_date_time = tribe_get_start_date( $event_id, true, 'D, j M, H:i' );
+          
+          // Output the start date and time
+          echo $event_start_date_time;
         ?>
       </h2>
     </span>
@@ -810,8 +801,52 @@ jQuery(document).ready(function($) {
 
 
 
+/*
+//TIME CALACUTIONS 
+jQuery(document).ready(function($) {
+    // Function to extract time from the text
+    function extractTime(text) {
+        var timeMatch = text.match(/\d{1,2}:\d{2}/);
+        return timeMatch ? timeMatch[0] : null;
+    }
 
+    // Extracting start and end times
+    var startTimeText = extractTime($('.tribe-event-date-start').text());
+    var endTimeText = extractTime($('.tribe-event-date-end').text());
 
+    // Function to calculate duration
+    function calculateDuration(startTime, endTime) {
+        var start = moment(startTime, 'HH:mm');
+        var end = moment(endTime, 'HH:mm');
+
+        // Check if end time is the next day
+        if (end.isBefore(start)) {
+            end.add(1, 'day');
+        }
+
+        var duration = moment.duration(end.diff(start));
+        var hours = duration.asHours();
+        var minutes = duration.minutes();
+
+        var result = '';
+        if (hours >= 1) {
+            result += Math.floor(hours) + ' hours ';
+        }
+        if (minutes > 0) {
+            result += minutes + ' minutes';
+        }
+        return result.trim();
+    }
+
+    if (startTimeText && endTimeText) {
+        // Display duration
+        var eventDuration = calculateDuration(startTimeText, endTimeText);
+        $('.time_counter_text').text(eventDuration);
+    } else {
+        console.log('Error parsing event times');
+    }
+});
+*/
 
 
 
