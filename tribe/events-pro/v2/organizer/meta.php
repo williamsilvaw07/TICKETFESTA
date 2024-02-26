@@ -355,27 +355,8 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
                                 <span class="event-time"><?php echo tribe_get_start_date(null, false, 'g:i a'); ?> - <?php echo tribe_get_end_date(null, false, 'g:i a'); ?></span>
                                 <span class="event-location"><?php echo tribe_get_venue(); ?></span>
                             </div>
-                            <?php
-// Include the event cost template.
-$this->template( 'photo/event/cost', [ 'event' => $event ] );
-
-// Get the event link.
-$event_link = esc_url( tribe_get_event_link($event) );
-
-// Fetch event meta which might contain ticket information.
-$event_meta = tribe_get_custom_fields($event->ID);
-
-// Assuming ticket information is stored in a meta field named 'Ticket Prices'.
-if ( isset($event_meta['Ticket Prices']) ) {
-    $ticket_prices = $event_meta['Ticket Prices'];
-    echo '<div class="event-ticket-price">Ticket Price: ' . esc_html($ticket_prices) . '</div>';
-}
-
-// Display the event link.
-echo '<a href="' . $event_link . '">Event Link</a>';
-?>
                             <div class="event-actions">
-                               
+                                <a href="<?php echo esc_url($event_url); ?>" class="btn-get-tickets">View Event</a>
                             </div>
                         </div>
                     </div>
@@ -638,6 +619,7 @@ echo '<a href="' . $event_link . '">Event Link</a>';
 });
 
 ///////////END
+
 
 
 
