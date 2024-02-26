@@ -6,6 +6,10 @@
 ////FONTASWER
 
 
+function my_theme_enqueue_scripts() {
+    wp_enqueue_script('jquery');
+}
+add_action('wp_enqueue_scripts', 'my_theme_enqueue_scripts');
 
 
 
@@ -21,46 +25,6 @@ add_action('wp_enqueue_scripts', 'enqueue_font_awesome');
 
 
 //* Do NOT include the opening php tag
-
-add_filter(
-    'rest_request_after_callbacks',
-    'tec_tickets_maybe_disable_events_for_app',
-    10,
-    3
-);
-
-/**
- * Maybe disable events for the ET+ APP.
- *
- * @param WP_REST_Response|WP_HTTP_Response|WP_Error|mixed $response Result to send to the client.
- *                                                                   Usually a WP_REST_Response or WP_Error.
- * @param array                                            $handler  Route handler used for the request.
- * @param WP_REST_Request                                  $request  Request used to generate the response.
- *
- * @return WP_REST_Response|WP_HTTP_Response|WP_Error|mixed $response Result to send to the client.
- *                                                                   Usually a WP_REST_Response or WP_Error.
- */
-function tec_tickets_maybe_disable_events_for_app($response, array $handler, \WP_REST_Request $request)
-{
-    if (empty($request->get_header('App-version'))) {
-        return $response;
-    }
-
-    if ('/tribe/events/v1/events' !== $request->get_route()) {
-        return $response;
-    }
-
-    $response = new WP_REST_Response(
-        [
-            'code' => 'rest_no_route',
-            'message' => 'No route was found matching the URL and request method.',
-        ]
-    );
-
-    $response->set_status(404);
-
-    return $response;
-}
 
 
 
@@ -755,7 +719,7 @@ function set_default_organizer_featured_image($organizer_id)
     }
 
     // Path to your default image (Upload your default image to the media library and replace this URL)
-    $default_image_url = 'https://thaynna-william.co.uk/wp-content/uploads/2024/01/default-avatar-photo-placeholder-profile-icon-vector.jpg';
+    $default_image_url = '/wp-content/uploads/2024/01/default-avatar-photo-placeholder-profile-icon-vector.jpg';
 
     // Find the attachment ID of the image from the URL
     $default_image_id = attachment_url_to_postid($default_image_url);
@@ -852,7 +816,7 @@ function display_user_created_organizers()
 
                         if (data.success && data.data && data.data.organizer_id) {
                             console.log('Redirecting to organizer ID:', data.data.organizer_id); // Debugging line
-                            window.location.href = 'https://thaynna-william.co.uk/edit-organisers/?id=' + data.data.organizer_id;
+                            window.location.href = '/edit-organisers/?id=' + data.data.organizer_id;
                         } else {
                             console.error('Unexpected response:', data);
                             alert('Unexpected response received. Check console for details.');
@@ -930,7 +894,7 @@ function display_user_created_organizers()
             while ($organizer_query->have_posts()) {
                 $organizer_query->the_post();
                 $organizer_id = get_the_ID();
-                $edit_url = esc_url("https://thaynna-william.co.uk/edit-organisers/?id={$organizer_id}");
+                $edit_url = esc_url("/edit-organisers/?id={$organizer_id}");
                 $profile_url = tribe_get_organizer_link($organizer_id, false, false); // Get URL only
     
                 echo '<tr id="organizer-row-' . $organizer_id . '">'; // Unique ID for each row
@@ -2995,7 +2959,7 @@ function custom_user_registration() {
                 update_user_meta($user_id, '_tribe_organizer_id', $organizer_id);
 
                 // Redirect to the specified page
-                wp_redirect('https://thaynna-william.co.uk/dashboard');
+                wp_redirect('/dashboard');
                 exit;
             } else {
                 echo 'Error creating organizer.';
@@ -3133,3 +3097,20 @@ function ticketfesta_login_redirect($redirect, $user){
 
 }
 
+
+
+add_action( 'woocommerce_cart_calculate_fees', 'add_extra_fees_for_products' );
+
+function add_extra_fees_for_products( $cart ) {
+    // Loop through each cart item
+    foreach ( $cart->get_cart() as $cart_item_key => $cart_item ) {
+        // Get the product ID
+        $product_id = $cart_item['product_id'];
+        
+        // Calculate extra fee based on product price
+        $extra_fee = $cart_item['data']->get_price() * 0.2; // 10% of the product price
+        
+        // Add extra fee to the cart
+        $cart->add_fee( 'Extra Fee for Product ' . $product_id, $extra_fee );
+    }
+}

@@ -94,30 +94,36 @@ $template_vars = array_merge( [ 'organizer' => $organizer, ], $conditionals )
 
 <div <?php tribe_classes( $classes ); ?>>
 
+<div class="organizer_profile_main_div">
 
-    <div class="organizer_profile_main_div">
+    <!-- Background Wrapper with Overlay -->
+    <div class="organizer_profile_bk_wrapper">
+        <div class="organizer_profile_bk" style="
+        <?php
+        // Ensure that $organizer_id is defined. Use $organizer->ID if available.
+        if ( isset( $organizer ) && isset( $organizer->ID ) ) {
+            $organizer_id = $organizer->ID;
+        } else {
+            // Handle the case where $organizer or $organizer->ID is not available
+            $organizer_id = get_the_ID(); // Fallback to get current post ID
+        }
 
-    <div class="organizer_profile_bk" style="
-    <?php
-    // Ensure that $organizer_id is defined. Use $organizer->ID if available.
-    if ( isset( $organizer ) && isset( $organizer->ID ) ) {
-        $organizer_id = $organizer->ID;
-    } else {
-        // Handle the case where $organizer or $organizer->ID is not available
-        $organizer_id = get_the_ID(); // Fallback to get current post ID
-    }
+        $banner_image_id = get_post_meta($organizer_id, 'banner_image_id', true);
+        if ($banner_image_id) {
+            $banner_image_url = wp_get_attachment_image_url($banner_image_id, 'full');
+        } else {
+            // Use default image if no specific image is set
+            $banner_image_url = 'https://thaynna-william.co.uk/wp-content/uploads/2024/01/Group-189-5.jpg';
+        }
+        echo 'background-image: url(' . esc_url($banner_image_url) . ');';
+        ?>
+        background-size: cover; background-position: center;">
+        </div>
+        <div class="glass_effect_overlay"></div>
+    </div>
 
-    $banner_image_id = get_post_meta($organizer_id, 'banner_image_id', true);
-    if ($banner_image_id) {
-        $banner_image_url = wp_get_attachment_image_url($banner_image_id, 'full');
-    } else {
-        // Use default image if no specific image is set
-        $banner_image_url = 'https://thaynna-william.co.uk/wp-content/uploads/2024/01/Group-189-5.jpg';
-    }
-    echo 'background-image: url(' . esc_url($banner_image_url) . ');';
-    ?>
-    background-size: cover; background-position: center;">
-</div>
+
+
 
 	<div class="tec-events-c-view-box-border">
 
@@ -974,6 +980,37 @@ jQuery(document).ready(function($) {
 
 <style>
 
+.organizer_profile_bk {
+    position: relative;
+    background-image: url('https://ticketfesta.co.uk/wp-content/uploads/2024/02/antoine-j-r3XvSBEQQLo-unsplash-2.jpg');
+    background-size: cover;
+    background-position: center;
+    overflow: hidden; /* Ensure the pseudo-element does not extend outside this container */
+}
+
+.organizer_profile_bk::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    backdrop-filter: blur(10px); /* Adjust the blur value as needed */
+    -webkit-backdrop-filter: blur(10px); /* For Safari */
+    background: rgba(0, 0, 0, 0.5); /* Dark overlay; adjust color and opacity as needed */
+    z-index: 0; /* Ensure this sits below the content */
+}
+
+/* Ensure content inside .organizer_profile_bk is positioned above the pseudo-element */
+.organizer_profile_main_div, .tec-events-c-view-box-border, .image_profile_text_main_continer, .tribe-events-pro-organizer__meta-featured-image-wrapper, .organizer_title_name {
+    position: relative;
+    z-index: 1; /* Higher than the pseudo-element to keep content above the overlay */
+}
+
+
+
+
+
     .tribe-events-c-messages__message--notice{
         display:none
     }
@@ -1632,6 +1669,12 @@ text-align: left;
 
 
   /****media responsive ***/
+  @media (min-width: 840px) {
+
+    
+    
+}
+
 
 
 
