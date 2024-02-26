@@ -895,21 +895,17 @@ jQuery(document).ready(function() {
         // Extract the src attribute from the img element
         var imgUrl = $(this).find('img').attr('src');
 
-        // Set the background image and apply the glass effect styling
-        $(this).css({
-            'background-image': 'url(' + imgUrl + ')',
-            'background-size': 'cover',
-            'background-position': 'center',
-            'backdrop-filter': 'blur(5px)',
-            '-webkit-backdrop-filter': 'blur(5px)',
-            'background-color': 'rgba(255, 255, 255, 0.4)', // Adjust the color and opacity for the glass effect
-            'border-radius': '10px', // Optional: for rounded corners
-        });
+        // Set the background image
+        $(this).css('background-image', 'url(' + imgUrl + ')');
+
+        // Add the 'glass-effect' class to apply the glass effect styling
+        $(this).addClass('glass-effect');
 
         // Hide the original img element
-  
+        $(this).find('img').hide();
     });
 });
+
 
 
     </script>
@@ -920,7 +916,7 @@ jQuery(document).ready(function() {
 .glass-effect {
     background-size: cover;
     background-position: center;; 
-    backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px)!importan;
     -webkit-backdrop-filter: blur(5px);
     background-color: rgba(255, 255, 255, 0.4); 
     border-radius: 10px; 
