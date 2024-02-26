@@ -925,6 +925,13 @@ jQuery(document).ready(function() {
 
 <style>
 
+
+.ticket-free {
+   
+    color: green;
+    font-weight: bold;
+}
+
 .glass-effect {
     background-size: cover;
     background-position: center;; 
