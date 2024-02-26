@@ -47,6 +47,9 @@
     background-color:black;
 
   }
+  .separate-containers .site-main {
+    margin-bottom: 0!important;
+  }
  h2,h3,h4,h5,h6{
     font-family: "Plus Jakarta Sans", Sans-serif!important;
   }
