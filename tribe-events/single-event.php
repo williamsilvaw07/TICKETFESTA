@@ -125,11 +125,14 @@ $cost  = tribe_get_formatted_cost( $event_id );
     <span class="time_text">
       <h2 class="tribe-event-date-start">
         <?php 
-          // Use the same format for consistency
+          // Use the same format for consistency and include the time
           $event_start_date_time = tribe_get_start_date( $event_id, true, 'D, j M, H:i' );
           
-          // Output the start date and time
-          echo $event_start_date_time;
+          // Get the event's timezone abbreviation
+          $timezone_abbr = Tribe__Events__Timezones::get_event_timezone_abbr( $event_id );
+
+          // Output the start date and time along with the timezone abbreviation
+          echo $event_start_date_time . ' ' . $timezone_abbr;
         ?>
       </h2>
     </span>
