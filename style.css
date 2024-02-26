@@ -413,7 +413,7 @@ footer h5{
 }
 
 footer li span{
-    font-weight: 300;
+    font-weight: 300!important;
     color: #aaa !important;
 
 }
