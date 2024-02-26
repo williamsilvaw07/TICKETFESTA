@@ -66,9 +66,7 @@ font-family: "Plus Jakarta Sans", Sans-serif;
 /*****END***/
 /***HEADER***/
 
-header {
-    background-color: #1A1A1A!important;
-}
+
 .site-header {
     --base-3: transparent;
     background-color: var(--base-3);
