@@ -66,6 +66,9 @@ font-family: "Plus Jakarta Sans", Sans-serif;
 /*****END***/
 /***HEADER***/
 
+header {
+    background-color: #1A1A1A!important;
+}
 .site-header {
     --base-3: transparent;
     background-color: var(--base-3);
@@ -571,7 +574,6 @@ width:90%!important;
     background: rgba(0, 0, 0, 0.4); /* black with 50% opacity */
     pointer-events: none;
 }
-
 
 
 .home_bk_image_imga .elementor-widget-container {
