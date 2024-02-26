@@ -445,11 +445,13 @@ jQuery(document).ready(function($) {
 }
 
 .event-timezone{
-display:block!important;
-font-size: 13px;
+    display: block!important;
+    font-size: 11px!important;
     text-transform: capitalize!important;
-    font-weight: 600!important;
+    font-weight: 500!important;
     margin-top: 0!important;
+    color: black!important;
+
 
     
 }
