@@ -979,31 +979,17 @@ jQuery(document).ready(function($) {
 
 
 // Make the entire event card clickable without affecting interactive elements like buttons and links
-document.addEventListener('DOMContentLoaded', function() {
-    var articles = document.querySelectorAll('.event-image a');
+jQuery(document).ready(function($) {
+    // Get the source of the image you want to use as the background
+    var backgroundImageSrc = $('.home_bk_image_imga img').attr('src');
 
-    articles.forEach(function(article) {
-        // Add click event listener to each article
-        article.addEventListener('click', function(e) {
-            // Check if the click was on interactive elements or their descendants
-            if (e.target.closest('a, button, .share_btn, .share_btn_event, .close_popup, .copyButton')) {
-                // Do nothing if the click is on interactive elements or their descendants
-                return;
-            }
-
-            // Redirect to the URL specified in the data-href attribute of the article
-            var url = article.querySelector('a').getAttribute('href');
-            if (url) {
-                window.location.href = url;
-            }
-        });
-
-        // Change the cursor to pointer to indicate clickable area
-        article.style.cursor = 'pointer';
+    // Set the background image of the target element
+    $('.tribe-events-view--photo').css({
+        'background-image': 'url(' + backgroundImageSrc + ')',
+        'background-size': 'cover',
+        'background-position': 'center center'
     });
 });
-
-
 
 </script>
 
