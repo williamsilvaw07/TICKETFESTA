@@ -3144,8 +3144,6 @@ function ticketfesta_login_redirect($redirect, $user){
 
 
 
-
-
 // Check if output buffering is active
 if (ob_get_level() > 0) {
     error_log('Output buffering is active, level: ' . ob_get_level());
@@ -3156,5 +3154,12 @@ if (ob_get_level() > 0) {
 // Check for any existing output
 $output = ob_get_contents();
 if (!empty($output)) {
+    // Log the unexpected output
     error_log('Unexpected output detected: ' . $output);
+    
+    // Capture and log the backtrace
+    ob_start(); // Start buffering to capture the output of print_r
+    debug_print_backtrace();
+    $backtrace = ob_get_clean(); // Get the buffered content
+    error_log("Backtrace: " . $backtrace);
 }
