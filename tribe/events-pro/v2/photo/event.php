@@ -448,10 +448,15 @@ jQuery(document).ready(function($) {
 display:block!important;
 font-size: 13px;
     text-transform: capitalize!important;
-    font-weight: 500!important;
+    font-weight: 600!important;
     margin-top: 0!important;
     color: #777777!important;
     
+}
+.event-day{
+    display: flex;
+    gap: 6px;
+    align-items: center;
 }
 
 
