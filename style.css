@@ -408,7 +408,13 @@ font-family: "Plus Jakarta Sans", Sans-serif;
 
 
 /******FOOTER****/
+footer h5{
+    font-weight: 600;
+}
 
+footer h5 span{
+    font-weight: 300;
+}
 
 
 /*****END*****/
