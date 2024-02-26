@@ -603,6 +603,20 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 
 
 
+	////JS TO ADD THE MAIN PRODUCT IMAGE ON THE BACKGROUND AND ADD THE LOCATION ON THE CUSTOM DIV 
+    document.addEventListener('DOMContentLoaded', function() {
+    var organizerProfileBkElement = document.querySelector('.organizer_profile_bk');
+    var titleElement = document.querySelector('.tribe_organizer-template-default');
+
+    if (organizerProfileBkElement && titleElement) {
+        // Extracting the background image style from the organizer_profile_bk element
+        var backgroundImageStyle = organizerProfileBkElement.style.backgroundImage;
+
+        // Setting the extracted background image as the background for the tribe_organizer-template-default element
+        titleElement.style.backgroundImage = backgroundImageStyle;
+        titleElement.classList.add('organiser_background');
+    }
+});
 
 ///////////END
 
