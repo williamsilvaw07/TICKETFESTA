@@ -889,8 +889,29 @@ jQuery(document).ready(function($) {
 
 
 
-/////TICKET SITE FEE HTML AND FUNCTIONS
+/////FUNCTION TO ADD THE EVENT MAIN IMAGE TO THE MANIN IMAGE DIV BACKGROUND 
+jQuery(document).ready(function() {
+    $('.tribe-events-event-image').each(function() {
+        // Extract the src attribute from the img element
+        var imgUrl = $(this).find('img').attr('src');
 
+        // Set the background image and apply the glass effect styling
+        $(this).css({
+            'background-image': 'url(' + imgUrl + ')',
+            'background-size': 'cover',
+            'background-position': 'center',
+            'width': '240px', // Set the desired width
+            'height': '275px', // Set the desired height
+            'backdrop-filter': 'blur(5px)',
+            '-webkit-backdrop-filter': 'blur(5px)',
+            'background-color': 'rgba(255, 255, 255, 0.4)', // Adjust the color and opacity for the glass effect
+            'border-radius': '10px', // Optional: for rounded corners
+        });
+
+        // Hide the original img element
+        $(this).find('img').hide();
+    });
+});
 
 
     </script>
