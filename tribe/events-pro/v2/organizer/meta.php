@@ -280,187 +280,101 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 
 
 
-
-
 <!-- Event LISTING -->
 <div class="event-listing-main-div organizer_profile_main_div_all organizer_main_div organizer_events_content">
-	<h3>Events</h3>
-<div class="event-listing_type"> 
-	<p class="live_events_link">Live Events </p>
-	<p class="past_events_link">Past Events</p>
-</div>
-
-
-
-<!-- Event past -->
-<div class=" past_event_listing_div">
-    <div class="event-listing">
-
-        <?php
-        $current_organizer_id = get_the_ID(); // Example: get_the_ID() or another method
-        $current_time = current_time('Y-m-d H:i:s');
-
-        // Define the query arguments to get past events for the current organizer
-        $past_events_args = array(
-            'post_type'      => 'tribe_events',
-            'posts_per_page' => -1, // Adjust number of posts per page as needed
-            'meta_query'     => array(
-                'relation' => 'AND',
-                array(
-                    'key'     => '_EventEndDate',
-                    'value'   => $current_time,
-                    'compare' => '<',
-                    'type'    => 'DATETIME'
-                ),
-                array(
-                    'key'     => '_EventOrganizerID',
-                    'value'   => $current_organizer_id,
-                    'compare' => '=',
-                ),
-            ),
-            'orderby'        => 'meta_value',
-            'meta_key'       => '_EventEndDate',
-            'order'          => 'DESC',
-        );
-
-        $past_events = new WP_Query($past_events_args);
-
-        if ($past_events->have_posts()) :
-            while ($past_events->have_posts()) : $past_events->the_post();
-                $event_url = get_the_permalink();
-                ?>
-                <div class="event-card">
-                <div class="past-event-tag">Past Event</div>
-                    <?php if (has_post_thumbnail()) : ?>
-                        <div class="event-image">
-                            <a href="<?php echo esc_url($event_url); ?>">
-                                <?php the_post_thumbnail('medium'); ?>
-                            </a>
-                        </div>
-                    <?php endif; ?>
-                    
-                    <div class="event-details">
-                        
-
-                        <div class="event-content">
-                        <h2 class="event-title">
-    <a href="<?php echo esc_url( $event_url ); ?>">
-        <?php echo mb_strimwidth(get_the_title(), 0, 60, '...'); ?>
-    </a>
-</h2>
-                            <div class="event-day">
-                                <?php echo tribe_get_start_date(null, false, 'D, d M, H:i'); ?>
-                            </div>
-                            <div class="event-time-location">
-                                <span class="event-time"><?php echo tribe_get_start_date(null, false, 'g:i a'); ?> - <?php echo tribe_get_end_date(null, false, 'g:i a'); ?></span>
-                                <span class="event-location"><?php echo tribe_get_venue(); ?></span>
-                            </div>
-                            <div class="event-actions">
-                                <a href="<?php echo esc_url($event_url); ?>" class="btn-get-tickets">View Event</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <?php
-            endwhile;
-            wp_reset_postdata();
-        else :
-            echo '<p>No past events found.</p>';
-        endif;
-        ?>
+    <h3>Events</h3>
+    <div class="event-listing_type"> 
+        <p class="live_events_link">Live Events </p>
+        <p class="past_events_link">Past Events</p>
     </div>
-</div>
-<!-- Event past end -->
 
-
-
-<!-- Event live -->
-<div class="live_event_listing_div">
-
-<div class="event-listing">
-    
-    <?php
-    // Define the query arguments to get events for this organizer.
-    $organizer_events_args = array(
-        'post_type'      => 'tribe_events',
-        'posts_per_page' => -1, // Retrieve all events; adjust as needed.
-        'meta_query'     => array(
-            array(
-                'key'   => '_EventOrganizerID',
-                'value' => $organizer->ID,
-            ),
-        ),
-    );
-
-    // Perform the query.
-    $organizer_events = new WP_Query( $organizer_events_args );
-
-    // Check if the organizer has events.
-    if ( $organizer_events->have_posts() ) :
-            while ( $organizer_events->have_posts() ) : $organizer_events->the_post();
-            // Get the event URL
-            $event_url = get_the_permalink();
-
-            // Get the cost of the event
-            $ticket_price = tribe_get_cost( null, true );
-
-            // Format the button text to include the price
-            $button_text = !empty($ticket_price) ? "" . esc_html($ticket_price) : "";
-
-            ?>
-            <div class="event-card">
-                <?php if ( has_post_thumbnail() ) : ?>
-                    <div class="event-image">
-                        <a href="<?php echo esc_url( $event_url ); ?>">
-                            <?php the_post_thumbnail('medium'); ?>
-                        </a>
-                    </div>
-                <?php else: ?>
-                    <div class="event-image">
-                        <a href="<?php echo esc_url( $event_url ); ?>">
-                            <img src="https://ticketfesta.co.uk/wp-content/uploads/2024/02/placeholder-4.png" alt="Placeholder" style="width: 100%; height: auto;">
-                        </a>
-                    </div>
-                <?php endif; ?>
-                
-                <div class="event-details">
-                    
-                    <div class="event-content">
-                    <h2 class="event-title">
-    <a href="<?php echo esc_url( $event_url ); ?>">
-        <?php echo mb_strimwidth(get_the_title(), 0, 60, '...'); ?>
-    </a>
-</h2>
-                        <div class="event-day">
-                            <?php echo tribe_get_start_date(null, false, 'D, d M, H:i'); ?>
-                        </div>
-                        <div class="event-time-location">
-                            <span class="event-time"><?php echo tribe_get_start_date( null, false, 'g:i a' ); ?> - <?php echo tribe_get_end_date( null, false, 'g:i a' ); ?></span>
-                            <span class="event-location"><?php echo tribe_get_venue(); ?></span>
-                        </div>
-                        <div class="event-actions">
-                            <a href="<?php echo esc_url( $event_url ); ?>" class="btn-get-tickets"><img src="https://thaynna-william.co.uk/wp-content/uploads/2023/12/Group-188.png">Get Tickets</a><span><?php echo $button_text; ?></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <!-- Event past -->
+    <div class="past_event_listing_div">
+        <div class="event-listing">
             <?php
-        endwhile;
+            $current_organizer_id = get_the_ID(); // Get the current organizer ID
+            $current_time = current_time('Y-m-d H:i:s');
 
-        // Reset post data to avoid conflicts with the main query.
-        wp_reset_postdata();
-    else :
-        echo '<p>No events found.</p>';
-    endif;
-    ?>
+            // Query for past events
+            $past_events_args = array(
+                'post_type' => 'tribe_events',
+                'posts_per_page' => -1,
+                'meta_query' => array(
+                    array(
+                        'key' => '_EventEndDate',
+                        'value' => $current_time,
+                        'compare' => '<',
+                        'type' => 'DATETIME',
+                    ),
+                    array(
+                        'key' => '_EventOrganizerID',
+                        'value' => $current_organizer_id,
+                        'compare' => '=',
+                    ),
+                ),
+                'orderby' => 'meta_value',
+                'meta_key' => '_EventEndDate',
+                'order' => 'DESC',
+            );
+
+            $past_events = new WP_Query($past_events_args);
+
+            if ($past_events->have_posts()) :
+                while ($past_events->have_posts()) : $past_events->the_post();
+                    include 'single-event-card.php'; // Include the event card template
+                endwhile;
+                wp_reset_postdata();
+            else :
+                echo '<p>No past events found.</p>';
+            endif;
+            ?>
+        </div>
+    </div>
+    <!-- End Event past -->
+
+    <!-- Event live -->
+    <div class="live_event_listing_div">
+        <div class="event-listing">
+            <?php
+            // Query for live events
+            $live_events_args = array(
+                'post_type' => 'tribe_events',
+                'posts_per_page' => -1,
+                'meta_query' => array(
+                    array(
+                        'key' => '_EventOrganizerID',
+                        'value' => $current_organizer_id,
+                        'compare' => '=',
+                    ),
+                    array(
+                        'key' => '_EventEndDate',
+                        'value' => $current_time,
+                        'compare' => '>=',
+                        'type' => 'DATETIME',
+                    ),
+                ),
+                'orderby' => 'meta_value',
+                'meta_key' => '_EventStartDate',
+                'order' => 'ASC',
+            );
+
+            $live_events = new WP_Query($live_events_args);
+
+            if ($live_events->have_posts()) :
+                while ($live_events->have_posts()) : $live_events->the_post();
+                    include 'single-event-card.php'; // Include the event card template
+                endwhile;
+                wp_reset_postdata();
+            else :
+                echo '<p>No live events found.</p>';
+            endif;
+            ?>
+        </div>
+    </div>
+    <!-- End Event live -->
 </div>
-</div>
+<!-- End Event LISTING -->
 
-<!-- Event live end -->
-</div>
-
-
-<!-- Event LISTING END -->
 
 
 
@@ -978,19 +892,6 @@ jQuery(document).ready(function($) {
 
 
 
-// Make the entire event card clickable without affecting interactive elements like buttons and links
-jQuery(document).ready(function($) {
-    var checkImageInterval = setInterval(function() {
-        var imageUrl = $('.home_bk_image_imga img').attr('src');
-
-        if (imageUrl) {
-            console.log('Image URL:', imageUrl); // Log the image URL for debugging
-            $('.tribe-events-view--photo').css('background-image', 'url(' + imageUrl + ')');
-            console.log('Background image set for .tribe-events-view--photo'); // Log success message
-            clearInterval(checkImageInterval); // Clear the interval once the image is found and processed
-        }
-    }, 100); // Check every 100ms
-});
 
 
 </script>
