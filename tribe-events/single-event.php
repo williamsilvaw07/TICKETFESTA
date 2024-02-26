@@ -900,8 +900,6 @@ jQuery(document).ready(function() {
             'background-image': 'url(' + imgUrl + ')',
             'background-size': 'cover',
             'background-position': 'center',
-            'width': '240px', // Set the desired width
-            'height': '275px', // Set the desired height
             'backdrop-filter': 'blur(5px)',
             '-webkit-backdrop-filter': 'blur(5px)',
             'background-color': 'rgba(255, 255, 255, 0.4)', // Adjust the color and opacity for the glass effect
@@ -918,6 +916,16 @@ jQuery(document).ready(function() {
 
 
 <style>
+
+.glass-effect {
+    background-size: cover;
+    background-position: center;; 
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    background-color: rgba(255, 255, 255, 0.4); 
+    border-radius: 10px; 
+}
+
 
 .tribe-currency-symbol , .tribe-amount , .btn_price_span {
     color: #d3fa16!important;
