@@ -444,7 +444,15 @@ jQuery(document).ready(function($) {
 
 }
 
-
+.event-timezone{
+display:block!important;
+font-size: 13px;
+    text-transform: capitalize!important;
+    font-weight: 500!important;
+    margin-top: 0!important;
+    color: #777777!important;
+    
+}
 
 
 
