@@ -1602,7 +1602,14 @@ width: fit-content!important;
 
 }
 
-
+.event-timezone{
+    display: block!important;
+    font-size: 11px!important;
+    text-transform: capitalize!important;
+    font-weight: 500!important;
+    margin-top: 0!important;
+    color: black!important;
+}
 .organizer_main_div h3{
 padding-bottom: 15px;
 font-size: 26px;
