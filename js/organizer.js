@@ -160,7 +160,9 @@ jQuery(document).ready(function (jQuery) {
   // Function to parse the query string into a JavaScript object
   // AJAX request when the button is clicked
   jQuery(document).on("click", "#coupon_form_save", function () {
-    var eventId = jQuery("#post_ID").val();
+    $(this).attr('disabled');
+
+    var eventId = jQuery("#event_id").val();
 
     var checkboxes = document.querySelectorAll(
       'input[name="product_ids[]"]:checked'
@@ -169,11 +171,9 @@ jQuery(document).ready(function (jQuery) {
     var coupon_code = document.getElementById("coupon_code");
     var discount_type = document.getElementById("discount_type");
     var amount = document.getElementById("amount");
-    var usage_limit = document.getElementById("usage_limit");
-    var start_date = document.getElementById("start_date");
-    var start_time = document.getElementById("start_time");
-    var expire_date = document.getElementById("expire_date");
-    var expire_time = document.getElementById("expire_time");
+    // var usage_limit = document.getElementById("usage_limit");
+    var start_date_time = document.getElementById("start_date_time");
+    var end_date_time = document.getElementById("end_date_time");
 
     var selectedValues = [];
     checkboxes.forEach(function (checkbox) {
@@ -191,11 +191,9 @@ jQuery(document).ready(function (jQuery) {
         coupon_code: coupon_code.value,
         discount_type: discount_type.value,
         amount: amount.value,
-        usage_limit: usage_limit.value,
-        start_date: start_date.value,
-        start_time: start_time.value,
-        expire_date: expire_date.value,
-        expire_time: expire_time.value,
+        // usage_limit: usage_limit.value,
+        end_date_time: end_date_time.value,
+        start_date_time: start_date_time.value,
       },
       success: function (response) {
         // Handle the response from the server
@@ -212,15 +210,12 @@ jQuery(document).ready(function (jQuery) {
         `;
 
         jQuery(document).find("#couponListBody").append(html);
-
+        location.reload(true);
         coupon_code.value = '';
         discount_type.value = '';
         amount.value = '';
-        usage_limit.value = '';
-        start_date.value = '';
-        start_time.value = '';
-        expire_time.value = '';
-
+        start_date_time.value = '';
+        end_date_time.value = '';
       },
     });
   });
