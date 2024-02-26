@@ -1306,7 +1306,6 @@ width: fit-content!important;
     display: block;
     text-align: center;
     margin-top: 0px;
-    display: flex;
     justify-content: center;
     align-items: center;
     align-content: center;
