@@ -1180,6 +1180,9 @@ background-position: center top;
     position: relative;
     z-index: 2;
     overflow-x: hidden!important;
+    -webkit-backdrop-filter: blur(80px); /* for Safari */
+    backdrop-filter: blur(80px);
+    background-color: rgba(0, 0, 0, 0.5);
     width: 100%;
 }
 .event-listing h3{
