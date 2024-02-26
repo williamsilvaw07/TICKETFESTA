@@ -909,16 +909,16 @@ function createLightbox(imageSrc, category) {
 
 ///FUNCTION TO GET THE EVENT IMAGE AND USE AS A BACKEND IMAGE ON THE DIV CONTAISN 
 jQuery(document).ready(function($) {
-    console.log('Document ready, processing event images...');
+   // console.log('Document ready, processing event images...');
 
     $('.event-card .event-image').each(function(index) {
         var $eventImageDiv = $(this); // Cache the current event image div
-        console.log('Processing event image div #' + (index + 1));
+       // console.log('Processing event image div #' + (index + 1));
 
         var $image = $eventImageDiv.find('img.wp-post-image');
         if ($image.length > 0) {
             var imgSrc = $image.attr('src'); // Get the image source from .wp-post-image
-            console.log('Image source for event image div #' + (index + 1) + ':', imgSrc);
+         //   console.log('Image source for event image div #' + (index + 1) + ':', imgSrc);
 
             // Create a new div for the blurred background image
             var blurredBackground = $('<div></div>').css({
@@ -951,7 +951,7 @@ jQuery(document).ready(function($) {
 
                 // Insert the dark overlay div just after the blurred background div
                 $eventImageDiv.prepend(darkOverlay);
-                console.log('Dark overlay added to event image div #' + (index + 1));
+              //  console.log('Dark overlay added to event image div #' + (index + 1));
             }
 
             // Ensure the .event-image div is positioned relatively to contain the absolute positioned children
@@ -966,10 +966,44 @@ jQuery(document).ready(function($) {
                 'z-index': '2' // Ensure the original image is above the overlay and the blurred background
             });
         } else {
-            console.log('No .wp-post-image found in event image div #' + (index + 1));
+           // console.log('No .wp-post-image found in event image div #' + (index + 1));
         }
     });
 });
+
+
+
+
+
+
+
+
+// Make the entire event card clickable without affecting interactive elements like buttons and links
+document.addEventListener('DOMContentLoaded', function() {
+    var articles = document.querySelectorAll('.tribe-events-pro-photo__event');
+
+    articles.forEach(function(article) {
+        // Add click event listener to each article
+        article.addEventListener('click', function(e) {
+            // Check if the click was on interactive elements or their descendants
+            if (e.target.closest('a, button, .share_btn, .share_btn_event, .close_popup, .copyButton')) {
+                // Do nothing if the click is on interactive elements or their descendants
+                return;
+            }
+
+            // Redirect to the URL specified in the data-href attribute of the article
+            var url = article.querySelector('a').getAttribute('href');
+            if (url) {
+                window.location.href = url;
+            }
+        });
+
+        // Change the cursor to pointer to indicate clickable area
+        article.style.cursor = 'pointer';
+    });
+});
+
+
 
 </script>
 
