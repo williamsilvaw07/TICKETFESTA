@@ -156,10 +156,13 @@ $cost  = tribe_get_formatted_cost( $event_id );
 
 
  <!-- Render the ticket form  -->
- <?php if ( ! empty( $cost ) ) : ?>
+ <?php 
+// Define what conditions should be considered as indicating a free ticket
+$is_free = empty($cost) || $cost === "0" || strtolower($cost) === "free";
+
+if ( ! $is_free ) : ?>
     <!-- Render the ticket form if there's a cost -->
-    <div class="get_tickets_div_single_event_form_new"> 
-    </div>
+    <div class="get_tickets_div_single_event_form_new"></div>
     <div class="get_tickets_div_single_event">
         <div class="get_tickets_div_single_event_inner_left">
             <h5 class="ticketpricebtnsection">
@@ -169,7 +172,7 @@ $cost  = tribe_get_formatted_cost( $event_id );
         </div>
     </div>
 <?php else : ?>
-    <!-- Show as free if there's no cost -->
+    <!-- Show as free if there's no cost or the cost indicates a free ticket -->
     <div class="get_tickets_div_single_event">
         <div class="get_tickets_div_single_event_inner_left">
             <h5 class="ticketpricebtnsection">
@@ -180,7 +183,7 @@ $cost  = tribe_get_formatted_cost( $event_id );
 <?php endif; ?>
 
 <!-- MOBILE TICKET BUTTON -->
-<?php if ( ! empty( $cost ) ) : ?>
+<?php if ( ! $is_free ) : ?>
     <div class="buttonticket_for_mobile">
         <div class="buttonticket_for_mobile_text">
             <span class="btn_from_span">From </span><span class="btn_price_span"><?php echo esc_html( $cost ); ?></span>
