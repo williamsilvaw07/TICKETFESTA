@@ -66,8 +66,7 @@ $organizer_names = array_map('tribe_get_organizer', $organizer_ids);
         <?php $this->template( 'photo/event/date-tag', [ 'event' => $event ] ); ?>
 
         <div class="tribe-events-pro-photo__event-details">
-            <!-- Display the trimmed title here -->
-            <h2 class="tribe-events-pro-photo__event-title"><?php echo esc_html($trimmed_title); ?></h2>
+            <?php $this->template( 'photo/event/title', [ 'event' => $event ] ); ?>
 
 <!-- Event Day and Time -->
 <div class="event-day">
