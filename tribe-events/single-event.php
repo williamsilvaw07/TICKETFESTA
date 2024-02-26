@@ -811,50 +811,6 @@ jQuery(document).ready(function($) {
 
 
 
-//TIME CALACUTIONS 
-jQuery(document).ready(function($) {
-    // Function to extract time from the text
-    function extractTime(text) {
-        var timeMatch = text.match(/\d{1,2}:\d{2}/);
-        return timeMatch ? timeMatch[0] : null;
-    }
-
-    // Extracting start and end times
-    var startTimeText = extractTime($('.tribe-event-date-start').text());
-    var endTimeText = extractTime($('.tribe-event-date-end').text());
-
-    // Function to calculate duration
-    function calculateDuration(startTime, endTime) {
-        var start = moment(startTime, 'HH:mm');
-        var end = moment(endTime, 'HH:mm');
-
-        // Check if end time is the next day
-        if (end.isBefore(start)) {
-            end.add(1, 'day');
-        }
-
-        var duration = moment.duration(end.diff(start));
-        var hours = duration.asHours();
-        var minutes = duration.minutes();
-
-        var result = '';
-        if (hours >= 1) {
-            result += Math.floor(hours) + ' hours ';
-        }
-        if (minutes > 0) {
-            result += minutes + ' minutes';
-        }
-        return result.trim();
-    }
-
-    if (startTimeText && endTimeText) {
-        // Display duration
-        var eventDuration = calculateDuration(startTimeText, endTimeText);
-        $('.time_counter_text').text(eventDuration);
-    } else {
-        console.log('Error parsing event times');
-    }
-});
 
 
 
