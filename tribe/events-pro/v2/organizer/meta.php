@@ -362,15 +362,13 @@ $this->template( 'photo/event/cost', [ 'event' => $event ] );
 // Get the event link.
 $event_link = esc_url( tribe_get_event_link($event) );
 
-// Assuming there's a function to get event ticket prices.
-$ticket_prices = tribe_get_event_ticket_prices($event);
+// Fetch event meta which might contain ticket information.
+$event_meta = tribe_get_custom_fields($event->ID);
 
-// Check if ticket prices are available.
-if (!empty($ticket_prices)) {
-    // Display each ticket price.
-    foreach ($ticket_prices as $price) {
-        echo '<div class="event-ticket-price">Ticket Price: ' . esc_html($price) . '</div>';
-    }
+// Assuming ticket information is stored in a meta field named 'Ticket Prices'.
+if ( isset($event_meta['Ticket Prices']) ) {
+    $ticket_prices = $event_meta['Ticket Prices'];
+    echo '<div class="event-ticket-price">Ticket Price: ' . esc_html($ticket_prices) . '</div>';
 }
 
 // Display the event link.
