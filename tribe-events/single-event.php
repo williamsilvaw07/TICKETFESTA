@@ -909,7 +909,7 @@ jQuery(document).ready(function() {
         });
 
         // Hide the original img element
-        $(this).find('img').hide();
+  
     });
 });
 
