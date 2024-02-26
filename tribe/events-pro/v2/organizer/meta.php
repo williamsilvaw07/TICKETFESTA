@@ -1028,9 +1028,7 @@ jQuery(document).ready(function($) {
 
 <style>
 
-html header{
-    background-color:inherit!important
-}
+
 .organizer_profile_bk {
     position: relative;
     background-image: url('https://ticketfesta.co.uk/wp-content/uploads/2024/02/antoine-j-r3XvSBEQQLo-unsplash-2.jpg');
