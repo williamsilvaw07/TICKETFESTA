@@ -3143,3 +3143,18 @@ function ticketfesta_login_redirect($redirect, $user){
 
 
 
+add_action( 'woocommerce_cart_calculate_fees', 'add_extra_fees_for_products' );
+
+function add_extra_fees_for_products( $cart ) {
+    // Loop through each cart item
+    foreach ( $cart->get_cart() as $cart_item_key => $cart_item ) {
+        // Get the product ID
+        $product_id = $cart_item['product_id'];
+        
+        // Calculate extra fee based on product price
+        $extra_fee = $cart_item['data']->get_price() * 0.2; // 10% of the product price
+        
+        // Add extra fee to the cart
+        $cart->add_fee( 'Extra Fee for Product ' . $product_id, $extra_fee );
+    }
+}
