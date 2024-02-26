@@ -16,7 +16,11 @@
  */
 
 
- 
+ // Trim the event title here before displaying it
+$trimmed_title = mb_strimwidth(get_the_title($event->ID), 0, 60, '...');
+
+
+
 $classes = get_post_class( [ 'tribe-common-g-col', 'tribe-events-pro-photo__event' ], $event->ID );
 if ( ! empty( $event->featured ) ) {
     $classes[] = 'tribe-events-pro-photo__event--featured';
@@ -62,7 +66,8 @@ $organizer_names = array_map('tribe_get_organizer', $organizer_ids);
         <?php $this->template( 'photo/event/date-tag', [ 'event' => $event ] ); ?>
 
         <div class="tribe-events-pro-photo__event-details">
-
+            <!-- Display the trimmed title here -->
+            <h2 class="tribe-events-pro-photo__event-title"><?php echo esc_html($trimmed_title); ?></h2>
 
 <!-- Event Day and Time -->
 <div class="event-day">
