@@ -980,18 +980,18 @@ jQuery(document).ready(function($) {
 
 // Make the entire event card clickable without affecting interactive elements like buttons and links
 jQuery(document).ready(function($) {
-    var checkImageInterval = setInterval(function() {
-        var imageUrl = $('.home_bk_image_imga img').attr('src');
+   // Find each .event-card element
+   $('.event-card').each(function() {
+        // Get the href attribute of the first <a> tag found within the .event-card
+        var link = $(this).find('a').attr('href');
 
-        if (imageUrl) {
-            console.log('Image URL:', imageUrl); // Log the image URL for debugging
-            $('.tribe-events-view--photo').css('background-image', 'url(' + imageUrl + ')');
-            console.log('Background image set for .tribe-events-view--photo'); // Log success message
-            clearInterval(checkImageInterval); // Clear the interval once the image is found and processed
+        // Check if the link is not undefined or empty
+        if (link) {
+            // Create a new <a> tag that wraps the entire .event-card contents
+            $(this).wrapInner('<a class="event-card-link" href="' + link + '"></a>');
         }
-    }, 100); // Check every 100ms
+    });
 });
-
 
 </script>
 
