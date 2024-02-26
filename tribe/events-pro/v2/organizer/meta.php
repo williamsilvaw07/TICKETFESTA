@@ -439,7 +439,17 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
                             <span class="event-location"><?php echo tribe_get_venue(); ?></span>
                         </div>
                         <div class="event-actions">
-                            <a href="<?php echo esc_url( $event_url ); ?>" class="btn-get-tickets"><img src="https://thaynna-william.co.uk/wp-content/uploads/2023/12/Group-188.png">Get Tickets</a><span><?php echo $button_text; ?></span>
+                          
+            <!-- Get Tickets Button -->
+            <div class="event-actions">
+                <div class="event_actions_inner">
+                    <?php $this->template( 'photo/event/cost', [ 'event' => $event ] ); ?>
+                    <a href="<?php echo esc_url( tribe_get_event_link($event) ); ?>" class="btn-get-tickets">
+                        <img src="https://thaynna-william.co.uk/wp-content/uploads/2023/12/Group-188.png" alt="Get Tickets" style="vertical-align: middle;"> Get Tickets
+                    </a>
+                </div>
+            </div>
+            <!-- End Get Tickets Button -->
                         </div>
                     </div>
                 </div>
