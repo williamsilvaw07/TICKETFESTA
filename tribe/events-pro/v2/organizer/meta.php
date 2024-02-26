@@ -1005,6 +1005,7 @@ jQuery(document).ready(function($) {
 
 <style>
 
+
 .organizer_profile_bk {
     position: relative;
     background-image: url('https://ticketfesta.co.uk/wp-content/uploads/2024/02/antoine-j-r3XvSBEQQLo-unsplash-2.jpg');
@@ -1293,6 +1294,7 @@ width: fit-content!important;
 }
 
 .event-actions a{
+    display:none;
     text-decoration: none;
     background-color: #FFD700;
     color: black!important;
