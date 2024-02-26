@@ -891,53 +891,6 @@ jQuery(document).ready(function($) {
 
 ///STICKY BUY TICKET FUNCTION FOR MOBILE 
 
-jQuery(document).ready(function() {
-    function isElementInView(element) {
-        var elementTop = element.offset().top;
-        var elementBottom = elementTop + element.outerHeight();
-
-        var viewportTop = $(window).scrollTop();
-        var viewportBottom = viewportTop + $(window).height();
-
-        return elementBottom > viewportTop && elementTop < viewportBottom;
-    }
-
-    function checkTicketButtonVisibility() {
-        var ticketButton = $('.buttonticket_for_mobile');
-        var stickyContainer = $('#sticky-button-container');
-
-        if (!isElementInView(ticketButton)) {
-            stickyContainer.show();
-        } else {
-            stickyContainer.hide();
-        }
-    }
-
-    // Check on scroll and on page load
-    $(window).scroll(checkTicketButtonVisibility);
-    checkTicketButtonVisibility();
-
-    // Scroll to ticket form on sticky button click
-    $('#scroll-to-tickets').click(function() {
-        // Removed the scroll to top functionality
-        // $('html, body').animate({
-        //     scrollTop: $(".tribe-events-event-image").offset().top
-        // }, 400); // Smooth scroll duration
-    });
-
-    // Extracting the lowest price
-    var priceElement = $('.top_flex_section_single_event .tribe-events-cost');
-    if (priceElement.length) {
-        var fullPriceText = priceElement.text();
-        var firstPrice = fullPriceText.split('–')[0].trim(); // Extracts the first part of the price range
-
-        // Creating a span element for the price with a class
-        var priceSpan = $('<span>').text(firstPrice).addClass('- price-value');
-
-        // Updating the button text by appending the spans
-        $('#scroll-to-tickets').append(priceSpan);
-    }
-});
 
 
     </script>
@@ -1684,7 +1637,7 @@ body .tribe-tickets__tickets-buy{
 
 
 #scroll-to-tickets{
-    display: flex!important;
+    display: none!important;
 justify-content: center;
 align-items: center;
 align-content: center;
