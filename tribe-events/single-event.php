@@ -887,17 +887,28 @@ jQuery(document).ready(function($) {
 
 /////TICKET SITE FEE HTML AND FUNCTIONS
 
-jQuery(document).ready(function($) {
-    // Text you want to add inside the span
-    var spanText = "Your Text Here";
+$(document).ready(function() {
+    // Select the element containing the ticket price
+    $('.tribe-tickets__tickets-item-extra-price .tribe-amount').each(function() {
+        // Retrieve the ticket price and remove any non-numeric characters (like currency symbols)
+        var ticketPrice = parseFloat($(this).text().replace(/[^0-9.]/g, ''));
 
-    // Find all elements with the class and append a p tag with a span inside
-    $('.tribe-tickets__tickets-item-extra-price').each(function() {
-        $(this).append('<p><span>' + spanText + '</span></p>');
+        // Initialize the site fee variable
+        var siteFee = 0;
+
+        // Check if the ticket price is less than 100
+        if (ticketPrice < 100) {
+            // Calculate the site fee as 3.5% of the ticket price plus a flat fee of 0.2
+            siteFee = (ticketPrice * 0.035) + 0.2;
+        }
+
+        // Round the site fee to two decimal places
+        siteFee = siteFee.toFixed(2);
+
+        // Append a new paragraph with the site fee to the parent of the ticket price element
+        $(this).parent().append('<p class="site-fee">Site Fee: <span class="site-fee-amount">' + siteFee + '</span></p>');
     });
 });
-
-
 
     </script>
 
