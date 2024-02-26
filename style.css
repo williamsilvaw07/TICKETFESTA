@@ -77,7 +77,7 @@ font-family: "Plus Jakarta Sans", Sans-serif;
 /***HEADER***/
 .elementor-element-9d845b1{
     width: 90%!important;
-    margin: 0 auto;
+    margin: 0 auto!important;
 }
 header{
     background-color: #1A1A1A!important;
