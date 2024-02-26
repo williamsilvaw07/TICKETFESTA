@@ -451,7 +451,26 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
     </a>
 </h2>
                         <div class="event-day">
-                            <?php echo tribe_get_start_date(null, false, 'D, d M, H:i'); ?>
+                        <?php 
+    // Format for the date and time
+    $event_start_date_time = tribe_get_start_date( $event_id, true, 'D, j M, H:i' );
+    
+    // Get the event's timezone object
+    $timezone = Tribe__Events__Timezones::get_event_timezone_string( $event_id );
+
+    // Create a DateTimeZone object from the event's timezone string
+    $dateTimeZone = new DateTimeZone($timezone);
+
+    // Create a DateTime object for the event's start date/time in the event's timezone
+    $dateTime = new DateTime( tribe_get_start_date( $event_id, false, 'Y-m-d H:i:s' ), $dateTimeZone );
+
+    // Format the DateTime object to get the timezone abbreviation
+    // Handles cases like BST/GMT dynamically based on the event's date and timezone
+    $timezone_abbr = $dateTime->format('T');
+
+    // Output the start date and time along with the timezone abbreviation in a span with a class
+    echo $event_start_date_time . ' <span class="event-timezone">' . $timezone_abbr . '</span>';
+    ?>
                         </div>
                         <div class="event-time-location">
                             <span class="event-time"><?php echo tribe_get_start_date( null, false, 'g:i a' ); ?> - <?php echo tribe_get_end_date( null, false, 'g:i a' ); ?></span>
