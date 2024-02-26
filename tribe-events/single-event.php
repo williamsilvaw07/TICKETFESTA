@@ -887,7 +887,7 @@ jQuery(document).ready(function($) {
 
 /////TICKET SITE FEE HTML AND FUNCTIONS
 
-$(document).ready(function() {
+jQuery(document).ready(function() {
     // Select the element containing the ticket price
     $('.tribe-tickets__tickets-item-extra-price .tribe-amount').each(function() {
         // Retrieve the ticket price and remove any non-numeric characters (like currency symbols)
