@@ -72,32 +72,6 @@ $after = apply_filters( 'tribe_events_single_event_title_html_after', '</h1>', $
 
 
 
-// Check if the Fee Handler class exists to prevent errors
-if ( class_exists( 'Tribe__Events__Community__Tickets__Fee_Handler' ) ) {
-    // Initialize the Fee Handler
-    $fee_handler = new Tribe__Events__Community__Tickets__Fee_Handler();
-
-    // Get the site fee data
-    $site_fee_data = $fee_handler->get_site_fee_data();
-
-    // Check if site fee data is available
-    if ( ! empty( $site_fee_data ) && is_array( $site_fee_data ) ) {
-        // Assuming 'amount' and 'type' are part of the site fee data
-        $fee_amount = isset( $site_fee_data['amount'] ) ? $site_fee_data['amount'] : '';
-        $fee_type = isset( $site_fee_data['type'] ) ? $site_fee_data['type'] : '';
-
-        // Display the site fee information
-        echo '<div class="single_event_page_location">';
-        echo '<p>Site Fee: ' . esc_html( $fee_amount ) . '</p>';
-        echo '<p>Fee Type: ' . esc_html( $fee_type ) . '</p>';
-        echo '</div>';
-    }
-}
-
-
-
-
-
 
  
 $title = apply_filters( 'tribe_events_single_event_title_html', the_title( $before, $after, false ), $event_id );
@@ -575,99 +549,6 @@ jQuery(document).ready(function($) {
 
 
 
-
-
-jQuery(document).ready(function() {
-    var btns = jQuery('.getticketbtn, #scroll-to-tickets');  // Selecting elements with class 'getticketbtn' and the ID 'scroll-to-tickets'
-    var linkViewAttendee = jQuery('.tribe-link-view-attendee');
-    var ticketsForm = jQuery('.tribe-common.event-tickets.tribe-tickets__tickets-wrapper');
-    var originalLocation = ticketsForm.parent();
-
-    // Function to get the lowest ticket price
-    function getLowestTicketPrice() {
-        var lowestPrice = null;
-
-        // Loop through each ticket item
-        jQuery('.tribe-tickets__tickets-item').each(function() {
-            // Get the price of the current ticket
-            var price = parseFloat(jQuery(this).data('ticket-price'));
-
-            // Check if this price is lower than the current lowest price
-            if (lowestPrice === null || price < lowestPrice) {
-                lowestPrice = price;
-            }
-        });
-
-        return lowestPrice;
-    }
-
-    // Function to display the lowest price
-    function displayLowestPrice() {
-        var lowestPrice = getLowestTicketPrice();
-        if (lowestPrice !== null) {
-            // Display the lowest price in elements with class .btn_price_span
-            jQuery('.btn_price_span').text('£' + lowestPrice.toFixed(2));
-        }
-    }
-
-    // Call the function to display the lowest price
-    displayLowestPrice();
-
-    // Event listener for buttons and scroll-to-tickets
-    btns.each(function() {
-        jQuery(this).on('click', function() {
-            if (ticketsForm.length) {
-                // Show the form and link view attendee elements
-                linkViewAttendee.show();
-                ticketsForm.show();
-
-                showPopup();
-            } else {
-                console.log("Required elements not found");
-            }
-        });
-    });
-
-    function showPopup() {
-        var popupBackground = jQuery('<div class="popup-background"></div>');
-        var popupContent = jQuery('<div class="popup-content"></div>');
-
-        popupBackground.append(popupContent);
-        popupContent.append(linkViewAttendee);
-        popupContent.append(ticketsForm);
-
-        var closeButton = jQuery('<button class="popup-close-btn">×</button>');
-        closeButton.on('click', function() {
-            closePopup();
-        });
-
-        popupContent.append(closeButton);
-        jQuery('body').append(popupBackground);
-
-        // Close popup when clicking outside the content area
-        popupBackground.on('click', function(e) {
-            if (e.target === this) {
-                closePopup();
-            }
-        });
-
-        // Add event listener to the 'tribe-tickets__tickets-buy' button inside the popup
-        popupContent.find('.tribe-tickets__tickets-buy').on('click', function() {
-            closePopup();
-        });
-    }
-
-    function closePopup() {
-    // Hide the form in its current location
-    ticketsForm.hide();
-
-    // Move the form back to its original location and show it
-    originalLocation.append(ticketsForm).show();
-
-    // Remove the popup background
-    jQuery('.popup-background').remove();
-}
-});
 
 
 
