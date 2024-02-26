@@ -993,7 +993,7 @@ jQuery(document).ready(function($) {
         } else {
             console.log('Image URL not found.'); // Log error message if image URL is not found
         }
-    }, 1000); // Delay of 30ms
+    }, 3000); // Delay of 30ms
 });
 
 
