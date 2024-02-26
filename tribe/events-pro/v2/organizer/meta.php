@@ -1150,6 +1150,7 @@ background-position: center top;
     flex-wrap: wrap;
     gap: 20px;
     justify-content: flex-start;
+    align-items: flex-start;
 }
 .organiser_background:before {
     content: '';
