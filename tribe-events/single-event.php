@@ -914,7 +914,12 @@ jQuery(document).ready(function() {
 
 
 <style>
-
+.site-fee{
+    color: #878787!important;
+    font-size: 13px!important;
+    letter-spacing: 1px;
+    font-weight: 300;
+}
 .tribe-currency-symbol , .tribe-amount , .btn_price_span {
     color: #d3fa16!important;
     font-size:22px!important;
