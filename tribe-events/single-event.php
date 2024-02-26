@@ -173,7 +173,7 @@ $cost  = tribe_get_formatted_cost( $event_id );
     <div class="get_tickets_div_single_event">
         <div class="get_tickets_div_single_event_inner_left">
             <h5 class="ticketpricebtnsection">
-                Free
+                <span class="ticket-free">Free</span>
             </h5>
         </div>
     </div>
@@ -190,7 +190,7 @@ $cost  = tribe_get_formatted_cost( $event_id );
 <?php else : ?>
     <div class="buttonticket_for_mobile">
         <div class="buttonticket_for_mobile_text">
-            Free
+            <span class="ticket-free">Free</span>
         </div>
     </div>
 <?php endif; ?>
