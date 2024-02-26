@@ -1027,7 +1027,7 @@ jQuery(document).ready(function($) {
 <style>
 
 html header{
-    background-color:inherit!important
+ 
 }
 .organizer_profile_bk {
     position: relative;
