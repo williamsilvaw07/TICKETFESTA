@@ -113,7 +113,7 @@ $template_vars = array_merge( [ 'organizer' => $organizer, ], $conditionals )
             $banner_image_url = wp_get_attachment_image_url($banner_image_id, 'full');
         } else {
             // Use default image if no specific image is set
-            $banner_image_url = 'https://thaynna-william.co.uk/wp-content/uploads/2024/01/Group-189-5.jpg';
+            $banner_image_url = '/wp-content/uploads/2024/02/antoine-j-r3XvSBEQQLo-unsplash-2-min.jpg';
         }
         echo 'background-image: url(' . esc_url($banner_image_url) . ');';
         ?>
