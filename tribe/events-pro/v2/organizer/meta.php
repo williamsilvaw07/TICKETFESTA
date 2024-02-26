@@ -375,7 +375,7 @@ if ( isset($event_meta['Ticket Prices']) ) {
 echo '<a href="' . $event_link . '">Event Link</a>';
 ?>
                             <div class="event-actions">
-                                <a href="<?php echo esc_url($event_url); ?>" class="btn-get-tickets">View Event</a>
+                               
                             </div>
                         </div>
                     </div>
