@@ -644,7 +644,7 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 	////JS TO ADD THE MAIN PRODUCT IMAGE ON THE BACKGROUND AND ADD THE LOCATION ON THE CUSTOM DIV 
     document.addEventListener('DOMContentLoaded', function() {
     var organizerProfileBkElement = document.querySelector('.organizer_profile_bk');
-    var titleElement = document.querySelector('.site-content');
+    var titleElement = document.querySelector('.event-listing-main-div');
 
     if (organizerProfileBkElement && titleElement) {
         // Extracting the background image style from the organizer_profile_bk element
@@ -1180,9 +1180,6 @@ background-position: center top;
     position: relative;
     z-index: 2;
     overflow-x: hidden!important;
-    -webkit-backdrop-filter: blur(80px); /* for Safari */
-    backdrop-filter: blur(80px);
-    background-color: rgba(0, 0, 0, 0.5);
     width: 100%;
 }
 .event-listing h3{
