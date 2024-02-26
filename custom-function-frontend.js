@@ -138,7 +138,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (imageElement && targetElement) {
         var imageUrl = imageElement.getAttribute('src');
         targetElement.style.backgroundImage = 'url("' + imageUrl + '")';
-        targetElement.classList.add('custom-background-class'); // Add this class if you want to apply additional styles
+        targetElement.classList.add('custom-background-class_home'); // Add this class if you want to apply additional styles
     }
 });
 
