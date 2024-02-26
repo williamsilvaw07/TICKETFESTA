@@ -450,7 +450,7 @@ font-size: 13px;
     text-transform: capitalize!important;
     font-weight: 600!important;
     margin-top: 0!important;
-    color: #777777!important;
+
     
 }
 .event-day{
