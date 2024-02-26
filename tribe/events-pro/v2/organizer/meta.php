@@ -1136,7 +1136,7 @@ padding: 1px;
    
  }
  .organiser_background {
-    background-size:   cover;
+    background-size:   contain;
 background-position: center top;
     background-repeat: no-repeat!important;
     position: relative;
