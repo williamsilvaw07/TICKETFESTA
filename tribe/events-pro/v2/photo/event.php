@@ -81,8 +81,8 @@ $organizer_names = array_map('tribe_get_organizer', $organizer_ids);
     // Handles cases like BST/GMT dynamically based on the event's date and timezone
     $timezone_abbr = $dateTime->format('T');
 
-    // Output the start date and time along with the timezone abbreviation
-    echo $event_start_date_time . ' ' . $timezone_abbr;
+    // Output the start date and time along with the timezone abbreviation in a span with a class
+    echo $event_start_date_time . ' <span class="event-timezone">' . $timezone_abbr . '</span>';
     ?>
 </div>
 
