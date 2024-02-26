@@ -1294,7 +1294,7 @@ width: fit-content!important;
 }
 
 .event-actions a{
-    display:none;
+    display:none!important;
     text-decoration: none;
     background-color: #FFD700;
     color: black!important;
