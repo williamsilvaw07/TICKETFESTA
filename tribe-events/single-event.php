@@ -1229,6 +1229,7 @@ background-position: center top;
     margin: 0;
     max-height: 475px;
     object-fit: contain;
+    backdrop-filter: blur(100px)!important;
 }
 .main_single_event_div{
     display: flex;
