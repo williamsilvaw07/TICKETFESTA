@@ -355,6 +355,27 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
                                 <span class="event-time"><?php echo tribe_get_start_date(null, false, 'g:i a'); ?> - <?php echo tribe_get_end_date(null, false, 'g:i a'); ?></span>
                                 <span class="event-location"><?php echo tribe_get_venue(); ?></span>
                             </div>
+                            <?php
+// Include the event cost template.
+$this->template( 'photo/event/cost', [ 'event' => $event ] );
+
+// Get the event link.
+$event_link = esc_url( tribe_get_event_link($event) );
+
+// Assuming there's a function to get event ticket prices.
+$ticket_prices = tribe_get_event_ticket_prices($event);
+
+// Check if ticket prices are available.
+if (!empty($ticket_prices)) {
+    // Display each ticket price.
+    foreach ($ticket_prices as $price) {
+        echo '<div class="event-ticket-price">Ticket Price: ' . esc_html($price) . '</div>';
+    }
+}
+
+// Display the event link.
+echo '<a href="' . $event_link . '">Event Link</a>';
+?>
                             <div class="event-actions">
                                 <a href="<?php echo esc_url($event_url); ?>" class="btn-get-tickets">View Event</a>
                             </div>
