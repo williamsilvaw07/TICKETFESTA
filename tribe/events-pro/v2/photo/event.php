@@ -66,7 +66,12 @@ $organizer_names = array_map('tribe_get_organizer', $organizer_ids);
         <?php $this->template( 'photo/event/date-tag', [ 'event' => $event ] ); ?>
 
         <div class="tribe-events-pro-photo__event-details">
-            <?php $this->template( 'photo/event/title', [ 'event' => $event ] ); ?>
+        <h3 class="tribe-events-pro-photo__event-title tribe-common-h6">
+                <a href="<?php echo esc_url( tribe_get_event_link($event) ); ?>" 
+                   title="<?php echo esc_attr($trimmed_title); ?>" 
+                   rel="bookmark" 
+                   class="tribe-events-pro-photo__event-title-link tribe-common-anchor-thin">
+                    <?php echo esc_html($trimmed_title); ?>
 
 <!-- Event Day and Time -->
 <div class="event-day">
