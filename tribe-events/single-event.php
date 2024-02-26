@@ -901,8 +901,8 @@ jQuery(document).ready(function() {
         // Add the 'glass-effect' class to apply the glass effect styling
         $(this).addClass('glass-effect');
 
-        // Hide the original img element
-        $(this).find('img').hide();
+     
+
     });
 });
 
