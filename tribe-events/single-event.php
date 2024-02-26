@@ -156,47 +156,32 @@ $cost  = tribe_get_formatted_cost( $event_id );
 
 
  <!-- Render the ticket form  -->
- <?php 
-// Define what conditions should be considered as indicating a free ticket
-$is_free = empty($cost) || $cost === "0" || strtolower($cost) === "free";
+ <div class="get_tickets_div_single_event_form_new"> 
+</div>
+<div class="get_tickets_div_single_event">
+<div class="get_tickets_div_single_event_inner_left">
 
-if ( ! $is_free ) : ?>
-    <!-- Render the ticket form if there's a cost -->
-    <div class="get_tickets_div_single_event_form_new"></div>
-    <div class="get_tickets_div_single_event">
-        <div class="get_tickets_div_single_event_inner_left">
-            <h5 class="ticketpricebtnsection">
-                <span class="fromspansingleevent">From</span>
-                <span class="tribe-events-cost"><?php echo esc_html( $cost ); ?></span>
-            </h5>
-        </div>
-    </div>
-<?php else : ?>
-    <!-- Show as free if there's no cost or the cost indicates a free ticket -->
-    <div class="get_tickets_div_single_event">
-        <div class="get_tickets_div_single_event_inner_left">
-            <h5 class="ticketpricebtnsection">
-                <span class="ticket-free">Free</span>
-            </h5>
-        </div>
-    </div>
-<?php endif; ?>
+<h5 class="ticketpricebtnsection"><span class="fromspansingleevent">From</span><?php if ( ! empty( $cost ) ) : ?>
+			<span class="tribe-events-cost"><?php echo esc_html( $cost ) ?></span>
+		<?php endif; ?></h5>
+		</div></div>
 
-<!-- MOBILE TICKET BUTTON -->
-<?php if ( ! $is_free ) : ?>
-    <div class="buttonticket_for_mobile">
-        <div class="buttonticket_for_mobile_text">
-            <span class="btn_from_span">From </span><span class="btn_price_span"><?php echo esc_html( $cost ); ?></span>
-        </div>
-        <button id="getticketbtn1" class="getticketbtn">Get Tickets</button>
-    </div>
-<?php else : ?>
-    <div class="buttonticket_for_mobile">
-        <div class="buttonticket_for_mobile_text">
-            <span class="ticket-free">Free</span>
-        </div>
-    </div>
-<?php endif; ?>
+<!-- MOBILE TICKET BUTTON  -->
+<div class=buttonticket_for_mobile>
+            <div class="buttonticket_for_mobile_text">
+<span class="btn_from_span">From </span><span class="btn_price_span"> </span>
+</div>
+        <button id="getticketbtn1" class="getticketbtn"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 18" fill="none">
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M16.9653 16.7465C18.5679 16.0528 21.6812 13.9865 22.8702 12.1175L20.6832 10.1855C20.3924 10.5734 19.8259 10.9195 19.371 11.0603C18.9161 11.2011 18.2894 11.0004 17.8401 10.8416C17.3907 10.6828 17.0932 10.2025 16.817 9.80332C16.5407 9.40414 16.3922 8.92572 16.3921 8.43499C16.3921 7.78501 17.0592 6.77067 17.0592 6.77067L14.9969 5.15533C14.4505 5.99078 13.3486 6.92551 11.909 8.03083C11.2461 8.53997 10.7359 9.21138 9.9668 9.52938" fill="#3D54FF"/>
+  <path d="M2.09375 10.6229C5.49369 13.5561 7.58317 15.5691 8.79872 16.3643C10.6218 17.5571 12.1641 17.7487 14.1652 17.5571C16.1659 17.3651 20.9196 15.0433 22.8705 12.1123L20.6668 10.1177C20.4418 10.4042 20.1546 10.6357 19.8268 10.7947C19.499 10.9536 19.1393 11.0358 18.775 11.0349C17.4532 11.0349 16.3816 9.97642 16.3816 8.67077C16.3816 8.34387 16.4499 8.02059 16.5823 7.72168C16.7146 7.42278 16.908 7.15487 17.1501 6.93515L14.9412 4.93665C14.1031 6.16269 12.79 7.25926 11.6069 8.16206" stroke="black" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M11.4975 7.77977C11.2241 7.53219 10.2662 6.3149 9.72028 5.81888C9.53416 6.02108 9.308 6.18235 9.05619 6.29244C8.80438 6.40253 8.53243 6.45904 8.2576 6.45837C7.16497 6.45837 6.27966 5.58225 6.27966 4.50098C6.27942 4.00795 6.46712 3.53338 6.80455 3.1739L4.40713 1C2.25948 3.33399 1.06362 5.82194 1.00238 7.97572C0.941142 10.1295 2.07271 10.8167 3.17934 10.9789C6.42794 11.4548 9.52083 9.75989 11.9349 7.97572" stroke="black" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M17.4145 13.5295C17.3359 13.6138 17.2747 13.7129 17.2345 13.821C17.1944 13.929 17.1759 14.044 17.1803 14.1592C17.1847 14.2744 17.2119 14.3877 17.2602 14.4924C17.3085 14.5971 17.377 14.6912 17.4618 14.7693C17.5466 14.8474 17.646 14.908 17.7543 14.9476C17.8626 14.9871 17.9777 15.0049 18.0929 14.9998C18.2081 14.9948 18.3212 14.967 18.4256 14.9181C18.53 14.8692 18.6237 14.8001 18.7013 14.7148C18.857 14.5439 18.9386 14.3184 18.9285 14.0875C18.9183 13.8565 18.8172 13.639 18.6472 13.4824C18.4772 13.3258 18.2521 13.2429 18.0211 13.2517C17.7902 13.2605 17.5721 13.3604 17.4145 13.5295Z" fill="#282828"/>
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M14.8021 11.3295C14.7215 11.4135 14.6585 11.5127 14.6168 11.6213C14.5751 11.7299 14.5554 11.8458 14.559 11.9621C14.5626 12.0784 14.5894 12.1928 14.6377 12.2986C14.6861 12.4045 14.755 12.4996 14.8406 12.5784C14.9262 12.6573 15.0266 12.7183 15.136 12.7578C15.2455 12.7974 15.3617 12.8147 15.4779 12.8088C15.5941 12.8029 15.7079 12.7738 15.8128 12.7234C15.9176 12.6729 16.0114 12.602 16.0885 12.5149C16.2402 12.3434 16.3187 12.1193 16.3071 11.8906C16.2954 11.6619 16.1946 11.4469 16.0262 11.2918C15.8578 11.1366 15.6353 11.0537 15.4064 11.0607C15.1776 11.0678 14.9606 11.1643 14.8021 11.3295Z" fill="#282828"/>
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M12.6043 9.1554C12.5265 9.23996 12.4661 9.33901 12.4265 9.44691C12.387 9.55482 12.369 9.66945 12.3738 9.78427C12.3785 9.8991 12.4059 10.0119 12.4542 10.1161C12.5025 10.2204 12.5709 10.3141 12.6555 10.3919C12.74 10.4698 12.8391 10.5302 12.947 10.5697C13.0549 10.6093 13.1695 10.6272 13.2843 10.6225C13.3992 10.6177 13.5119 10.5904 13.6162 10.542C13.7205 10.4937 13.8142 10.4253 13.892 10.3408C14.0492 10.17 14.1321 9.9438 14.1225 9.7119C14.1129 9.48 14.0116 9.26142 13.8408 9.10423C13.6701 8.94704 13.4439 8.86412 13.212 8.87372C12.9801 8.88332 12.7615 8.98464 12.6043 9.1554Z" fill="#282828"/>
+</svg>Get Tickets</button>
+</div>
+
+</div>
 
 
 
@@ -927,13 +912,6 @@ jQuery(document).ready(function() {
 
 
 <style>
-
-
-.ticket-free {
-   
-    color: green;
-    font-weight: bold;
-}
 
 .glass-effect {
     background-size: cover;
