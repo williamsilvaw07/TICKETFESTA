@@ -640,24 +640,6 @@ echo '<a href="' . $event_link . '">Event Link</a>';
 ///////////END
 
 
-//////ON TICKET BTN SHOW ONLY THE LOWEST PRICE 
-jQuery(document).ready(function($) {
-  // Select all spans within 'Get Tickets' buttons
-  $('.event-actions span').each(function() {
-    // Get the span text
-    var text = $(this).text();
-
-    // Match prices and extract the lowest price
-    var prices = text.match(/£\d+\.?\d*/g);
-    if (prices && prices.length) {
-      var lowestPrice = prices[0]; // assuming the first one is the lowest
-
-      // Update the span text to include only the lowest price
-      // and wrap 'From' in a span with a class
-      $(this).html('<span class="from-text">From</span> ' + lowestPrice);
-    }
-  });
-});
 
 
 
