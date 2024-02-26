@@ -60,7 +60,18 @@ $organizer_names = array_map('tribe_get_organizer', $organizer_ids);
         <?php $this->template( 'photo/event/date-tag', [ 'event' => $event ] ); ?>
 
         <div class="tribe-events-pro-photo__event-details">
-            <?php $this->template( 'photo/event/title', [ 'event' => $event ] ); ?>
+            <?php if ( ! empty( $template_args['trim_title'] ) ) {
+    // Get the event title, assuming $event is available and contains the title.
+    // You may need to adjust this line depending on how your event titles are stored or accessed.
+    $event_title = get_the_title( $event->ID );
+
+    // Apply the character limit.
+    $event_title = mb_strimwidth( $event_title, 0, 60, '...' );
+}
+
+// Display the (possibly trimmed) title.
+echo esc_html( $event_title );
+ ?>
 
 <!-- Event Day and Time -->
 <div class="event-day">
