@@ -22,7 +22,7 @@
     $event_title = get_the_title( $event->ID );
 
     // Apply the character limit.
-    $event_title = mb_strimwidth( $event_title, 0, 60, '...' );
+    $event_title = mb_strimwidth( $event_title, 0, 10, '...' );
 }
 
 
