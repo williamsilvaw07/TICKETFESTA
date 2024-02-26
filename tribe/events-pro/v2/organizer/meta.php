@@ -979,16 +979,19 @@ jQuery(document).ready(function($) {
 
 
 // Make the entire event card clickable without affecting interactive elements like buttons and links
-jQuery(document).ready(function($) {
-    // Get the source of the image you want to use as the background
-    var backgroundImageSrc = $('.home_bk_image_imga img').attr('src');
+jQuery(document).ready(function() {
+    // Find the image in the '.home_bk_image_imga' class
+    var imageUrl = $('.home_bk_image_imga img').attr('src');
+    console.log('Image URL:', imageUrl); // Log the image URL for debugging
 
-    // Set the background image of the target element
-    $('.tribe-events-view--photo').css({
-        'background-image': 'url(' + backgroundImageSrc + ')',
-        'background-size': 'cover',
-        'background-position': 'center center'
-    });
+    // Check if the image URL is found
+    if (imageUrl) {
+        // Apply the image as the background for the '.tribe-events-view--photo' element
+        $('.tribe-events-view--photo').css('background-image', 'url(' + imageUrl + ')');
+        console.log('Background image set for .tribe-events-view--photo'); // Log success message
+    } else {
+        console.log('Image URL not found.'); // Log error message if image URL is not found
+    }
 });
 
 </script>
