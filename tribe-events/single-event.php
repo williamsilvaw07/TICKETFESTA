@@ -916,7 +916,7 @@ jQuery(document).ready(function() {
 .glass-effect {
     background-size: cover;
     background-position: center;; 
-    backdrop-filter: blur(5px)!importan;
+    backdrop-filter: blur(5px)!important;
     -webkit-backdrop-filter: blur(5px);
     background-color: rgba(255, 255, 255, 0.4); 
     border-radius: 10px; 
