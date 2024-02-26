@@ -887,39 +887,13 @@ jQuery(document).ready(function($) {
 
 /////TICKET SITE FEE HTML AND FUNCTIONS
 
-jQuery(document).ready(function() {
-    // Select the element containing the ticket price
-    $('.tribe-tickets__tickets-item-extra-price .tribe-amount').each(function() {
-        // Retrieve the ticket price and remove any non-numeric characters (like currency symbols)
-        var ticketPrice = parseFloat($(this).text().replace(/[^0-9.]/g, ''));
 
-        // Initialize the site fee variable
-        var siteFee = 0;
-
-        // Check if the ticket price is less than 100
-        if (ticketPrice < 100) {
-            // Calculate the site fee as 3.5% of the ticket price plus a flat fee of 0.2
-            siteFee = (ticketPrice * 0.035) + 0.2;
-        }
-
-        // Round the site fee to two decimal places
-        siteFee = siteFee.toFixed(2);
-
-        // Append a new paragraph with the site fee to the parent of the ticket price element
-        $(this).parent().append('<p class="site-fee">Site Fee: <span class="site-fee-amount">' + siteFee + '</span></p>');
-    });
-});
 
     </script>
 
 
 <style>
-.site-fee{
-    color: #878787!important;
-    font-size: 13px!important;
-    letter-spacing: 1px;
-    font-weight: 300;
-}
+
 .tribe-currency-symbol , .tribe-amount , .btn_price_span {
     color: #d3fa16!important;
     font-size:22px!important;
