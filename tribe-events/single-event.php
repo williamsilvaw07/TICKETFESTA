@@ -885,11 +885,17 @@ jQuery(document).ready(function($) {
 
 
 
+/////TICKET SITE FEE HTML AND FUNCTIONS
 
+jQuery(document).ready(function($) {
+    // Text you want to add inside the span
+    var spanText = "Your Text Here";
 
-///STICKY BUY TICKET FUNCTION FOR MOBILE 
-
-///STICKY BUY TICKET FUNCTION FOR MOBILE 
+    // Find all elements with the class and append a p tag with a span inside
+    $('.tribe-tickets__tickets-item-extra-price').each(function() {
+        $(this).append('<p><span>' + spanText + '</span></p>');
+    });
+});
 
 
 
