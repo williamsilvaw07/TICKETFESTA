@@ -462,9 +462,6 @@ jQuery(document).ready(function($) {
     font-weight: 500!important;
     margin-top: 0!important;
     color: black!important;
-
-
-    
 }
 .event-day{
     display: flex;
