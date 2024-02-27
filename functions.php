@@ -3,20 +3,26 @@
 
 
 
-function restrict_admin_pages_for_organiser() {
-    // Check if the current user has the 'organiser' role
-    if ( current_user_can( 'organiser' ) && ! current_user_can( 'manage_options' ) ) {
+function restrict_backend_access_for_organiser() {
+    if (current_user_can('organiser') && // Check if the current user is an organiser
+        !(defined('DOING_AJAX') && DOING_AJAX) &&  // Allow Ajax requests
+        !(defined('DOING_CRON') && DOING_CRON)) {  // Allow Cron requests
+        
+        // Optional: Whitelist specific admin pages, e.g., profile page
         global $pagenow;
-        // List of admin pages organisers are allowed to access
-        $allowed_pages = array( 'index.php', 'edit.php', 'post-new.php' ); // Dashboard, Posts list, Add New Post
-        if ( ! in_array( $pagenow, $allowed_pages ) ) {
-            wp_redirect( admin_url() ); // Redirect to the dashboard if accessing a restricted page
-            exit;
+        $whitelisted_pages = ['profile.php'];
+        if (in_array($pagenow, $whitelisted_pages)) {
+            return; // Skip the redirect for whitelisted pages
         }
+
+        // Redirect to the homepage or another page
+        wp_redirect(home_url());
+        exit;
     }
 }
 
-add_action( 'admin_init', 'restrict_admin_pages_for_organiser' );
+add_action('admin_init', 'restrict_backend_access_for_organiser');
+
 
 ////checkout
 
