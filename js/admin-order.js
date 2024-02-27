@@ -8,7 +8,7 @@ jQuery(document).ready(function($) {
     console.log('Ticketprice: ', ticketPrice);
     console.log('Quantity: ', quantity);
     var ticketFee = get_tribe_ticket_fee(ticketPrice, quantity);
-    let newText = '<strong>Total Site Fees:</strong> ' + ticketFee;
+    let newText = '<strong>Total Site Fees:</strong> £' + ticketFee;
     jQuery('.tribe-event-meta-total-site-fees').html(newText);
 });
 
