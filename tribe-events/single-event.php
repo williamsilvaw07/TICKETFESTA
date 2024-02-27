@@ -110,7 +110,7 @@ $cost  = tribe_get_formatted_cost( $event_id );
                 $date->setTimezone(new DateTimeZone('Europe/London'));
                 $EventEndDate = $date->format('D, d M, H:i T');
                 echo $EventStartDate;
-           
+                echo "<div style='display:none'> <span class='pick_start_date'>$EventStartDate</span> <span class='pick_end_date'>$EventStartDate</span></div>"
            
            ?>
 			<?php echo tribe_event_featured_image( $event_id, 'full', false ); ?>
