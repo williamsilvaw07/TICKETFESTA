@@ -113,7 +113,7 @@ $template_vars = array_merge( [ 'organizer' => $organizer, ], $conditionals )
             $banner_image_url = wp_get_attachment_image_url($banner_image_id, 'full');
         } else {
             // Use default image if no specific image is set
-            $banner_image_url = 'https://thaynna-william.co.uk/wp-content/uploads/2024/01/Group-189-5.jpg';
+            $banner_image_url = '/wp-content/uploads/2024/02/antoine-j-r3XvSBEQQLo-unsplash-2-min.jpg';
         }
         echo 'background-image: url(' . esc_url($banner_image_url) . ');';
         ?>
@@ -283,6 +283,8 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 
 
 <!-- Event LISTING -->
+<div class="event-listing-main-div_main">
+
 <div class="event-listing-main-div organizer_profile_main_div_all organizer_main_div organizer_events_content">
 	<h3>Events</h3>
 <div class="event-listing_type"> 
@@ -349,7 +351,26 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
     </a>
 </h2>
                             <div class="event-day">
-                                <?php echo tribe_get_start_date(null, false, 'D, d M, H:i'); ?>
+                            <?php 
+    // Format for the date and time
+    $event_start_date_time = tribe_get_start_date( $event_id, true, 'D, j M, H:i' );
+    
+    // Get the event's timezone object
+    $timezone = Tribe__Events__Timezones::get_event_timezone_string( $event_id );
+
+    // Create a DateTimeZone object from the event's timezone string
+    $dateTimeZone = new DateTimeZone($timezone);
+
+    // Create a DateTime object for the event's start date/time in the event's timezone
+    $dateTime = new DateTime( tribe_get_start_date( $event_id, false, 'Y-m-d H:i:s' ), $dateTimeZone );
+
+    // Format the DateTime object to get the timezone abbreviation
+    // Handles cases like BST/GMT dynamically based on the event's date and timezone
+    $timezone_abbr = $dateTime->format('T');
+
+    // Output the start date and time along with the timezone abbreviation in a span with a class
+    echo $event_start_date_time . ' <span class="event-timezone">' . $timezone_abbr . '</span>';
+    ?>
                             </div>
                             <div class="event-time-location">
                                 <span class="event-time"><?php echo tribe_get_start_date(null, false, 'g:i a'); ?> - <?php echo tribe_get_end_date(null, false, 'g:i a'); ?></span>
@@ -432,7 +453,26 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
     </a>
 </h2>
                         <div class="event-day">
-                            <?php echo tribe_get_start_date(null, false, 'D, d M, H:i'); ?>
+                        <?php 
+    // Format for the date and time
+    $event_start_date_time = tribe_get_start_date( $event_id, true, 'D, j M, H:i' );
+    
+    // Get the event's timezone object
+    $timezone = Tribe__Events__Timezones::get_event_timezone_string( $event_id );
+
+    // Create a DateTimeZone object from the event's timezone string
+    $dateTimeZone = new DateTimeZone($timezone);
+
+    // Create a DateTime object for the event's start date/time in the event's timezone
+    $dateTime = new DateTime( tribe_get_start_date( $event_id, false, 'Y-m-d H:i:s' ), $dateTimeZone );
+
+    // Format the DateTime object to get the timezone abbreviation
+    // Handles cases like BST/GMT dynamically based on the event's date and timezone
+    $timezone_abbr = $dateTime->format('T');
+
+    // Output the start date and time along with the timezone abbreviation in a span with a class
+    echo $event_start_date_time . ' <span class="event-timezone">' . $timezone_abbr . '</span>';
+    ?>
                         </div>
                         <div class="event-time-location">
                             <span class="event-time"><?php echo tribe_get_start_date( null, false, 'g:i a' ); ?> - <?php echo tribe_get_end_date( null, false, 'g:i a' ); ?></span>
@@ -495,7 +535,14 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 ?>
     <!-- Event Gallery Category -->
     <div class="organizer_gallery_category">
-        <?php foreach($categories as $category){ 
+
+        <?php 
+            if(empty($categories)){
+                echo '<h3>No images found.</h3>';
+            
+            }
+        
+        foreach($categories as $category){ 
             $cat_title = $category->name;
             $category_image_array = get_term_meta($category->term_id, 'category_images', true); // get category images
             $category_images = explode(',', $category_image_array);
@@ -581,7 +628,7 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 
 </div>
 <!-- Event about END -->
-
+</div>
 
 
 
@@ -604,13 +651,16 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 
 
 	////JS TO ADD THE MAIN PRODUCT IMAGE ON THE BACKGROUND AND ADD THE LOCATION ON THE CUSTOM DIV 
-	document.addEventListener('DOMContentLoaded', function() {
-    var imageElement = document.querySelector('.tribe-events-pro-organizer__meta-featured-image-wrapper img');
-    var titleElement = document.querySelector('.tribe_organizer-template-default');
+    document.addEventListener('DOMContentLoaded', function() {
+    var organizerProfileBkElement = document.querySelector('.organizer_profile_bk');
+    var titleElement = document.querySelector('.event-listing-main-div_main');
 
-    if (imageElement && titleElement) {
-        var imageUrl = imageElement.getAttribute('src');
-        titleElement.style.backgroundImage = 'url("' + imageUrl + '")';
+    if (organizerProfileBkElement && titleElement) {
+        // Extracting the background image style from the organizer_profile_bk element
+        var backgroundImageStyle = organizerProfileBkElement.style.backgroundImage;
+
+        // Setting the extracted background image as the background for the tribe_organizer-template-default element
+        titleElement.style.backgroundImage = backgroundImageStyle;
         titleElement.classList.add('organiser_background');
     }
 });
@@ -618,24 +668,7 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 ///////////END
 
 
-//////ON TICKET BTN SHOW ONLY THE LOWEST PRICE 
-jQuery(document).ready(function($) {
-  // Select all spans within 'Get Tickets' buttons
-  $('.event-actions span').each(function() {
-    // Get the span text
-    var text = $(this).text();
 
-    // Match prices and extract the lowest price
-    var prices = text.match(/£\d+\.?\d*/g);
-    if (prices && prices.length) {
-      var lowestPrice = prices[0]; // assuming the first one is the lowest
-
-      // Update the span text to include only the lowest price
-      // and wrap 'From' in a span with a class
-      $(this).html('<span class="from-text">From</span> ' + lowestPrice);
-    }
-  });
-});
 
 
 
@@ -906,16 +939,16 @@ function createLightbox(imageSrc, category) {
 
 ///FUNCTION TO GET THE EVENT IMAGE AND USE AS A BACKEND IMAGE ON THE DIV CONTAISN 
 jQuery(document).ready(function($) {
-    console.log('Document ready, processing event images...');
+   // console.log('Document ready, processing event images...');
 
     $('.event-card .event-image').each(function(index) {
         var $eventImageDiv = $(this); // Cache the current event image div
-        console.log('Processing event image div #' + (index + 1));
+       // console.log('Processing event image div #' + (index + 1));
 
         var $image = $eventImageDiv.find('img.wp-post-image');
         if ($image.length > 0) {
             var imgSrc = $image.attr('src'); // Get the image source from .wp-post-image
-            console.log('Image source for event image div #' + (index + 1) + ':', imgSrc);
+         //   console.log('Image source for event image div #' + (index + 1) + ':', imgSrc);
 
             // Create a new div for the blurred background image
             var blurredBackground = $('<div></div>').css({
@@ -948,7 +981,7 @@ jQuery(document).ready(function($) {
 
                 // Insert the dark overlay div just after the blurred background div
                 $eventImageDiv.prepend(darkOverlay);
-                console.log('Dark overlay added to event image div #' + (index + 1));
+              //  console.log('Dark overlay added to event image div #' + (index + 1));
             }
 
             // Ensure the .event-image div is positioned relatively to contain the absolute positioned children
@@ -963,7 +996,29 @@ jQuery(document).ready(function($) {
                 'z-index': '2' // Ensure the original image is above the overlay and the blurred background
             });
         } else {
-            console.log('No .wp-post-image found in event image div #' + (index + 1));
+           // console.log('No .wp-post-image found in event image div #' + (index + 1));
+        }
+    });
+});
+
+
+
+
+
+
+
+
+// Make the entire event card clickable without affecting interactive elements like buttons and links
+jQuery(document).ready(function($) {
+   // Find each .event-card element
+   $('.event-card').each(function() {
+        // Get the href attribute of the first <a> tag found within the .event-card
+        var link = $(this).find('a').attr('href');
+
+        // Check if the link is not undefined or empty
+        if (link) {
+            // Create a new <a> tag that wraps the entire .event-card contents
+            $(this).wrapInner('<a class="event-card-link" href="' + link + '"></a>');
         }
     });
 });
@@ -979,6 +1034,7 @@ jQuery(document).ready(function($) {
 
 
 <style>
+
 
 .organizer_profile_bk {
     position: relative;
@@ -1125,7 +1181,7 @@ padding: 1px;
    
  }
  .organiser_background {
-    background-size:   cover;
+    background-size:   contain;
 background-position: center top;
     background-repeat: no-repeat!important;
     position: relative;
@@ -1141,6 +1197,7 @@ background-position: center top;
     flex-wrap: wrap;
     gap: 20px;
     justify-content: flex-start;
+    align-items: flex-start;
 }
 .organiser_background:before {
     content: '';
@@ -1268,6 +1325,7 @@ width: fit-content!important;
 }
 
 .event-actions a{
+    display:none!important;
     text-decoration: none;
     background-color: #FFD700;
     color: black!important;
@@ -1279,7 +1337,6 @@ width: fit-content!important;
     display: block;
     text-align: center;
     margin-top: 0px;
-    display: flex;
     justify-content: center;
     align-items: center;
     align-content: center;
@@ -1551,8 +1608,19 @@ width: fit-content!important;
     text-align: center;
 
 }
-
-
+.event-day{
+    display: flex;
+    gap: 6px;
+    align-items: center;
+}
+.event-timezone{
+    display: block!important;
+    font-size: 11px!important;
+    text-transform: capitalize!important;
+    font-weight: 500!important;
+    margin-top: 0!important;
+    color: black!important;
+}
 .organizer_main_div h3{
 padding-bottom: 15px;
 font-size: 26px;

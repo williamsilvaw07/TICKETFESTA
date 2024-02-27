@@ -31,6 +31,10 @@
     color: white!important;
 
   }
+
+  .footer_main_div{
+    font-family: "Plus Jakarta Sans", Sans-serif!important;
+  }
   .tribe-events-c-events-bar__filter-button-text , html button{
     font-family: "Plus Jakarta Sans", Sans-serif!important;
   }
@@ -42,6 +46,12 @@
   .entry-content{
     background-color:black;
 
+  }
+  .separate-containers .site-main {
+    margin-bottom: 0!important;
+  }
+ h2,h3,h4,h5,h6, li , p , a , span{
+    font-family: "Plus Jakarta Sans", Sans-serif!important;
   }
 
   html h1 {
@@ -65,7 +75,16 @@ font-family: "Plus Jakarta Sans", Sans-serif;
 
 /*****END***/
 /***HEADER***/
-
+.elementor-element-9d845b1{
+    width: 90%!important;
+    margin: 0 auto!important;
+}
+header{
+    background-color: #1A1A1A!important;
+}
+.elementor-element-9d845b1 {
+    background-color: #1A1A1A!important;
+}
 .site-header {
     --base-3: transparent;
     background-color: var(--base-3);
@@ -391,7 +410,64 @@ font-family: "Plus Jakarta Sans", Sans-serif;
 
 
 
+
+
+
+
+
+
+
+
+/******CHECKOUT HEADER AND FOOTER*****/
+.woocommerce-checkout header{
+    background-color: #1a1a1a!important;
+}
+
+.woocommerce-checkout .elementor-section-wrap{
+    background-color: #1a1a1a!important;
+}
+ .elementor-3943 .elementor-element.elementor-element-9d845b1:not(.elementor-motion-effects-element-type-background), .woocommerce-checkout .elementor-3943 .elementor-element.elementor-element-9d845b1 > .elementor-motion-effects-container > .elementor-motion-effects-layer {
+    background-color: #1a1a1a!important;
+}
+/******END*****/
+
+
 /****END***/
+
+
+/******FOOTER****/
+.site-footer{
+    background-color: #1A1A1A !important;
+}
+footer{
+    max-width: 90%;
+    margin: 0 auto;
+}
+footer h5 {
+    font-weight: 600!important;
+    font-size: 17px!important;
+}
+
+footer li span{
+    font-weight: 300!important;
+    color: #aaa !important;
+    font-size: 15px;
+}
+
+.elementor-element-3109b262 p{
+    margin-top: -5px;
+    font-size: 12px; 
+    color: #aaa !important;
+}
+
+
+/*****END*****/
+
+
+
+
+
+
 
 /*****menu******/
 
@@ -468,6 +544,7 @@ a.tribe-button.tribe-button-primary.add-new , .organizers_add_new_btn{
 
 
 /****HOME BANNER******/
+
 .home header{
     width:90%!important;  
     margin: 0 auto;
@@ -554,7 +631,7 @@ width:90%!important;
 .home .entry-content:not(:first-child) , .home .site-main{
     margin-top: 0em!important;
 }
-.elementor-1476 .elementor-element.elementor-element-0fdff56 .elementor-heading-title {
+.home_main_heading{
     opacity: 0.7!important;
 }
 .home_main_heading{
@@ -571,7 +648,6 @@ width:90%!important;
     background: rgba(0, 0, 0, 0.4); /* black with 50% opacity */
     pointer-events: none;
 }
-
 
 
 .home_bk_image_imga .elementor-widget-container {
@@ -856,7 +932,7 @@ html .event-venue-city-organizer{
             margin: 0 auto;
             }
             
-        .home .elementor-3943 .elementor-element.elementor-element-9d845b1:not(.elementor-motion-effects-element-type-background), .elementor-3943 .elementor-element.elementor-element-9ee88e6:not(.elementor-motion-effects-element-type-background),  header {
+        .home .elementor-3943 .elementor-element.elementor-element-9d845b1:not(.elementor-motion-effects-element-type-background), .elementor-3943 .elementor-element.elementor-element-9ee88e6:not(.elementor-motion-effects-element-type-background), .home header {
             background-color: #1A1A1A!important;
         }
         .elementor-3943 .elementor-element.elementor-element-9ee88e6:not(.elementor-motion-effects-element-type-background), .elementor-3943 .elementor-element.elementor-element-9ee88e6 > .elementor-motion-effects-container > .elementor-motion-effects-layer {
@@ -864,6 +940,9 @@ html .event-venue-city-organizer{
         }
 }
 /*******end*****/
+
+
+
 
 
 
@@ -1433,5 +1512,36 @@ color: #555!important;
         background-color: #1A1A1A!important;
         color: white!important;
     }
-    
+    .event-tickets .tribe-tickets__tickets-item, .entry .entry-content .event-tickets .tribe-tickets__tickets-item {
+        align-items: center;
+        display: flex;
+        align-items: self-start;
+        flex-direction: column;
+    }
+    .event-tickets .tribe-tickets__tickets-item-content-title, .entry .entry-content .event-tickets .tribe-tickets__tickets-item-content-title {
+        align-self: start;
+    }
+    .event-tickets .tribe-tickets__tickets-item-quantity button {
+        top: -15px;
+    }
+    .startdate,.enddate {
+        font-size: 12px;
+    }
+    .event-tickets .tribe-tickets__tickets-item-quantity {
+        flex: 0 0 8px;
+        
+    }
+}
+
+.site-fee-container{
+    text-align: right;
+}
+
+span.site-fee-container, span.site-fee-container span.ticket_site_fee {
+    color: #949494!important;
+    font-size: 14px;
+}
+
+.event-tickets .tribe-tickets__tickets-item-details-content, .entry .entry-content .event-tickets .tribe-tickets__tickets-item-details-content {
+    grid-row: 4;
 }

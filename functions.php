@@ -1,7 +1,46 @@
 <?php
 
 
+////FUNCTION TO BLOCK BACKEND ACCESSS 
 
+function restrict_backend_access_for_organiser() {
+    if (current_user_can('organiser') && // Check if the current user is an organiser
+        !(defined('DOING_AJAX') && DOING_AJAX) &&  // Allow Ajax requests
+        !(defined('DOING_CRON') && DOING_CRON)) {  // Allow Cron requests
+        
+        // Optional: Whitelist specific admin pages, e.g., profile page
+        global $pagenow;
+        $whitelisted_pages = ['profile.php'];
+        if (in_array($pagenow, $whitelisted_pages)) {
+            return; // Skip the redirect for whitelisted pages
+        }
+
+        // Redirect to the homepage or another page
+        wp_redirect(home_url());
+        exit;
+    }
+}
+
+add_action('admin_init', 'restrict_backend_access_for_organiser');
+
+
+////CHECKOUT
+
+/**
+ * Flux checkout - Allow custom CSS files.
+ *
+ * @param array $sources Sources.
+ *
+ * @return array
+ */
+function flux_allow_custom_css_files( $sources ) {
+	$sources[] = 'http://site.com/wp-content/themes/storefront/style.css';
+	return $sources;
+}
+add_filter( 'flux_checkout_allowed_sources', 'flux_allow_custom_css_files' );
+
+add_action( 'flux_before_layout', 'get_header' );
+add_action( 'flux_after_layout', 'get_footer' );
 
 ////FONTASWER
 
@@ -3204,15 +3243,24 @@ function ticketfesta_login_redirect($redirect, $user){
 add_action( 'woocommerce_cart_calculate_fees', 'add_extra_fees_for_products' );
 
 function add_extra_fees_for_products( $cart ) {
+    $extra_fee = 0;
     // Loop through each cart item
     foreach ( $cart->get_cart() as $cart_item_key => $cart_item ) {
         // Get the product ID
         $product_id = $cart_item['product_id'];
         
         // Calculate extra fee based on product price
-        $extra_fee = $cart_item['data']->get_price() * 0.2; // 10% of the product price
+        $product_price = $cart_item['data']->get_price();
+        $quantity = $cart_item['quantity'];
+        if($product_price < 50){
+            $extra_fee += ($product_price * .03 + 0.02) * $quantity;
+        }elseif($product_price > 50){
+            $extra_fee += ($product_price * .01 + 0.02) * $quantity;
+        }
         
-        // Add extra fee to the cart
-        $cart->add_fee( 'Extra Fee for Product ' . $product_id, $extra_fee );
+    }
+
+    if($extra_fee !== 0){
+        $cart->add_fee( 'Sites Fee ', $extra_fee );
     }
 }

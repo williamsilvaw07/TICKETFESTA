@@ -96,6 +96,20 @@ $cost  = tribe_get_formatted_cost( $event_id );
        <?php while ( have_posts() ) :  the_post(); ?>
 		<div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 			<!-- Event featured image, but exclude link -->
+           <?php 
+                $ticket = Tribe__Tickets__Tickets::get_event_tickets( get_the_ID(  ) )[0];
+                $start_dateTime = $ticket->start_date . ' ' . $ticket->start_time;
+                $end_dateTime = $ticket->end_date. ' ' .$ticket->end_time;
+                $date = new DateTime($start_dateTime);
+                $date->setTimezone(new DateTimeZone('Europe/London'));
+                $EventStartDate = $date->format('D, d M, H:i T');
+
+                $date = new DateTime($end_dateTime);
+                $date->setTimezone(new DateTimeZone('Europe/London'));
+                $EventEndDate = $date->format('D, d M, H:i T');
+                echo "<div style='display:none'> <span class='pick_start_date'>$EventStartDate</span> <span class='pick_end_date'>$EventEndDate</span></div>"
+           
+           ?>
 			<?php echo tribe_event_featured_image( $event_id, 'full', false ); ?>
 <!-- Event featured image, END -->
       </div>
@@ -114,6 +128,7 @@ $cost  = tribe_get_formatted_cost( $event_id );
 
 
 <!-- Event Location &  date and time  -->
+<!-- Event Location & Date and Time -->
 <div class="single_event_page_location ">
 
 <div class="location_div_js">📍<span class="location_name"></span> - <span class="location_postcode"></span></div>
@@ -124,21 +139,24 @@ $cost  = tribe_get_formatted_cost( $event_id );
     <span class="time_text">
       <h2 class="tribe-event-date-start">
         <?php 
-          $date_format = 'l, j F Y'; // Format for the date including the day of the week
-          $time_format = 'H:i'; // 24-hour format without timezone
+          // Format for the date and time
+          $event_start_date_time = tribe_get_start_date( $event_id, true, 'D, j M, H:i' );
+          
+          // Get the event's timezone object
+          $timezone = Tribe__Events__Timezones::get_event_timezone_string( $event_id );
 
-          // Get the start date and time in the desired format
-          $event_start_date = tribe_get_start_date($event_id, false, $date_format);
-          $event_start_time = tribe_get_start_time($event_id, false, $time_format);
+          // Create a DateTimeZone object from the event's timezone string
+          $dateTimeZone = new DateTimeZone($timezone);
 
-          // Get the event's timezone abbreviation
-          $timezone = Tribe__Events__Timezones::get_event_timezone_abbr( $event_id );
+          // Create a DateTime object for the event's start date/time in the event's timezone
+          $dateTime = new DateTime( tribe_get_start_date( $event_id, false, 'Y-m-d H:i:s' ), $dateTimeZone );
 
-          // Combine the date, time, and the dynamic timezone abbreviation
-          $event_date_time = $event_start_date . ' - ' . $event_start_time . ' ' . $timezone;
+          // Format the DateTime object to get the timezone abbreviation
+          // Handles cases like BST/GMT dynamically based on the event's date and timezone
+          $timezone_abbr = $dateTime->format('T');
 
-          // Output the date, time, and the dynamic timezone abbreviation
-          echo $event_date_time;
+          // Output the start date and time along with the timezone abbreviation
+          echo $event_start_date_time . ' ' . $timezone_abbr;
         ?>
       </h2>
     </span>
@@ -810,7 +828,7 @@ jQuery(document).ready(function($) {
 
 
 
-
+/*
 //TIME CALACUTIONS 
 jQuery(document).ready(function($) {
     // Function to extract time from the text
@@ -855,7 +873,7 @@ jQuery(document).ready(function($) {
         console.log('Error parsing event times');
     }
 });
-
+*/
 
 
 
@@ -885,7 +903,22 @@ jQuery(document).ready(function($) {
 
 
 
-/////TICKET SITE FEE HTML AND FUNCTIONS
+/////FUNCTION TO ADD THE EVENT MAIN IMAGE TO THE MANIN IMAGE DIV BACKGROUND 
+jQuery(document).ready(function() {
+    $('.tribe-events-event-image').each(function() {
+        // Extract the src attribute from the img element
+        var imgUrl = $(this).find('img').attr('src');
+
+        // Set the background image
+        $(this).css('background-image', 'url(' + imgUrl + ')');
+
+        // Add the 'glass-effect' class to apply the glass effect styling
+        $(this).addClass('glass-effect');
+
+     
+
+    });
+});
 
 
 
@@ -893,6 +926,16 @@ jQuery(document).ready(function($) {
 
 
 <style>
+
+.glass-effect {
+    background-size: cover;
+    background-position: center;; 
+    backdrop-filter: blur(50px)!important;
+    -webkit-backdrop-filter: blur(50px)!important;
+    background-color: rgba(255, 255, 255, 0.4); 
+    border-radius: 10px; 
+}
+
 
 .tribe-currency-symbol , .tribe-amount , .btn_price_span {
     color: #d3fa16!important;
@@ -1200,6 +1243,7 @@ background-position: center top;
     margin: 0;
     max-height: 475px;
     object-fit: contain;
+    backdrop-filter: blur(100px)!important;
 }
 .main_single_event_div{
     display: flex;

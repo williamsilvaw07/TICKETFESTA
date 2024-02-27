@@ -15,6 +15,12 @@
  * @see tribe_get_event() For the format of the event object.
  */
 
+
+ // Trim the event title here before displaying it
+$trimmed_title = mb_strimwidth(get_the_title($event->ID), 0, 60, '...');
+
+
+
 $classes = get_post_class( [ 'tribe-common-g-col', 'tribe-events-pro-photo__event' ], $event->ID );
 if ( ! empty( $event->featured ) ) {
     $classes[] = 'tribe-events-pro-photo__event--featured';
@@ -60,12 +66,36 @@ $organizer_names = array_map('tribe_get_organizer', $organizer_ids);
         <?php $this->template( 'photo/event/date-tag', [ 'event' => $event ] ); ?>
 
         <div class="tribe-events-pro-photo__event-details">
-            <?php $this->template( 'photo/event/title', [ 'event' => $event ] ); ?>
+        <h3 class="tribe-events-pro-photo__event-title tribe-common-h6">
+                <a href="<?php echo esc_url( tribe_get_event_link($event) ); ?>" 
+                   title="<?php echo esc_attr($trimmed_title); ?>" 
+                   rel="bookmark" 
+                   class="tribe-events-pro-photo__event-title-link tribe-common-anchor-thin">
+                    <?php echo esc_html($trimmed_title); ?>
 
-            <!-- Event Day and Time -->
-            <div class="event-day">
-                <?php echo tribe_get_start_date( $event, true, 'D, j M, H:i' ); ?>
-            </div>
+<!-- Event Day and Time -->
+<div class="event-day">
+    <?php 
+    // Format for the date and time
+    $event_start_date_time = tribe_get_start_date( $event_id, true, 'D, j M, H:i' );
+    
+    // Get the event's timezone object
+    $timezone = Tribe__Events__Timezones::get_event_timezone_string( $event_id );
+
+    // Create a DateTimeZone object from the event's timezone string
+    $dateTimeZone = new DateTimeZone($timezone);
+
+    // Create a DateTime object for the event's start date/time in the event's timezone
+    $dateTime = new DateTime( tribe_get_start_date( $event_id, false, 'Y-m-d H:i:s' ), $dateTimeZone );
+
+    // Format the DateTime object to get the timezone abbreviation
+    // Handles cases like BST/GMT dynamically based on the event's date and timezone
+    $timezone_abbr = $dateTime->format('T');
+
+    // Output the start date and time along with the timezone abbreviation in a span with a class
+    echo $event_start_date_time . ' <span class="event-timezone">' . $timezone_abbr . '</span>';
+    ?>
+</div>
 
          <!-- Venue and City -->
          <div class="event-venue-city-organizer">
@@ -425,7 +455,19 @@ jQuery(document).ready(function($) {
 
 }
 
-
+.event-timezone{
+    display: block!important;
+    font-size: 11px!important;
+    text-transform: capitalize!important;
+    font-weight: 500!important;
+    margin-top: 0!important;
+    color: black!important;
+}
+.event-day{
+    display: flex;
+    gap: 6px;
+    align-items: center;
+}
 
 
 

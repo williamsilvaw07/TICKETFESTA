@@ -1,4 +1,34 @@
+
+function get_tribe_ticket_fee(ticketAmount, quantity = 1){
+    ticketSiteFee = 0;
+    if(ticketAmount < 50 ){
+        ticketSiteFee += (ticketAmount * .03 + 0.02) * quantity;
+    }
+    if(ticketAmount > 50 ){
+        ticketSiteFee += (ticketAmount *  .01 + 0.02) * quantity;
+    }
+
+    return ticketSiteFee.toFixed(2);
+}
 document.addEventListener('DOMContentLoaded', function() {
+
+    // single product price
+    jQuery('.tribe-tickets__tickets-sale-price').each(function() {
+        // Append a div element with the text "Sites Fees" to each item
+        
+        var ticketAmount = parseFloat(jQuery('.tribe-amount').text().trim()).toFixed(2);
+        var ticketSiteFee =  get_tribe_ticket_fee(ticketAmount);
+        jQuery(this).append('<span class="site-fee-container">+£ <span class="ticket_site_fee">'+ticketSiteFee+'</span> fee</span>');
+    }); 
+
+    // jQuery('.tribe-tickets__tickets-footer-total').each(function() {
+    //     // Append a div element with the text "Sites Fees" to each item
+        
+    //     var ticketAmount = parseFloat(jQuery('.tribe-amount').text().trim()).toFixed(2);
+    //     var ticketSiteFee =  get_tribe_ticket_fee(ticketAmount);
+    //     $(this).append('<span class="site-fee-container">+£ <span class="ticket_site_fee tribe_total_fee">'+ticketSiteFee+'</span> fee</span>');
+    // }); 
+
 
     jQuery('.flux-checkout__login-button.login-button').each(function() {
         // Add classes 'xoo-el-action-sc' and 'xoo-el-login-tgr'
@@ -129,7 +159,35 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
+jQuery(document).ready(function($) {
+    // jQuery code to be executed when the DOM is ready
+       
+    function update_site_fees(){
+    
+        var ticketAmount = parseFloat(jQuery('.tribe-amount').text().trim()).toFixed(2);
+        var quantity = parseInt(jQuery('.tribe-tickets__tickets-footer-quantity-number').text().trim());
+        var ticketSiteFee = get_tribe_ticket_fee(ticketAmount, quantity );
+        var total_fee =  parseFloat(ticketAmount) * parseFloat(quantity) + parseFloat(ticketSiteFee);
+        jQuery('.tribe-tickets__tickets-footer-total .tribe-amount').text(total_fee.toFixed(2)); 
+    }
+    jQuery('.tribe-tickets__tickets-item').on('click',function(){
+        update_site_fees();
+    });
 
+    $('.tribe-tickets__tickets-item').each(function() {
+        // Find the element with class tribe-tickets__tickets-item-content-title within the current tribe-tickets__tickets-item
+        var $titleElement = $(this).find('.tribe-tickets__tickets-item-content-title');
+        var start_date = jQuery('.pick_start_date').text().trim();
+        var end_date = jQuery('.pick_end_date').text().trim();
 
+        let dateHtml = '<div class="startdate"> Start Date: ' + start_date + '</div>';
+        dateHtml += '<div class="enddate"> End Date: ' + end_date + '</div>';
+        // Create a new title element
+        var $newTitleElement = $(dateHtml); // Change 'New Title' to your desired title
+        
+        // Append the new title element after the tribe-tickets__tickets-item-content-title element
+        $newTitleElement.insertAfter($titleElement);
+    });
+});
 
 
