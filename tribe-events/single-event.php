@@ -97,7 +97,7 @@ $cost  = tribe_get_formatted_cost( $event_id );
 		<div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 			<!-- Event featured image, but exclude link -->
            <?php 
-                $current_post_meta = get_post_meta(the_ID());
+                $current_post_meta = get_post_meta( get_the_ID(  ));
                 echo '<pre>';
                 var_dump($current_post_meta); 
                 echo '</pre>';
