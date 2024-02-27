@@ -21,13 +21,13 @@ document.addEventListener('DOMContentLoaded', function() {
         $(this).append('<span class="site-fee-container">+£ <span class="ticket_site_fee">'+ticketSiteFee+'</span> fee</span>');
     }); 
 
-    jQuery('.tribe-tickets__tickets-footer-total').each(function() {
-        // Append a div element with the text "Sites Fees" to each item
+    // jQuery('.tribe-tickets__tickets-footer-total').each(function() {
+    //     // Append a div element with the text "Sites Fees" to each item
         
-        var ticketAmount = parseFloat(jQuery('.tribe-amount').text().trim()).toFixed(2);
-        var ticketSiteFee =  get_tribe_ticket_fee(ticketAmount);
-        $(this).append('<span class="site-fee-container">+£ <span class="ticket_site_fee tribe_total_fee">'+ticketSiteFee+'</span> fee</span>');
-    }); 
+    //     var ticketAmount = parseFloat(jQuery('.tribe-amount').text().trim()).toFixed(2);
+    //     var ticketSiteFee =  get_tribe_ticket_fee(ticketAmount);
+    //     $(this).append('<span class="site-fee-container">+£ <span class="ticket_site_fee tribe_total_fee">'+ticketSiteFee+'</span> fee</span>');
+    // }); 
 
 
     jQuery('.flux-checkout__login-button.login-button').each(function() {
@@ -167,7 +167,8 @@ jQuery(document).ready(function() {
         var ticketAmount = parseFloat(jQuery('.tribe-amount').text().trim()).toFixed(2);
         var quantity = parseInt(jQuery('.tribe-tickets__tickets-footer-quantity-number').text().trim());
         var ticketSiteFee = get_tribe_ticket_fee(ticketAmount, quantity );
-        jQuery('.tribe_total_fee').text(ticketSiteFee); 
+        var total_fee = ticketSiteFee + ticketAmount;
+        jQuery('.tribe-amount').text(total_fee); 
     }
     jQuery('.tribe-tickets__tickets-item').on('click',function(){
         console.log('hi');
