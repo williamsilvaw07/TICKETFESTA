@@ -1,5 +1,11 @@
 document.addEventListener('DOMContentLoaded', function() {
 
+    // single product price
+    $('.tribe-tickets__tickets-item').each(function() {
+        // Append a div element with the text "Sites Fees" to each item
+        $(this).append('<div class="site-fee-container">Sites Fees: <span class="ticket_site_fee">£0</span></div>');
+    });
+
     jQuery('.flux-checkout__login-button.login-button').each(function() {
         // Add classes 'xoo-el-action-sc' and 'xoo-el-login-tgr'
         jQuery(this).addClass('xoo-el-action-sc xoo-el-login-tgr');
