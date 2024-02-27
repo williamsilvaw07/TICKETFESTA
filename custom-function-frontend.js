@@ -159,7 +159,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-jQuery(document).ready(function() {
+jQuery(document).ready(function($) {
     // jQuery code to be executed when the DOM is ready
        
     function update_site_fees(){
