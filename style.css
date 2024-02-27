@@ -1500,12 +1500,14 @@ color: #555!important;
         align-self: start;
     }
     .event-tickets .tribe-tickets__tickets-item-quantity button {
-        height: 10px;
-        position: relative;
-        top: -45px;
+        top: -15px;
     }
     .startdate,.enddate {
         font-size: 12px;
+    }
+    .event-tickets .tribe-tickets__tickets-item-quantity {
+        flex: 0 0 8px;
+        
     }
 }
 
