@@ -1503,5 +1503,5 @@ span.site-fee-container, span.site-fee-container span.ticket_site_fee {
 }
 
 .event-tickets .tribe-tickets__tickets-item-details-content, .entry .entry-content .event-tickets .tribe-tickets__tickets-item-details-content {
-    grid-row: 3;
+    grid-row: 4;
 }
