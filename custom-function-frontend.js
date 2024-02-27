@@ -158,6 +158,7 @@ jQuery(document).ready(function() {
     // jQuery('.tribe-tickets__tickets-item-quantity-add').on('click', update_site_fees());
     jQuery('.tribe-tickets__tickets-item-quantity').on('click',update_site_fees());
     jQuery('.tribe-tickets__tickets-item').on('click',function(){
+        console.log('hi');
         update_site_fees();
     });
 });
