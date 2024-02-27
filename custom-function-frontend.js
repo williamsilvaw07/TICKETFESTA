@@ -159,7 +159,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-jQuery(document).ready(function() {
+jQuery(document).ready(function($) {
     // jQuery code to be executed when the DOM is ready
        
     function update_site_fees(){
@@ -167,12 +167,26 @@ jQuery(document).ready(function() {
         var ticketAmount = parseFloat(jQuery('.tribe-amount').text().trim()).toFixed(2);
         var quantity = parseInt(jQuery('.tribe-tickets__tickets-footer-quantity-number').text().trim());
         var ticketSiteFee = get_tribe_ticket_fee(ticketAmount, quantity );
-        var total_fee =  parseFloat(ticketSiteFee + parseFloat(ticketAmount * quantity)).toFixed(2);
-        jQuery('.tribe-tickets__tickets-footer-total .tribe-amount').text(total_fee); 
+        var total_fee =  parseFloat(ticketAmount) * parseFloat(quantity) + parseFloat(ticketSiteFee);
+        jQuery('.tribe-tickets__tickets-footer-total .tribe-amount').text(total_fee.toFixed(2)); 
     }
     jQuery('.tribe-tickets__tickets-item').on('click',function(){
-        console.log('hi');
         update_site_fees();
+    });
+
+    $('.tribe-tickets__tickets-item').each(function() {
+        // Find the element with class tribe-tickets__tickets-item-content-title within the current tribe-tickets__tickets-item
+        var $titleElement = $(this).find('.tribe-tickets__tickets-item-content-title');
+        var start_date = jQuery('.pick_start_date').text().trim();
+        var end_date = jQuery('.pick_end_date').text().trim();
+
+        let dateHtml = '<div class="startdate"> Start Date: ' + start_date + '</div>';
+        dateHtml += '<div class="enddate"> End Date: ' + end_date + '</div>';
+        // Create a new title element
+        var $newTitleElement = $(dateHtml); // Change 'New Title' to your desired title
+        
+        // Append the new title element after the tribe-tickets__tickets-item-content-title element
+        $newTitleElement.insertAfter($titleElement);
     });
 });
 

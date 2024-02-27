@@ -96,6 +96,18 @@ $cost  = tribe_get_formatted_cost( $event_id );
        <?php while ( have_posts() ) :  the_post(); ?>
 		<div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 			<!-- Event featured image, but exclude link -->
+           <?php 
+                $current_post_meta = get_post_meta( get_the_ID(  ));
+                $date = new DateTime($current_post_meta['_EventStartDate'][0]);
+                $date->setTimezone(new DateTimeZone('Europe/London'));
+                $EventStartDate = $date->format('D, d M, H:i T');
+
+                $date = new DateTime($current_post_meta['_EventEndDate'][0]);
+                $date->setTimezone(new DateTimeZone('Europe/London'));
+                $EventEndDate = $date->format('D, d M, H:i T');
+                echo "<div style='display:none'> <span class='pick_start_date'>$EventStartDate</span> <span class='pick_end_date'>$EventEndDate</span></div>"
+           
+           ?>
 			<?php echo tribe_event_featured_image( $event_id, 'full', false ); ?>
 <!-- Event featured image, END -->
       </div>

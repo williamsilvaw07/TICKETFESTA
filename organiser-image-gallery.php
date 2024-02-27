@@ -665,6 +665,10 @@ function enqueue_media_uploader($hook) {
         wp_enqueue_media();
         wp_enqueue_script('category-media-uploader', get_stylesheet_directory_uri() . '/js/admin-custom-cat.js', array('jquery'), null, true);
     }
+
+    if ('tribe_events_page_tickets-orders' === $hook) {
+        wp_enqueue_script('admin-order-js', get_stylesheet_directory_uri() . '/js/admin-order.js', array('jquery'), null, true);
+    }
 }
 add_action('admin_enqueue_scripts', 'enqueue_media_uploader');
 
