@@ -178,7 +178,8 @@ jQuery(document).ready(function($) {
         // Find the element with class tribe-tickets__tickets-item-content-title within the current tribe-tickets__tickets-item
         var $titleElement = $(this).find('.tribe-tickets__tickets-item-content-title');
         
-        let dateHtml = '<span class="start-end-date"> Start Date: Tue, 16 Apr, 20:00 BST ,  End Date: Tue, 16 Apr, 20:00 BST</span>'
+        let dateHtml = '<div class="startdate"> Start Date: Tue, 16 Apr, 20:00 BST</div>';
+        dateHtml += '<div class="enddate"> End Date: Tue, 16 Apr, 20:00 BST</div>';
         // Create a new title element
         var $newTitleElement = $(dateHtml); // Change 'New Title' to your desired title
         
