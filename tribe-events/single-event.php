@@ -98,10 +98,10 @@ $cost  = tribe_get_formatted_cost( $event_id );
 			<!-- Event featured image, but exclude link -->
            <?php 
                 $ticket = Tribe__Tickets__Tickets::get_event_tickets( get_the_ID(  ) )[0];
-                $start_dateTime = $ticket['start_date'] . ' ' . $ticket['start_time'];
-                $end_dateTime = $ticket['end_date']. ' ' .$ticket['end_time'];
+                // $start_dateTime = $ticket['start_date'] . ' ' . $ticket['start_time'];
+                // $end_dateTime = $ticket['end_date']. ' ' .$ticket['end_time'];
                 echo '<pre>';
-                var_dump($ticket);
+                var_dump($ticket['end_date']);
                 var_dump('start_dateTime: ', $start_dateTime);
                 var_dump('end_dateTime: ', $end_dateTime);
                 echo '</pre>';
