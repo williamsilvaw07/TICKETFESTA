@@ -1490,7 +1490,23 @@ color: #555!important;
         background-color: #1A1A1A!important;
         color: white!important;
     }
-    
+    .event-tickets .tribe-tickets__tickets-item, .entry .entry-content .event-tickets .tribe-tickets__tickets-item {
+        align-items: center;
+        display: flex;
+        align-items: self-start;
+        flex-direction: column;
+    }
+    .event-tickets .tribe-tickets__tickets-item-content-title, .entry .entry-content .event-tickets .tribe-tickets__tickets-item-content-title {
+        align-self: start;
+    }
+    .event-tickets .tribe-tickets__tickets-item-quantity button {
+        height: 10px;
+        position: relative;
+        top: -45px;
+    }
+    .startdate,.enddate {
+        font-size: 12px;
+    }
 }
 
 .site-fee-container{
