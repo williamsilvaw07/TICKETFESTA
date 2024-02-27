@@ -174,6 +174,17 @@ jQuery(document).ready(function() {
         console.log('hi');
         update_site_fees();
     });
+
+    $('.tribe-tickets__tickets-item').each(function() {
+        // Find the element with class tribe-tickets__tickets-item-content-title within the current tribe-tickets__tickets-item
+        var $titleElement = $(this).find('.tribe-tickets__tickets-item-content-title');
+        
+        // Create a new title element
+        var $newTitleElement = $('<h2>New Title</h2>'); // Change 'New Title' to your desired title
+        
+        // Append the new title element after the tribe-tickets__tickets-item-content-title element
+        $newTitleElement.insertAfter($titleElement);
+    });
 });
 
 
