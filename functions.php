@@ -16,7 +16,8 @@ function flux_allow_custom_css_files( $sources ) {
 }
 add_filter( 'flux_checkout_allowed_sources', 'flux_allow_custom_css_files' );
 
-
+add_action( 'flux_before_layout', 'get_header' );
+add_action( 'flux_after_layout', 'get_footer' );
 
 ////FONTASWER
 
