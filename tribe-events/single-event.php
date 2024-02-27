@@ -108,16 +108,15 @@ $cost  = tribe_get_formatted_cost( $event_id );
                 $showStartDate = $startDate > $current_dateTime;
                 
                 // Determine if we should display the end date
-                // Assuming you want to hide the end date if it's the same as the event end date
                 $eventEndDateTime = new DateTime(tribe_get_end_date(get_the_ID(), false, 'Y-m-d H:i:s'), new DateTimeZone('Europe/London'));
                 $showEndDate = $endDate->format('Y-m-d H:i') != $eventEndDateTime->format('Y-m-d H:i');
 
-                // Only display Start Date section if applicable
+                // Display Start Date section if applicable
                 if ($showStartDate) {
                     echo "<div>Start Date: <span class='pick_start_date'>" . $startDate->format('D, d M, H:i T') . "</span></div>";
                 }
 
-                // Only display End Date section if applicable
+                // Display End Date section if applicable
                 if ($showEndDate) {
                     echo "<div>End Date: <span class='pick_end_date'>" . $endDate->format('D, d M, H:i T') . "</span></div>";
                 }
