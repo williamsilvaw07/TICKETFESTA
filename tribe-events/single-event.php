@@ -88,7 +88,25 @@ $cost  = tribe_get_formatted_cost( $event_id );
 	<div class="main_single_event_div">
 
 
+    <script>
+document.addEventListener("DOMContentLoaded", function() {
+    // Select the start date and end date elements
+    var startDateElement = document.querySelector('.startdate');
+    var endDateElement = document.querySelector('.enddate');
 
+    // Check if the start date element is empty or contains placeholder text
+    if (!startDateElement.textContent.trim() || startDateElement.textContent.trim() === "N/A") {
+        // Hide the start date element
+        startDateElement.style.display = 'none';
+    }
+
+    // Check if the end date element is empty or contains placeholder text
+    if (!endDateElement.textContent.trim() || endDateElement.textContent.trim() === "N/A") {
+        // Hide the end date element
+        endDateElement.style.display = 'none';
+    }
+});
+</script>
 
 
 	<div class="top_flex_section_single_event single_event_sections">
