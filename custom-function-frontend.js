@@ -168,7 +168,7 @@ jQuery(document).ready(function() {
         var quantity = parseInt(jQuery('.tribe-tickets__tickets-footer-quantity-number').text().trim());
         var ticketSiteFee = get_tribe_ticket_fee(ticketAmount, quantity );
         var total_fee = ticketSiteFee + ticketAmount;
-        jQuery('.tribe-amount').text(total_fee); 
+        jQuery('.tribe-tickets__tickets-footer-total .tribe-amount').text(total_fee); 
     }
     jQuery('.tribe-tickets__tickets-item').on('click',function(){
         console.log('hi');
