@@ -97,12 +97,17 @@ $cost  = tribe_get_formatted_cost( $event_id );
 		<div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 			<!-- Event featured image, but exclude link -->
            <?php 
-                $current_post_meta = get_post_meta( get_the_ID(  ));
-                $date = new DateTime($current_post_meta['_EventStartDate'][0]);
+                $ticket = Tribe__Tickets__Tickets::get_event_tickets( get_the_ID(  ) )[0];
+                $start_dateTime = $tickets['start_date'] . ' ' . $tickets['start_time'];
+                $end_dateTime = $tickets['end_date']. ' ' .$tickets['end_time'];
+                echo '<pre>';
+                var_dump($ticket);
+                echo '</pre>';
+                $date = new DateTime($start_dateTime);
                 $date->setTimezone(new DateTimeZone('Europe/London'));
                 $EventStartDate = $date->format('D, d M, H:i T');
 
-                $date = new DateTime($current_post_meta['_EventEndDate'][0]);
+                $date = new DateTime($end_dateTime);
                 $date->setTimezone(new DateTimeZone('Europe/London'));
                 $EventEndDate = $date->format('D, d M, H:i T');
                 echo "<div style='display:none'> <span class='pick_start_date'>$EventStartDate</span> <span class='pick_end_date'>$EventEndDate</span></div>"
