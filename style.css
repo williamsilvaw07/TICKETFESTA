@@ -1496,3 +1496,8 @@ color: #555!important;
 .site-fee-container{
     text-align: right;
 }
+
+span.site-fee-container, span.site-fee-container span.ticket_site_fee {
+    color: #949494!important;
+    font-size: 14px;
+}
