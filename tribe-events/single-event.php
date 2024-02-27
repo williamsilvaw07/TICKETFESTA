@@ -161,9 +161,15 @@ $cost  = tribe_get_formatted_cost( $event_id );
 <div class="get_tickets_div_single_event">
 <div class="get_tickets_div_single_event_inner_left">
 
-<h5 class="ticketpricebtnsection"><span class="fromspansingleevent">From</span><?php if ( ! empty( $cost ) ) : ?>
-			<span class="tribe-events-cost"><?php echo esc_html( $cost ) ?></span>
-		<?php endif; ?></h5>
+<h5 class="ticketpricebtnsection">
+        <span class="fromspansingleevent">From</span>
+        <?php if ( ! empty( $cost ) ) : ?>
+            <span class="tribe-events-cost"><?php echo esc_html( $cost ); ?></span>
+        <?php endif; ?>
+        <?php if ( ! empty( $ticket_sale_end_date ) ) : ?>
+            <span class="ticket-sale-end-date">Sale ends on <?php echo esc_html( $ticket_sale_end_date ); ?></span>
+        <?php endif; ?>
+    </h5>
 		</div></div>
 
 <!-- MOBILE TICKET BUTTON  -->
