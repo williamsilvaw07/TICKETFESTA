@@ -76,7 +76,8 @@ $after = apply_filters( 'tribe_events_single_event_title_html_after', '</h1>', $
  
 $title = apply_filters( 'tribe_events_single_event_title_html', the_title( $before, $after, false ), $event_id );
 $cost  = tribe_get_formatted_cost( $event_id );
-
+// Fetch the sale end date from a custom field (replace 'sale_end_date' with your actual custom field key)
+$sale_end_date = get_post_meta($event_id, 'sale_end_date', true);
 ?>
 
 
@@ -162,14 +163,15 @@ $cost  = tribe_get_formatted_cost( $event_id );
 <div class="get_tickets_div_single_event_inner_left">
 
 <h5 class="ticketpricebtnsection">
-        <span class="fromspansingleevent">From</span>
-        <?php if ( ! empty( $cost ) ) : ?>
-            <span class="tribe-events-cost"><?php echo esc_html( $cost ); ?></span>
-        <?php endif; ?>
-        <?php if ( ! empty( $ticket_sale_end_date ) ) : ?>
-            <span class="ticket-sale-end-date">Sale ends on <?php echo esc_html( $ticket_sale_end_date ); ?></span>
-        <?php endif; ?>
-    </h5>
+            <span class="fromspansingleevent">From</span>
+            <?php if ( ! empty( $cost ) ) : ?>
+                <span class="tribe-events-cost"><?php echo esc_html( $cost ); ?></span>
+            <?php endif; ?>
+            <!-- Check and display the sale end date if available -->
+            <?php if ( ! empty( $sale_end_date ) ) : ?>
+                <span class="ticket-sale-end-date">Sale Ends: <?php echo esc_html( $sale_end_date ); ?></span>
+            <?php endif; ?>
+        </h5>
 		</div></div>
 
 <!-- MOBILE TICKET BUTTON  -->
