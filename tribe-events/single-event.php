@@ -166,8 +166,8 @@ $cost  = tribe_get_formatted_cost( $event_id );
         <?php if ( ! empty( $cost ) ) : ?>
             <span class="tribe-events-cost"><?php echo esc_html( $cost ); ?></span>
         <?php endif; ?>
-        <?php if ( ! empty( $ticket_sale_end_date ) ) : ?>
-            <span class="ticket-sale-end-date">Sale ends on <?php echo esc_html( $ticket_sale_end_date ); ?></span>
+        <?php if ( ! empty( $sale_end_date ) ) : ?>
+            <span class="ticket-sale-end-date">Sale Ends: <?php echo esc_html( $sale_end_date ); ?></span>
         <?php endif; ?>
     </h5>
 		</div></div>
