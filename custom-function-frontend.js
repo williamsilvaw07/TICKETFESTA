@@ -148,10 +148,10 @@ jQuery(document).ready(function() {
         var ticketSiteFee = 0;
 
         if(ticketAmount < 50 ){
-            ticketSiteFee += ticketAmount * .03 + 0.02;
+            ticketSiteFee += (ticketAmount * .03 + 0.02) * quantity;
         }
         if(ticketAmount > 50 ){
-            ticketSiteFee += ticketAmount * .01 + 0.02;
+            ticketSiteFee += (ticketAmount *  .01 + 0.02) * quantity;
         }
         jQuery('.ticket_site_fee').text(ticketSiteFee); 
     }
@@ -162,10 +162,10 @@ jQuery(document).ready(function() {
         var ticketSiteFee = 0;
 
         if(ticketAmount < 50 ){
-            ticketSiteFee += ticketAmount * .03 + 0.02;
+            ticketSiteFee += (ticketAmount * .03 + 0.02) * quantity;
         }
         if(ticketAmount > 50 ){
-            ticketSiteFee += ticketAmount * .01 + 0.02;
+            ticketSiteFee += (ticketAmount * .01 + 0.02) * quantity;
         }
         jQuery('.ticket_site_fee').text(ticketSiteFee.toFixed(2));
     
