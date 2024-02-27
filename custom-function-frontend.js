@@ -155,8 +155,8 @@ jQuery(document).ready(function() {
         console.log('ticketAmount', ticketAmount,'quantity',quantity,'ticketSiteFee',ticketSiteFee );
         jQuery('.ticket_site_fee').text(ticketSiteFee); 
     }
-    jQuery('.tribe-tickets__tickets-item-quantity-add').on('click', update_site_fees());
-    jQuery('.tribe-tickets__tickets-item-quantity-remove').on('click',update_site_fees());
+    // jQuery('.tribe-tickets__tickets-item-quantity-add').on('click', update_site_fees());
+    // jQuery('.tribe-tickets__tickets-item-quantity-remove').on('click',update_site_fees());
 });
 
 
