@@ -108,20 +108,24 @@ $cost  = tribe_get_formatted_cost( $event_id );
             $endDate = new DateTime($end_dateTime, new DateTimeZone('Europe/London'));
             $EventEndDate = $endDate->format('D, d M, H:i T');
 
+            $eventEndDateTime = new DateTime(tribe_get_end_date(get_the_ID(), false, 'Y-m-d H:i:s'), new DateTimeZone('Europe/London'));
+
             // Check if the ticket start date and time is in the past
             if ($startDate > $current_dateTime) {
                 // Ticket start date and time is in the future, display it
                 echo "<div> <span class='pick_start_date'>$EventStartDate</span> </div>";
             }
 
-            // Always display the end date
-            echo "<div style='display:none'> <span class='pick_end_date'>$EventEndDate</span></div>";
+            // Only display the end date if it's different from the event's end date
+            if ($endDate != $eventEndDateTime) {
+                echo "<div> <span class='pick_end_date'>$EventEndDate</span></div>";
+            }
         ?>
         <?php echo tribe_event_featured_image( $event_id, 'full', false ); ?>
         <!-- Event featured image, END -->
     </div>
 
-    
+
 
       <!-- sticky button for mobile   -->
       <div id="sticky-button-container" style="display: none;">
