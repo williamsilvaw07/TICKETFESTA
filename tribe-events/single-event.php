@@ -98,8 +98,10 @@ $cost  = tribe_get_formatted_cost( $event_id );
 			<!-- Event featured image, but exclude link -->
            <?php 
                 $current_post_meta = get_post_meta( get_the_ID(  ));
+                $tickets = tribe_events_get_tickets(get_the_ID());
+
                 echo '<pre>';
-                var_dump($current_post_meta);
+                var_dump($tickets);
                 echo '</pre>';
                 $date = new DateTime($current_post_meta['_EventStartDate'][0]);
                 $date->setTimezone(new DateTimeZone('Europe/London'));
