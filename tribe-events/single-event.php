@@ -96,6 +96,7 @@ $cost  = tribe_get_formatted_cost( $event_id );
        <?php while ( have_posts() ) :  the_post(); ?>
 		<div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 			<!-- Event featured image, but exclude link -->
+           <?php echo '89'; ?>
 			<?php echo tribe_event_featured_image( $event_id, 'full', false ); ?>
 <!-- Event featured image, END -->
       </div>
