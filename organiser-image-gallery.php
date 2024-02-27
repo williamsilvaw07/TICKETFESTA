@@ -673,7 +673,7 @@ function enqueue_media_uploader($hook) {
     && isset($_GET['page']) 
     && $_GET['page'] === 'tickets-orders' 
     ) {
-        wp_enqueue_script('category-media-uploader', get_stylesheet_directory_uri() . '/js/admin-order.js', array('jquery'), null, true);
+        wp_enqueue_script('admin-order-js', get_stylesheet_directory_uri() . '/js/admin-order.js', array('jquery'), null, true);
     }
 }
 add_action('admin_enqueue_scripts', 'enqueue_media_uploader');
