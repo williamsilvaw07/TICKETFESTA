@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         var ticketAmount = parseFloat(jQuery('.tribe-amount').text().trim()).toFixed(2);
         var ticketSiteFee =  get_tribe_ticket_fee(ticketAmount);
-        $(this).append('<span class="site-fee-container">+£ <span class="ticket_site_fee">'+ticketSiteFee+'</span> fee</span>');
+        jQuery(this).append('<span class="site-fee-container">+£ <span class="ticket_site_fee">'+ticketSiteFee+'</span> fee</span>');
     }); 
 
     // jQuery('.tribe-tickets__tickets-footer-total').each(function() {
