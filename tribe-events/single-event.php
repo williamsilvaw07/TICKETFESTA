@@ -96,44 +96,27 @@ $cost  = tribe_get_formatted_cost( $event_id );
 <?php while ( have_posts() ) : the_post(); ?>
     <div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
         <?php 
-            $ticket = Tribe__Tickets__Tickets::get_event_tickets( get_the_ID() )[0];
-            $start_dateTime = $ticket->start_date . ' ' . $ticket->start_time;
-            $end_dateTime = $ticket->end_date. ' ' .$ticket->end_time;
+            // Assume $event_id is defined and correct
             $current_dateTime = new DateTime('now', new DateTimeZone('Europe/London'));
-
-            $startDate = new DateTime($start_dateTime, new DateTimeZone('Europe/London'));
-            $EventStartDate = $startDate->format('D, d M, H:i T');
-
-            $endDate = new DateTime($end_dateTime, new DateTimeZone('Europe/London'));
-            $EventEndDate = $endDate->format('D, d M, H:i T');
-
             $eventStartDateTime = new DateTime(tribe_get_start_date($event_id, false, 'Y-m-d H:i:s'), new DateTimeZone('Europe/London'));
+            $eventEndDateTime = new DateTime(tribe_get_end_date($event_id, false, 'Y-m-d H:i:s'), new DateTimeZone('Europe/London'));
 
-            $showStartDate = false;
-            $showEndDate = false;
+            $showStartDate = $eventStartDateTime > $current_dateTime;
+            $showEndDate = $eventEndDateTime->format('Y-m-d') != $eventStartDateTime->format('Y-m-d');
 
-            // Check if the ticket start date and time is in the past
-            if ($startDate > $current_dateTime) {
-                $showStartDate = true;
-            }
-
-            // Check if the end date is different from the event start date
-            if ($endDate->format('Y-m-d') != $eventStartDateTime->format('Y-m-d')) {
-                $showEndDate = true;
-            }
-
-            // Conditionally display the start date and end date labels and values
+            // Conditionally display the start date section
             if ($showStartDate) {
-                echo "<div>Start Date: <span class='pick_start_date'>$EventStartDate</span> </div>";
+                echo "<div>Start Date: <span class='event_start_date'>" . $eventStartDateTime->format('D, d M, H:i T') . "</span> </div>";
             }
 
+            // Conditionally display the end date section
             if ($showEndDate) {
-                echo "<div>End Date: <span class='pick_end_date'>$EventEndDate</span></div>";
+                echo "<div>End Date: <span class='event_end_date'>" . $eventEndDateTime->format('D, d M, H:i T') . "</span></div>";
             }
         ?>
         <?php echo tribe_event_featured_image( $event_id, 'full', false ); ?>
     </div>
-
+<?php endwhile; ?>
 
 
 
