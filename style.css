@@ -423,7 +423,9 @@ header{
     background-color: #1a1a1a!important;
 }
 
-
+.woocommerce-checkout .elementor-section-wrap{
+    background-color: #1a1a1a!important;
+}
 
 /******END*****/
 
