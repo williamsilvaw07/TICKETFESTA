@@ -95,29 +95,33 @@ $cost  = tribe_get_formatted_cost( $event_id );
 <!-- Event featured image, but exclude link -->
 <?php while ( have_posts() ) : the_post(); ?>
     <div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+        <!-- Event featured image, but exclude link -->
         <?php 
-            // Assume $event_id is defined and correct
+            $ticket = Tribe__Tickets__Tickets::get_event_tickets( get_the_ID() )[0];
+            $start_dateTime = $ticket->start_date . ' ' . $ticket->start_time;
+            $end_dateTime = $ticket->end_date. ' ' .$ticket->end_time;
             $current_dateTime = new DateTime('now', new DateTimeZone('Europe/London'));
-            $eventStartDateTime = new DateTime(tribe_get_start_date($event_id, false, 'Y-m-d H:i:s'), new DateTimeZone('Europe/London'));
-            $eventEndDateTime = new DateTime(tribe_get_end_date($event_id, false, 'Y-m-d H:i:s'), new DateTimeZone('Europe/London'));
 
-            $showStartDate = $eventStartDateTime > $current_dateTime;
-            $showEndDate = $eventEndDateTime->format('Y-m-d') != $eventStartDateTime->format('Y-m-d');
+            $startDate = new DateTime($start_dateTime, new DateTimeZone('Europe/London'));
+            $EventStartDate = $startDate->format('D, d M, H:i T');
 
-            // Conditionally display the start date section
-            if ($showStartDate) {
-                echo "<div>Start Date: <span class='event_start_date'>" . $eventStartDateTime->format('D, d M, H:i T') . "</span> </div>";
+            $endDate = new DateTime($end_dateTime, new DateTimeZone('Europe/London'));
+            $EventEndDate = $endDate->format('D, d M, H:i T');
+
+            // Check if the ticket start date and time is in the past
+            if ($startDate > $current_dateTime) {
+                // Ticket start date and time is in the future, display it
+                echo "<div> <span class='pick_start_date'>$EventStartDate</span> </div>";
             }
 
-            // Conditionally display the end date section
-            if ($showEndDate) {
-                echo "<div>End Date: <span class='event_end_date'>" . $eventEndDateTime->format('D, d M, H:i T') . "</span></div>";
-            }
+            // Always display the end date
+            echo "<div style='display:none'> <span class='pick_end_date'>$EventEndDate</span></div>";
         ?>
         <?php echo tribe_event_featured_image( $event_id, 'full', false ); ?>
+        <!-- Event featured image, END -->
     </div>
 
-
+    
 
       <!-- sticky button for mobile   -->
       <div id="sticky-button-container" style="display: none;">
