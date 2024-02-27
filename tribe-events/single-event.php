@@ -101,7 +101,7 @@ $cost  = tribe_get_formatted_cost( $event_id );
                 // $start_dateTime = $ticket['start_date'] . ' ' . $ticket['start_time'];
                 // $end_dateTime = $ticket['end_date']. ' ' .$ticket['end_time'];
                 echo '<pre>';
-                var_dump($ticket);
+                var_dump($ticket->end_date);
                 // var_dump('start_dateTime: ', $start_dateTime);
                 // var_dump('end_dateTime: ', $end_dateTime);
                 echo '</pre>';
