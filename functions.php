@@ -1,21 +1,22 @@
 <?php
-/**
- * Avoid a problem with Events Calendar PRO 4.2 which can inadvertently
- * break oembeds.
- */
-function undo_recurrence_oembed_logic() {
-    if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) return;
 
-    $pro_object   = Tribe__Events__Pro__Main::instance();
-    $pro_callback = array( $pro_object, 'oembed_request_post_id_for_recurring_events' );
 
-    remove_filter( 'oembed_request_post_id', $pro_callback );
+
+
+function restrict_admin_pages_for_organiser() {
+    // Check if the current user has the 'organiser' role
+    if ( current_user_can( 'organiser' ) && ! current_user_can( 'manage_options' ) ) {
+        global $pagenow;
+        // List of admin pages organisers are allowed to access
+        $allowed_pages = array( 'index.php', 'edit.php', 'post-new.php' ); // Dashboard, Posts list, Add New Post
+        if ( ! in_array( $pagenow, $allowed_pages ) ) {
+            wp_redirect( admin_url() ); // Redirect to the dashboard if accessing a restricted page
+            exit;
+        }
+    }
 }
 
-add_action( 'init', 'undo_recurrence_oembed_logic' );
-
-
-
+add_action( 'admin_init', 'restrict_admin_pages_for_organiser' );
 
 ////checkout
 
