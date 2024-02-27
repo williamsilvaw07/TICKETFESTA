@@ -183,7 +183,7 @@ jQuery(document).ready(function($) {
         var $newTitleElement = $(dateHtml); // Change 'New Title' to your desired title
         
         // Append the new title element after the tribe-tickets__tickets-item-content-title element
-        $newTitleElement.insertAfter(dateHtml);
+        $newTitleElement.insertAfter($titleElement);
     });
 });
 
