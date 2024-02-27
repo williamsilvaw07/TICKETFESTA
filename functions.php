@@ -1,4 +1,20 @@
 <?php
+/**
+ * Avoid a problem with Events Calendar PRO 4.2 which can inadvertently
+ * break oembeds.
+ */
+function undo_recurrence_oembed_logic() {
+    if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) return;
+
+    $pro_object   = Tribe__Events__Pro__Main::instance();
+    $pro_callback = array( $pro_object, 'oembed_request_post_id_for_recurring_events' );
+
+    remove_filter( 'oembed_request_post_id', $pro_callback );
+}
+
+add_action( 'init', 'undo_recurrence_oembed_logic' );
+
+
 
 
 ////checkout
