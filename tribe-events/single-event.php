@@ -93,33 +93,37 @@ $cost  = tribe_get_formatted_cost( $event_id );
 
 	<div class="top_flex_section_single_event single_event_sections">
 <!-- Event featured image, but exclude link -->
-<?php while ( have_posts() ) : the_post(); ?>
-    <div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-        <!-- Event featured image, but exclude link -->
-        <?php 
-            $ticket = Tribe__Tickets__Tickets::get_event_tickets( get_the_ID() )[0];
-            $start_dateTime = $ticket->start_date . ' ' . $ticket->start_time;
-            $end_dateTime = $ticket->end_date. ' ' .$ticket->end_time;
-            $current_dateTime = new DateTime('now', new DateTimeZone('Europe/London'));
+<?php while (have_posts()) : the_post(); ?>
+        <div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+            <?php 
+                $ticket = Tribe__Tickets__Tickets::get_event_tickets(get_the_ID())[0];
+                $start_dateTime = $ticket->start_date . ' ' . $ticket->start_time;
+                $end_dateTime = $ticket->end_date . ' ' . $ticket->end_time;
+                $current_dateTime = new DateTime('now', new DateTimeZone('Europe/London'));
 
-            $startDate = new DateTime($start_dateTime, new DateTimeZone('Europe/London'));
-            $EventStartDate = $startDate->format('D, d M, H:i T');
+                $startDate = new DateTime($start_dateTime, new DateTimeZone('Europe/London'));
+                $endDate = new DateTime($end_dateTime, new DateTimeZone('Europe/London'));
 
-            $endDate = new DateTime($end_dateTime, new DateTimeZone('Europe/London'));
-            $EventEndDate = $endDate->format('D, d M, H:i T');
+                // Determine if we should display the start date
+                $showStartDate = $startDate > $current_dateTime;
+                
+                // Determine if we should display the end date
+                // Assuming you want to hide the end date if it's the same as the event end date
+                $eventEndDateTime = new DateTime(tribe_get_end_date(get_the_ID(), false, 'Y-m-d H:i:s'), new DateTimeZone('Europe/London'));
+                $showEndDate = $endDate->format('Y-m-d H:i') != $eventEndDateTime->format('Y-m-d H:i');
 
-            // Check if the ticket start date and time is in the past
-            if ($startDate > $current_dateTime) {
-                // Ticket start date and time is in the future, display it
-                echo "<div> <span class='pick_start_date'>$EventStartDate</span> </div>";
-            }
+                // Only display Start Date section if applicable
+                if ($showStartDate) {
+                    echo "<div>Start Date: <span class='pick_start_date'>" . $startDate->format('D, d M, H:i T') . "</span></div>";
+                }
 
-            // Always display the end date
-            echo "<div style='display:none'> <span class='pick_end_date'>$EventEndDate</span></div>";
-        ?>
-        <?php echo tribe_event_featured_image( $event_id, 'full', false ); ?>
-        <!-- Event featured image, END -->
-    </div>
+                // Only display End Date section if applicable
+                if ($showEndDate) {
+                    echo "<div>End Date: <span class='pick_end_date'>" . $endDate->format('D, d M, H:i T') . "</span></div>";
+                }
+            ?>
+            <?php echo tribe_event_featured_image($event_id, 'full', false); ?>
+        </div>
 
     
 
