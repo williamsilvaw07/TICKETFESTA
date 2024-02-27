@@ -667,14 +667,14 @@ function enqueue_media_uploader($hook) {
     }
 
 
-    // if ('edit.php' === $hook 
+    if ('edit.php' === $hook 
     // && isset($_GET['post_type']) 
     // && $_GET['post_type'] === 'tribe_events' 
     // && isset($_GET['page']) 
     // && $_GET['page'] === 'tickets-orders' 
-    // ) {
+    ) {
         wp_enqueue_script('admin-order-js', get_stylesheet_directory_uri() . '/js/admin-order.js', array('jquery'), null, true);
-    // }
+    }
 }
 add_action('admin_enqueue_scripts', 'enqueue_media_uploader');
 
