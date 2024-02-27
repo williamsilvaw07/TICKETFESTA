@@ -8,7 +8,7 @@ function get_tribe_ticket_fee(ticketAmount, quantity = 1){
         ticketSiteFee += (ticketAmount *  .01 + 0.02) * quantity;
     }
 
-    return ticketSiteFee;
+    return ticketSiteFee.toFixed(2);
 }
 document.addEventListener('DOMContentLoaded', function() {
 
