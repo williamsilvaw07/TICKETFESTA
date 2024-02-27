@@ -535,7 +535,14 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 ?>
     <!-- Event Gallery Category -->
     <div class="organizer_gallery_category">
-        <?php foreach($categories as $category){ 
+
+        <?php 
+            if(empty($categories)){
+                echo '<h3>No images found.</h3>';
+            
+            }
+        
+        foreach($categories as $category){ 
             $cat_title = $category->name;
             $category_image_array = get_term_meta($category->term_id, 'category_images', true); // get category images
             $category_images = explode(',', $category_image_array);
