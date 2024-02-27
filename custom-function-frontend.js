@@ -146,30 +146,17 @@ jQuery(document).ready(function() {
         var ticketAmount = parseFloat(jQuery('.tribe-amount').text().trim()).toFixed(2);
         var quantity = parseInt(jQuery('.tribe-tickets__tickets-footer-quantity-number').text().trim());
         var ticketSiteFee = 0;
-
         if(ticketAmount < 50 ){
             ticketSiteFee += (ticketAmount * .03 + 0.02) * quantity;
         }
         if(ticketAmount > 50 ){
             ticketSiteFee += (ticketAmount *  .01 + 0.02) * quantity;
         }
+        console.log('ticketAmount', ticketAmount,'quantity',quantity,'ticketSiteFee',ticketSiteFee );
         jQuery('.ticket_site_fee').text(ticketSiteFee); 
     }
     jQuery('.tribe-tickets__tickets-item-quantity-add').on('click', update_site_fees());
-    jQuery('.tribe-tickets__tickets-item-quantity-remove').on('click', function(){
-        var ticketAmount = parseFloat(jQuery('.tribe-amount').text().trim()).toFixed(2);
-        var quantity = parseInt(jQuery('.tribe-tickets__tickets-footer-quantity-number').text().trim());
-        var ticketSiteFee = 0;
-
-        if(ticketAmount < 50 ){
-            ticketSiteFee += (ticketAmount * .03 + 0.02) * quantity;
-        }
-        if(ticketAmount > 50 ){
-            ticketSiteFee += (ticketAmount * .01 + 0.02) * quantity;
-        }
-        jQuery('.ticket_site_fee').text(ticketSiteFee.toFixed(2));
-    
-    });
+    jQuery('.tribe-tickets__tickets-item-quantity-remove').on('click',update_site_fees());
 });
 
 
