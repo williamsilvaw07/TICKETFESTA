@@ -410,6 +410,24 @@ header{
 
 
 
+
+
+
+
+
+
+
+
+/******CHECKOUT HEADER AND FOOTER*****/
+.woocommerce-checkout header{
+    background-color: #1a1a1a!important;
+}
+
+
+
+/******END*****/
+
+
 /****END***/
 
 
