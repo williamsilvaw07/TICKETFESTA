@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
 
     // single product price
-    jQuery('.tribe-tickets__tickets-item').each(function() {
+    jQuery('.tribe-tickets__tickets-sale-price').each(function() {
         // Append a div element with the text "Sites Fees" to each item
         $(this).append('<div class="site-fee-container">Sites Fees: £<span class="ticket_site_fee">0</span></div>');
     }); 
