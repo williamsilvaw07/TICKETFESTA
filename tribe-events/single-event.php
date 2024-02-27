@@ -161,20 +161,9 @@ $cost  = tribe_get_formatted_cost( $event_id );
 <div class="get_tickets_div_single_event">
 <div class="get_tickets_div_single_event_inner_left">
 
-<?php if ( ! empty( $cost ) ) : ?>
-    <h5 class="ticketpricebtnsection">
-        <span class="fromspansingleevent">From</span>
-        <span class="tribe-events-cost"><?php echo esc_html( $cost ); ?></span>
-        <?php
-        // Example: Retrieving a custom field directly from the event post.
-        $sale_end_date = get_post_meta( $event_id, 'sale_end_date', true );
-        if ( ! empty( $sale_end_date ) ) :
-            $formatted_sale_end_date = date_i18n( 'F j, Y', strtotime( $sale_end_date ) );
-        ?>
-            <div class="ticket-sale-end-date">Sale Ends: <?php echo esc_html( $formatted_sale_end_date ); ?></div>
-        <?php endif; ?>
-    </h5>
-<?php endif; ?>
+<h5 class="ticketpricebtnsection"><span class="fromspansingleevent">From</span><?php if ( ! empty( $cost ) ) : ?>
+			<span class="tribe-events-cost"><?php echo esc_html( $cost ) ?></span>
+		<?php endif; ?></h5>
 		</div></div>
 
 <!-- MOBILE TICKET BUTTON  -->
