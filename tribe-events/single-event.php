@@ -103,8 +103,8 @@ $cost  = tribe_get_formatted_cost( $event_id );
                 echo '</pre>';
 
                 $date = new DateTime($current_post_meta['_EventStartDate'][0]);
-                $EventStartDate = $date->format('D, d M, H:i T');
                 $date->setTimezone(new DateTimeZone('Europe/London'));
+                $EventStartDate = $date->format('D, d M, H:i T');
 
                 $date = new DateTime($current_post_meta['_EventEndDate'][0]);
                 $date->setTimezone(new DateTimeZone('Europe/London'));
