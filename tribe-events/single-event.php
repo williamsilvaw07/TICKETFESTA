@@ -98,8 +98,7 @@ $cost  = tribe_get_formatted_cost( $event_id );
 			<!-- Event featured image, but exclude link -->
            <?php 
                 $current_post_meta = get_post_meta( get_the_ID(  ));
-                $tickets = tribe_events_get_tickets(get_the_ID());
-
+                $tickets = Tribe__Tickets__Tickets::get_event_tickets( get_the_ID(  ) );
                 echo '<pre>';
                 var_dump($tickets);
                 echo '</pre>';
