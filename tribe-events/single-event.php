@@ -93,26 +93,34 @@ $cost  = tribe_get_formatted_cost( $event_id );
 
 	<div class="top_flex_section_single_event single_event_sections">
 <!-- Event featured image, but exclude link -->
-       <?php while ( have_posts() ) :  the_post(); ?>
-		<div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-			<!-- Event featured image, but exclude link -->
-           <?php 
-                $ticket = Tribe__Tickets__Tickets::get_event_tickets( get_the_ID(  ) )[0];
-                $start_dateTime = $ticket->start_date . ' ' . $ticket->start_time;
-                $end_dateTime = $ticket->end_date. ' ' .$ticket->end_time;
-                $date = new DateTime($start_dateTime);
-                $date->setTimezone(new DateTimeZone('Europe/London'));
-                $EventStartDate = $date->format('D, d M, H:i T');
+<?php while ( have_posts() ) : the_post(); ?>
+    <div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+        <!-- Event featured image, but exclude link -->
+        <?php 
+            $ticket = Tribe__Tickets__Tickets::get_event_tickets( get_the_ID() )[0];
+            $start_dateTime = $ticket->start_date . ' ' . $ticket->start_time;
+            $end_dateTime = $ticket->end_date. ' ' .$ticket->end_time;
+            $current_dateTime = new DateTime('now', new DateTimeZone('Europe/London'));
 
-                $date = new DateTime($end_dateTime);
-                $date->setTimezone(new DateTimeZone('Europe/London'));
-                $EventEndDate = $date->format('D, d M, H:i T');
-                echo "<div style='display:none'> <span class='pick_start_date'>$EventStartDate</span> <span class='pick_end_date'>$EventEndDate</span></div>"
-           
-           ?>
-			<?php echo tribe_event_featured_image( $event_id, 'full', false ); ?>
-<!-- Event featured image, END -->
-      </div>
+            $startDate = new DateTime($start_dateTime, new DateTimeZone('Europe/London'));
+            $EventStartDate = $startDate->format('D, d M, H:i T');
+
+            $endDate = new DateTime($end_dateTime, new DateTimeZone('Europe/London'));
+            $EventEndDate = $endDate->format('D, d M, H:i T');
+
+            // Check if the ticket start date and time is in the past
+            if ($startDate > $current_dateTime) {
+                // Ticket start date and time is in the future, display it
+                echo "<div> <span class='pick_start_date'>$EventStartDate</span> </div>";
+            }
+
+            // Always display the end date
+            echo "<div style='display:none'> <span class='pick_end_date'>$EventEndDate</span></div>";
+        ?>
+        <?php echo tribe_event_featured_image( $event_id, 'full', false ); ?>
+        <!-- Event featured image, END -->
+    </div>
+<?php endwhile; ?>
 
       <!-- sticky button for mobile   -->
       <div id="sticky-button-container" style="display: none;">
