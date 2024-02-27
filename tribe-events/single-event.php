@@ -161,26 +161,9 @@ $cost  = tribe_get_formatted_cost( $event_id );
 <div class="get_tickets_div_single_event">
 <div class="get_tickets_div_single_event_inner_left">
 
-<h5 class="ticketpricebtnsection">
-    <span class="fromspansingleevent">From</span>
-    <?php if ( ! empty( $cost ) ) : ?>
-        <span class="tribe-events-cost"><?php echo esc_html( $cost ); ?></span>
-    <?php endif; ?>
-    <?php if ( ! empty( $tickets_on_sale ) ) : ?>
-        <?php foreach ( $tickets_on_sale as $ticket ) : ?>
-            <?php
-            // Hypothetically getting the sale end date from the ticket object.
-            // Replace `get_sale_end_date` with the actual method or property.
-            $sale_end_date = method_exists( $ticket, 'get_sale_end_date' ) ? $ticket->get_sale_end_date() : '';
-            if ( ! empty( $sale_end_date ) ) :
-                // Format the sale end date for display.
-                $formatted_sale_end_date = date_i18n( 'F j, Y', strtotime( $sale_end_date ) );
-            ?>
-                <div class="ticket-sale-end-date">Sale Ends: <?php echo esc_html( $formatted_sale_end_date ); ?></div>
-            <?php endif; ?>
-        <?php endforeach; ?>
-    <?php endif; ?>
-</h5>
+<h5 class="ticketpricebtnsection"><span class="fromspansingleevent">From</span><?php if ( ! empty( $cost ) ) : ?>
+			<span class="tribe-events-cost"><?php echo esc_html( $cost ) ?></span>
+		<?php endif; ?></h5>
 		</div></div>
 
 <!-- MOBILE TICKET BUTTON  -->
