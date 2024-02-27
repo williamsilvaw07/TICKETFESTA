@@ -666,8 +666,7 @@ function enqueue_media_uploader($hook) {
         wp_enqueue_script('category-media-uploader', get_stylesheet_directory_uri() . '/js/admin-custom-cat.js', array('jquery'), null, true);
     }
 
-var_dump($hook);
-    if ('edit.php' === $hook 
+    if ('tribe_events_page_tickets-orders' === $hook 
     // && isset($_GET['post_type']) 
     // && $_GET['post_type'] === 'tribe_events' 
     // && isset($_GET['page']) 
