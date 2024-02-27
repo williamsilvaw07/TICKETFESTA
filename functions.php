@@ -1,4 +1,13 @@
 <?php
+function enqueue_quill_editor_assets() {
+    // Enqueue Quill stylesheet
+    wp_enqueue_style( 'quill-snow-css', 'https://cdn.jsdelivr.net/npm/quill@2.0.0-rc.2/dist/quill.snow.css' );
+
+    // Enqueue Quill JavaScript library
+    wp_enqueue_script( 'quill-js', 'https://cdn.jsdelivr.net/npm/quill@2.0.0-rc.2/dist/quill.js', array(), false, true );
+}
+
+add_action( 'wp_enqueue_scripts', 'enqueue_quill_editor_assets' );
 
 
 ////FUNCTION TO BLOCK BACKEND ACCESSS 
