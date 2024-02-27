@@ -22,7 +22,20 @@ document.addEventListener('DOMContentLoaded', function() {
         jQuery('.ticket_site_fee').text(ticketSiteFee); 
     }
     jQuery('.tribe-tickets__tickets-item-quantity-add').on('click', update_site_fees());
-    jQuery('.tribe-tickets__tickets-item-quantity-remove').on('click', update_site_fees());
+    jQuery('.tribe-tickets__tickets-item-quantity-remove').on('click', function(){
+        var ticketAmount = parseFloat(jQuery('.tribe-amount').text().trim()).toFixed(2);
+        var quantity = parseInt(jQuery('.tribe-tickets__tickets-footer-quantity-number').text().trim());
+        var ticketSiteFee = 0;
+
+        if(ticketAmount < 50 ){
+            ticketSiteFee += ticketAmount * .03 + 0.02;
+        }
+        if(ticketAmount > 50 ){
+            ticketSiteFee += ticketAmount * .01 + 0.02;
+        }
+        jQuery('.ticket_site_fee').text(ticketSiteFee);
+    
+    });
 
     jQuery('.flux-checkout__login-button.login-button').each(function() {
         // Add classes 'xoo-el-action-sc' and 'xoo-el-login-tgr'
