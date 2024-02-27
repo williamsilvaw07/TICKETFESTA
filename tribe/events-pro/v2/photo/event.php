@@ -86,7 +86,7 @@ $organizer_names = array_map('tribe_get_organizer', $organizer_ids);
     $dateTimeZone = new DateTimeZone($timezone);
 
     // Create a DateTime object for the event's start date/time in the event's timezone
-    $dateTime = new DateTime( tribe_get_start_date( $event->ID, false, 'Y-m-d H:i:s' ), $dateTimeZone );
+    $dateTime = new DateTime( tribe_get_start_date( $event_id, false, 'Y-m-d H:i:s' ), $dateTimeZone );
 
     // Format the DateTime object to get the timezone abbreviation
     // Handles cases like BST/GMT dynamically based on the event's date and timezone
