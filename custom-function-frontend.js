@@ -3,8 +3,27 @@ document.addEventListener('DOMContentLoaded', function() {
     // single product price
     $('.tribe-tickets__tickets-item').each(function() {
         // Append a div element with the text "Sites Fees" to each item
-        $(this).append('<div class="site-fee-container">Sites Fees: <span class="ticket_site_fee">£0</span></div>');
-    });
+        $(this).append('<div class="site-fee-container">Sites Fees: £<span class="ticket_site_fee">0</span></div>');
+    }); tribe-tickets__tickets-item-quantity-remove
+
+    $('.tribe-tickets__tickets-item-quantity-add').on('click', update_site_fees());
+    $('.tribe-tickets__tickets-item-quantity-remove').on('click', update_site_fees());
+
+    function update_site_fees(){
+    
+        var ticketAmount = parseFloat($('.tribe-amount').text().trim()).toFixed(2);
+        var quantity = parseInt($('.tribe-tickets__tickets-footer-quantity-number').text().trim());
+        var ticketSiteFee = 0;
+
+        if(ticketAmount < 50 ){
+            ticketSiteFee += ticketAmount * .03 + 0.02;
+        }
+        if(ticketAmount > 50 ){
+            ticketSiteFee += ticketAmount * .01 + 0.02;
+        }
+        var ticketSiteFee = ticketAmount * quantity;
+        $('.ticket_site_fee').text(ticketSiteFee); 
+    }
 
     jQuery('.flux-checkout__login-button.login-button').each(function() {
         // Add classes 'xoo-el-action-sc' and 'xoo-el-login-tgr'
