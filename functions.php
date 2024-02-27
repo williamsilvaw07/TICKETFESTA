@@ -1,7 +1,7 @@
 <?php
 
 
-
+////FUNCTION TO BLOCK BACKEND ACCESSS 
 
 function restrict_backend_access_for_organiser() {
     if (current_user_can('organiser') && // Check if the current user is an organiser
@@ -24,7 +24,7 @@ function restrict_backend_access_for_organiser() {
 add_action('admin_init', 'restrict_backend_access_for_organiser');
 
 
-////checkout
+////CHECKOUT
 
 /**
  * Flux checkout - Allow custom CSS files.
