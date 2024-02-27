@@ -102,10 +102,14 @@ $cost  = tribe_get_formatted_cost( $event_id );
                 var_dump($current_post_meta); 
                 echo '</pre>';
 
-                $dateString = '2024-04-16 20:00:00';
                 $date = new DateTime($current_post_meta['_EventStartDate'][0]);
-                $formattedDate = $date->format('D, d M, H:i T');
-                echo $formattedDate;
+                $EventStartDate = $date->format('D, d M, H:i T');
+                $date->setTimezone(new DateTimeZone('Europe/London'));
+
+                $date = new DateTime($current_post_meta['_EventEndDate'][0]);
+                $date->setTimezone(new DateTimeZone('Europe/London'));
+                $EventEndDate = $date->format('D, d M, H:i T');
+                echo $EventStartDate;
            
            
            ?>
