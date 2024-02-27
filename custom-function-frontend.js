@@ -178,11 +178,12 @@ jQuery(document).ready(function($) {
         // Find the element with class tribe-tickets__tickets-item-content-title within the current tribe-tickets__tickets-item
         var $titleElement = $(this).find('.tribe-tickets__tickets-item-content-title');
         
+        let dateHtml = '<span class="start-end-date"> Start Date: Tue, 16 Apr, 20:00 BST ,  End Date: Tue, 16 Apr, 20:00 BST</span>'
         // Create a new title element
-        var $newTitleElement = $('<h2>New Title</h2>'); // Change 'New Title' to your desired title
+        var $newTitleElement = $(dateHtml); // Change 'New Title' to your desired title
         
         // Append the new title element after the tribe-tickets__tickets-item-content-title element
-        $newTitleElement.insertAfter($titleElement);
+        $newTitleElement.insertAfter(dateHtml);
     });
 });
 
