@@ -1501,3 +1501,7 @@ span.site-fee-container, span.site-fee-container span.ticket_site_fee {
     color: #949494!important;
     font-size: 14px;
 }
+
+.event-tickets .tribe-tickets__tickets-item-details-content, .entry .entry-content .event-tickets .tribe-tickets__tickets-item-details-content {
+    grid-row: 3;
+}
