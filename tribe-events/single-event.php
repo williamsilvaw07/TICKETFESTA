@@ -102,6 +102,8 @@ $cost  = tribe_get_formatted_cost( $event_id );
                 $end_dateTime = $tickets['end_date']. ' ' .$tickets['end_time'];
                 echo '<pre>';
                 var_dump($ticket);
+                var_dump('start_dateTime: ', $start_dateTime);
+                var_dump('end_dateTime: ', $end_dateTime);
                 echo '</pre>';
                 $date = new DateTime($start_dateTime);
                 $date->setTimezone(new DateTimeZone('Europe/London'));
