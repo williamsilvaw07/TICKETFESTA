@@ -41,7 +41,7 @@ $organizer_names = array_map('tribe_get_organizer', $organizer_ids);
         <?php $this->template( 'photo/event/featured-image', [ 'event' => $event ] ); ?>
     <?php else : ?>
         <div class="event-featured-image-placeholder">
-            <img src="/placeholder-4-e1708647807620.png" alt="Placeholder Image">
+            <img src="https://ticketfesta.co.uk/wp-content/uploads/2024/02/placeholder-1-1.png" alt="Placeholder Image">
         </div>
     <?php endif; ?>
 
