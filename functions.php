@@ -1,6 +1,29 @@
 <?php
 
 
+////FUNCTION TO BLOCK BACKEND ACCESSS 
+
+function restrict_backend_access_for_organiser() {
+    if (current_user_can('organiser') && // Check if the current user is an organiser
+        !(defined('DOING_AJAX') && DOING_AJAX) &&  // Allow Ajax requests
+        !(defined('DOING_CRON') && DOING_CRON)) {  // Allow Cron requests
+        
+        // Optional: Whitelist specific admin pages, e.g., profile page
+        global $pagenow;
+        $whitelisted_pages = ['profile.php'];
+        if (in_array($pagenow, $whitelisted_pages)) {
+            return; // Skip the redirect for whitelisted pages
+        }
+
+        // Redirect to the homepage or another page
+        wp_redirect(home_url());
+        exit;
+    }
+}
+
+add_action('admin_init', 'restrict_backend_access_for_organiser');
+
+
 ////CHECKOUT
 
 /**
@@ -274,6 +297,29 @@ function iam00_get_coupon_associate_with_event($eventId){
     foreach ($products as $product) {
         $product_ids[] = $product->ID;
     }
+
+    $coupon_posts = get_posts(
+        array(
+            'post_type' => 'shop_coupon',
+            'posts_per_page' => -1,
+            'meta_query' => array(
+                array(
+                    'key' => 'product_ids',
+                    'value' => "%%",
+                    'compare' => 'LIKE',
+                ),
+            ),
+        )
+    );
+
+    // dd( $coupon_posts);
+
+    foreach ($coupon_posts as $coupon_post) {
+        // $metaKeys = post_meta($coupon_post->ID,'product_ids', true);
+        $metaKeys = get_post_meta($coupon_post->ID, 'product_ids', true);
+        var_dump($metaKeys);
+    }
+
     
     // Get all coupons
     $args = array(
@@ -288,6 +334,7 @@ function iam00_get_coupon_associate_with_event($eventId){
         ),
     );
     $query = new WP_Query($args);
+    dd($query->posts);
     return $query->posts;
 }
 
@@ -498,6 +545,83 @@ function iam00_create_woo_coupon_for_ticket()
     die();
 }
 add_action('wp_ajax_add_coupon_action', 'iam00_create_woo_coupon_for_ticket'); // For logged-in users
+function iam00_delete_woo_coupon_for_ticket()
+{
+    //check nonce
+    if (!isset($_POST['nonce'])) {
+        $response_data = array(
+            'message' => 'Nonce missing',
+        );
+        wp_send_json_success($response_data, 422);
+        wp_die();
+    } else {
+        if (!wp_verify_nonce($_POST['nonce'], 'add-coupon-nonce')) {
+            // Nonce is invalid, handle accordingly
+            $response_data = array(
+                'message' => 'Invalid nonce',
+            );
+            wp_send_json_success($response_data, 422);
+            wp_die();
+        }
+    }
+    // check woocommerce active
+    if (!is_plugin_active('woocommerce/woocommerce.php')) {
+        $response_data = array(
+            'message' => 'Woocommerce is not active',
+        );
+        wp_send_json_success($response_data, 422);
+        die();
+    }
+    //Get the user id
+    $userId = get_current_user_id();
+    //Get Event id && Check if this event own by this user
+    if (isset($_POST['coupon_id'])) {
+        $coupon_id = $_POST['coupon_id'];
+        $coupon = get_post($coupon_id);
+
+        if (!$coupon) {
+            $response_data = array(
+                'message' => 'event not found',
+            );
+            wp_send_json_success($response_data, 422);
+            die();
+        }
+        if ((int) $coupon->post_author !== $userId) {
+            $response_data = array(
+                'message' => 'coupon not belongs to you',
+            );
+            wp_send_json_success($response_data, 422);
+            die();
+        }
+
+        if (get_post_type($coupon_id) === 'shop_coupon') {
+            // Delete the coupon
+            wp_delete_post($coupon_id, true); // Passing true as the second parameter permanently deletes the post
+            
+            $response_data = array(
+                'message' => 'Coupon deleted successfully.',
+            );
+            wp_send_json_success($response_data, 200);
+            die();
+        } else {
+            $response_data = array(
+                'message' => 'Coupon not found.',
+            );
+            wp_send_json_success($response_data, 422);
+            die();
+        }
+    } else {
+        $response_data = array(
+            'message' => 'coupon_id missing',
+        );
+        wp_send_json_success($response_data, 422);
+        die();
+    }
+
+    // Always use die() at the end of your handler function
+    die();
+}
+add_action('wp_ajax_delete_coupon_action', 'iam00_delete_woo_coupon_for_ticket'); // For logged-in users
 
 function iam00_create_event()
 {
@@ -537,6 +661,7 @@ function generatepress_child_style()
         wp_enqueue_script('moment', get_stylesheet_directory_uri() . '/adminlte/plugins/moment/moment.min.js', array(), null, true);
         wp_enqueue_script('tempusdominus', get_stylesheet_directory_uri() . '/adminlte/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js', array('jquery'), null, true);
         wp_enqueue_script('adminlte', get_stylesheet_directory_uri() . '/adminlte/js/adminlte.min.js', array('jquery', 'bootstrap'), null, true);
+        wp_enqueue_script('sweetalert2', 'https://cdn.jsdelivr.net/npm/sweetalert2@11', array('jquery', 'bootstrap'), null, true);
 
 
         wp_enqueue_script('organizer-js', get_stylesheet_directory_uri() . '/js/organizer.js', array('jquery'), null, true);
