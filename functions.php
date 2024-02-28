@@ -1,28 +1,6 @@
 <?php
 
 
-////FUNCTION TO BLOCK BACKEND ACCESSS 
-
-function restrict_backend_access_for_organiser() {
-    if (current_user_can('organiser') && // Check if the current user is an organiser
-        !(defined('DOING_AJAX') && DOING_AJAX) &&  // Allow Ajax requests
-        !(defined('DOING_CRON') && DOING_CRON)) {  // Allow Cron requests
-        
-        // Optional: Whitelist specific admin pages, e.g., profile page
-        global $pagenow;
-        $whitelisted_pages = [''];
-        if (in_array($pagenow, $whitelisted_pages)) {
-            return; // Skip the redirect for whitelisted pages
-        }
-
-        // Redirect to the homepage or another page
-        wp_redirect(home_url());
-        exit;
-    }
-}
-
-add_action('admin_init', 'restrict_backend_access_for_organiser');
-
 
 ////CHECKOUT
 

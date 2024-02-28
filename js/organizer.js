@@ -51,66 +51,7 @@ function updateTicket() {
 }
 
 
-function getCoupons() {
-
-  var eventId = jQuery("#post_ID").val();
-  jQuery.ajax({
-    url: iam00_ajax_object.ajax_url, // AJAX URL set by WordPress
-    type: "post",
-    data: {
-      action: "get_event_ticket_coupon_action", // Custom AJAX action
-      nonce: iam00_ajax_object.nonce,
-      event_id: eventId,
-    },
-    success: function (response) {
-      // Handle the response from the server
-      var options = "";
-
-      if (response.success) {
-        //
-
-        let html = `
-      <table>
-          <thead>
-            <tr class="table-header">
-              <th class="code">Code</th>
-              <th class="amount">Amount</th>
-              <th class="discount_type">Discount Type</th>
-              <th class="start_date">Start Date</th>
-              <th class="expire_date">End Date</th>
-              <th class="usage_limit">Usage Limit</th>
-            </tr>
-          </thead>
-          <tbody id="couponListBody">`;
-
-        let body = '';
-
-        jQuery.each(response.data, function (index, data) {
-          body += `<tr>
-            <td class="code">`+ data.code + `</td>
-            <td class="amount">`+ data.amount + `</td>
-            <td class="discount_type">`+ data.discount_type + `</td>
-            <td class="start_date">`+ data.start_date + `</td>
-            <td class="expire_date">`+ data.expire_date + `</td>
-            <td class="usage_limit">`+ data.usage_limit + `</td>
-          </tr>`;
-        });
-
-        let htmlEnd = `
-          </tbody>
-        </table>
-      `;
-        jQuery(document).find("#couponList").append(html + body + htmlEnd);
-        // console.log(html + body + htmlEnd);
-      }
-    },
-  });
-}
-
-
 function onClickDeleteHandeler(coupon_id) {
-  return getCoupons();
-
   Swal.fire({
     title: "Are you sure?",
     text: "You won't be able to revert this!",
@@ -121,7 +62,7 @@ function onClickDeleteHandeler(coupon_id) {
     confirmButtonText: "Yes, delete it!"
   }).then(function (t) {
     if (t.isConfirmed) {
-      $.ajax({
+      jQuery.ajax({
         url: iam00_ajax_object.ajax_url,
         type: 'POST',
         dataType: 'json',
@@ -331,7 +272,61 @@ jQuery(document).ready(function (jQuery) {
   });
 
 
-  
+  function getCoupons() {
+
+    var eventId = jQuery("#post_ID").val();
+    jQuery.ajax({
+      url: iam00_ajax_object.ajax_url, // AJAX URL set by WordPress
+      type: "post",
+      data: {
+        action: "get_event_ticket_coupon_action", // Custom AJAX action
+        nonce: iam00_ajax_object.nonce,
+        event_id: eventId,
+      },
+      success: function (response) {
+        // Handle the response from the server
+        var options = "";
+
+        if (response.success) {
+          //
+
+          let html = `
+        <table>
+            <thead>
+              <tr class="table-header">
+                <th class="code">Code</th>
+                <th class="amount">Amount</th>
+                <th class="discount_type">Discount Type</th>
+                <th class="start_date">Start Date</th>
+                <th class="expire_date">End Date</th>
+                <th class="usage_limit">Usage Limit</th>
+              </tr>
+            </thead>
+            <tbody id="couponListBody">`;
+
+          let body = '';
+
+          jQuery.each(response.data, function (index, data) {
+            body += `<tr>
+              <td class="code">`+ data.code + `</td>
+              <td class="amount">`+ data.amount + `</td>
+              <td class="discount_type">`+ data.discount_type + `</td>
+              <td class="start_date">`+ data.start_date + `</td>
+              <td class="expire_date">`+ data.expire_date + `</td>
+              <td class="usage_limit">`+ data.usage_limit + `</td>
+            </tr>`;
+          });
+
+          let htmlEnd = `
+            </tbody>
+          </table>
+        `;
+          jQuery(document).find("#couponList").append(html + body + htmlEnd);
+          // console.log(html + body + htmlEnd);
+        }
+      },
+    });
+  }
 
   getCoupons();
 
