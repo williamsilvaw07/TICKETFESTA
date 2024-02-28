@@ -97,18 +97,25 @@ $cost  = tribe_get_formatted_cost( $event_id );
 		<div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 			<!-- Event featured image, but exclude link -->
            <?php 
-                $ticket = Tribe__Tickets__Tickets::get_event_tickets( get_the_ID(  ) )[0];
-                $start_dateTime = $ticket->start_date . ' ' . $ticket->start_time;
-                $end_dateTime = $ticket->end_date. ' ' .$ticket->end_time;
-                $date = new DateTime($start_dateTime);
-                $date->setTimezone(new DateTimeZone('Europe/London'));
-                $EventStartDate = $date->format('D, d M, H:i T');
+                $tickets = Tribe__Tickets__Tickets::get_event_tickets( get_the_ID(  ) );
+                foreach($tickets as $ticket){
+                    $currentDateTime = new DateTime();
+                    $start_dateTime = $ticket->start_date . ' ' . $ticket->start_time;
+                    $end_dateTime = $ticket->end_date. ' ' .$ticket->end_time;
+                    $date = new DateTime($start_dateTime);
+                    $date->setTimezone(new DateTimeZone('Europe/London'));
+                    $EventStartDate = $date->format('D, d M, H:i T');
+                    $startDatedPassed = $date < $currentDateTime;
 
-                $date = new DateTime($end_dateTime);
-                $date->setTimezone(new DateTimeZone('Europe/London'));
-                $EventEndDate = $date->format('D, d M, H:i T');
-                echo "<div style='display:none'> <span class='pick_start_date'>$EventStartDate</span> <span class='pick_end_date'>$EventEndDate</span></div>"
-           
+                    $date = new DateTime($end_dateTime);
+                    $date->setTimezone(new DateTimeZone('Europe/London'));
+                    $EventEndDate = $date->format('D, d M, H:i T');
+                    $endDatedPassed = $date < $currentDateTime;
+                    echo "<div style='display:none' class='ticket-date-container' data-ticket-id='$ticket->ID'> 
+                        <span class='pick_start_date' data-passed='$startDatedPassed'>$EventStartDate</span> 
+                        <span class='pick_end_date' data-passed='$endDatedPassed' >$EventEndDate</span>
+                    </div>";
+                }
            ?>
 			<?php echo tribe_event_featured_image( $event_id, 'full', false ); ?>
 <!-- Event featured image, END -->
