@@ -62,7 +62,7 @@ function onClickDeleteHandeler(coupon_id) {
     confirmButtonText: "Yes, delete it!"
   }).then(function (t) {
     if (t.isConfirmed) {
-      $.ajax({
+      jQuery.ajax({
         url: iam00_ajax_object.ajax_url,
         type: 'POST',
         dataType: 'json',
