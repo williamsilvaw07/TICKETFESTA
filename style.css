@@ -618,7 +618,7 @@ width:90%!important;
 
 /***********FRONTEND ALL EVENTS*****/
 
-.home .entry-header , html  .tribe-events-c-view-selector {
+.home .entry-header , html  .tribe-events-c-view-selector , .tribe-events-c-top-bar {
     display: none!important;
 }
 #ecsa-search input[type=text] {
