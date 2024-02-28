@@ -175,18 +175,23 @@ jQuery(document).ready(function($) {
     });
 
     $('.tribe-tickets__tickets-item').each(function() {
-        // Find the element with class tribe-tickets__tickets-item-content-title within the current tribe-tickets__tickets-item
-        var $titleElement = $(this).find('.tribe-tickets__tickets-item-content-title');
+        var titleElement = $(this).find('.tribe-tickets__tickets-item-content-title');
+        var ticket_id = $(this).data('ticket-id');
         var start_date = jQuery('.pick_start_date').text().trim();
         var end_date = jQuery('.pick_end_date').text().trim();
-
+        $('.ticket-date-container').each(function() {
+            var ticketId = $(this).data('ticket-id');
+            if(ticket_id == ticketId){
+                start_date = $(this).find('.pick_start_date').text().trim();
+                end_date = $(this).find('.pick_end_date').text().trim()
+            }
+        });
         let dateHtml = '<div class="startdate"> Start Date: ' + start_date + '</div>';
         dateHtml += '<div class="enddate"> End Date: ' + end_date + '</div>';
         // Create a new title element
-        var $newTitleElement = $(dateHtml); // Change 'New Title' to your desired title
+        var $newTitleElement = $(dateHtml); 
         
-        // Append the new title element after the tribe-tickets__tickets-item-content-title element
-        $newTitleElement.insertAfter($titleElement);
+        $newTitleElement.insertAfter(titleElement);
     });
 });
 
