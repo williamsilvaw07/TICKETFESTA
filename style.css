@@ -617,6 +617,10 @@ width:90%!important;
 
 
 /***********FRONTEND ALL EVENTS*****/
+
+.home .entry-header , html  .tribe-events-c-view-selector {
+    display: none!important;
+}
 #ecsa-search input[type=text] {
     color: #fff!important;
 
@@ -920,7 +924,7 @@ html .event-venue-city-organizer{
     .elementor-element-679702c{
         margin-top: 30px!important;
     }
-    .home .entry-header , html  .tribe-events-c-view-selector , .tribe-common--breakpoint-medium.tribe-events .tribe-events-c-view-selector {
+    .home .entry-header , html  .tribe-events-c-view-selector {
         display: none!important;
     }
     .home .container .site-content .content-area {
