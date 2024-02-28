@@ -943,7 +943,7 @@ html .event-venue-city-organizer{
             background-color: #1A1A1A!important;
         }
         .tribe-events-c-top-bar{
-            display: block;
+            display: block!important;
         }
 }
 /*******end*****/
