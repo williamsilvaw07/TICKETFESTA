@@ -56,7 +56,7 @@ $organizer_names = array_map('tribe_get_organizer', $organizer_ids);
             <span class="share_popup_box_title">Event URL</span>
             <div class="share_event_url_inner">
                 <span class="eventUrl"><?php echo esc_url( tribe_get_event_link($event) ); ?></span>
-                <button class="copyButton"><img src="https://thaynna-william.co.uk/wp-content/uploads/2024/02/copy.png" alt="Copy URL"></button>
+                <button class="copyButton"><img src="/uploads/2024/02/copy.png" alt="Copy URL"></button>
             </div>
         </div>
         <span class="copyMessage" style="display: none;">Link copied!</span>
