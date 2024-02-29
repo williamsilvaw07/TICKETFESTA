@@ -178,11 +178,10 @@ jQuery(document).ready(function($) {
     // Retrieve the image URL from the <img> element inside the .order_event_image container
     var imageUrl = $('.order_event_image img').attr('src');
     
-    // Create a new <div> for the image and set its background image
-    var $imageDiv = $('<div class="order_event_image"></div>'); // Create a new <div> element with the class 'order_event_image'
-    $imageDiv.css('background-image', 'url(' + imageUrl + ')'); // Set the background image of the <div> to the retrieved URL
-    $('.order_event_image_container').append($imageDiv); // Append the new <div> to the container with the class 'order_event_image_container'
+    // Set the background image of the existing .order_event_image div
+    $('.order_event_image').css('background-image', 'url(' + imageUrl + ')');
 });
+
 
 
 </script>
