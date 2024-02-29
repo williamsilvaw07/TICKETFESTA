@@ -53,17 +53,20 @@ $organizer_names = array_map('tribe_get_organizer', $organizer_ids);
 
     <!-- Popup div for sharing link -->
     <div class="share_btn_event" style="display: none;">
-        <button class="close_popup" aria-label="Close">&times;</button>
-        <h3>Share with friends</h3>
-        <div class="share_event_url">
-            <span class="share_popup_box_title">Event URL</span>
-            <div class="share_event_url_inner">
-                <span class="eventUrl"><?php echo esc_url( tribe_get_event_link($event) ); ?></span>
-                <button class="copyButton"><img src="/uploads/2024/02/copy.png" alt="Copy URL"></button>
-            </div>
+    <button class="close_popup" aria-label="Close">&times;</button>
+    <h3>Share with friends</h3>
+    <div class="share_event_url">
+        <span class="share_popup_box_title">Event URL</span>
+        <div class="share_event_url_inner">
+            <span class="eventUrl"><?php echo esc_url( tribe_get_event_link($event) ); ?></span>
+            <button class="copyButton" aria-label="Copy URL">
+                <i class="fas fa-copy"></i>
+            </button>
         </div>
-        <span class="copyMessage" style="display: none;">Link copied!</span>
     </div>
+    <span class="copyMessage" style="display: none;">Link copied!</span>
+</div>
+
 
     <div class="tribe-events-pro-photo__event-details-wrapper">
         <?php $this->template( 'photo/event/date-tag', [ 'event' => $event ] ); ?>
