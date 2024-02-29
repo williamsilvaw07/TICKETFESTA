@@ -234,7 +234,7 @@ tr.woocommerce-orders-table__row , thead tr{
 }
 
 .woocommerce-orders-table__cell-order-number , th.woocommerce-orders-table__header-order-number{
-	flex: 0 0 80%
+	flex: 0 0 70%
 }
 
 .woocommerce-orders-table__cell-order-date , .woocommerce-orders-table__cell-order-total , .woocommerce-orders-table__cell-order-actions , .woocommerce-orders-table__header-order-actions , .woocommerce-orders-table__header-order-date , .woocommerce-orders-table__header-order-total{
