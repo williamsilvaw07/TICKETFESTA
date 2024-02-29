@@ -208,9 +208,7 @@ do_action( 'woocommerce_before_account_orders', $has_orders ); ?>
 }
 
 
-.order_event_details h5{
-	font-weight: 600;
-    font-size: 17px;
+.order_event_details p{
     margin: 0;
 }
 
