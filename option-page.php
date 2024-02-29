@@ -45,7 +45,8 @@ class TicketSiteFees {
 
         // Check if the order fee is retrieved successfully
         if ($order_fee !== null) {
-            echo "Order Fee: $order_fee";
+            var_dump($order_fee);
+            // echo "Order Fee: $order_fee";
         } else {
             echo "Order fee not found for order ID: $order_id";
         }
