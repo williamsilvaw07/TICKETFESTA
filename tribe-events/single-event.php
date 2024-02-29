@@ -104,12 +104,12 @@ $cost  = tribe_get_formatted_cost( $event_id );
                     $end_dateTime = $ticket->end_date. ' ' .$ticket->end_time;
                     $date = new DateTime($start_dateTime);
                     $date->setTimezone(new DateTimeZone('Europe/London'));
-                    $EventStartDate = $date->format('D, d M, H:i T');
+                    $EventStartDate = $date->format('d M, H:i T');
                     $startDatedPassed = $date < $currentDateTime;
 
                     $date = new DateTime($end_dateTime);
                     $date->setTimezone(new DateTimeZone('Europe/London'));
-                    $EventEndDate = $date->format('D, d M, H:i T');
+                    $EventEndDate = $date->format('d M, H:i T');
                     $endDatedPassed = $date < $currentDateTime;
                     echo "<div style='display:none' class='ticket-date-container' data-ticket-id='$ticket->ID'> 
                         <span class='pick_start_date' data-passed='$startDatedPassed'>$EventStartDate</span> 
