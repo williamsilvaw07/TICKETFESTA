@@ -1,7 +1,71 @@
+
 <?php
 
+//////FUNCTION TO ADD THE EVENT IMAGE TO THE TICKET/PRODUCT MAIN IMAGE  
 
-////CHECKOUT
+function set_all_products_featured_image_to_event_image() {
+    // Query all products.
+    $args = array(
+        'post_type' => 'product',
+        'posts_per_page' => -1, // Retrieve all products
+        'fields' => 'ids', // Retrieve only the IDs for performance
+    );
+
+    $product_ids = get_posts($args);
+
+    foreach ($product_ids as $product_id) {
+        // Retrieve the associated event ID for each product.
+        $event_id = get_post_meta($product_id, '_tribe_wooticket_for_event', true);
+
+        if (!empty($event_id)) {
+            // Get the event's featured image ID.
+            $event_image_id = get_post_thumbnail_id($event_id);
+
+            if (!empty($event_image_id)) {
+                // Set the event's image as the product's featured image.
+                set_post_thumbnail($product_id, $event_image_id);
+                error_log("Product ID {$product_id} featured image updated to event ID {$event_id}'s image.");
+            } else {
+                error_log("Event ID {$event_id} does not have a featured image.");
+            }
+        } else {
+            error_log("Product ID {$product_id} does not have an associated event.");
+        }
+    }
+}
+
+// Optionally, you can trigger this function with a specific action, hook, or manually.
+add_action('wp_loaded', 'set_all_products_featured_image_to_event_image');
+
+///////END
+
+
+
+
+
+////FUNCTION TO ADD THE EVENT TITLE ON THE TICKET/PRODUCT FRONTEND 
+/**
+ * Example for adding event data to WooCommerce checkout for Events Calendar tickets.
+ * @link https://theeventscalendar.com/support/forums/topic/event-title-and-date-in-cart/
+ */
+add_filter( 'woocommerce_cart_item_name', 'woocommerce_cart_item_name_event_title', 10, 3 );
+ 
+function woocommerce_cart_item_name_event_title( $title, $values, $cart_item_key ) {
+    $ticket_meta = get_post_meta( $values['product_id'] );
+ 
+    // Only do if ticket product
+    if ( array_key_exists( '_tribe_wooticket_for_event', $ticket_meta ) ) {
+        $event_id = absint( $ticket_meta[ '_tribe_wooticket_for_event' ][0] );
+ 
+        if ( $event_id ) {
+            $title = sprintf( '%s for <a href="%s" target="_blank"><strong>%s</strong></a>', $title, get_permalink( $event_id ), get_the_title( $event_id ) );
+        }
+    }
+ 
+    return $title;
+}
+
+
 
 /**
  * Flux checkout - Allow custom CSS files.
@@ -3400,6 +3464,8 @@ function add_extra_fees_for_products( $cart ) {
     }
 
     if($extra_fee !== 0){
-        $cart->add_fee( 'Sites Fee ', $extra_fee );
+        $cart->add_fee( 'Sites Fee ', $extra_fee ); 
     }
 }
+
+require_once get_stylesheet_directory() . '/option-page.php';
