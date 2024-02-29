@@ -386,12 +386,12 @@ display:none!important
 }
 .woocommerce-orders-table__cell-order-date:before{
 	content: "Transaction Date"!important;
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 900;
 }
 .woocommerce-orders-table__cell-order-total:before{
 	content: "Total";
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 900;
 }
 .woocommerce-orders-table__cell-order-tota , .woocommerce-orders-table__cell-order-date , .woocommerce-orders-table__cell-order-total , .woocommerce-orders-table__cell-order-actions{
