@@ -239,19 +239,17 @@ jQuery(document).ready(function($) {
     
 
   // Copy to clipboard functionality
-  $(document).on('click', '.copyButton', function() {
-    var eventUrlText = $(this).siblings('.eventUrl').text();
-    //console.log('Copy button clicked, text to copy:', eventUrlText);
+  $(document).ready(function() { // Ensure the DOM is fully loaded
+    $(document).on('click', '.copyButton', function() {
+        var eventUrlText = $(this).siblings('.eventUrl').text();
+        var $button = $(this); // Reference to the clicked button
 
-    var $button = $(this); // Save the reference to 'this' (the clicked button)
-
-    navigator.clipboard.writeText(eventUrlText).then(function() {
-        //console.log('Text successfully copied to the clipboard'); 
-        $button.siblings('.copyMessage').text('Link copied!').css('display', 'block').delay(3000).fadeOut(400, function() {
-       //     console.log('Copy message should now be hidden');
+        navigator.clipboard.writeText(eventUrlText).then(function() {
+            // Attempt to display the message directly without relying on siblings, for troubleshooting
+            $('.copyMessage').text('Link copied!').css('display', 'block').delay(3000).fadeOut(400);
+        }).catch(function(error) {
+            console.error('Error copying text:', error);
         });
-    }).catch(function(error) {
-      //  console.error('Error copying text to clipboard:', error);
     });
 });
 
