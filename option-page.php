@@ -76,6 +76,24 @@ if (!empty($order_ids)) {
         echo "No order meta found for order ID: $order_id";
     }
     
+// Replace <your_order_id_here> with the actual order ID
+$order_id = 4297;
+
+// Get the order object
+$order = wc_get_order($order_id);
+
+// Get fees applied to the order
+$fees = $order->get_fees();
+
+// Output the custom fees
+if (!empty($fees)) {
+    echo "Custom Fees for Order ID $order_id:<br>";
+    foreach ($fees as $fee) {
+        echo "{$fee->name}: {$fee->amount}<br>";
+    }
+} else {
+    echo "No custom fees found for order ID: $order_id";
+}
 
 }
 
