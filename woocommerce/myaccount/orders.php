@@ -402,12 +402,13 @@ display:none!important
     gap: 10px;
 }
 html .woocommerce-account .woocommerce-orders-table__cell {
-	padding-bottom:5px!important
+	padding-bottom:5px!important;
+	padding-top:0!important;
 }
 
 .order_event_container {
     justify-content: center;
-	padding:0!important;
+
 	padding-bottom: 5px!important;
 }
 .woocommerce-orders-table__cell-order-number:before , .woocommerce-orders-table__cell-order-actions:before{
