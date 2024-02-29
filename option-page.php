@@ -85,7 +85,7 @@ $order = wc_get_order($order_id);
 // Get fees applied to the order
 $fees = $order->get_fees();
 echo '<pre>';
-var_dump($fees[0]->get_total());
+var_dump($fees[0]);
 echo '</pre>';
 
 // Output the custom fees
