@@ -38,21 +38,12 @@ function add_event_association_column_content_with_image( $column, $product_id )
 
 
 
-$image_url = 'https://ticketfesta.co.uk/wp-content/uploads/2024/02/about-us-team4-1-29.png';
-$attachment_id = attachment_url_to_postid( $image_url );
-
-if ( $attachment_id ) {
-    echo "The attachment ID is: " . $attachment_id;
-} else {
-    echo "No attachment found for this URL.";
-}
-
 
 
 
 function update_all_product_featured_images() {
     // Set the attachment ID of your new main image.
-    $new_image_id = 4291; // Change 123 to the actual attachment ID of your new image.
+    $new_image_id = 4212; // Change 123 to the actual attachment ID of your new image.
 
     // Query all products.
     $args = array(
