@@ -401,6 +401,9 @@ display:none!important
     justify-content: center;
     gap: 10px;
 }
+.woocommerce-orders-table__cell {
+	padding: 0 !important;
+}
 
 .order_event_container {
     justify-content: center;
