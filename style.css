@@ -1153,7 +1153,7 @@ color: black!important;
 
 .woocommerce-account thead tr th{
     margin-bottom: 10px!important;
-    border-bottom: 1px solid #444!important;
+
     padding-bottom: 12px!important;
     padding-left: 0!important;
 }
@@ -1165,7 +1165,7 @@ color: black!important;
     color: #fff!important;
     font-weight: 300!important;
 }
-.woocommerce-orders-table__row {
+.woocommerce-orders-table__row  , .woocommerce-orders-table thead tr{
     align-items: center!important;
     padding: 18px 0!important;
     border-bottom: 1px solid #444!important;
