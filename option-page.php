@@ -27,24 +27,19 @@ class TicketSiteFees {
         $order_id = 4297;
 
         // Prepare the SQL query
-        // $query = $wpdb->prepare("
-        //     SELECT meta_value
-        //     FROM {$wpdb->prefix}woocommerce_order_itemmeta
-        //     WHERE order_item_id = (
-        //         SELECT order_item_id
-        //         FROM {$wpdb->prefix}woocommerce_order_items
-        //         WHERE order_id = %d
-        //     )
-        //     AND meta_key = '_order_total'
-        // ", $order_id);
-
         $query = $wpdb->prepare("
+            SELECT meta_value
+            FROM {$wpdb->prefix}woocommerce_order_itemmeta
+            WHERE order_item_id = 201
+        ", $order_id);
 
-            SELECT order_item_id
-            FROM {$wpdb->prefix}woocommerce_order_items
-            WHERE order_id = %d
+    //     $query = $wpdb->prepare("
+
+    //         SELECT order_item_id
+    //         FROM {$wpdb->prefix}woocommerce_order_items
+    //         WHERE order_id = %d
         
-    ", $order_id);
+    // ", $order_id);
         // Execute the query
         $order_fee = $wpdb->get_var($query);
 
