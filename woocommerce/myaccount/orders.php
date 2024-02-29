@@ -174,12 +174,21 @@ do_action( 'woocommerce_before_account_orders', $has_orders ); ?>
 
 
 <script>
-jQuery(document).ready(function($) {
-    // Retrieve the image URL from the <img> element inside the .order_event_image container
-    var imageUrl = $('.order_event_image img').attr('src');
-    
-    // Set the background image of the existing .order_event_image div
-    $('.order_event_image').css('background-image', 'url(' + imageUrl + ')');
+document.addEventListener('DOMContentLoaded', function() {
+    // Get all elements with class 'order_event_image'
+    var orderEventImages = document.querySelectorAll('.order_event_image');
+
+    // Loop through each image element
+    orderEventImages.forEach(function(image) {
+        // Get the closest parent table row element
+        var tableRow = image.closest('.woocommerce-orders-table__row');
+
+        // Get the cell containing the order number
+        var orderNumberCell = tableRow.querySelector('.woocommerce-orders-table__cell-order-number');
+
+        // Move the image element inside the order number cell
+        orderNumberCell.prepend(image);
+    });
 });
 
 
