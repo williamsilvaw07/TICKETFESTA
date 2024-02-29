@@ -193,9 +193,9 @@ jQuery(document).ready(function($) {
         let dateHtml = '';
 
         if(start_date_passed != '1'){
-            dateHtml += '<div class="startdate">Sales start on' + start_date + '</div>';
+            dateHtml += '<div class="startdate">Sales start on ' + start_date + '</div>';
         }
-        dateHtml += '<div class="enddate">Sales end on' + end_date + '</div>';
+        dateHtml += '<div class="enddate">Sales end on ' + end_date + '</div>';
         // Create a new title element
         var $newTitleElement = $(dateHtml); 
         
