@@ -26,6 +26,9 @@ function set_ticket_featured_image_to_event_image( $post_id, $post, $update ) {
     }
 }
 
+error_log( 'Product ID: ' . $product_id );
+error_log( 'Event ID: ' . $event_id );
+error_log( 'Event Thumbnail ID: ' . $event_thumbnail_id );
 
 
 
