@@ -190,6 +190,26 @@ jQuery(document).ready(function($) {
 
 
 <style>
+
+
+
+.oder_nm_link_main{
+	display:none
+}
+
+.order_event_container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 15px;
+
+
+}
+
+
 .order_event_image {
     width: 100%;
     height: 100%;
@@ -207,23 +227,6 @@ jQuery(document).ready(function($) {
     right: 0;
     bottom: 0;
     background: rgba(255, 255, 255, 0.3); /* Adjust the opacity as needed */
-}
-
-
-.oder_nm_link_main{
-	display:none
-}
-
-.order_event_container{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-content: center;
-    justify-content: flex-start;
-    align-items: center;
-    gap: 15px;
-
-
 }
 
 
