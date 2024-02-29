@@ -95,6 +95,23 @@ function woocommerce_cart_item_name_event_title( $title, $values, $cart_item_key
  
     return $title;
 }
+////CHECKOUT
+
+/**
+ * Flux checkout - Allow custom CSS files.
+ *
+ * @param array $sources Sources.
+ *
+ * @return array
+ */
+function flux_allow_custom_css_files( $sources ) {
+	$sources[] = 'http://site.com/wp-content/themes/storefront/style.css';
+	return $sources;
+}
+add_filter( 'flux_checkout_allowed_sources', 'flux_allow_custom_css_files' );
+
+add_action( 'flux_before_layout', 'get_header' );
+add_action( 'flux_after_layout', 'get_footer' );
 
 ////FONTASWER
 
