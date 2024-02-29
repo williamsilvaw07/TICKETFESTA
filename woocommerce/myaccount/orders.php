@@ -85,7 +85,7 @@ do_action( 'woocommerce_before_account_orders', $has_orders ); ?>
                 echo '<div class="order_event_details">';
 				echo '<h5>' . esc_html($event_post->post_title) . '</h5>';
                 // Display the order number
-                echo '<p><span class="event_order_number_title">order number:</span>' . esc_html( _x( '#', 'order number label', 'woocommerce' ) . $order->get_order_number() ) . '</p>';
+                echo '<p><span class="event_order_number_title">order number: </span>' . esc_html( _x( '#', 'order number label', 'woocommerce' ) . $order->get_order_number() ) . '</p>';
                 // Fetch the event start date and time
                 $event_start_date = get_post_meta($event_id, '_EventStartDate', true);
                 // Format the date and time for display
@@ -218,6 +218,9 @@ do_action( 'woocommerce_before_account_orders', $has_orders ); ?>
 .order_event_details p{
     margin: 0;
 }
-
+.order_event_details span{
+	font-weight: 600;
+    text-transform: capitalize;
+}
 
 	</style>
