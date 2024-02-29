@@ -1076,7 +1076,9 @@ margin-top: 0!important;
 .woocommerce-MyAccount-content{
     flex: 0 0 70%!important
 }
-
+.woocommerce-account .entry-header{
+    display: none;
+}
 
 .woocommerce-MyAccount-navigation{
     min-height: 100%;
