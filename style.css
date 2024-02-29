@@ -1180,6 +1180,8 @@ color: black!important;
 }
 .woocommerce-account .woocommerce{
     display: flex;
+    flex-direction: row;
+    width: 100%;
 
 }
 
