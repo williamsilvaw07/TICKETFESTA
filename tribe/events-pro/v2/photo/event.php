@@ -396,8 +396,18 @@ jQuery(document).ready(function($) {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Light black box shadow */
 
 }
+.share_btn i
+{position: relative;
+    right: 2px;
+    top: 1px;
+
+}
 .share_btn{
     z-index: 9; 
+    background: white;
+    border-radius: 1000px;
+    width: 30px;
+    height: 30px;
 }
 
 .overlay {
