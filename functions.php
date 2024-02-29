@@ -2203,6 +2203,490 @@ add_action('save_post', 'save_event_line_up', 10, 3);
 
 
 
+
+
+///function for edit event extra options 
+function save_event_extra_options($post_id, $post, $update)
+{
+    // Security checks
+    if (!isset($_POST['event_extra_options_nonce']) || !wp_verify_nonce($_POST['event_extra_options_nonce'], 'save_event_extra_options'))
+        return;
+    if (!current_user_can('edit_post', $post_id))
+        return;
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE)
+        return;
+    if ($post->post_type !== 'tribe_events')
+        return;
+
+    // Save 'over 18' option
+    $over18 = isset($_POST['over18']) ? 'on' : ''; // Change to 'on' and '' to align with the checked() function
+    update_post_meta($post_id, 'over18', $over18);
+    $over14 = isset($_POST['over14']) ? 'on' : '';
+    update_post_meta($post_id, 'over14', $over14);
+
+    // Save 'over 15' option
+    $over15 = isset($_POST['over15']) ? 'on' : '';
+    update_post_meta($post_id, 'over15', $over15);
+
+    // Save 'no refunds' option
+    $norefunds = isset($_POST['norefunds']) ? 'on' : '';
+    update_post_meta($post_id, 'norefunds', $norefunds);
+}
+add_action('save_post_tribe_events', 'save_event_extra_options', 10, 3);
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////END////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////NEW FUNCTION ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+////FUNCTION FOR PENING PAYMENT OR PAID FOR THE EVENT OGINSRZER 
+// Add event payment status meta box
+// Add event payment status meta box
+function add_event_payment_status_meta_box()
+{
+    add_meta_box(
+        'event_payment_status_meta_box',
+        'Event Payment Status',
+        'event_payment_status_meta_box_callback',
+        'tribe_events',
+        'side',
+        'default'
+    );
+}
+add_action('add_meta_boxes', 'add_event_payment_status_meta_box');
+
+function event_payment_status_meta_box_callback($post)
+{
+    wp_nonce_field(basename(__FILE__), 'event_payment_status_nonce');
+    $payment_status = get_post_meta($post->ID, '_payment_status', true) ?: 'awaiting_event';
+
+    echo '<select name="event_payment_status" id="event_payment_status">
+            <option value="awaiting_event"' . selected($payment_status, 'awaiting_event', false) . '>Not Ended</option>
+            <option value="pending"' . selected($payment_status, 'pending', false) . '>Pending Payment</option>
+            <option value="paid"' . selected($payment_status, 'paid', false) . '>Paid</option>
+          </select>';
+}
+
+function save_event_payment_status($post_id)
+{
+    if (
+        !isset($_POST['event_payment_status_nonce']) || !wp_verify_nonce($_POST['event_payment_status_nonce'], basename(__FILE__)) ||
+        defined('DOING_AUTOSAVE') && DOING_AUTOSAVE ||
+        !current_user_can('edit_post', $post_id)
+    ) {
+        return;
+    }
+
+    if (isset($_POST['event_payment_status'])) {
+        update_post_meta($post_id, '_payment_status', sanitize_text_field($_POST['event_payment_status']));
+    }
+}
+add_action('save_post', 'save_event_payment_status');
+
+// Schedule daily event status updates
+function schedule_daily_event_status_update()
+{
+    if (!wp_next_scheduled('daily_event_status_check')) {
+        wp_schedule_event(time(), 'daily', 'daily_event_status_check');
+    }
+}
+add_action('wp', 'schedule_daily_event_status_update');
+
+// Automated status update for past events
+function update_event_payment_status()
+{
+    $args = array(
+        'post_type' => 'tribe_events',
+        'posts_per_page' => -1,
+        'meta_query' => array(
+            array(
+                'key' => '_EventEndDate',
+                'value' => current_time('mysql'),
+                'compare' => '<',
+                'type' => 'DATETIME'
+            ),
+            array(
+                'key' => '_payment_status',
+                'compare' => 'NOT IN',
+                'value' => array('paid', 'pending') // Only update if status is not already 'paid' or 'pending'
+            )
+        )
+    );
+
+    $query = new WP_Query($args);
+
+    foreach ($query->posts as $post) {
+        update_post_meta($post->ID, '_payment_status', 'pending');
+    }
+}
+add_action('daily_event_status_check', 'update_event_payment_status');
+
+
+
+// Hook when the payment status is updated to 'Paid'
+function update_payment_date_on_paid_status($new_status, $old_status, $post)
+{
+    error_log('update_payment_date_on_paid_status triggered'); // Add this line for debugging
+
+    // Check if the status changed to 'Paid'
+    if ($new_status === 'paid' && $old_status !== 'paid') {
+        // Update the payment date to the current date and time
+        update_post_meta($post->ID, '_payment_date', current_time('mysql'));
+    }
+}
+add_action('transition_post_status', 'update_payment_date_on_paid_status', 10, 3);
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////END////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////NEW FUNCTION ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+////FUNCTION FOR TO ADD USER BANK DETAILS FORM IN S SHORTCODE THE SHOW ON THE BACKEND USER PAGE SECTION AND THE FUNCTION TO DELETE THE DETAILS FOR ADMIN ONLY 
+
+// Function to handle saving bank details
+function save_bank_details()
+{
+    if (isset($_POST['save_bank_details'])) {
+        $user_id = get_current_user_id();
+        $full_name = isset($_POST['full_name']) ? sanitize_text_field($_POST['full_name']) : '';
+        $shortcode = isset($_POST['shortcode']) ? sanitize_text_field($_POST['shortcode']) : '';
+        $account_number = isset($_POST['account_number']) ? sanitize_text_field($_POST['account_number']) : '';
+
+        // Validate input data
+        if (empty($full_name) || empty($shortcode) || empty($account_number)) {
+            return "<div class='error'><p>Please fill all required fields.</p></div>";
+        }
+
+        // Save bank details in user meta
+        $bank_details = array(
+            'full_name' => $full_name,
+            'shortcode' => $shortcode,
+            'account_number' => $account_number
+        );
+        $saved = update_user_meta($user_id, 'bank_details', $bank_details);
+
+        // Send email to site admin
+        if ($saved) {
+            $to = get_option('admin_email');
+            $subject = 'New Bank Details Entry';
+            $message = 'A new bank details entry has been added by user ID ' . $user_id . '.';
+            $headers = array('Content-Type: text/html; charset=UTF-8');
+            wp_mail($to, $subject, $message, $headers);
+        }
+
+        if ($saved) {
+            return "<div class='updated'><p>Bank details saved successfully.</p></div>";
+        } else {
+
+        }
+    }
+}
+
+// Add action to handle form submission
+add_action('init', 'save_bank_details');
+
+// Function to display bank details form
+function display_bank_details_form()
+{
+    if (!is_user_logged_in()) {
+        return 'You must be logged in to add bank details.';
+    }
+
+    // Check if the user has already saved bank details
+    $user_id = get_current_user_id();
+    $bank_details = get_user_meta($user_id, 'bank_details', true);
+
+    // Check if form is submitted and display message accordingly
+    $form_message = save_bank_details();
+
+    if (!empty($bank_details)) {
+        $message = '<div class="sales-card today_sale_admin_dashboard admin_bank_details_card">';
+        $message .= '<h5 class="admin_dashboard_bank_details-label card_admin_dashboard">Bank Details</h5>';
+        $message .= '<p class="bank-details-item">Full Name: <span>' . esc_html($bank_details['full_name']) . '</span></p>';
+        $message .= '<p class="bank-details-item">Sort Code: <span>' . esc_html($bank_details['shortcode']) . '</span></p>';
+        $message .= '<p class="bank-details-item">Account Number: <span>' . esc_html($bank_details['account_number']) . '</span></p>';
+        $message .= '<p class="bank-details-message"><strong>Bank details can\'t be edited once entered for security reasons. If you require changes, please <a href="/contact-us/" target="_blank">contact us</a>.</strong></p>';
+        $message .= '</div>';
+        return $form_message . $message;
+    }
+
+    // Display the bank details form
+    ob_start();
+    ?>
+        <div class="sales-card today_sale_admin_dashboard admin_bank_details_card">
+            <h5 class="admin_dashboard_bank_details-label card_admin_dashboard">Bank Details</h5>
+            <form method="post" action="">
+                <label for="full_name">Full Name:</label>
+                <input type="text" name="full_name" id="full_name" placeholder="Full Name" required>
+                <label for="shortcode">Sort Code:</label>
+                <input type="text" name="shortcode" id="shortcode" placeholder="Sort Code" required pattern="[0-9]*">
+                <label for="account_number">Account Number:</label>
+                <input type="text" name="account_number" id="account_number" placeholder="Account Number" required
+                    pattern="[0-9]*">
+                <p>Bank details cannot be changed once saved. <a href="/terms-and-conditions/" target="_blank">Contact support
+                        for any updates.</a></p>
+                <div class="terms_condtion_bank_details">
+                    <input type="checkbox" name="terms" id="terms" required>
+                    <label id="term_bank_details" for="terms">I agree to the <a href="/terms-and-conditions/"
+                            target="_blank">Terms and Conditions</a>.</label>
+                </div>
+                <input class="terms_bank_details_submit_btn" type="submit" name="save_bank_details" value="Save Bank Details">
+            </form>
+        </div>
+        <?php
+        return $form_message . ob_get_clean();
+}
+add_shortcode('bank_details_form', 'display_bank_details_form');
+
+// Function to handle deleting bank details on admin backend
+function delete_bank_details_on_admin_backend($user_id)
+{
+    if (isset($_POST['delete_bank_details'])) {
+        $deleted = delete_user_meta($user_id, 'bank_details');
+        if ($deleted) {
+            echo "<div class='updated'><p>Bank details deleted successfully.</p></div>"; // Display success message
+        } else {
+            echo "<div class='error'><p>Failed to delete bank details.</p></div>"; // Display error message
+        }
+    }
+}
+
+add_action('show_user_profile', function ($user) {
+    delete_bank_details_on_admin_backend($user->ID);
+});
+
+add_action('edit_user_profile', function ($user) {
+    delete_bank_details_on_admin_backend($user->ID);
+});
+
+// Function to display bank details in user profile
+function add_bank_details_field($user)
+{
+    $bank_details = get_user_meta($user->ID, 'bank_details', true);
+    ?>
+        <div class="sales-card today_sale_admin_dashboard admin_bank_details_card">
+            <h5 class="admin_dashboard_bank_details-label card_admin_dashboard">Bank Details</h5>
+            <?php if (!empty($bank_details)): ?>
+                    <p class="bank-details-item">Full Name: <span>
+                            <?php echo esc_html($bank_details['full_name']); ?>
+                        </span></p>
+                    <p class="bank-details-item">Sort Code: <span>
+                            <?php echo esc_html($bank_details['shortcode']); ?>
+                        </span></p>
+                    <p class="bank-details-item">Account Number: <span>
+                            <?php echo esc_html($bank_details['account_number']); ?>
+                        </span></p>
+                    <form method="post" action="">
+                        <input type="submit" name="delete_bank_details" value="Delete Bank Details">
+                    </form>
+            <?php else: ?>
+                    <p>No bank details found.</p>
+            <?php endif; ?>
+        </div>
+        <?php
+}
+add_action('show_user_profile', 'add_bank_details_field');
+add_action('edit_user_profile', 'add_bank_details_field');
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////END////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////NEW FUNCTION ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+// Add shortcode to display the image upload form
+include get_stylesheet_directory() . '/organiser-image-gallery.php';
+
+
+// Add shortcode to display organiser account settings 
+//include get_stylesheet_directory() . '/organiser-all-gallery.php';
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////END////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////NEW FUNCTION ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+function add_inline_custom_admin_css()
+{
+    ?>
+        <style type="text/css">
+            .stellarwp-telemetry-modal {
+                position: fixed;
+                bottom: 0;
+                display: none !important;
+                right: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: 999999;
+                display: flex;
+                justify-content: center;
+                align-items: flex-start;
+                transition: all 0.3s ease-in-out;
+                visibility: hidden;
+                pointer-events: none;
+                opacity: 0;
+            }
+        </style>
+        <?php
+}
+add_action('admin_head', 'add_inline_custom_admin_css');
+
+
+/**
+ * @snippet       WooCommerce Add New Tab @ My Account
+ */
+
+// ------------------
+// 1. Register new endpoint (URL) for My Account page
+// Note: Re-save Permalinks or it will give 404 error
+
+function ticketfeasta_add_following_endpoint()
+{
+    add_rewrite_endpoint('following', EP_ROOT | EP_PAGES);
+}
+
+add_action('init', 'ticketfeasta_add_following_endpoint');
+
+// ------------------
+// 2. Add new query var
+
+function ticketfeasta_following_query_vars($vars)
+{
+    $vars[] = 'following';
+    return $vars;
+}
+
+add_filter('query_vars', 'ticketfeasta_following_query_vars', 0);
+
+// ------------------
+// 3. Insert the new endpoint into the My Account menu
+
+function ticketfeasta_following_link_my_account($items)
+{
+    $items['following'] = 'Following';
+    return $items;
+}
+
+add_filter('woocommerce_account_menu_items', 'ticketfeasta_following_link_my_account');
+
+// ------------------
+// 4. Add content to the new tab
+
+function ticketfeasta_following()
+{
+    $user_id = wp_get_current_user()->id;
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if (isset($_POST['following_id'])) {
+            $organiser_to_unfollow = $_POST['following_id'];
+            ticketfeasta_remove_follower($organiser_to_unfollow, $user_id);
+            ticketfeasta_unfollow($organiser_to_unfollow, $user_id);
+        }
+    }
+
+    echo '<h3>Following List:</h3>';
+    $user_id = wp_get_current_user()->id;
+    $following_array = get_user_meta($user_id, 'following', true);
+    $following_array = json_decode($following_array, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        $following_array = array();
+    }
+    if (count($following_array) === 0) {
+        echo "<p class='empty-following'>You are not following anyone.</p>";
+    }
+
+    foreach ($following_array as $following) {
+        echo $following;
+        $organiser_name = get_the_title($following);
+        ?>
+                <form method="POST">
+                    <input type="hidden" name="following_id" value="<?php echo $following; ?>">
+                    <label>
+                        <?php echo $organiser_name; ?>
+                    </label>
+                    <input type="submit" value="<?php echo "Unfollow"; ?>" nanme="submit" class="unfollow-button">
+                </form>
+                <?php
+    }
+}
+
+function ticketfeasta_remove_follower($organizer_id, $user_id)
+{
+    $followers_array = get_post_meta($organizer_id, 'followers', true);
+    $followers_array = json_decode($followers_array, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        $followers_array = array();
+    }
+    // user removed as follower
+    if (in_array($user_id, $followers_array)) {
+        $key = array_search($user_id, $followers_array);
+        unset($followers_array[$key]);
+        $followers_array = array_values($followers_array); // Re-index array after removal
+    }
+    update_post_meta($organizer_id, 'followers', json_encode($followers_array));
+}
+
+function ticketfeasta_unfollow($organizer_id, $user_id)
+{
+    $following_array = get_user_meta($user_id, 'following', true);
+    $following_array = json_decode($following_array, true);
+
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        $following_array = array();
+    }
+    // user unfollowing as organiser
+    if (in_array($organizer_id, $following_array)) {
+        $key = array_search($organizer_id, $following_array);
+        unset($following_array[$key]);
+        $following_array = array_values($following_array); // Re-index array after removal
+    }
+    update_user_meta($user_id, 'following', json_encode($following_array));
+}
+
+
+add_action('woocommerce_account_following_endpoint', 'ticketfeasta_following');
+
+
  
  
  
