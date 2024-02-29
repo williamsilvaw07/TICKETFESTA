@@ -36,7 +36,7 @@ $organizer_names = array_map('tribe_get_organizer', $organizer_ids);
 <article <?php tribe_classes( $classes ) ?>>
  <!-- Share Button -->
  <button class="share_btn">
-  <i class="fas fa-share-alt"></i>
+  <i class="fas fa-copy"></i>
 </button>
 
     
