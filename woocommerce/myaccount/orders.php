@@ -242,7 +242,9 @@ tr.woocommerce-orders-table__row , thead tr{
 }
 
 
-
+.woocommerce table.shop_table td {
+    text-align: center;
+}
 
 .oder_nm_link_main{
 	display:none
@@ -296,6 +298,7 @@ tr.woocommerce-orders-table__row , thead tr{
     align-content: center;
     justify-content: space-between;
     gap: 8px;
+	text-align: left;
 	
 }
 
