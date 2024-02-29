@@ -1,7 +1,7 @@
 
 <?php
 
-* Example for adding event data to WooCommerce checkout for Events Calendar tickets.
+/* Example for adding event data to WooCommerce checkout for Events Calendar tickets.
 * @link https://theeventscalendar.com/support/forums/topic/event-title-and-date-in-cart/
 */
 add_filter( 'woocommerce_cart_item_name', 'woocommerce_cart_item_name_event_title', 10, 3 );
