@@ -192,6 +192,11 @@ do_action( 'woocommerce_before_account_orders', $has_orders ); ?>
 }
 
 
+.order_event_image img{
+    width: 100%;
+    max-width: 200px;
+    border-radius: 6px
+}
 
 
 
