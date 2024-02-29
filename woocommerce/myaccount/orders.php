@@ -417,7 +417,7 @@ display:none!important
 .order_event_details {
 	align-items: center;
 }
-html body .woocommerce-orders-table__cell-order-total{
+html .woocommerce-account  .woocommerce-orders-table__cell-order-total{
 	padding-bottom:10px!important
 }
 
