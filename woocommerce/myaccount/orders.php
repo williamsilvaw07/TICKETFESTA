@@ -279,6 +279,7 @@ jQuery(document).ready(function($) {
     align-content: center;
     justify-content: space-between;
     gap: 8px;
+	padding: 15px 0
 }
 
 .order_event_details h5{
