@@ -1,6 +1,34 @@
 
 <?php
 
+
+
+add_action( 'save_post_product', 'set_ticket_featured_image_to_event_image', 10, 3 );
+
+function set_ticket_featured_image_to_event_image( $post_id, $post, $update ) {
+    // If this is a new post, $update will be false
+    // Check if the product already has a featured image
+    if ( has_post_thumbnail( $post_id ) || !$update ) {
+        return; // Exit if the product has a featured image or if it's a new product
+    }
+
+    // Check if this product is a ticket associated with an event
+    $event_id = get_post_meta( $post_id, '_tribe_wooticket_for_event', true );
+    if ( empty( $event_id ) ) {
+        return; // Exit if not associated with an event
+    }
+
+    // Check if the associated event has a featured image
+    $event_thumbnail_id = get_post_thumbnail_id( $event_id );
+    if ( !empty( $event_thumbnail_id ) ) {
+        // Set the event's featured image as the product's featured image
+        set_post_thumbnail( $post_id, $event_thumbnail_id );
+    }
+}
+
+
+
+
 /**
  * Example for adding event data to WooCommerce checkout for Events Calendar tickets.
  * @link https://theeventscalendar.com/support/forums/topic/event-title-and-date-in-cart/
