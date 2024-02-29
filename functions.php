@@ -40,31 +40,26 @@ function add_event_association_column_content_with_image( $column, $product_id )
 
 
 
-function set_product_image_to_event_featured_image() {
-    $product_id = 4026; // The ID of the product to update.
+add_action( 'woocommerce_admin_process_product_object', 'set_product_featured_image_to_event_image', 10, 1 );
+function set_product_featured_image_to_event_image( $product ) {
+    // Retrieve the associated event ID stored in the product's meta
+    $event_id = $product->get_meta( '_tribe_wooticket_for_event', true );
 
-    // Retrieve the associated event ID stored in the product's metadata.
-    $event_id = get_post_meta($product_id, '_associated_event_id', true);
+    // Proceed only if there's an associated event
+    if ( !empty( $event_id ) ) {
+        // Get the event's featured image ID
+        $event_image_id = get_post_thumbnail_id( $event_id );
 
-    if (!empty($event_id)) {
-        // Get the event's featured image ID.
-        $event_image_id = get_post_thumbnail_id($event_id);
-
-        if ($event_image_id) {
-            // Set the event's featured image as the product's featured image.
-            set_post_thumbnail($product_id, $event_image_id);
-            error_log("Successfully set the event's featured image for product ID {$product_id}.");
-        } else {
-            error_log("The associated event ID {$event_id} does not have a featured image.");
+        // Proceed only if the event has a featured image
+        if ( !empty( $event_image_id ) ) {
+            // Check if the product already has the same featured image set to avoid unnecessary updates
+            if ( $product->get_image_id() != $event_image_id ) {
+                // Set the event's featured image as the product's featured image
+                $product->set_image_id( $event_image_id );
+            }
         }
-    } else {
-        error_log("No associated event ID found for product ID {$product_id}.");
     }
 }
-
-// Optionally, trigger this function when appropriate.
-add_action('wp_loaded', 'set_product_image_to_event_featured_image');
-
 
 
 
