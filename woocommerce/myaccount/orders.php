@@ -62,9 +62,6 @@ do_action( 'woocommerce_before_account_orders', $has_orders ); ?>
             // Display the product name
             echo '<p><strong>' . esc_html( $item->get_name() ) . '</strong></p>';
 
-            // Display the quantity
-            echo '<p>Quantity: ' . esc_html( $item->get_quantity() ) . '</p>';
-
             // Retrieve the associated event ID for the product
             $product_id = $item->get_product_id();
             $event_id = get_post_meta($product_id, '_tribe_wooticket_for_event', true);
