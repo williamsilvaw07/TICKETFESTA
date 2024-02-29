@@ -229,8 +229,10 @@ jQuery(document).ready(function($) {
 <style>
 
 tr.woocommerce-orders-table__row , thead tr{
-	display: flex;
-    width: 100%; 
+    display: flex;
+    width: 100%;
+    align-content: center;
+    align-items: center;
 }
 
 .woocommerce-orders-table__cell-order-number , th.woocommerce-orders-table__header-order-number{
