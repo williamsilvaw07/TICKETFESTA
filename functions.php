@@ -40,23 +40,30 @@ function add_event_association_column_content_with_image( $column, $product_id )
 
 
 
-function set_featured_image_for_specific_product() {
-    $product_id = 4291; // Target product ID.
-    $new_image_id = 4212; // The new image's attachment ID.
+function set_product_image_to_event_featured_image() {
+    $product_id = 4291; // The ID of the product to update.
 
-    // Attempt to set the new image as the featured image for the specified product.
-    $result = set_post_thumbnail($product_id, $new_image_id);
+    // Retrieve the associated event ID stored in the product's metadata.
+    $event_id = get_post_meta($product_id, '_associated_event_id', true);
 
-    if ($result) {
-        error_log("Successfully set the featured image for product ID {$product_id}.");
+    if (!empty($event_id)) {
+        // Get the event's featured image ID.
+        $event_image_id = get_post_thumbnail_id($event_id);
+
+        if ($event_image_id) {
+            // Set the event's featured image as the product's featured image.
+            set_post_thumbnail($product_id, $event_image_id);
+            error_log("Successfully set the event's featured image for product ID {$product_id}.");
+        } else {
+            error_log("The associated event ID {$event_id} does not have a featured image.");
+        }
     } else {
-        error_log("Failed to set the featured image for product ID {$product_id}.");
+        error_log("No associated event ID found for product ID {$product_id}.");
     }
 }
 
-// Optionally, trigger this function with a specific action or manual call.
-add_action('wp_loaded', 'set_featured_image_for_specific_product'); // wp_loaded ensures WordPress is fully loaded.
-
+// Optionally, trigger this function when appropriate.
+add_action('wp_loaded', 'set_product_image_to_event_featured_image');
 
 
 
