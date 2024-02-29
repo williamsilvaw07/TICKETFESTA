@@ -56,11 +56,11 @@ do_action( 'woocommerce_before_account_orders', $has_orders ); ?>
         <?php echo esc_html( _x( '#', 'hash before order number', 'woocommerce' ) . $order->get_order_number() ); ?>
     </a>
     <?php
- // Loop through each order item
+// Loop through each order item
 $items = $order->get_items();
 foreach ( $items as $item_id => $item ) {
     // Display the product name and quantity together
-    echo '<p><strong>' . esc_html( $item->get_name() ) . ' x ' . esc_html( $item->get_quantity() ) . '</strong></p>';
+    echo '<p><strong>' . esc_html( $item->get_name() ) . ' x ' . esc_html( $item->get_quantity() ) . '</strong>';
 
     // Retrieve the associated event ID for the product
     $product_id = $item->get_product_id();
@@ -73,14 +73,14 @@ foreach ( $items as $item_id => $item ) {
         // Adjust the date format string as needed
         if ($event_start_date) {
             $formatted_date = date_i18n('F j, Y g:i a', strtotime($event_start_date));
-            echo '<p>Event Date & Time: ' . esc_html($formatted_date) . '</p>';
+            echo '<br>Event Date & Time: ' . esc_html($formatted_date);
         }
 
         // Optionally, fetch and display the event title or other information
         $event_post = get_post($event_id);
         if ($event_post) {
             // Displaying the event title here as well, though you might choose to display it elsewhere
-            echo '<p>Event: ' . esc_html($event_post->post_title) . '</p>';
+            echo '<br>Event: ' . esc_html($event_post->post_title);
         }
 
         // If an event ID is found, fetch and display the event's featured image
@@ -88,13 +88,15 @@ foreach ( $items as $item_id => $item ) {
         if ($event_image_id) {
             $event_image_url = wp_get_attachment_image_url($event_image_id, 'full');
             if ($event_image_url) {
-                echo '<img src="' . esc_url($event_image_url) . '" alt="Event Image" style="width:100%;max-width:300px;">';
+                echo '<br><img src="' . esc_url($event_image_url) . '" alt="Event Image" style="width:100%;max-width:300px;">';
             }
         }
     } else {
         // If no event ID is found, optionally display a placeholder or message
-        echo '<p>No associated event found.</p>';
+        echo '<br>No associated event found.';
     }
+
+    echo '</p>'; // Close the paragraph tag
 }
     ?>
 
