@@ -1117,6 +1117,7 @@ color: black!important;
     background-color: rgb(26, 26, 26);
     overflow: auto;
     padding-left: 15px;
+    flex: 0 0 30%!important
 }
 .my-account-welcome-message {
     /* Add your custom styles here */
