@@ -34,45 +34,27 @@ function add_event_association_column_content_with_image( $column, $product_id )
     }
 }
 
-add_action( 'woocommerce_update_product', 'set_ticket_featured_image_to_event_image_with_logging', 10, 2 );
-
-function set_ticket_featured_image_to_event_image_with_logging( $product_id, $product ) {
-    // Log execution
-    error_log( 'Attempting to set featured image for product ID: ' . $product_id );
-
-    // Check if the product already has a featured image
-    if ( has_post_thumbnail( $product_id ) ) {
-        error_log( 'Product ID ' . $product_id . ' already has a featured image.' );
-        return; // Exit if the product has a featured image
+add_action( 'woocommerce_admin_process_product_object', 'set_product_image_to_event_image', 10, 1 );
+function set_product_image_to_event_image( $product ) {
+    // Check if the product already has a featured image set
+    if ( !empty( $product->get_image_id() ) ) {
+        return; // If so, no action is needed
     }
 
-    // Retrieve the associated event ID
-    $event_id = get_post_meta( $product_id, '_tribe_wooticket_for_event', true );
-    if ( !$event_id ) {
-        error_log( 'No associated event ID found for product ID ' . $product_id );
-        return; // Exit if not associated with an event
-    }
+    // Get the event ID stored in product meta
+    $event_id = $product->get_meta( '_tribe_wooticket_for_event', true );
 
-    // Retrieve the event's featured image ID
-    $event_thumbnail_id = get_post_thumbnail_id( $event_id );
-    if ( !$event_thumbnail_id ) {
-        error_log( 'No featured image found for event ID ' . $event_id );
-        return;
-    }
+    // Proceed if there's an associated event
+    if ( !empty( $event_id ) ) {
+        // Get the event's featured image ID
+        $event_image_id = get_post_thumbnail_id( $event_id );
 
-    // Set the event's featured image as the product's featured image
-    if ( set_post_thumbnail( $product_id, $event_thumbnail_id ) ) {
-        error_log( 'Featured image set for product ID ' . $product_id . ' using event ID ' . $event_id );
-    } else {
-        error_log( 'Failed to set featured image for product ID ' . $product_id . ' using event ID ' . $event_id );
+        // If the event has a featured image, set it as the product's image
+        if ( !empty( $event_image_id ) ) {
+            $product->set_image_id( $event_image_id );
+        }
     }
 }
-
-
-
-add_action( 'woocommerce_update_product', function( $product_id ) {
-    error_log( 'Product updated: ' . $product_id );
-}, 10, 1 );
 
 
 
