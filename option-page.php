@@ -29,9 +29,9 @@ class TicketSiteFees {
         ?>
 		<div class="wrap">
 			<h2> Site Fees</h2>
-			<p> Yearly Site Fees:  <?php  echo $yearly_site_fees;?></p>
-			<p> Monthly Site Fees:  <?php  echo $monthly_site_fees;?></p>
-			<p> Weekly Site Fees:  <?php  echo $weekly_site_fees;?></p>
+			<p> Yearly Site Fees:  £<?php  echo $yearly_site_fees;?></p>
+			<p> Monthly Site Fees:  £<?php  echo $monthly_site_fees;?></p>
+			<p> Weekly Site Fees:  £<?php  echo $weekly_site_fees;?></p>
 			<?php settings_errors(); ?>
 		</div>
 	<?php 
