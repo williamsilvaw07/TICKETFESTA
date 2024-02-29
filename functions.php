@@ -1105,8 +1105,471 @@ add_action('wp_ajax_add_event', 'iam00_create_event');
  
  add_filter('wp_unique_post_slug', 'customize_organizer_slug', 10, 4);
  
- 
- 
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////NEW FUNCTION ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+///FUNCTION TO CHECK IF ORGANIZE NAME IS UNIQE
+function ajax_check_organizer_name()
+{
+    $organizer_name = sanitize_text_field($_POST['organizer_name']);
+
+    $existing_organizers = get_posts(
+        array(
+            'post_type' => 'tribe_organizer',
+            'post_status' => 'publish',
+            'title' => $organizer_name,
+            'posts_per_page' => 1,
+        )
+    );
+
+    if (count($existing_organizers) > 0) {
+        echo 'An organizer with this name already exists.';
+    }
+    wp_die();
+}
+
+add_action('wp_ajax_check_organizer_name', 'ajax_check_organizer_name');
+add_action('wp_ajax_nopriv_check_organizer_name', 'ajax_check_organizer_name'); // If needed for non-logged in users
+
+
+//////////////////////END////////////////////////
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////NEW FUNCTION ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////NEW FUNCTION ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+///FUNCTION TO DISPLAY THE CURRENT USER EVENTS 
+
+
+/**
+ * Retrieves events for the current logged-in user.
+ */
+function get_my_events()
+{
+    // Check if user is logged in
+    if (!is_user_logged_in()) {
+        return 'You must be logged in to see your events.';
+    }
+
+    // Get the current user
+    $current_user = wp_get_current_user();
+
+    // Query the events post type for the current user's events
+    $args = array(
+        'post_type' => 'tribe_events', // Replace with your actual event post type
+        'author' => $current_user->ID,
+        // Add any additional query arguments you need
+    );
+
+    $events_query = new WP_Query($args);
+
+    // Start building the output
+    $output = '<ul class="my-events-list">';
+
+    // Loop through the events and build the list
+    if ($events_query->have_posts()) {
+        while ($events_query->have_posts()) {
+            $events_query->the_post();
+            $output .= '<li>' . get_the_title() . ' - ' . get_the_date() . '</li>';
+        }
+    } else {
+        $output .= '<li>No events found.</li>';
+    }
+
+    // Reset the post data
+    wp_reset_postdata();
+
+    $output .= '</ul>';
+
+    return $output;
+}
+
+/**
+ * Shortcode to display the list of events for the current user.
+ */
+function my_events_shortcode($atts)
+{
+    // Extract the attributes passed to the shortcode
+    $a = shortcode_atts(
+        array(
+            'view' => 'my_events', // The default view attribute
+        ),
+        $atts
+    );
+
+    // Check if the view is set to 'my_events'
+    if ($a['view'] === 'my_events') {
+        return get_my_events(); // Call the function to get the events
+    }
+    return 'Invalid view specified.';
+}
+
+// Register the shortcode with WordPress
+add_shortcode('tribe_community_events', 'my_events_shortcode');
+
+
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////NEW FUNCTION ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+function get_svg_icon($type)
+{
+    $tick_svg = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 161 121" fill="none">
+  <path d="M59.2923 120.272C57.9275 120.267 56.5783 119.982 55.3283 119.434C54.0783 118.887 52.9544 118.087 52.0264 117.087L3.65329 65.6281C1.84504 63.701 0.876365 61.1346 0.960363 58.4933C1.04436 55.8521 2.17415 53.3524 4.10119 51.5441C6.02823 49.7359 8.59467 48.7672 11.2359 48.8512C13.8772 48.9352 16.3769 50.065 18.1851 51.992L59.1928 95.6871L142.9 4.11661C143.75 3.0588 144.806 2.18581 146.006 1.55128C147.205 0.916742 148.521 0.534051 149.873 0.426711C151.226 0.319371 152.586 0.489649 153.87 0.927084C155.154 1.36452 156.336 2.05987 157.341 2.97044C158.347 3.88102 159.156 4.98758 159.718 6.22216C160.281 7.45674 160.585 8.79329 160.612 10.1497C160.639 11.5061 160.389 12.8537 159.876 14.1098C159.364 15.3659 158.599 16.504 157.631 17.4541L66.6578 116.987C65.7385 118.006 64.6185 118.824 63.3681 119.389C62.1177 119.954 60.7639 120.255 59.3918 120.272H59.2923Z" fill="#21DAB8"/>
+</svg>'; // Replace with your tick SVG
+    $cross_svg = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 239 239" fill="none">
+  <path d="M133.474 119.441L176.273 76.7416C178.147 74.8673 179.2 72.3253 179.2 69.6747C179.2 67.0241 178.147 64.4821 176.273 62.6079C174.399 60.7336 171.857 59.6807 169.206 59.6807C166.556 59.6807 164.014 60.7336 162.139 62.6079L119.44 105.407L76.74 62.6079C74.8658 60.7336 72.3238 59.6807 69.6732 59.6807C67.0226 59.6807 64.4806 60.7336 62.6063 62.6079C60.7321 64.4821 59.6792 67.0241 59.6792 69.6747C59.6792 72.3253 60.7321 74.8673 62.6063 76.7416L105.406 119.441L62.6063 162.141C61.6734 163.066 60.933 164.167 60.4277 165.38C59.9223 166.593 59.6622 167.894 59.6622 169.208C59.6622 170.522 59.9223 171.823 60.4277 173.036C60.933 174.249 61.6734 175.349 62.6063 176.275C63.5316 177.208 64.6325 177.948 65.8454 178.453C67.0583 178.959 68.3592 179.219 69.6732 179.219C70.9872 179.219 72.2881 178.959 73.501 178.453C74.7139 177.948 75.8148 177.208 76.74 176.275L119.44 133.475L162.139 176.275C163.065 177.208 164.166 177.948 165.379 178.453C166.591 178.959 167.892 179.219 169.206 179.219C170.52 179.219 171.821 178.959 173.034 178.453C174.247 177.948 175.348 177.208 176.273 176.275C177.206 175.349 177.947 174.249 178.452 173.036C178.957 171.823 179.217 170.522 179.217 169.208C179.217 167.894 178.957 166.593 178.452 165.38C177.947 164.167 177.206 163.066 176.273 162.141L133.474 119.441Z" fill="#FF0040"/>
+</svg>'; // Replace with your cross SVG
+
+    if ($type === 'positive') {
+        return $tick_svg;
+    } else {
+        return $cross_svg;
+    }
+}
+
+
+
+
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////NEW FUNCTION ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+//FUNCTION TO CREATE SHORTCODE FOR ORGANIZER SHORT CODE REPORTS
+
+function my_tribe_community_tickets_sales_report_shortcode($atts)
+{
+    // Check if 'event_id' is in the URL and is a number
+    if (isset($_GET['event_id']) && is_numeric($_GET['event_id'])) {
+        $event_id = intval($_GET['event_id']);
+        return do_shortcode('[tribe_community_tickets view="sales_report" id="' . $event_id . '"]');
+    } else {
+        return 'No Sales Report Found';
+    }
+}
+add_shortcode('organizer_sales_report', 'my_tribe_community_tickets_sales_report_shortcode');
+
+
+
+
+function my_tribe_community_tickets_attendees_report_shortcode($atts)
+{
+    // Check if 'event_id' is in the URL and is a number
+    if (isset($_GET['event_id']) && is_numeric($_GET['event_id'])) {
+        $event_id = intval($_GET['event_id']);
+        return do_shortcode('[tribe_community_tickets view="attendees_report" id="' . $event_id . '"]');
+    } else {
+        return 'No Attendees Report Found';
+    }
+}
+add_shortcode('organizer_attendees_report', 'my_tribe_community_tickets_attendees_report_shortcode');
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////END////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function get_ticket_info($user_id)
+{
+    $today = date('Y-m-d');
+    $total_sales_today = 0;
+    $total_tickets_sold_today = 0;
+    $total_sales_lifetime = 0;
+    $total_tickets_sold_lifetime = 0;
+    $total_tickets_sold_previous_day = 0; // Initialize the variable for tickets sold one day before
+
+    // Calculate the total sales for the previous day
+    $total_sales_previous_day = get_total_sales_for_previous_day($user_id);
+
+    // Fetch orders
+    $orders = wc_get_orders(
+        array(
+            'status' => array('completed'),
+            'limit' => -1,
+            'type' => 'shop_order',
+        )
+    );
+
+    foreach ($orders as $order) {
+        // Skip if not an instance of WC_Order
+        if (!($order instanceof WC_Order)) {
+            continue;
+        }
+
+        $order_date = $order->get_date_created()->format('Y-m-d');
+        $is_today = ($order_date === $today);
+        $is_previous_day = ($order_date === date('Y-m-d', strtotime('-1 day'))); // Check if the order is from the previous day
+
+        foreach ($order->get_items() as $item) {
+            $product_id = $item->get_product_id();
+            $event_id = get_post_meta($product_id, '_tribe_wooticket_for_event', true);
+            $event_author = get_post_field('post_author', $event_id);
+
+            if ($event_author == $user_id) {
+                $quantity = $item->get_quantity();
+                $total_tickets_sold_lifetime += $quantity;
+                $total_sales_lifetime += $order->get_total();
+
+                if ($is_today) {
+                    $total_tickets_sold_today += $quantity;
+                    $total_sales_today += $order->get_total();
+                }
+
+                // Check if it's from the previous day and add to the total tickets sold one day before
+                if ($is_previous_day) {
+                    $total_tickets_sold_previous_day += $quantity;
+                }
+            }
+        }
+    }
+
+    return array(
+        'total_sales_today' => $total_sales_today,
+        'total_tickets_sold_today' => $total_tickets_sold_today,
+        'total_sales_lifetime' => $total_sales_lifetime,
+        'total_tickets_sold_lifetime' => $total_tickets_sold_lifetime,
+        'total_sales_previous_day' => $total_sales_previous_day,
+        'total_tickets_sold_previous_day' => $total_tickets_sold_previous_day // Add total tickets sold one day before
+    );
+}
+
+
+
+
+
+
+
+
+function get_total_sales_for_previous_day($user_id)
+{
+    // Calculate the date for the previous day
+    $previous_day = date('Y-m-d', strtotime('-1 day'));
+
+    $total_sales_previous_day = 0;
+
+    // Fetch orders
+    $orders = wc_get_orders(
+        array(
+            'status' => array('completed'),
+            'date_created' => $previous_day, // Filter orders for the previous day
+            'limit' => -1,
+            'type' => 'shop_order',
+        )
+    );
+
+    foreach ($orders as $order) {
+        // Skip if not an instance of WC_Order
+        if (!($order instanceof WC_Order)) {
+            continue;
+        }
+
+        foreach ($order->get_items() as $item) {
+            $product_id = $item->get_product_id();
+            $event_id = get_post_meta($product_id, '_tribe_wooticket_for_event', true);
+            $event_author = get_post_field('post_author', $event_id);
+
+            if ($event_author == $user_id) {
+                $total_sales_previous_day += $order->get_total();
+            }
+        }
+    }
+
+    return $total_sales_previous_day;
+}
+
+function calculate_percentage_change($previous_value, $current_value)
+{
+    if ($previous_value == 0) {
+        if ($current_value > 0) {
+            return '100%'; // Represents a significant increase from 0
+        } else {
+            return '0%'; // No change if current value is also 0
+        }
+    }
+
+    $percentage_change = (($current_value - $previous_value) / $previous_value) * 100;
+    return round($percentage_change, 2) . '%';
+}
+
+function calculate_amount_change($previous_value, $current_value)
+{
+    $amount_change = $current_value - $previous_value;
+
+    // Check if the amount change is zero
+    if ($amount_change == 0) {
+        return '£0.00';
+    }
+
+    // Check if the amount is negative
+    if ($amount_change < 0) {
+        // If negative, add minus sign before the pound sign
+        return '-£' . esc_html(number_format(abs($amount_change), 2));
+    } else {
+        // If positive, just add the pound sign
+        return '£' . esc_html(number_format($amount_change, 2));
+    }
+}
+
+
+function shortcode_todays_sales()
+{
+    $user_id = get_current_user_id(); // Get the current user's ID
+    $ticket_info = get_ticket_info($user_id);
+    $total_sales_today = $ticket_info['total_sales_today'];
+    $total_sales_previous_day = $ticket_info['total_sales_previous_day']; // Get previous day's sales
+
+    // Calculate percentage change and amount change
+    $percentage_change = calculate_percentage_change($total_sales_previous_day, $total_sales_today);
+    $amount_change = calculate_amount_change($total_sales_previous_day, $total_sales_today);
+
+    // Format amounts in pounds (£)
+    $total_sales_today_formatted = '£' . number_format($total_sales_today, 2);
+    $total_sales_previous_day_formatted = '£' . number_format($total_sales_previous_day, 2);
+
+    // Create the HTML for the card-like section
+    $output = '
+    <div class="sales-card today_sale_admin_dashboard">
+        <div class="sales-card-content ">
+            <div class="sales-today ">
+                <h5 class="admin_dashboard_sales-label card_admin_dashboard ">Today\'s Sales</h5>
+                <div class="admin_dashboard_sales-amount ">' . esc_html($total_sales_today_formatted) . '</div>
+            </div>
+            <div class="admin_dashboard_sales-yesterday ">
+                <div class="admin_dashboard_sales_amount_yesterday ">' . esc_html($total_sales_previous_day_formatted) . '</div>
+            </div>
+            <div class="admin_dashboard_lower_other_day ">
+                <span class="admin_dashboard_percentage-change ">' . esc_html($percentage_change) . '</span>
+                <p class="dmin_dashboard_amount-change_p_tag"><span class="admin_dashboard_amount-change">' . esc_html($amount_change) . '</span></p>
+                
+            </div>
+            <span class="from_text_price_yesturday">Compared to previous day</span>
+        </div>
+    </div>';
+
+    return $output;
+}
+
+add_shortcode('todays_sales', 'shortcode_todays_sales');
+
+
+
+function shortcode_todays_tickets_sold()
+{
+    $ticket_info = get_ticket_info(get_current_user_id());
+    $total_tickets_sold_today = $ticket_info['total_tickets_sold_today'];
+    $total_tickets_sold_previous_day = $ticket_info['total_tickets_sold_previous_day'];
+
+    // Calculate the percentage change correctly
+    if ($total_tickets_sold_previous_day == 0) {
+        $percentage_change = '0%';
+    } else {
+        $percentage_change = number_format((($total_tickets_sold_today - $total_tickets_sold_previous_day) / $total_tickets_sold_previous_day) * 100, 2) . '%';
+    }
+
+    // Calculate the amount change as a number (not currency)
+    $amount_change = $total_tickets_sold_today - $total_tickets_sold_previous_day;
+
+    // Determine the color based on the amount change
+    if ($amount_change < 0) {
+        $color = 'red';
+    } elseif ($amount_change > 0) {
+        $color = 'green';
+    } else {
+        $color = '#aaa'; // No change
+    }
+
+    return '
+    <div class="sales-card today_sale_admin_dashboard">
+        <div class="sales-card-content ">
+            <div class="sales-today ">
+                <h5 class="admin_dashboard_sales-label card_admin_dashboard ">Tickets Sold Today</h5>
+                <div class="admin_dashboard_sales-amount ">' . esc_html($total_tickets_sold_today) . ' <span class="admin_dashboard_sales-amount_span">Tickets</span></div>
+            </div>
+            <div class="admin_dashboard_sales-yesterday ">
+                <div class="admin_dashboard_sales_amount_yesterday ">' . esc_html($total_tickets_sold_previous_day) . '</div>
+            </div>
+            <div class="admin_dashboard_lower_other_day ">
+                <span class="admin_dashboard_percentage-change" style="color: ' . $color . ' !important;">' . esc_html($percentage_change) . '</span>
+                <p class="dmin_dashboard_amount-change_p_tag"><span class="admin_dashboard_amount-change">' . esc_html($amount_change) . '</span></p>
+            </div>
+            <span class="from_text_price_yesturday">Compared to previous day</span>
+        </div>
+    </div>';
+}
+add_shortcode('todays_tickets_sold', 'shortcode_todays_tickets_sold');
+
+
+function shortcode_valid_tickets_sold()
+{
+    $ticket_info = get_ticket_info(get_current_user_id());
+    return '<div class="summary_tabs_my_events_ticket_refunded">Valid Tickets Sold: ' . esc_html($ticket_info['total_tickets_sold_lifetime']) . '</div>';
+}
+add_shortcode('valid_tickets_sold', 'shortcode_valid_tickets_sold');
+
+
+
+
+
+
+
+function shortcode_revenue()
+{
+    $ticket_info = get_ticket_info(get_current_user_id());
+    $total_sales_lifetime = $ticket_info['total_sales_lifetime'];
+
+    return '
+    <div class="sales-card today_sale_admin_dashboard">
+        <div class="sales-card-content ">
+            <div class="sales-today ">
+                <h5 class="admin_dashboard_sales-label card_admin_dashboard ">Revenue</h5>
+                <div class="admin_dashboard_sales-amount ">£' . esc_html(number_format($total_sales_lifetime, 2)) . ' <span class="admin_dashboard_sales-amount_span">GBP</span></div>
+                <div class="admin_dashboard_sales-amount_view_full_report">
+                    <a href="YOUR_LINK_HERE">View Full Breakdown</a>
+                </div>                
+            </div>
+            <!-- Additional sections can go here -->
+        </div>
+    </div>';
+}
+add_shortcode('revenue', 'shortcode_revenue');
+
+
  
  
  
