@@ -1793,6 +1793,416 @@ function recent_activity_shortcode($atts)
 }
 add_shortcode('recent_activity', 'recent_activity_shortcode');
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////END////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////NEW FUNCTION ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////END////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+function handle_create_new_organizer()
+{
+    // Check for nonce for security
+    if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'create_new_organizer_nonce')) {
+        wp_send_json_error('Nonce verification failed.');
+        return;
+    }
+
+    // Ensure only logged-in users can create an organizer
+    if (!is_user_logged_in()) {
+        wp_send_json_error('User must be logged in.');
+        return;
+    }
+
+    $current_user_id = get_current_user_id();
+
+    $organizer_data = array(
+        'post_title' => 'New Organizer', // Default title, you can modify as needed
+        'post_content' => '',
+        'post_status' => 'publish',
+        'post_type' => 'tribe_organizer',
+        'post_author' => $current_user_id
+    );
+
+    $organizer_id = wp_insert_post($organizer_data);
+
+    if (is_wp_error($organizer_id)) {
+        // Log and send error response
+        error_log('Error creating organizer: ' . $organizer_id->get_error_message());
+        wp_send_json_error('Error creating new organizer: ' . $organizer_id->get_error_message());
+    } else {
+        // Log success and send success response
+        error_log('Organizer created: ' . $organizer_id);
+        wp_send_json_success(array('organizer_id' => $organizer_id));
+    }
+}
+
+add_action('wp_ajax_create_new_organizer', 'handle_create_new_organizer');
+// If you want non-logged in users to create organizers, uncomment the following line:
+// add_action('wp_ajax_nopriv_create_new_organizer', 'handle_create_new_organizer');
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////END////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////NEW FUNCTION ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+/////////////FUNCTIONS FOR NEW AND EDIT EVENT 
+
+
+////FUNCTION TO LIMIT EVENT IMAGE UPLOAD TO 1MB
+add_filter('tribe_community_events_max_file_size_allowed', function () {
+    return 1048576; // 1MB
+});
+
+
+/*
+add_filter( 'tribe_events_community_required_fields', 'my_community_required_fields', 10, 1 );
+
+function my_community_required_fields( $fields ) {
+
+if ( ! is_array( $fields ) ) {
+return $fields;
+}
+
+$fields[] = 'event_image';
+
+return $fields;
+}
+*/
+add_action('save_post_tribe_events', 'save_event_sponsors', 10, 3);
+
+function save_event_sponsors($post_id, $post, $update)
+{
+    if (!isset($_FILES['event_sponsors_logo'])) {
+        return;
+    }
+
+    $sponsor_logos = $_FILES['event_sponsors_logo'];
+    $allowed_types = ['image/jpeg', 'image/png'];
+    $max_size = 500 * 1024; // 500KB in bytes
+
+    for ($i = 0; $i < count($sponsor_logos['name']); $i++) {
+        if (!in_array($sponsor_logos['type'][$i], $allowed_types) || $sponsor_logos['size'][$i] > $max_size) {
+            continue;
+        }
+
+        if ($sponsor_logos['error'][$i] == UPLOAD_ERR_OK) {
+            $tmp_name = $sponsor_logos['tmp_name'][$i];
+            $name = basename($sponsor_logos['name'][$i]);
+            $upload_dir = wp_upload_dir();
+            $path = $upload_dir['path'] . '/' . $name;
+
+            if (move_uploaded_file($tmp_name, $path)) {
+                $attachment_id = wp_insert_attachment(
+                    array(
+                        'guid' => $upload_dir['url'] . '/' . $name,
+                        'post_mime_type' => $sponsor_logos['type'][$i],
+                        'post_title' => preg_replace('/\.[^.]+$/', '', $name),
+                        'post_content' => '',
+                        'post_status' => 'inherit'
+                    ),
+                    $path,
+                    $post_id
+                );
+
+                add_post_meta($post_id, 'event_sponsor_logo', $attachment_id);
+            }
+        }
+    }
+}
+// Function to handle the AJAX request for removing a sponsor logo for logged-in users
+add_action('wp_ajax_remove_sponsor_logo', 'handle_remove_sponsor_logo');
+
+// Function to handle the AJAX request for removing a sponsor logo for logged-out users
+add_action('wp_ajax_nopriv_remove_sponsor_logo', 'handle_remove_sponsor_logo');
+
+function handle_remove_sponsor_logo()
+{
+    // Check for nonce security
+    $nonce = $_POST['nonce'];
+    if (!wp_verify_nonce($nonce, 'remove_sponsor_logo_nonce')) {
+        wp_send_json_error(array('error' => 'Nonce verification failed.'));
+        exit;
+    }
+
+    $logo_id = isset($_POST['logo_id']) ? intval($_POST['logo_id']) : 0;
+    $event_id = isset($_POST['event_id']) ? intval($_POST['event_id']) : 0;
+
+    if ($logo_id > 0 && $event_id > 0) {
+        if (delete_post_meta($event_id, 'event_sponsor_logo', $logo_id)) {
+            wp_delete_attachment($logo_id, true);
+            wp_send_json_success();
+        } else {
+            wp_send_json_error(array('error' => 'Failed to remove logo from event metadata.'));
+        }
+    } else {
+        wp_send_json_error(array('error' => 'Invalid logo or event ID.'));
+    }
+
+    exit;
+}
+
+
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////END////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+///////BUGGGGGGGGGGG ON HERE*********/
+
+///FUNCTION TO REDRIECT THE USER AFTER EVENT SUBMIT OR UPDATE 
+// Redirect after event submission or update
+// add_action('template_redirect', 'tribe_submission_redirect');
+
+// function tribe_submission_redirect() {
+//     // Check if we're on the event submission page and an event has been submitted
+//     if (isset($_POST['community-event'])) {
+//         // Get the event ID from the submitted form
+//         $event_id = isset($_POST['post_ID']) ? intval($_POST['post_ID']) : 0;
+
+//         // Ensure we have a valid event ID
+//         if ($event_id > 0) {
+//             // Construct the URL to the custom submission received page, including the event ID
+//             $url = home_url("/event-submission-received?event_id={$event_id}");
+
+//             // Redirect to the custom URL and exit
+//             wp_redirect($url);
+//             exit;
+//         }
+//     }
+// }
+
+// Shortcode to display event submission response
+function my_event_submission_response_shortcode($atts)
+{
+    // Get the event ID from the URL
+    $event_id = isset($_GET['event_id']) ? intval($_GET['event_id']) : 0;
+
+    // Make sure we have an event ID before proceeding
+    if ($event_id <= 0) {
+        return 'No event found.';
+    }
+
+    // Construct the URLs
+    $view_event_url = esc_url(get_permalink($event_id));
+    $edit_event_url = esc_url(home_url('/organizer-edit-event/?event_id=' . $event_id));
+
+    // Build the output
+    $output = "<div class='event-submission-response'>";
+    $output .= "<p>Your event has been created successfully!</p>";
+    $output .= "<a href='{$view_event_url}' class='button'>View Event</a> ";
+    $output .= "<a href='{$edit_event_url}' class='button'>Edit Event</a>";
+    $output .= "</div>";
+
+    return $output;
+}
+
+// Register the shortcode
+add_shortcode('event_submission_response', 'my_event_submission_response_shortcode');
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////NEW FUNCTION ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+/**
+ * Dynamically generates and processes the [tribe_community_events] shortcode for editing an event
+ * based on the 'event_id' query parameter present in the URL. This allows for the dynamic editing of events
+ * without hardcoding the event ID in the shortcode, making it versatile for use across different events.
+ * If a valid 'event_id' is not present in the URL, the function returns an error message prompting for a valid event ID.
+ */
+function dynamic_tribe_edit_event_shortcode()
+{
+    // Check if the 'event_id' query parameter is set in the URL
+    $event_id = isset($_GET['event_id']) ? intval($_GET['event_id']) : 0;
+    // Check if a valid event_id is provided
+    if ($event_id > 0) {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if (!empty($_POST['event_status'])) {
+                // Processing continues as the `event_status` field has a value
+                $args = array(
+                    'ID' => $event_id,
+                    'post_type' => 'tribe_events',
+                    'post_status' => $_POST['event_status'],
+                );
+
+                wp_update_post($args);
+            }
+        }
+        // Generate the tribe_community_events shortcode with the dynamic event ID
+        $shortcode = "[tribe_community_events view='edit_event' id='$event_id']";
+
+        // Execute and return the tribe_community_events shortcode
+        return do_shortcode($shortcode);
+    }
+
+    // Return an error message or empty string if event_id is not valid
+    return 'Please provide a valid event ID in the URL.';
+}
+add_shortcode('dynamic_edit_event', 'dynamic_tribe_edit_event_shortcode');
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////END////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////NEW FUNCTION ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+//////FUNCTION FOR EXTRA SECTION ON EDIT-EVENT.PHP
+
+
+
+////////EDIT EVENT FAQ SECTION FUNCTION
+function save_event_faqs($post_id, $post, $update)
+{
+    // Check if it's the correct post type.
+    if ($post->post_type !== 'tribe_events')
+        return;
+
+    // Verify the nonce for security.
+    if (!isset($_POST['event_faqs_nonce']) || !wp_verify_nonce($_POST['event_faqs_nonce'], 'save_event_faqs'))
+        return;
+
+    // Check the user's permissions.
+    if (!current_user_can('edit_post', $post_id))
+        return;
+
+    // Check if doing autosave.
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE)
+        return;
+
+    // Initialize an array to store clean FAQs data
+    $clean_faqs = [];
+
+    // Check if FAQs data is submitted
+    if (isset($_POST['event_faqs']) && is_array($_POST['event_faqs'])) {
+        // Re-index the FAQs array to ensure numerical indexing without gaps.
+        $faqs = array_values($_POST['event_faqs']);
+
+        foreach ($faqs as $faq) {
+            // Check if the FAQ has both a question and an answer.
+            if (!empty($faq['question']) && !empty($faq['answer'])) {
+                // Sanitize the data.
+                $question = sanitize_text_field($faq['question']);
+                $answer = sanitize_textarea_field($faq['answer']);
+
+                // Add the sanitized FAQ to the clean array.
+                $clean_faqs[] = ['question' => $question, 'answer' => $answer];
+            }
+        }
+    }
+
+    // Update the event's FAQs metadata.
+    update_post_meta($post_id, 'event_faqs', $clean_faqs);
+}
+
+add_action('save_post', 'save_event_faqs', 10, 3);
+
+
+
+
+///function for edit event agenda
+function save_event_agendas($post_id, $post, $update)
+{
+    if ($post->post_type !== 'tribe_events')
+        return;
+    if (!isset($_POST['admin_agenda_event_agendas_nonce']) || !wp_verify_nonce($_POST['admin_agenda_event_agendas_nonce'], 'save_event_agendas'))
+        return;
+    if (!current_user_can('edit_post', $post_id))
+        return;
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE)
+        return;
+
+    $clean_agendas = [];
+    if (isset($_POST['event_agendas']) && is_array($_POST['event_agendas'])) {
+        $agendas = array_values($_POST['event_agendas']);
+        foreach ($agendas as $agenda) {
+            if (!empty($agenda['time_from']) && !empty($agenda['time_to']) && !empty($agenda['title'])) {
+                $clean_agendas[] = [
+                    'time_from' => sanitize_text_field($agenda['time_from']),
+                    'time_to' => sanitize_text_field($agenda['time_to']),
+                    'title' => sanitize_text_field($agenda['title']),
+                ];
+            }
+        }
+    }
+    update_post_meta($post_id, 'event_agendas', $clean_agendas);
+}
+add_action('save_post', 'save_event_agendas', 10, 3);
+
+
+
+
+
+
+
+
+
+///function for edit event line ups 
+function save_event_line_up($post_id, $post, $update)
+{
+    if ($post->post_type !== 'tribe_events')
+        return;
+    if (!isset($_POST['event_line_up_nonce']) || !wp_verify_nonce($_POST['event_line_up_nonce'], 'save_event_line_up'))
+        return;
+    if (!current_user_can('edit_post', $post_id))
+        return;
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE)
+        return;
+
+    $clean_line_up = [];
+    if (isset($_POST['event_line_up']) && is_array($_POST['event_line_up'])) {
+        foreach ($_POST['event_line_up'] as $line_up_item) {
+            if (!empty($line_up_item['name'])) {
+                $clean_line_up[] = [
+                    'name' => sanitize_text_field($line_up_item['name']),
+                ];
+            }
+        }
+    }
+    update_post_meta($post_id, 'event_line_up', $clean_line_up);
+}
+add_action('save_post', 'save_event_line_up', 10, 3);
+
+
+
  
  
  
