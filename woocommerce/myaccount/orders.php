@@ -49,13 +49,6 @@ do_action( 'woocommerce_before_account_orders', $has_orders ); ?>
 
 
 
-
-
-  
-								
-
-
-
 								<?php elseif ( 'order-number' === $column_id ) : ?>
     <a href="<?php echo esc_url( $order->get_view_order_url() ); ?>">
         <?php echo esc_html( _x( '#', 'hash before order number', 'woocommerce' ) . $order->get_order_number() ); ?>
@@ -93,7 +86,8 @@ do_action( 'woocommerce_before_account_orders', $has_orders ); ?>
                 // Format the date and time for display
                 // Adjust the date format string as needed
                 if ($event_start_date) {
-                    $formatted_date = date_i18n('d M, H:i', strtotime($event_start_date));
+					$formatted_date = date_i18n('d M Y, H:i', strtotime($event_start_date));
+
                     echo '<p><strong>Event Date & Time:</strong> ' . esc_html($formatted_date) . '</p>';
                 }
                 // Display the product name and quantity together
@@ -109,8 +103,6 @@ do_action( 'woocommerce_before_account_orders', $has_orders ); ?>
         }
     }
     ?>
-
-
 
 
 
