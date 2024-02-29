@@ -23,33 +23,30 @@ class TicketSiteFees {
 	public function site_fees_create_admin_page() {
         global $wpdb;
 
-        // Replace <your_order_id_here> with the actual order ID
-        $order_id = 4297;
+// Define the start and end dates for the one-year range
+$start_date = date('Y-m-d', strtotime('-1 year')); // One year ago from today
+$end_date = date('Y-m-d'); // Today's date
 
-        // Prepare the SQL query
-        $query = $wpdb->prepare("
-            SELECT meta_value
-            FROM {$wpdb->prefix}woocommerce_order_itemmeta
-            WHERE order_item_id = 201
-        ", $order_id);
+// Prepare the SQL query
+$query = $wpdb->prepare("
+    SELECT ID
+    FROM {$wpdb->prefix}posts
+    WHERE post_type = 'shop_order'
+    AND post_status IN ('wc-completed', 'wc-processing', 'wc-on-hold') -- You can adjust the post statuses as needed
+    AND post_date >= %s
+    AND post_date <= %s
+", $start_date, $end_date);
 
-    //     $query = $wpdb->prepare("
+// Execute the query to get all order IDs within the one-year range
+$order_ids = $wpdb->get_col($query);
 
-    //         SELECT order_item_id
-    //         FROM {$wpdb->prefix}woocommerce_order_items
-    //         WHERE order_id = %d
-        
-    // ", $order_id);
-        // Execute the query
-        $order_fee = $wpdb->get_var($query);
+// Output the order IDs
+if (!empty($order_ids)) {
+    echo "Order IDs within the one-year range: " . implode(', ', $order_ids);
+} else {
+    echo "No orders found within the one-year range.";
+}
 
-        // Check if the order fee is retrieved successfully
-        if ($order_fee !== null) {
-            var_dump($order_fee);
-            // echo "Order Fee: $order_fee";
-        } else {
-            echo "Order fee not found for order ID: $order_id";
-        }
 
         ?>
 		<div class="wrap">
