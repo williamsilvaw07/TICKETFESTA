@@ -2,42 +2,21 @@
 <?php
 
 
-add_filter( 'manage_edit-product_columns', 'add_event_association_column_header', 20 );
-function add_event_association_column_header( $columns ) {
-    // Add a new column for the event association
-    $columns['event_association'] = __( 'Associated Event', 'your-textdomain' );
-    return $columns;
-}
-
-
-add_action( 'manage_product_posts_custom_column', 'add_event_association_column_content_with_image', 10, 2 );
-function add_event_association_column_content_with_image( $column, $product_id ) {
-    if ( $column == 'event_association' ) {
-        // Retrieve the associated event ID
-        $event_id = get_post_meta( $product_id, '_tribe_wooticket_for_event', true );
-        if ( !empty( $event_id ) ) {
-            // Get the event's post title
-            $event_post = get_post( $event_id );
-            if ( $event_post ) {
-                echo esc_html( $event_post->post_title );
-                // Attempt to get the event's featured image
-                $event_image = get_the_post_thumbnail_url( $event_id, 'thumbnail' ); // 'thumbnail' can be changed to any registered image size
-                if ( $event_image ) {
-                    echo '<br><img src="' . esc_url( $event_image ) . '" alt="" style="max-width:75px; height:auto; margin-top:8px;">';
-                }
-            } else {
-                _e( 'No associated event', 'your-textdomain' );
-            }
-        } else {
-            _e( 'N/A', 'your-textdomain' ); // Display something if there's no association
-        }
-    }
-}
 
 
 
 
 
+
+
+
+
+
+
+
+
+
+//////FUNCTION TO ADD THE EVENT IMAGE TO THE TICKET/PRODUCT MAIN IMAGE  
 
 function set_all_products_featured_image_to_event_image() {
     // Query all products.
@@ -73,8 +52,13 @@ function set_all_products_featured_image_to_event_image() {
 // Optionally, you can trigger this function with a specific action, hook, or manually.
 add_action('wp_loaded', 'set_all_products_featured_image_to_event_image');
 
+///////END
 
 
+
+
+
+////FUNCTION TO ADD THE EVENT TITLE ON THE TICKET/PRODUCT FRONTEND 
 /**
  * Example for adding event data to WooCommerce checkout for Events Calendar tickets.
  * @link https://theeventscalendar.com/support/forums/topic/event-title-and-date-in-cart/
@@ -95,6 +79,13 @@ function woocommerce_cart_item_name_event_title( $title, $values, $cart_item_key
  
     return $title;
 }
+
+
+
+///////END
+
+
+
 ////CHECKOUT
 
 /**

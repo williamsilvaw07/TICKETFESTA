@@ -48,6 +48,9 @@ do_action( 'woocommerce_before_account_orders', $has_orders ); ?>
 
 
 
+
+
+
                                 <?php elseif ( 'order-number' === $column_id ) : ?>
     <a href="<?php echo esc_url( $order->get_view_order_url() ); ?>">
         <?php echo esc_html( _x( '#', 'hash before order number', 'woocommerce' ) . $order->get_order_number() ); ?>
@@ -59,14 +62,17 @@ do_action( 'woocommerce_before_account_orders', $has_orders ); ?>
             // Display the product name
             echo '<p><strong>' . esc_html( $item->get_name() ) . '</strong></p>';
 
-            // Display the quantity
-            echo '<p>Quantity: ' . esc_html( $item->get_quantity() ) . '</p>';
-
             // Retrieve the associated event ID for the product
             $product_id = $item->get_product_id();
             $event_id = get_post_meta($product_id, '_tribe_wooticket_for_event', true);
 
             if (!empty($event_id)) {
+
+				   // Optionally, fetch and display the event title or other information
+				   $event_post = get_post($event_id);
+				   if ($event_post) {
+					   echo '<p>'. esc_html($event_post->post_title) . '</p>';
+				   }
                 // If an event ID is found, fetch and display the event's featured image
                 $event_image_id = get_post_thumbnail_id($event_id);
                 if ($event_image_id) {
@@ -76,11 +82,7 @@ do_action( 'woocommerce_before_account_orders', $has_orders ); ?>
                     }
                 }
 
-                // Optionally, fetch and display the event title or other information
-                $event_post = get_post($event_id);
-                if ($event_post) {
-                    echo '<p>Event: ' . esc_html($event_post->post_title) . '</p>';
-                }
+            
             } else {
                 // If no event ID is found, optionally display a placeholder or message
                 echo '<p>No associated event found.</p>';
