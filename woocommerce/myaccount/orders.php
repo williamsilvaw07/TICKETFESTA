@@ -395,7 +395,7 @@ display:none!important
     font-weight: 900;
 }
 .woocommerce-orders-table__cell-order-tota , .woocommerce-orders-table__cell-order-date{
-	display: flex;
+	display: flex!important;
     text-align: right!important;
     align-items: center;
     justify-content: center;
