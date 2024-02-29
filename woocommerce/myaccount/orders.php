@@ -124,11 +124,12 @@ do_action( 'woocommerce_before_account_orders', $has_orders ); ?>
 							<?php elseif ( 'order-status' === $column_id ) : ?>
 								<?php echo esc_html( wc_get_order_status_name( $order->get_status() ) ); ?>
 
-							<?php elseif ( 'order-total' === $column_id ) : ?>
-								<?php
-								/* translators: 1: formatted order total 2: total order items */
-								echo wp_kses_post( sprintf( _n( '%1$s for %2$s item', '%1$s for %2$s items', $item_count, 'woocommerce' ), $order->get_formatted_order_total(), $item_count ) );
-								?>
+								<?php elseif ( 'order-total' === $column_id ) : ?>
+    <?php
+    // Only display the formatted order total without item count.
+    echo wp_kses_post( $order->get_formatted_order_total() );
+    ?>
+
 
 							<?php elseif ( 'order-actions' === $column_id ) : ?>
 								<?php
@@ -227,8 +228,45 @@ jQuery(document).ready(function($) {
 
 <style>
 
+tr.woocommerce-orders-table__row , thead tr{
+	display: flex;
+    width: 100%; 
+}
 
+.woocommerce-orders-table__cell-order-number , th.woocommerce-orders-table__header-order-number{
+	flex: 0 0 70%
+}
 
+.woocommerce-orders-table__cell-order-date , .woocommerce-orders-table__cell-order-total , .woocommerce-orders-table__cell-order-actions , .woocommerce-orders-table__header-order-actions , .woocommerce-orders-table__header-order-date , .woocommerce-orders-table__header-order-total{
+	flex: 1
+}
+
+.woocommerce-orders-table__cell-order-total .woocommerce-Price-amount{
+	font-size: 17px!important;
+    font-weight: 600!important;
+}
+.woocommerce table.shop_table td {
+    text-align: center;
+}
+
+.woocommerce table.shop_table th{
+	padding-right:0!important;
+    text-align: center;
+}
+.woocommerce table.my_account_orders .button {
+    white-space: nowrap;
+    font-size: 12px!important;
+    padding: 5px 15px !important;
+    border-radius: 4px!important;
+	padding-bottom: 3px!important;
+}
+.woocommerce table.my_account_orders .button:hover{
+	background: #d3fa16!important;
+    color: #000000!important;
+}
+.woocommerce table.shop_table .woocommerce-orders-table__header-order-number{
+	text-align: left!important;
+}
 .oder_nm_link_main{
 	display:none
 }
@@ -241,6 +279,7 @@ jQuery(document).ready(function($) {
     justify-content: flex-start;
     align-items: center;
     gap: 15px;
+	padding: 15px 0
 
 
 }
@@ -264,6 +303,7 @@ jQuery(document).ready(function($) {
     align-content: center;
     justify-content: center;
     align-items: center;
+	
 }
 
 .order_event_image img{
@@ -279,7 +319,8 @@ jQuery(document).ready(function($) {
     align-content: center;
     justify-content: space-between;
     gap: 8px;
-	padding: 15px 0
+	text-align: left;
+	
 }
 
 .order_event_details h5{
@@ -295,6 +336,9 @@ jQuery(document).ready(function($) {
 .order_event_details span{
 	font-weight: 600;
     text-transform: capitalize;
+}
+.woocommerce-orders-table__header-order-status , .woocommerce-orders-table__cell-order-status{
+	display:none!important
 }
 
 	</style>

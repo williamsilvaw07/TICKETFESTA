@@ -1108,9 +1108,6 @@ color: black!important;
 }
 
 
- .woocommerce-orders-table__cell-order-total  , .woocommerce-orders-table__header-order-total{
- display: none;
-}
 .woocommerce-MyAccount-navigation{
     min-height: 100%;
     position: absolute;
