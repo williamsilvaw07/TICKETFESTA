@@ -43,56 +43,32 @@ function add_event_association_column_content_with_image( $column, $product_id )
 
 
 
-function set_all_products_featured_image() {
-    $image_url = 'https://ticketfesta.co.uk/wp-content/uploads/2024/02/blog-post-48-saying-yes.jpg'; // The specific image URL
-    $upload_dir = wp_upload_dir(); // WordPress upload directory
-    $image_data = file_get_contents($image_url); // Fetch image content
-    $filename = basename($image_url); // Determine filename from URL
+function update_all_product_featured_images() {
+    // Set the attachment ID of your new main image.
+    $new_image_id = 123; // Change 123 to the actual attachment ID of your new image.
 
-    if (wp_mkdir_p($upload_dir['path'])) {
-        $file = $upload_dir['path'] . '/' . $filename; // Path to save the file
-    } else {
-        $file = $upload_dir['basedir'] . '/' . $filename;
-    }
-
-    file_put_contents($file, $image_data); // Save the image file
-
-    $wp_filetype = wp_check_filetype($filename, null); // Check filetype
-    $attachment = array(
-        'post_mime_type' => $wp_filetype['type'], // MIME type
-        'post_title' => sanitize_file_name($filename), // Sanitize and set file title
-        'post_content' => '', // No content
-        'post_status' => 'inherit' // Set status
-    );
-
-    // Insert the attachment into the media library
-    $attach_id = wp_insert_attachment($attachment, $file);
-
-    require_once(ABSPATH . 'wp-admin/includes/image.php'); // Required for attachment processing
-    $attach_data = wp_generate_attachment_metadata($attach_id, $file); // Generate metadata
-    wp_update_attachment_metadata($attach_id, $attach_data); // Update metadata
-
-    // Query all products
+    // Query all products.
     $args = array(
         'post_type' => 'product',
-        'posts_per_page' => -1
+        'posts_per_page' => -1,
+        'fields' => 'ids', // Only get product IDs to improve performance.
     );
 
     $products = get_posts($args);
 
-    foreach ($products as $product) {
-        set_post_thumbnail($product->ID, $attach_id); // Set the image as the featured image for each product
+    foreach ($products as $product_id) {
+        // Set the new image as the featured image for each product.
+        set_post_thumbnail($product_id, $new_image_id);
     }
 
-    return "All products updated with new featured image.";
+    return "All products updated with the new featured image.";
 }
 
-// Optionally, trigger this function via a specific action or manually run it once.
-// set_all_products_featured_image();
-
-
-
-
+// Optionally, you can trigger this function with a specific URL parameter for a one-time operation.
+// For example, visiting yoursite.com?update_featured_images=true
+if ( isset($_GET['update_featured_images']) && $_GET['update_featured_images'] === 'true' ) {
+    add_action('init', 'update_all_product_featured_images');
+}
 
 
 
