@@ -945,6 +945,14 @@ html .event-venue-city-organizer{
         .tribe-events-c-top-bar{
             display: block!important;
         }
+        .tribe-events .tribe-events-c-events-bar {
+            display: flex;
+            transform: scale(0.8);
+            gap: 13px;
+            background: inherit;
+            box-shadow: inherit!important;
+        
+        }
         .tribe-events-c-top-bar span{
             font-size: 16px!important;
         
