@@ -423,6 +423,14 @@ jQuery(document).ready(function($) {
 
 
 }
+.social_sharing_links{
+    padding-bottom: 22px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 17px;
+}
 .social_sharing_links i{
     color:#1A1A1A!important
 }
