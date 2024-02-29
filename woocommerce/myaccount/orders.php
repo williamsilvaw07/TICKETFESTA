@@ -401,7 +401,7 @@ display:none!important
 }
 
 .order_event_details {
-    justify-content: space-between;
+	align-items: center;
 }
 
 
