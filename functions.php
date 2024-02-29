@@ -34,6 +34,37 @@ function add_event_association_column_content_with_image( $column, $product_id )
     }
 }
 
+add_action( 'woocommerce_update_product', 'add_event_featured_image_to_product_gallery', 10, 2 );
+
+function add_event_featured_image_to_product_gallery( $product_id, $product ) {
+    // Check if this product is a ticket associated with an event
+    $event_id = get_post_meta( $product_id, '_tribe_wooticket_for_event', true );
+    if ( !$event_id ) {
+        return; // Exit if not associated with an event or if the event ID is not set
+    }
+
+    // Get the event's featured image ID
+    $event_thumbnail_id = get_post_thumbnail_id( $event_id );
+    if ( !$event_thumbnail_id ) {
+        return; // Exit if the event does not have a featured image
+    }
+
+    // Get existing product gallery image IDs
+    $gallery_image_ids = $product->get_gallery_image_ids();
+
+    // Check if the event's featured image is already in the product's gallery
+    if ( !in_array( $event_thumbnail_id, $gallery_image_ids ) ) {
+        // Add the event's featured image ID to the array of gallery image IDs
+        $gallery_image_ids[] = $event_thumbnail_id;
+        
+        // Update the product's gallery image IDs
+        $product->set_gallery_image_ids( $gallery_image_ids );
+        $product->save();
+    }
+}
+
+
+
 
 
 /**
