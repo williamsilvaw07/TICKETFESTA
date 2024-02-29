@@ -38,7 +38,28 @@ function add_event_association_column_content_with_image( $column, $product_id )
 
 
 
+// Add a new column to the Media Library list view.
+add_filter('manage_media_columns', 'add_media_column_attachment_id');
+function add_media_column_attachment_id($columns) {
+    // Insert the 'Attachment ID' column before the 'Date' column.
+    // Note: If you want to add it at the end, you can simply use $columns['attachment_id'] = 'Attachment ID';
+    $new = [];
+    foreach($columns as $key => $title) {
+        if ($key === 'date') {  // Choose where you want to add the new column ('before' the 'Date' column here).
+            $new['attachment_id'] = 'Attachment ID';
+        }
+        $new[$key] = $title;
+    }
+    return $new;
+}
 
+// Populate the new 'Attachment ID' column.
+add_action('manage_media_custom_column', 'show_media_column_attachment_id', 10, 2);
+function show_media_column_attachment_id($column_name, $id) {
+    if ($column_name === 'attachment_id') {
+        echo $id;
+    }
+}
 
 
 
