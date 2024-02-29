@@ -51,8 +51,12 @@ do_action( 'woocommerce_before_account_orders', $has_orders ); ?>
 
 
 
+								
 
-
+								<?php elseif ( 'order-number' === $column_id ) : ?>
+    <a href="<?php echo esc_url( $order->get_view_order_url() ); ?>">
+        <?php echo esc_html( _x( '#', 'hash before order number', 'woocommerce' ) . $order->get_order_number() ); ?>
+    </a>
     <?php
     // Loop through each order item
     $items = $order->get_items();
@@ -95,7 +99,7 @@ do_action( 'woocommerce_before_account_orders', $has_orders ); ?>
                 echo '<p><strong>' . esc_html($event_post->post_title) . '</strong></p>';
                 echo '</div>'; // Close the order_event_details div
 
-                
+                echo '</div>'; // Close the order_event_container div
             }
         } else {
             // If no event ID is found, optionally display a placeholder or message
@@ -104,16 +108,8 @@ do_action( 'woocommerce_before_account_orders', $has_orders ); ?>
     }
     ?>
 
-<?php elseif ( 'order-number' === $column_id ) : ?>
-    <a href="<?php echo esc_url( $order->get_view_order_url() ); ?>">
-        <?php echo esc_html( _x( '#', 'hash before order number', 'woocommerce' ) . $order->get_order_number() ); ?>
-    </a>
 
 
-
-	<?php echo '</div>'; // Close the order_event_container div?
-
-?>
 
 
 
