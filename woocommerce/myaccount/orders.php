@@ -190,17 +190,14 @@ jQuery(document).ready(function($) {
 
 
 <style>
-.order_event_image_container {
-    /* Add any container styles here */
-}
-
 .order_event_image {
     width: 100%;
-    height: 200px; /* Adjust the height as needed */
-    background-size: cover;
-    background-position: center;
-    position: relative;
+    height: 100%;
+    max-width: 250px;
+    max-height: 200px;
 }
+
+
 
 .order_event_image::before {
     content: "";
@@ -235,6 +232,7 @@ jQuery(document).ready(function($) {
     max-width: 200px!important;
     border-radius: 6px;
 	max-height: 150px;
+	object-fit: contain;
 }
 
 .order_event_details{
