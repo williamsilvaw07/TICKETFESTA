@@ -420,8 +420,11 @@ jQuery(document).ready(function($) {
 {position: relative;
     right: 2px;
     top: 1px;
-    color:#1A1A1A!important
 
+
+}
+.social_sharing_links i{
+    color:#1A1A1A!important
 }
 body .share_btn{
     z-index: 9; 
