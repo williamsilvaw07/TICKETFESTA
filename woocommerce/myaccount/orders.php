@@ -343,4 +343,31 @@ tr.woocommerce-orders-table__row , thead tr{
 	display:none!important
 }
 
+
+
+@media (max-width: 1294px) {
+	.woocommerce-orders-table__cell-order-number , th.woocommerce-orders-table__header-order-number{
+	flex: 0 0 40%
+}
+
+.woocommerce-orders-table__cell-order-date , .woocommerce-orders-table__cell-order-total , .woocommerce-orders-table__cell-order-actions , .woocommerce-orders-table__header-order-actions , .woocommerce-orders-table__header-order-date , .woocommerce-orders-table__header-order-total{
+	flex: 1
+}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	</style>
