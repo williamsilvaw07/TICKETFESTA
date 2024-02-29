@@ -21,97 +21,61 @@ class TicketSiteFees {
 	}
 
 	public function site_fees_create_admin_page() {
-        global $wpdb;
 
-// Define the start and end dates for the one-year range
-$start_date = date('Y-m-d', strtotime('-1 year')); // One year ago from today
-$end_date = date('Y-m-d'); // Today's date
-
-// Prepare the SQL query
-$query = $wpdb->prepare("
-    SELECT ID
-    FROM {$wpdb->prefix}posts
-    WHERE post_type = 'shop_order'
-    AND post_status IN ('wc-completed', 'wc-processing', 'wc-on-hold') -- You can adjust the post statuses as needed
-    AND post_date >= %s
-    AND post_date <= %s
-", $start_date, $end_date);
-
-// Execute the query to get all order IDs within the one-year range
-$order_ids = $wpdb->get_col($query);
-
-// Output the order IDs
-if (!empty($order_ids)) {
-    echo "Order IDs within the one-year range: " . implode(', ', $order_ids);
-} else {
-    echo "No orders found within the one-year range.";
-}
-
+        $yearly_site_fees = $this->get_yearly_total_site_fees();
 
         ?>
 		<div class="wrap">
 			<h2> Site Fees</h2>
-			<p></p>
+			<p> Yearly Site Fees:  <?php  echo $yearly_site_fees;?></p>
 			<?php settings_errors(); ?>
-
-			
 		</div>
 	<?php 
-    
-    $order_id = 4297;
 
-    // Get order meta
-    $order_meta = get_post_meta($order_id);
-    
-    // Output order meta
-    if (!empty($order_meta)) {
-        $order_meta = maybe_unserialize($order_meta);
+}
 
-        echo "Order Meta for Order ID $order_id:<br>";
-        foreach ($order_meta as $meta_key => $meta_values) {
-            echo "$meta_key: " . implode(', ', $meta_values) . "<br>";
-        }
-        var_dump(unserialize($order_meta["_community_tickets_order_fees"][0]));
-    } else {
-        echo "No order meta found for order ID: $order_id";
+
+    // retrive yearly site fees from database
+    function get_yearly_total_site_fees(){
+    
+        global $wpdb;
+
+        // Define the start and end dates for the one-year range
+        $start_date = date('Y-m-d', strtotime('-1 year')); // One year ago from today
+        $end_date = date('Y-m-d'); // Today's date
+        
+        // Prepare the SQL query
+        $query = $wpdb->prepare("
+            SELECT ID
+            FROM {$wpdb->prefix}posts
+            WHERE post_type = 'shop_order'
+            AND post_status IN ('wc-completed', 'wc-processing', 'wc-on-hold') -- You can adjust the post statuses as needed
+            AND post_date >= %s
+            AND post_date <= %s
+        ", $start_date, $end_date);
+        
+        // Execute the query to get all order IDs within the one-year range
+        $order_ids = $wpdb->get_col($query);
+        return $this->get_site_fees_total($order_ids);
     }
     
-// Replace <your_order_id_here> with the actual order ID
-$order_id = 4297;
-
-// Get the order object
-$order = wc_get_order($order_id);
-
-// Get fees applied to the order
-$fees = $order->get_fees();
-
-
-// Output the custom fees
-if (!empty($fees)) {
-    echo "Custom Fees for Order ID $order_id:<br>";
-    foreach ($fees as $fee) {
-        echo '<pre>';
-        var_dump((float)$fee->get_total());
-        echo '</pre>';
-        echo "{$fee->name}: {$fee->get_total()}<br>";
+    // calculate site fees from order id array
+    function get_site_fees_total($order_ids = []){
+        $total_fee = 0;
+        foreach($order_ids as $order_id){
+            $order = wc_get_order($order_id);
+            $fees = $order->get_fees();
+            if (!empty($fees)) {
+                foreach ($fees as $fee) {
+                    $total_fee += (float)$fee->get_total();
+                }
+            }
+        } 
+        return  $total_fee;  
     }
-} else {
-    echo "No custom fees found for order ID: $order_id";
-}
-
-}
-
-
-
-    // Replace <your_order_id_here> with the actual order ID
 
 
 }
-if ( is_admin() )
+if ( is_admin() ){
 	$year_site_fees = new TicketSiteFees();
-
-/* 
- * Retrieve this value with:
- * $year_site_fees_options = get_option( 'year_site_fees_option_name' ); // Array of All Options
- * $year_0 = $year_site_fees_options['year_0']; // year
- */
+}
