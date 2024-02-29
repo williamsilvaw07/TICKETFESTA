@@ -173,12 +173,44 @@ do_action( 'woocommerce_before_account_orders', $has_orders ); ?>
 
 
 
+<script>
+jQuery(document).ready(function($) {
+    // Image URL
+    var imageUrl = 'https://ticketfesta.co.uk/wp-content/uploads/2024/02/antoine-j-r3XvSBEQQLo-unsplash-2-min-2.jpg';
+    
+    // Create a new <div> for the image and append it to the container
+    var $imageDiv = $('<div class="order_event_image"></div>');
+    $imageDiv.css('background-image', 'url(' + imageUrl + ')');
+    $('.order_event_image_container').append($imageDiv);
+});
 
+</script>
 
 
 
 
 <style>
+.order_event_image_container {
+    /* Add any container styles here */
+}
+
+.order_event_image {
+    width: 100%;
+    height: 200px; /* Adjust the height as needed */
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+.order_event_image::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.3); /* Adjust the opacity as needed */
+}
 
 
 .oder_nm_link_main{
