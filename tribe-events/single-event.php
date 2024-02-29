@@ -1466,7 +1466,16 @@ html .single-tribe_events .tribe-events-gmap{
     font-weight: 400!important;
 }
 
+.site-fee-container{
+    text-align: right;
+}
 
+
+span.site-fee-container, span.site-fee-container span.ticket_site_fee  , .enddate , .startdate{
+    color: #949494!important;
+    font-size: 13px;
+    font-weight: 500;
+}
 /**ticket popup**/
 
 .popup-background {
