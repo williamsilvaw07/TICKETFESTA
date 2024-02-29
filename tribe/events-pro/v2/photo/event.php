@@ -404,8 +404,8 @@ jQuery(document).ready(function($) {
 }
 .share_btn{
     z-index: 9; 
-    background: white;
-    border-radius: 1000px;
+    background: white!important;
+    border-radius: 100px;
     width: 30px;
     height: 30px;
 }
