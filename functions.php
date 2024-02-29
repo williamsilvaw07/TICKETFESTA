@@ -1,24 +1,26 @@
 
 <?php
 
-/* Example for adding event data to WooCommerce checkout for Events Calendar tickets.
-* @link https://theeventscalendar.com/support/forums/topic/event-title-and-date-in-cart/
-*/
+/**
+ * Example for adding event data to WooCommerce checkout for Events Calendar tickets.
+ * @link https://theeventscalendar.com/support/forums/topic/event-title-and-date-in-cart/
+ */
 add_filter( 'woocommerce_cart_item_name', 'woocommerce_cart_item_name_event_title', 10, 3 );
-
+ 
 function woocommerce_cart_item_name_event_title( $title, $values, $cart_item_key ) {
-   $ticket_meta = get_post_meta( $values['product_id'] );
-
-   // Only do if ticket product
-   if ( array_key_exists( '_tribe_wooticket_for_event', $ticket_meta ) ) {
-       $event_id = absint( $ticket_meta[ '_tribe_wooticket_for_event' ][0] );
-
-       if ( $event_id ) {
-           $title = sprintf( '%s for <a href="%s" target="_blank"><strong>%s</strong></a>', $title, get_permalink( $event_id ), get_the_title( $event_id ) );
-       }
-   }
-
-   return $title;
+    $ticket_meta = get_post_meta( $values['product_id'] );
+ 
+    // Only do if ticket product
+    if ( array_key_exists( '_tribe_wooticket_for_event', $ticket_meta ) ) {
+        $event_id = absint( $ticket_meta[ '_tribe_wooticket_for_event' ][0] );
+ 
+        if ( $event_id ) {
+            $title = sprintf( '%s for <a href="%s" target="_blank"><strong>%s</strong></a>', $title, get_permalink( $event_id ), get_the_title( $event_id ) );
+        }
+    }
+ 
+    return $title;
+}
 ////CHECKOUT
 
 /**
