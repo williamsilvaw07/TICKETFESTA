@@ -2476,34 +2476,6 @@ add_shortcode('bank_details_form', 'display_bank_details_form');
 // });
 
 // Function to display bank details in user profile
-function add_bank_details_field($user)
-{
-    $bank_details = get_user_meta($user->ID, 'bank_details', true);
-    ?>
-        <div class="sales-card today_sale_admin_dashboard admin_bank_details_card">
-            <h5 class="admin_dashboard_bank_details-label card_admin_dashboard">Bank Details</h5>
-            <?php if (!empty($bank_details)): ?>
-                    <p class="bank-details-item">Full Name: <span>
-                            <?php echo esc_html($bank_details['full_name']); ?>
-                        </span></p>
-                    <p class="bank-details-item">Sort Code: <span>
-                            <?php echo esc_html($bank_details['shortcode']); ?>
-                        </span></p>
-                    <p class="bank-details-item">Account Number: <span>
-                            <?php echo esc_html($bank_details['account_number']); ?>
-                        </span></p>
-                    <form method="post" action="">
-                        <input type="submit" name="delete_bank_details" value="Delete Bank Details">
-                    </form>
-            <?php else: ?>
-                    <p>No bank details found.</p>
-            <?php endif; ?>
-        </div>
-        <?php
-}
-add_action('show_user_profile', 'add_bank_details_field');
-add_action('edit_user_profile', 'add_bank_details_field');
-
 
 
 
