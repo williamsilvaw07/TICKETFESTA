@@ -85,15 +85,15 @@ $order = wc_get_order($order_id);
 // Get fees applied to the order
 $fees = $order->get_items(['fee']);
 echo '<pre>';
-var_dump($fees->get_total());
+var_dump($fees[0]);
 echo '</pre>';
 
 // Output the custom fees
 if (!empty($fees)) {
     echo "Custom Fees for Order ID $order_id:<br>";
-    foreach ($fees as $fee) {
-        echo "{$fee->name}: {$fee->amount}<br>";
-    }
+    // foreach ($fees as $fee) {
+    //     echo "{$fee->name}: {$fee->get_total()}<br>";
+    // }
 } else {
     echo "No custom fees found for order ID: $order_id";
 }
