@@ -1107,6 +1107,10 @@ color: black!important;
     padding-right: 8px;
 }
 
+.woocommerce-MyAccount-content{
+    flex: 0 0 70%!important
+}
+
 
 .woocommerce-MyAccount-navigation{
     min-height: 100%;
