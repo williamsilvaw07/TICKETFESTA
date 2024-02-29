@@ -191,8 +191,11 @@ jQuery(document).ready(function($) {
                 'background-image': 'url(' + imgSrc + ')',
                 'background-size': 'cover',
                 'background-position': 'center center',
-                'backdrop-filter': 'blur(10px) contrast(70%)', // Apply glass effect
-                'z-index': '0'
+                'backdrop-filter': 'blur(10px) brightness(90%)', // Apply glass effect with blur and brightness adjustment
+                'background-color': 'rgba(255, 255, 255, 0.4)', // Semi-transparent white background for frosted glass effect
+                'z-index': '0',
+                'border-radius': '8px', // Optional: adds rounded corners to the glass effect background
+                'border': '1px solid rgba(255, 255, 255, 0.18)' // Optional: adds a subtle border for more glass-like realism
             });
 
             // Insert the glass effect div as the first child of the .order_event_image element
@@ -212,6 +215,7 @@ jQuery(document).ready(function($) {
         }
     });
 });
+
 
 
 
