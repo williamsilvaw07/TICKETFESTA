@@ -257,12 +257,13 @@ jQuery(document).ready(function($) {
 .order_event_image::before {
 
 }
-
+.order_event_image{
+	border-radius: 6px;
+}
 
 .order_event_image img{
     width: 100%;
     max-width: 200px!important;
-    border-radius: 6px;
 	max-height: 150px;
 	object-fit: contain;
 }
