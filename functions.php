@@ -70,6 +70,11 @@ function set_ticket_featured_image_to_event_image_with_logging( $product_id, $pr
 
 
 
+add_action( 'woocommerce_update_product', function( $product_id ) {
+    error_log( 'Product updated: ' . $product_id );
+}, 10, 1 );
+
+
 
 /**
  * Example for adding event data to WooCommerce checkout for Events Calendar tickets.
