@@ -34,66 +34,72 @@ function add_event_association_column_content_with_image( $column, $product_id )
     }
 }
 
-add_action( 'woocommerce_admin_process_product_object', 'custom_set_product_image_to_event_image', 10, 1 );
-function custom_set_product_image_to_event_image( $product ) {
-    // Check if the product already has a featured image set
-    if ( $product->get_image_id() ) {
-        error_log( 'Product ID ' . $product->get_id() . ' already has a featured image.' );
-        return;
-    }
 
-    // Get the associated event ID from product meta
-    $event_id = $product->get_meta( '_tribe_wooticket_for_event', true );
-    if ( empty( $event_id ) ) {
-        error_log( 'No associated event ID found for product ID ' . $product->get_id() );
-        return;
-    }
 
-    // Get the event's featured image URL
-    $event_image_url = get_the_post_thumbnail_url( $event_id, 'full' );
-    if ( empty( $event_image_url ) ) {
-        error_log( 'No featured image URL found for event ID ' . $event_id );
-        return;
-    }
 
-    // Use the provided function to set the event's image as the product's featured image
-    if ( Generate_Featured_Image( $event_image_url, $product->get_id() ) ) {
-        error_log( 'Featured image set for product ID ' . $product->get_id() . ' using event ID ' . $event_id );
-    } else {
-        error_log( 'Failed to set featured image for product ID ' . $product->get_id() . ' using event ID ' . $event_id );
-    }
-}
 
-function Generate_Featured_Image( $image_url, $post_id ) {
-    // Assume $image_url is a valid URL for the image and $post_id is the valid post ID
-    $upload_dir = wp_upload_dir(); // Get WordPress upload directory
-    $image_data = file_get_contents($image_url); // Get image data
-    $filename = basename($image_url); // Create a filename
 
-    if ( wp_mkdir_p( $upload_dir['path'] ) ) {
-        $file = $upload_dir['path'] . '/' . $filename;
+
+
+
+
+function set_all_products_featured_image() {
+    $image_url = 'https://ticketfesta.co.uk/wp-content/uploads/2024/02/blog-post-48-saying-yes.jpg'; // The specific image URL
+    $upload_dir = wp_upload_dir(); // WordPress upload directory
+    $image_data = file_get_contents($image_url); // Fetch image content
+    $filename = basename($image_url); // Determine filename from URL
+
+    if (wp_mkdir_p($upload_dir['path'])) {
+        $file = $upload_dir['path'] . '/' . $filename; // Path to save the file
     } else {
         $file = $upload_dir['basedir'] . '/' . $filename;
     }
 
-    file_put_contents( $file, $image_data ); // Save the image
+    file_put_contents($file, $image_data); // Save the image file
 
-    $wp_filetype = wp_check_filetype( $filename, null ); // Check the image file type
+    $wp_filetype = wp_check_filetype($filename, null); // Check filetype
     $attachment = array(
-        'post_mime_type' => $wp_filetype['type'],
-        'post_title' => sanitize_file_name( $filename ),
-        'post_content' => '',
-        'post_status' => 'inherit'
+        'post_mime_type' => $wp_filetype['type'], // MIME type
+        'post_title' => sanitize_file_name($filename), // Sanitize and set file title
+        'post_content' => '', // No content
+        'post_status' => 'inherit' // Set status
     );
 
-    $attach_id = wp_insert_attachment( $attachment, $file, $post_id ); // Insert attachment
-    require_once( ABSPATH . 'wp-admin/includes/image.php' );
-    $attach_data = wp_generate_attachment_metadata( $attach_id, $file ); // Generate metadata
-    wp_update_attachment_metadata( $attach_id, $attach_data ); // Update metadata
-    set_post_thumbnail( $post_id, $attach_id ); // Set as featured image
+    // Insert the attachment into the media library
+    $attach_id = wp_insert_attachment($attachment, $file);
 
-    return $attach_id ? true : false; // Return true if successful, false otherwise
+    require_once(ABSPATH . 'wp-admin/includes/image.php'); // Required for attachment processing
+    $attach_data = wp_generate_attachment_metadata($attach_id, $file); // Generate metadata
+    wp_update_attachment_metadata($attach_id, $attach_data); // Update metadata
+
+    // Query all products
+    $args = array(
+        'post_type' => 'product',
+        'posts_per_page' => -1
+    );
+
+    $products = get_posts($args);
+
+    foreach ($products as $product) {
+        set_post_thumbnail($product->ID, $attach_id); // Set the image as the featured image for each product
+    }
+
+    return "All products updated with new featured image.";
 }
+
+// Optionally, trigger this function via a specific action or manually run it once.
+// set_all_products_featured_image();
+
+
+
+
+
+
+
+
+
+
+
 
 /**
  * Example for adding event data to WooCommerce checkout for Events Calendar tickets.
