@@ -14,6 +14,9 @@ function parseQueryString(queryString) {
   return params;
 }
 
+
+var product_ids_selected = [];
+
 function updateTicket() {
   console.log('updateTicket');
 
@@ -50,6 +53,19 @@ function updateTicket() {
   });
 }
 
+function onClickEditHandeler(elem) {
+  let data = jQuery(elem).data('details');
+  jQuery('#edit_coupon_code').val(data.code);
+  jQuery('#edit_amount').val(data.amount);
+  jQuery('#edit_discount_type').val(data.discount_type);
+  jQuery('#edit_event_id').val(data.event_id);
+  jQuery("#edit_event_id").trigger('change');
+  jQuery('#edit_start_date_time').val(data.start_date);
+  jQuery('#edit_end_date_time').val(data.expire_date);
+  jQuery('#coupon_id').val(data.coupon_id);
+
+  product_ids_selected = data.product_ids;
+}
 
 function onClickDeleteHandeler(coupon_id) {
   Swal.fire({
@@ -197,7 +213,7 @@ jQuery(document).ready(function (jQuery) {
   // Function to parse the query string into a JavaScript object
   // AJAX request when the button is clicked
   jQuery(document).on("click", "#coupon_form_save", function () {
-    $(this).attr('disabled');
+    jQuery(this).attr('disabled');
 
     var eventId = jQuery("#event_id").val();
 
@@ -253,6 +269,25 @@ jQuery(document).ready(function (jQuery) {
         amount.value = '';
         start_date_time.value = '';
         end_date_time.value = '';
+      },
+    });
+  });
+
+
+
+  jQuery(document).on("click", "#edit_coupon_form_save", function (e) {
+    e.preventDefault();
+    jQuery(this).attr('disabled');
+    var formData = jQuery("#editForm").serializeArray();
+    formData.push({name: "nonce", value: iam00_ajax_object.nonce});
+    formData.push({name: "action", value: "edit_coupon_action"});
+
+    jQuery.ajax({
+      url: iam00_ajax_object.ajax_url, // AJAX URL set by WordPress
+      type: "post",
+      data: formData,
+      success: function (response) {
+        location.reload(true);
       },
     });
   });
@@ -341,33 +376,60 @@ jQuery(document).ready(function (jQuery) {
 // Check if the URL contains 'category_id'
 jQuery(document).ready(function () {
 
-  $("#event_id").on('change', updateTicket);
+  jQuery("#event_id").on('change', updateTicket);
+  jQuery("#edit_event_id").on('change', function () {
+    var htmlOutputStart = `<label>Tickets</label>`;
+    jQuery.ajax({
+      url: iam00_ajax_object.ajax_url, // AJAX URL set by WordPress
+      type: "post",
+      data: {
+        action: "get_event_ticket_action", // Custom AJAX action
+        nonce: iam00_ajax_object.nonce,
+        event_id: jQuery('#edit_event_id').val(),
+      },
+      success: function (response) {
+        // Handle the response from the server
+        if (response.success) {
+          console.log(response)
+          Object.entries(response.data).forEach(([key, value]) => {
+            htmlOutputStart +=
+              `<div class="form-check">
+                  <input class="form-check-input" id="edit_product_ids_`+ key + `" type="checkbox" name="product_ids[]" value="` + key + `">
+                  <label class="form-check-label" for="edit_product_ids_`+ key + `">` + value + `</label>
+              </div>`;
+          });
 
-  $('#start_date').datetimepicker({
+          jQuery("#edit_tickets").html(htmlOutputStart);
+
+          product_ids_selected.forEach(function (key) {
+            // Mark the checkbox as selected if the key exists
+            var checkbox = document.getElementById("edit_product_ids_" + key);
+            if (checkbox) {
+              checkbox.checked = true;
+            }
+          });
+
+        }
+      },
+    });
+
+  });
+
+  jQuery('#start_date').datetimepicker({
     format: 'YYYY-MM-DD H:mm'
   });
 
-  $('#end_date').datetimepicker({
+  jQuery('#end_date').datetimepicker({
     format: 'YYYY-MM-DD H:mm'
   });
 
-  console.log("Document ready.");
+  jQuery('#edit_start_date').datetimepicker({
+    format: 'YYYY-MM-DD H:mm'
+  });
 
-  // Check if the URL contains 'category_id'
-  if (window.location.href.indexOf('category_id') !== -1) {
-    console.log("URL contains 'category_id'.");
+  jQuery('#edit_end_date').datetimepicker({
+    format: 'YYYY-MM-DD H:mm'
+  });
 
-    // Check how many elements are selected before applying the style change
-    var elements = jQuery('.elementor .hide_back_btn_gallery');
-    console.log(elements.length + " elements found with the class 'hide_back_btn_gallery'.");
-
-    // Override the CSS for '.elementor .hide_back_btn_gallery'
-    elements.css('display', 'block');
-
-    // Confirm the style change was attempted
-    console.log("Attempted to change display to 'block'.");
-  } else {
-    console.log("URL does not contain 'category_id'.");
-  }
 });
 
