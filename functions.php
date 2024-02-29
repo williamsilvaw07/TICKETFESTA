@@ -34,8 +34,8 @@ function add_event_association_column_content_with_image( $column, $product_id )
     }
 }
 
-add_action( 'woocommerce_admin_process_product_object', 'set_product_image_to_event_image', 10, 1 );
-function set_product_image_to_event_image( $product ) {
+add_action( 'woocommerce_admin_process_product_object', 'set_product_image_to_event_image_using_url', 10, 1 );
+function set_product_image_to_event_image_using_url( $product ) {
     // Check if the product already has a featured image set
     if ( !empty( $product->get_image_id() ) ) {
         return; // If so, no action is needed
@@ -46,16 +46,20 @@ function set_product_image_to_event_image( $product ) {
 
     // Proceed if there's an associated event
     if ( !empty( $event_id ) ) {
-        // Get the event's featured image ID
-        $event_image_id = get_post_thumbnail_id( $event_id );
+        // Get the event's featured image URL
+        $event_image_url = get_the_post_thumbnail_url( $event_id, 'full' );
 
-        // If the event has a featured image, set it as the product's image
-        if ( !empty( $event_image_id ) ) {
-            $product->set_image_id( $event_image_id );
+        if ( !empty( $event_image_url ) ) {
+            // Use the utility function to set the event image as the product's featured image
+            Generate_Featured_Image( $event_image_url, $product->get_id() );
         }
     }
 }
 
+// Define the utility function for setting the featured image from a URL
+function Generate_Featured_Image( $image_url, $post_id ){
+    // Your existing code for downloading the image and setting it as featured image
+}
 
 
 /**
