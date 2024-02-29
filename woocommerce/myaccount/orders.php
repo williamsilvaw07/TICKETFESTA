@@ -276,7 +276,6 @@ tr.woocommerce-orders-table__row , thead tr{
 .order_event_container{
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
     align-content: center;
     justify-content: flex-start;
     align-items: center;
@@ -344,6 +343,16 @@ tr.woocommerce-orders-table__row , thead tr{
 }
 
 
+
+@media (max-width: 1350x) {
+	.order_event_image {
+    width: 100%;
+    height: 100%;
+    max-width: 175px;
+    max-height: 130px;
+}
+
+}
 
 @media (max-width: 1294px) {
 	.woocommerce-orders-table__cell-order-number , th.woocommerce-orders-table__header-order-number{
