@@ -259,6 +259,10 @@ jQuery(document).ready(function($) {
 }
 .order_event_image{
 	border-radius: 6px;
+	display: flex;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
 }
 
 .order_event_image img{
