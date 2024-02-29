@@ -401,7 +401,7 @@ display:none!important
     justify-content: center;
     gap: 10px;
 }
-body .woocommerce-orders-table__cell {
+html .woocommerce-account .woocommerce-orders-table__cell {
 	padding: 0 !important;
 }
 
