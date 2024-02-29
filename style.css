@@ -1079,7 +1079,10 @@ margin-top: 0!important;
 .woocommerce-account .entry-header{
     display: none;
 }
-
+.woocommerce-account .woocommerce-MyAccount-content{
+    float: inherit!important;
+    width: inherit!important;
+}
 .woocommerce-MyAccount-navigation{
     min-height: 100%;
     position: relative;
