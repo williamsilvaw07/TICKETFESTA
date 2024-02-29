@@ -420,6 +420,7 @@ jQuery(document).ready(function($) {
 {position: relative;
     right: 2px;
     top: 1px;
+    color:#1A1A1A!important
 
 }
 body .share_btn{
