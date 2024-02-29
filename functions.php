@@ -2491,7 +2491,7 @@ add_shortcode('bank_details_form', 'display_bank_details_form');
 
 
 // Add shortcode to display the image upload form
-include get_stylesheet_directory() . '/organiser-image-gallery.php';
+// include get_stylesheet_directory() . '/organiser-image-gallery.php';
 
 
 // Add shortcode to display organiser account settings 
