@@ -93,7 +93,7 @@ class TicketSiteFees {
             SELECT ID
             FROM {$wpdb->prefix}posts
             WHERE post_type = 'shop_order'
-            AND post_status IN ('wc-completed', 'wc-processing', 'wc-on-hold') -- You can adjust the post statuses as needed
+            AND post_status IN ('wc-completed', 'wc-processing', 'wc-on-hold')
             AND post_date >= %s
             AND post_date <= %s
         ", $start_date, $end_date);
