@@ -399,7 +399,7 @@ display:none!important
     justify-content: center;
 
 }
-.woocommerce-orders-table__cell-order-number:before , .woocommerce-orders-table__cell-order-actions:before{
+.woocommerce-orders-table__cell-order-number:before , .woocommerce-orders-table__cell-order-actions:before , .woocommerce-orders-table__cell-order-date:before{
 	display:none!important
 }
 .order_event_details {
