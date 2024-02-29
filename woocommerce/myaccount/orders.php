@@ -436,6 +436,26 @@ html .woocommerce-account  .woocommerce-orders-table__cell-order-total{
 
 
 
+@media (max-width: 700px) {
+	#custom-welcome-message{
+		display:none
+	}
+	.woocommerce-MyAccount-navigation{
+		width: 100%;
+    max-width: 100%;
+    height: 76px;
+    background-color: #000000;
+    position: fixed;
+    top: 91.1%;
+    left: 0px;
+    padding: 4px 4px;
+    padding-top: 0;
+    z-index: 99;
+	}
+}
+
+
+
 
 
 
