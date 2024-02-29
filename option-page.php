@@ -83,7 +83,7 @@ $order_id = 4297;
 $order = wc_get_order($order_id);
 
 // Get fees applied to the order
-$fees = $order->get_fees();
+$fees = $order->get_items(['fee']);
 echo '<pre>';
 var_dump($fees);
 echo '</pre>';
