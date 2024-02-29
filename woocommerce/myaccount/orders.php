@@ -358,6 +358,23 @@ tr.woocommerce-orders-table__row , thead tr{
 
 
 
+@media (max-width: 950px) {
+    .woocommerce-orders-table__cell-order-number, 
+    .woocommerce-orders-table__header-order-number {
+        flex: 0 0 60%;
+    }
+    .woocommerce-orders-table__cell-order-date, 
+    .woocommerce-orders-table__header-order-date, 
+    .woocommerce-orders-table__cell-order-status, 
+    .woocommerce-orders-table__header-order-status, 
+    .woocommerce-orders-table__cell-order-total, 
+    .woocommerce-orders-table__header-order-total, 
+    .woocommerce-orders-table__cell-order-actions, 
+    .woocommerce-orders-table__header-order-actions {
+        flex: 1;
+    }
+}
+
 
 
 
