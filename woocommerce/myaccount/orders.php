@@ -57,6 +57,7 @@ do_action( 'woocommerce_before_account_orders', $has_orders ); ?>
     </a>
     <?php
  // Loop through each order item
+// Loop through each order item
 $items = $order->get_items();
 foreach ( $items as $item_id => $item ) {
     // Display the product name and quantity together
@@ -72,7 +73,7 @@ foreach ( $items as $item_id => $item ) {
         // Format the date and time for display
         // Adjust the date format string as needed
         if ($event_start_date) {
-            $formatted_date = date_i18n('F j, Y g:i a', strtotime($event_start_date));
+            $formatted_date = date_i18n('d M, H:i', strtotime($event_start_date));
             echo '<p>Event Date & Time: ' . esc_html($formatted_date) . '</p>';
         }
 
@@ -96,6 +97,7 @@ foreach ( $items as $item_id => $item ) {
         echo '<p>No associated event found.</p>';
     }
 }
+
     ?>
 
 
