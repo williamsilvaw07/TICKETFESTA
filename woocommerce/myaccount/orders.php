@@ -278,7 +278,7 @@ jQuery(document).ready(function($) {
     flex-direction: column;
     align-content: center;
     justify-content: space-between;
-    gap: 11px;
+    gap: 8px;
 }
 
 .order_event_details h5{
