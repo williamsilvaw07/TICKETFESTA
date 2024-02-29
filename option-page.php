@@ -65,6 +65,8 @@ if (!empty($order_ids)) {
     
     // Output order meta
     if (!empty($order_meta)) {
+        $order_meta = array_map('maybe_unserialize', $order_meta);
+
         echo "Order Meta for Order ID $order_id:<br>";
         foreach ($order_meta as $meta_key => $meta_values) {
             echo "$meta_key: " . implode(', ', $meta_values) . "<br>";
