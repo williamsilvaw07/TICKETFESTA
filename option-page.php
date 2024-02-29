@@ -56,7 +56,30 @@ if (!empty($order_ids)) {
 
 			
 		</div>
-	<?php }
+	<?php 
+    
+    $order_id = 4297;
+
+    // Get order meta
+    $order_meta = get_post_meta($order_id);
+    
+    // Output order meta
+    if (!empty($order_meta)) {
+        $order_meta = array_map('maybe_unserialize', $order_meta);
+
+        echo "Order Meta for Order ID $order_id:<br>";
+        foreach ($order_meta as $meta_key => $meta_values) {
+            echo "$meta_key: " . implode(', ', $meta_values) . "<br>";
+        }
+    } else {
+        echo "No order meta found for order ID: $order_id";
+    }
+    
+
+}
+
+    // Replace <your_order_id_here> with the actual order ID
+
 
 }
 if ( is_admin() )
