@@ -2,37 +2,28 @@
 <?php
 
 
-add_action( 'woocommerce_update_product', 'set_ticket_featured_image_to_event_image', 10, 2 );
-
-function set_ticket_featured_image_to_event_image( $product_id, $product ) {
-    // Adding error logging to help diagnose issues
-    error_log( 'Running set_ticket_featured_image_to_event_image for product ID: ' . $product_id );
-
-    // Check if the product already has a featured image
-    if ( has_post_thumbnail( $product_id ) ) {
-        error_log( 'Product ID ' . $product_id . ' already has a featured image.' );
-        return; // Exit if the product has a featured image
-    }
-
-    // Check if this product is a ticket associated with an event
-    $event_id = get_post_meta( $product_id, '_tribe_wooticket_for_event', true );
-    if ( !$event_id ) {
-        error_log( 'No associated event ID found for product ID ' . $product_id );
-        return; // Exit if not associated with an event or if the event ID is not set
-    }
-
-    // Check if the associated event has a featured image
-    $event_thumbnail_id = get_post_thumbnail_id( $event_id );
-    if ( !$event_thumbnail_id ) {
-        error_log( 'No featured image found for event ID ' . $event_id );
-        return;
-    }
-
-    // Set the event's featured image as the product's featured image
-    if ( set_post_thumbnail( $product_id, $event_thumbnail_id ) ) {
-        error_log( 'Featured image set for product ID ' . $product_id . ' using event ID ' . $event_id );
-    } else {
-        error_log( 'Failed to set featured image for product ID ' . $product_id . ' using event ID ' . $event_id );
+add_filter( 'manage_edit-product_columns', 'add_event_association_column_header', 20 );
+function add_event_association_column_header( $columns ) {
+    // Add a new column for the event association
+    $columns['event_association'] = __( 'Associated Event', 'your-textdomain' );
+    return $columns;
+}
+add_action( 'manage_product_posts_custom_column', 'add_event_association_column_content', 10, 2 );
+function add_event_association_column_content( $column, $product_id ) {
+    if ( $column == 'event_association' ) {
+        // Retrieve the associated event ID using the meta key you use to link tickets to events
+        $event_id = get_post_meta( $product_id, '_tribe_wooticket_for_event', true );
+        if ( !empty( $event_id ) ) {
+            // Optionally, display the event title instead of or in addition to the ID
+            $event_post = get_post( $event_id );
+            if ( $event_post ) {
+                echo esc_html( $event_post->post_title );
+            } else {
+                _e( 'No associated event', 'your-textdomain' );
+            }
+        } else {
+            _e( 'N/A', 'your-textdomain' ); // Display something if there's no association
+        }
     }
 }
 
