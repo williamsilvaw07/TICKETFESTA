@@ -1108,10 +1108,10 @@ text-transform: capitalize!important;
     font-size: 17px!important;
 }
 .event-tickets .tribe-tickets__tickets-item-details-content, .entry .entry-content .event-tickets .tribe-tickets__tickets-item-details-content {
-    color: #878787!important;
+    color: #fffff!important;
     font-size: 13px!important;
     letter-spacing: 1px;
-    font-weight: 300;
+    font-weight: 500;
 
 }
 .tribe-tickets__tickets-item-extra-price{
@@ -1474,7 +1474,7 @@ html .single-tribe_events .tribe-events-gmap{
 span.site-fee-container, span.site-fee-container span.ticket_site_fee  , .enddate , .startdate{
     color: #949494!important;
     font-size: 13px;
-    font-weight: 500;
+    font-weight: 300;
 }
 /**ticket popup**/
 
