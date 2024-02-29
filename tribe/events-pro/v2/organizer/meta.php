@@ -262,19 +262,19 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 
 <!-- organizer profile nav -->
 <div class="organizer_navbar">
-	<div class="organizer_nav-item organizer_events">
-	  <img src="https://thaynna-william.co.uk/wp-content/uploads/2023/12/calendar-1.png" alt="Events Icon" class="organizer_nav-icon" width="21">
-	  <span>Events</span>
-	</div>
-	<div class="organizer_nav-item organizer_Gallery">
-	  <img src="https://thaynna-william.co.uk/wp-content/uploads/2023/12/image-gallery-1.png" alt="Gallery Icon" class="organizer_nav-icon" width="21">
-	  <span>Gallery</span>
-	</div>
-	<div class="organizer_nav-item organizer_about">
-	  <img src="https://thaynna-william.co.uk/wp-content/uploads/2023/12/user-1-1.png" alt="About Icon" class="organizer_nav-icon profile_icon_nav" width="21">
-	  <span>About</span>
-	</div>
+  <div class="organizer_nav-item organizer_events">
+    <i class="fa fa-calendar-alt organizer_nav-icon" aria-hidden="true"></i>
+    <span>Events</span>
   </div>
+  <div class="organizer_nav-item organizer_Gallery">
+    <i class="fa fa-images organizer_nav-icon" aria-hidden="true"></i>
+    <span>Gallery</span>
+  </div>
+  <div class="organizer_nav-item organizer_about">
+    <i class="fa fa-user organizer_nav-icon profile_icon_nav" aria-hidden="true"></i>
+    <span>About</span>
+  </div>
+</div>
   <!-- organizer profile nav END -->
 
 
@@ -1420,6 +1420,10 @@ width: fit-content!important;
     gap: 10px;
     padding: 12px 19px 12px 19px!important;
  
+}
+
+.organizer_nav-item.active i{
+    color:#d3fa16 !important
 }
 .profile_icon_nav{
     max-width: 17px!important;

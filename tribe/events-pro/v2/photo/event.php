@@ -35,13 +35,16 @@ $organizer_names = array_map('tribe_get_organizer', $organizer_ids);
 ?>
 <article <?php tribe_classes( $classes ) ?>>
  <!-- Share Button -->
- <button class="share_btn"><img src="https://thaynna-william.co.uk/wp-content/uploads/2024/02/share-ios-chunky_svg__eds-icon-share-ios-chunky_svg-1.png"></button>
+ <button class="share_btn">
+  <i class="fas fa-share-alt"></i>
+</button>
+
     
     <?php if ( has_post_thumbnail($event->ID) ) : ?>
         <?php $this->template( 'photo/event/featured-image', [ 'event' => $event ] ); ?>
     <?php else : ?>
         <div class="event-featured-image-placeholder">
-            <img src="https://ticketfesta.co.uk/wp-content/uploads/2024/02/placeholder-4-e1708647807620.png" alt="Placeholder Image">
+            <img src="https://ticketfesta.co.uk/wp-content/uploads/2024/02/placeholder-1-1.png" alt="Placeholder Image">
         </div>
     <?php endif; ?>
 
@@ -49,18 +52,40 @@ $organizer_names = array_map('tribe_get_organizer', $organizer_ids);
     <div class="overlay" style="display: none;"></div>
 
     <!-- Popup div for sharing link -->
+
     <div class="share_btn_event" style="display: none;">
-        <button class="close_popup" aria-label="Close">&times;</button>
-        <h3>Share with friends</h3>
-        <div class="share_event_url">
-            <span class="share_popup_box_title">Event URL</span>
-            <div class="share_event_url_inner">
-                <span class="eventUrl"><?php echo esc_url( tribe_get_event_link($event) ); ?></span>
-                <button class="copyButton"><img src="https://thaynna-william.co.uk/wp-content/uploads/2024/02/copy.png" alt="Copy URL"></button>
-            </div>
-        </div>
-        <span class="copyMessage" style="display: none;">Link copied!</span>
+    <button class="close_popup" aria-label="Close">&times;</button>
+    <h3>Share with friends</h3>
+    <div class="social_sharing_links">
+        <!-- Facebook -->
+        <a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo urlencode(esc_url( tribe_get_event_link($event) )); ?>" target="_blank" aria-label="Share on Facebook">
+            <i class="fab fa-facebook-f"></i>
+        </a>
+        <!-- Twitter -->
+        <a href="https://twitter.com/intent/tweet?url=<?php echo urlencode(esc_url( tribe_get_event_link($event) )); ?>&text=Check%20out%20this%20event!" target="_blank" aria-label="Share on Twitter">
+            <i class="fab fa-twitter"></i>
+        </a>
+        <!-- Messenger -->
+        <a href="fb-messenger://share?link=<?php echo urlencode(esc_url( tribe_get_event_link($event) )); ?>" target="_blank" aria-label="Share on Messenger">
+            <i class="fab fa-facebook-messenger"></i>
+        </a>
+        <!-- WhatsApp -->
+        <a href="https://wa.me/?text=<?php echo urlencode(esc_url( tribe_get_event_link($event) )); ?>" target="_blank" aria-label="Share on WhatsApp">
+            <i class="fab fa-whatsapp"></i>
+        </a>
     </div>
+    <div class="share_event_url">
+        <span class="share_popup_box_title">Event URL</span>
+        <div class="share_event_url_inner">
+            <span class="eventUrl"><?php echo esc_url( tribe_get_event_link($event) ); ?></span>
+            <button class="copyButton" aria-label="Copy URL">
+                <i class="fas fa-copy"></i>
+            </button>
+        </div>
+    </div>
+    <span class="copyMessage" style="display: none;">Link copied!</span>
+</div>
+
 
     <div class="tribe-events-pro-photo__event-details-wrapper">
         <?php $this->template( 'photo/event/date-tag', [ 'event' => $event ] ); ?>
@@ -76,6 +101,7 @@ $organizer_names = array_map('tribe_get_organizer', $organizer_ids);
 <!-- Event Day and Time -->
 <div class="event-day">
     <?php 
+    $$event_id = $event->ID;
     // Format for the date and time
     $event_start_date_time = tribe_get_start_date( $event_id, true, 'D, j M, H:i' );
     
@@ -233,19 +259,17 @@ jQuery(document).ready(function($) {
     
 
   // Copy to clipboard functionality
-  $(document).on('click', '.copyButton', function() {
-    var eventUrlText = $(this).siblings('.eventUrl').text();
-    //console.log('Copy button clicked, text to copy:', eventUrlText);
+  $(document).ready(function() { // Ensure the DOM is fully loaded
+    $(document).on('click', '.copyButton', function() {
+        var eventUrlText = $(this).siblings('.eventUrl').text();
+        var $button = $(this); // Reference to the clicked button
 
-    var $button = $(this); // Save the reference to 'this' (the clicked button)
-
-    navigator.clipboard.writeText(eventUrlText).then(function() {
-        //console.log('Text successfully copied to the clipboard'); 
-        $button.siblings('.copyMessage').text('Link copied!').css('display', 'block').delay(3000).fadeOut(400, function() {
-       //     console.log('Copy message should now be hidden');
+        navigator.clipboard.writeText(eventUrlText).then(function() {
+            // Attempt to display the message directly without relying on siblings, for troubleshooting
+            $('.copyMessage').text('Link copied!').css('display', 'block').delay(3000).fadeOut(400);
+        }).catch(function(error) {
+            console.error('Error copying text:', error);
         });
-    }).catch(function(error) {
-      //  console.error('Error copying text to clipboard:', error);
     });
 });
 
@@ -393,8 +417,30 @@ jQuery(document).ready(function($) {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Light black box shadow */
 
 }
-.share_btn{
+.share_btn i
+{position: relative;
+    right: 2px;
+    top: 1px;
+
+
+}
+body .social_sharing_links{
+    padding-bottom: 22px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 17px;
+}
+.social_sharing_links i{
+    color:#1A1A1A!important
+}
+body .share_btn{
     z-index: 9; 
+    background: white!important;
+    border-radius: 100px;
+    width: 30px;
+    height: 30px;
 }
 
 .overlay {

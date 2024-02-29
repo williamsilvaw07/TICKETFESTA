@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         var ticketAmount = parseFloat(jQuery('.tribe-amount').text().trim()).toFixed(2);
         var ticketSiteFee =  get_tribe_ticket_fee(ticketAmount);
-        jQuery(this).append('<span class="site-fee-container">+£ <span class="ticket_site_fee">'+ticketSiteFee+'</span> fee</span>');
+        jQuery(this).append('<span class="site-fee-container">+ £<span class="ticket_site_fee">'+ticketSiteFee+'</span> Fee</span>');
     }); 
 
     // jQuery('.tribe-tickets__tickets-footer-total').each(function() {
@@ -193,9 +193,9 @@ jQuery(document).ready(function($) {
         let dateHtml = '';
 
         if(start_date_passed != '1'){
-            dateHtml += '<div class="startdate"> Start Date: ' + start_date + '</div>';
+            dateHtml += '<div class="startdate">Sales start on ' + start_date + '</div>';
         }
-        dateHtml += '<div class="enddate"> End Date: ' + end_date + '</div>';
+        dateHtml += '<div class="enddate">Sales end on ' + end_date + '</div>';
         // Create a new title element
         var $newTitleElement = $(dateHtml); 
         

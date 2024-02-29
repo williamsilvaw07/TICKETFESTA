@@ -104,12 +104,12 @@ $cost  = tribe_get_formatted_cost( $event_id );
                     $end_dateTime = $ticket->end_date. ' ' .$ticket->end_time;
                     $date = new DateTime($start_dateTime);
                     $date->setTimezone(new DateTimeZone('Europe/London'));
-                    $EventStartDate = $date->format('D, d M, H:i T');
+                    $EventStartDate = $date->format('d M, H:i');
                     $startDatedPassed = $date < $currentDateTime;
 
                     $date = new DateTime($end_dateTime);
                     $date->setTimezone(new DateTimeZone('Europe/London'));
-                    $EventEndDate = $date->format('D, d M, H:i T');
+                    $EventEndDate = $date->format('d M, H:i');
                     $endDatedPassed = $date < $currentDateTime;
                     echo "<div style='display:none' class='ticket-date-container' data-ticket-id='$ticket->ID'> 
                         <span class='pick_start_date' data-passed='$startDatedPassed'>$EventStartDate</span> 
@@ -1108,10 +1108,10 @@ text-transform: capitalize!important;
     font-size: 17px!important;
 }
 .event-tickets .tribe-tickets__tickets-item-details-content, .entry .entry-content .event-tickets .tribe-tickets__tickets-item-details-content {
-    color: #878787!important;
+    color: #ffff!important;
     font-size: 13px!important;
     letter-spacing: 1px;
-    font-weight: 300;
+    font-weight: 500;
 
 }
 .tribe-tickets__tickets-item-extra-price{
@@ -1466,7 +1466,16 @@ html .single-tribe_events .tribe-events-gmap{
     font-weight: 400!important;
 }
 
+.site-fee-container{
+    text-align: right;
+}
 
+
+span.site-fee-container, span.site-fee-container span.ticket_site_fee  , .enddate , .startdate{
+    color: #949494!important;
+    font-size: 13px;
+    font-weight: 300;
+}
 /**ticket popup**/
 
 .popup-background {
