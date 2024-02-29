@@ -438,7 +438,7 @@ html .woocommerce-account  .woocommerce-orders-table__cell-order-total{
 
 @media (max-width: 700px) {
 	#custom-welcome-message{
-		display:none
+		display:none!important
 	}
 	.woocommerce-MyAccount-navigation{
 		width: 100%;
