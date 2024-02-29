@@ -71,7 +71,7 @@ if (!empty($order_ids)) {
         foreach ($order_meta as $meta_key => $meta_values) {
             echo "$meta_key: " . implode(', ', $meta_values) . "<br>";
         }
-        var_dump($order_meta["_community_tickets_order_fees"][0]);
+        var_dump(unserialize($order_meta["_community_tickets_order_fees"][0]));
     } else {
         echo "No order meta found for order ID: $order_id";
     }
