@@ -76,8 +76,59 @@ if (!empty($order_ids)) {
         echo "No order meta found for order ID: $order_id";
     }
     
+// Replace <your_order_id_here> with the actual order ID
+$order_id = 4297;
+
+// Get the order object
+$order = wc_get_order($order_id);
+
+// Get fees applied to the order
+$fees = $order->get_fees();
+echo '<pre>';
+var_dump($fees);
+echo '</pre>';
+
+// Output the custom fees
+if (!empty($fees)) {
+    echo "Custom Fees for Order ID $order_id:<br>";
+    foreach ($fees as $fee) {
+        echo "{$fee->name}: {$fee->amount}<br>";
+    }
+} else {
+    echo "No custom fees found for order ID: $order_id";
+}
+
+
+// Get the order object
+$order = wc_get_order( $order_id );
+
+// Check if $order is valid
+if ( ! $order ) {
+  return; // Handle the case where the order is not found
+}
+
+// Initialize an empty array to store the fees
+$custom_fees = array();
+
+// Loop through all order fees
+foreach ( $order->get_items( 'fee' ) as $item_id => $item_fee ) {
+
+  // Check if the fee is a custom fee (not a tax)
+  if ( ! $item_fee->is_tax() ) {
+    $custom_fees[] = array(
+      'name' => $item_fee->get_name(),
+      'total' => $item_fee->get_total(),
+      'total_tax' => $item_fee->get_total_tax(),
+    );
+  }
+}
+
+// $custom_fees will now contain an array of associative arrays,
+// each representing a custom fee with details like name, total, and total tax.
 
 }
+
+
 
     // Replace <your_order_id_here> with the actual order ID
 
