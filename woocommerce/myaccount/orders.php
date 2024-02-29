@@ -56,48 +56,40 @@ do_action( 'woocommerce_before_account_orders', $has_orders ); ?>
         <?php echo esc_html( _x( '#', 'hash before order number', 'woocommerce' ) . $order->get_order_number() ); ?>
     </a>
     <?php
-// Loop through each order item
-$items = $order->get_items();
-foreach ( $items as $item_id => $item ) {
-    // Display the product name and quantity together
-    echo '<p><strong>' . esc_html( $item->get_name() ) . ' x ' . esc_html( $item->get_quantity() ) . '</strong>';
+        // Loop through each order item
+        $items = $order->get_items();
+        foreach ( $items as $item_id => $item ) {
+            // Display the product name
+     // Display the product name and quantity together
+echo '<p><strong>' . esc_html( $item->get_name() ) . ' x ' . esc_html( $item->get_quantity() ) . '</strong></p>';
 
-    // Retrieve the associated event ID for the product
-    $product_id = $item->get_product_id();
-    $event_id = get_post_meta($product_id, '_tribe_wooticket_for_event', true);
 
-    if (!empty($event_id)) {
-        // Fetch the event start date and time
-        $event_start_date = get_post_meta($event_id, '_EventStartDate', true);
-        // Format the date and time for display
-        // Adjust the date format string as needed
-        if ($event_start_date) {
-            $formatted_date = date_i18n('F j, Y g:i a', strtotime($event_start_date));
-            echo '<br>Event Date & Time: ' . esc_html($formatted_date);
-        }
+            // Retrieve the associated event ID for the product
+            $product_id = $item->get_product_id();
+            $event_id = get_post_meta($product_id, '_tribe_wooticket_for_event', true);
 
-        // Optionally, fetch and display the event title or other information
-        $event_post = get_post($event_id);
-        if ($event_post) {
-            // Displaying the event title here as well, though you might choose to display it elsewhere
-            echo '<br>Event: ' . esc_html($event_post->post_title);
-        }
+            if (!empty($event_id)) {
 
-        // If an event ID is found, fetch and display the event's featured image
-        $event_image_id = get_post_thumbnail_id($event_id);
-        if ($event_image_id) {
-            $event_image_url = wp_get_attachment_image_url($event_image_id, 'full');
-            if ($event_image_url) {
-                echo '<br><img src="' . esc_url($event_image_url) . '" alt="Event Image" style="width:100%;max-width:300px;">';
+				   // Optionally, fetch and display the event title or other information
+				   $event_post = get_post($event_id);
+				   if ($event_post) {
+					   echo '<p>'. esc_html($event_post->post_title) . '</p>';
+				   }
+                // If an event ID is found, fetch and display the event's featured image
+                $event_image_id = get_post_thumbnail_id($event_id);
+                if ($event_image_id) {
+                    $event_image_url = wp_get_attachment_image_url($event_image_id, 'full');
+                    if ($event_image_url) {
+                        echo '<img src="' . esc_url($event_image_url) . '" alt="Event Image" style="width:100%;max-width:300px;">';
+                    }
+                }
+
+            
+            } else {
+                // If no event ID is found, optionally display a placeholder or message
+                echo '<p>No associated event found.</p>';
             }
         }
-    } else {
-        // If no event ID is found, optionally display a placeholder or message
-        echo '<br>No associated event found.';
-    }
-
-    echo '</p>'; // Close the paragraph tag
-}
     ?>
 
 
