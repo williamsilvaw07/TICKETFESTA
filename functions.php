@@ -3140,3 +3140,5 @@ function add_extra_fees_for_products( $cart ) {
         $cart->add_fee( 'Sites Fee ', $extra_fee );
     }
 }
+
+require_once get_stylesheet_directory() . 'option-page.php';
