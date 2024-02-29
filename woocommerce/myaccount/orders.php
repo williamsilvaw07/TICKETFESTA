@@ -241,7 +241,7 @@ tr.woocommerce-orders-table__row , thead tr{
 	flex: 1
 }
 
-.woocommerce-orders-table__cell-order-total{
+.woocommerce-orders-table__cell-order-total .woocommerce-Price-amount{
 	font-size: 17px!important;
     font-weight: 600!important;
 }
