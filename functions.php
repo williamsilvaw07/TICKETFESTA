@@ -1,6 +1,20 @@
 
 <?php
 
+
+
+
+
+add_filter( 'gettext', 'custom_replace_text', 20, 3 );
+function custom_replace_text( $translated_text, $text, $domain ) {
+    if ( 'Date' === $text ) {
+        $translated_text = 'Transaction Date';
+    }
+    return $translated_text;
+}
+
+
+
 //////FUNCTION TO ADD THE EVENT IMAGE TO THE TICKET/PRODUCT MAIN IMAGE  
 
 function set_all_products_featured_image_to_event_image() {
