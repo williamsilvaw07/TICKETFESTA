@@ -385,7 +385,7 @@ thead{
 display:none!important
 }
 .woocommerce-orders-table__cell-order-date:before{
-	content: "Transaction Date";
+	content: "Transaction Date"!important;
     font-size: 15px;
     font-weight: 900;
 }
