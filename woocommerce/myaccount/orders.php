@@ -365,6 +365,13 @@ tr.woocommerce-orders-table__row , thead tr{
 
 }
 
+@media (max-width: 1180px) {
+	.order_event_container {
+
+    flex-wrap: wrap;
+}
+
+}
 
 
 @media (max-width: 950px) {
