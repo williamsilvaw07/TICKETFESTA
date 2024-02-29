@@ -101,6 +101,7 @@ $organizer_names = array_map('tribe_get_organizer', $organizer_ids);
 <!-- Event Day and Time -->
 <div class="event-day">
     <?php 
+    $$event_id = $event->ID;
     // Format for the date and time
     $event_start_date_time = tribe_get_start_date( $event_id, true, 'D, j M, H:i' );
     
