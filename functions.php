@@ -41,7 +41,7 @@ function add_event_association_column_content_with_image( $column, $product_id )
 
 
 function set_product_image_to_event_featured_image() {
-    $product_id = 4291; // The ID of the product to update.
+    $product_id = 4026; // The ID of the product to update.
 
     // Retrieve the associated event ID stored in the product's metadata.
     $event_id = get_post_meta($product_id, '_associated_event_id', true);
