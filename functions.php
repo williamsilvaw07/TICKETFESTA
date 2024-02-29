@@ -1570,6 +1570,229 @@ function shortcode_revenue()
 add_shortcode('revenue', 'shortcode_revenue');
 
 
+
+
+
+
+function shortcode_current_user_upcoming_live_events_count()
+{
+    if (!is_user_logged_in()) {
+        return 'You must be logged in to view your events.';
+    }
+
+    $current_user_id = get_current_user_id();
+    $today_date = date('Y-m-d');
+
+    // Query for live events happening today or in the future
+    $events = tribe_get_events([
+        'posts_per_page' => -1, // Retrieve all matching events
+        'start_date' => $today_date, // From today onwards
+        'end_date' => '2030-12-31', // Arbitrary far future date
+        'author' => $current_user_id, // Events by the current user
+        'post_status' => 'publish', // Only published (live) events
+    ]);
+
+    // Count the events
+    $upcoming_live_events_count = count($events);
+
+    // Return the count in the specified HTML layout
+    return '
+    <div class="sales-card today_sale_admin_dashboard">
+        <div class="sales-card-content ">
+            <div class="sales-today ">
+                <h5 class="admin_dashboard_sales-label card_admin_dashboard ">Live Events</h5>
+                <div class="admin_dashboard_sales-amount ">' . $upcoming_live_events_count . ' <span class="admin_dashboard_sales-amount_span">Events</span></div>
+                <div class="admin_dashboard_sales-amount_view_full_report">
+                    <a href="/organizer-events/">View Live Events </a>
+                </div>                
+            </div>
+            <!-- Additional sections can go here -->
+        </div>
+    </div>';
+}
+
+add_shortcode('user_live_events_count', 'shortcode_current_user_upcoming_live_events_count');
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////END////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+///FUNCTION FOR THE EVENT STAUS 
+add_action('init', 'update_event_status');
+
+function update_event_status()
+{
+    if (
+        isset($_POST['event_status_nonce'], $_POST['event_status'], $_POST['event_id']) &&
+        wp_verify_nonce($_POST['event_status_nonce'], 'event_status_update')
+    ) {
+        $event_id = absint($_POST['event_id']);
+        $new_status = sanitize_text_field($_POST['event_status']);
+
+        if (current_user_can('edit_post', $event_id) && in_array($new_status, ['draft', 'publish'])) {
+            wp_update_post([
+                'ID' => $event_id,
+                'post_status' => $new_status
+            ]);
+        }
+    }
+}
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////NEW FUNCTION ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+///FUNCTION TO GET THE LASTES 5 ORDER FOR THE CURRENT USER 
+function get_latest_orders_for_events($limit = 4, $page = 1)
+{
+    $current_user_id = get_current_user_id(); // Get the current user ID
+    $offset = ($page - 1) * $limit; // Calculate the offset for the current page
+
+    // Define the query for orders
+    $query_args = array(
+        'limit' => $limit,
+        'offset' => $offset,
+        'orderby' => 'date',
+        'order' => 'DESC',
+        'status' => array('completed', 'processing', 'on-hold'),
+        'paginate' => true
+    );
+
+    // Fetch the orders
+    $orders_pagination = wc_get_orders($query_args);
+    $latest_orders = $orders_pagination->orders;
+
+    $order_data = [];
+
+    foreach ($latest_orders as $order) {
+        if (!($order instanceof WC_Order)) {
+            continue;
+        }
+
+        $items = $order->get_items();
+        $valid_for_user = false;
+
+        foreach ($items as $item) {
+            $event_id = get_post_meta($item->get_product_id(), '_tribe_wooticket_for_event', true);
+
+            if ($event_id) {
+                $event_author_id = get_post_field('post_author', $event_id);
+                if ($event_author_id == $current_user_id) {
+                    $valid_for_user = true;
+                    break;
+                }
+            }
+        }
+
+        if ($valid_for_user) {
+            $data = new stdClass();
+            $data->order_id = $order->get_id();
+            $data->customer_name = $order->get_billing_first_name() . ' ' . $order->get_billing_last_name();
+            $data->customer_email = $order->get_billing_email();
+            $data->order_status = wc_get_order_status_name($order->get_status());
+            $data->order_subtotal = $order->get_subtotal();
+            $data->ticket_names = [];
+            $data->time_since = human_time_diff(strtotime($order->get_date_created()->date('Y-m-d H:i:s'))) . ' ago';
+
+            foreach ($items as $item) {
+                $product_name = $item->get_name();
+                $data->ticket_names[] = $product_name;
+            }
+
+            $order_data[] = $data;
+        }
+    }
+
+    return array('orders' => $order_data, 'total_pages' => $orders_pagination->max_num_pages);
+}
+
+
+function recent_activity_shortcode($atts)
+{
+    $atts = shortcode_atts(
+        array(
+            'limit' => 4,
+            'page' => 1
+        ),
+        $atts,
+        'recent_activity'
+    );
+
+    $latest_orders_data = get_latest_orders_for_events($atts['limit'], $atts['page']);
+    $latest_orders = $latest_orders_data['orders'];
+
+    ob_start();
+    ?>
+
+
+
+        <div class="admin_dashboard_main_recent_activity">
+            <h2>Recent Activity <span>Last 24h</span></h2>
+            <div class="admin_dashboard_main_activity_titles">
+                <div>Customer</div>
+                <div>Product</div>
+                <div>Status</div>
+                <div>Purchased</div>
+                <div>Amount</div>
+            </div>
+            <div class="admin_dashboard_main_activity_list">
+                <?php foreach ($latest_orders as $order_info): ?>
+                        <div class="admin_dashboard_main_activity_item">
+                            <div class="admin_dashboard_main_customer_info">
+                                <strong class="title">Customer</strong>
+                                <strong>
+                                    <?php echo esc_html($order_info->customer_name); ?>
+                                </strong>
+                                <span>
+                                    <?php echo esc_html($order_info->customer_email); ?>
+                                </span>
+                            </div>
+                            <div class="admin_dashboard_main_product">
+                                <strong class="title">Product</strong>
+                                <?php
+                                $product_names = implode(', ', $order_info->ticket_names);
+                                if (function_exists('mb_strlen') && function_exists('mb_substr')) {
+                                    echo esc_html(mb_strlen($product_names) > 20 ? mb_substr($product_names, 0, 20) . '...' : $product_names);
+                                } else {
+                                    echo esc_html(strlen($product_names) > 20 ? substr($product_names, 0, 20) . '...' : $product_names);
+                                }
+                                ?>
+                            </div>
+                            <div class="admin_dashboard_main_status">
+                                <strong class="title">Status</strong>
+                                <span class="status_result">
+                                    <?php echo esc_html($order_info->order_status); ?>
+                                </span>
+                            </div>
+                            <div class="admin_dashboard_main_retained">
+                                <strong class="title">Purchased</strong>
+                                <span class="time_info">
+                                    <?php echo esc_html($order_info->time_since); ?>
+                                </span>
+                            </div>
+                            <div class="admin_dashboard_main_amount">
+                                <strong class="title">Amount</strong>
+                                <?php echo wc_price($order_info->order_subtotal); ?>
+                            </div>
+                        </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
+
+
+
+        <?php
+        return ob_get_clean();
+}
+add_shortcode('recent_activity', 'recent_activity_shortcode');
+
  
  
  
