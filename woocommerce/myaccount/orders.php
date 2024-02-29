@@ -298,5 +298,8 @@ jQuery(document).ready(function($) {
 	font-weight: 600;
     text-transform: capitalize;
 }
+.woocommerce-orders-table__header-order-status , .woocommerce-orders-table__cell-order-status{
+	display:none!important
+}
 
 	</style>
