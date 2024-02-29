@@ -423,7 +423,7 @@ jQuery(document).ready(function($) {
 
 
 }
-.social_sharing_links{
+body .social_sharing_links{
     padding-bottom: 22px;
     display: flex;
     flex-direction: row;
