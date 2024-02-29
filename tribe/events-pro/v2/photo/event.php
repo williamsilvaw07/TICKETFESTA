@@ -402,7 +402,7 @@ jQuery(document).ready(function($) {
     top: 1px;
 
 }
-.share_btn{
+body .share_btn{
     z-index: 9; 
     background: white!important;
     border-radius: 100px;
