@@ -51,6 +51,11 @@ do_action( 'woocommerce_before_account_orders', $has_orders ); ?>
 
 
 
+  
+								
+
+
+
 								<?php elseif ( 'order-number' === $column_id ) : ?>
     <a href="<?php echo esc_url( $order->get_view_order_url() ); ?>">
         <?php echo esc_html( _x( '#', 'hash before order number', 'woocommerce' ) . $order->get_order_number() ); ?>
@@ -81,6 +86,8 @@ do_action( 'woocommerce_before_account_orders', $has_orders ); ?>
                 echo '</div>'; // Close the order_event_image div
 
                 echo '<div class="order_event_details">';
+                // Display the order number
+                echo '<p><strong>' . esc_html( _x( 'Order Number: #', 'order number label', 'woocommerce' ) . $order->get_order_number() ) . '</strong></p>';
                 // Fetch the event start date and time
                 $event_start_date = get_post_meta($event_id, '_EventStartDate', true);
                 // Format the date and time for display
