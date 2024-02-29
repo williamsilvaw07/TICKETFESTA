@@ -1421,6 +1421,10 @@ width: fit-content!important;
     padding: 12px 19px 12px 19px!important;
  
 }
+
+.organizer_nav-item.active i{
+    color:#d3fa16 !important
+}
 .profile_icon_nav{
     max-width: 17px!important;
 }
