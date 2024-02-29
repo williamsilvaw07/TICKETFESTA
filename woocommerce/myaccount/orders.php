@@ -382,10 +382,23 @@ tr.woocommerce-orders-table__row , thead tr{
     flex-direction: column;
 }
 .thead{
-
+display:none!important
 }
 .woocommerce-orders-table__cell-order-date:before{
-	content:"Transaction Date"
+	content: "Transaction Date";
+    font-size: 15px;
+    font-weight: 900;
+}
+.woocommerce-orders-table__cell-order-total:before{
+	content: "Total";
+    font-size: 15px;
+    font-weight: 900;
+}
+
+
+.woocommerce table.shop_table td {
+    text-align: center;
+    font-size: 16px!important;
 }
 }
 
