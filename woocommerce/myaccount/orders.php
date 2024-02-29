@@ -174,20 +174,29 @@ do_action( 'woocommerce_before_account_orders', $has_orders ); ?>
 
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Get all elements with class 'order_event_image'
-    var orderEventImages = document.querySelectorAll('.order_event_image');
+$(document).ready(function() {
+    // Get the image source dynamically
+    var imgSrc = $('.order_event_image img').attr('src');
 
-    // Loop through each image element
-    orderEventImages.forEach(function(image) {
-        // Get the closest parent table row element
-        var tableRow = image.closest('.woocommerce-orders-table__row');
+    // Set the background image of .order_event_image
+    $('.order_event_image').css('background-image', 'url(' + imgSrc + ')');
 
-        // Get the cell containing the order number
-        var orderNumberCell = tableRow.querySelector('.woocommerce-orders-table__cell-order-number');
+    // Add glass effect
+    $('.order_event_image').css({
+        'position': 'relative',
+        'overflow': 'hidden'
+    });
 
-        // Move the image element inside the order number cell
-        orderNumberCell.prepend(image);
+    $('.order_event_image').append('<div class="glass"></div>');
+
+    $('.order_event_image .glass').css({
+        'position': 'absolute',
+        'top': '0',
+        'left': '0',
+        'width': '100%',
+        'height': '100%',
+        'background': 'rgba(255, 255, 255, 0.5)',
+        'pointer-events': 'none'
     });
 });
 
