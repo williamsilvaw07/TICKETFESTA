@@ -228,6 +228,20 @@ jQuery(document).ready(function($) {
 
 <style>
 
+tr.woocommerce-orders-table__row{
+	display: flex;
+    width: 100%; 
+}
+
+.woocommerce-orders-table__cell-order-number{
+	flex: 0 0 60%
+}
+
+.woocommerce-orders-table__cell-order-date , .woocommerce-orders-table__cell-order-total , .woocommerce-orders-table__cell-order-actions {
+	flex: 1
+}
+
+
 
 
 .oder_nm_link_main{
