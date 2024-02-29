@@ -395,6 +395,15 @@ display:none!important
     font-weight: 900;
 }
 
+.order_event_container {
+    justify-content: center;
+
+}
+
+.order_event_details {
+    justify-content: space-between;
+}
+
 
 .woocommerce table.shop_table td {
     text-align: center;
