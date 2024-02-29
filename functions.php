@@ -45,7 +45,7 @@ function add_event_association_column_content_with_image( $column, $product_id )
 
 function update_all_product_featured_images() {
     // Set the attachment ID of your new main image.
-    $new_image_id = 123; // Change 123 to the actual attachment ID of your new image.
+    $new_image_id = 4291; // Change 123 to the actual attachment ID of your new image.
 
     // Query all products.
     $args = array(
