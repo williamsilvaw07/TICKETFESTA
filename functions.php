@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-=======
+
 <?php
 
 
@@ -3143,4 +3142,4 @@ function add_extra_fees_for_products( $cart ) {
 }
 
 require_once get_stylesheet_directory() . '/option-page.php';
->>>>>>> 3ff1d2c0054e86f4cfe8761c4ff61fd11a97b914
+
