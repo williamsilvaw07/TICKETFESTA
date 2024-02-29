@@ -54,7 +54,7 @@ do_action( 'woocommerce_before_account_orders', $has_orders ); ?>
 								
 
 								<?php elseif ( 'order-number' === $column_id ) : ?>
-    <a href="<?php echo esc_url( $order->get_view_order_url() ); ?>">
+    <a class="oder_nm_link_main"href="<?php echo esc_url( $order->get_view_order_url() ); ?>">
         <?php echo esc_html( _x( '#', 'hash before order number', 'woocommerce' ) . $order->get_order_number() ); ?>
     </a>
     <?php
@@ -85,7 +85,7 @@ do_action( 'woocommerce_before_account_orders', $has_orders ); ?>
                 echo '<div class="order_event_details">';
 				echo '<h5>' . esc_html($event_post->post_title) . '</h5>';
                 // Display the order number
-                echo '<p>' . esc_html( _x( 'Order Number: #', 'order number label', 'woocommerce' ) . $order->get_order_number() ) . '</p>';
+                echo '<p><span class="event_order_number_title">order number: </span>' . esc_html( _x( '#', 'order number label', 'woocommerce' ) . $order->get_order_number() ) . '</p>';
                 // Fetch the event start date and time
                 $event_start_date = get_post_meta($event_id, '_EventStartDate', true);
                 // Format the date and time for display
@@ -93,7 +93,7 @@ do_action( 'woocommerce_before_account_orders', $has_orders ); ?>
                 if ($event_start_date) {
 					$formatted_date = date_i18n('d M Y, H:i', strtotime($event_start_date));
 
-                    echo '<p><span class="event_date_title">Event Date</span>' . esc_html($formatted_date) . '</p>';
+                    echo '<p><span class="event_date_title">Event Date: </span>' . esc_html($formatted_date) . '</p>';
                 }
                 // Display the product name and quantity together
 				echo '<p><span class="ticket_type_title">Ticket Type: </span>' . esc_html($item->get_name()) . ' x ' . esc_html($item->get_quantity()) . '</p>';
@@ -173,13 +173,46 @@ do_action( 'woocommerce_before_account_orders', $has_orders ); ?>
 
 
 
+<script>
+jQuery(document).ready(function($) {
+    // Image URL
+    var imageUrl = 'https://ticketfesta.co.uk/wp-content/uploads/2024/02/antoine-j-r3XvSBEQQLo-unsplash-2-min-2.jpg';
+    
+    // Create a new <div> for the image and append it to the container
+    var $imageDiv = $('<div class="order_event_image"></div>');
+    $imageDiv.css('background-image', 'url(' + imageUrl + ')');
+    $('.order_event_image_container').append($imageDiv);
+});
 
+</script>
 
 
 
 
 <style>
+.order_event_image {
+    width: 100%;
+    height: 100%;
+    max-width: 250px;
+    max-height: 200px;
+}
 
+
+
+.order_event_image::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.3); /* Adjust the opacity as needed */
+}
+
+
+.oder_nm_link_main{
+	display:none
+}
 
 .order_event_container{
     display: flex;
@@ -197,9 +230,32 @@ do_action( 'woocommerce_before_account_orders', $has_orders ); ?>
 .order_event_image img{
     width: 100%;
     max-width: 200px!important;
-    border-radius: 6px
+    border-radius: 6px;
+	max-height: 150px;
+	object-fit: contain;
+}
+
+.order_event_details{
+	display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: space-between;
+    gap: 11px;
+}
+
+.order_event_details h5{
+	font-weight: 600;
+    font-size: 17px;
+    margin: 0;
 }
 
 
+.order_event_details p{
+    margin: 0;
+}
+.order_event_details span{
+	font-weight: 600;
+    text-transform: capitalize;
+}
 
 	</style>
