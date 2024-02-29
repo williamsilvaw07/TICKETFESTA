@@ -83,7 +83,8 @@ do_action( 'woocommerce_before_account_orders', $has_orders ); ?>
                 echo '</div>'; // Close the order_event_image div
 
                 echo '<div class="order_event_details">';
-				echo '<h5>' . esc_html($event_post->post_title) . '</h5>';
+				echo '<h5>' . esc_html(mb_substr($event_post->post_title, 0, 60)) . (mb_strlen($event_post->post_title) > 60 ? '...' : '') . '</h5>';
+
                 // Display the order number
                 echo '<p><span class="event_order_number_title">order number: </span>' . esc_html( _x( '#', 'order number label', 'woocommerce' ) . $order->get_order_number() ) . '</p>';
                 // Fetch the event start date and time
