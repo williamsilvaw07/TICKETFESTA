@@ -1108,7 +1108,7 @@ text-transform: capitalize!important;
     font-size: 17px!important;
 }
 .event-tickets .tribe-tickets__tickets-item-details-content, .entry .entry-content .event-tickets .tribe-tickets__tickets-item-details-content {
-    color: #fffff!important;
+    color: #ffff!important;
     font-size: 13px!important;
     letter-spacing: 1px;
     font-weight: 500;
