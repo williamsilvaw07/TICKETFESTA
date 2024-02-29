@@ -49,13 +49,6 @@ do_action( 'woocommerce_before_account_orders', $has_orders ); ?>
 
 
 
-
-
-  
-								
-
-
-
 								<?php
 // Loop through each order item
 $items = $order->get_items();
