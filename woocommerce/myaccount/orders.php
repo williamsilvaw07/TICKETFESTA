@@ -200,6 +200,13 @@ do_action( 'woocommerce_before_account_orders', $has_orders ); ?>
     border-radius: 6px
 }
 
+.order_event_details{
+	display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: space-between;
+    gap: 11px;
+}
 
 .order_event_details h5{
 	font-weight: 600;
