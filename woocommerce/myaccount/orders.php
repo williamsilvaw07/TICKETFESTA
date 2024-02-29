@@ -73,7 +73,7 @@ foreach ( $items as $item_id => $item ) {
         // Format the date and time for display
         // Adjust the date format string as needed
         if ($event_start_date) {
-            $formatted_date = date_i18n('F j, Y g:i a', strtotime($event_start_date));
+            $formatted_date = date_i18n('d M, H:i', strtotime($event_start_date));
             echo '<p>Event Date & Time: ' . esc_html($formatted_date) . '</p>';
         }
 
