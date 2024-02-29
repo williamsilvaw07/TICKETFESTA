@@ -394,7 +394,7 @@ display:none!important
     font-size: 15px;
     font-weight: 900;
 }
-.woocommerce-orders-table__cell-order-tota , .woocommerce-orders-table__cell-order-date{
+.woocommerce-orders-table__cell-order-tota , .woocommerce-orders-table__cell-order-date , .woocommerce-orders-table__cell-order-total{
 	display: flex!important;
     text-align: right!important;
     align-items: center;
