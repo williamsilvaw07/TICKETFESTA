@@ -1179,9 +1179,9 @@ color: black!important;
     font-weight: 300!important;
 }
 .woocommerce-account .woocommerce{
-    display: flex;
-    flex-direction: row;
+    display: flex!important;
     width: 100%;
+    flex-direction: row;
 
 }
 
