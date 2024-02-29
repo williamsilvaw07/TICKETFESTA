@@ -3138,7 +3138,7 @@ function add_extra_fees_for_products( $cart ) {
     }
 
     if($extra_fee !== 0){
-        $cart->add_fee( 'Sites Fee ', $extra_fee );
+        $cart->add_fee( 'Sites Fee ', $extra_fee ); 
     }
 }
 
