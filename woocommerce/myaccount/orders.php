@@ -67,20 +67,20 @@ foreach ($items as $item_id => $item) {
     $event_id = get_post_meta($product_id, '_tribe_wooticket_for_event', true);
 
     if (!empty($event_id)) {
-        // Fetch the event start date and time
-        $event_start_date = get_post_meta($event_id, '_EventStartDate', true);
-        // Format the date and time for display
-        // Adjust the date format string as needed
-        if ($event_start_date) {
-            $formatted_date = date_i18n('d M, H:i', strtotime($event_start_date));
-            echo '<div class="order_event_date_time"><p>Event Date & Time: ' . esc_html($formatted_date) . '</p></div>';
-        }
-
         // Optionally, fetch and display the event title or other information
         $event_post = get_post($event_id);
         if ($event_post) {
             // Display the event title inside the same div as h4
             echo '<div class="order_event_title_dv"><h4>' . esc_html($event_post->post_title) . '</h4>';
+
+            // Fetch the event start date and time
+            $event_start_date = get_post_meta($event_id, '_EventStartDate', true);
+            // Format the date and time for display
+            // Adjust the date format string as needed
+            if ($event_start_date) {
+                $formatted_date = date_i18n('d M, H:i', strtotime($event_start_date));
+                echo '<p>Event Date & Time: ' . esc_html($formatted_date) . '</p>';
+            }
 
             // If an event ID is found, fetch and display the event's featured image
             $event_image_id = get_post_thumbnail_id($event_id);
@@ -98,6 +98,7 @@ foreach ($items as $item_id => $item) {
         echo '<p>No associated event found.</p>';
     }
 }
+
 
     ?>
 
