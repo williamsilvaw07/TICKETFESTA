@@ -173,3 +173,92 @@ do_action( 'woocommerce_before_account_orders', $has_orders ); ?>
 
 
 
+<script>
+jQuery(document).ready(function($) {
+    // Image URL
+    var imageUrl = 'https://ticketfesta.co.uk/wp-content/uploads/2024/02/antoine-j-r3XvSBEQQLo-unsplash-2-min-2.jpg';
+    
+    // Create a new <div> for the image and append it to the container
+    var $imageDiv = $('<div class="order_event_image"></div>');
+    $imageDiv.css('background-image', 'url(' + imageUrl + ')');
+    $('.order_event_image_container').append($imageDiv);
+});
+
+</script>
+
+
+
+
+<style>
+
+
+
+.oder_nm_link_main{
+	display:none
+}
+
+.order_event_container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 15px;
+
+
+}
+
+
+.order_event_image {
+    width: 100%;
+    height: 100%;
+    max-width: 250px;
+    max-height: 200px;
+}
+
+
+
+.order_event_image::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.3); /* Adjust the opacity as needed */
+}
+
+
+.order_event_image img{
+    width: 100%;
+    max-width: 200px!important;
+    border-radius: 6px;
+	max-height: 150px;
+	object-fit: contain;
+}
+
+.order_event_details{
+	display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: space-between;
+    gap: 11px;
+}
+
+.order_event_details h5{
+	font-weight: 600;
+    font-size: 17px;
+    margin: 0;
+}
+
+
+.order_event_details p{
+    margin: 0;
+}
+.order_event_details span{
+	font-weight: 600;
+    text-transform: capitalize;
+}
+
+	</style>
