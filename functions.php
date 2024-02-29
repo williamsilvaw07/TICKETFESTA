@@ -34,35 +34,39 @@ function add_event_association_column_content_with_image( $column, $product_id )
     }
 }
 
-add_action( 'woocommerce_update_product', 'add_event_featured_image_to_product_gallery', 10, 2 );
+add_action( 'woocommerce_update_product', 'set_ticket_featured_image_to_event_image_with_logging', 10, 2 );
 
-function add_event_featured_image_to_product_gallery( $product_id, $product ) {
-    // Check if this product is a ticket associated with an event
+function set_ticket_featured_image_to_event_image_with_logging( $product_id, $product ) {
+    // Log execution
+    error_log( 'Attempting to set featured image for product ID: ' . $product_id );
+
+    // Check if the product already has a featured image
+    if ( has_post_thumbnail( $product_id ) ) {
+        error_log( 'Product ID ' . $product_id . ' already has a featured image.' );
+        return; // Exit if the product has a featured image
+    }
+
+    // Retrieve the associated event ID
     $event_id = get_post_meta( $product_id, '_tribe_wooticket_for_event', true );
     if ( !$event_id ) {
-        return; // Exit if not associated with an event or if the event ID is not set
+        error_log( 'No associated event ID found for product ID ' . $product_id );
+        return; // Exit if not associated with an event
     }
 
-    // Get the event's featured image ID
+    // Retrieve the event's featured image ID
     $event_thumbnail_id = get_post_thumbnail_id( $event_id );
     if ( !$event_thumbnail_id ) {
-        return; // Exit if the event does not have a featured image
+        error_log( 'No featured image found for event ID ' . $event_id );
+        return;
     }
 
-    // Get existing product gallery image IDs
-    $gallery_image_ids = $product->get_gallery_image_ids();
-
-    // Check if the event's featured image is already in the product's gallery
-    if ( !in_array( $event_thumbnail_id, $gallery_image_ids ) ) {
-        // Add the event's featured image ID to the array of gallery image IDs
-        $gallery_image_ids[] = $event_thumbnail_id;
-        
-        // Update the product's gallery image IDs
-        $product->set_gallery_image_ids( $gallery_image_ids );
-        $product->save();
+    // Set the event's featured image as the product's featured image
+    if ( set_post_thumbnail( $product_id, $event_thumbnail_id ) ) {
+        error_log( 'Featured image set for product ID ' . $product_id . ' using event ID ' . $event_id );
+    } else {
+        error_log( 'Failed to set featured image for product ID ' . $product_id . ' using event ID ' . $event_id );
     }
 }
-
 
 
 
