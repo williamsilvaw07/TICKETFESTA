@@ -253,6 +253,12 @@ tr.woocommerce-orders-table__row , thead tr{
 	padding-right:0!important;
     text-align: center;
 }
+.woocommerce table.my_account_orders .button {
+    white-space: nowrap;
+    font-size: 12px!important;
+    padding: 5px 15px !important;
+    border-radius: 4px!important;
+}
 
 .woocommerce table.shop_table .woocommerce-orders-table__header-order-number{
 	text-align: left!important;
