@@ -40,29 +40,22 @@ function add_event_association_column_content_with_image( $column, $product_id )
 
 
 
-function update_all_product_featured_images() {
-    error_log('Starting to update all product featured images...');
-    $new_image_id = 4212; // Make sure this ID is correct and points to an existing attachment in your media library.
+function set_featured_image_for_specific_product() {
+    $product_id = 4291; // Target product ID.
+    $new_image_id = 4212; // The new image's attachment ID.
 
-    $args = array(
-        'post_type' => 'product',
-        'posts_per_page' => -1,
-        'fields' => 'ids',
-    );
+    // Attempt to set the new image as the featured image for the specified product.
+    $result = set_post_thumbnail($product_id, $new_image_id);
 
-    $products = get_posts($args);
-
-    foreach ($products as $product_id) {
-        set_post_thumbnail($product_id, $new_image_id);
-        error_log('Setting featured image for product ID: ' . $product_id);
+    if ($result) {
+        error_log("Successfully set the featured image for product ID {$product_id}.");
+    } else {
+        error_log("Failed to set the featured image for product ID {$product_id}.");
     }
-
-    error_log("All products updated with the new featured image.");
 }
 
-if ( isset($_GET['update_featured_images']) && $_GET['update_featured_images'] === 'true' ) {
-    add_action('init', 'update_all_product_featured_images');
-}
+// Optionally, trigger this function with a specific action or manual call.
+add_action('wp_loaded', 'set_featured_image_for_specific_product'); // wp_loaded ensures WordPress is fully loaded.
 
 
 
