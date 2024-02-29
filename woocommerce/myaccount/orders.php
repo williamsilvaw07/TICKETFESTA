@@ -241,6 +241,7 @@ jQuery(document).ready(function($) {
     justify-content: flex-start;
     align-items: center;
     gap: 15px;
+	padding: 15px 0
 
 
 }
@@ -264,6 +265,7 @@ jQuery(document).ready(function($) {
     align-content: center;
     justify-content: center;
     align-items: center;
+	
 }
 
 .order_event_image img{
@@ -279,7 +281,7 @@ jQuery(document).ready(function($) {
     align-content: center;
     justify-content: space-between;
     gap: 8px;
-	padding: 15px 0
+	
 }
 
 .order_event_details h5{
