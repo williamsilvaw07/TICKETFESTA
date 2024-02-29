@@ -278,7 +278,8 @@ jQuery(document).ready(function($) {
     flex-direction: column;
     align-content: center;
     justify-content: space-between;
-    gap: 11px;
+    gap: 8px;
+	padding: 15px 0
 }
 
 .order_event_details h5{
