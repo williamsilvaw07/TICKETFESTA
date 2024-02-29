@@ -1070,43 +1070,9 @@ color: black!important;
 
 
 /***my account page***/
-.woocommerce-orders-table__cell-order-total .item-count {
-    display: none;
+.woocommerce-account .entry-content .woocommerce:before{
+display: none!important;
 }
-
-/* Add icons to My Account menu items */
-.woocommerce-MyAccount-navigation-link--dashboard:before {
-    content: '\f015'; /* FontAwesome icon for Dashboard */
-    font-family: 'Font Awesome 5 Free';
-    padding-right: 8px;
-}
-
-.woocommerce-MyAccount-navigation-link--orders:before {
-    content: '\f07a'; /* FontAwesome icon for Tickets (uses cart icon) */
-    font-family: 'Font Awesome 5 Free';
-    padding-right: 8px;
-}
-
-/* Repeat for each menu item, using the appropriate FontAwesome icon unicode */
-
-.woocommerce-MyAccount-navigation-link--coupons:before {
-    content: '\f145'; /* FontAwesome icon for Coupons */
-    font-family: 'Font Awesome 5 Free';
-    padding-right: 8px;
-}
-
-.woocommerce-MyAccount-navigation-link--edit-account:before {
-    content: '\f4ff'; /* FontAwesome icon for Account Details */
-    font-family: 'Font Awesome 5 Free';
-    padding-right: 8px;
-}
-
-.woocommerce-MyAccount-navigation-link--customer-logout:before {
-    content: '\f2f5'; /* FontAwesome icon for Logout */
-    font-family: 'Font Awesome 5 Free';
-    padding-right: 8px;
-}
-
 .woocommerce-MyAccount-content{
     flex: 0 0 70%!important
 }
