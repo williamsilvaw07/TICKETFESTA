@@ -83,6 +83,7 @@ do_action( 'woocommerce_before_account_orders', $has_orders ); ?>
                 echo '</div>'; // Close the order_event_image div
 
                 echo '<div class="order_event_details">';
+				echo '<h5>' . esc_html($event_post->post_title) . '</h5>';
                 // Display the order number
                 echo '<p>' . esc_html( _x( 'Order Number: #', 'order number label', 'woocommerce' ) . $order->get_order_number() ) . '</p>';
                 // Fetch the event start date and time
@@ -97,7 +98,7 @@ do_action( 'woocommerce_before_account_orders', $has_orders ); ?>
                 // Display the product name and quantity together
 				echo '<p><span class="ticket_type_title">Ticket Type: </span>' . esc_html($item->get_name()) . ' x ' . esc_html($item->get_quantity()) . '</p>';
 
-                echo '<h5>' . esc_html($event_post->post_title) . '</h5>';
+               
                 echo '</div>'; // Close the order_event_details div
 
                 echo '</div>'; // Close the order_event_container div
