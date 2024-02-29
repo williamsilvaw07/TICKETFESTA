@@ -361,7 +361,7 @@ tr.woocommerce-orders-table__row , thead tr{
 @media (max-width: 950px) {
     .woocommerce-orders-table__cell-order-number, 
     .woocommerce-orders-table__header-order-number {
-        flex: 0 0 60%;
+        flex: 0 0 60%!important
     }
     .woocommerce-orders-table__cell-order-date, 
     .woocommerce-orders-table__header-order-date, 
@@ -371,7 +371,7 @@ tr.woocommerce-orders-table__row , thead tr{
     .woocommerce-orders-table__header-order-total, 
     .woocommerce-orders-table__cell-order-actions, 
     .woocommerce-orders-table__header-order-actions {
-        flex: 1;
+        flex: 1!important
     }
 }
 
