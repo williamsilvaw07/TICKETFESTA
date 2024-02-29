@@ -209,7 +209,7 @@ get_header('organizer');
                         <div class="form-group">
                             <label for="coupon_code" name="discount_type">Discount Type</label>
                             <select class="form-control" id="discount_type">
-                                <option value="fixed">Fixed</option>
+                                <option value="fixed_cart">Fixed</option>
                                 <option value="percent">Percent</option>
                             </select>
                         </div>
@@ -304,7 +304,7 @@ get_header('organizer');
                         <div class="form-group">
                             <label for="edit_discount_type">Discount Type</label>
                             <select class="form-control" id="edit_discount_type" name="discount_type">
-                                <option value="fixed">Fixed</option>
+                                <option value="fixed_cart">Fixed</option>
                                 <option value="percent">Percent</option>
                             </select>
                         </div>
@@ -317,7 +317,8 @@ get_header('organizer');
                             <div class="form-group">
                                 <div class="input-group date" id="edit_start_date" data-target-input="nearest">
                                     <input type="text" class="form-control datetimepicker-input"
-                                        data-target="#edit_start_date" name="start_date" id="edit_start_date_time" />
+                                        data-target="#edit_start_date" name="start_date" id="edit_start_date_time" 
+                                        data-toggle="datetimepicker"/>
                                     <div class="input-group-append" data-target="#edit_start_date"
                                         data-toggle="datetimepicker">
                                         <div class="input-group-text"><i class="fa fa-calendar"></i></div>
@@ -332,7 +333,8 @@ get_header('organizer');
                             <div class="form-group">
                                 <div class="input-group date" id="edit_end_date" data-target-input="nearest">
                                     <input type="text" class="form-control datetimepicker-input" data-target="#edit_end_date"
-                                        name="end_date" id="edit_end_date_time" />
+                                        name="end_date" id="edit_end_date_time" 
+                                        data-toggle="datetimepicker"/>
                                     <div class="input-group-append" data-target="#edit_end_date"
                                         data-toggle="datetimepicker">
                                         <div class="input-group-text"><i class="fa fa-calendar"></i></div>
