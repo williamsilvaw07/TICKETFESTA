@@ -1,6 +1,7 @@
 <?php
 
 
+
 ////CHECKOUT
 
 /**
@@ -35,6 +36,14 @@ function enqueue_font_awesome() {
 add_action('wp_enqueue_scripts', 'enqueue_font_awesome');
 
 ////END
+
+
+
+
+
+//* Do NOT include the opening php tag
+
+
 
 
 
@@ -79,6 +88,7 @@ function customize_order_number_display($order_number, $order)
 }
 
 add_filter('woocommerce_order_number', 'customize_order_number_display', 10, 2);
+
 
 
 // Function to customize My Account page tabs
@@ -134,7 +144,6 @@ add_action('wp_footer', 'change_view_order_text_script');
 
 
 
-
 function customize_my_account_menu_items($items)
 {
     // Remove unwanted sections
@@ -162,6 +171,8 @@ function change_my_account_orders_title($translated_text, $text, $domain)
     return $translated_text;
 }
 add_filter('gettext', 'change_my_account_orders_title', 20, 3);
+
+
 
 
 ///Redirect right to checkout page
@@ -508,603 +519,613 @@ function iam00_create_event()
 }
 add_action('wp_ajax_add_event', 'iam00_create_event');
 
-
 /**
  * Recommended way to include parent theme styles.
  * (Please see http://codex.wordpress.org/Child_Themes#How_to_Create_a_Child_Theme)
  *
  */
 
- add_action('wp_enqueue_scripts', 'generatepress_child_style');
- function generatepress_child_style()
- {
-     if (is_page_template('organizer-template.php') || is_page_template('organizer-coupons.php')) {
-         /** Call landing-page-template-one enqueue */
-         wp_enqueue_style('fontawsome', get_stylesheet_directory_uri() . '/adminlte/plugins/fontawesome-free/css/all.min.css');
-         wp_enqueue_style('tempusdominus', get_stylesheet_directory_uri() . '/adminlte/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css');
-         wp_enqueue_style('adminlte', get_stylesheet_directory_uri() . '/adminlte/css/adminlte.min.css');
- 
-         wp_enqueue_script('bootstrap', get_stylesheet_directory_uri() . '/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js', array('jquery'), null, true);
-         wp_enqueue_script('moment', get_stylesheet_directory_uri() . '/adminlte/plugins/moment/moment.min.js', array(), null, true);
-         wp_enqueue_script('tempusdominus', get_stylesheet_directory_uri() . '/adminlte/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js', array('jquery'), null, true);
-         wp_enqueue_script('adminlte', get_stylesheet_directory_uri() . '/adminlte/js/adminlte.min.js', array('jquery', 'bootstrap'), null, true);
- 
- 
-         wp_enqueue_script('organizer-js', get_stylesheet_directory_uri() . '/js/organizer.js', array('jquery'), null, true);
-         // Pass the AJAX URL to the script
-         wp_localize_script(
-             'organizer-js',
-             'iam00_ajax_object',
-             array(
-                 'ajax_url' => admin_url('admin-ajax.php'),
-                 'nonce' => wp_create_nonce('add-coupon-nonce'),
-             )
-         );
- 
-     } else {
-         /** Call regular enqueue */
-         wp_enqueue_style('parent-style', get_template_directory_uri() . '/style.css');
-         wp_enqueue_style('child-style', get_stylesheet_directory_uri() . '/style.css', array('parent-style'));
-     }
- }
- 
- 
- 
- 
- 
- 
- /**
-  * Your code goes below.
-  * 
-  * 
-  * 
-  * 
-  * 
-  * 
-  * 
-  * 
-  */
- 
- /*
- 
-  function list_user_events() {
-     $current_user_id = get_current_user_id();
-     if (!$current_user_id) {
-         echo "No user logged in.";
-         return;
-     }
- 
-     // Query for all events created by the current user
-     $user_events = get_posts([
-         'post_type' => 'tribe_events',
-         'author' => $current_user_id,
-         'posts_per_page' => -1
-     ]);
- 
-     if (empty($user_events)) {
-         echo "<p>No events found for this user.</p>";
-         return;
-     }
- 
-     echo "<h3>User Events</h3>";
- 
-     // Loop through each event and display its information
-     foreach ($user_events as $event) {
-         $event_id = $event->ID;
-         $event_title = esc_html($event->post_title);
-         
-         echo "<h4>Event Title: $event_title - ID: $event_id</h4>";
-         
-         // Display the sales report shortcode for this event
-         echo do_shortcode("[tribe_community_tickets view='sales_report' id='$event_id']");
-     }
- }
- 
- // Usage
- list_user_events();
- */
- 
- 
- 
- /*
- function list_user_events() {
-     $current_user_id = get_current_user_id();
-     if (!$current_user_id) {
-         echo "No user logged in.";
-         return;
-     }
- 
-     // Query for all events created by the current user
-     $user_events = get_posts([
-         'post_type' => 'tribe_events',
-         'author' => $current_user_id,
-         'posts_per_page' => -1
-     ]);
- 
-     if (empty($user_events)) {
-         echo "<p>No events found for this user.</p>";
-         return;
-     }
- 
-     echo "<h3>User Events</h3>";
- 
-     // Loop through each event and display its information
-     foreach ($user_events as $event) {
-         $event_id = $event->ID;
-         $event_title = esc_html($event->post_title);
-         $total_sales = get_total_sales_for_event($event_id);
- 
-         echo "<h4>Event Title: $event_title - ID: $event_id</h4>";
-         echo "<p>Total Ticket Sales: $total_sales</p>";
-         
-         // Display the sales report shortcode for this event
-         echo do_shortcode("[tribe_community_tickets view='sales_report' id='$event_id']");
-     }
- }
- 
- 
- function get_total_sales_for_event($event_id) {
-     $products = fetch_woocommerce_products();
- 
-     $total_sales = 0;
-     echo "<p>Debug: Checking products for event ID: " . htmlspecialchars($event_id) . "</p>";
- 
-     foreach ($products as $product) {
-         echo "<p>Debug: Checking product ID: " . htmlspecialchars($product->id) . "</p>";
- 
-         foreach ($product->meta_data as $meta) {
-             echo "<p>Debug: Meta Key: " . htmlspecialchars($meta->key) . ", Meta Value: " . htmlspecialchars($meta->value) . "</p>";
- 
-             if ($meta->key === '_tribe_wooticket_for_event' && $meta->value == $event_id) {
-                 echo "<p>Debug: Match found. Product ID: " . htmlspecialchars($product->id) . " linked to event ID: " . htmlspecialchars($event_id) . "</p>";
-                 $total_sales += $product->total_sales;
-                 echo "<p>Debug: Adding sales: " . htmlspecialchars($product->total_sales) . " from product ID: " . htmlspecialchars($product->id) . "</p>";
-                 break; // Break the inner loop once the matching event ID is found
-             }
-         }
-     }
- 
-     echo "<p>Debug: Total sales for event ID " . htmlspecialchars($event_id) . ": " . htmlspecialchars($total_sales) . "</p>";
-     return $total_sales;
- }
- 
- 
- 
- function fetch_woocommerce_products() {
-     $consumer_key = 'ck_a23d3274327f59fe678e41555ae04c96aacd93cf';
-     $consumer_secret = 'cs_db2129ea904a9e50ec0b12d5c562bbdf748b18e7';
-     $url = 'https://thaynna-william.co.uk/wp-json/wc/v3/products';
- 
-     $args = [
-         'headers' => [
-             'Authorization' => 'Basic ' . base64_encode($consumer_key . ':' . $consumer_secret)
-         ]
-     ];
- 
-     $response = wp_remote_get($url, $args);
-     if (is_wp_error($response)) {
-         error_log('Error fetching WooCommerce products: ' . $response->get_error_message());
-         return [];
-     }
- 
-     $body = wp_remote_retrieve_body($response);
-     $data = json_decode($body);
- 
-     return $data;
- }
- 
- // Usage
- list_user_events();
- 
- 
- */
- 
- 
- 
- 
- 
- 
- add_filter('woocommerce_product_data_store_cpt_get_defaults', 'set_default_product_virtual', 10, 2);
- function set_default_product_virtual($defaults, $product_type)
- {
-     $defaults['virtual'] = true; // Set products to virtual by default
-     return $defaults;
- }
- 
- 
- 
- 
- 
- 
- 
- 
- function set_default_organizer_featured_image($organizer_id)
- {
-     // Check if the organizer has a featured image
-     if (has_post_thumbnail($organizer_id)) {
-         return;
-     }
- 
-     // Path to your default image (Upload your default image to the media library and replace this URL)
-     $default_image_url = '/wp-content/uploads/2024/01/default-avatar-photo-placeholder-profile-icon-vector.jpg';
- 
-     // Find the attachment ID of the image from the URL
-     $default_image_id = attachment_url_to_postid($default_image_url);
- 
-     // Set the default image as the featured image for the organizer
-     if ($default_image_id) {
-         set_post_thumbnail($organizer_id, $default_image_id);
-     }
- }
- 
- // Hook into The Events Calendar's action that runs after an organizer is saved/updated
- add_action('tribe_events_organizer_updated', 'set_default_organizer_featured_image');
- 
- 
- 
- 
- 
- ///FUNCTION TO MAKKE THE ORGANIZERS DEFUALT A GLOBE FUNCTION 
- function get_default_organizer_id_for_current_user()
- {
-     if (is_user_logged_in()) {
-         $current_user_id = get_current_user_id();
-         return get_user_meta($current_user_id, '_tribe_organizer_id', true);
-     }
- 
-     return false; // Return false if user is not logged in
- }
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- // FUNCTION TO CREATE LIST OF ORGANIZERS
- function display_user_created_organizers()
- {
- 
- 
-     // Define ajaxurl for the JavaScript
-     ?>
-         <script type="text/javascript">
-             var ajaxurl = "<?php echo admin_url('admin-ajax.php'); ?>";
-         </script>
-         <?php
- 
- 
- 
- 
-         if (!is_user_logged_in()) {
-             return 'You need to be logged in to view this page.'; // Only display for logged-in users
-         }
- 
-         ob_start(); // Start output buffering
-     
-         // Create a nonce for the AJAX request
-         $nonce = wp_create_nonce('create_new_organizer_nonce');
- 
-         echo '<div class="organizers-header">';
-         echo '<h2>Your Organizers</h2>'; // Title
-         echo '<a class="organizers_add_new_btn" href="javascript:void(0);" onclick="createNewOrganizer()">Create New Organizer</a>';
-         echo '<input type="hidden" id="create_new_organizer_nonce" value="' . esc_attr($nonce) . '" />';
-         echo '</div>';
- 
-         // JavaScript for createNewOrganizer
-         ?>
-         <script>
-             function createNewOrganizer() {
-                 console.log('Attempting to create a new organizer...'); // Debugging line
- 
-                 var nonce = document.querySelector('#create_new_organizer_nonce').value;
- 
-                 fetch('/wp-admin/admin-ajax.php?action=create_new_organizer', {
-                     method: 'POST',
-                     credentials: 'same-origin',
-                     headers: {
-                         'Content-Type': 'application/x-www-form-urlencoded'
-                     },
-                     body: 'nonce=' + nonce
-                 })
-                     .then(response => {
-                         if (!response.ok) {
-                             throw new Error(`HTTP error! status: ${response.status}`);
-                         }
-                         return response.json();
-                     })
-                     .then(data => {
-                         console.log('Response received:', data); // Debugging line
- 
-                         if (data.success && data.data && data.data.organizer_id) {
-                             console.log('Redirecting to organizer ID:', data.data.organizer_id); // Debugging line
-                             window.location.href = '/edit-organisers/?id=' + data.data.organizer_id;
-                         } else {
-                             console.error('Unexpected response:', data);
-                             alert('Unexpected response received. Check console for details.');
-                         }
-                     })
-                     .catch(error => {
-                         console.error('Error caught in fetch request:', error);
-                         alert('Error creating new organizer. Check console for details.');
-                     });
-             }
- 
- 
-             function deleteOrganizer(organizerId) {
-                 console.log('Delete organizer called with ID:', organizerId);
- 
-                 if (!confirm('Are you sure you want to delete this organizer?')) {
-                     return;
-                 }
- 
-                 var data = {
-                     'action': 'delete_organizer',
-                     'organizer_id': organizerId
-                 };
- 
-                 jQuery.post(ajaxurl, data, function (response) {
-                     console.log('AJAX response:', response);
- 
-                     if (response.success) {
-                         alert(response.data.message);
-                         jQuery('#organizer-row-' + organizerId).remove(); // Remove the row from the table
-                     } else {
-                         var message = response.data && response.data.message ? response.data.message : 'Unknown error occurred';
-                         console.log('Error message:', message);
-                         alert(message);
-                     }
-                 }).fail(function (jqXHR, textStatus, errorThrown) {
-                     console.log('AJAX error:', textStatus, errorThrown);
-                     alert('Failed to delete: ' + errorThrown);
-                 });
- 
- 
- 
- 
- 
- 
- 
- 
-             }
-         </script>
-         <?php
- 
-         $current_user_id = get_current_user_id();
-         $default_organizer_id = get_default_organizer_id_for_current_user();
- 
-         $args = array(
-             'post_type' => 'tribe_organizer',
-             'posts_per_page' => -1,
-             'author' => $current_user_id,
-         );
- 
-         $organizer_query = new WP_Query($args);
- 
- 
-         if ($organizer_query->have_posts()) {
-             echo '<table id="user-organizers-list" style="width: 100%;">';
-             echo '<thead>';
-             echo '<tr>';
-             echo '<th>Organizer Logo</th>';
-             echo '<th>Organizer Name</th>';
-             echo '<th>Actions</th>';
-             echo '</tr>';
-             echo '</thead>';
-             echo '<tbody>';
- 
-             while ($organizer_query->have_posts()) {
-                 $organizer_query->the_post();
-                 $organizer_id = get_the_ID();
-                 $edit_url = esc_url("/edit-organisers/?id={$organizer_id}");
-                 $profile_url = tribe_get_organizer_link($organizer_id, false, false); // Get URL only
-     
-                 echo '<tr id="organizer-row-' . $organizer_id . '">'; // Unique ID for each row
-                 echo '<td>' . get_the_post_thumbnail($organizer_id, 'thumbnail') . '</td>';
- 
-                 $organizer_title = get_the_title();
-                 if ($organizer_id == $default_organizer_id) {
-                     $organizer_title .= ' (Default)';
-                 }
-                 echo '<td>' . $organizer_title . '</td>';
- 
-                 echo '<td class="action-links">';
-                 echo '<a href="' . $edit_url . '" class="edit-link action-link">Edit</a>';
-                 // Only show delete link if it's not the default organizer
-                 if ($organizer_id != $default_organizer_id) {
-                     echo '<a href="javascript:void(0);" onclick="deleteOrganizer(' . $organizer_id . ')" class="delete-link action-link">Delete</a>';
-                 }
-                 echo '<a href="' . $profile_url . '" class="profile-link action-link">View Profile</a>';
-                 echo '</td>';
-                 echo '</tr>';
-             }
- 
-             echo '</tbody>';
-             echo '</table>';
- 
-             wp_reset_postdata();
-         } else {
-             echo 'No organizers found.';
-         }
- 
-         return ob_get_clean(); // Return the buffered output
- }
- function register_organizers_shortcode()
- {
-     add_shortcode('user_organizers', 'display_user_created_organizers');
- }
- 
- add_action('init', 'register_organizers_shortcode');
+add_action('wp_enqueue_scripts', 'generatepress_child_style');
+function generatepress_child_style()
+{
+    if (is_page_template('organizer-template.php') || is_page_template('organizer-coupons.php')) {
+        /** Call landing-page-template-one enqueue */
+        wp_enqueue_style('fontawsome', get_stylesheet_directory_uri() . '/adminlte/plugins/fontawesome-free/css/all.min.css');
+        wp_enqueue_style('tempusdominus', get_stylesheet_directory_uri() . '/adminlte/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css');
+        wp_enqueue_style('adminlte', get_stylesheet_directory_uri() . '/adminlte/css/adminlte.min.css');
 
- function get_organizer_id_shortcode_function($atts)
- {
-     $atts = shortcode_atts(
-         array(
-             'id' => '0'
-         ),
-         $atts
-     );
- 
-     $organizer_id = $atts['id'];
- 
-     if ($organizer_id == '0' && isset($_GET['id']) && !empty($_GET['id'])) {
-         $organizer_id = $_GET['id'];
-     }
- 
-     if ($organizer_id == '0') {
-         return "No organizer ID provided.";
-     }
- 
-     return do_shortcode('[tribe_community_events view="edit_organizer" id="' . $organizer_id . '"]');
- }
- 
- add_shortcode('get_organizer_id_shortcode_function_shortcode', 'get_organizer_id_shortcode_function');
- 
- function update_organizer_slug_on_title_change($post_id, $post, $update)
- {
-     if ('tribe_organizer' !== $post->post_type) {
-         return;
-     }
- 
-     remove_action('save_post', 'update_organizer_slug_on_title_change', 10);
- 
-     $new_slug = sanitize_title($post->post_title);
- 
-     if ($post->post_name !== $new_slug) {
-         wp_update_post(
-             array(
-                 'ID' => $post_id,
-                 'post_name' => $new_slug,
-             )
-         );
-     }
- 
-     add_action('save_post', 'update_organizer_slug_on_title_change', 10, 3);
- }
- 
- add_action('save_post', 'update_organizer_slug_on_title_change', 10, 3);
- 
- function check_organizer_name_existence($post_id, $post, $update)
- {
-     if ('tribe_organizer' !== $post->post_type) {
-         return;
-     }
- 
-     if (!isset($_POST['post_title'])) {
-         return;
-     }
- 
-     $organizer_name = sanitize_text_field($_POST['post_title']);
- 
-     $existing_organizers = get_posts(
-         array(
-             'post_type' => 'tribe_organizer',
-             'post_status' => 'publish',
-             'title' => $organizer_name,
-             'exclude' => array($post_id),
-             'posts_per_page' => 1,
-         )
-     );
- 
-     if (count($existing_organizers) > 0) {
-         wp_die('Error: An organizer with this name already exists. Please choose a different name.', 'Organizer Name Exists', array('back_link' => true));
-     }
- }
- 
- add_action('save_post', 'check_organizer_name_existence', 10, 3);
- 
- function reset_organizer_slug_on_deletion($post_id)
- {
-     $post = get_post($post_id);
-     if ($post && $post->post_type === 'tribe_organizer') {
-         $new_slug = $post->post_name . '-deleted-' . time();
-         wp_update_post(
-             array(
-                 'ID' => $post_id,
-                 'post_name' => $new_slug,
-             )
-         );
-     }
- }
- 
- add_action('before_delete_post', 'reset_organizer_slug_on_deletion');
- 
- 
- 
- 
- function ajax_delete_organizer()
- {
-     header('Content-Type: application/json'); // Ensure JSON response
- 
-     $organizer_id = isset($_POST['organizer_id']) ? intval($_POST['organizer_id']) : 0;
- 
-     if (!$organizer_id) {
-         wp_send_json_error('Invalid Organizer ID');
-         die();
-     }
- 
-     if (!current_user_can('delete_post', $organizer_id)) {
-         wp_send_json_error('No permission to delete this organizer');
-         die();
-     }
- 
-     $result = wp_delete_post($organizer_id, true);
- 
-     if ($result) {
-         wp_send_json_success(array('message' => 'Organizer deleted successfully'));
-     } else {
-         wp_send_json_error('Deletion failed');
-     }
- 
-     die();
- }
- add_action('wp_ajax_delete_organizer', 'ajax_delete_organizer');
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- function customize_organizer_slug($slug, $post_ID, $post_status, $post_type)
- {
-     if ('tribe_organizer' != $post_type) {
-         return $slug;
-     }
- 
-     // Check if slug ends with a number
-     if (preg_match('/-\d+$/', $slug)) {
-         $original_slug = preg_replace('/-\d+$/', '', $slug);
-         $existing_posts = get_posts(
-             array(
-                 'post_type' => 'tribe_organizer',
-                 'name' => $original_slug,
-                 'post_status' => 'any',
-                 'numberposts' => 1
-             )
-         );
- 
-         if (empty($existing_posts)) {
-             return $original_slug; // Use the original slug if no posts found
-         }
-     }
- 
-     return $slug;
- }
- 
- add_filter('wp_unique_post_slug', 'customize_organizer_slug', 10, 4);
- 
+        wp_enqueue_script('bootstrap', get_stylesheet_directory_uri() . '/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js', array('jquery'), null, true);
+        wp_enqueue_script('moment', get_stylesheet_directory_uri() . '/adminlte/plugins/moment/moment.min.js', array(), null, true);
+        wp_enqueue_script('tempusdominus', get_stylesheet_directory_uri() . '/adminlte/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js', array('jquery'), null, true);
+        wp_enqueue_script('adminlte', get_stylesheet_directory_uri() . '/adminlte/js/adminlte.min.js', array('jquery', 'bootstrap'), null, true);
+
+
+        wp_enqueue_script('organizer-js', get_stylesheet_directory_uri() . '/js/organizer.js', array('jquery'), null, true);
+        // Pass the AJAX URL to the script
+        wp_localize_script(
+            'organizer-js',
+            'iam00_ajax_object',
+            array(
+                'ajax_url' => admin_url('admin-ajax.php'),
+                'nonce' => wp_create_nonce('add-coupon-nonce'),
+            )
+        );
+
+    } else {
+        /** Call regular enqueue */
+        wp_enqueue_style('parent-style', get_template_directory_uri() . '/style.css');
+        wp_enqueue_style('child-style', get_stylesheet_directory_uri() . '/style.css', array('parent-style'));
+    }
+}
+
+
+
+
+
+
+/**
+ * Your code goes below.
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ */
+
+/*
+
+ function list_user_events() {
+    $current_user_id = get_current_user_id();
+    if (!$current_user_id) {
+        echo "No user logged in.";
+        return;
+    }
+
+    // Query for all events created by the current user
+    $user_events = get_posts([
+        'post_type' => 'tribe_events',
+        'author' => $current_user_id,
+        'posts_per_page' => -1
+    ]);
+
+    if (empty($user_events)) {
+        echo "<p>No events found for this user.</p>";
+        return;
+    }
+
+    echo "<h3>User Events</h3>";
+
+    // Loop through each event and display its information
+    foreach ($user_events as $event) {
+        $event_id = $event->ID;
+        $event_title = esc_html($event->post_title);
+        
+        echo "<h4>Event Title: $event_title - ID: $event_id</h4>";
+        
+        // Display the sales report shortcode for this event
+        echo do_shortcode("[tribe_community_tickets view='sales_report' id='$event_id']");
+    }
+}
+
+// Usage
+list_user_events();
+*/
+
+
+
+/*
+function list_user_events() {
+    $current_user_id = get_current_user_id();
+    if (!$current_user_id) {
+        echo "No user logged in.";
+        return;
+    }
+
+    // Query for all events created by the current user
+    $user_events = get_posts([
+        'post_type' => 'tribe_events',
+        'author' => $current_user_id,
+        'posts_per_page' => -1
+    ]);
+
+    if (empty($user_events)) {
+        echo "<p>No events found for this user.</p>";
+        return;
+    }
+
+    echo "<h3>User Events</h3>";
+
+    // Loop through each event and display its information
+    foreach ($user_events as $event) {
+        $event_id = $event->ID;
+        $event_title = esc_html($event->post_title);
+        $total_sales = get_total_sales_for_event($event_id);
+
+        echo "<h4>Event Title: $event_title - ID: $event_id</h4>";
+        echo "<p>Total Ticket Sales: $total_sales</p>";
+        
+        // Display the sales report shortcode for this event
+        echo do_shortcode("[tribe_community_tickets view='sales_report' id='$event_id']");
+    }
+}
+
+
+function get_total_sales_for_event($event_id) {
+    $products = fetch_woocommerce_products();
+
+    $total_sales = 0;
+    echo "<p>Debug: Checking products for event ID: " . htmlspecialchars($event_id) . "</p>";
+
+    foreach ($products as $product) {
+        echo "<p>Debug: Checking product ID: " . htmlspecialchars($product->id) . "</p>";
+
+        foreach ($product->meta_data as $meta) {
+            echo "<p>Debug: Meta Key: " . htmlspecialchars($meta->key) . ", Meta Value: " . htmlspecialchars($meta->value) . "</p>";
+
+            if ($meta->key === '_tribe_wooticket_for_event' && $meta->value == $event_id) {
+                echo "<p>Debug: Match found. Product ID: " . htmlspecialchars($product->id) . " linked to event ID: " . htmlspecialchars($event_id) . "</p>";
+                $total_sales += $product->total_sales;
+                echo "<p>Debug: Adding sales: " . htmlspecialchars($product->total_sales) . " from product ID: " . htmlspecialchars($product->id) . "</p>";
+                break; // Break the inner loop once the matching event ID is found
+            }
+        }
+    }
+
+    echo "<p>Debug: Total sales for event ID " . htmlspecialchars($event_id) . ": " . htmlspecialchars($total_sales) . "</p>";
+    return $total_sales;
+}
+
+
+
+function fetch_woocommerce_products() {
+    $consumer_key = 'ck_a23d3274327f59fe678e41555ae04c96aacd93cf';
+    $consumer_secret = 'cs_db2129ea904a9e50ec0b12d5c562bbdf748b18e7';
+    $url = 'https://thaynna-william.co.uk/wp-json/wc/v3/products';
+
+    $args = [
+        'headers' => [
+            'Authorization' => 'Basic ' . base64_encode($consumer_key . ':' . $consumer_secret)
+        ]
+    ];
+
+    $response = wp_remote_get($url, $args);
+    if (is_wp_error($response)) {
+        error_log('Error fetching WooCommerce products: ' . $response->get_error_message());
+        return [];
+    }
+
+    $body = wp_remote_retrieve_body($response);
+    $data = json_decode($body);
+
+    return $data;
+}
+
+// Usage
+list_user_events();
+
+
+*/
+
+
+
+
+
+
+add_filter('woocommerce_product_data_store_cpt_get_defaults', 'set_default_product_virtual', 10, 2);
+function set_default_product_virtual($defaults, $product_type)
+{
+    $defaults['virtual'] = true; // Set products to virtual by default
+    return $defaults;
+}
+
+
+
+
+
+
+
+
+function set_default_organizer_featured_image($organizer_id)
+{
+    // Check if the organizer has a featured image
+    if (has_post_thumbnail($organizer_id)) {
+        return;
+    }
+
+    // Path to your default image (Upload your default image to the media library and replace this URL)
+    $default_image_url = '/wp-content/uploads/2024/01/default-avatar-photo-placeholder-profile-icon-vector.jpg';
+
+    // Find the attachment ID of the image from the URL
+    $default_image_id = attachment_url_to_postid($default_image_url);
+
+    // Set the default image as the featured image for the organizer
+    if ($default_image_id) {
+        set_post_thumbnail($organizer_id, $default_image_id);
+    }
+}
+
+// Hook into The Events Calendar's action that runs after an organizer is saved/updated
+add_action('tribe_events_organizer_updated', 'set_default_organizer_featured_image');
+
+
+
+
+
+///FUNCTION TO MAKKE THE ORGANIZERS DEFUALT A GLOBE FUNCTION 
+function get_default_organizer_id_for_current_user()
+{
+    if (is_user_logged_in()) {
+        $current_user_id = get_current_user_id();
+        return get_user_meta($current_user_id, '_tribe_organizer_id', true);
+    }
+
+    return false; // Return false if user is not logged in
+}
+
+
+
+
+
+
+
+
+
+
+
+
+// FUNCTION TO CREATE LIST OF ORGANIZERS
+function display_user_created_organizers()
+{
+
+
+    // Define ajaxurl for the JavaScript
+    ?>
+        <script type="text/javascript">
+            var ajaxurl = "<?php echo admin_url('admin-ajax.php'); ?>";
+        </script>
+        <?php
+
+
+
+
+        if (!is_user_logged_in()) {
+            return 'You need to be logged in to view this page.'; // Only display for logged-in users
+        }
+
+        ob_start(); // Start output buffering
+    
+        // Create a nonce for the AJAX request
+        $nonce = wp_create_nonce('create_new_organizer_nonce');
+
+        echo '<div class="organizers-header">';
+        echo '<h2>Your Organizers</h2>'; // Title
+        echo '<a class="organizers_add_new_btn" href="javascript:void(0);" onclick="createNewOrganizer()">Create New Organizer</a>';
+        echo '<input type="hidden" id="create_new_organizer_nonce" value="' . esc_attr($nonce) . '" />';
+        echo '</div>';
+
+        // JavaScript for createNewOrganizer
+        ?>
+        <script>
+            function createNewOrganizer() {
+                console.log('Attempting to create a new organizer...'); // Debugging line
+
+                var nonce = document.querySelector('#create_new_organizer_nonce').value;
+
+                fetch('/wp-admin/admin-ajax.php?action=create_new_organizer', {
+                    method: 'POST',
+                    credentials: 'same-origin',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: 'nonce=' + nonce
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log('Response received:', data); // Debugging line
+
+                        if (data.success && data.data && data.data.organizer_id) {
+                            console.log('Redirecting to organizer ID:', data.data.organizer_id); // Debugging line
+                            window.location.href = '/edit-organisers/?id=' + data.data.organizer_id;
+                        } else {
+                            console.error('Unexpected response:', data);
+                            alert('Unexpected response received. Check console for details.');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error caught in fetch request:', error);
+                        alert('Error creating new organizer. Check console for details.');
+                    });
+            }
+
+
+            function deleteOrganizer(organizerId) {
+                console.log('Delete organizer called with ID:', organizerId);
+
+                if (!confirm('Are you sure you want to delete this organizer?')) {
+                    return;
+                }
+
+                var data = {
+                    'action': 'delete_organizer',
+                    'organizer_id': organizerId
+                };
+
+                jQuery.post(ajaxurl, data, function (response) {
+                    console.log('AJAX response:', response);
+
+                    if (response.success) {
+                        alert(response.data.message);
+                        jQuery('#organizer-row-' + organizerId).remove(); // Remove the row from the table
+                    } else {
+                        var message = response.data && response.data.message ? response.data.message : 'Unknown error occurred';
+                        console.log('Error message:', message);
+                        alert(message);
+                    }
+                }).fail(function (jqXHR, textStatus, errorThrown) {
+                    console.log('AJAX error:', textStatus, errorThrown);
+                    alert('Failed to delete: ' + errorThrown);
+                });
+
+
+
+
+
+
+
+
+            }
+        </script>
+        <?php
+
+        $current_user_id = get_current_user_id();
+        $default_organizer_id = get_default_organizer_id_for_current_user();
+
+        $args = array(
+            'post_type' => 'tribe_organizer',
+            'posts_per_page' => -1,
+            'author' => $current_user_id,
+        );
+
+        $organizer_query = new WP_Query($args);
+
+
+        if ($organizer_query->have_posts()) {
+            echo '<table id="user-organizers-list" style="width: 100%;">';
+            echo '<thead>';
+            echo '<tr>';
+            echo '<th>Organizer Logo</th>';
+            echo '<th>Organizer Name</th>';
+            echo '<th>Actions</th>';
+            echo '</tr>';
+            echo '</thead>';
+            echo '<tbody>';
+
+            while ($organizer_query->have_posts()) {
+                $organizer_query->the_post();
+                $organizer_id = get_the_ID();
+                $edit_url = esc_url("/edit-organisers/?id={$organizer_id}");
+                $profile_url = tribe_get_organizer_link($organizer_id, false, false); // Get URL only
+    
+                echo '<tr id="organizer-row-' . $organizer_id . '">'; // Unique ID for each row
+                echo '<td>' . get_the_post_thumbnail($organizer_id, 'thumbnail') . '</td>';
+
+                $organizer_title = get_the_title();
+                if ($organizer_id == $default_organizer_id) {
+                    $organizer_title .= ' (Default)';
+                }
+                echo '<td>' . $organizer_title . '</td>';
+
+                echo '<td class="action-links">';
+                echo '<a href="' . $edit_url . '" class="edit-link action-link">Edit</a>';
+                // Only show delete link if it's not the default organizer
+                if ($organizer_id != $default_organizer_id) {
+                    echo '<a href="javascript:void(0);" onclick="deleteOrganizer(' . $organizer_id . ')" class="delete-link action-link">Delete</a>';
+                }
+                echo '<a href="' . $profile_url . '" class="profile-link action-link">View Profile</a>';
+                echo '</td>';
+                echo '</tr>';
+            }
+
+            echo '</tbody>';
+            echo '</table>';
+
+            wp_reset_postdata();
+        } else {
+            echo 'No organizers found.';
+        }
+
+        return ob_get_clean(); // Return the buffered output
+}
+function register_organizers_shortcode()
+{
+    add_shortcode('user_organizers', 'display_user_created_organizers');
+}
+
+add_action('init', 'register_organizers_shortcode');
+
+function get_organizer_id_shortcode_function($atts)
+{
+    $atts = shortcode_atts(
+        array(
+            'id' => '0'
+        ),
+        $atts
+    );
+
+    $organizer_id = $atts['id'];
+
+    if ($organizer_id == '0' && isset($_GET['id']) && !empty($_GET['id'])) {
+        $organizer_id = $_GET['id'];
+    }
+
+    if ($organizer_id == '0') {
+        return "No organizer ID provided.";
+    }
+
+    return do_shortcode('[tribe_community_events view="edit_organizer" id="' . $organizer_id . '"]');
+}
+
+add_shortcode('get_organizer_id_shortcode_function_shortcode', 'get_organizer_id_shortcode_function');
+
+function update_organizer_slug_on_title_change($post_id, $post, $update)
+{
+    if ('tribe_organizer' !== $post->post_type) {
+        return;
+    }
+
+    remove_action('save_post', 'update_organizer_slug_on_title_change', 10);
+
+    $new_slug = sanitize_title($post->post_title);
+
+    if ($post->post_name !== $new_slug) {
+        wp_update_post(
+            array(
+                'ID' => $post_id,
+                'post_name' => $new_slug,
+            )
+        );
+    }
+
+    add_action('save_post', 'update_organizer_slug_on_title_change', 10, 3);
+}
+
+add_action('save_post', 'update_organizer_slug_on_title_change', 10, 3);
+
+function check_organizer_name_existence($post_id, $post, $update)
+{
+    if ('tribe_organizer' !== $post->post_type) {
+        return;
+    }
+
+    if (!isset($_POST['post_title'])) {
+        return;
+    }
+
+    $organizer_name = sanitize_text_field($_POST['post_title']);
+
+    $existing_organizers = get_posts(
+        array(
+            'post_type' => 'tribe_organizer',
+            'post_status' => 'publish',
+            'title' => $organizer_name,
+            'exclude' => array($post_id),
+            'posts_per_page' => 1,
+        )
+    );
+
+    if (count($existing_organizers) > 0) {
+        wp_die('Error: An organizer with this name already exists. Please choose a different name.', 'Organizer Name Exists', array('back_link' => true));
+    }
+}
+
+add_action('save_post', 'check_organizer_name_existence', 10, 3);
+
+function reset_organizer_slug_on_deletion($post_id)
+{
+    $post = get_post($post_id);
+    if ($post && $post->post_type === 'tribe_organizer') {
+        $new_slug = $post->post_name . '-deleted-' . time();
+        wp_update_post(
+            array(
+                'ID' => $post_id,
+                'post_name' => $new_slug,
+            )
+        );
+    }
+}
+
+add_action('before_delete_post', 'reset_organizer_slug_on_deletion');
+
+
+
+
+function ajax_delete_organizer()
+{
+    header('Content-Type: application/json'); // Ensure JSON response
+
+    $organizer_id = isset($_POST['organizer_id']) ? intval($_POST['organizer_id']) : 0;
+
+    if (!$organizer_id) {
+        wp_send_json_error('Invalid Organizer ID');
+        die();
+    }
+
+    if (!current_user_can('delete_post', $organizer_id)) {
+        wp_send_json_error('No permission to delete this organizer');
+        die();
+    }
+
+    $result = wp_delete_post($organizer_id, true);
+
+    if ($result) {
+        wp_send_json_success(array('message' => 'Organizer deleted successfully'));
+    } else {
+        wp_send_json_error('Deletion failed');
+    }
+
+    die();
+}
+add_action('wp_ajax_delete_organizer', 'ajax_delete_organizer');
+
+
+
+
+
+
+
+
+
+
+
+
+
+function customize_organizer_slug($slug, $post_ID, $post_status, $post_type)
+{
+    if ('tribe_organizer' != $post_type) {
+        return $slug;
+    }
+
+    // Check if slug ends with a number
+    if (preg_match('/-\d+$/', $slug)) {
+        $original_slug = preg_replace('/-\d+$/', '', $slug);
+        $existing_posts = get_posts(
+            array(
+                'post_type' => 'tribe_organizer',
+                'name' => $original_slug,
+                'post_status' => 'any',
+                'numberposts' => 1
+            )
+        );
+
+        if (empty($existing_posts)) {
+            return $original_slug; // Use the original slug if no posts found
+        }
+    }
+
+    return $slug;
+}
+
+add_filter('wp_unique_post_slug', 'customize_organizer_slug', 10, 4);
+
+
+
+
+
+
+
+
+
+
+
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1568,6 +1589,9 @@ function shortcode_revenue()
     </div>';
 }
 add_shortcode('revenue', 'shortcode_revenue');
+
+
+
 
 
 
@@ -2204,7 +2228,6 @@ add_action('save_post', 'save_event_line_up', 10, 3);
 
 
 
-
 ///function for edit event extra options 
 function save_event_extra_options($post_id, $post, $update)
 {
@@ -2452,30 +2475,56 @@ function display_bank_details_form()
 }
 add_shortcode('bank_details_form', 'display_bank_details_form');
 
-//// pdf error ? 
+// Function to handle deleting bank details on admin backend
+function delete_bank_details_on_admin_backend($user_id)
+{
+    if (isset($_POST['delete_bank_details'])) {
+        $deleted = delete_user_meta($user_id, 'bank_details');
+        if ($deleted) {
+            echo "<div class='updated'><p>Bank details deleted successfully.</p></div>"; // Display success message
+        } else {
+            echo "<div class='error'><p>Failed to delete bank details.</p></div>"; // Display error message
+        }
+    }
+}
 
-// // Function to handle deleting bank details on admin backend
-// function delete_bank_details_on_admin_backend($user_id)
-// {
-//     if (isset($_POST['delete_bank_details'])) {
-//         $deleted = delete_user_meta($user_id, 'bank_details');
-//         if ($deleted) {
-//             echo "<div class='updated'><p>Bank details deleted successfully.</p></div>"; // Display success message
-//         } else {
-//             echo "<div class='error'><p>Failed to delete bank details.</p></div>"; // Display error message
-//         }
-//     }
-// }
+add_action('show_user_profile', function ($user) {
+    delete_bank_details_on_admin_backend($user->ID);
+});
 
-// add_action('show_user_profile', function ($user) {
-//     delete_bank_details_on_admin_backend($user->ID);
-// });
-
-// add_action('edit_user_profile', function ($user) {
-//     delete_bank_details_on_admin_backend($user->ID);
-// });
+add_action('edit_user_profile', function ($user) {
+    delete_bank_details_on_admin_backend($user->ID);
+});
 
 // Function to display bank details in user profile
+function add_bank_details_field($user)
+{
+    $bank_details = get_user_meta($user->ID, 'bank_details', true);
+    ?>
+        <div class="sales-card today_sale_admin_dashboard admin_bank_details_card">
+            <h5 class="admin_dashboard_bank_details-label card_admin_dashboard">Bank Details</h5>
+            <?php if (!empty($bank_details)): ?>
+                    <p class="bank-details-item">Full Name: <span>
+                            <?php echo esc_html($bank_details['full_name']); ?>
+                        </span></p>
+                    <p class="bank-details-item">Sort Code: <span>
+                            <?php echo esc_html($bank_details['shortcode']); ?>
+                        </span></p>
+                    <p class="bank-details-item">Account Number: <span>
+                            <?php echo esc_html($bank_details['account_number']); ?>
+                        </span></p>
+                    <form method="post" action="">
+                        <input type="submit" name="delete_bank_details" value="Delete Bank Details">
+                    </form>
+            <?php else: ?>
+                    <p>No bank details found.</p>
+            <?php endif; ?>
+        </div>
+        <?php
+}
+add_action('show_user_profile', 'add_bank_details_field');
+add_action('edit_user_profile', 'add_bank_details_field');
+
 
 
 
@@ -2495,7 +2544,7 @@ include get_stylesheet_directory() . '/organiser-image-gallery.php';
 
 
 // Add shortcode to display organiser account settings 
-// include get_stylesheet_directory() . '/organiser-all-gallery.php';
+//include get_stylesheet_directory() . '/organiser-all-gallery.php';
 
 
 
@@ -2510,3 +2559,584 @@ include get_stylesheet_directory() . '/organiser-image-gallery.php';
 ///////////////////NEW FUNCTION ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
+
+
+
+
+
+
+
+
+
+function add_inline_custom_admin_css()
+{
+    ?>
+        <style type="text/css">
+            .stellarwp-telemetry-modal {
+                position: fixed;
+                bottom: 0;
+                display: none !important;
+                right: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: 999999;
+                display: flex;
+                justify-content: center;
+                align-items: flex-start;
+                transition: all 0.3s ease-in-out;
+                visibility: hidden;
+                pointer-events: none;
+                opacity: 0;
+            }
+        </style>
+        <?php
+}
+add_action('admin_head', 'add_inline_custom_admin_css');
+
+
+/**
+ * @snippet       WooCommerce Add New Tab @ My Account
+ */
+
+// ------------------
+// 1. Register new endpoint (URL) for My Account page
+// Note: Re-save Permalinks or it will give 404 error
+
+function ticketfeasta_add_following_endpoint()
+{
+    add_rewrite_endpoint('following', EP_ROOT | EP_PAGES);
+}
+
+add_action('init', 'ticketfeasta_add_following_endpoint');
+
+// ------------------
+// 2. Add new query var
+
+function ticketfeasta_following_query_vars($vars)
+{
+    $vars[] = 'following';
+    return $vars;
+}
+
+add_filter('query_vars', 'ticketfeasta_following_query_vars', 0);
+
+// ------------------
+// 3. Insert the new endpoint into the My Account menu
+
+function ticketfeasta_following_link_my_account($items)
+{
+    $items['following'] = 'Following';
+    return $items;
+}
+
+add_filter('woocommerce_account_menu_items', 'ticketfeasta_following_link_my_account');
+
+// ------------------
+// 4. Add content to the new tab
+
+function ticketfeasta_following()
+{
+    $user_id = wp_get_current_user()->id;
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if (isset($_POST['following_id'])) {
+            $organiser_to_unfollow = $_POST['following_id'];
+            ticketfeasta_remove_follower($organiser_to_unfollow, $user_id);
+            ticketfeasta_unfollow($organiser_to_unfollow, $user_id);
+        }
+    }
+
+    echo '<h3>Following List:</h3>';
+    $user_id = wp_get_current_user()->id;
+    $following_array = get_user_meta($user_id, 'following', true);
+    $following_array = json_decode($following_array, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        $following_array = array();
+    }
+    if (count($following_array) === 0) {
+        echo "<p class='empty-following'>You are not following anyone.</p>";
+    }
+
+    foreach ($following_array as $following) {
+        echo $following;
+        $organiser_name = get_the_title($following);
+        ?>
+                <form method="POST">
+                    <input type="hidden" name="following_id" value="<?php echo $following; ?>">
+                    <label>
+                        <?php echo $organiser_name; ?>
+                    </label>
+                    <input type="submit" value="<?php echo "Unfollow"; ?>" nanme="submit" class="unfollow-button">
+                </form>
+                <?php
+    }
+}
+
+function ticketfeasta_remove_follower($organizer_id, $user_id)
+{
+    $followers_array = get_post_meta($organizer_id, 'followers', true);
+    $followers_array = json_decode($followers_array, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        $followers_array = array();
+    }
+    // user removed as follower
+    if (in_array($user_id, $followers_array)) {
+        $key = array_search($user_id, $followers_array);
+        unset($followers_array[$key]);
+        $followers_array = array_values($followers_array); // Re-index array after removal
+    }
+    update_post_meta($organizer_id, 'followers', json_encode($followers_array));
+}
+
+function ticketfeasta_unfollow($organizer_id, $user_id)
+{
+    $following_array = get_user_meta($user_id, 'following', true);
+    $following_array = json_decode($following_array, true);
+
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        $following_array = array();
+    }
+    // user unfollowing as organiser
+    if (in_array($organizer_id, $following_array)) {
+        $key = array_search($organizer_id, $following_array);
+        unset($following_array[$key]);
+        $following_array = array_values($following_array); // Re-index array after removal
+    }
+    update_user_meta($user_id, 'following', json_encode($following_array));
+}
+
+
+add_action('woocommerce_account_following_endpoint', 'ticketfeasta_following');
+
+
+
+function get_follower_by_organiser_id($organizer_id)
+{
+    $followers_array = get_post_meta($organizer_id, 'followers', true);
+    $followers_array = json_decode($followers_array, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        $followers_array = array();
+    }
+    return $followers_array;
+}
+
+function ticketfeasta_publish_tribe_events_on_first_update($post_id, $post, $update)
+{
+    if ($post->post_type == 'tribe_events') {
+        $published_date = strtotime($post->post_date);
+        $current_date = strtotime(current_time('mysql'));
+        // if ($published_date == $current_date) {
+
+        $organizer_id = get_post_meta($post_id, '_EventOrganizerID', true);
+        $followers = get_follower_by_organiser_id($organizer_id);
+        $organizer_name = get_the_title($organizer_id);
+        $event_link = get_the_permalink($post_id);
+        $event_name = get_the_title($post_id);
+        foreach ($followers as $follower) {
+            $user_data = get_userdata($follower);
+            if ($user_data) {
+                $to = $user_data->user_email;
+                $subject = 'Check Out this new event.';
+                $message = "Check out this event <a href='$event_link'> $event_name </a> published by $organizer_name.";
+
+                $headers = array(
+                    'Content-Type: text/html; charset=UTF-8',
+                );
+
+                wp_mail($to, $subject, $message, $headers);
+            }
+        }
+        // }
+
+    }
+}
+
+add_action('save_post', 'ticketfeasta_publish_tribe_events_on_first_update', 10, 3);
+
+function ticketfeasta_order_update_follower($post_id, $post, $update)
+{
+    if ($post->post_type == 'shop_order') {
+        $ticket_datas = get_post_meta($post_id);
+        $user_email = $ticket_datas['_billing_email'][0];
+
+        $user = get_user_by('email', $user_email);
+
+        $user_id = false;
+        if ($user) {
+            $user_id = $user->ID;
+        }
+        if ($user_id !== false & isset($ticket_datas['_community_tickets_order_fees']) && is_array($ticket_datas['_community_tickets_order_fees'])) {
+            foreach ($ticket_datas['_community_tickets_order_fees'] as $item) {
+                $item_data = unserialize($item);
+                $fees = $item_data['breakdown']['fees'];
+                if (is_array($fees)) {
+                    foreach ($fees as $fee) {
+                        $fee_items = $fee;
+                        if (is_array($fee_items)) {
+                            foreach ($fee_items as $fee_item) {
+                                $event_id = $fee_item['event_id'];
+                                $organizer_id = get_post_meta($event_id, '_EventOrganizerID', true);
+                                ticketfeasta_follow($organizer_id, $user_id);
+                                ticketfeasta_add_follower($organizer_id, $user_id);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+add_action('save_post', 'ticketfeasta_order_update_follower', 10, 3);
+
+
+function ticketfeasta_add_follower($organizer_id, $user_id)
+{
+    $followers_array = get_post_meta($organizer_id, 'followers', true);
+    $followers_array = json_decode($followers_array, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        $followers_array = array();
+    }
+    if (!in_array($user_id, $followers_array)) {
+        $followers_array[] = $user_id;
+    }
+    update_post_meta($organizer_id, 'followers', json_encode($followers_array));
+}
+
+function ticketfeasta_follow($organizer_id, $user_id)
+{
+    $following_array = get_user_meta($user_id, 'following', true);
+    $following_array = json_decode($following_array, true);
+
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        $following_array = array();
+    }
+    // user unfollowing as organiser
+    if (!in_array($organizer_id, $following_array)) {
+        $following_array[] = $organizer_id;
+
+    }
+    update_user_meta($user_id, 'following', json_encode($following_array));
+}
+
+
+// Add a custom checkbox field to the checkout page
+// add_action( 'woocommerce_after_order_notes', 'add_subscribed_organiser_checkbox' );
+// function add_subscribed_organiser_checkbox( $checkout ) {
+//     echo '<div id="subscribed_organiser_checkbox">';
+//     woocommerce_form_field( 'subscribed_organiser', array(
+//         'type' => 'checkbox',
+//         'class' => array( 'input-checkbox' ),
+//         'label' => __('Subscribe to organiser'),
+//         'required' => false,
+//     ), $checkout->get_value( 'subscribed_organiser' ));
+//     echo '</div>';
+// }
+
+// Save the checkbox value to the order meta
+// add_action( 'woocommerce_checkout_update_order_meta', 'save_subscribed_organiser_checkbox' );
+// function save_subscribed_organiser_checkbox( $order_id ) {
+//     if ( ! empty( $_POST['subscribed_organiser'] ) ) {
+//         var_dump( $_POST['subscribed_organiser']);
+//         die();
+//         update_post_meta( $order_id, 'subscribed_organiser', sanitize_text_field( $_POST['subscribed_organiser'] ) );
+//     }
+// }
+
+
+
+// function ticketfeasta_inline_js(){
+//     
+//     <script type="text/javascript">
+//         document.addEventListener('DOMContentLoaded', function() {
+
+//             var termsWrapper = document.querySelector('.woocommerce-terms-and-conditions-wrapper');
+
+//             if (termsWrapper) {
+//                 // Create a checkbox input field
+//                 var checkbox = document.createElement('input');
+//                 checkbox.type = 'checkbox';
+//                 checkbox.name = 'subscribed_organiser';
+//                 checkbox.id = 'subscribed_organiser';
+//                 checkbox.value = 'checked'; 
+
+//                 checkbox.checked = true;
+//                 var label = document.createElement('label');
+//                 label.htmlFor = 'subscribed_organiser';
+//                 label.appendChild(document.createTextNode('Subscribe to event organizer.'));
+
+//                 // Append the checkbox and label to the terms wrapper
+//                 termsWrapper.appendChild(checkbox);
+//                 termsWrapper.appendChild(label);
+//             }
+//         });
+
+//     </script>
+// 
+
+// }
+// add_action('wp_footer', 'ticketfeasta_inline_js');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////END////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////NEW FUNCTION ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+////////FUNCTION TO CREATE A SIGN UP FORM FOR THE ORGANIZER
+// Function to display the custom registration form
+function custom_user_registration_form() {
+    if (is_user_logged_in()) {
+        return 'You are already logged in.';
+    }
+
+    $html = '<form action="' . esc_url($_SERVER['REQUEST_URI']) . '" method="post">';
+    $html .= '<p><label for="first_name">First Name <strong>*</strong></label>';
+    $html .= '<input type="text" name="first_name" id="first_name" required></p>';
+    $html .= '<p><label for="last_name">Last Name <strong>*</strong></label>';
+    $html .= '<input type="text" name="last_name" id="last_name" required></p>';
+    $html .= '<p><label for="email">Email <strong>*</strong></label>';
+    $html .= '<input type="email" name="email" id="email" required></p>';
+    $html .= '<p><label for="password">Password <strong>*</strong></label>';
+    $html .= '<input type="password" name="password" id="password" required></p>';
+    $html .= '<p><label for="organizer_title">Organizer Title <strong>*</strong></label>';
+    $html .= '<input type="text" name="organizer_title" id="organizer_title" required></p>';
+    $html .= '<p><input type="submit" name="submit" value="Register"></p>';
+    $html .= '</form>';
+    $html .= '<p>Already have an account? <a href="' . home_url('/custom-login') . '">Login here</a>.</p>';
+
+    return $html;
+}
+
+// Function to handle the registration process
+function custom_user_registration() {
+    if (isset($_POST['first_name']) && isset($_POST['last_name']) && isset($_POST['email']) && isset($_POST['password']) && !is_user_logged_in()) {
+        $first_name = sanitize_text_field($_POST['first_name']);
+        $last_name = sanitize_text_field($_POST['last_name']);
+        $email = sanitize_email($_POST['email']);
+        $password = $_POST['password'];
+        $organizer_title = sanitize_text_field($_POST['organizer_title']);
+
+        $user_id = wp_create_user($email, $password, $email); // Username is set to email
+
+        if (!is_wp_error($user_id)) {
+            // Update user meta for first name and last name
+            update_user_meta($user_id, 'first_name', $first_name);
+            update_user_meta($user_id, 'last_name', $last_name);
+
+            // Assign the 'organiser' role to the user
+            $user = new WP_User($user_id);
+            $user->set_role('organiser');
+
+            // Automatically log the user in
+            wp_set_current_user($user_id);
+            wp_set_auth_cookie($user_id);
+
+            // Create the organizer post
+            $organizer_data = array(
+                'post_title'   => $organizer_title, // Use the organizer title for the post title
+                'post_content' => '',
+                'post_status'  => 'publish',
+                'post_type'    => 'tribe_organizer',
+                'post_author'  => $user_id
+            );
+            $organizer_id = wp_insert_post($organizer_data);
+
+            if (!is_wp_error($organizer_id)) {
+                update_user_meta($user_id, '_tribe_organizer_id', $organizer_id);
+
+                // Redirect to the specified page
+                wp_redirect('/dashboard');
+                exit;
+            } else {
+                echo 'Error creating organizer.';
+            }
+        } else {
+            echo 'Error creating user.';
+        }
+    }
+}
+
+// Function to register the shortcode
+function register_custom_registration_shortcode() {
+    add_shortcode('custom_registration_form', 'custom_user_registration_form');
+}
+
+// Hooking up the functions to WordPress
+add_action('init', 'register_custom_registration_shortcode');
+add_action('init', 'custom_user_registration');
+//////END
+
+
+
+
+
+///FUNCTION FOR ADMIN ORGANIZER LOGIN FORM
+function restrict_access_and_show_login_form() {
+    if (is_page_template('organizer-template.php')) {
+        if (!is_user_logged_in()) {
+            wp_redirect(home_url('/custom-login'));
+            exit;
+        }
+
+        $user = wp_get_current_user();
+        if (!in_array('organiser', (array) $user->roles) && !in_array('administrator', (array) $user->roles)) {
+            wp_redirect(home_url('/custom-login'));
+            exit;
+        }
+    }
+}
+add_action('template_redirect', 'restrict_access_and_show_login_form');
+//////END
+
+
+
+
+
+
+
+
+
+
+
+
+
+////SEARCH FUNCTION POP UP
+function custom_search_popup() {
+    ?>
+    <div id="searchPopup" class="search-popup">
+        <div id="searchOverlay" class="search-overlay"></div>
+        <div id="searchContent" class="search-content">
+            <!-- Close button with an "X" icon -->
+            <button id="closePopup" class="close-popup">&#10005;</button> <!-- &#10005; is the HTML entity for a heavy multiplication X used as a close icon -->
+            <?php echo do_shortcode('[events-calendar-search placeholder="Search Events" show-events="5" disable-past-events="true" layout="medium" content-type="advance"]'); ?>
+        </div>
+    </div>
+    <?php
+}
+add_action('wp_footer', 'custom_search_popup');
+function enqueue_custom_frontend_js() {
+    // Get the version of your script file to ensure the browser doesn't cache old versions.
+    $script_version = filemtime(get_stylesheet_directory() . '/custom-function-frontend.js');
+
+    // Enqueue your custom script, the 'get_stylesheet_directory_uri()' function points to your child theme's root directory.
+    wp_enqueue_script('custom-frontend-js', get_stylesheet_directory_uri() . '/custom-function-frontend.js', array('jquery'), $script_version, true);
+}
+
+// Hook your custom function into 'wp_enqueue_scripts' action.
+add_action('wp_enqueue_scripts', 'enqueue_custom_frontend_js');
+
+
+
+// for registration 
+add_action( 'xoo_el_created_customer', 'ticketfesta_organizer_register', 10, 2);
+
+function ticketfesta_organizer_register($customer_id, $new_customer_data){
+    $create_organizer =  isset($_POST['create-organizer']) ? $_POST['create-organizer'] : '';
+    $organizer_title  =  isset($_POST['organizer-title']) ? $_POST['organizer-title'] : str_replace('.', '-', $new_customer_data['user_login']);
+    
+    if($create_organizer !== ''){
+        $post_data = array(
+            'post_type'   => 'tribe_organizer',
+            'post_status' => 'publish',
+            'post_title'  => $organizer_title,
+            'post_author' => $customer_id
+        );
+        
+        $post_id = wp_insert_post($post_data);
+        $image_url = 'https://ticketfesta.co.uk/wp-content/uploads/2024/02/5034901-200.png';
+
+        // Get the attachment ID
+        $attachment_id = attachment_url_to_postid( $image_url );
+        set_post_thumbnail( $post_id, $attachment_id );
+        update_user_meta( $customer_id, 'current_organizer', $post_id );
+        $user = get_userdata( $customer_id );
+        $user->set_role( 'organiser' );
+    }
+
+}
+
+add_action( 'xoo_el_registration_redirect', 'ticketfesta_registration_redirect', 10, 2 );
+
+function ticketfesta_registration_redirect($redirect, $new_customer){
+    $create_organizer =  isset($_POST['create-organizer']) ? $_POST['create-organizer'] : '';
+    if($create_organizer !== ''){
+        $site_url = home_url();
+        $dashboard_url = trailingslashit( $site_url ) . 'dashboard/';
+        $redirect = $dashboard_url;
+    }
+
+    return $redirect;
+}
+
+
+add_action( 'xoo_el_login_redirect', 'ticketfesta_login_redirect', 10, 2 );
+
+function ticketfesta_login_redirect($redirect, $user){
+    $current_organizer = get_user_meta( $user->ID, 'current_organizer', true );
+
+    if($current_organizer !== ''){
+        $site_url = home_url();
+        $dashboard_url = trailingslashit( $site_url ) . 'dashboard/';
+        $redirect = $dashboard_url;
+    }
+    return $redirect;
+
+}
+
+
+
+add_action( 'woocommerce_cart_calculate_fees', 'add_extra_fees_for_products' );
+
+function add_extra_fees_for_products( $cart ) {
+    $extra_fee = 0;
+    // Loop through each cart item
+    foreach ( $cart->get_cart() as $cart_item_key => $cart_item ) {
+        // Get the product ID
+        $product_id = $cart_item['product_id'];
+        
+        // Calculate extra fee based on product price
+        $product_price = $cart_item['data']->get_price();
+        $quantity = $cart_item['quantity'];
+        if($product_price < 50){
+            $extra_fee += ($product_price * .03 + 0.02) * $quantity;
+        }elseif($product_price > 50){
+            $extra_fee += ($product_price * .01 + 0.02) * $quantity;
+        }
+        
+    }
+
+    if($extra_fee !== 0){
+        $cart->add_fee( 'Sites Fee ', $extra_fee );
+    }
+}
