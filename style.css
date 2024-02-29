@@ -1070,8 +1070,8 @@ color: black!important;
 
 
 /***my account page***/
-.woocommerce-account .entry-content .woocommerce:before{
-display: none!important;
+.woocommerce-account .entry-content {
+margin-top: 0!important;
 }
 .woocommerce-MyAccount-content{
     flex: 0 0 70%!important
