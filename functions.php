@@ -39,31 +39,39 @@ function add_event_association_column_content_with_image( $column, $product_id )
 
 
 
+function set_all_products_featured_image_to_event_image() {
+    // Query all products.
+    $args = array(
+        'post_type' => 'product',
+        'posts_per_page' => -1, // Retrieve all products
+        'fields' => 'ids', // Retrieve only the IDs for performance
+    );
 
-function set_product_featured_image_to_event_image() {
-    $product_id = 4026; // Specific product ID.
+    $product_ids = get_posts($args);
 
-    // Retrieve the associated event ID.
-    $event_id = get_post_meta( $product_id, '_tribe_wooticket_for_event', true );
+    foreach ($product_ids as $product_id) {
+        // Retrieve the associated event ID for each product.
+        $event_id = get_post_meta($product_id, '_tribe_wooticket_for_event', true);
 
-    if ( !empty( $event_id ) ) {
-        // Get the event's featured image ID.
-        $event_image_id = get_post_thumbnail_id( $event_id );
+        if (!empty($event_id)) {
+            // Get the event's featured image ID.
+            $event_image_id = get_post_thumbnail_id($event_id);
 
-        if ( !empty( $event_image_id ) ) {
-            // Set the event's image as the product's featured image.
-            set_post_thumbnail( $product_id, $event_image_id );
-            error_log("Product ID {$product_id} featured image updated to event ID {$event_id}'s image.");
+            if (!empty($event_image_id)) {
+                // Set the event's image as the product's featured image.
+                set_post_thumbnail($product_id, $event_image_id);
+                error_log("Product ID {$product_id} featured image updated to event ID {$event_id}'s image.");
+            } else {
+                error_log("Event ID {$event_id} does not have a featured image.");
+            }
         } else {
-            error_log("Event ID {$event_id} does not have a featured image.");
+            error_log("Product ID {$product_id} does not have an associated event.");
         }
-    } else {
-        error_log("Product ID {$product_id} does not have an associated event.");
     }
 }
 
-// Optionally, trigger this function with a specific action, hook, or manually.
-set_product_featured_image_to_event_image();
+// Optionally, you can trigger this function with a specific action, hook, or manually.
+add_action('wp_loaded', 'set_all_products_featured_image_to_event_image');
 
 
 
