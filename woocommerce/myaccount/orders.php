@@ -228,7 +228,7 @@ jQuery(document).ready(function($) {
 
 <style>
 
-tr.woocommerce-orders-table__row{
+tr.woocommerce-orders-table__row , thead tr{
 	display: flex;
     width: 100%; 
 }
