@@ -131,3 +131,35 @@ function change_view_order_text_script()
 }
 add_action('wp_footer', 'change_view_order_text_script');
 
+
+
+
+
+function customize_my_account_menu_items($items)
+{
+    // Remove unwanted sections
+    unset($items['downloads']); // Remove "Downloads"
+    unset($items['edit-address']); // Remove "Addresses"
+    unset($items['coupons']); // Assuming 'coupons' is a custom endpoint. If it doesn't exist or has a different key, adjust accordingly.
+
+    // Rename "Orders" to "Tickets"
+    $items['orders'] = __('Tickets', 'woocommerce');
+
+    return $items;
+}
+add_filter('woocommerce_account_menu_items', 'customize_my_account_menu_items');
+
+// Optional: Function to change the "Orders" page title to "Tickets"
+function change_my_account_orders_title($translated_text, $text, $domain)
+{
+    if (is_account_page()) {
+        switch ($translated_text) {
+            case 'Orders':
+                $translated_text = __('Tickets', 'woocommerce');
+                break;
+        }
+    }
+    return $translated_text;
+}
+add_filter('gettext', 'change_my_account_orders_title', 20, 3);
+
