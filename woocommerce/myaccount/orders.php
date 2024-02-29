@@ -56,7 +56,7 @@ do_action( 'woocommerce_before_account_orders', $has_orders ); ?>
         <?php echo esc_html( _x( '#', 'hash before order number', 'woocommerce' ) . $order->get_order_number() ); ?>
     </a>
     <?php
-// Loop through each order item
+ // Loop through each order item
 $items = $order->get_items();
 foreach ( $items as $item_id => $item ) {
     // Display the product name and quantity together
@@ -96,6 +96,8 @@ foreach ( $items as $item_id => $item ) {
         echo '<p>No associated event found.</p>';
     }
 }
+    ?>
+
 
 
 
