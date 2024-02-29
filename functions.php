@@ -34,33 +34,66 @@ function add_event_association_column_content_with_image( $column, $product_id )
     }
 }
 
-add_action( 'woocommerce_admin_process_product_object', 'set_product_image_to_event_image_using_url', 10, 1 );
-function set_product_image_to_event_image_using_url( $product ) {
+add_action( 'woocommerce_admin_process_product_object', 'custom_set_product_image_to_event_image', 10, 1 );
+function custom_set_product_image_to_event_image( $product ) {
     // Check if the product already has a featured image set
-    if ( !empty( $product->get_image_id() ) ) {
-        return; // If so, no action is needed
+    if ( $product->get_image_id() ) {
+        error_log( 'Product ID ' . $product->get_id() . ' already has a featured image.' );
+        return;
     }
 
-    // Get the event ID stored in product meta
+    // Get the associated event ID from product meta
     $event_id = $product->get_meta( '_tribe_wooticket_for_event', true );
+    if ( empty( $event_id ) ) {
+        error_log( 'No associated event ID found for product ID ' . $product->get_id() );
+        return;
+    }
 
-    // Proceed if there's an associated event
-    if ( !empty( $event_id ) ) {
-        // Get the event's featured image URL
-        $event_image_url = get_the_post_thumbnail_url( $event_id, 'full' );
+    // Get the event's featured image URL
+    $event_image_url = get_the_post_thumbnail_url( $event_id, 'full' );
+    if ( empty( $event_image_url ) ) {
+        error_log( 'No featured image URL found for event ID ' . $event_id );
+        return;
+    }
 
-        if ( !empty( $event_image_url ) ) {
-            // Use the utility function to set the event image as the product's featured image
-            Generate_Featured_Image( $event_image_url, $product->get_id() );
-        }
+    // Use the provided function to set the event's image as the product's featured image
+    if ( Generate_Featured_Image( $event_image_url, $product->get_id() ) ) {
+        error_log( 'Featured image set for product ID ' . $product->get_id() . ' using event ID ' . $event_id );
+    } else {
+        error_log( 'Failed to set featured image for product ID ' . $product->get_id() . ' using event ID ' . $event_id );
     }
 }
 
-// Define the utility function for setting the featured image from a URL
-function Generate_Featured_Image( $image_url, $post_id ){
-    // Your existing code for downloading the image and setting it as featured image
-}
+function Generate_Featured_Image( $image_url, $post_id ) {
+    // Assume $image_url is a valid URL for the image and $post_id is the valid post ID
+    $upload_dir = wp_upload_dir(); // Get WordPress upload directory
+    $image_data = file_get_contents($image_url); // Get image data
+    $filename = basename($image_url); // Create a filename
 
+    if ( wp_mkdir_p( $upload_dir['path'] ) ) {
+        $file = $upload_dir['path'] . '/' . $filename;
+    } else {
+        $file = $upload_dir['basedir'] . '/' . $filename;
+    }
+
+    file_put_contents( $file, $image_data ); // Save the image
+
+    $wp_filetype = wp_check_filetype( $filename, null ); // Check the image file type
+    $attachment = array(
+        'post_mime_type' => $wp_filetype['type'],
+        'post_title' => sanitize_file_name( $filename ),
+        'post_content' => '',
+        'post_status' => 'inherit'
+    );
+
+    $attach_id = wp_insert_attachment( $attachment, $file, $post_id ); // Insert attachment
+    require_once( ABSPATH . 'wp-admin/includes/image.php' );
+    $attach_data = wp_generate_attachment_metadata( $attach_id, $file ); // Generate metadata
+    wp_update_attachment_metadata( $attach_id, $attach_data ); // Update metadata
+    set_post_thumbnail( $post_id, $attach_id ); // Set as featured image
+
+    return $attach_id ? true : false; // Return true if successful, false otherwise
+}
 
 /**
  * Example for adding event data to WooCommerce checkout for Events Calendar tickets.
