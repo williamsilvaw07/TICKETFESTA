@@ -98,34 +98,6 @@ if (!empty($fees)) {
     echo "No custom fees found for order ID: $order_id";
 }
 
-
-// Get the order object
-$order = wc_get_order( $order_id );
-
-// Check if $order is valid
-if ( ! $order ) {
-  return; // Handle the case where the order is not found
-}
-
-// Initialize an empty array to store the fees
-$custom_fees = array();
-
-// Loop through all order fees
-foreach ( $order->get_items( 'fee' ) as $item_id => $item_fee ) {
-
-  // Check if the fee is a custom fee (not a tax)
-  if ( ! $item_fee->is_tax() ) {
-    $custom_fees[] = array(
-      'name' => $item_fee->get_name(),
-      'total' => $item_fee->get_total(),
-      'total_tax' => $item_fee->get_total_tax(),
-    );
-  }
-}
-
-// $custom_fees will now contain an array of associative arrays,
-// each representing a custom fee with details like name, total, and total tax.
-
 }
 
 
