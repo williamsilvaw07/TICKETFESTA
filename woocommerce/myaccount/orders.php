@@ -412,7 +412,7 @@ html .woocommerce-account .woocommerce-orders-table__cell {
 .woocommerce-orders-table__cell-order-number:before , .woocommerce-orders-table__cell-order-actions:before{
 	display:none!important
 }
-.order_event_details {
+body .order_event_details {
 	align-items: center;
 	padding-bottom: 0!important;
 }
