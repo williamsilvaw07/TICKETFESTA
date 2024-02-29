@@ -381,7 +381,7 @@ tr.woocommerce-orders-table__row , thead tr{
     align-content: center;
     flex-direction: column;
 }
-.thead{
+thead{
 display:none!important
 }
 .woocommerce-orders-table__cell-order-date:before{
