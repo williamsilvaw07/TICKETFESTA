@@ -414,6 +414,7 @@ html .woocommerce-account .woocommerce-orders-table__cell {
 }
 .order_event_details {
 	align-items: center;
+	padding: bottom 0;
 }
 
 
@@ -421,6 +422,7 @@ html .woocommerce-account .woocommerce-orders-table__cell {
     text-align: center;
     font-size: 16px!important;
 }
+
 }
 
 
