@@ -92,10 +92,11 @@ do_action( 'woocommerce_before_account_orders', $has_orders ); ?>
                 if ($event_start_date) {
 					$formatted_date = date_i18n('d M Y, H:i', strtotime($event_start_date));
 
-                    echo '<p>' . esc_html($formatted_date) . '</p>';
+                    echo '<p><span class="event_date_title">Event Date</span>' . esc_html($formatted_date) . '</p>';
                 }
                 // Display the product name and quantity together
-                echo '<p>' . esc_html($item->get_name()) . ' x ' . esc_html($item->get_quantity()) . '></p>';
+				echo '<p><span class="ticket_type_title">Ticket Type: </span>' . esc_html($item->get_name()) . ' x ' . esc_html($item->get_quantity()) . '</p>';
+
                 echo '<h5>' . esc_html($event_post->post_title) . '</h5>';
                 echo '</div>'; // Close the order_event_details div
 
