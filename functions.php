@@ -123,11 +123,6 @@ add_action('wp_enqueue_scripts', 'my_theme_enqueue_scripts');
 
 
 
-function enqueue_font_awesome() {
-    wp_enqueue_style('font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css');
-}
-add_action('wp_enqueue_scripts', 'enqueue_font_awesome');
-
 ////END
 
 
