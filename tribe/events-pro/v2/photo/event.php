@@ -35,7 +35,10 @@ $organizer_names = array_map('tribe_get_organizer', $organizer_ids);
 ?>
 <article <?php tribe_classes( $classes ) ?>>
  <!-- Share Button -->
- <button class="share_btn"><img src="https://ticketfesta.co.uk/wp-content/uploads/2024/02/share-ios-chunky_svg__eds-icon-share-ios-chunky_svg-1.png"></button>
+ <button class="share_btn">
+  <i class="fas fa-share-alt"></i>
+</button>
+
     
     <?php if ( has_post_thumbnail($event->ID) ) : ?>
         <?php $this->template( 'photo/event/featured-image', [ 'event' => $event ] ); ?>
