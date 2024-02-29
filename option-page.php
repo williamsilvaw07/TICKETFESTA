@@ -54,7 +54,7 @@ class TicketSiteFees {
     function get_monthly_total_site_fees(){
     
         // Define the start and end dates for the one-year range
-        $start_date = date('Y-m-d', strtotime('-1 year')); // One year ago from today
+        $start_date = date('Y-m-d', strtotime('-1 month')); // One year ago from today
         $end_date = date('Y-m-d'); // Today's date
         
         $order_ids = $this->get_order_id_by_time_range($start_date, $end_date);
@@ -66,7 +66,7 @@ class TicketSiteFees {
     function get_weekly_total_site_fees(){
     
         // Define the start and end dates for the one-year range
-        $start_date = date('Y-m-d', strtotime('-1 year')); // One year ago from today
+        $start_date = date('Y-m-d', strtotime('-1 week')); // One year ago from today
         $end_date = date('Y-m-d'); // Today's date
         
         $order_ids = $this->get_order_id_by_time_range($start_date, $end_date);
