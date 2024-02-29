@@ -85,7 +85,7 @@ do_action( 'woocommerce_before_account_orders', $has_orders ); ?>
                 echo '<div class="order_event_details">';
 				echo '<h5>' . esc_html($event_post->post_title) . '</h5>';
                 // Display the order number
-                echo '<p>' . esc_html( _x( 'Order Number: #', 'order number label', 'woocommerce' ) . $order->get_order_number() ) . '</p>';
+                echo '<p><span class="event_order_number_title">order number:</span>' . esc_html( _x( '#', 'order number label', 'woocommerce' ) . $order->get_order_number() ) . '</p>';
                 // Fetch the event start date and time
                 $event_start_date = get_post_meta($event_id, '_EventStartDate', true);
                 // Format the date and time for display
@@ -93,7 +93,7 @@ do_action( 'woocommerce_before_account_orders', $has_orders ); ?>
                 if ($event_start_date) {
 					$formatted_date = date_i18n('d M Y, H:i', strtotime($event_start_date));
 
-                    echo '<p><span class="event_date_title">Event Date</span>' . esc_html($formatted_date) . '</p>';
+                    echo '<p><span class="event_date_title">Event Date:</span>' . esc_html($formatted_date) . '</p>';
                 }
                 // Display the product name and quantity together
 				echo '<p><span class="ticket_type_title">Ticket Type: </span>' . esc_html($item->get_name()) . ' x ' . esc_html($item->get_quantity()) . '</p>';
@@ -200,6 +200,19 @@ do_action( 'woocommerce_before_account_orders', $has_orders ); ?>
     border-radius: 6px
 }
 
+
+.order_event_details h5{
+	font-weight: 600;
+    font-size: 17px;
+    margin: 0;
+}
+
+
+.order_event_details h5{
+	font-weight: 600;
+    font-size: 17px;
+    margin: 0;
+}
 
 
 	</style>
