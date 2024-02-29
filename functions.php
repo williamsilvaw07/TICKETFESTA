@@ -80,3 +80,54 @@ function customize_order_number_display($order_number, $order)
 
 add_filter('woocommerce_order_number', 'customize_order_number_display', 10, 2);
 
+
+// Function to customize My Account page tabs
+
+function add_username_above_account_navigation()
+{
+    $current_user = wp_get_current_user();
+    if ($current_user->display_name) {
+        // The message is hidden by default using inline CSS; JavaScript will show it later.
+        echo '<div id="custom-welcome-message" class="my-account-welcome-message" style="display: none;">Welcome, ' . esc_html($current_user->display_name) . '!</div>';
+    }
+}
+add_action('woocommerce_before_account_navigation', 'add_username_above_account_navigation');
+
+function move_custom_welcome_message_script()
+{
+    if (is_account_page()) {
+        // Add inline JavaScript to move the welcome message and show it
+        ?>
+                <script type="text/javascript">
+                    jQuery(document).ready(function ($) {
+                        // Move the welcome message to just above the <ul> inside the navigation
+                        var welcomeMessage = $('#custom-welcome-message');
+                        welcomeMessage.prependTo('.woocommerce-MyAccount-navigation');
+                        // Now display the message
+                        welcomeMessage.show();
+                    });
+                </script>
+                <?php
+    }
+}
+add_action('wp_footer', 'move_custom_welcome_message_script');
+function change_view_order_text_script()
+{
+    if (is_account_page()) {
+        // Add inline JavaScript to change the "View" buttons to "View Tickets"
+        ?>
+                <script type="text/javascript">
+                    jQuery(document).ready(function ($) {
+                        // Change the text of each "View" button to "View Tickets"
+                        $('.woocommerce-MyAccount-orders .woocommerce-button').each(function () {
+                            if ($(this).text().trim() === 'View') {
+                                $(this).text('View Tickets');
+                            }
+                        });
+                    });
+                </script>
+                <?php
+    }
+}
+add_action('wp_footer', 'change_view_order_text_script');
+
