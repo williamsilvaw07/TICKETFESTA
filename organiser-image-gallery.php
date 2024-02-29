@@ -798,7 +798,6 @@ function tec_check_account_upload_limit($organizer_id, $files){
     }
     return false;
 }
-?>
 
 
 
