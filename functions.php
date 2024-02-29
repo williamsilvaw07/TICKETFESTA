@@ -2,7 +2,99 @@
 <?php
 
 
+add_filter( 'manage_edit-product_columns', 'add_event_association_column_header', 20 );
+function add_event_association_column_header( $columns ) {
+    // Add a new column for the event association
+    $columns['event_association'] = __( 'Associated Event', 'your-textdomain' );
+    return $columns;
+}
 
+
+add_action( 'manage_product_posts_custom_column', 'add_event_association_column_content_with_image', 10, 2 );
+function add_event_association_column_content_with_image( $column, $product_id ) {
+    if ( $column == 'event_association' ) {
+        // Retrieve the associated event ID
+        $event_id = get_post_meta( $product_id, '_tribe_wooticket_for_event', true );
+        if ( !empty( $event_id ) ) {
+            // Get the event's post title
+            $event_post = get_post( $event_id );
+            if ( $event_post ) {
+                echo esc_html( $event_post->post_title );
+                // Attempt to get the event's featured image
+                $event_image = get_the_post_thumbnail_url( $event_id, 'thumbnail' ); // 'thumbnail' can be changed to any registered image size
+                if ( $event_image ) {
+                    echo '<br><img src="' . esc_url( $event_image ) . '" alt="" style="max-width:75px; height:auto; margin-top:8px;">';
+                }
+            } else {
+                _e( 'No associated event', 'your-textdomain' );
+            }
+        } else {
+            _e( 'N/A', 'your-textdomain' ); // Display something if there's no association
+        }
+    }
+}
+
+
+
+
+
+
+function set_all_products_featured_image_to_event_image() {
+    // Query all products.
+    $args = array(
+        'post_type' => 'product',
+        'posts_per_page' => -1, // Retrieve all products
+        'fields' => 'ids', // Retrieve only the IDs for performance
+    );
+
+    $product_ids = get_posts($args);
+
+    foreach ($product_ids as $product_id) {
+        // Retrieve the associated event ID for each product.
+        $event_id = get_post_meta($product_id, '_tribe_wooticket_for_event', true);
+
+        if (!empty($event_id)) {
+            // Get the event's featured image ID.
+            $event_image_id = get_post_thumbnail_id($event_id);
+
+            if (!empty($event_image_id)) {
+                // Set the event's image as the product's featured image.
+                set_post_thumbnail($product_id, $event_image_id);
+                error_log("Product ID {$product_id} featured image updated to event ID {$event_id}'s image.");
+            } else {
+                error_log("Event ID {$event_id} does not have a featured image.");
+            }
+        } else {
+            error_log("Product ID {$product_id} does not have an associated event.");
+        }
+    }
+}
+
+// Optionally, you can trigger this function with a specific action, hook, or manually.
+add_action('wp_loaded', 'set_all_products_featured_image_to_event_image');
+
+
+
+/**
+ * Example for adding event data to WooCommerce checkout for Events Calendar tickets.
+ * @link https://theeventscalendar.com/support/forums/topic/event-title-and-date-in-cart/
+ */
+add_filter( 'woocommerce_cart_item_name', 'woocommerce_cart_item_name_event_title', 10, 3 );
+ 
+function woocommerce_cart_item_name_event_title( $title, $values, $cart_item_key ) {
+    $ticket_meta = get_post_meta( $values['product_id'] );
+ 
+    // Only do if ticket product
+    if ( array_key_exists( '_tribe_wooticket_for_event', $ticket_meta ) ) {
+        $event_id = absint( $ticket_meta[ '_tribe_wooticket_for_event' ][0] );
+ 
+        if ( $event_id ) {
+            $title = sprintf( '%s for <a href="%s" target="_blank"><strong>%s</strong></a>', $title, get_permalink( $event_id ), get_the_title( $event_id ) );
+        }
+    }
+ 
+    return $title;
+}
 ////CHECKOUT
 
 /**
