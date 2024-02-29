@@ -23,11 +23,15 @@ class TicketSiteFees {
 	public function site_fees_create_admin_page() {
 
         $yearly_site_fees = $this->get_yearly_total_site_fees();
+        $monthly_site_fees = $this->get_monthly_total_site_fees();
+        $weekly_site_fees = $this->get_weekly_total_site_fees();
 
         ?>
 		<div class="wrap">
 			<h2> Site Fees</h2>
 			<p> Yearly Site Fees:  <?php  echo $yearly_site_fees;?></p>
+			<p> Monthly Site Fees:  <?php  echo $monthly_site_fees;?></p>
+			<p> Weekly Site Fees:  <?php  echo $weekly_site_fees;?></p>
 			<?php settings_errors(); ?>
 		</div>
 	<?php 
@@ -38,12 +42,39 @@ class TicketSiteFees {
     // retrive yearly site fees from database
     function get_yearly_total_site_fees(){
     
-        global $wpdb;
-
         // Define the start and end dates for the one-year range
         $start_date = date('Y-m-d', strtotime('-1 year')); // One year ago from today
         $end_date = date('Y-m-d'); // Today's date
         
+        $order_ids = $this->get_order_id_by_time_range($start_date, $end_date);
+        return $this->get_site_fees_total($order_ids);
+    }
+
+    // retrive monthly site fees from database
+    function get_monthly_total_site_fees(){
+    
+        // Define the start and end dates for the one-year range
+        $start_date = date('Y-m-d', strtotime('-1 year')); // One year ago from today
+        $end_date = date('Y-m-d'); // Today's date
+        
+        $order_ids = $this->get_order_id_by_time_range($start_date, $end_date);
+        return $this->get_site_fees_total($order_ids);
+    }
+
+
+    // retrive weekly site fees from database
+    function get_weekly_total_site_fees(){
+    
+        // Define the start and end dates for the one-year range
+        $start_date = date('Y-m-d', strtotime('-1 year')); // One year ago from today
+        $end_date = date('Y-m-d'); // Today's date
+        
+        $order_ids = $this->get_order_id_by_time_range($start_date, $end_date);
+        return $this->get_site_fees_total($order_ids);
+    }
+    function get_order_id_by_time_range($start_date, $end_date){
+        global $wpdb;
+        $order_ids = [];
         // Prepare the SQL query
         $query = $wpdb->prepare("
             SELECT ID
@@ -56,9 +87,9 @@ class TicketSiteFees {
         
         // Execute the query to get all order IDs within the one-year range
         $order_ids = $wpdb->get_col($query);
-        return $this->get_site_fees_total($order_ids);
+        return $order_ids;
     }
-    
+
     // calculate site fees from order id array
     function get_site_fees_total($order_ids = []){
         $total_fee = 0;
