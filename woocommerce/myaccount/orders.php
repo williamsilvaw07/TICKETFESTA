@@ -187,8 +187,24 @@ $(document).ready(function() {
         'overflow': 'hidden'
     });
 
+    // Append glass effect
     $('.order_event_image').append('<div class="glass"></div>');
 
+    // Append close button
+    $('.order_event_image').append('<div class="close-button">&times;</div>');
+
+    // Style close button
+    $('.order_event_image .close-button').css({
+        'position': 'absolute',
+        'top': '10px',
+        'right': '10px',
+        'color': '#fff',
+        'cursor': 'pointer',
+        'font-size': '20px',
+        'z-index': '999'
+    });
+
+    // Style glass effect
     $('.order_event_image .glass').css({
         'position': 'absolute',
         'top': '0',
@@ -198,7 +214,13 @@ $(document).ready(function() {
         'background': 'rgba(255, 255, 255, 0.5)',
         'pointer-events': 'none'
     });
+
+    // Close event
+    $('.order_event_image .close-button').click(function() {
+        $('.order_event_image').fadeOut();
+    });
 });
+
 
 
 
