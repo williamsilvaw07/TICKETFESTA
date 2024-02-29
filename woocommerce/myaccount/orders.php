@@ -407,14 +407,13 @@ html .woocommerce-account .woocommerce-orders-table__cell {
 
 .order_event_container {
     justify-content: center;
-
+	padding-bottom: 0!important;
 }
 .woocommerce-orders-table__cell-order-number:before , .woocommerce-orders-table__cell-order-actions:before{
 	display:none!important
 }
-body .order_event_details {
+.order_event_details {
 	align-items: center;
-	padding-bottom: 0!important;
 }
 
 
