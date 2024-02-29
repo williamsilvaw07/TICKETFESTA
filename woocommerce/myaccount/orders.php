@@ -247,7 +247,8 @@ tr.woocommerce-orders-table__row , thead tr{
 }
 
 .woocommerce table.shop_table th{
-	padding-right:0!important
+	padding-right:0!important;
+    align-items: center;
 }
 
 .oder_nm_link_main{
