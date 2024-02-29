@@ -174,53 +174,44 @@ do_action( 'woocommerce_before_account_orders', $has_orders ); ?>
 
 
 <script>
-$(document).ready(function() {
-    // Get the image source dynamically
-    var imgSrc = $('.order_event_image img').attr('src');
+jQuery(document).ready(function($) {
+    $('.order_event_image').each(function() {
+        var $this = $(this); // Cache the current .order_event_image element
+        var imgSrc = $this.find('img').attr('src'); // Get the source of the contained image
 
-    // Set the background image of .order_event_image
-    $('.order_event_image').css('background-image', 'url(' + imgSrc + ')');
+        // Check if the glass-effect background already exists to avoid duplicates
+        if ($this.children('.glass-effect-background').length === 0) {
+            // Create a new div for the glass-effect background
+            var glassEffectDiv = $('<div class="glass-effect-background"></div>').css({
+                'position': 'absolute',
+                'top': 0,
+                'left': 0,
+                'width': '100%',
+                'height': '100%',
+                'background-image': 'url(' + imgSrc + ')',
+                'background-size': 'cover',
+                'background-position': 'center center',
+                'backdrop-filter': 'blur(10px) contrast(70%)', // Apply glass effect
+                'z-index': '0'
+            });
 
-    // Add glass effect
-    $('.order_event_image').css({
-        'position': 'relative',
-        'overflow': 'hidden'
-    });
+            // Insert the glass effect div as the first child of the .order_event_image element
+            $this.prepend(glassEffectDiv);
 
-    // Append glass effect
-    $('.order_event_image').append('<div class="glass"></div>');
+            // Adjust the .order_event_image container styling
+            $this.css({
+                'position': 'relative',
+                'overflow': 'hidden'
+            });
 
-    // Append close button
-    $('.order_event_image').append('<div class="close-button">&times;</div>');
-
-    // Style close button
-    $('.order_event_image .close-button').css({
-        'position': 'absolute',
-        'top': '10px',
-        'right': '10px',
-        'color': '#fff',
-        'cursor': 'pointer',
-        'font-size': '20px',
-        'z-index': '999'
-    });
-
-    // Style glass effect
-    $('.order_event_image .glass').css({
-        'position': 'absolute',
-        'top': '0',
-        'left': '0',
-        'width': '100%',
-        'height': '100%',
-        'background': 'rgba(255, 255, 255, 0.5)',
-        'pointer-events': 'none'
-    });
-
-    // Close event
-    $('.order_event_image .close-button').click(function() {
-        $('.order_event_image').fadeOut();
+            // Ensure the original image remains clear and above the glass effect background
+            $this.find('img').css({
+                'position': 'relative',
+                'z-index': '2'
+            });
+        }
     });
 });
-
 
 
 
