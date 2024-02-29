@@ -452,6 +452,13 @@ html .woocommerce-account  .woocommerce-orders-table__cell-order-total{
     padding-top: 0;
     z-index: 99;
 	}
+	.woocommerce-MyAccount-navigation ul{
+		display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 4%;
+	}
 	.woocommerce-MyAccount-navigation li{
 		width: fit-content;
 	}
