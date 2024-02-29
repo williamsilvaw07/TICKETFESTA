@@ -242,8 +242,8 @@ tr.woocommerce-orders-table__row , thead tr{
 }
 
 .woocommerce-orders-table__cell-order-total{
-	font-size: 17px;
-    font-weight: 600;
+	font-size: 17px!important;
+    font-weight: 600!important;
 }
 .woocommerce table.shop_table td {
     text-align: center;
