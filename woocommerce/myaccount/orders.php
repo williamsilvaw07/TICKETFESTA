@@ -376,7 +376,7 @@ tr.woocommerce-orders-table__row , thead tr{
 
 @media (max-width: 950px) {
 	tr.woocommerce-orders-table__row {
-    display: flex;
+    display: flex!important
     width: 100%;
     align-content: center;
     flex-direction: column;
