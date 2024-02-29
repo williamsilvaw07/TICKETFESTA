@@ -91,7 +91,7 @@ if (!empty($fees)) {
     echo "Custom Fees for Order ID $order_id:<br>";
     foreach ($fees as $fee) {
         echo '<pre>';
-        var_dump($fee);
+        var_dump($fee->get_total());
         echo '</pre>';
         echo "{$fee->name}: {$fee->get_total()}<br>";
     }
