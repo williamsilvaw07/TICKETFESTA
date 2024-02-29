@@ -175,14 +175,15 @@ do_action( 'woocommerce_before_account_orders', $has_orders ); ?>
 
 <script>
 jQuery(document).ready(function($) {
-    // Image URL
-    var imageUrl = 'https://ticketfesta.co.uk/wp-content/uploads/2024/02/antoine-j-r3XvSBEQQLo-unsplash-2-min-2.jpg';
+    // Retrieve the image URL from the <img> element inside the .order_event_image container
+    var imageUrl = $('.order_event_image img').attr('src');
     
-    // Create a new <div> for the image and append it to the container
-    var $imageDiv = $('<div class="order_event_image"></div>');
-    $imageDiv.css('background-image', 'url(' + imageUrl + ')');
-    $('.order_event_image_container').append($imageDiv);
+    // Create a new <div> for the image and set its background image
+    var $imageDiv = $('<div class="order_event_image"></div>'); // Create a new <div> element with the class 'order_event_image'
+    $imageDiv.css('background-image', 'url(' + imageUrl + ')'); // Set the background image of the <div> to the retrieved URL
+    $('.order_event_image_container').append($imageDiv); // Append the new <div> to the container with the class 'order_event_image_container'
 });
+
 
 </script>
 
