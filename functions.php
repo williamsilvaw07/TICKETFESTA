@@ -2,33 +2,36 @@
 <?php
 
 
+add_action( 'woocommerce_update_product', 'set_ticket_featured_image_to_event_image', 10, 2 );
 
-add_action( 'save_post_product', 'set_ticket_featured_image_to_event_image', 10, 3 );
+function set_ticket_featured_image_to_event_image( $product_id, $product ) {
+    error_log( 'Attempting to set featured image for product ID: ' . $product_id );
 
-function set_ticket_featured_image_to_event_image( $post_id, $post, $update ) {
-    // If this is a new post, $update will be false
     // Check if the product already has a featured image
-    if ( has_post_thumbnail( $post_id ) || !$update ) {
-        return; // Exit if the product has a featured image or if it's a new product
+    if ( has_post_thumbnail( $product_id ) ) {
+        error_log( 'Product ID ' . $product_id . ' already has a featured image.' );
+        return; // Exit if the product has a featured image
     }
 
     // Check if this product is a ticket associated with an event
-    $event_id = get_post_meta( $post_id, '_tribe_wooticket_for_event', true );
-    if ( empty( $event_id ) ) {
-        return; // Exit if not associated with an event
+    $event_id = get_post_meta( $product_id, '_tribe_wooticket_for_event', true );
+    if ( !$event_id ) {
+        error_log( 'No event ID found for product ID ' . $product_id );
+        return; // Exit if not associated with an event or if the event ID is not set
+    } else {
+        error_log( 'Found event ID ' . $event_id . ' for product ID ' . $product_id );
     }
 
     // Check if the associated event has a featured image
     $event_thumbnail_id = get_post_thumbnail_id( $event_id );
-    if ( !empty( $event_thumbnail_id ) ) {
+    if ( $event_thumbnail_id ) {
+        error_log( 'Setting featured image for product ID ' . $product_id . ' to event thumbnail ID ' . $event_thumbnail_id );
         // Set the event's featured image as the product's featured image
-        set_post_thumbnail( $post_id, $event_thumbnail_id );
+        set_post_thumbnail( $product_id, $event_thumbnail_id );
+    } else {
+        error_log( 'No featured image found for event ID ' . $event_id );
     }
 }
-
-error_log( 'Product ID: ' . $product_id );
-error_log( 'Event ID: ' . $event_id );
-error_log( 'Event Thumbnail ID: ' . $event_thumbnail_id );
 
 
 
