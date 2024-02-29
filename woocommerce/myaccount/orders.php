@@ -254,7 +254,7 @@ tr.woocommerce-orders-table__row , thead tr{
     text-align: center;
 }
 .woocommerce-orders-table__header-order-number{
-	text-align: left;
+	text-align: left!important;
 }
 .oder_nm_link_main{
 	display:none
