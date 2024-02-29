@@ -253,7 +253,8 @@ tr.woocommerce-orders-table__row , thead tr{
 	padding-right:0!important;
     text-align: center;
 }
-.woocommerce-orders-table__header-order-number{
+
+.woocommerce table.shop_table .woocommerce-orders-table__header-order-number{
 	text-align: left!important;
 }
 .oder_nm_link_main{
