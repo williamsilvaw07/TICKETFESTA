@@ -8,16 +8,23 @@ function add_event_association_column_header( $columns ) {
     $columns['event_association'] = __( 'Associated Event', 'your-textdomain' );
     return $columns;
 }
-add_action( 'manage_product_posts_custom_column', 'add_event_association_column_content', 10, 2 );
-function add_event_association_column_content( $column, $product_id ) {
+
+
+add_action( 'manage_product_posts_custom_column', 'add_event_association_column_content_with_image', 10, 2 );
+function add_event_association_column_content_with_image( $column, $product_id ) {
     if ( $column == 'event_association' ) {
-        // Retrieve the associated event ID using the meta key you use to link tickets to events
+        // Retrieve the associated event ID
         $event_id = get_post_meta( $product_id, '_tribe_wooticket_for_event', true );
         if ( !empty( $event_id ) ) {
-            // Optionally, display the event title instead of or in addition to the ID
+            // Get the event's post title
             $event_post = get_post( $event_id );
             if ( $event_post ) {
                 echo esc_html( $event_post->post_title );
+                // Attempt to get the event's featured image
+                $event_image = get_the_post_thumbnail_url( $event_id, 'thumbnail' ); // 'thumbnail' can be changed to any registered image size
+                if ( $event_image ) {
+                    echo '<br><img src="' . esc_url( $event_image ) . '" alt="" style="max-width:75px; height:auto; margin-top:8px;">';
+                }
             } else {
                 _e( 'No associated event', 'your-textdomain' );
             }
