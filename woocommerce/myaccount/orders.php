@@ -84,7 +84,7 @@ do_action( 'woocommerce_before_account_orders', $has_orders ); ?>
 
                 echo '<div class="order_event_details">';
                 // Display the order number
-                echo '<p><strong>' . esc_html( _x( 'Order Number: #', 'order number label', 'woocommerce' ) . $order->get_order_number() ) . '</strong></p>';
+                echo '<p>' . esc_html( _x( 'Order Number: #', 'order number label', 'woocommerce' ) . $order->get_order_number() ) . '</p>';
                 // Fetch the event start date and time
                 $event_start_date = get_post_meta($event_id, '_EventStartDate', true);
                 // Format the date and time for display
@@ -92,11 +92,11 @@ do_action( 'woocommerce_before_account_orders', $has_orders ); ?>
                 if ($event_start_date) {
 					$formatted_date = date_i18n('d M Y, H:i', strtotime($event_start_date));
 
-                    echo '<p><strong>Event Date & Time:</strong> ' . esc_html($formatted_date) . '</p>';
+                    echo '<p>' . esc_html($formatted_date) . '</p>';
                 }
                 // Display the product name and quantity together
-                echo '<p><strong>' . esc_html($item->get_name()) . ' x ' . esc_html($item->get_quantity()) . '</strong></p>';
-                echo '<p><strong>' . esc_html($event_post->post_title) . '</strong></p>';
+                echo '<p>' . esc_html($item->get_name()) . ' x ' . esc_html($item->get_quantity()) . '></p>';
+                echo '<h5>' . esc_html($event_post->post_title) . '</h5>';
                 echo '</div>'; // Close the order_event_details div
 
                 echo '</div>'; // Close the order_event_container div
@@ -168,3 +168,31 @@ do_action( 'woocommerce_before_account_orders', $has_orders ); ?>
 <?php endif; ?>
 
 <?php do_action( 'woocommerce_after_account_orders', $has_orders ); ?>
+
+
+
+
+
+
+
+
+<style>
+
+
+.order_event_container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 15px;
+
+
+}
+
+
+
+
+
+	</style>
