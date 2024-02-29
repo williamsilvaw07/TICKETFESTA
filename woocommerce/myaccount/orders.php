@@ -51,45 +51,65 @@ do_action( 'woocommerce_before_account_orders', $has_orders ); ?>
 
 
 
-                                <?php elseif ( 'order-number' === $column_id ) : ?>
+  
+								
+
+
+
+								<?php elseif ( 'order-number' === $column_id ) : ?>
     <a href="<?php echo esc_url( $order->get_view_order_url() ); ?>">
         <?php echo esc_html( _x( '#', 'hash before order number', 'woocommerce' ) . $order->get_order_number() ); ?>
     </a>
     <?php
- // Loop through each order item
- $items = $order->get_items();
- foreach ($items as $item_id => $item) {
-	 // Display the product name and quantity together
-	 echo '<p><strong>' . esc_html($item->get_name()) . ' x ' . esc_html($item->get_quantity()) . '</strong></p>';
- 
-	 // Retrieve the associated event ID for the product
-	 $product_id = $item->get_product_id();
-	 $event_id = get_post_meta($product_id, '_tribe_wooticket_for_event', true);
- 
-	 if (!empty($event_id)) {
-		 // Optionally, fetch and display the event title or other information
-		 $event_post = get_post($event_id);
-		 if ($event_post) {
-			 // Display the event title inside the same div as h4
-			 echo '<div class="order_event_title_dv"><h4>' . esc_html($event_post->post_title) . '</h4>';
- 
-			 // Fetch the event start date and time
-			 $event_start_date = get_post_meta($event_id, '_EventStartDate', true);
-			 // Format the date and time for display
-			 // Adjust the date format string as needed
-			 if ($event_start_date) {
-				 $formatted_date = date_i18n('d M, H:i', strtotime($event_start_date));
-				 echo '<p>Event Date & Time: ' . esc_html($formatted_date) . '</p>';
-			 }
- 
-			 echo '</div>'; // Close the div
-		 }
-	 } else {
-		 // If no event ID is found, optionally display a placeholder or message
-		 echo '<p>No associated event found.</p>';
-	 }
- }
+    // Loop through each order item
+    $items = $order->get_items();
+    foreach ($items as $item_id => $item) {
+        // Retrieve the associated event ID for the product
+        $product_id = $item->get_product_id();
+        $event_id = get_post_meta($product_id, '_tribe_wooticket_for_event', true);
+
+        if (!empty($event_id)) {
+            // Optionally, fetch and display the event title or other information
+            $event_post = get_post($event_id);
+            if ($event_post) {
+                // Display the event title inside the same div as h4
+                echo '<div class="order_event_container">';
+                echo '<div class="order_event_image">';
+                // If an event ID is found, fetch and display the event's featured image
+                $event_image_id = get_post_thumbnail_id($event_id);
+                if ($event_image_id) {
+                    $event_image_url = wp_get_attachment_image_url($event_image_id, 'full');
+                    if ($event_image_url) {
+                        echo '<img src="' . esc_url($event_image_url) . '" alt="Event Image" style="width:100%;max-width:300px;">';
+                    }
+                }
+                echo '</div>'; // Close the order_event_image div
+
+                echo '<div class="order_event_details">';
+                // Display the order number
+                echo '<p><strong>' . esc_html( _x( 'Order Number: #', 'order number label', 'woocommerce' ) . $order->get_order_number() ) . '</strong></p>';
+                // Fetch the event start date and time
+                $event_start_date = get_post_meta($event_id, '_EventStartDate', true);
+                // Format the date and time for display
+                // Adjust the date format string as needed
+                if ($event_start_date) {
+                    $formatted_date = date_i18n('d M, H:i', strtotime($event_start_date));
+                    echo '<p><strong>Event Date & Time:</strong> ' . esc_html($formatted_date) . '</p>';
+                }
+                // Display the product name and quantity together
+                echo '<p><strong>' . esc_html($item->get_name()) . ' x ' . esc_html($item->get_quantity()) . '</strong></p>';
+                echo '<p><strong>' . esc_html($event_post->post_title) . '</strong></p>';
+                echo '</div>'; // Close the order_event_details div
+
+                echo '</div>'; // Close the order_event_container div
+            }
+        } else {
+            // If no event ID is found, optionally display a placeholder or message
+            echo '<p>No associated event found.</p>';
+        }
+    }
     ?>
+
 
 
 
