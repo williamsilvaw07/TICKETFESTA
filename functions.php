@@ -38,27 +38,13 @@ function add_event_association_column_content_with_image( $column, $product_id )
 
 
 
-// Add a new column to the Media Library list view.
-add_filter('manage_media_columns', 'add_media_column_attachment_id');
-function add_media_column_attachment_id($columns) {
-    // Insert the 'Attachment ID' column before the 'Date' column.
-    // Note: If you want to add it at the end, you can simply use $columns['attachment_id'] = 'Attachment ID';
-    $new = [];
-    foreach($columns as $key => $title) {
-        if ($key === 'date') {  // Choose where you want to add the new column ('before' the 'Date' column here).
-            $new['attachment_id'] = 'Attachment ID';
-        }
-        $new[$key] = $title;
-    }
-    return $new;
-}
+$image_url = 'https://ticketfesta.co.uk/wp-content/uploads/2024/02/about-us-team4-1-29.png';
+$attachment_id = attachment_url_to_postid( $image_url );
 
-// Populate the new 'Attachment ID' column.
-add_action('manage_media_custom_column', 'show_media_column_attachment_id', 10, 2);
-function show_media_column_attachment_id($column_name, $id) {
-    if ($column_name === 'attachment_id') {
-        echo $id;
-    }
+if ( $attachment_id ) {
+    echo "The attachment ID is: " . $attachment_id;
+} else {
+    echo "No attachment found for this URL.";
 }
 
 
