@@ -25,6 +25,7 @@ class TicketSiteFees {
         $yearly_site_fees = $this->get_yearly_total_site_fees();
         $monthly_site_fees = $this->get_monthly_total_site_fees();
         $weekly_site_fees = $this->get_weekly_total_site_fees();
+        $daily_site_fees = $this->get_daily_total_site_fees();
 
         ?>
 		<div class="wrap">
@@ -32,6 +33,7 @@ class TicketSiteFees {
 			<p> Yearly Site Fees:  £<?php  echo $yearly_site_fees;?></p>
 			<p> Monthly Site Fees:  £<?php  echo $monthly_site_fees;?></p>
 			<p> Weekly Site Fees:  £<?php  echo $weekly_site_fees;?></p>
+			<p> Daily Site Fees:  £<?php  echo $daily_site_fees;?></p>
 			<?php settings_errors(); ?>
 		</div>
 	<?php 
@@ -53,8 +55,8 @@ class TicketSiteFees {
     // retrive monthly site fees from database
     function get_monthly_total_site_fees(){
     
-        // Define the start and end dates for the one-year range
-        $start_date = date('Y-m-d', strtotime('-1 month')); // One year ago from today
+        // Define the start and end dates for the one-month range
+        $start_date = date('Y-m-d', strtotime('-1 month')); // One month ago from today
         $end_date = date('Y-m-d'); // Today's date
         
         $order_ids = $this->get_order_id_by_time_range($start_date, $end_date);
@@ -65,8 +67,19 @@ class TicketSiteFees {
     // retrive weekly site fees from database
     function get_weekly_total_site_fees(){
     
-        // Define the start and end dates for the one-year range
-        $start_date = date('Y-m-d', strtotime('-1 week')); // One year ago from today
+        // Define the start and end dates for the one-week range
+        $start_date = date('Y-m-d', strtotime('-1 week')); // One week ago from today
+        $end_date = date('Y-m-d'); // Today's date
+        
+        $order_ids = $this->get_order_id_by_time_range($start_date, $end_date);
+        return $this->get_site_fees_total($order_ids);
+    }
+
+
+    function get_daily_total_site_fees(){
+    
+        // Define the start and end dates for the one-day range
+        $start_date = date('Y-m-d', strtotime('-24 hour')); // One day ago from today
         $end_date = date('Y-m-d'); // Today's date
         
         $order_ids = $this->get_order_id_by_time_range($start_date, $end_date);
