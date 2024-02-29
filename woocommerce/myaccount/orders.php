@@ -60,7 +60,9 @@ do_action( 'woocommerce_before_account_orders', $has_orders ); ?>
         $items = $order->get_items();
         foreach ( $items as $item_id => $item ) {
             // Display the product name
-            echo '<p><strong>' . esc_html( $item->get_name() ) . '</strong></p>';
+     // Display the product name and quantity together
+echo '<p><strong>' . esc_html( $item->get_name() ) . ' x ' . esc_html( $item->get_quantity() ) . '</strong></p>';
+
 
             // Retrieve the associated event ID for the product
             $product_id = $item->get_product_id();
