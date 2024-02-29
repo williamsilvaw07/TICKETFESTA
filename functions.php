@@ -940,4 +940,178 @@ add_action('wp_ajax_add_event', 'iam00_create_event');
  }
  
  add_action('init', 'register_organizers_shortcode');
+
+ function get_organizer_id_shortcode_function($atts)
+ {
+     $atts = shortcode_atts(
+         array(
+             'id' => '0'
+         ),
+         $atts
+     );
  
+     $organizer_id = $atts['id'];
+ 
+     if ($organizer_id == '0' && isset($_GET['id']) && !empty($_GET['id'])) {
+         $organizer_id = $_GET['id'];
+     }
+ 
+     if ($organizer_id == '0') {
+         return "No organizer ID provided.";
+     }
+ 
+     return do_shortcode('[tribe_community_events view="edit_organizer" id="' . $organizer_id . '"]');
+ }
+ 
+ add_shortcode('get_organizer_id_shortcode_function_shortcode', 'get_organizer_id_shortcode_function');
+ 
+ function update_organizer_slug_on_title_change($post_id, $post, $update)
+ {
+     if ('tribe_organizer' !== $post->post_type) {
+         return;
+     }
+ 
+     remove_action('save_post', 'update_organizer_slug_on_title_change', 10);
+ 
+     $new_slug = sanitize_title($post->post_title);
+ 
+     if ($post->post_name !== $new_slug) {
+         wp_update_post(
+             array(
+                 'ID' => $post_id,
+                 'post_name' => $new_slug,
+             )
+         );
+     }
+ 
+     add_action('save_post', 'update_organizer_slug_on_title_change', 10, 3);
+ }
+ 
+ add_action('save_post', 'update_organizer_slug_on_title_change', 10, 3);
+ 
+ function check_organizer_name_existence($post_id, $post, $update)
+ {
+     if ('tribe_organizer' !== $post->post_type) {
+         return;
+     }
+ 
+     if (!isset($_POST['post_title'])) {
+         return;
+     }
+ 
+     $organizer_name = sanitize_text_field($_POST['post_title']);
+ 
+     $existing_organizers = get_posts(
+         array(
+             'post_type' => 'tribe_organizer',
+             'post_status' => 'publish',
+             'title' => $organizer_name,
+             'exclude' => array($post_id),
+             'posts_per_page' => 1,
+         )
+     );
+ 
+     if (count($existing_organizers) > 0) {
+         wp_die('Error: An organizer with this name already exists. Please choose a different name.', 'Organizer Name Exists', array('back_link' => true));
+     }
+ }
+ 
+ add_action('save_post', 'check_organizer_name_existence', 10, 3);
+ 
+ function reset_organizer_slug_on_deletion($post_id)
+ {
+     $post = get_post($post_id);
+     if ($post && $post->post_type === 'tribe_organizer') {
+         $new_slug = $post->post_name . '-deleted-' . time();
+         wp_update_post(
+             array(
+                 'ID' => $post_id,
+                 'post_name' => $new_slug,
+             )
+         );
+     }
+ }
+ 
+ add_action('before_delete_post', 'reset_organizer_slug_on_deletion');
+ 
+ 
+ 
+ 
+ function ajax_delete_organizer()
+ {
+     header('Content-Type: application/json'); // Ensure JSON response
+ 
+     $organizer_id = isset($_POST['organizer_id']) ? intval($_POST['organizer_id']) : 0;
+ 
+     if (!$organizer_id) {
+         wp_send_json_error('Invalid Organizer ID');
+         die();
+     }
+ 
+     if (!current_user_can('delete_post', $organizer_id)) {
+         wp_send_json_error('No permission to delete this organizer');
+         die();
+     }
+ 
+     $result = wp_delete_post($organizer_id, true);
+ 
+     if ($result) {
+         wp_send_json_success(array('message' => 'Organizer deleted successfully'));
+     } else {
+         wp_send_json_error('Deletion failed');
+     }
+ 
+     die();
+ }
+ add_action('wp_ajax_delete_organizer', 'ajax_delete_organizer');
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ function customize_organizer_slug($slug, $post_ID, $post_status, $post_type)
+ {
+     if ('tribe_organizer' != $post_type) {
+         return $slug;
+     }
+ 
+     // Check if slug ends with a number
+     if (preg_match('/-\d+$/', $slug)) {
+         $original_slug = preg_replace('/-\d+$/', '', $slug);
+         $existing_posts = get_posts(
+             array(
+                 'post_type' => 'tribe_organizer',
+                 'name' => $original_slug,
+                 'post_status' => 'any',
+                 'numberposts' => 1
+             )
+         );
+ 
+         if (empty($existing_posts)) {
+             return $original_slug; // Use the original slug if no posts found
+         }
+     }
+ 
+     return $slug;
+ }
+ 
+ add_filter('wp_unique_post_slug', 'customize_organizer_slug', 10, 4);
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
