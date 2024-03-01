@@ -1070,7 +1070,11 @@ color: black!important;
 
 
 /***my account page***/
-
+.woocommerce-account h1.entry-title {
+    background: #0d0e0e;
+    margin-left: 4%;
+    margin-top: 38px;
+}
   .woocommerce-account .elementor-section-wrap .elementor-element-9d845b1{
     width: 100%!important;
 }
@@ -1177,7 +1181,9 @@ input.select2-search__field[aria-owns='select2-saved_tribe_organizer-results'] {
 	width: 90%!important;
 	
 }
-
+.woocommerce-account .entry-header{
+    display: block;
+}
 
 }
 
