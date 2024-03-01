@@ -3684,3 +3684,51 @@ function display_upcoming_events_for_user_with_view_order_button() {
 }
 
 add_action('woocommerce_account_dashboard', 'display_upcoming_events_for_user_with_view_order_button');
+
+// update product images
+function update_featured_image_of_tribe_events($post_id) {
+    // Check if the saved post is of post type 'tribe_events'
+    if (get_post_type($post_id) === 'tribe_events') {
+        // Get the current featured image of post 123
+        $featured_image_id = get_post_thumbnail_id($post_id);
+
+        // If post 123 doesn't have a featured image, exit the function
+        if (!$featured_image_id) {
+            return;
+        }
+        $product_ids = get_product_ids_by_event_id($post_id);
+
+        foreach($product_ids as $product_id){
+        
+            // Update the featured image of the current post to match post 123
+            set_post_thumbnail($product_id, $featured_image_id);
+        }
+    }
+}
+
+// Hook the function to run when a post is saved or updated
+add_action('save_post', 'update_featured_image_of_tribe_events');
+
+function get_product_ids_by_event_id($event_id){
+
+    global $wpdb;
+
+    // Your WordPress database prefix
+    $table_name = $wpdb->prefix . 'postmeta';
+    
+    // SQL query
+    $sql = "SELECT post_id
+            FROM $table_name
+            WHERE meta_key = '_tribe_wooticket_for_event'
+            AND meta_value = $event_id";
+    
+    // Execute the query
+    $product_ids = $wpdb->get_results($sql);
+    
+    // Extracting product IDs from the results
+    $product_ids_array = array();
+    foreach ($product_ids as $product_id) {
+        $product_ids_array[] = $product_id->post_id;
+    }
+    return $product_ids_array;
+}

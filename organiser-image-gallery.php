@@ -676,40 +676,10 @@ function enqueue_media_uploader($hook) {
             'site_fees' => $site_fees
         ));
     }
-    get_product_ids_by_event_id('3789');
 }
 add_action('admin_enqueue_scripts', 'enqueue_media_uploader');
 
-function get_product_ids_by_event_id($event_id){
 
-    global $wpdb;
-
-    // Your WordPress database prefix
-    $table_name = $wpdb->prefix . 'postmeta';
-    
-    // SQL query
-    $sql = "SELECT post_id
-            FROM $table_name
-            WHERE meta_key = '_tribe_wooticket_for_event'
-            AND meta_value = $event_id";
-    
-    // Execute the query
-    $product_ids = $wpdb->get_results($sql);
-    
-    // Extracting product IDs from the results
-    $product_ids_array = array();
-    foreach ($product_ids as $product_id) {
-        $product_ids_array[] = $product_id->post_id;
-    }
-    
-    // Displaying the product IDs
-    if (!empty($product_ids_array)) {
-        echo "Product IDs found: " . implode(', ', $product_ids_array);
-    } else {
-        echo "No products found with the specified custom field value.";
-    }
-    
-}
 // returns site fees for order id array
 function get_site_fees_total_order_ids($order_ids = []){
     $total_fee = 0;
