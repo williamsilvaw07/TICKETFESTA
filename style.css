@@ -1079,7 +1079,7 @@ margin-top: 0!important;
 .woocommerce-MyAccount-content{
     flex: 0 0 70%!important
 }
-.woocommerce-account .entry-header{
+.woocommerce-account .entry-header , .woocommerce-MyAccount-navigation-link--wc-smart-coupons{
     display: none;
 }
 .woocommerce-account .woocommerce-MyAccount-content{
