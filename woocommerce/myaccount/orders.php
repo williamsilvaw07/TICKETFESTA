@@ -387,13 +387,23 @@ display:none!important
 }
 .woocommerce-orders-table__cell-order-date:before{
 	content: "Transaction Date"!important;
-    font-size: 16px;
-    font-weight: 900;
+    font-size: 14px;
+    color: #aaa;
+    text-transform: capitalize;
+    padding-left: 6px;
 }
 .woocommerce-orders-table__cell-order-total:before{
 	content: "Total";
-    font-size: 16px;
-    font-weight: 900;
+    font-size: 14px;
+    color: #aaa;
+    text-transform: capitalize;
+    padding-left: 6px;
+}
+.order_event_details span{
+	font-size: 14px;
+    color: #aaa;
+    text-transform: capitalize;
+    padding-left: 6px;
 }
 .woocommerce-orders-table__cell-order-tota , .woocommerce-orders-table__cell-order-date , .woocommerce-orders-table__cell-order-total , .woocommerce-orders-table__cell-order-actions{
 	display: flex!important;
