@@ -221,13 +221,15 @@ jQuery(document).ready(function($) {
     align-items: center;
 }
 .ticket{
-    animation: bouncingCard 0.6s ease-out infinite alternate;
+
     background-color: white;
-    color: darkslategray;
+    color: #1a1a1a!important;
     border-radius: 12px;
+	max-width: 350px;
+
 }
 .ticketShadow{
-    animation: bouncingShadow 0.6s ease-out infinite alternate;
+
     margin-top: 4px;
     width: 95%;
     height: 12px;
