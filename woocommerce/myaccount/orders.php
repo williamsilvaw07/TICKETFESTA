@@ -229,8 +229,10 @@ jQuery(document).ready(function($) {
 <style>
 
 tr.woocommerce-orders-table__row , thead tr{
-	display: flex;
-    width: 100%; 
+    display: flex;
+    width: 100%;
+    align-content: center;
+    align-items: center;
 }
 
 .woocommerce-orders-table__cell-order-number , th.woocommerce-orders-table__header-order-number{
@@ -274,7 +276,6 @@ tr.woocommerce-orders-table__row , thead tr{
 .order_event_container{
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
     align-content: center;
     justify-content: flex-start;
     align-items: center;
@@ -341,4 +342,120 @@ tr.woocommerce-orders-table__row , thead tr{
 	display:none!important
 }
 
+
+
+
+@media (max-width: 1350x) {
+	.order_event_image {
+    width: 100%;
+    height: 100%;
+    max-width: 175px;
+    max-height: 130px;
+}
+
+}
+
+@media (max-width: 1294px) {
+	.woocommerce-orders-table__cell-order-number , th.woocommerce-orders-table__header-order-number{
+	flex: 0 0 50%
+}
+
+.woocommerce-orders-table__cell-order-date , .woocommerce-orders-table__cell-order-total , .woocommerce-orders-table__cell-order-actions , .woocommerce-orders-table__header-order-actions , .woocommerce-orders-table__header-order-date , .woocommerce-orders-table__header-order-total{
+	flex: 1
+}
+
+}
+
+@media (max-width: 1180px) {
+	.order_event_container {
+
+    flex-wrap: wrap;
+}
+
+}
+
+
+@media (max-width: 950px) {
+	tr.woocommerce-orders-table__row {
+    display: flex!important;
+    width: 100%;
+    align-content: center;
+    flex-direction: column;
+}
+thead{
+display:none!important
+}
+.woocommerce-orders-table__cell-order-total:before , .woocommerce-orders-table__cell-order-date:before , .order_event_details span{
+    color: #aaa!important;
+    text-transform: capitalize!important;
+    padding-left: 6px!important;
+	font-weight: 300!important;
+	font-size: 14px;
+
+}
+.woocommerce-orders-table__cell-order-date:before{
+	content: "Transaction Date"!important;
+
+}
+.woocommerce-orders-table__cell-order-total:before{
+	content: "Total";
+ 
+
+}
+
+.woocommerce-orders-table__cell-order-tota , .woocommerce-orders-table__cell-order-date , .woocommerce-orders-table__cell-order-total , .woocommerce-orders-table__cell-order-actions{
+	display: flex!important;
+    text-align: right!important;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+ .woocommerce-account .woocommerce-orders-table__cell {
+	padding-bottom:5px!important;
+	padding-top:0!important;
+}
+
+.order_event_container {
+    justify-content: center;
+
+	padding-bottom: 0px!important;
+}
+.woocommerce-orders-table__cell-order-number:before , .woocommerce-orders-table__cell-order-actions:before{
+	display:none!important
+}
+.order_event_details {
+	align-items: center;
+}
+html .woocommerce-account  .woocommerce-orders-table__cell-order-total{
+	padding-bottom:10px!important
+}
+
+
+.woocommerce table.shop_table td {
+    text-align: center;
+    font-size: 16px!important;
+}
+
+.order_event_details h5 {
+    text-align: center;
+}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	</style>
+
+<?php

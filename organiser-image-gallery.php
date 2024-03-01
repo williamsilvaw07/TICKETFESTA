@@ -667,11 +667,57 @@ function enqueue_media_uploader($hook) {
     }
 
     if ('tribe_events_page_tickets-orders' === $hook) {
+
+        $event_id = isset($_GET['event_id']) ? $_GET['event_id'] : ''; // Replace with the actual event ID
+        $orders = get_orders_by_event_id($event_id);
+        $site_fees = get_site_fees_total_order_ids($orders);
         wp_enqueue_script('admin-order-js', get_stylesheet_directory_uri() . '/js/admin-order.js', array('jquery'), null, true);
+        wp_localize_script('admin-order-js', 'order_data', array(
+            'site_fees' => $site_fees
+        ));
     }
 }
 add_action('admin_enqueue_scripts', 'enqueue_media_uploader');
 
+
+// returns site fees for order id array
+function get_site_fees_total_order_ids($order_ids = []){
+    $total_fee = 0;
+    foreach($order_ids as $order_id){
+        $order = wc_get_order($order_id);
+        $fees = $order->get_fees();
+        if (!empty($fees)) {
+            foreach ($fees as $fee) {
+                $total_fee += (float)$fee->get_total();
+            }
+        }
+    } 
+    return  $total_fee;  
+}
+// Get all orders by event ID
+function get_orders_by_event_id( $meta_value) {
+    global $wpdb;
+    $meta_key='_community_tickets_order_fees';
+
+    // Prefix for WordPress database tables
+    $prefix = $wpdb->prefix;
+
+
+    $query = $wpdb->prepare("
+    SELECT p.ID
+    FROM {$prefix}posts p
+    INNER JOIN {$prefix}postmeta pm ON p.ID = pm.post_id
+    WHERE pm.meta_key = %s 
+    AND pm.meta_value LIKE %s
+    AND p.post_type = 'shop_order'
+    AND p.post_status = %s", $meta_key, '%' . $meta_value . '%', 'wc-completed');
+
+    // Execute the query
+    $order_ids = $wpdb->get_col($query);
+    // Return the order IDs
+    return $order_ids;
+
+}
 // Hooking the handler function to both logged-in and non-logged-in users
 add_action('wp_ajax_upload_images_cat', 'upload_images_cat');
 add_action('wp_ajax_nopriv_upload_images_cat', 'upload_images_cat');

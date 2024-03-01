@@ -1070,67 +1070,28 @@ color: black!important;
 
 
 /***my account page***/
-.woocommerce-orders-table__cell-order-total .item-count {
+.woocommerce-account h1.entry-title {
+    background: #0d0e0e;
+  padding-left: 4%;
+    margin-top: 38px;
+}
+  .woocommerce-account .elementor-section-wrap .elementor-element-9d845b1{
+    width: 100%!important;
+}
+.woocommerce-account .woocommerce {
+    background: #0d0e0e;
+}
+.woocommerce-account .entry-content , .woocommerce-account  .site-main {
+margin-top: 0!important;
+}
+.woocommerce-MyAccount-content{
+    flex: 0 0 70%!important
+}
+.woocommerce-account .entry-header , .woocommerce-MyAccount-navigation-link--wc-smart-coupons{
     display: none;
 }
 
-/* Add icons to My Account menu items */
-.woocommerce-MyAccount-navigation-link--dashboard:before {
-    content: '\f015'; /* FontAwesome icon for Dashboard */
-    font-family: 'Font Awesome 5 Free';
-    padding-right: 8px;
-}
 
-.woocommerce-MyAccount-navigation-link--orders:before {
-    content: '\f07a'; /* FontAwesome icon for Tickets (uses cart icon) */
-    font-family: 'Font Awesome 5 Free';
-    padding-right: 8px;
-}
-
-/* Repeat for each menu item, using the appropriate FontAwesome icon unicode */
-
-.woocommerce-MyAccount-navigation-link--coupons:before {
-    content: '\f145'; /* FontAwesome icon for Coupons */
-    font-family: 'Font Awesome 5 Free';
-    padding-right: 8px;
-}
-
-.woocommerce-MyAccount-navigation-link--edit-account:before {
-    content: '\f4ff'; /* FontAwesome icon for Account Details */
-    font-family: 'Font Awesome 5 Free';
-    padding-right: 8px;
-}
-
-.woocommerce-MyAccount-navigation-link--customer-logout:before {
-    content: '\f2f5'; /* FontAwesome icon for Logout */
-    font-family: 'Font Awesome 5 Free';
-    padding-right: 8px;
-}
-
-
-.woocommerce-MyAccount-navigation{
-    min-height: 100%;
-    position: absolute;
-    top: 143px;
-    max-width: 200px;
-    height: 100vh;
-    background-color: rgb(26, 26, 26);
-    overflow: auto;
-    padding-left: 15px;
-}
-.my-account-welcome-message {
-    /* Add your custom styles here */
-    font-size: 1.2em;
-    margin-bottom: 20px;
-    text-align: center;
-}
-
-
-
-#custom-welcome-message{
-    margin-top: 20px;
-    text-align: left;
-}
 .woocommerce-MyAccount-orders  .woocommerce-button{line-height: inherit;
     padding: 7px 15px!important;
     border-radius: 5px!important;
@@ -1144,8 +1105,6 @@ color: black!important;
     position: relative;
     padding: 17px;
     border-radius: 10px;
-    /* width: 100%; */
-    /* max-width: 500px; */
     margin: 38px auto;
     display: flex;
     flex-direction: column;
@@ -1153,11 +1112,19 @@ color: black!important;
 
 .woocommerce-account thead tr th{
     margin-bottom: 10px!important;
-    border-bottom: 1px solid #444!important;
+
     padding-bottom: 12px!important;
     padding-left: 0!important;
 }
 .woocommerce-account tbody tr td {
+    align-items: center!important;
+    padding: 18px 0!important;
+   
+    font-size: 14px!important;
+    color: #fff!important;
+    font-weight: 300!important;
+}
+.woocommerce-orders-table__row  , .woocommerce-orders-table thead tr{
     align-items: center!important;
     padding: 18px 0!important;
     border-bottom: 1px solid #444!important;
@@ -1166,7 +1133,9 @@ color: black!important;
     font-weight: 300!important;
 }
 .woocommerce-account .woocommerce{
-    display: flex;
+    display: flex!important;
+    width: 100%;
+    flex-direction: row;
 
 }
 
@@ -1187,8 +1156,44 @@ input.select2-search__field[aria-owns='select2-saved_tribe_organizer-results'] {
     display: none!important;
 }
 
+.woocommerce-orders-table thead tr{
+    padding-top: 0!important;
+    padding-bottom:0!important
+}
 
 
+
+@media (max-width: 950px) {
+
+.woocommerce-MyAccount-content {
+    flex: 0 0 90%!important;
+}
+
+
+}
+
+
+
+@media (max-width: 950px) {
+
+	.woocommerce-MyAccount-content {
+    flex: inherit!important;
+	width: 90%!important;
+	
+}
+.woocommerce-account .entry-header{
+    display: block;
+    font-size: 21px!important;
+}
+.woocommerce-account .entry-header h1{
+  
+    font-size: 21px!important;
+}
+.woocommerce-account .container .site-content .content-area {
+    background: #0d0e0e!important;
+}
+
+}
 
 
 

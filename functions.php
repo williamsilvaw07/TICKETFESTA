@@ -1,7 +1,87 @@
 <?php
 
+///MY ACCOUNT FUNCTION 
+function custom_limit_orders_per_page( $args ) {
+    $args['limit'] = 2; // Set this to how many orders you want per page.
+    return $args;
+}
+add_filter( 'woocommerce_my_account_my_orders_query', 'custom_limit_orders_per_page', 10, 1 );
 
-////CHECKOUT
+
+
+add_filter( 'gettext', 'custom_replace_text', 20, 3 );
+function custom_replace_text( $translated_text, $text, $domain ) {
+    if ( 'Date' === $text ) {
+        $translated_text = 'Transaction Date';
+    }
+    return $translated_text;
+}
+
+
+
+//////FUNCTION TO ADD THE EVENT IMAGE TO THE TICKET/PRODUCT MAIN IMAGE  
+
+function set_all_products_featured_image_to_event_image() {
+    // Query all products.
+    $args = array(
+        'post_type' => 'product',
+        'posts_per_page' => -1, // Retrieve all products
+        'fields' => 'ids', // Retrieve only the IDs for performance
+    );
+
+    $product_ids = get_posts($args);
+
+    foreach ($product_ids as $product_id) {
+        // Retrieve the associated event ID for each product.
+        $event_id = get_post_meta($product_id, '_tribe_wooticket_for_event', true);
+
+        if (!empty($event_id)) {
+            // Get the event's featured image ID.
+            $event_image_id = get_post_thumbnail_id($event_id);
+
+            if (!empty($event_image_id)) {
+                // Set the event's image as the product's featured image.
+                set_post_thumbnail($product_id, $event_image_id);
+                error_log("Product ID {$product_id} featured image updated to event ID {$event_id}'s image.");
+            } else {
+                error_log("Event ID {$event_id} does not have a featured image.");
+            }
+        } else {
+            error_log("Product ID {$product_id} does not have an associated event.");
+        }
+    }
+}
+
+// Optionally, you can trigger this function with a specific action, hook, or manually.
+add_action('wp_loaded', 'set_all_products_featured_image_to_event_image');
+
+///////END
+
+
+
+
+
+////FUNCTION TO ADD THE EVENT TITLE ON THE TICKET/PRODUCT FRONTEND 
+/**
+ * Example for adding event data to WooCommerce checkout for Events Calendar tickets.
+ * @link https://theeventscalendar.com/support/forums/topic/event-title-and-date-in-cart/
+ */
+add_filter( 'woocommerce_cart_item_name', 'woocommerce_cart_item_name_event_title', 10, 3 );
+ 
+function woocommerce_cart_item_name_event_title( $title, $values, $cart_item_key ) {
+    $ticket_meta = get_post_meta( $values['product_id'] );
+ 
+    // Only do if ticket product
+    if ( array_key_exists( '_tribe_wooticket_for_event', $ticket_meta ) ) {
+        $event_id = absint( $ticket_meta[ '_tribe_wooticket_for_event' ][0] );
+ 
+        if ( $event_id ) {
+            $title = sprintf( '%s for <a href="%s" target="_blank"><strong>%s</strong></a>', $title, get_permalink( $event_id ), get_the_title( $event_id ) );
+        }
+    }
+ 
+    return $title;
+}
 
 /**
  * Flux checkout - Allow custom CSS files.
@@ -2990,12 +3070,15 @@ function get_follower_by_organiser_id($organizer_id)
     return $followers_array;
 }
 
+
+// send email to subscriber after post first publish
 function ticketfeasta_publish_tribe_events_on_first_update($post_id, $post, $update)
 {
+    // check if it is not the first publish
+    if ( $update || 'publish' !== $post->post_status ) {
+        return;
+    }
     if ($post->post_type == 'tribe_events') {
-        $published_date = strtotime($post->post_date);
-        $current_date = strtotime(current_time('mysql'));
-        // if ($published_date == $current_date) {
 
         $organizer_id = get_post_meta($post_id, '_EventOrganizerID', true);
         $followers = get_follower_by_organiser_id($organizer_id);
@@ -3016,7 +3099,6 @@ function ticketfeasta_publish_tribe_events_on_first_update($post_id, $post, $upd
                 wp_mail($to, $subject, $message, $headers);
             }
         }
-        // }
 
     }
 }
@@ -3409,3 +3491,198 @@ function add_extra_fees_for_products( $cart ) {
         $cart->add_fee( 'Sites Fee ', $extra_fee );
     }
 }
+
+require_once get_stylesheet_directory() . '/option-page.php';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function ticketfeasta_display_following_organizers_events_dashboard() {
+    $user_id = get_current_user_id();
+    $following_array = get_user_meta($user_id, 'following', true);
+    $following_array = json_decode($following_array, true);
+    ?>
+    <h1>Events from Organizers You Follow:</h1>
+    <?php
+    if (json_last_error() !== JSON_ERROR_NONE || empty($following_array)) {
+        ?>
+        <p>You are not following any organizers with upcoming events.</p>
+        <?php
+        return;
+    }
+
+    foreach ($following_array as $organizer_id) {
+        $args = array(
+            'post_type' => 'tribe_events',
+            'posts_per_page' => -1,
+            'meta_query' => array(
+                array(
+                    'key' => '_EventOrganizerID',
+                    'value' => $organizer_id,
+                    'compare' => '=',
+                ),
+            ),
+            'meta_key' => '_EventStartDate',
+            'orderby' => 'meta_value',
+            'order' => 'ASC',
+            'meta_value' => date('Y-m-d H:i:s'), // Ensure the event is in the future.
+            'meta_compare' => '>='
+        );
+
+        $events_query = new WP_Query($args);
+
+        if ($events_query->have_posts()) {
+            $organizer_name = get_the_title($organizer_id);
+            $organizer_url = get_permalink($organizer_id);
+            $organizer_img = get_the_post_thumbnail_url($organizer_id, 'medium') ?: 'https://ticketfesta.co.uk/wp-content/uploads/2024/02/placeholder-4.png';
+            ?>
+            <div class='organizer-block'>
+                <div class='organizer-block_inner'>
+                    <a href='<?php echo esc_url($organizer_url); ?>'>
+                        <img src='<?php echo esc_url($organizer_img); ?>' alt='<?php echo esc_attr($organizer_name); ?>' class='organizer-image'/>
+                    </a>
+                    <h6><a href='<?php echo esc_url($organizer_url); ?>'><?php echo esc_html($organizer_name); ?></a></h6>
+                </div>
+                <div class='organizer-block_events_inner'>
+            <?php
+            while ($events_query->have_posts()) : $events_query->the_post();
+                $event_id = get_the_ID();
+                $event_url = get_the_permalink();
+                $event_img = get_the_post_thumbnail_url($event_id, 'large') ?: 'https://ticketfesta.co.uk/wp-content/uploads/2024/02/placeholder-4.png';
+                $event_start_date_time = tribe_get_start_date($event_id, false, 'D, j M Y g:i a');
+                $event_price = tribe_get_cost($event_id, true);
+                ?>
+                    <div class="event-card">
+                        <div class="event-image">
+                            <a href="<?php echo esc_url($event_url); ?>">
+                                <img src="<?php echo esc_url($event_img); ?>" alt="<?php the_title(); ?>">
+                            </a>
+                        </div>
+                        <div class="event-details">
+                            <div class="event-content">
+                            <h2 class="event-title"><a href="<?php echo esc_url($event_url); ?>"><?php echo mb_strimwidth(get_the_title(), 0, 60, '...'); ?></a></h2>
+
+                                <div class="event-day"><?php echo esc_html($event_start_date_time); ?></div>
+                                <div class="event-time-location">
+                                    <span class="event-time"><?php echo tribe_get_start_date(null, false, 'g:i a'); ?> - <?php echo tribe_get_end_date(null, false, 'g:i a'); ?></span>
+                                    <span class="event-location"><?php echo tribe_get_venue(); ?></span>
+                                </div>
+                                <div class="event-price"><?php echo esc_html($event_price); ?></div>
+                            </div>
+                        </div>
+                    </div>
+                <?php
+            endwhile;
+            ?>
+                </div> <!-- Close organizer-block_events_inner -->
+            </div> <!-- Close organizer-block -->
+            <?php
+            wp_reset_postdata();
+        }
+    }
+}
+
+add_action('woocommerce_account_following_endpoint', 'ticketfeasta_display_following_organizers_events_dashboard');
+
+
+
+
+
+
+
+
+
+
+function display_upcoming_events_for_user_with_view_order_button() {
+    $user_id = get_current_user_id();
+    $displayed_event_ids = array();
+    $customer_orders = wc_get_orders(array(
+        'meta_key' => '_customer_user',
+        'meta_value' => $user_id,
+        'post_status' => array('wc-completed'),
+    ));
+
+    echo '<h2>Upcoming Events You Have Tickets For:</h2>';
+
+    if (!empty($customer_orders)) {
+        foreach ($customer_orders as $customer_order) {
+            $order_url = $customer_order->get_view_order_url();
+            $items = $customer_order->get_items();
+            $order_paid_date = $customer_order->get_date_paid() ? $customer_order->get_date_paid()->date('d/m/y') : 'N/A';
+
+
+            foreach ($items as $item_id => $item) {
+                $event_id = get_post_meta($item->get_product_id(), '_tribe_wooticket_for_event', true);
+                if (in_array($event_id, $displayed_event_ids) || empty($event_id)) {
+                    continue;
+                }
+
+                $event_start_date = get_post_meta($event_id, '_EventStartDate', true);
+                if (strtotime($event_start_date) > current_time('timestamp')) {
+                    $event_title = get_the_title($event_id);
+                    $event_url = get_permalink($event_id);
+                    $event_image_url = get_the_post_thumbnail_url($event_id, 'full') ?: 'https://ticketfesta.co.uk/wp-content/uploads/2024/02/placeholder-4.png';
+                    $ticket_quantity = $item->get_quantity();
+                    $order_total = $customer_order->get_formatted_order_total();
+                    $event_address = tribe_get_address($event_id);
+                    // Encode the address for URL use
+                    $map_link = "https://maps.google.com/?q=" . urlencode($event_address);
+
+                    ?>
+                    <div class="ticketContainer">
+                        <div class="ticket">
+                            <div class="ticketImage">
+                                <img src="<?php echo $event_image_url; ?>" alt="Event Image">
+                            </div>
+
+                             <div class="ticket_inner_div ">
+                            <div class="ticketTitle"><?php echo mb_strlen($event_title) > 60 ? mb_substr($event_title, 0, 60) . '...' : $event_title; ?></div>
+                            <div class="eventaddress"><?php echo $event_address; ?> <a class="opne_on_map_link" href="<?php echo $map_link; ?>" target="_blank">Open on Map</a></div>
+                            <hr>
+                            <div class="ticketDetail">
+                                <div>Event Date:&ensp;<?php echo date_i18n('F j, Y, g:i a', strtotime($event_start_date)); ?></div>
+                                <div>Ticket Quantity:&ensp;<?php echo $ticket_quantity; ?></div>
+                                <div>Order Total:&ensp;<?php echo $order_total; ?></div>
+                                </div>
+                            </div>
+                            <div class="ticketRip">
+                                <div class="circleLeft"></div>
+                                <div class="ripLine"></div>
+                                <div class="circleRight"></div>
+                            </div>
+                            <div class="ticketSubDetail">
+                                <div class="code"><?php echo $customer_order->get_order_number(); ?></div>
+                                <div>Paid:&ensp;<?php echo $order_paid_date; ?></div> <!-- Displaying the order paid date -->
+                            </div>
+                            <div class="ticketlowerSubDetail">
+                                <a href="<?php echo $order_url; ?>"><button class="view_ticket_btn">View Ticket</button></a>
+                                <a href="<?php echo $event_url; ?>"><button class="view_event_btn">Event Details</button></a>
+                            </div>
+                        </div>
+                        <div class="ticketShadow"></div>
+                    </div>
+                    <?php
+
+                    $displayed_event_ids[] = $event_id;
+                }
+            }
+        }
+    } else {
+        echo "<p>You currently have no tickets for upcoming events.</p>";
+    }
+}
+
+add_action('woocommerce_account_dashboard', 'display_upcoming_events_for_user_with_view_order_button');
