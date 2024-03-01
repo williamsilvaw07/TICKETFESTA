@@ -3512,8 +3512,6 @@ require_once get_stylesheet_directory() . '/option-page.php';
 
 
 
-
-
 function ticketfeasta_display_following_organizers_events_dashboard() {
     $user_id = get_current_user_id();
     $following_array = get_user_meta($user_id, 'following', true);
@@ -3524,13 +3522,13 @@ function ticketfeasta_display_following_organizers_events_dashboard() {
         return;
     }
 
-    // Modify this query based on how your events are linked to organizers
+    // Query for events
     $args = array(
         'post_type' => 'tribe_events',
         'posts_per_page' => -1,
         'meta_query' => array(
             array(
-                'key' => '_EventOrganizerID', // This needs to be adjusted to your setup
+                'key' => '_EventOrganizerID',
                 'value' => $following_array,
                 'compare' => 'IN',
             ),
@@ -3545,17 +3543,22 @@ function ticketfeasta_display_following_organizers_events_dashboard() {
         while ($events_query->have_posts()) {
             $events_query->the_post();
             $organizer_ids = tribe_get_organizer_ids();
-            $organizer_link = !empty($organizer_ids) ? get_permalink($organizer_ids[0]) : '#';
-            $organizer_name = !empty($organizer_ids) ? tribe_get_organizer($organizer_ids[0]) : 'Unknown Organizer';
-            $featured_image = get_the_post_thumbnail_url(get_the_ID(), 'thumbnail');
-            echo '<li>';
-            if ($featured_image) {
-                echo '<img src="' . esc_url($featured_image) . '" alt="' . get_the_title() . '" style="width: 100px; height: auto;"> ';
+            
+            foreach ($organizer_ids as $organizer_id) {
+                $organizer_link = get_permalink($organizer_id);
+                $organizer_name = get_the_title($organizer_id);
+                $organizer_image_id = get_post_thumbnail_id($organizer_id);
+                $organizer_image_url = wp_get_attachment_image_url($organizer_image_id, 'thumbnail');
+                
+                echo '<li>';
+                if ($organizer_image_url) {
+                    echo '<img src="' . esc_url($organizer_image_url) . '" alt="' . esc_attr($organizer_name) . '" style="width: 100px; height: auto;"> ';
+                }
+                echo '<a href="' . get_the_permalink() . '">' . get_the_title() . '</a> by ';
+                echo '<a href="' . esc_url($organizer_link) . '">' . esc_html($organizer_name) . '</a>';
+                echo ' on ' . tribe_get_start_date(null, false);
+                echo '</li>';
             }
-            echo '<a href="' . get_the_permalink() . '">' . get_the_title() . '</a> by ';
-            echo '<a href="' . esc_url($organizer_link) . '">' . esc_html($organizer_name) . '</a>';
-            echo ' on ' . tribe_get_start_date(null, false);
-            echo '</li>';
         }
         echo '</ul>';
     } else {
