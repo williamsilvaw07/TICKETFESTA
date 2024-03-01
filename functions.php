@@ -3540,6 +3540,7 @@ function ticketfeasta_display_following_organizers_events_dashboard() {
         while ($events_query->have_posts()) {
             $events_query->the_post();
             $event_id = get_the_ID();
+            $organizer_id = tribe_get_organizer_id($event_id);
             $event_title = get_the_title();
             $event_link = get_the_permalink();
             $event_start_date = tribe_get_start_date($event_id, false);
@@ -3548,8 +3549,13 @@ function ticketfeasta_display_following_organizers_events_dashboard() {
             $event_price = tribe_get_cost($event_id, true);
             $event_image_id = get_post_thumbnail_id($event_id);
             $event_image_url = wp_get_attachment_image_url($event_image_id, 'thumbnail');
+            $organizer_image_id = get_post_thumbnail_id($organizer_id);
+            $organizer_image_url = wp_get_attachment_image_url($organizer_image_id, 'thumbnail');
 
             echo '<li>';
+            if ($organizer_image_url) {
+                echo '<img src="' . esc_url($organizer_image_url) . '" alt="Organizer Image" style="width: 50px; height: auto;"> ';
+            }
             if ($event_image_url) {
                 echo '<img src="' . esc_url($event_image_url) . '" alt="' . esc_attr($event_title) . '" style="width: 100px; height: auto;"> ';
             }
