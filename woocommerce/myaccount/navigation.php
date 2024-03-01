@@ -48,7 +48,45 @@ $icons = [
 
 <style>
 
+.woocommerce-MyAccount-navigation{
+    min-height: 100%;
+    position: relative;
+ padding-top:50px;
+ height: auto;
+    background-color: rgb(26, 26, 26);
+    overflow: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+    flex: 0 0 auto!important;
+    width: fit-content!important;
+}
+.my-account-welcome-message {
+  
+    font-size: 25px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    text-align: center;
 
+}
+
+
+.woocommerce-MyAccount-navigation li a{
+text-decoration: none;
+list-style: none;
+font-size: 14px;
+
+}
+
+.woocommerce-MyAccount-navigation i {
+    padding-right: 10px;
+}
+
+
+#custom-welcome-message{
+    margin-top: 20px;
+    text-align: left;
+    text-transform: capitalize;
+}
 
 /* Target the active link */
 .woocommerce-MyAccount-navigation-link.is-active a {
