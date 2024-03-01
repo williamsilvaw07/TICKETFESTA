@@ -1184,6 +1184,9 @@ input.select2-search__field[aria-owns='select2-saved_tribe_organizer-results'] {
 .woocommerce-account .entry-header{
     display: block;
 }
+.woocommerce-account .container .site-content .content-area {
+    background: #0d0e0e!important;
+}
 
 }
 
