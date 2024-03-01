@@ -229,7 +229,7 @@ jQuery(document).ready(function($) {
 
 }
 .ticketShadow{
-
+display:none;
     margin-top: 4px;
     width: 95%;
     height: 12px;
