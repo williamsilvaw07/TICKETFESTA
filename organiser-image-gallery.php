@@ -703,12 +703,14 @@ function get_orders_by_event_id($meta_key='_community_tickets_order_fees', $meta
     //     AND meta_value LIKE %s", $meta_key);
 
     $query = $wpdb->prepare("
-    SELECT post_id
-    FROM {$prefix}postmeta
-    WHERE meta_key = %s 
-    AND meta_value LIKE %s
-    AND p.post_status = 'wc-completed'", 
-    $meta_key, '%' . $meta_value . '%');
+    SELECT p.ID
+    FROM {$prefix}posts p
+    INNER JOIN {$prefix}postmeta pm ON p.ID = pm.post_id
+    WHERE pm.meta_key = %s 
+    AND pm.meta_value LIKE %s
+    AND p.post_type = 'shop_order'
+    AND p.post_status = %s", $meta_key, '%' . $meta_value . '%', 'wc-completed');
+
     // Execute the query
     $order_ids = $wpdb->get_col($query);
     echo '<pre>';
