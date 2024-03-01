@@ -184,7 +184,7 @@ jQuery(document).ready(function($) {
     border: 3px solid white;
 
 }
-.organizer-block_inner h4{
+.organizer-block_inner h6{
 	text-decoration: none;
     font-weight: 600;
 }
