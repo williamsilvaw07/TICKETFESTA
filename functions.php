@@ -3516,7 +3516,7 @@ function ticketfeasta_display_following_organizers_events_dashboard() {
     $user_id = get_current_user_id();
     $following_array = get_user_meta($user_id, 'following', true);
     $following_array = json_decode($following_array, true);
-    echo '<h3>Events from Organizers You Follow:</h3>';
+    echo '<h1>Events from Organizers You Follow:</h1>';
     if (json_last_error() !== JSON_ERROR_NONE || empty($following_array)) {
         echo "<p>You are not following any organizers with upcoming events.</p>";
         return;
