@@ -671,7 +671,6 @@ function enqueue_media_uploader($hook) {
         $event_id = isset($_GET['event_id']) ? $_GET['event_id'] : ''; // Replace with the actual event ID
         $orders = get_orders_by_event_id($event_id);
         $site_fees = get_site_fees_total_order_ids($orders);
-        echo $site_fees;
         wp_enqueue_script('admin-order-js', get_stylesheet_directory_uri() . '/js/admin-order.js', array('jquery'), null, true);
         wp_localize_script('admin-order-js', 'order_data', array(
             'site_fees' => $site_fees
@@ -719,9 +718,6 @@ function get_orders_by_event_id( $meta_value) {
 
     // Execute the query
     $order_ids = $wpdb->get_col($query);
-    echo '<pre>';
-    var_dump($order_ids );
-    echo '</pre>';
     // Return the order IDs
     return $order_ids;
 
