@@ -169,10 +169,12 @@ jQuery(document).ready(function($) {
 <style>
 
 .organizer-block_inner{
-	display: flex;
+    display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     gap: 14px;
+    align-content: center;
+    align-items: center;
 }
 
 .organizer-block_inner img{
