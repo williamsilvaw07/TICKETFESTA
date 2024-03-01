@@ -3546,7 +3546,7 @@ function ticketfeasta_display_following_organizers_events_dashboard() {
             $organizer_name = get_the_title($organizer_id);
             $organizer_url = get_permalink($organizer_id);
             $organizer_img = get_the_post_thumbnail_url($organizer_id, 'medium') ?: 'https://ticketfesta.co.uk/wp-content/uploads/2024/02/placeholder-4.png';
-
+            $event_start_date_time_with_zone = $event_start_date_time . ' ' . $event_time_zone;
             ?>
             <div class='organizer-block'>
                 <a href='<?php echo esc_url($organizer_url); ?>'><img src='<?php echo esc_url($organizer_img); ?>' alt='<?php echo esc_attr($organizer_name); ?>' class='organizer-image'/></a>
