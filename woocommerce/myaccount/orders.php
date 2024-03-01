@@ -343,7 +343,31 @@ tr.woocommerce-orders-table__row , thead tr{
 }
 
 
+/* Target the active link */
+.woocommerce-MyAccount-navigation-link.is-active a {
+    background: linear-gradient(270deg, rgba(211, 250, 22, 0.28) 0.01%, rgba(211, 250, 22, 0.00) 99.96%);
+    color: white;
+    position: relative;
+}
 
+/* Add a decorative bar to the active link */
+.woocommerce-MyAccount-navigation-link.is-active a::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 5px;
+    background-color: #d3fa16;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+/* Ensure icons and text within the active link are white */
+.woocommerce-MyAccount-navigation-link.is-active a i,
+.woocommerce-MyAccount-navigation-link.is-active a .nav-label {
+    color: white;
+}
 @media (max-width: 1350x) {
 	.order_event_image {
     width: 100%;
