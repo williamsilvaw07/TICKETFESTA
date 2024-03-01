@@ -457,3 +457,5 @@ html .woocommerce-account  .woocommerce-orders-table__cell-order-total{
 
 
 	</style>
+
+<?php
