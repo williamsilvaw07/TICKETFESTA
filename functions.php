@@ -3690,10 +3690,10 @@ function update_featured_image_of_tribe_events($post_id) {
     // Check if the saved post is of post type 'tribe_events'
     if (get_post_type($post_id) === 'tribe_events') {
         // Get the current featured image of post 123
-        $post_123_featured_image_id = get_post_thumbnail_id($post_id);
+        $featured_image_id = get_post_thumbnail_id($post_id);
 
         // If post 123 doesn't have a featured image, exit the function
-        if (!$post_123_featured_image_id) {
+        if (!$featured_image_id) {
             return;
         }
         $product_ids = get_product_ids_by_event_id($post_id);
@@ -3731,5 +3731,4 @@ function get_product_ids_by_event_id($event_id){
         $product_ids_array[] = $product_id->post_id;
     }
     return $product_ids_array;
-    
 }
