@@ -3644,7 +3644,7 @@ function display_upcoming_events_for_user_with_view_order_button() {
                             <div class="ticketImage">
                                 <img src="<?php echo $event_image_url; ?>" alt="Event Image">
                             </div>
-                            <div class="ticketTitle"><?php echo mb_strlen($event_title) > 60 ? mb_substr($event_title, 0, 60) . '...' : $event_title; ?></div>
+                            <div class="ticketTitle"><?php echo mb_strlen($event_title) > 40 ? mb_substr($event_title, 0, 40) . '...' : $event_title; ?></div>
 
                             <hr>
                             <div class="ticketDetail">
