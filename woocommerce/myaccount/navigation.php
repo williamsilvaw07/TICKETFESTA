@@ -17,6 +17,7 @@ $icons = [
     'dashboard'       => '<i class="fas fa-tachometer-alt"></i>',
     'orders'          => '<i class="fas fa-shopping-bag"></i>',
     'downloads'       => '<i class="fas fa-download"></i>',
+    'following'       => '<i class="fas fa-download"></i>',
     'edit-address'    => '<i class="fas fa-address-card"></i>',
     'edit-account'    => '<i class="fas fa-user-cog"></i>',
     'customer-logout' => '<i class="fas fa-sign-out-alt"></i>',
