@@ -450,7 +450,7 @@ html .woocommerce-account  .woocommerce-orders-table__cell-order-total{
 		width: 100%!important;
     max-width: 100%;
     height: 76px;
-    background-color: #ffffff;
+    background-color: #000000;
     position: fixed;
     top: 91.1%;
     left: 0px;
