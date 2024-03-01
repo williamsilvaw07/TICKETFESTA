@@ -427,9 +427,7 @@ html .woocommerce-account  .woocommerce-orders-table__cell-order-total{
     text-align: center;
     font-size: 16px!important;
 }
-.woocommerce-MyAccount-content {
-    flex: 0 0 52%!important;
-}
+
 .order_event_details h5 {
     text-align: center;
 }
