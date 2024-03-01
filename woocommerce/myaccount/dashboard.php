@@ -193,10 +193,7 @@ jQuery(document).ready(function($) {
         $(this).append(glassEffect);
 
         // Hide the original img element as its src is now set as the background
-        $(this).find('img').css({
-            'visibility': 'hidden',
-            'position': 'absolute'
-        });
+     
     });
 });
 
