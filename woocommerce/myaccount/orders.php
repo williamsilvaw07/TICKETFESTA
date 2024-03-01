@@ -385,26 +385,24 @@ tr.woocommerce-orders-table__row , thead tr{
 thead{
 display:none!important
 }
+.woocommerce-orders-table__cell-order-total:before , .woocommerce-orders-table__cell-order-total:before , .order_event_details span{
+    color: #aaa!important;
+    text-transform: capitalize!important;
+    padding-left: 6px!important;
+	font-weight: 300!important;
+	font-size: 14px;
+
+}
 .woocommerce-orders-table__cell-order-date:before{
 	content: "Transaction Date"!important;
-    font-size: 14px;
-    color: #aaa;
-    text-transform: capitalize;
-    padding-left: 6px;
+
 }
 .woocommerce-orders-table__cell-order-total:before{
 	content: "Total";
-    font-size: 14px!important;
-    color: #aaa!important;
-    text-transform: capitalize!important;
-    padding-left: 6px!important;
+ 
+
 }
-.order_event_details span{
-	font-size: 14px!important;
-    color: #aaa!important;
-    text-transform: capitalize!important;
-    padding-left: 6px!important;
-}
+
 .woocommerce-orders-table__cell-order-tota , .woocommerce-orders-table__cell-order-date , .woocommerce-orders-table__cell-order-total , .woocommerce-orders-table__cell-order-actions{
 	display: flex!important;
     text-align: right!important;
