@@ -3516,7 +3516,7 @@ require_once get_stylesheet_directory() . '/option-page.php';
 
 
 
-function ticketfeasta_display_following_organizers_events() {
+function ticketfeasta_display_following_organizers_events_dashboard() {
     $user_id = get_current_user_id();
     $following_array = get_user_meta($user_id, 'following', true);
     $following_array = json_decode($following_array, true);
@@ -3526,13 +3526,13 @@ function ticketfeasta_display_following_organizers_events() {
         return;
     }
 
-    // Assuming you have a way to relate organizers to events, adjust the query accordingly
+    // Modify this query based on how your events are linked to organizers
     $args = array(
         'post_type' => 'tribe_events',
         'posts_per_page' => -1,
         'meta_query' => array(
             array(
-                'key' => '_EventOrganizerID', // Adjust based on how your events are linked to organizers
+                'key' => '_EventOrganizerID', // This needs to be adjusted to your setup
                 'value' => $following_array,
                 'compare' => 'IN',
             ),
@@ -3542,10 +3542,11 @@ function ticketfeasta_display_following_organizers_events() {
     $events_query = new WP_Query($args);
 
     if ($events_query->have_posts()) {
+        echo '<h3>Upcoming Events From Organizers You Follow</h3>';
         echo '<ul class="following-events-list">';
         while ($events_query->have_posts()) {
             $events_query->the_post();
-            echo '<li><a href="' . get_the_permalink() . '">' . get_the_title() . '</a> - ' . tribe_get_start_date(null, false) . '</li>';
+            echo '<li><a href="' . get_the_permalink() . '">' . get_the_title() . '</a> on ' . tribe_get_start_date(null, false) . '</li>';
         }
         echo '</ul>';
     } else {
@@ -3555,5 +3556,5 @@ function ticketfeasta_display_following_organizers_events() {
     wp_reset_postdata();
 }
 
-// Add this line to where you want to display the list, for example in the 'ticketfeasta_following' function or as a new endpoint.
-// ticketfeasta_display_following_organizers_events();
+// Hook our function to the account dashboard to display the events
+add_action('woocommerce_account_dashboard', 'ticketfeasta_display_following_organizers_events_dashboard');
