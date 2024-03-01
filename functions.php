@@ -3559,6 +3559,10 @@ function ticketfeasta_display_following_organizers_events_dashboard() {
                 $event_img = get_the_post_thumbnail_url($event_id, 'medium') ?: 'https://ticketfesta.co.uk/wp-content/uploads/2024/02/placeholder-4.png';
                 $event_start_date_time = tribe_get_start_date($event_id, false, 'D, j M Y g:i a');
                 $event_price = tribe_get_cost($event_id, true);
+                $event_start_date_time = tribe_get_start_date($event_id, false, 'D, j M Y g:i a');
+                // Fetch the event's time zone
+                $event_time_zone = tribe_get_event_timezone_string($event_id);
+                // Append the time zone to the start date and time
                 $event_start_date_time_with_zone = $event_start_date_time . ' ' . $event_time_zone;
                 ?>
                 <div class="event-card">
@@ -3570,7 +3574,8 @@ function ticketfeasta_display_following_organizers_events_dashboard() {
                     <div class="event-details">
                         <div class="event-content">
                             <h2 class="event-title"><a href="<?php echo esc_url($event_url); ?>"><?php the_title(); ?></a></h2>
-                            <div class="event-day"><?php echo esc_html($event_start_date_time); ?></div>
+                            <div class="event-day"><?php echo esc_html($event_start_date_time_with_zone); ?></div>
+
                             <div class="event-time-location">
                             <span class="event-time"><?php echo tribe_get_start_date(null, false, 'g:i a'); ?> - <?php echo tribe_get_end_date(null, false, 'g:i a'); ?></span>
                                 <span class="event-location"><?php echo tribe_get_venue(); ?></span>
