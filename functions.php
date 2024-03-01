@@ -3642,6 +3642,7 @@ function display_upcoming_events_for_user_with_view_order_button() {
                     ?>
                     <div class="ticketContainer">
                         <div class="ticket">
+                        <div class="ticketImage"><?php echo $event_image_url; ?></div>
                             <div class="ticketTitle"><?php echo $event_title; ?></div>
                             <hr>
                             <div class="ticketDetail">
