@@ -7,19 +7,6 @@ jQuery(document).ready(function($) {
 
     console.log('Ticketprice: ', ticketPrice);
     console.log('Quantity: ', quantity);
-    var ticketFee = get_tribe_ticket_fee(ticketPrice, quantity);
-    let newText = '<strong>Total Site Fees:</strong> £' + ticketFee;
+    let newText = '<strong>Total Site Fees:</strong> £' + window.order_data.site_fees;
     jQuery('.tribe-event-meta-total-site-fees').html(newText);
 });
-
-function get_tribe_ticket_fee(ticketAmount, quantity = 1){
-    ticketSiteFee = 0;
-    if(ticketAmount < 50 ){
-        ticketSiteFee += (ticketAmount * .03 + 0.02) * quantity;
-    }
-    if(ticketAmount > 50 ){
-        ticketSiteFee += (ticketAmount *  .01 + 0.02) * quantity;
-    }
-
-    return ticketSiteFee.toFixed(2);
-}
