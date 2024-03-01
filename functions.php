@@ -295,23 +295,24 @@ function iam00_return_ticket_associate_with_event()
         global $wpdb;
         // $results = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}postmeta WHERE meta_key = '_tribe_wooticket_for_event' AND meta_value = {$eventId}");
         $results = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}postmeta WHERE meta_key = '_tribe_wooticket_for_event'");
-dd($results);
+
         $ids = [];
 
         foreach ($results as $key => $value) {
             $ids[] = $value->post_id;
         }
-        $args = array(
-            'include' => $ids, // Replace with your actual product IDs
-            'return' => 'objects' // Ensure product objects are returned
-        );
-        $products = wc_get_products($args);
 
         $response = [];
-
-        foreach ($products as $product) {
-            // Access product data:
-            $response[$product->get_id()] = $product->get_name();
+        if(sizeof($results)>0){
+            $args = array(
+                'include' => $ids, // Replace with your actual product IDs
+                'return' => 'objects' // Ensure product objects are returned
+            );
+            $products = wc_get_products($args);
+            foreach ($products as $product) {
+                // Access product data:
+                $response[$product->get_id()] = $product->get_name();
+            }
         }
 
         wp_send_json_success($response, 200);
