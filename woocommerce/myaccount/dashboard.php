@@ -240,7 +240,8 @@ display:none;
 
 /* Ticket Content */
 .ticketTitle{
-    font-size: 1.5rem;
+	font-size: 19px;
+    line-height: 23px;
     font-weight: 700;
     padding: 12px 16px 4px;
 }
