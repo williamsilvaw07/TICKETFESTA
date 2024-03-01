@@ -6,7 +6,7 @@
 
 ///MY ACCOUNT FUNCTION 
 function custom_limit_orders_per_page( $args ) {
-    $args['limit'] = 3; // Set this to how many orders you want per page.
+    $args['limit'] = 2; // Set this to how many orders you want per page.
     return $args;
 }
 add_filter( 'woocommerce_my_account_my_orders_query', 'custom_limit_orders_per_page', 10, 1 );
