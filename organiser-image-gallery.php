@@ -676,8 +676,8 @@ function enqueue_media_uploader($hook) {
 
 
     // Example usage:
-    $event_id = 4025; // Replace with the actual event ID
-    $orders = get_orders_by_event_id();
+    $event_id = isset($_GET['event_id']) ? $_GET['event_id'] : ''; // Replace with the actual event ID
+    $orders = get_orders_by_event_id($event_id);
 
     // Displaying the orders
     if ($orders) {
@@ -690,8 +690,9 @@ function enqueue_media_uploader($hook) {
 }
 add_action('admin_enqueue_scripts', 'enqueue_media_uploader');
 // Get all orders by event ID
-function get_orders_by_event_id($meta_key='_community_tickets_order_fees', $meta_value='4025') {
+function get_orders_by_event_id( $meta_value) {
     global $wpdb;
+    $meta_key='_community_tickets_order_fees';
 
     // Prefix for WordPress database tables
     $prefix = $wpdb->prefix;
