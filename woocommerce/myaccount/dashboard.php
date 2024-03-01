@@ -163,7 +163,7 @@ jQuery(document).ready(function($) {
 
 ////FUNCTION TO ADD THE EVENT IMAGE AS A BACKGROUND 
 jQuery(document).ready(function($) {
-    $('.event-image').each(function() {
+    $('.ticketImage').each(function() {
         // Get the src of the img element
         var imgSrc = $(this).find('img').attr('src');
 
@@ -212,7 +212,9 @@ jQuery(document).ready(function($) {
 
 
 <style>
-
+	.ticket_inner_div{
+		padding:5px 10px
+	}
 hr {
     width: 100%;
     border: 1px solid #efefef;
@@ -224,6 +226,9 @@ hr {
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+.ticketImage, .ticketImage img{
+	max-height:150px
 }
 .ticket{
 
@@ -256,7 +261,7 @@ hr{
 .ticketDetail{
     font-size: 1.1rem;
     font-weight: 500;
-    padding: 4px 16px;
+   
 }
 .ticketSubDetail{
     display: flex;
