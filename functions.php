@@ -3599,7 +3599,7 @@ function ticketfeasta_display_following_organizers_events_dashboard() {
     }
 }
 
-add_action('woocommerce_account_dashboard', 'ticketfeasta_display_following_organizers_events_dashboard');
+add_action('woocommerce-MyAccount-navigation-link--following', 'ticketfeasta_display_following_organizers_events_dashboard');
 
 
 
