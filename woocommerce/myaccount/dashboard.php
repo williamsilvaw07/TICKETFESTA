@@ -305,7 +305,14 @@ hr{
     border-radius: 12px 0 0 12px;
 }
 
-
+.opne_on_map_link{
+	color: black!important;
+    text-decoration: none;
+    font-size: 12px;
+    border: 1px solid black;
+    border-radius: 3px;
+    padding: 3px 6px;
+}
 
 
     </style>
