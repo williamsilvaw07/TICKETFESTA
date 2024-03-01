@@ -3541,6 +3541,8 @@ function ticketfeasta_display_following_organizers_events_dashboard() {
             $events_query->the_post();
             $event_id = get_the_ID();
             $organizer_id = tribe_get_organizer_id($event_id);
+            $organizer_name = tribe_get_organizer($event_id);
+            $organizer_link = get_permalink($organizer_id);
             $event_title = get_the_title();
             $event_link = get_the_permalink();
             $event_start_date = tribe_get_start_date($event_id, false);
@@ -3555,6 +3557,10 @@ function ticketfeasta_display_following_organizers_events_dashboard() {
             echo '<li>';
             if ($organizer_image_url) {
                 echo '<img src="' . esc_url($organizer_image_url) . '" alt="Organizer Image" style="width: 50px; height: auto;"> ';
+            }
+            // Add organizer name as a link
+            if ($organizer_link && $organizer_name) {
+                echo '<a href="' . esc_url($organizer_link) . '">' . esc_html($organizer_name) . '</a> ';
             }
             if ($event_image_url) {
                 echo '<img src="' . esc_url($event_image_url) . '" alt="' . esc_attr($event_title) . '" style="width: 100px; height: auto;"> ';
