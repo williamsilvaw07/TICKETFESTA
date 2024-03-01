@@ -3649,7 +3649,7 @@ function display_upcoming_events_for_user_with_view_order_button() {
                     echo "<h3><a href='{$event_url}'>{$event_title}</a></h3>";
                     echo "<p>Event Date: " . date_i18n('F j, Y, g:i a', strtotime($event_start_date)) . "</p>";
                     // Add the "View Order" button
-                    echo "<a href='{$order_url}' class='button view-order-button'>View Order</a>";
+                    echo "<a href='{$order_url}' class='button view-order-button'>View Ticket</a>";
                     echo "</div>";
                     echo "</div>";
 
