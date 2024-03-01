@@ -3604,8 +3604,6 @@ add_action('woocommerce_account_following_endpoint', 'ticketfeasta_display_follo
 
 
 
-
-
 function display_upcoming_events_for_user_with_view_order_button() {
     $user_id = get_current_user_id();
 
@@ -3641,8 +3639,8 @@ function display_upcoming_events_for_user_with_view_order_button() {
 
                     ?>
                     <div class="ticketContainer">
-                        <div class="ticket">
-                        <div class="ticketImage"><?php echo $event_image_url; ?></div>
+                        <div class="ticket" style="background-image:url('<?php echo $event_image_url; ?>'); background-size: cover; background-position: center;">
+                            <div class="ticketImageOverlay"></div> <!-- You can use this overlay for better text visibility on the image -->
                             <div class="ticketTitle"><?php echo $event_title; ?></div>
                             <hr>
                             <div class="ticketDetail">
