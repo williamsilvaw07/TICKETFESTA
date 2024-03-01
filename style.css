@@ -1086,10 +1086,7 @@ margin-top: 0!important;
 .woocommerce-account .entry-header , .woocommerce-MyAccount-navigation-link--wc-smart-coupons{
     display: none;
 }
-.woocommerce-account .woocommerce-MyAccount-content{
-    float: inherit!important;
-    width: inherit!important;
-}
+
 
 .woocommerce-MyAccount-orders  .woocommerce-button{line-height: inherit;
     padding: 7px 15px!important;
@@ -1104,8 +1101,6 @@ margin-top: 0!important;
     position: relative;
     padding: 17px;
     border-radius: 10px;
-    /* width: 100%; */
-    /* max-width: 500px; */
     margin: 38px auto;
     display: flex;
     flex-direction: column;
