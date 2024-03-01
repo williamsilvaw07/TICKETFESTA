@@ -108,7 +108,7 @@ get_header('organizer');
 
                                                 $postMeta = get_post_meta($coupon->ID, 'product_ids', true);
                                                 $product_ids_array = explode(',', $postMeta);
-                                                echo "<ul>";
+                                                echo "<ul style='margin-left: 15px;'>";
                                                 foreach ($product_ids_array as $key => $product_id) {
                                                     $product = wc_get_product($product_id);
                                                     echo "<li>{$product->get_name()}</li>";
@@ -147,7 +147,8 @@ get_header('organizer');
                                             <td>
                                                 <?php
                                                 $data['discount_type'] = $wooCoupon->get_discount_type();
-                                                echo $wooCoupon->get_discount_type();
+
+                                                echo ['fixed_cart'=>'Fixed', 'percent'=>'Percent'][$wooCoupon->get_discount_type()];
                                                 ?>
                                             </td>
                                             <td class="text-end">

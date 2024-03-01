@@ -1,85 +1,7 @@
-
 <?php
 
 
-
-
-
-add_filter( 'gettext', 'custom_replace_text', 20, 3 );
-function custom_replace_text( $translated_text, $text, $domain ) {
-    if ( 'Date' === $text ) {
-        $translated_text = 'Transaction Date';
-    }
-    return $translated_text;
-}
-
-
-
-//////FUNCTION TO ADD THE EVENT IMAGE TO THE TICKET/PRODUCT MAIN IMAGE  
-
-function set_all_products_featured_image_to_event_image() {
-    // Query all products.
-    $args = array(
-        'post_type' => 'product',
-        'posts_per_page' => -1, // Retrieve all products
-        'fields' => 'ids', // Retrieve only the IDs for performance
-    );
-
-    $product_ids = get_posts($args);
-
-    foreach ($product_ids as $product_id) {
-        // Retrieve the associated event ID for each product.
-        $event_id = get_post_meta($product_id, '_tribe_wooticket_for_event', true);
-
-        if (!empty($event_id)) {
-            // Get the event's featured image ID.
-            $event_image_id = get_post_thumbnail_id($event_id);
-
-            if (!empty($event_image_id)) {
-                // Set the event's image as the product's featured image.
-                set_post_thumbnail($product_id, $event_image_id);
-                error_log("Product ID {$product_id} featured image updated to event ID {$event_id}'s image.");
-            } else {
-                error_log("Event ID {$event_id} does not have a featured image.");
-            }
-        } else {
-            error_log("Product ID {$product_id} does not have an associated event.");
-        }
-    }
-}
-
-// Optionally, you can trigger this function with a specific action, hook, or manually.
-add_action('wp_loaded', 'set_all_products_featured_image_to_event_image');
-
-///////END
-
-
-
-
-
-////FUNCTION TO ADD THE EVENT TITLE ON THE TICKET/PRODUCT FRONTEND 
-/**
- * Example for adding event data to WooCommerce checkout for Events Calendar tickets.
- * @link https://theeventscalendar.com/support/forums/topic/event-title-and-date-in-cart/
- */
-add_filter( 'woocommerce_cart_item_name', 'woocommerce_cart_item_name_event_title', 10, 3 );
- 
-function woocommerce_cart_item_name_event_title( $title, $values, $cart_item_key ) {
-    $ticket_meta = get_post_meta( $values['product_id'] );
- 
-    // Only do if ticket product
-    if ( array_key_exists( '_tribe_wooticket_for_event', $ticket_meta ) ) {
-        $event_id = absint( $ticket_meta[ '_tribe_wooticket_for_event' ][0] );
- 
-        if ( $event_id ) {
-            $title = sprintf( '%s for <a href="%s" target="_blank"><strong>%s</strong></a>', $title, get_permalink( $event_id ), get_the_title( $event_id ) );
-        }
-    }
- 
-    return $title;
-}
-
-
+////CHECKOUT
 
 /**
  * Flux checkout - Allow custom CSS files.
@@ -291,7 +213,8 @@ function iam00_return_ticket_associate_with_event()
     if (isset($_POST['event_id'])) {
         $eventId = (int) $_POST['event_id'];
         global $wpdb;
-        $results = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}postmeta WHERE meta_key = '_tribe_wooticket_for_event' AND meta_value = {$eventId}");
+        // $results = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}postmeta WHERE meta_key = '_tribe_wooticket_for_event' AND meta_value = {$eventId}");
+        $results = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}postmeta WHERE meta_key = '_tribe_wooticket_for_event'");
 
         $ids = [];
 
@@ -693,16 +616,21 @@ function iam00_edit_coupon_action()
         $description = isset($_POST['description']) ? $_POST['description'] : '';
         $usage_limit = isset($_POST['usage_limit']) ? $_POST['usage_limit'] : 1;
 
-        //Check if coupon name unique
-        if (wc_get_coupon_id_by_code($coupon_code)) {
-            $response_data = array(
-                'message' => 'Coupon already exists with the code: ' . $coupon_code,
-            );
-            wp_send_json_success($response_data, 422);
-            die();
-        }
+       
         //Create coupon associate with the product id
         $coupon = new WC_Coupon($couponId);
+
+         //Check if coupon name unique
+         if($coupon_code != $coupon->get_code()){
+            if (wc_get_coupon_id_by_code($coupon_code)) {
+                $response_data = array(
+                    'message' => 'Coupon already exists with the code: ' . $coupon_code,
+                );
+                wp_send_json_success($response_data, 422);
+                die();
+            }
+        }
+
         // Set coupon properties
         $coupon->set_code($coupon_code);
         $coupon->set_product_ids($product_ids);
@@ -3478,8 +3406,6 @@ function add_extra_fees_for_products( $cart ) {
     }
 
     if($extra_fee !== 0){
-        $cart->add_fee( 'Sites Fee ', $extra_fee ); 
+        $cart->add_fee( 'Sites Fee ', $extra_fee );
     }
 }
-
-require_once get_stylesheet_directory() . '/option-page.php';
