@@ -15,7 +15,7 @@ do_action( 'woocommerce_before_account_navigation' );
 
 $icons = [
     'dashboard'       => '<i class="fas fa-home"></i>',
-    'orders'          => '<i class="fas fa-ticket"></i>',
+    'orders'          => '<i class="fas fa-ticket-alt"></i>',
     'downloads'       => '<i class="fas fa-download"></i>',
     'following'       => '<i class="fas fa-heart"></i>',
     'edit-address'    => '<i class="fas fa-address-card"></i>',
