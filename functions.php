@@ -3607,7 +3607,10 @@ add_action('woocommerce_account_following_endpoint', 'ticketfeasta_display_follo
 
 
 
-function display_upcoming_events_for_user_without_duplicates() {
+
+
+
+function display_upcoming_events_for_user_with_view_order_button() {
     $user_id = get_current_user_id();
 
     // Initialize an array to keep track of displayed event IDs
@@ -3623,6 +3626,7 @@ function display_upcoming_events_for_user_without_duplicates() {
 
     if (!empty($customer_orders)) {
         foreach ($customer_orders as $customer_order) {
+            $order_url = $customer_order->get_view_order_url();
             $items = $customer_order->get_items();
 
             foreach ($items as $item_id => $item) {
@@ -3644,6 +3648,8 @@ function display_upcoming_events_for_user_without_duplicates() {
                     echo "<div class='event-info'>";
                     echo "<h3><a href='{$event_url}'>{$event_title}</a></h3>";
                     echo "<p>Event Date: " . date_i18n('F j, Y, g:i a', strtotime($event_start_date)) . "</p>";
+                    // Add the "View Order" button
+                    echo "<a href='{$order_url}' class='button view-order-button'>View Order</a>";
                     echo "</div>";
                     echo "</div>";
 
@@ -3657,4 +3663,4 @@ function display_upcoming_events_for_user_without_duplicates() {
     }
 }
 
-add_action('woocommerce_account_dashboard', 'display_upcoming_events_for_user_without_duplicates');
+add_action('woocommerce_account_dashboard', 'display_upcoming_events_for_user_with_view_order_button');
