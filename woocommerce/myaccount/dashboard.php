@@ -184,7 +184,10 @@ jQuery(document).ready(function($) {
     border: 3px solid white;
 
 }
-
+.organizer-block_inner h4{
+	text-decoration: none;
+    font-weight: 600;
+}
 
 .organizer_profile_main_div{
     width:100%;
