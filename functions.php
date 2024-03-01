@@ -3507,6 +3507,9 @@ require_once get_stylesheet_directory() . '/option-page.php';
 
 
 
+
+
+
 function ticketfeasta_display_following_organizers_events_dashboard() {
     $user_id = get_current_user_id();
     $following_array = get_user_meta($user_id, 'following', true);
@@ -3557,11 +3560,21 @@ function ticketfeasta_display_following_organizers_events_dashboard() {
                 $event_image_id = get_post_thumbnail_id($event_id);
                 $event_image_url = wp_get_attachment_image_url($event_image_id, 'medium');
                 $ticket_price = tribe_get_cost(null, true);
-                $button_text = !empty($ticket_price) ? esc_html($ticket_price) : '';
+                $button_text = !empty($ticket_price) ? "Get Tickets - " . esc_html($ticket_price) : "Get Tickets";
 
-                include 'path/to/your/event-card-template.php'; // Adjust the path to your event card template
+                // Here you insert your HTML layout for each event
+                echo '<div class="event-card">';
+                if ($event_image_url) {
+                    echo '<div class="event-image"><a href="' . esc_url($event_url) . '"><img src="' . esc_url($event_image_url) . '" alt="' . esc_attr($event_title) . '"></a></div>';
+                }
+                echo '<div class="event-details">';
+                echo '<h2 class="event-title"><a href="' . esc_url($event_url) . '">' . esc_html($event_title) . '</a></h2>';
+                // Include more event details here
+                echo '</div>';
+                echo '<div class="event-actions"><a href="' . esc_url($event_url) . '" class="btn-get-tickets">' . esc_html($button_text) . '</a></div>';
+                echo '</div>'; // Close .event-card
             }
-            echo '</div>';
+            echo '</div>'; // Close .event-listing
         } else {
             echo "<p>No upcoming events from " . esc_html($organizer_name) . ".</p>";
         }
