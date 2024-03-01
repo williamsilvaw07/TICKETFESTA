@@ -270,18 +270,18 @@ hr{
 .circleLeft{
     width: 12px;
     height: 24px;
-    background-color: #B7B5E4;
+    background-color: #1a1a1a;
     border-radius: 0 12px 12px 0;
 }
 .ripLine{
     width: 100%;
-    border-top: 3px solid #B7B5E4;
+    border-top: 3px solid #1a1a1a;
     border-top-style: dashed ;
 }
 .circleRight{
     width: 12px;
     height: 24px;
-    background-color: #B7B5E4;
+    background-color: #1a1a1a;
     border-radius: 12px 0 0 12px;
 }
 
