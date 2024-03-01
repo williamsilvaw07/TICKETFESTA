@@ -3606,6 +3606,11 @@ add_action('woocommerce_account_following_endpoint', 'ticketfeasta_display_follo
 
 
 
+
+
+
+
+
 function display_upcoming_events_for_user_with_view_order_button() {
     $user_id = get_current_user_id();
 
@@ -3642,7 +3647,7 @@ function display_upcoming_events_for_user_with_view_order_button() {
                     ?>
                     <div class="ticketContainer">
                         <div class="ticket">
-                        <div class="ticketImage"><?php echo $event_image_url; ?></div>
+                            <div class="ticketImage" style="background-image: url('<?php echo $event_image_url; ?>');"></div>
                             <div class="ticketTitle"><?php echo $event_title; ?></div>
                             <hr>
                             <div class="ticketDetail">
@@ -3674,4 +3679,4 @@ function display_upcoming_events_for_user_with_view_order_button() {
     }
 }
 
-add_action('woocommerce_account_dashboard', 'display_upcoming_events_for_user_with_view_order_button');
+add_action('woocommerce_account_dashboard', 'display_upcoming_events_for_user
