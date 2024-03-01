@@ -168,6 +168,22 @@ jQuery(document).ready(function($) {
 
 <style>
 
+h1{
+
+
+
+}
+
+
+.organizer-block_events_inner{
+    display: flex;
+    align-items: stretch;
+    justify-content: flex-start;
+    flex-direction: row;
+    flex-wrap: nowrap;
+
+}
+
 .organizer-block_inner{
     display: flex;
     flex-direction: row;
