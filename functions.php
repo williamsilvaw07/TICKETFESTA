@@ -3523,84 +3523,68 @@ function ticketfeasta_display_following_organizers_events_dashboard() {
     }
 
     ob_start(); // Start output buffering.
-    ?>
 
-    <div class="live_event_listing_div">
-        <div class="event-listing">
-            <?php
-            foreach ($following_array as $organizer_id) {
-                // Fetch organizer's name and image
-                $organizer_name = get_the_title($organizer_id);
-                $organizer_url = get_permalink($organizer_id);
-                $organizer_image = get_the_post_thumbnail_url($organizer_id, 'medium');
+    foreach ($following_array as $organizer_id) {
+        $args = array(
+            'post_type' => 'tribe_events',
+            'posts_per_page' => -1,
+            'meta_query' => array(
+                array(
+                    'key' => '_EventOrganizerID',
+                    'value' => $organizer_id,
+                    'compare' => '=',
+                ),
+            ),
+            'meta_key' => '_EventStartDate',
+            'orderby' => 'meta_value',
+            'order' => 'ASC',
+            'meta_value' => date('Y-m-d H:i:s'), // Ensure the event is in the future.
+            'meta_compare' => '>='
+        );
 
-                // Display organizer info
-                echo '<div class="organizer-info">';
-                if ($organizer_image) {
-                    echo '<img src="' . esc_url($organizer_image) . '" alt="' . esc_attr($organizer_name) . '">';
-                }
-                echo '<a href="' . esc_url($organizer_url) . '">' . esc_html($organizer_name) . '</a>';
-                echo '</div>';
+        $events_query = new WP_Query($args);
 
-                $args = array(
-                    'post_type' => 'tribe_events',
-                    'posts_per_page' => -1,
-                    'meta_query' => array(
-                        array(
-                            'key' => '_EventOrganizerID',
-                            'value' => $organizer_id,
-                            'compare' => '=',
-                        ),
-                    ),
-                );
+        if ($events_query->have_posts()) {
+            $organizer_name = get_the_title($organizer_id);
+            $organizer_url = get_permalink($organizer_id);
+            $organizer_img = get_the_post_thumbnail_url($organizer_id, 'medium') ?: 'https://ticketfesta.co.uk/wp-content/uploads/2024/02/placeholder-4.png';
 
-                $events_query = new WP_Query($args);
+            echo "<div class='organizer-block'>";
+            echo "<a href='{$organizer_url}'><img src='{$organizer_img}' alt='{$organizer_name}' class='organizer-image'/></a>";
+            echo "<h3><a href='{$organizer_url}'>{$organizer_name}</a></h3>";
 
-                if ($events_query->have_posts()) :
-                    while ($events_query->have_posts()) : $events_query->the_post();
-                        // Event details
-                        $event_id = get_the_ID();
-                        $event_url = get_the_permalink();
-                        $ticket_price = tribe_get_cost(null, true);
-                        $button_text = !empty($ticket_price) ? "Get Tickets - " . esc_html($ticket_price) : "Get Tickets";
-                        $event_start_date_time = tribe_get_start_date($event_id, false, 'D, j M Y g:i a');
-                        // Event image
-                        $event_image_url = get_the_post_thumbnail_url($event_id, 'medium') ?: 'https://ticketfesta.co.uk/wp-content/uploads/2024/02/placeholder-4.png';
-                        ?>
+            while ($events_query->have_posts()) : $events_query->the_post();
+                $event_id = get_the_ID();
+                $event_url = get_the_permalink();
+                $event_img = get_the_post_thumbnail_url($event_id, 'medium') ?: 'https://ticketfesta.co.uk/wp-content/uploads/2024/02/placeholder-4.png';
+                $event_start_date_time = tribe_get_start_date($event_id, false, 'D, j M Y g:i a');
 
-                        <div class="event-card">
-                            <div class="event-image">
-                                <a href="<?php echo esc_url($event_url); ?>">
-                                    <img src="<?php echo esc_url($event_image_url); ?>" alt="<?php the_title(); ?>">
-                                </a>
-                            </div>
-                            <div class="event-details">
-                                <div class="event-content">
-                                    <h2 class="event-title"><a href="<?php echo esc_url($event_url); ?>"><?php the_title(); ?></a></h2>
-                                    <div class="event-day"><?php echo esc_html($event_start_date_time); ?></div>
-                                    <div class="event-time-location">
-                                        <span class="event-time"><?php echo tribe_get_start_date(null, false, 'g:i a'); ?> - <?php echo tribe_get_end_date(null, false, 'g:i a'); ?></span>
-                                        <span class="event-location"><?php echo tribe_get_venue(); ?></span>
-                                    </div>
-                                    <div class="event-actions">
-                                        <a href="<?php echo esc_url($event_url); ?>" class="btn-get-tickets"><?php echo esc_html($button_text); ?></a>
-                                    </div>
-                                </div>
+                ?>
+                <div class="event-card">
+                    <div class="event-image">
+                        <a href="<?php echo esc_url($event_url); ?>">
+                            <img src="<?php echo esc_url($event_img); ?>" alt="<?php the_title(); ?>">
+                        </a>
+                    </div>
+                    <div class="event-details">
+                        <div class="event-content">
+                            <h2 class="event-title"><a href="<?php echo esc_url($event_url); ?>"><?php the_title(); ?></a></h2>
+                            <div class="event-day"><?php echo esc_html($event_start_date_time); ?></div>
+                            <div class="event-time-location">
+                                <span class="event-time"><?php echo tribe_get_start_date(null, false, 'g:i a'); ?> - <?php echo tribe_get_end_date(null, false, 'g:i a'); ?></span>
+                                <span class="event-location"><?php echo tribe_get_venue(); ?></span>
                             </div>
                         </div>
-                        <?php
-                    endwhile;
-                else :
-                    echo '<p>No events found for ' . esc_html($organizer_name) . '.</p>';
-                endif;
+                    </div>
+                </div>
+                <?php
+            endwhile;
+            echo "</div>"; // Close organizer block.
+        }
 
-                wp_reset_postdata();
-            }
-            ?>
-        </div>
-    </div>
+        wp_reset_postdata();
+    }
 
-    <?php
     $output = ob_get_clean(); // Get output buffer content and clean buffer.
     echo $output; // Display the content.
 }
