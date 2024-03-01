@@ -691,27 +691,31 @@ function enqueue_media_uploader($hook) {
 add_action('admin_enqueue_scripts', 'enqueue_media_uploader');
 // Get all orders by event ID
 function get_orders_by_event_id($event_id) {
-    global $wpdb;
+    // global $wpdb;
 
-    // Prefix for WordPress database tables
-    $prefix = $wpdb->prefix;
+    // // Prefix for WordPress database tables
+    // $prefix = $wpdb->prefix;
 
-    // Query to retrieve orders related to the event
-    $query = $wpdb->prepare("
-        SELECT p.ID as order_id, p.post_date as order_date, p.post_status as order_status, pm.meta_value as event_id
-        FROM {$prefix}posts p
-        INNER JOIN {$prefix}postmeta pm ON p.ID = pm.post_id
-        WHERE p.post_type = 'tribe_wootickets' 
-        AND pm.meta_key = '_tribe_wooticket_event_id' 
-        AND pm.meta_value = %d
-        ORDER BY p.post_date DESC", $event_id);
+    // // Query to retrieve orders related to the event
+    // $query = $wpdb->prepare("
+    //     SELECT p.ID as order_id, p.post_date as order_date, p.post_status as order_status, pm.meta_value as event_id
+    //     FROM {$prefix}posts p
+    //     INNER JOIN {$prefix}postmeta pm ON p.ID = pm.post_id
+    //     WHERE p.post_type = 'tribe_wootickets' 
+    //     AND pm.meta_key = '_tribe_wooticket_event_id' 
+    //     AND pm.meta_value = %d
+    //     ORDER BY p.post_date DESC", $event_id);
 
-    // Execute the query
-    $results = $wpdb->get_results($query);
+    // // Execute the query
+    // $results = $wpdb->get_results($query);
 
+    $ticket_datas = get_post_meta('4297');
+    echo '<pre>';
+    var_dump($ticket_datas );
+    echo '</pre>';
     // Return the results
-        return $results;
-    }
+        return [];
+}
 // Hooking the handler function to both logged-in and non-logged-in users
 add_action('wp_ajax_upload_images_cat', 'upload_images_cat');
 add_action('wp_ajax_nopriv_upload_images_cat', 'upload_images_cat');
