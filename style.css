@@ -1077,7 +1077,7 @@ color: black!important;
 margin-top: 0!important;
 }
 .woocommerce-MyAccount-content{
-  
+    flex: 0 0 70%!important
 }
 .woocommerce-account .entry-header{
     display: none;
@@ -1094,7 +1094,7 @@ margin-top: 0!important;
     background-color: rgb(26, 26, 26);
     overflow: auto;
     padding-left: 15px;
-   
+    flex: 0 0 18%!important
 }
 .my-account-welcome-message {
     /* Add your custom styles here */
