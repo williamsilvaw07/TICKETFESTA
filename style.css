@@ -1163,6 +1163,17 @@ input.select2-search__field[aria-owns='select2-saved_tribe_organizer-results'] {
 }
 
 
+@media (max-width: 700px) {
+
+	.woocommerce-MyAccount-content {
+    flex: inherit!important;
+	width: 90%!important;
+	
+}
+
+
+}
+
 
 
 
