@@ -3070,6 +3070,8 @@ function get_follower_by_organiser_id($organizer_id)
     return $followers_array;
 }
 
+
+
 function ticketfeasta_publish_tribe_events_on_first_update($post_id, $post, $update)
 {
     if ($post->post_type == 'tribe_events') {
@@ -3491,3 +3493,67 @@ function add_extra_fees_for_products( $cart ) {
 }
 
 require_once get_stylesheet_directory() . '/option-page.php';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function ticketfeasta_display_following_organizers_events() {
+    $user_id = get_current_user_id();
+    $following_array = get_user_meta($user_id, 'following', true);
+    $following_array = json_decode($following_array, true);
+
+    if (json_last_error() !== JSON_ERROR_NONE || empty($following_array)) {
+        echo "<p>You are not following any organizers with upcoming events.</p>";
+        return;
+    }
+
+    // Assuming you have a way to relate organizers to events, adjust the query accordingly
+    $args = array(
+        'post_type' => 'tribe_events',
+        'posts_per_page' => -1,
+        'meta_query' => array(
+            array(
+                'key' => '_EventOrganizerID', // Adjust based on how your events are linked to organizers
+                'value' => $following_array,
+                'compare' => 'IN',
+            ),
+        ),
+    );
+
+    $events_query = new WP_Query($args);
+
+    if ($events_query->have_posts()) {
+        echo '<ul class="following-events-list">';
+        while ($events_query->have_posts()) {
+            $events_query->the_post();
+            echo '<li><a href="' . get_the_permalink() . '">' . get_the_title() . '</a> - ' . tribe_get_start_date(null, false) . '</li>';
+        }
+        echo '</ul>';
+    } else {
+        echo "<p>No upcoming events from the organizers you're following.</p>";
+    }
+
+    wp_reset_postdata();
+}
+
+// Add this line to where you want to display the list, for example in the 'ticketfeasta_following' function or as a new endpoint.
+// ticketfeasta_display_following_organizers_events();
