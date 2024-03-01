@@ -1070,6 +1070,10 @@ color: black!important;
 
 
 /***my account page***/
+
+.woocommerce-account header{
+    width: 100%!important;
+}
 .woocommerce-account .woocommerce {
     background: #0d0e0e;
 }
