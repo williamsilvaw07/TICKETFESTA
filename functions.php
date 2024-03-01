@@ -3529,6 +3529,19 @@ function ticketfeasta_display_following_organizers_events_dashboard() {
         <div class="event-listing">
             <?php
             foreach ($following_array as $organizer_id) {
+                // Fetch organizer's name and image
+                $organizer_name = get_the_title($organizer_id);
+                $organizer_url = get_permalink($organizer_id);
+                $organizer_image = get_the_post_thumbnail_url($organizer_id, 'medium');
+
+                // Display organizer info
+                echo '<div class="organizer-info">';
+                if ($organizer_image) {
+                    echo '<img src="' . esc_url($organizer_image) . '" alt="' . esc_attr($organizer_name) . '">';
+                }
+                echo '<a href="' . esc_url($organizer_url) . '">' . esc_html($organizer_name) . '</a>';
+                echo '</div>';
+
                 $args = array(
                     'post_type' => 'tribe_events',
                     'posts_per_page' => -1,
@@ -3545,20 +3558,22 @@ function ticketfeasta_display_following_organizers_events_dashboard() {
 
                 if ($events_query->have_posts()) :
                     while ($events_query->have_posts()) : $events_query->the_post();
+                        // Event details
                         $event_id = get_the_ID();
                         $event_url = get_the_permalink();
                         $ticket_price = tribe_get_cost(null, true);
                         $button_text = !empty($ticket_price) ? "Get Tickets - " . esc_html($ticket_price) : "Get Tickets";
                         $event_start_date_time = tribe_get_start_date($event_id, false, 'D, j M Y g:i a');
+                        // Event image
+                        $event_image_url = get_the_post_thumbnail_url($event_id, 'medium') ?: 'https://ticketfesta.co.uk/wp-content/uploads/2024/02/placeholder-4.png';
                         ?>
+
                         <div class="event-card">
-                            <?php if (has_post_thumbnail()) : ?>
-                                <div class="event-image">
-                                    <a href="<?php echo esc_url($event_url); ?>">
-                                        <?php the_post_thumbnail('medium'); ?>
-                                    </a>
-                                </div>
-                            <?php endif; ?>
+                            <div class="event-image">
+                                <a href="<?php echo esc_url($event_url); ?>">
+                                    <img src="<?php echo esc_url($event_image_url); ?>" alt="<?php the_title(); ?>">
+                                </a>
+                            </div>
                             <div class="event-details">
                                 <div class="event-content">
                                     <h2 class="event-title"><a href="<?php echo esc_url($event_url); ?>"><?php the_title(); ?></a></h2>
@@ -3576,7 +3591,7 @@ function ticketfeasta_display_following_organizers_events_dashboard() {
                         <?php
                     endwhile;
                 else :
-                    echo '<p>No events found.</p>';
+                    echo '<p>No events found for ' . esc_html($organizer_name) . '.</p>';
                 endif;
 
                 wp_reset_postdata();
