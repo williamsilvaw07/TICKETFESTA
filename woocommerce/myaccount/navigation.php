@@ -171,6 +171,10 @@ font-size: 14px;
  
 
 }
+.woocommerce-MyAccount-navigation li a {
+
+    text-align: center;
+}
 }
 
 
