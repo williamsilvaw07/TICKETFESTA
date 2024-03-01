@@ -212,7 +212,9 @@ jQuery(document).ready(function($) {
 
 
 <style>
-
+	.ticket_inner_div{
+		padding:5px 10px
+	}
 hr {
     width: 100%;
     border: 1px solid #efefef;
