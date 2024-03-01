@@ -467,6 +467,10 @@ html .woocommerce-account  .woocommerce-orders-table__cell-order-total{
 	.woocommerce-MyAccount-navigation li{
 		width: fit-content;
 	}
+	.woocommerce-MyAccount-content {
+    flex: inherit!important;
+}
+
 }
 
 
