@@ -183,7 +183,7 @@ jQuery(document).ready(function($) {
             'left': '0',
             'height': '100%',
             'width': '100%',
-            'background': 'rgba(255, 255, 255, 0.4)',
+            'background': 'rgba(0, 0, 0, 0.4)',
             'backdrop-filter': 'blur(8px)',
             'z-index': '1'
         });
