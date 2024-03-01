@@ -3512,8 +3512,6 @@ require_once get_stylesheet_directory() . '/option-page.php';
 
 
 
-
-
 function ticketfeasta_display_following_organizers_events_dashboard() {
     $user_id = get_current_user_id();
     $following_array = get_user_meta($user_id, 'following', true);
@@ -3524,64 +3522,72 @@ function ticketfeasta_display_following_organizers_events_dashboard() {
         return;
     }
 
-    $args = array(
-        'post_type' => 'tribe_events',
-        'posts_per_page' => -1,
-        'meta_query' => array(
-            array(
-                'key' => '_EventOrganizerID',
-                'value' => $following_array,
-                'compare' => 'IN',
-            ),
-        ),
-    );
+    ob_start(); // Start output buffering.
+    ?>
 
-    $events_query = new WP_Query($args);
+    <div class="live_event_listing_div">
+        <div class="event-listing">
+            <?php
+            foreach ($following_array as $organizer_id) {
+                $args = array(
+                    'post_type' => 'tribe_events',
+                    'posts_per_page' => -1,
+                    'meta_query' => array(
+                        array(
+                            'key' => '_EventOrganizerID',
+                            'value' => $organizer_id,
+                            'compare' => '=',
+                        ),
+                    ),
+                );
 
-    if ($events_query->have_posts()) {
-        echo '<h3>Upcoming Events From Organizers You Follow</h3>';
-        echo '<ul class="following-events-list">';
-        while ($events_query->have_posts()) {
-            $events_query->the_post();
-            $event_id = get_the_ID();
-            $organizer_id = tribe_get_organizer_id($event_id);
-            $organizer_name = tribe_get_organizer($event_id);
-            $organizer_link = get_permalink($organizer_id);
-            $event_title = get_the_title();
-            $event_link = get_the_permalink();
-            $event_start_date = tribe_get_start_date($event_id, false);
-            $event_end_date = tribe_get_end_date($event_id, false);
-            $event_location = tribe_get_address($event_id);
-            $event_price = tribe_get_cost($event_id, true);
-            $event_image_id = get_post_thumbnail_id($event_id);
-            $event_image_url = wp_get_attachment_image_url($event_image_id, 'thumbnail');
-            $organizer_image_id = get_post_thumbnail_id($organizer_id);
-            $organizer_image_url = wp_get_attachment_image_url($organizer_image_id, 'thumbnail');
+                $events_query = new WP_Query($args);
 
-            echo '<li>';
-            if ($organizer_image_url) {
-                echo '<img src="' . esc_url($organizer_image_url) . '" alt="Organizer Image" style="width: 50px; height: auto;"> ';
+                if ($events_query->have_posts()) :
+                    while ($events_query->have_posts()) : $events_query->the_post();
+                        $event_id = get_the_ID();
+                        $event_url = get_the_permalink();
+                        $ticket_price = tribe_get_cost(null, true);
+                        $button_text = !empty($ticket_price) ? "Get Tickets - " . esc_html($ticket_price) : "Get Tickets";
+                        $event_start_date_time = tribe_get_start_date($event_id, false, 'D, j M Y g:i a');
+                        ?>
+                        <div class="event-card">
+                            <?php if (has_post_thumbnail()) : ?>
+                                <div class="event-image">
+                                    <a href="<?php echo esc_url($event_url); ?>">
+                                        <?php the_post_thumbnail('medium'); ?>
+                                    </a>
+                                </div>
+                            <?php endif; ?>
+                            <div class="event-details">
+                                <div class="event-content">
+                                    <h2 class="event-title"><a href="<?php echo esc_url($event_url); ?>"><?php the_title(); ?></a></h2>
+                                    <div class="event-day"><?php echo esc_html($event_start_date_time); ?></div>
+                                    <div class="event-time-location">
+                                        <span class="event-time"><?php echo tribe_get_start_date(null, false, 'g:i a'); ?> - <?php echo tribe_get_end_date(null, false, 'g:i a'); ?></span>
+                                        <span class="event-location"><?php echo tribe_get_venue(); ?></span>
+                                    </div>
+                                    <div class="event-actions">
+                                        <a href="<?php echo esc_url($event_url); ?>" class="btn-get-tickets"><?php echo esc_html($button_text); ?></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <?php
+                    endwhile;
+                else :
+                    echo '<p>No events found.</p>';
+                endif;
+
+                wp_reset_postdata();
             }
-            // Add organizer name as a link
-            if ($organizer_link && $organizer_name) {
-                echo '<a href="' . esc_url($organizer_link) . '">' . esc_html($organizer_name) . '</a> ';
-            }
-            if ($event_image_url) {
-                echo '<img src="' . esc_url($event_image_url) . '" alt="' . esc_attr($event_title) . '" style="width: 100px; height: auto;"> ';
-            }
-            echo '<a href="' . esc_url($event_link) . '">' . esc_html($event_title) . '</a>';
-            echo '<p>Date: ' . esc_html($event_start_date) . ' to ' . esc_html($event_end_date) . '</p>';
-            echo '<p>Location: ' . esc_html($event_location) . '</p>';
-            echo '<p>Price: ' . esc_html($event_price) . '</p>';
-            echo '</li>';
-        }
-        echo '</ul>';
-    } else {
-        echo "<p>No upcoming events from the organizers you're following.</p>";
-    }
+            ?>
+        </div>
+    </div>
 
-    wp_reset_postdata();
+    <?php
+    $output = ob_get_clean(); // Get output buffer content and clean buffer.
+    echo $output; // Display the content.
 }
 
-// Hook our function to the account dashboard to display the events
 add_action('woocommerce_account_dashboard', 'ticketfeasta_display_following_organizers_events_dashboard');
