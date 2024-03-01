@@ -129,319 +129,10 @@ $allowed_html = array(
 
 
 
-////TABS NAV
 
-jQuery(document).ready(function($) {
-  // Initially hide all content
-  $('.organizer_events_content, .organizer_Gallery_content, .organizer_about_content').hide();
 
-  // Function to remove active class from all items and hide their spans
-  function resetActive() {
-    $('.organizer_nav-item').removeClass('active').css('background-color', ''); // Reset background
-    $('.organizer_nav-item span').hide(); // Hide all spans
-  }
 
-  // Click event for Events nav item
-  $('.organizer_events').on('click', function() {
-    resetActive();
-    $(this).addClass('active').css('background-color', 'red'); // Set background to red for active
-    $(this).find('span').show(); // Show span for this tab
-    $('.organizer_events_content').show();
-    $('.organizer_Gallery_content, .organizer_about_content').hide();
-  });
 
-  // Click event for Gallery nav item
-  $('.organizer_Gallery').on('click', function() {
-    resetActive();
-    $(this).addClass('active').css('background-color', 'red');
-    $(this).find('span').show(); // Show span for this tab
-    $('.organizer_Gallery_content').show();
-    $('.organizer_events_content, .organizer_about_content').hide();
-  });
-
-  // Click event for About nav item
-  $('.organizer_about').on('click', function() {
-    resetActive();
-    $(this).addClass('active').css('background-color', 'red');
-    $(this).find('span').show(); // Show span for this tab
-    $('.organizer_about_content').show();
-    $('.organizer_events_content, .organizer_Gallery_content').hide();
-  });
-
-  // Trigger the 'click' event on the first tab to set it as the default open tab
-  $('.organizer_events').trigger('click');
-});
-
-
-
-
-
-
-////FUNCTION TO SHOW ANND HIDE THE LIVE EVENTS AND PAST
-
-jQuery(document).ready(function($) {
-    // Initially hide the past events and mark live events as active
-    $('.past_event_listing_div').hide();
-    $('.live_events_link').addClass('event_type_active');
-
-    // When "Live Events" is clicked
-    $('.live_events_link').click(function() {
-        $('.past_event_listing_div').hide();
-        $('.live_event_listing_div').show();
-        $('.past_events_link').removeClass('event_type_active');
-        $(this).addClass('event_type_active');
-    });
-
-    // When "Past Events" is clicked
-    $('.past_events_link').click(function() {
-        $('.live_event_listing_div').hide();
-        $('.past_event_listing_div').show();
-        $('.live_events_link').removeClass('event_type_active');
-        $(this).addClass('event_type_active');
-    });
-});
-
-
-
-
-
-
-
-
-
-
-//FUNCTION TO DISPLAY Gallery Category IMAGES 
-document.addEventListener('DOMContentLoaded', function() {
-    // const imageData = {
-    //     'category1': [
-    //         'https://thaynna-william.co.uk/wp-content/uploads/2024/01/jk-placeholder-image-1.jpg',
-    //         'https://thaynna-william.co.uk/wp-content/uploads/2024/01/jk-placeholder-image-1.jpg',
-
-    //     ],
-    //     'category2': [
-    //         'https://thaynna-william.co.uk/wp-content/uploads/2024/01/jk-placeholder-image-1.jpg',
-    //     ],
-       
-    // };
-
-    const galleryCategory = document.querySelector('.organizer_gallery_category');
-    const galleryDisplayArea = document.getElementById('galleryDisplayArea');
-
-
-	function displayImages(category) {
-    // Create backButton with icon (SVG) and text
-    const backButton = document.createElement('button');
-    backButton.className = 'lightbox-back-button';
-
-    // SVG for the back icon
-    const backIconSVG = `
-        <svg xmlns="http://www.w3.org/2000/svg" width="79" height="69" viewBox="0 0 79 69" fill="none">
-            <path d="M73.3483 29.4643H15.7033L33.3467 8.27265C34.1717 7.28007 34.5687 6.0004 34.4502 4.71517C34.3317 3.42993 33.7075 2.24441 32.7149 1.4194C31.7223 0.594395 30.4426 0.19748 29.1574 0.315977C27.8721 0.434474 26.6866 1.05868 25.8616 2.05126L1.55931 31.214C1.39581 31.446 1.2496 31.6897 1.12187 31.9431C1.12187 32.1861 1.12187 32.3319 0.781639 32.575C0.561332 33.1323 0.445981 33.7255 0.441406 34.3247C0.445981 34.924 0.561332 35.5172 0.781639 36.0745C0.781639 36.3175 0.781638 36.4633 1.12187 36.7064C1.2496 36.9598 1.39581 37.2035 1.55931 37.4354L25.8616 66.5982C26.3186 67.1469 26.8909 67.5881 27.5377 67.8905C28.1846 68.1929 28.8901 68.3491 29.6042 68.348C30.7398 68.3502 31.8404 67.9547 32.7149 67.2301C33.207 66.822 33.6139 66.3209 33.9121 65.7554C34.2103 65.1899 34.394 64.5711 34.4527 63.9345C34.5114 63.2979 34.4439 62.656 34.2541 62.0455C34.0643 61.435 33.756 60.8679 33.3467 60.3768L15.7033 39.1852H73.3483C74.6374 39.1852 75.8737 38.6731 76.7852 37.7616C77.6967 36.8501 78.2088 35.6138 78.2088 34.3247C78.2088 33.0357 77.6967 31.7994 76.7852 30.8879C75.8737 29.9764 74.6374 29.4643 73.3483 29.4643Z" fill="#231F20"/>
-        </svg>
-    `;
-    backButton.innerHTML = backIconSVG;
-
-    const backText = document.createTextNode('Back to Gallery');
-    backButton.appendChild(backText);
-
-    backButton.onclick = function() {
-        galleryCategory.style.display = 'block';
-        galleryDisplayArea.style.display = 'none';
-    };
-
-    // Clear previous content and add backButton
-    galleryDisplayArea.innerHTML = '';
-    galleryDisplayArea.appendChild(backButton);
-    galleryDisplayArea.style.display = 'block';
-    galleryCategory.style.display = 'none';
-
-    // Create a container for images
-    const imagesContainer = document.createElement('div');
-    imagesContainer.className = 'images-container_main'; // Class for the container
-
-    // Iterate over each image in the category and add to the container
-    imageData[category].forEach(imageSrc => {
-        const img = document.createElement('img');
-        img.src = imageSrc;
-        img.style.width = '100%';
-        img.style.height = 'auto';
-        img.style.margin = '10px 0';
-        img.style.maxWidth = '350px';
-        img.setAttribute("data-category", category);
-
-        const imageDiv = document.createElement('div');
-        imageDiv.className = 'image-container'; // Class for individual image div
-        imageDiv.appendChild(img);
-        imagesContainer.appendChild(imageDiv);
-    });
-
-    // Append the container with images to galleryDisplayArea
-    galleryDisplayArea.appendChild(imagesContainer);
-}
-
-
-
-
-    document.querySelectorAll('.organizer_gallery_category_inner').forEach(categoryDiv => {
-        categoryDiv.addEventListener('click', function() {
-            const category = this.getAttribute('data-category');
-            displayImages(category);
-        });
-    });
-});
-
-
-function createLightbox(imageSrc, category) {
-        // Create lightbox elements
-        const lightbox = document.createElement('div');
-        lightbox.className = 'lightbox';
-        document.body.appendChild(lightbox);
-
-        const img = document.createElement('img');
-        img.src = imageSrc;
-        img.className = 'lightbox-image';
-        lightbox.appendChild(img);
-
-        const closeButton = document.createElement('button');
-        closeButton.textContent = 'X';
-        closeButton.className = 'lightbox-close';
-        lightbox.appendChild(closeButton);
-
-        const prevButton = document.createElement('span');
-        prevButton.className = 'prev-image';
-        prevButton.innerHTML = '<';
-        prevButton.onclick = function() {
-            console.log("Previous button clicked!");
-            imgSrc = document.querySelector('.lightbox-image').getAttribute('src');
-            index = imageData[category].indexOf(imgSrc);
-            length = imageData[category].length - 1
-
-            nextIndex = ( index - 1 )  < 0 ? length : index - 1;
-            nextImgSrc = imageData[category][nextIndex]
-            lightboxImage = document.querySelector('.lightbox-image');
-            lightboxImage.src = nextImgSrc;
-            currentDownload = document.querySelector('.lightbox-download');
-            currentDownload.href = nextImgSrc;
-            currentDownload.download = nextImgSrc.split('/').pop(); // Extract filename from URL
-        };
-        lightbox.appendChild(prevButton);
-
-        const nextButton = document.createElement('span');
-        nextButton.className = 'next-image';
-        nextButton.innerHTML = '>';
-        nextButton.onclick = function() {
-            console.log("Previous button clicked!");
-            imgSrc = document.querySelector('.lightbox-image').getAttribute('src');
-            index = imageData[category].indexOf(imgSrc);
-            length = imageData[category].length - 1
-
-            nextIndex = ( index + 1 )  > length ? 0 : index + 1;
-            nextImgSrc = imageData[category][nextIndex]
-            lightboxImage = document.querySelector('.lightbox-image');
-            lightboxImage.src = nextImgSrc;
-            currentDownload = document.querySelector('.lightbox-download');
-            currentDownload.href = nextImgSrc;
-            currentDownload.download = nextImgSrc.split('/').pop(); // Extract filename from URL
-        };
-        lightbox.appendChild(nextButton);
-
-        const downloadButton = document.createElement('a');
-        downloadButton.href = imageSrc;
-        downloadButton.download = imageSrc.split('/').pop(); // Extract filename from URL
-        downloadButton.textContent = 'Download';
-        downloadButton.className = 'lightbox-download';
-        lightbox.appendChild(downloadButton);
-
-        // Close lightbox on click outside the image or on the close button
-        lightbox.addEventListener('click', function(e) {
-            if (e.target !== img && e.target !== downloadButton && e.target !== prevButton && e.target !== nextButton) {
-                lightbox.remove();
-            }
-        });
-
-        closeButton.addEventListener('click', function() {
-            lightbox.remove();
-        });
-    }
-
-    galleryDisplayArea.addEventListener('click', function(e) {
-        if (e.target.tagName === 'IMG') {
-            createLightbox(e.target.src , e.target.getAttribute('data-category'));
-        }
-    });
-
-
-
-
-
-
-
-
-
-
-///FUNCTION TO GET THE EVENT IMAGE AND USE AS A BACKEND IMAGE ON THE DIV CONTAISN 
-jQuery(document).ready(function($) {
-   // console.log('Document ready, processing event images...');
-
-    $('.event-card .event-image').each(function(index) {
-        var $eventImageDiv = $(this); // Cache the current event image div
-       // console.log('Processing event image div #' + (index + 1));
-
-        var $image = $eventImageDiv.find('img.wp-post-image');
-        if ($image.length > 0) {
-            var imgSrc = $image.attr('src'); // Get the image source from .wp-post-image
-         //   console.log('Image source for event image div #' + (index + 1) + ':', imgSrc);
-
-            // Create a new div for the blurred background image
-            var blurredBackground = $('<div></div>').css({
-                'position': 'absolute',
-                'top': '0px',
-                'left': '0px',
-                'width': '100%',
-                'height': '100%',
-                'background-image': 'url(' + imgSrc + ')',
-                'background-size': 'cover',
-                'background-position': 'center center',
-                'filter': 'blur(40px)',
-                'z-index': '0' // Ensure the blurred background is behind everything
-            });
-
-            // Prepend the blurred background div to the .event-image div
-            $eventImageDiv.prepend(blurredBackground);
-
-            // Create a new div for the dark overlay if it doesn't already exist
-            if ($eventImageDiv.children('.dark-overlay').length === 0) {
-                var darkOverlay = $('<div class="dark-overlay"></div>').css({
-                    'position': 'absolute',
-                    'top': '0px',
-                    'left': '0px',
-                    'width': '100%',
-                    'height': '100%',
-                    'background-color': 'rgba(0, 0, 0, 0.3)',
-                    'z-index': '1' // Ensure the dark overlay is above the blurred background but below the original image
-                });
-
-                // Insert the dark overlay div just after the blurred background div
-                $eventImageDiv.prepend(darkOverlay);
-              //  console.log('Dark overlay added to event image div #' + (index + 1));
-            }
-
-            // Ensure the .event-image div is positioned relatively to contain the absolute positioned children
-            $eventImageDiv.css({
-                'position': 'relative',
-                'overflow': 'hidden' // Hide any overflow from the blur effect
-            });
-
-            // Keep the original image on top without modifying its z-index
-            $image.css({
-                'position': 'relative',
-                'z-index': '2' // Ensure the original image is above the overlay and the blurred background
-            });
-        } else {
-           // console.log('No .wp-post-image found in event image div #' + (index + 1));
-        }
-    });
-});
 
 
 
@@ -476,55 +167,6 @@ jQuery(document).ready(function($) {
 
 
 <style>
-
-
-.organizer_profile_bk {
-    position: relative;
-    background-image: url('https://ticketfesta.co.uk/wp-content/uploads/2024/02/antoine-j-r3XvSBEQQLo-unsplash-2.jpg');
-    background-size: cover;
-    background-position: center;
-    overflow: hidden; /* Ensure the pseudo-element does not extend outside this container */
-}
-
-.organizer_profile_bk::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    backdrop-filter: blur(10px); /* Adjust the blur value as needed */
-    -webkit-backdrop-filter: blur(10px); /* For Safari */
-    background: rgba(0, 0, 0, 0.5); /* Dark overlay; adjust color and opacity as needed */
-    z-index: 0; /* Ensure this sits below the content */
-}
-
-/* Ensure content inside .organizer_profile_bk is positioned above the pseudo-element */
-.organizer_profile_main_div, .tec-events-c-view-box-border, .image_profile_text_main_continer, .tribe-events-pro-organizer__meta-featured-image-wrapper, .organizer_title_name {
-    position: relative;
-    z-index: 1; /* Higher than the pseudo-element to keep content above the overlay */
-}
-
-
-
-
-
-    .tribe-events-c-messages__message--notice{
-        display:none
-    }
-    .past-event-tag{
-        position: absolute;
-    background: #f8f8f8;
-    z-index: 9;
-    color: black;
-    letter-spacing: 0.2px;
-    font-size: 12px;
-    font-weight: 400;
-    padding: 6px 12px!important;
-    border-radius: 8px 0px 0 0;
- 
-    text-align: center;
-    }
 
     .event-listing-main-div , .organizer_gallery_main  , .organizer_about_main{
         margin: 0 auto!important;
@@ -619,21 +261,7 @@ padding: 1px;
 
 
  /*****organiser profile**/
- .organizer_profile_main_div_all h2{
-   
- }
- .organiser_background {
-    background-size:   contain;
-background-position: center top;
-    background-repeat: no-repeat!important;
-    position: relative;
-    z-index: 2;
-    overflow-x: hidden!important;
-    width: 100%;
-}
-.event-listing h3{
-    display: none;
-}
+
 .event-listing{
     display: flex;
     flex-wrap: wrap;
@@ -641,23 +269,9 @@ background-position: center top;
     justify-content: flex-start;
     align-items: flex-start;
 }
-.organiser_background:before {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    -webkit-backdrop-filter: blur(80px); /* for Safari */
-    backdrop-filter: blur(80px);
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: -1;
-    width: 100%;
-}
 
-.single-tribe_organizer .tribe-events-header__content-title , .single-tribe_organizer  .tribe-events-header__top-bar , .single-tribe_organizer  .tribe-events-calendar-list , .single-tribe_organizer .tribe-events-calendar-list-nav , .single-tribe_organizer  .tribe-events-c-subscribe-dropdown__container , .organizer-events h3 , .single-tribe_organizer .tribe-events-header__title-text , .single-tribe_organizer .tribe-events-c-breadcrumbs__list{
-    display: none!important;
-}
+
+
 .tribe-events-view--organizer .tribe-common-l-container{
     padding-top: px!important;
     padding: 0!important;
@@ -762,9 +376,7 @@ width: fit-content!important;
     margin-top: 5px!important;
 
 }
-.event-time{
-    display:none
-}
+
 
 .event-actions a{
     display:none!important;
