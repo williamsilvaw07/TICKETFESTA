@@ -168,6 +168,22 @@ jQuery(document).ready(function($) {
 
 <style>
 
+.organizer-block_inner{
+	display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 14px;
+}
+
+.organizer-block_inner img{
+	border-radius: 100px;
+    max-width: 200px;
+    width: 100%;
+    border: 5px solid white;
+
+}
+
+
 .organizer_profile_main_div{
     width:100%;
     position: relative;
