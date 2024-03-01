@@ -432,6 +432,7 @@ html .woocommerce-account  .woocommerce-orders-table__cell-order-total{
 .order_event_details h5 {
     text-align: center;
 }
+
 }
 
 
@@ -446,7 +447,7 @@ html .woocommerce-account  .woocommerce-orders-table__cell-order-total{
 		display:none!important
 	}
 	.woocommerce-MyAccount-navigation{
-		width: 100%;
+		width: 100%!important;
     max-width: 100%;
     height: 76px;
     background-color: #000000;
