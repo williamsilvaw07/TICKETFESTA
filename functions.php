@@ -295,7 +295,7 @@ function iam00_return_ticket_associate_with_event()
         global $wpdb;
         // $results = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}postmeta WHERE meta_key = '_tribe_wooticket_for_event' AND meta_value = {$eventId}");
         $results = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}postmeta WHERE meta_key = '_tribe_wooticket_for_event'");
-
+dd($results);
         $ids = [];
 
         foreach ($results as $key => $value) {
