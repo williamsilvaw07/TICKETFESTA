@@ -1119,6 +1119,7 @@ font-size: 14px;
 #custom-welcome-message{
     margin-top: 20px;
     text-align: left;
+    text-transform: capitalize;
 }
 .woocommerce-MyAccount-orders  .woocommerce-button{line-height: inherit;
     padding: 7px 15px!important;
