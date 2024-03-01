@@ -3573,7 +3573,8 @@ function ticketfeasta_display_following_organizers_events_dashboard() {
                         </div>
                         <div class="event-details">
                             <div class="event-content">
-                                <h2 class="event-title"><a href="<?php echo esc_url($event_url); ?>"><?php the_title(); ?></a></h2>
+                            <h2 class="event-title"><a href="<?php echo esc_url($event_url); ?>"><?php echo mb_strimwidth(get_the_title(), 0, 60, '...'); ?></a></h2>
+
                                 <div class="event-day"><?php echo esc_html($event_start_date_time); ?></div>
                                 <div class="event-time-location">
                                     <span class="event-time"><?php echo tribe_get_start_date(null, false, 'g:i a'); ?> - <?php echo tribe_get_end_date(null, false, 'g:i a'); ?></span>
