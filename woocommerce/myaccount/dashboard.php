@@ -227,6 +227,9 @@ hr {
     flex-direction: column;
     align-items: center;
 }
+.ticketImage, .ticketImage img{
+	max-height:150px
+}
 .ticket{
 
     background-color: white;
