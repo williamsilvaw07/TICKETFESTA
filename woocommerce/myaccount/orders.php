@@ -350,7 +350,7 @@ tr.woocommerce-orders-table__row , thead tr{
     position: relative;
 }
 
-.woocommerce-MyAccount-navigation .woocommerce-MyAccount-navigation-link.is-active a:before {
+.woocommerce-MyAccount-navigation .woocommerce-MyAccount-navigation-link.is-active a:after {
     content: '';
     position: absolute;
     right: 0;
