@@ -667,28 +667,33 @@ function enqueue_media_uploader($hook) {
     }
 
     if ('tribe_events_page_tickets-orders' === $hook) {
+
+        $event_id = isset($_GET['event_id']) ? $_GET['event_id'] : ''; // Replace with the actual event ID
+        $orders = get_orders_by_event_id($event_id);
+        $site_fees = get_site_fees_total_order_ids($orders);
+        echo $site_fees;
         wp_enqueue_script('admin-order-js', get_stylesheet_directory_uri() . '/js/admin-order.js', array('jquery'), null, true);
-    }
-
-
-
-
-
-
-    // Example usage:
-    $event_id = isset($_GET['event_id']) ? $_GET['event_id'] : ''; // Replace with the actual event ID
-    $orders = get_orders_by_event_id($event_id);
-
-    // Displaying the orders
-    if ($orders) {
-        foreach ($orders as $order) {
-            echo "Order ID: {$order->order_id}, Date: {$order->order_date}, Status: {$order->order_status}<br>";
-        }
-    } else {
-        echo "No orders found for the event.";
+        wp_localize_script('admin-order-js', 'order_data', array(
+            'site_fees' => $site_fees
+        ));
     }
 }
 add_action('admin_enqueue_scripts', 'enqueue_media_uploader');
+
+// returns site fees for order id array
+function get_site_fees_total_order_ids($order_ids = []){
+    $total_fee = 0;
+    foreach($order_ids as $order_id){
+        $order = wc_get_order($order_id);
+        $fees = $order->get_fees();
+        if (!empty($fees)) {
+            foreach ($fees as $fee) {
+                $total_fee += (float)$fee->get_total();
+            }
+        }
+    } 
+    return  $total_fee;  
+}
 // Get all orders by event ID
 function get_orders_by_event_id( $meta_value) {
     global $wpdb;
