@@ -3660,7 +3660,10 @@ function display_upcoming_events_for_user_with_view_order_button() {
                             <div class="ticketSubDetail">
                                 <div class="code"><?php echo $customer_order->get_order_number(); ?></div>
                                 <div class="date"><?php echo date_i18n('F j<\s\u\p>S</\s\u\p> Y', strtotime($event_start_date)); ?></div>
-                                <div>:&emsp;<a href="<?php echo $order_url; ?>"><button class="view_ticket_btn">View Ticket<button></a></div>
+                      
+                            </div>
+                            <div class="ticketlowerSubDetail">
+                            <div>:&emsp;<a href="<?php echo $order_url; ?>"><button class="view_ticket_btn">View Ticket<button></a></div>
                                 <div>View:&nbsp;<a href="<?php echo $event_url; ?>"><button class="view_event_btn">Event Details<button></a></div>
                             </div>
                         </div>
