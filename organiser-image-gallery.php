@@ -706,7 +706,9 @@ function get_orders_by_event_id($meta_key='_community_tickets_order_fees', $meta
     SELECT post_id
     FROM {$prefix}postmeta
     WHERE meta_key = %s 
-    AND meta_value LIKE %s", $meta_key, '%' . $meta_value . '%');
+    AND meta_value LIKE %s
+    AND p.post_status = 'wc-completed'", 
+    $meta_key, '%' . $meta_value . '%');
     // Execute the query
     $order_ids = $wpdb->get_col($query);
     echo '<pre>';
