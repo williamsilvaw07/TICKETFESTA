@@ -122,7 +122,7 @@ font-size: 14px;
 
 
 
-@media (max-width: 700px) {
+@media (max-width: 950px) {
 	#custom-welcome-message{
 		display:none!important
 	}
