@@ -1071,7 +1071,7 @@ color: black!important;
 
 /***my account page***/
 
- .woocommerce-account .elementor-section-wrap{
+ html .woocommerce-account .elementor-section-wrap{
     width: 100%!important;
 }
 .woocommerce-account .woocommerce {
