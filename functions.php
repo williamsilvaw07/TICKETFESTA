@@ -3570,7 +3570,7 @@ function ticketfeasta_display_following_organizers_events_dashboard() {
                 $event_start_date_time = tribe_get_start_date($event_id, false, 'D, j M Y g:i a');
                 $event_price = tribe_get_cost($event_id, true);
 
-                ?>
+                ?>      <div class='organizer-block_events_inner'>
                 <div class="event-card">
                     <div class="event-image">
                         <a href="<?php echo esc_url($event_url); ?>">
@@ -3588,6 +3588,7 @@ function ticketfeasta_display_following_organizers_events_dashboard() {
                             <div class="event-price"><?php echo esc_html($event_price); ?></div>
                         </div>
                     </div>
+                </div>
                 </div>
                 <?php
             endwhile;
