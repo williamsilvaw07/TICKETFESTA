@@ -148,16 +148,22 @@ font-size: 14px;
     .woocommerce-MyAccount-navigation li {
     width: 40px;
 }
-
+.woocommerce-MyAccount-navigation i {
+    padding-right: 0px;
+}
+.woocommerce-MyAccount-navigation li.is-active a {
+    text-align: center!important;
+}
 .woocommerce-MyAccount-navigation .nav-label {
     display: none; 
 }
 .woocommerce-MyAccount-navigation .woocommerce-MyAccount-navigation-link.is-active a:before {
-    right: inherit;
+    left: 0;
     top: 0;
     bottom: 0;
     width: 100%;
     height: 5px;
+    border-radius: 6px;
 
 }
 .woocommerce-MyAccount-navigation-link.is-active a {
