@@ -256,7 +256,7 @@ hr{
 .ticketDetail{
     font-size: 1.1rem;
     font-weight: 500;
-    padding: 4px 16px;
+   
 }
 .ticketSubDetail{
     display: flex;
