@@ -447,6 +447,8 @@ html .woocommerce-account  .woocommerce-orders-table__cell-order-total{
 
 	.woocommerce-MyAccount-content {
     flex: inherit!important;
+	width: 90%!important;
+	
 }
 
 
