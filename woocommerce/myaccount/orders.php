@@ -385,7 +385,7 @@ tr.woocommerce-orders-table__row , thead tr{
 thead{
 display:none!important
 }
-.woocommerce-orders-table__cell-order-total:before , .woocommerce-orders-table__cell-order-total:before , .order_event_details span{
+.woocommerce-orders-table__cell-order-total:before , .woocommerce-orders-table__cell-order-date:before , .order_event_details span{
     color: #aaa!important;
     text-transform: capitalize!important;
     padding-left: 6px!important;
