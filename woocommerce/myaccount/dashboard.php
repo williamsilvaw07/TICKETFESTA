@@ -181,6 +181,9 @@ h1{
 
 }
 
+.event-time{
+	display:none
+}
 
 .organizer-block_events_inner{
     display: flex;
