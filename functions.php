@@ -3079,9 +3079,6 @@ function ticketfeasta_publish_tribe_events_on_first_update($post_id, $post, $upd
         return;
     }
     if ($post->post_type == 'tribe_events') {
-        $published_date = strtotime($post->post_date);
-        $current_date = strtotime(current_time('mysql'));
-        // if ($published_date == $current_date) {
 
         $organizer_id = get_post_meta($post_id, '_EventOrganizerID', true);
         $followers = get_follower_by_organiser_id($organizer_id);
@@ -3102,7 +3099,6 @@ function ticketfeasta_publish_tribe_events_on_first_update($post_id, $post, $upd
                 wp_mail($to, $subject, $message, $headers);
             }
         }
-        // }
 
     }
 }
@@ -3682,3 +3678,6 @@ function display_upcoming_events_for_user_with_view_order_button() {
 }
 
 add_action('woocommerce_account_dashboard', 'display_upcoming_events_for_user_with_view_order_button');
+
+
+echo 'hello';

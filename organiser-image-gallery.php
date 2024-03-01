@@ -701,11 +701,6 @@ function get_orders_by_event_id( $meta_value) {
     // Prefix for WordPress database tables
     $prefix = $wpdb->prefix;
 
-    // Query to retrieve order IDs with matching meta value
-    // $query = $wpdb->prepare("
-    //     SELECT post_id
-    //     FROM {$prefix}postmeta
-    //     AND meta_value LIKE %s", $meta_key);
 
     $query = $wpdb->prepare("
     SELECT p.ID
@@ -721,12 +716,6 @@ function get_orders_by_event_id( $meta_value) {
     // Return the order IDs
     return $order_ids;
 
-    // $ticket_datas = get_post_meta('4297');
-    // echo '<pre>';
-    // var_dump($ticket_datas );
-    // echo '</pre>';
-    // // Return the results
-    //     return [];
 }
 // Hooking the handler function to both logged-in and non-logged-in users
 add_action('wp_ajax_upload_images_cat', 'upload_images_cat');
