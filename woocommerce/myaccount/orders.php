@@ -443,17 +443,6 @@ html .woocommerce-account  .woocommerce-orders-table__cell-order-total{
 
 
 
-@media (max-width: 700px) {
-
-	.woocommerce-MyAccount-content {
-    flex: inherit!important;
-	width: 90%!important;
-	
-}
-
-
-}
-
 
 
 
