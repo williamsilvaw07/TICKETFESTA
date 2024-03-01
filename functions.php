@@ -3524,13 +3524,12 @@ function ticketfeasta_display_following_organizers_events_dashboard() {
         return;
     }
 
-    // Modify this query based on how your events are linked to organizers
     $args = array(
         'post_type' => 'tribe_events',
         'posts_per_page' => -1,
         'meta_query' => array(
             array(
-                'key' => '_EventOrganizerID', // This needs to be adjusted to your setup
+                'key' => '_EventOrganizerID',
                 'value' => $following_array,
                 'compare' => 'IN',
             ),
@@ -3544,17 +3543,36 @@ function ticketfeasta_display_following_organizers_events_dashboard() {
         echo '<ul class="following-events-list">';
         while ($events_query->have_posts()) {
             $events_query->the_post();
-            $organizer_ids = tribe_get_organizer_ids();
-            $organizer_link = !empty($organizer_ids) ? get_permalink($organizer_ids[0]) : '#';
-            $organizer_name = !empty($organizer_ids) ? tribe_get_organizer($organizer_ids[0]) : 'Unknown Organizer';
-            $featured_image = get_the_post_thumbnail_url(get_the_ID(), 'thumbnail');
+            $event_id = get_the_ID();
+            $organizer_id = tribe_get_organizer_id($event_id);
+            $organizer_name = tribe_get_organizer($event_id);
+            $organizer_link = get_permalink($organizer_id);
+            $event_title = get_the_title();
+            $event_link = get_the_permalink();
+            $event_start_date = tribe_get_start_date($event_id, false);
+            $event_end_date = tribe_get_end_date($event_id, false);
+            $event_location = tribe_get_address($event_id);
+            $event_price = tribe_get_cost($event_id, true);
+            $event_image_id = get_post_thumbnail_id($event_id);
+            $event_image_url = wp_get_attachment_image_url($event_image_id, 'thumbnail');
+            $organizer_image_id = get_post_thumbnail_id($organizer_id);
+            $organizer_image_url = wp_get_attachment_image_url($organizer_image_id, 'thumbnail');
+
             echo '<li>';
-            if ($featured_image) {
-                echo '<img src="' . esc_url($featured_image) . '" alt="' . get_the_title() . '" style="width: 100px; height: auto;"> ';
+            if ($organizer_image_url) {
+                echo '<img src="' . esc_url($organizer_image_url) . '" alt="Organizer Image" style="width: 50px; height: auto;"> ';
             }
-            echo '<a href="' . get_the_permalink() . '">' . get_the_title() . '</a> by ';
-            echo '<a href="' . esc_url($organizer_link) . '">' . esc_html($organizer_name) . '</a>';
-            echo ' on ' . tribe_get_start_date(null, false);
+            // Add organizer name as a link
+            if ($organizer_link && $organizer_name) {
+                echo '<a href="' . esc_url($organizer_link) . '">' . esc_html($organizer_name) . '</a> ';
+            }
+            if ($event_image_url) {
+                echo '<img src="' . esc_url($event_image_url) . '" alt="' . esc_attr($event_title) . '" style="width: 100px; height: auto;"> ';
+            }
+            echo '<a href="' . esc_url($event_link) . '">' . esc_html($event_title) . '</a>';
+            echo '<p>Date: ' . esc_html($event_start_date) . ' to ' . esc_html($event_end_date) . '</p>';
+            echo '<p>Location: ' . esc_html($event_location) . '</p>';
+            echo '<p>Price: ' . esc_html($event_price) . '</p>';
             echo '</li>';
         }
         echo '</ul>';
