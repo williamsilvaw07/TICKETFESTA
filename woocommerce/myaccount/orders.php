@@ -350,8 +350,7 @@ tr.woocommerce-orders-table__row , thead tr{
     position: relative;
 }
 
-/* Add a decorative bar to the active link */
-.woocommerce-MyAccount-navigation-link.is-active a::after {
+.woocommerce-MyAccount-navigation .woocommerce-MyAccount-navigation-link.is-active a::after {
     content: '';
     position: absolute;
     right: 0;
@@ -361,8 +360,8 @@ tr.woocommerce-orders-table__row , thead tr{
     background-color: #d3fa16;
     border-top-right-radius: 4px;
     border-bottom-right-radius: 4px;
+    z-index: 1; /* Ensure the pseudo-element is above the link background */
 }
-
 /* Ensure icons and text within the active link are white */
 .woocommerce-MyAccount-navigation-link.is-active a i,
 .woocommerce-MyAccount-navigation-link.is-active a .nav-label {
