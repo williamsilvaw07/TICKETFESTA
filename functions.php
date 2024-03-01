@@ -3510,6 +3510,10 @@ require_once get_stylesheet_directory() . '/option-page.php';
 
 
 
+
+
+
+
 function ticketfeasta_display_following_organizers_events_dashboard() {
     $user_id = get_current_user_id();
     $following_array = get_user_meta($user_id, 'following', true);
@@ -3520,69 +3524,46 @@ function ticketfeasta_display_following_organizers_events_dashboard() {
         return;
     }
 
-    echo '<div class="live_event_listing_div">';
-
-    foreach ($following_array as $organizer_id) {
-        $organizer_name = get_the_title($organizer_id);
-        $organizer_link = get_permalink($organizer_id);
-        $organizer_image_id = get_post_thumbnail_id($organizer_id);
-        $organizer_image_url = wp_get_attachment_image_url($organizer_image_id, 'thumbnail');
-
-        // Display the organizer's name and image
-        echo '<div class="organizer-info">';
-        if ($organizer_image_url) {
-            echo '<img src="' . esc_url($organizer_image_url) . '" alt="Organizer Image" style="width: 50px; height: auto;"> ';
-        }
-        echo '<a href="' . esc_url($organizer_link) . '">' . esc_html($organizer_name) . '</a>';
-        echo '</div>';
-
-        $args = array(
-            'post_type' => 'tribe_events',
-            'posts_per_page' => -1,
-            'meta_query' => array(
-                array(
-                    'key' => '_EventOrganizerID',
-                    'value' => $organizer_id,
-                    'compare' => '=',
-                ),
+    // Modify this query based on how your events are linked to organizers
+    $args = array(
+        'post_type' => 'tribe_events',
+        'posts_per_page' => -1,
+        'meta_query' => array(
+            array(
+                'key' => '_EventOrganizerID', // This needs to be adjusted to your setup
+                'value' => $following_array,
+                'compare' => 'IN',
             ),
-        );
+        ),
+    );
 
-        $events_query = new WP_Query($args);
+    $events_query = new WP_Query($args);
 
-        if ($events_query->have_posts()) {
-            echo '<div class="event-listing">';
-            while ($events_query->have_posts()) {
-                $events_query->the_post();
-                $event_id = get_the_ID();
-                $event_title = get_the_title();
-                $event_url = get_the_permalink();
-                $event_image_id = get_post_thumbnail_id($event_id);
-                $event_image_url = wp_get_attachment_image_url($event_image_id, 'medium');
-                $ticket_price = tribe_get_cost(null, true);
-                $button_text = !empty($ticket_price) ? "Get Tickets - " . esc_html($ticket_price) : "Get Tickets";
-
-                // Here you insert your HTML layout for each event
-                echo '<div class="event-card">';
-                if ($event_image_url) {
-                    echo '<div class="event-image"><a href="' . esc_url($event_url) . '"><img src="' . esc_url($event_image_url) . '" alt="' . esc_attr($event_title) . '"></a></div>';
-                }
-                echo '<div class="event-details">';
-                echo '<h2 class="event-title"><a href="' . esc_url($event_url) . '">' . esc_html($event_title) . '</a></h2>';
-                // Include more event details here
-                echo '</div>';
-                echo '<div class="event-actions"><a href="' . esc_url($event_url) . '" class="btn-get-tickets">' . esc_html($button_text) . '</a></div>';
-                echo '</div>'; // Close .event-card
+    if ($events_query->have_posts()) {
+        echo '<h3>Upcoming Events From Organizers You Follow</h3>';
+        echo '<ul class="following-events-list">';
+        while ($events_query->have_posts()) {
+            $events_query->the_post();
+            $organizer_ids = tribe_get_organizer_ids();
+            $organizer_link = !empty($organizer_ids) ? get_permalink($organizer_ids[0]) : '#';
+            $organizer_name = !empty($organizer_ids) ? tribe_get_organizer($organizer_ids[0]) : 'Unknown Organizer';
+            $featured_image = get_the_post_thumbnail_url(get_the_ID(), 'thumbnail');
+            echo '<li>';
+            if ($featured_image) {
+                echo '<img src="' . esc_url($featured_image) . '" alt="' . get_the_title() . '" style="width: 100px; height: auto;"> ';
             }
-            echo '</div>'; // Close .event-listing
-        } else {
-            echo "<p>No upcoming events from " . esc_html($organizer_name) . ".</p>";
+            echo '<a href="' . get_the_permalink() . '">' . get_the_title() . '</a> by ';
+            echo '<a href="' . esc_url($organizer_link) . '">' . esc_html($organizer_name) . '</a>';
+            echo ' on ' . tribe_get_start_date(null, false);
+            echo '</li>';
         }
-
-        wp_reset_postdata();
+        echo '</ul>';
+    } else {
+        echo "<p>No upcoming events from the organizers you're following.</p>";
     }
 
-    echo '</div>'; // Close .live_event_listing_div
+    wp_reset_postdata();
 }
 
+// Hook our function to the account dashboard to display the events
 add_action('woocommerce_account_dashboard', 'ticketfeasta_display_following_organizers_events_dashboard');
