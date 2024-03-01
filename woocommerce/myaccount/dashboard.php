@@ -168,55 +168,6 @@ jQuery(document).ready(function($) {
 
 <style>
 
-
-.organizer_profile_bk {
-    position: relative;
-    background-image: url('https://ticketfesta.co.uk/wp-content/uploads/2024/02/antoine-j-r3XvSBEQQLo-unsplash-2.jpg');
-    background-size: cover;
-    background-position: center;
-    overflow: hidden; /* Ensure the pseudo-element does not extend outside this container */
-}
-
-.organizer_profile_bk::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    backdrop-filter: blur(10px); /* Adjust the blur value as needed */
-    -webkit-backdrop-filter: blur(10px); /* For Safari */
-    background: rgba(0, 0, 0, 0.5); /* Dark overlay; adjust color and opacity as needed */
-    z-index: 0; /* Ensure this sits below the content */
-}
-
-/* Ensure content inside .organizer_profile_bk is positioned above the pseudo-element */
-.organizer_profile_main_div, .tec-events-c-view-box-border, .image_profile_text_main_continer, .tribe-events-pro-organizer__meta-featured-image-wrapper, .organizer_title_name {
-    position: relative;
-    z-index: 1; /* Higher than the pseudo-element to keep content above the overlay */
-}
-
-
-
-
-
-    .tribe-events-c-messages__message--notice{
-        display:none
-    }
-    .past-event-tag{
-        position: absolute;
-    background: #f8f8f8;
-    z-index: 9;
-    color: black;
-    letter-spacing: 0.2px;
-    font-size: 12px;
-    font-weight: 400;
-    padding: 6px 12px!important;
-    border-radius: 8px 0px 0 0;
- 
-    text-align: center;
-    }
-
     .event-listing-main-div , .organizer_gallery_main  , .organizer_about_main{
         margin: 0 auto!important;
     padding: 40px!important;
@@ -310,21 +261,7 @@ padding: 1px;
 
 
  /*****organiser profile**/
- .organizer_profile_main_div_all h2{
-   
- }
- .organiser_background {
-    background-size:   contain;
-background-position: center top;
-    background-repeat: no-repeat!important;
-    position: relative;
-    z-index: 2;
-    overflow-x: hidden!important;
-    width: 100%;
-}
-.event-listing h3{
-    display: none;
-}
+
 .event-listing{
     display: flex;
     flex-wrap: wrap;
@@ -332,23 +269,9 @@ background-position: center top;
     justify-content: flex-start;
     align-items: flex-start;
 }
-.organiser_background:before {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    -webkit-backdrop-filter: blur(80px); /* for Safari */
-    backdrop-filter: blur(80px);
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: -1;
-    width: 100%;
-}
 
-.single-tribe_organizer .tribe-events-header__content-title , .single-tribe_organizer  .tribe-events-header__top-bar , .single-tribe_organizer  .tribe-events-calendar-list , .single-tribe_organizer .tribe-events-calendar-list-nav , .single-tribe_organizer  .tribe-events-c-subscribe-dropdown__container , .organizer-events h3 , .single-tribe_organizer .tribe-events-header__title-text , .single-tribe_organizer .tribe-events-c-breadcrumbs__list{
-    display: none!important;
-}
+
+
 .tribe-events-view--organizer .tribe-common-l-container{
     padding-top: px!important;
     padding: 0!important;
@@ -453,9 +376,7 @@ width: fit-content!important;
     margin-top: 5px!important;
 
 }
-.event-time{
-    display:none
-}
+
 
 .event-actions a{
     display:none!important;
