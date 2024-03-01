@@ -1098,7 +1098,8 @@ margin-top: 0!important;
     background-color: rgb(26, 26, 26);
     overflow: auto;
     padding-left: 15px;
-    flex: 0 0 18%!important
+    flex: 0 0 auto!important;
+    width: fit-content!important;
 }
 .my-account-welcome-message {
   
