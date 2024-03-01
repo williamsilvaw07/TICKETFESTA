@@ -3601,6 +3601,11 @@ add_action('woocommerce_account_following_endpoint', 'ticketfeasta_display_follo
 
 
 
+
+
+
+
+
 function display_upcoming_events_for_user_with_view_order_button() {
     $user_id = get_current_user_id();
     $displayed_event_ids = array();
@@ -3630,7 +3635,9 @@ function display_upcoming_events_for_user_with_view_order_button() {
                     $event_image_url = get_the_post_thumbnail_url($event_id, 'full') ?: 'https://ticketfesta.co.uk/wp-content/uploads/2024/02/placeholder-4.png';
                     $ticket_quantity = $item->get_quantity();
                     $order_total = $customer_order->get_formatted_order_total();
-                    $event_address = tribe_get_address($event_id); // Fetching event address using The Events Calendar function
+                    $event_address = tribe_get_address($event_id);
+                    // Encode the address for URL use
+                    $map_link = "https://maps.google.com/?q=" . urlencode($event_address);
 
                     ?>
                     <div class="ticketContainer">
@@ -3638,9 +3645,10 @@ function display_upcoming_events_for_user_with_view_order_button() {
                             <div class="ticketImage">
                                 <img src="<?php echo $event_image_url; ?>" alt="Event Image">
                             </div>
-                            <div class="ticket_inner_div">
+
+                             <div class="ticket_inner_div ">
                             <div class="ticketTitle"><?php echo mb_strlen($event_title) > 60 ? mb_substr($event_title, 0, 60) . '...' : $event_title; ?></div>
-                            <div class="eventaddress"><?php echo $event_address; ?></div> <!-- Displaying the event address -->
+                            <div class="eventaddress"><a href="<?php echo $map_link; ?>" target="_blank"><?php echo $event_address; ?></a></div>
                             <hr>
                             <div class="ticketDetail">
                                 <div>Event Date:&ensp;<?php echo date_i18n('F j, Y, g:i a', strtotime($event_start_date)); ?></div>
