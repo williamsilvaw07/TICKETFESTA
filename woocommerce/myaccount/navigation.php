@@ -28,9 +28,9 @@ $icons = [
     <ul>
         <?php foreach ( wc_get_account_menu_items() as $endpoint => $label ) : ?>
             <li class="<?php echo wc_get_account_menu_item_classes( $endpoint ); ?>">
-                <a href="<?php echo esc_url( wc_get_account_endpoint_url( $endpoint ) ); ?>">
+               <span> <a href="<?php echo esc_url( wc_get_account_endpoint_url( $endpoint ) ); ?>">
                     <?php echo isset($icons[$endpoint]) ? $icons[$endpoint] . ' ' : ''; ?><?php echo esc_html( $label ); ?>
-                </a>
+                </a></span>
             </li>
         <?php endforeach; ?>
     </ul>
