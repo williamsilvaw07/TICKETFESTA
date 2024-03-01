@@ -145,16 +145,27 @@ font-size: 14px;
     align-items: center;
     padding: 0 4%;
 	}
-	.woocommerce-MyAccount-navigation li{
-		width: fit-content;
-	}
+    .woocommerce-MyAccount-navigation li {
+    width: 40px;
+}
 
 .woocommerce-MyAccount-navigation .nav-label {
     display: none; 
 }
+.woocommerce-MyAccount-navigation .woocommerce-MyAccount-navigation-link.is-active a:before {
+    right: inherit;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    height: 5px;
 
 }
+.woocommerce-MyAccount-navigation-link.is-active a {
+    background: linear-gradient(180deg, rgba(211, 250, 22, 0.28) 0.01%, rgba(211, 250, 22, 0.00) 99.96%);
+ 
 
+}
+}
 
 
 
