@@ -230,6 +230,14 @@ hr {
 .ticketImage, .ticketImage img{
 	max-height:150px
 }
+	.ticketImage img{
+		width: 200px;
+    margin: 0 auto;
+
+	}
+	.ticketImage{
+		    display: flex;
+	}
 .ticket{
 
     background-color: white;
@@ -250,8 +258,8 @@ display:none;
 
 /* Ticket Content */
 .ticketTitle{
-	font-size: 19px;
-    line-height: 23px;
+font-size: 18px;
+    line-height: 22px;
     font-weight: 700;
 }
 hr{
