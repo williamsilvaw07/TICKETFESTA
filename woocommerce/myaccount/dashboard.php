@@ -163,7 +163,7 @@ jQuery(document).ready(function($) {
 
 ////FUNCTION TO ADD THE EVENT IMAGE AS A BACKGROUND 
 jQuery(document).ready(function($) {
-    $('.event-image').each(function() {
+    $('.ticketImage').each(function() {
         // Get the src of the img element
         var imgSrc = $(this).find('img').attr('src');
 
