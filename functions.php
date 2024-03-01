@@ -3600,3 +3600,61 @@ function ticketfeasta_display_following_organizers_events_dashboard() {
 }
 
 add_action('woocommerce_account_dashboard', 'ticketfeasta_display_following_organizers_events_dashboard');
+
+
+
+
+
+
+
+
+function display_upcoming_events_for_user() {
+    // Get current user ID
+    $user_id = get_current_user_id();
+
+    // Query user's orders
+    $customer_orders = wc_get_orders(array(
+        'meta_key' => '_customer_user',
+        'meta_value' => $user_id,
+        'post_status' => array('wc-completed'), // You can add more statuses if needed
+    ));
+
+    echo '<h2>Upcoming Events You Have Tickets For:</h2>';
+
+    // Check if user has orders
+    if (!empty($customer_orders)) {
+        foreach ($customer_orders as $customer_order) {
+            // Get order items
+            $items = $customer_order->get_items();
+
+            foreach ($items as $item_id => $item) {
+                // Attempt to get the event ID associated with the product (ticket)
+                $event_id = get_post_meta($item->get_product_id(), '_tribe_wooticket_for_event', true);
+
+                if (!empty($event_id)) {
+                    // Check if the event date is in the future
+                    $event_start_date = get_post_meta($event_id, '_EventStartDate', true);
+                    if (strtotime($event_start_date) > current_time('timestamp')) {
+                        // Fetch event details
+                        $event_title = get_the_title($event_id);
+                        $event_url = get_permalink($event_id);
+                        $event_image_url = get_the_post_thumbnail_url($event_id, 'full') ?: 'https://yourdefaultimageurl.com/default.jpg';
+
+                        // Display event details
+                        echo "<div class='event'>";
+                        echo "<div class='event-image'><a href='{$event_url}'><img src='{$event_image_url}' alt='{$event_title}' /></a></div>";
+                        echo "<div class='event-info'>";
+                        echo "<h3><a href='{$event_url}'>{$event_title}</a></h3>";
+                        echo "<p>Event Date: " . date_i18n('F j, Y, g:i a', strtotime($event_start_date)) . "</p>";
+                        echo "</div>";
+                        echo "</div>";
+                    }
+                }
+            }
+        }
+    } else {
+        echo "<p>You currently have no tickets for upcoming events.</p>";
+    }
+}
+
+add_action('woocommerce_account_dashboard', 'display_upcoming_events_for_user');
