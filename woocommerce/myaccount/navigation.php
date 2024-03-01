@@ -70,7 +70,11 @@ $icons = [
     z-index: 1; /* Ensure the pseudo-element is above the link background */
 }
 
-
+/* Ensure icons and text within the active link are white */
+.woocommerce-MyAccount-navigation-link.is-active a i,
+.woocommerce-MyAccount-navigation-link.is-active a .nav-label {
+    color: white;
+}
 
 
 
