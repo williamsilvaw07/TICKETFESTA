@@ -3701,7 +3701,7 @@ function update_featured_image_of_tribe_events($post_id) {
         foreach($product_ids as $product_id){
         
             // Update the featured image of the current post to match post 123
-            set_post_thumbnail($product_id, $post_123_featured_image_id);
+            set_post_thumbnail($product_id, $featured_image_id);
         }
     }
 }
