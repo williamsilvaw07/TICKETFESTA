@@ -3071,9 +3071,13 @@ function get_follower_by_organiser_id($organizer_id)
 }
 
 
-
+// send email to subscriber after post first publish
 function ticketfeasta_publish_tribe_events_on_first_update($post_id, $post, $update)
 {
+    // check if it is not the first publish
+    if ( $update || 'publish' !== $post->post_status ) {
+        return;
+    }
     if ($post->post_type == 'tribe_events') {
         $published_date = strtotime($post->post_date);
         $current_date = strtotime(current_time('mysql'));
