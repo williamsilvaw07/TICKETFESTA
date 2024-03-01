@@ -3638,6 +3638,7 @@ function display_upcoming_events_for_user_with_view_order_button() {
                             <div class="ticketImage">
                                 <img src="<?php echo $event_image_url; ?>" alt="Event Image">
                             </div>
+                            <div class="ticket_inner_div">
                             <div class="ticketTitle"><?php echo mb_strlen($event_title) > 60 ? mb_substr($event_title, 0, 60) . '...' : $event_title; ?></div>
                             <div class="eventaddress"><?php echo $event_address; ?></div> <!-- Displaying the event address -->
                             <hr>
@@ -3645,6 +3646,7 @@ function display_upcoming_events_for_user_with_view_order_button() {
                                 <div>Event Date:&ensp;<?php echo date_i18n('F j, Y, g:i a', strtotime($event_start_date)); ?></div>
                                 <div>Ticket Quantity:&ensp;<?php echo $ticket_quantity; ?></div>
                                 <div>Order Total:&ensp;<?php echo $order_total; ?></div>
+                                </div>
                             </div>
                             <div class="ticketRip">
                                 <div class="circleLeft"></div>
