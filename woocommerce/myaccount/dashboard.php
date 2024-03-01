@@ -178,6 +178,8 @@ jQuery(document).ready(function($) {
 .organizer-block_inner img{
 	border-radius: 100px;
     max-width: 200px;
+	height:200px;
+	
     width: 100%;
     border: 5px solid white;
 
