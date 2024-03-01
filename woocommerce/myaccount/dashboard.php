@@ -386,8 +386,8 @@ h1{
 }
 
 .event-image img {
-    height: 200px;
-    max-height: 220px;
+    height: 148px;
+    max-height: 148px;
     margin: auto;
     object-fit: contain;
     display: flex;
