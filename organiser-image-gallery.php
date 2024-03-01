@@ -677,7 +677,7 @@ function enqueue_media_uploader($hook) {
 
     // Example usage:
     $event_id = 4025; // Replace with the actual event ID
-    $orders = get_orders_by_event_id($event_id);
+    $orders = get_orders_by_event_id();
 
     // Displaying the orders
     if ($orders) {
@@ -697,15 +697,21 @@ function get_orders_by_event_id($meta_key='_community_tickets_order_fees', $meta
     $prefix = $wpdb->prefix;
 
     // Query to retrieve order IDs with matching meta value
-    $query = $wpdb->prepare("
-        SELECT post_id
-        FROM {$prefix}postmeta
-        WHERE meta_key = %s 
-        AND meta_value LIKE %s", $meta_key, '%' . $meta_value . '%');
+    // $query = $wpdb->prepare("
+    //     SELECT post_id
+    //     FROM {$prefix}postmeta
+    //     AND meta_value LIKE %s", $meta_key);
 
+    $query = $wpdb->prepare("
+    SELECT post_id
+    FROM {$prefix}postmeta
+    WHERE meta_key = %s 
+    AND meta_value LIKE %s", $meta_key, '%' . $meta_value . '%');
     // Execute the query
     $order_ids = $wpdb->get_col($query);
-
+    echo '<pre>';
+    var_dump($order_ids );
+    echo '</pre>';
     // Return the order IDs
     return $order_ids;
 
