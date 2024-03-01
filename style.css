@@ -1107,10 +1107,13 @@ margin-top: 0!important;
 .woocommerce-MyAccount-navigation li a{
 text-decoration: none;
 list-style: none;
+font-size: 14px;
 
 }
 
-
+.woocommerce-MyAccount-navigation i {
+    padding-right: 10px;
+}
 
 
 #custom-welcome-message{
