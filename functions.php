@@ -3637,6 +3637,8 @@ function display_upcoming_events_for_user_with_view_order_button() {
                     $ticket_quantity = $item->get_quantity();
                     $order_total = $customer_order->get_formatted_order_total();
                     $event_address = tribe_get_address($event_id);
+                                 // Encode the address for URL use
+                                 $map_link = "https://maps.google.com/?q=" . urlencode($event_address);
 
                     ?>
                     <div class="ticketContainer">
@@ -3645,7 +3647,7 @@ function display_upcoming_events_for_user_with_view_order_button() {
                                 <img src="<?php echo $event_image_url; ?>" alt="Event Image">
                             </div>
                             <div class="ticketTitle"><?php echo mb_strlen($event_title) > 60 ? mb_substr($event_title, 0, 60) . '...' : $event_title; ?></div>
-                            <div class="eventaddress"><?php echo $event_address; ?></div>
+                            <div class="eventaddress"><?php echo $event_address; ?> <a class="opne_on_map_link" href="<?php echo $map_link; ?>" target="_blank">Open on Map</a></div>
                             <hr>
                             <div class="ticketDetail">
                                 <div>Event Date:&ensp;<?php echo date_i18n('F j, Y, g:i a', strtotime($event_start_date)); ?></div>
