@@ -676,6 +676,10 @@ function enqueue_media_uploader($hook) {
             'site_fees' => $site_fees
         ));
     }
+    $order_meta = get_post_meta('3790'  );
+    echo '<pre>';
+    var_dump( $order_meta );
+    echo '</pre>';
 }
 add_action('admin_enqueue_scripts', 'enqueue_media_uploader');
 
