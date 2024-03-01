@@ -176,12 +176,12 @@ jQuery(document).ready(function($) {
 }
 
 .organizer-block_inner img{
-	border-radius: 100px;
-    max-width: 200px;
-	height:200px;
-	
+    border-radius: 100px;
+    max-width: 81px;
+    height: 80px;
+    object-fit: cover;
     width: 100%;
-    border: 5px solid white;
+    border: 3px solid white;
 
 }
 
