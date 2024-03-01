@@ -3648,7 +3648,8 @@ function display_upcoming_events_for_user_with_view_order_button() {
                             <div class="ticketImage">
                                 <img src="<?php echo $event_image_url; ?>" alt="Event Image">
                             </div>
-                            <div class="ticketTitle"><?php echo $event_title; ?></div>
+                            <div class="ticketTitle"><?php echo mb_strlen($event_title) > 60 ? mb_substr($event_title, 0, 60) . '...' : $event_title; ?></div>
+
                             <hr>
                             <div class="ticketDetail">
                                 <div>Event Date:&ensp;<?php echo date_i18n('F j, Y, g:i a', strtotime($event_start_date)); ?></div>
@@ -3663,8 +3664,8 @@ function display_upcoming_events_for_user_with_view_order_button() {
                             <div class="ticketSubDetail">
                                 <div class="code"><?php echo $customer_order->get_order_number(); ?></div>
                                 <div class="date"><?php echo date_i18n('F j<\s\u\p>S</\s\u\p> Y', strtotime($event_start_date)); ?></div>
-                                <div>Order:&emsp;<a href="<?php echo $order_url; ?>">View Ticket</a></div>
-                                <div>View:&nbsp;<a href="<?php echo $event_url; ?>">Event Details</a></div>
+                                <div>:&emsp;<a href="<?php echo $order_url; ?>"><button class="view_ticket_btn">View Ticket<button></a></div>
+                                <div>View:&nbsp;<a href="<?php echo $event_url; ?>"><button class="view_event_btn">Event Details<button></a></div>
                             </div>
                         </div>
                         <div class="ticketShadow"></div>
