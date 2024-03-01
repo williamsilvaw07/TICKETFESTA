@@ -3522,8 +3522,6 @@ function ticketfeasta_display_following_organizers_events_dashboard() {
         return;
     }
 
-    ob_start(); // Start output buffering.
-
     foreach ($following_array as $organizer_id) {
         $args = array(
             'post_type' => 'tribe_events',
@@ -3549,9 +3547,11 @@ function ticketfeasta_display_following_organizers_events_dashboard() {
             $organizer_url = get_permalink($organizer_id);
             $organizer_img = get_the_post_thumbnail_url($organizer_id, 'medium') ?: 'https://ticketfesta.co.uk/wp-content/uploads/2024/02/placeholder-4.png';
 
-            echo "<div class='organizer-block'>";
-            echo "<a href='{$organizer_url}'><img src='{$organizer_img}' alt='{$organizer_name}' class='organizer-image'/></a>";
-            echo "<h3><a href='{$organizer_url}'>{$organizer_name}</a></h3>";
+            ?>
+            <div class='organizer-block'>
+                <a href='<?php echo esc_url($organizer_url); ?>'><img src='<?php echo esc_url($organizer_img); ?>' alt='<?php echo esc_attr($organizer_name); ?>' class='organizer-image'/></a>
+                <h3><a href='<?php echo esc_url($organizer_url); ?>'><?php echo esc_html($organizer_name); ?></a></h3>
+            <?php
 
             while ($events_query->have_posts()) : $events_query->the_post();
                 $event_id = get_the_ID();
@@ -3575,20 +3575,17 @@ function ticketfeasta_display_following_organizers_events_dashboard() {
                                 <span class="event-time"><?php echo tribe_get_start_date(null, false, 'g:i a'); ?> - <?php echo tribe_get_end_date(null, false, 'g:i a'); ?></span>
                                 <span class="event-location"><?php echo tribe_get_venue(); ?></span>
                             </div>
-                            <div class="event-price"><?php echo $event_price; ?></div>
+                            <div class="event-price"><?php echo esc_html($event_price); ?></div>
                         </div>
                     </div>
                 </div>
                 <?php
             endwhile;
             echo "</div>"; // Close organizer block.
+
+            wp_reset_postdata();
         }
-
-        wp_reset_postdata();
     }
-
-    $output = ob_get_clean(); // Get output buffer content and clean buffer.
-    echo $output; // Display the content.
 }
 
 add_action('woocommerce_account_dashboard', 'ticketfeasta_display_following_organizers_events_dashboard');
