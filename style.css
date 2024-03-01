@@ -1197,6 +1197,7 @@ input.select2-search__field[aria-owns='select2-saved_tribe_organizer-results'] {
 
 .woocommerce-orders-table thead tr{
     padding-top: 0!important;
+    padding-bottom:0!important
 }
 
 
