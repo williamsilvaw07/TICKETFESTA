@@ -3634,7 +3634,7 @@ function display_upcoming_events_for_user_with_view_order_button() {
                 if (strtotime($event_start_date) > current_time('timestamp')) {
                     $event_title = get_the_title($event_id);
                     $event_url = get_permalink($event_id);
-                    $event_image_url = get_the_post_thumbnail_url($event_id, 'full') ?: 'https://yourdefaultimageurl.com/default.jpg';
+                    $event_image_url = get_the_post_thumbnail_url($event_id, 'full') ?: 'https://ticketfesta.co.uk/wp-content/uploads/2024/02/placeholder-4.png';
                     $ticket_quantity = $item->get_quantity();
                     $order_total = $customer_order->get_formatted_order_total();
 
