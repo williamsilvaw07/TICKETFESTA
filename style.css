@@ -1104,6 +1104,14 @@ margin-top: 0!important;
 }
 
 
+.woocommerce-MyAccount-navigation li a{
+text-decoration: none;
+list-style: none;
+
+}
+
+
+
 
 #custom-welcome-message{
     margin-top: 20px;
