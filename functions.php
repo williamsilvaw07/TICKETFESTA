@@ -3546,7 +3546,7 @@ function ticketfeasta_display_following_organizers_events_dashboard() {
  <div class='organizer-block'>
 
  
-         <div class='organizer-block'>
+         <div class='organizer-block_inner'>
          <?php
         if ($events_query->have_posts()) {
             $organizer_name = get_the_title($organizer_id);
@@ -3558,6 +3558,8 @@ function ticketfeasta_display_following_organizers_events_dashboard() {
 
                 <a href='<?php echo esc_url($organizer_url); ?>'><img src='<?php echo esc_url($organizer_img); ?>' alt='<?php echo esc_attr($organizer_name); ?>' class='organizer-image'/></a>
                 <h4><a href='<?php echo esc_url($organizer_url); ?>'><?php echo esc_html($organizer_name); ?></a></h4>
+
+                </div>
             <?php
 
             while ($events_query->have_posts()) : $events_query->the_post();
