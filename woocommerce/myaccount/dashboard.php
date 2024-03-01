@@ -213,7 +213,12 @@ jQuery(document).ready(function($) {
 
 <style>
 
-
+hr {
+    width: 100%;
+    border: 1px solid #efefef;
+	margin-bottom: 11px;
+    margin-top: 11px;
+}
 /* Main Ticket Style */
 .ticketContainer{
     display: flex;
@@ -243,7 +248,6 @@ display:none;
 	font-size: 19px;
     line-height: 23px;
     font-weight: 700;
-    padding: 12px 16px 4px;
 }
 hr{
     width: 90%;
