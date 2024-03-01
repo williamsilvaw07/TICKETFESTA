@@ -262,6 +262,7 @@ h1{
     line-height: 20px;
     font-size: 18px;
     font-weight: 800;
+	margin-bottom: 6px;
 }
 .event-title a{
     text-decoration: none;
