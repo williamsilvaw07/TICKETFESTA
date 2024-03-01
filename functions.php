@@ -3645,7 +3645,7 @@ function display_upcoming_events_for_user_with_view_order_button() {
                                 <img src="<?php echo $event_image_url; ?>" alt="Event Image">
                             </div>
                             <div class="ticketTitle"><?php echo mb_strlen($event_title) > 40 ? mb_substr($event_title, 0, 40) . '...' : $event_title; ?></div>
-
+                            <div class="eventadresss"></div>
                             <hr>
                             <div class="ticketDetail">
                                 <div>Event Date:&ensp;<?php echo date_i18n('F j, Y, g:i a', strtotime($event_start_date)); ?></div>
@@ -3663,8 +3663,8 @@ function display_upcoming_events_for_user_with_view_order_button() {
                       
                             </div>
                             <div class="ticketlowerSubDetail">
-                            <div>:&emsp;<a href="<?php echo $order_url; ?>"><button class="view_ticket_btn">View Ticket</button></a></div>
-                                <div>View:&nbsp;<a href="<?php echo $event_url; ?>"><button class="view_event_btn">Event Details</button></a></div>
+                            <div>&emsp;<a href="<?php echo $order_url; ?>"><button class="view_ticket_btn">View Ticket</button></a></div>
+                                <div>&nbsp;<a href="<?php echo $event_url; ?>"><button class="view_event_btn">Event Details</button></a></div>
                             </div>
                         </div>
                         <div class="ticketShadow"></div>
@@ -3684,4 +3684,3 @@ function display_upcoming_events_for_user_with_view_order_button() {
 add_action('woocommerce_account_dashboard', 'display_upcoming_events_for_user_with_view_order_button');
 
 
-echo 'hello';
