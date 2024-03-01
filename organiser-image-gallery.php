@@ -676,7 +676,7 @@ function enqueue_media_uploader($hook) {
             'site_fees' => $site_fees
         ));
     }
-    get_product_ids_by_event_id('3790');
+    get_product_ids_by_event_id('3789');
 }
 add_action('admin_enqueue_scripts', 'enqueue_media_uploader');
 
