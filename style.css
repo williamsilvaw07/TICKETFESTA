@@ -1070,6 +1070,9 @@ color: black!important;
 
 
 /***my account page***/
+.woocommerce-account .woocommerce {
+    background: #0d0e0e;
+}
 .woocommerce-account .entry-content , .woocommerce-account  .site-main {
 margin-top: 0!important;
 }
