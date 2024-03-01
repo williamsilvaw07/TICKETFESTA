@@ -162,7 +162,6 @@ jQuery(document).ready(function($) {
 
 
 ////FUNCTION TO ADD THE EVENT IMAGE AS A BACKGROUND 
-
 jQuery(document).ready(function($) {
     $('.event-image').each(function() {
         // Get the src of the img element
@@ -192,10 +191,14 @@ jQuery(document).ready(function($) {
         // Append the glass effect overlay to the .event-image div
         $(this).append(glassEffect);
 
-        // Hide the original img element as its src is now set as the background
-     
+        // Ensure the img element stays visible on top of the glass effect
+        $(this).find('img').css({
+            'position': 'relative',
+            'z-index': '2'
+        });
     });
 });
+
 
 
 </script>
