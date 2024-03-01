@@ -3707,7 +3707,7 @@ function update_featured_image_of_tribe_events($post_id) {
 }
 
 // Hook the function to run when a post is saved or updated
-add_action('save_post', 'update_featured_image_of_tribe_events');
+// add_action('save_post', 'update_featured_image_of_tribe_events');
 
 function get_product_ids_by_event_id($event_id){
 
