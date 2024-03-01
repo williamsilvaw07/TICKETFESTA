@@ -3620,8 +3620,8 @@ function display_upcoming_events_for_user_with_view_order_button() {
     if (!empty($customer_orders)) {
         foreach ($customer_orders as $customer_order) {
             $order_url = $customer_order->get_view_order_url();
-            $order_paid_date = $customer_order->get_date_paid() ? $customer_order->get_date_paid()->date('F j<\s\u\p>S</\s\u\p> Y') : 'N/A';
             $items = $customer_order->get_items();
+            $order_paid_date = $customer_order->get_date_paid() ? $customer_order->get_date_paid()->date('F j<\s\u\p>S</\s\u\p> Y') : 'N/A';
 
             foreach ($items as $item_id => $item) {
                 $event_id = get_post_meta($item->get_product_id(), '_tribe_wooticket_for_event', true);
@@ -3637,8 +3637,8 @@ function display_upcoming_events_for_user_with_view_order_button() {
                     $ticket_quantity = $item->get_quantity();
                     $order_total = $customer_order->get_formatted_order_total();
                     $event_address = tribe_get_address($event_id);
-                                 // Encode the address for URL use
-                                 $map_link = "https://maps.google.com/?q=" . urlencode($event_address);
+                    // Encode the address for URL use
+                    $map_link = "https://maps.google.com/?q=" . urlencode($event_address);
 
                     ?>
                     <div class="ticketContainer">
@@ -3646,6 +3646,8 @@ function display_upcoming_events_for_user_with_view_order_button() {
                             <div class="ticketImage">
                                 <img src="<?php echo $event_image_url; ?>" alt="Event Image">
                             </div>
+
+                             <div class="ticket_inner_div ">
                             <div class="ticketTitle"><?php echo mb_strlen($event_title) > 60 ? mb_substr($event_title, 0, 60) . '...' : $event_title; ?></div>
                             <div class="eventaddress"><?php echo $event_address; ?> <a class="opne_on_map_link" href="<?php echo $map_link; ?>" target="_blank">Open on Map</a></div>
                             <hr>
@@ -3653,7 +3655,7 @@ function display_upcoming_events_for_user_with_view_order_button() {
                                 <div>Event Date:&ensp;<?php echo date_i18n('F j, Y, g:i a', strtotime($event_start_date)); ?></div>
                                 <div>Ticket Quantity:&ensp;<?php echo $ticket_quantity; ?></div>
                                 <div>Order Total:&ensp;<?php echo $order_total; ?></div>
-                                <div>Transaction Date:&ensp;<?php echo $order_paid_date; ?></div>
+                                </div>
                             </div>
                             <div class="ticketRip">
                                 <div class="circleLeft"></div>
@@ -3662,7 +3664,7 @@ function display_upcoming_events_for_user_with_view_order_button() {
                             </div>
                             <div class="ticketSubDetail">
                                 <div class="code"><?php echo $customer_order->get_order_number(); ?></div>
-                                <div class="date"><?php echo date_i18n('F j<\s\u\p>S</\s\u\p> Y', strtotime($customer_order->get_date_created())); ?></div>
+                                <div>Transaction Date:&ensp;<?php echo $order_paid_date; ?></div> <!-- Displaying the order paid date -->
                             </div>
                             <div class="ticketlowerSubDetail">
                                 <a href="<?php echo $order_url; ?>"><button class="view_ticket_btn">View Ticket</button></a>
@@ -3673,7 +3675,6 @@ function display_upcoming_events_for_user_with_view_order_button() {
                     </div>
                     <?php
 
-                    // Add the event ID to the array of displayed event IDs
                     $displayed_event_ids[] = $event_id;
                 }
             }
@@ -3684,6 +3685,7 @@ function display_upcoming_events_for_user_with_view_order_button() {
 }
 
 add_action('woocommerce_account_dashboard', 'display_upcoming_events_for_user_with_view_order_button');
+
 
 
 
