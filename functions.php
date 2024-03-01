@@ -3684,3 +3684,4 @@ function display_upcoming_events_for_user_with_view_order_button() {
 add_action('woocommerce_account_dashboard', 'display_upcoming_events_for_user_with_view_order_button');
 
 
+echo 'hello';
