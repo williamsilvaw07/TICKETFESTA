@@ -173,6 +173,13 @@ h1{
 
 
 }
+.organizer-block{
+    margin: 60px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+
+}
 
 
 .organizer-block_events_inner{
