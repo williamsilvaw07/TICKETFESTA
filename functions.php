@@ -3553,7 +3553,7 @@ function ticketfeasta_display_following_organizers_events_dashboard() {
             $organizer_img = get_the_post_thumbnail_url($organizer_id, 'medium') ?: 'https://ticketfesta.co.uk/wp-content/uploads/2024/02/placeholder-4.png';
 
             ?>
-           <h4>Events By:<?php echo esc_html($organizer_name); ?></h4>
+    
            <div class='organizer-block_inner'>
 
                 <a href='<?php echo esc_url($organizer_url); ?>'>
