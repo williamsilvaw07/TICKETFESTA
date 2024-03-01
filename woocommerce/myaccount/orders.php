@@ -351,7 +351,7 @@ tr.woocommerce-orders-table__row , thead tr{
 }
 
 /* Add a decorative bar to the active link */
-.woocommerce-MyAccount-navigation-link.is-active a::after {
+.woocommerce-MyAccount-navigation-link.is-active::after {
     content: '';
     position: absolute;
     right: 0;
