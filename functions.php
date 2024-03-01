@@ -3606,7 +3606,6 @@ add_action('woocommerce_account_following_endpoint', 'ticketfeasta_display_follo
 
 
 
-
 function display_upcoming_events_for_user_with_view_order_button() {
     $user_id = get_current_user_id();
 
@@ -3619,9 +3618,7 @@ function display_upcoming_events_for_user_with_view_order_button() {
         'post_status' => array('wc-completed'), // Adjust according to your needs
     ));
 
-    ?>
-    <h2>Upcoming Events You Have Tickets For:</h2>
-    <?php
+    echo '<h2>Upcoming Events You Have Tickets For:</h2>';
 
     if (!empty($customer_orders)) {
         foreach ($customer_orders as $customer_order) {
@@ -3643,17 +3640,26 @@ function display_upcoming_events_for_user_with_view_order_button() {
                     $event_image_url = get_the_post_thumbnail_url($event_id, 'full') ?: 'https://yourdefaultimageurl.com/default.jpg';
 
                     ?>
-                    <div class='event'>
-                        <div class='event-image'>
-                            <a href='<?php echo $event_url; ?>'>
-                                <img src='<?php echo $event_image_url; ?>' alt='<?php echo $event_title; ?>'>
-                            </a>
+                    <div class="ticketContainer">
+                        <div class="ticket">
+                            <div class="ticketTitle"><?php echo $event_title; ?></div>
+                            <hr>
+                            <div class="ticketDetail">
+                                <div>Event Date:&ensp;<?php echo date_i18n('F j, Y, g:i a', strtotime($event_start_date)); ?></div>
+                                <div>View:&nbsp;<a href="<?php echo $event_url; ?>">Event Details</a></div>
+                                <div>Order:&emsp;<a href="<?php echo $order_url; ?>">View Ticket</a></div>
+                            </div>
+                            <div class="ticketRip">
+                                <div class="circleLeft"></div>
+                                <div class="ripLine"></div>
+                                <div class="circleRight"></div>
+                            </div>
+                            <div class="ticketSubDetail">
+                                <div class="code"><?php echo $customer_order->get_order_number(); ?></div>
+                                <div class="date"><?php echo date_i18n('F j<\s\u\p>S</\s\u\p> Y', strtotime($event_start_date)); ?></div>
+                            </div>
                         </div>
-                        <div class='event-info'>
-                            <h3><a href='<?php echo $event_url; ?>'><?php echo $event_title; ?></a></h3>
-                            <p>Event Date: <?php echo date_i18n('F j, Y, g:i a', strtotime($event_start_date)); ?></p>
-                            <a href='<?php echo $order_url; ?>' class='button view-order-button'>View Ticket</a>
-                        </div>
+                        <div class="ticketShadow"></div>
                     </div>
                     <?php
 
@@ -3663,9 +3669,7 @@ function display_upcoming_events_for_user_with_view_order_button() {
             }
         }
     } else {
-        ?>
-        <p>You currently have no tickets for upcoming events.</p>
-        <?php
+        echo "<p>You currently have no tickets for upcoming events.</p>";
     }
 }
 

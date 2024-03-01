@@ -82,3 +82,213 @@ $allowed_html = array(
 
 
 
+?>
+
+
+
+
+
+<script>
+
+
+
+	////JS TO ADD THE MAIN PRODUCT IMAGE ON THE BACKGROUND AND ADD THE LOCATION ON THE CUSTOM DIV 
+    document.addEventListener('DOMContentLoaded', function() {
+    var organizerProfileBkElement = document.querySelector('.organizer_profile_bk');
+    var titleElement = document.querySelector('.event-listing-main-div_main');
+
+    if (organizerProfileBkElement && titleElement) {
+        // Extracting the background image style from the organizer_profile_bk element
+        var backgroundImageStyle = organizerProfileBkElement.style.backgroundImage;
+
+        // Setting the extracted background image as the background for the tribe_organizer-template-default element
+        titleElement.style.backgroundImage = backgroundImageStyle;
+        titleElement.classList.add('organiser_background');
+    }
+});
+
+///////////END
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Make the entire event card clickable without affecting interactive elements like buttons and links
+jQuery(document).ready(function($) {
+   // Find each .event-card element
+   $('.event-card').each(function() {
+        // Get the href attribute of the first <a> tag found within the .event-card
+        var link = $(this).find('a').attr('href');
+
+        // Check if the link is not undefined or empty
+        if (link) {
+            // Create a new <a> tag that wraps the entire .event-card contents
+            $(this).wrapInner('<a class="event-card-link" href="' + link + '"></a>');
+        }
+    });
+});
+
+
+
+
+
+
+////FUNCTION TO ADD THE EVENT IMAGE AS A BACKGROUND 
+jQuery(document).ready(function($) {
+    $('.event-image').each(function() {
+        // Get the src of the img element
+        var imgSrc = $(this).find('img').attr('src');
+
+        // Set the background image of the .event-image div to the src of the img
+        $(this).css({
+            'background-image': 'url(' + imgSrc + ')',
+            'background-size': 'cover',
+            'background-position': 'center center',
+            'position': 'relative',
+            'overflow': 'hidden'
+        });
+
+        // Create a glass effect overlay
+        var glassEffect = $('<div></div>').css({
+            'position': 'absolute',
+            'top': '0',
+            'left': '0',
+            'height': '100%',
+            'width': '100%',
+            'background': 'rgba(0, 0, 0, 0.4)',
+            'backdrop-filter': 'blur(8px)',
+            'z-index': '1'
+        });
+
+        // Append the glass effect overlay to the .event-image div
+        $(this).append(glassEffect);
+
+        // Ensure the img element stays visible on top of the glass effect
+        $(this).find('img').css({
+            'position': 'relative',
+            'z-index': '2'
+        });
+    });
+});
+
+
+
+</script>
+
+
+
+
+
+
+
+
+
+<style>
+
+
+/* Main Ticket Style */
+.ticketContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.ticket{
+    animation: bouncingCard 0.6s ease-out infinite alternate;
+    background-color: white;
+    color: darkslategray;
+    border-radius: 12px;
+}
+.ticketShadow{
+    animation: bouncingShadow 0.6s ease-out infinite alternate;
+    margin-top: 4px;
+    width: 95%;
+    height: 12px;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.4);
+    filter: blur(12px);
+}
+
+/* Ticket Content */
+.ticketTitle{
+    font-size: 1.5rem;
+    font-weight: 700;
+    padding: 12px 16px 4px;
+}
+hr{
+    width: 90%;
+    border: 1px solid #efefef;
+}
+.ticketDetail{
+    font-size: 1.1rem;
+    font-weight: 500;
+    padding: 4px 16px;
+}
+.ticketSubDetail{
+    display: flex;
+    justify-content: space-between;
+    font-size: 1rem;
+    padding: 12px 16px;
+}
+.ticketSubDetail .code{
+    margin-right: 24px;
+}
+
+/* Ticket Ripper */
+.ticketRip{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.circleLeft{
+    width: 12px;
+    height: 24px;
+    background-color: #B7B5E4;
+    border-radius: 0 12px 12px 0;
+}
+.ripLine{
+    width: 100%;
+    border-top: 3px solid #B7B5E4;
+    border-top-style: dashed ;
+}
+.circleRight{
+    width: 12px;
+    height: 24px;
+    background-color: #B7B5E4;
+    border-radius: 12px 0 0 12px;
+}
+
+
+
+
+    </style>
+
+
+<?php
