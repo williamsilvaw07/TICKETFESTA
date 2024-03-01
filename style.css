@@ -1101,10 +1101,12 @@ margin-top: 0!important;
     flex: 0 0 18%!important
 }
 .my-account-welcome-message {
-    /* Add your custom styles here */
-    font-size: 1.2em;
+  
+    font-size: 25px;
+    font-weight: 700;
     margin-bottom: 20px;
     text-align: center;
+
 }
 
 
