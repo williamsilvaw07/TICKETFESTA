@@ -1185,6 +1185,10 @@ input.select2-search__field[aria-owns='select2-saved_tribe_organizer-results'] {
     display: block;
     font-size: 21px!important;
 }
+.woocommerce-account .entry-header h1{
+  
+    font-size: 21px!important;
+}
 .woocommerce-account .container .site-content .content-area {
     background: #0d0e0e!important;
 }
