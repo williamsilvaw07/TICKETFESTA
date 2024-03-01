@@ -3634,7 +3634,7 @@ function display_upcoming_events_for_user_with_view_order_button() {
                 if (strtotime($event_start_date) > current_time('timestamp')) {
                     $event_title = get_the_title($event_id);
                     $event_url = get_permalink($event_id);
-                    $event_image_url = get_the_post_thumbnail_url($event_id, 'full') ?: 'https://yourdefaultimageurl.com/default.jpg';
+                    $event_image_url = get_the_post_thumbnail_url($event_id, 'full') ?: 'https://ticketfesta.co.uk/wp-content/uploads/2024/02/placeholder-4.png';
                     $ticket_quantity = $item->get_quantity();
                     $order_total = $customer_order->get_formatted_order_total();
 
@@ -3644,7 +3644,8 @@ function display_upcoming_events_for_user_with_view_order_button() {
                             <div class="ticketImage">
                                 <img src="<?php echo $event_image_url; ?>" alt="Event Image">
                             </div>
-                            <div class="ticketTitle"><?php echo $event_title; ?></div>
+                            <div class="ticketTitle"><?php echo mb_strlen($event_title) > 40 ? mb_substr($event_title, 0, 40) . '...' : $event_title; ?></div>
+
                             <hr>
                             <div class="ticketDetail">
                                 <div>Event Date:&ensp;<?php echo date_i18n('F j, Y, g:i a', strtotime($event_start_date)); ?></div>
@@ -3659,8 +3660,11 @@ function display_upcoming_events_for_user_with_view_order_button() {
                             <div class="ticketSubDetail">
                                 <div class="code"><?php echo $customer_order->get_order_number(); ?></div>
                                 <div class="date"><?php echo date_i18n('F j<\s\u\p>S</\s\u\p> Y', strtotime($event_start_date)); ?></div>
-                                <div>Order:&emsp;<a href="<?php echo $order_url; ?>">View Ticket</a></div>
-                                <div>View:&nbsp;<a href="<?php echo $event_url; ?>">Event Details</a></div>
+                      
+                            </div>
+                            <div class="ticketlowerSubDetail">
+                            <div>:&emsp;<a href="<?php echo $order_url; ?>"><button class="view_ticket_btn">View Ticket</button></a></div>
+                                <div>View:&nbsp;<a href="<?php echo $event_url; ?>"><button class="view_event_btn">Event Details</button></a></div>
                             </div>
                         </div>
                         <div class="ticketShadow"></div>
