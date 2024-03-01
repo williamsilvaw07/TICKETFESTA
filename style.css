@@ -1072,7 +1072,7 @@ color: black!important;
 /***my account page***/
 .woocommerce-account h1.entry-title {
     background: #0d0e0e;
-    margin-left: 4%;
+  padding-left: 4%;
     margin-top: 38px;
 }
   .woocommerce-account .elementor-section-wrap .elementor-element-9d845b1{
