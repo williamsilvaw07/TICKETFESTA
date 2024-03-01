@@ -3542,21 +3542,30 @@ function ticketfeasta_display_following_organizers_events_dashboard() {
 
         $events_query = new WP_Query($args);
 
+?>
+ <div class='organizer-block'>
+
+ 
+         <div class='organizer-block_inner'>
+         <?php
         if ($events_query->have_posts()) {
             $organizer_name = get_the_title($organizer_id);
             $organizer_url = get_permalink($organizer_id);
             $organizer_img = get_the_post_thumbnail_url($organizer_id, 'medium') ?: 'https://ticketfesta.co.uk/wp-content/uploads/2024/02/placeholder-4.png';
 
             ?>
-            <div class='organizer-block'>
+           
+
                 <a href='<?php echo esc_url($organizer_url); ?>'><img src='<?php echo esc_url($organizer_img); ?>' alt='<?php echo esc_attr($organizer_name); ?>' class='organizer-image'/></a>
-                <h3><a href='<?php echo esc_url($organizer_url); ?>'><?php echo esc_html($organizer_name); ?></a></h3>
+                <h4><a href='<?php echo esc_url($organizer_url); ?>'><?php echo esc_html($organizer_name); ?></a></h4>
+
+                </div>
             <?php
 
             while ($events_query->have_posts()) : $events_query->the_post();
                 $event_id = get_the_ID();
                 $event_url = get_the_permalink();
-                $event_img = get_the_post_thumbnail_url($event_id, 'medium') ?: 'https://ticketfesta.co.uk/wp-content/uploads/2024/02/placeholder-4.png';
+                $event_img = get_the_post_thumbnail_url($event_id, 'large') ?: 'https://ticketfesta.co.uk/wp-content/uploads/2024/02/placeholder-4.png';
                 $event_start_date_time = tribe_get_start_date($event_id, false, 'D, j M Y g:i a');
                 $event_price = tribe_get_cost($event_id, true);
 
