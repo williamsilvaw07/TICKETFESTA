@@ -156,6 +156,51 @@ jQuery(document).ready(function($) {
     });
 });
 
+
+
+
+
+
+////FUNCTION TO ADD THE EVENT IMAGE AS A BACKGROUND 
+
+jQuery(document).ready(function($) {
+    $('.event-image').each(function() {
+        // Get the src of the img element
+        var imgSrc = $(this).find('img').attr('src');
+
+        // Set the background image of the .event-image div to the src of the img
+        $(this).css({
+            'background-image': 'url(' + imgSrc + ')',
+            'background-size': 'cover',
+            'background-position': 'center center',
+            'position': 'relative',
+            'overflow': 'hidden'
+        });
+
+        // Create a glass effect overlay
+        var glassEffect = $('<div></div>').css({
+            'position': 'absolute',
+            'top': '0',
+            'left': '0',
+            'height': '100%',
+            'width': '100%',
+            'background': 'rgba(255, 255, 255, 0.4)',
+            'backdrop-filter': 'blur(8px)',
+            'z-index': '1'
+        });
+
+        // Append the glass effect overlay to the .event-image div
+        $(this).append(glassEffect);
+
+        // Hide the original img element as its src is now set as the background
+        $(this).find('img').css({
+            'visibility': 'hidden',
+            'position': 'absolute'
+        });
+    });
+});
+
+
 </script>
 
 
