@@ -3621,7 +3621,8 @@ function display_upcoming_events_for_user_with_view_order_button() {
         foreach ($customer_orders as $customer_order) {
             $order_url = $customer_order->get_view_order_url();
             $items = $customer_order->get_items();
-            $order_paid_date = $customer_order->get_date_paid() ? $customer_order->get_date_paid()->date('F j<\s\u\p>S</\s\u\p> Y') : 'N/A';
+            $order_paid_date = $customer_order->get_date_paid() ? $customer_order->get_date_paid()->date('d/m/y') : 'N/A';
+
 
             foreach ($items as $item_id => $item) {
                 $event_id = get_post_meta($item->get_product_id(), '_tribe_wooticket_for_event', true);
