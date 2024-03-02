@@ -328,31 +328,31 @@ document.addEventListener('DOMContentLoaded', function() {
 
     var form = document.querySelector('form');
     // Event listener for the form submission
-    // form.addEventListener('submit', function(e) {
-    //     if (isEditIconClicked) {
-    //         e.preventDefault(); // Prevent default form submission only if edit icon clicked
+    form.addEventListener('submit', function(e) {
+        if (isEditIconClicked) {
+            e.preventDefault(); // Prevent default form submission only if edit icon clicked
 
-    //         var titleValue = document.querySelector('input[name="post_title"]').value.trim();
-    //         // AJAX request to check the title
-    //         var xhr = new XMLHttpRequest();
-    //         xhr.open('POST', '/wp-admin/admin-ajax.php', true);
-    //         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    //         xhr.onload = function() {
-    //             if (this.status === 200) {
-    //                 if (this.responseText === '') {
-    //                     // Name is unique, proceed to submit the form
-    //                     form.submit();
-    //                 } else {
-    //                     // Name is not unique, show error message
-    //                     alert(this.responseText);
-    //                     isEditIconClicked = false; // Reset flag
-    //                 }
-    //             }
-    //         };
-    //         xhr.send('action=check_organizer_name&organizer_name=' + encodeURIComponent(titleValue));
-    //     }
-    //     // If edit icon not clicked, form submits normally
-    // });
+            var titleValue = document.querySelector('input[name="post_title"]').value.trim();
+            // AJAX request to check the title
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/wp-admin/admin-ajax.php', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onload = function() {
+                if (this.status === 200) {
+                    if (this.responseText === '') {
+                        // Name is unique, proceed to submit the form
+                        form.submit();
+                    } else {
+                        // Name is not unique, show error message
+                        alert(this.responseText);
+                        isEditIconClicked = false; // Reset flag
+                    }
+                }
+            };
+            xhr.send('action=check_organizer_name&organizer_name=' + encodeURIComponent(titleValue));
+        }
+        // If edit icon not clicked, form submits normally
+    });
 
     form.addEventListener('submit', function(e) {
         e.preventDefault();
@@ -364,7 +364,10 @@ document.addEventListener('DOMContentLoaded', function() {
         xhr.open('POST', ajaxurl, true);
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
         var organizer_description = document.querySelector('input[name="organizer_description"]').value.trim();
-        //     var organizer_email = document.querySelector('input[name="organizer_email"]').value.trim();
+        var organizer_email = document.querySelector('input[name="organizer_email"]').value.trim();
+        var organizer_facebook = document.querySelector('input[name="organizer_facebook"]').value.trim();
+        var organizer_twitter = document.querySelector('input[name="organizer_twitter"]').value.trim();
+        var organizer_instagram = document.querySelector('input[name="organizer_instagram"]').value.trim();
         // Get the query string portion of the URL
         var queryString = window.location.search;
 
@@ -383,35 +386,13 @@ document.addEventListener('DOMContentLoaded', function() {
         };
 
         // Send the request
-        xhr.send('action=update_organizer_information&organizer_description=' + organizer_description +'&organizer_id=' + organizer_id);
-
-        // if (isEditIconClicked) {
-        //     e.preventDefault(); // Prevent default form submission only if edit icon clicked
-
-        //     var titleValue = document.querySelector('input[name="post_title"]').value.trim();
-        //     var organizer_description = document.querySelector('input[name="organizer_description"]').value.trim();
-        //     var organizer_email = document.querySelector('input[name="organizer_email"]').value.trim();
-        //     var organizer_id = queryParams.get('id');
-        //     // AJAX request to check the title
-        //     var xhr = new XMLHttpRequest();
-        //     xhr.open('POST', '/wp-admin/admin-ajax.php', true);
-        //     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        //     xhr.onload = function() {
-        //         if (this.status === 200) {
-        //             if (this.responseText === '') {
-        //                 // Name is unique, proceed to submit the form
-        //                 form.submit();
-        //             } else {
-        //                 // Name is not unique, show error message
-        //                 alert(this.responseText);
-        //                 isEditIconClicked = false; // Reset flag
-        //             }
-        //         }
-        //     };
-        //     // xhr.send('action=check_organizer_name&organizer_name=' + encodeURIComponent(titleValue));
-        //     xhr.send('action=update_organizer_information&organizer_description=' + encodeURIComponent(organizer_description) + '&organizer_email=' + encodeURIComponent(organizer_email) + '&organizer_id=' + encodeURIComponent(organizer_id));
-        // }
-        // If edit icon not clicked, form submits normally
+        xhr.send('action=update_organizer_information&organizer_description=' + organizer_description 
+            +'&organizer_id=' + organizer_id
+            +'&organizer_email=' + organizer_email
+            +'&organizer_facebook=' + organizer_facebook
+            +'&organizer_twitter=' + organizer_twitter
+            +'&organizer_instagram=' + organizer_instagram
+        );
     });
 });
 

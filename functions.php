@@ -1513,9 +1513,30 @@ add_action('wp_ajax_nopriv_check_organizer_name', 'ajax_check_organizer_name'); 
 
 function ajax_update_organizer_information()
 {
-    $organizer_description = sanitize_text_field($_POST['organizer_description']);
-    $organizer_id = sanitize_text_field($_POST['organizer_id']);
-    update_post_meta($organizer_id, 'organizer_description', $organizer_description);
+    $organizer_id = sanitize_text_field($_POST['organizer_id']);    
+    if (isset($_POST['organizer_description'])) {
+        $organizer_description = sanitize_text_field($_POST['organizer_description']);
+        
+        update_post_meta($organizer_id, 'organizer_description', $organizer_description);
+    }
+    
+    if (isset($_POST['organizer_email'])) {
+        $organizer_email = sanitize_email($_POST['organizer_email']);
+        update_post_meta($organizer_id, '_OrganizerEmail', $organizer_email);
+    }
+    if (isset($_POST['organizer_facebook'])) {
+        $organizer_facebook = sanitize_url($_POST['organizer_facebook']);
+        update_post_meta($organizer_id, 'organizer_facebook', $organizer_facebook);
+    }
+    if (isset($_POST['organizer_twitter'])) {
+        $organizer_twitter = sanitize_url($_POST['organizer_twitter']);
+        update_post_meta($organizer_id, 'organizer_twitter', $organizer_twitter);
+    }
+    if (isset($_POST['organizer_instagram'])) {
+        $organizer_instagram = sanitize_url($_POST['organizer_instagram']);
+        update_post_meta($organizer_id, 'organizer_instagram', $organizer_instagram);
+    }
+
     var_dump($_POST);
     die();
 }
