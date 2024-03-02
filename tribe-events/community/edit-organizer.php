@@ -191,7 +191,7 @@ if ($banner_image_id) {
             $author_id = get_post_field('post_author', $organizer_id);
 
             // Get the author's email using the author ID
-            $author_email = get_the_author_meta('user_email', $organizer_id);
+            $author_email = get_the_author_meta('user_email', $author_id);
             $organizer_email = esc_attr( $author_email ); 
 
         ?>
