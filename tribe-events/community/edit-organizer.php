@@ -31,6 +31,9 @@ $organizer_id = get_the_ID(); // Get the organizer post ID
 <?php
 // Check if the form has been submitted
 if ('POST' === $_SERVER['REQUEST_METHOD']) {
+    echo '<pre>';
+    var_dump($_POST);
+    echo '</pre>';
     // Include WordPress file handling functions
     require_once(ABSPATH . 'wp-admin/includes/file.php'); 
 
@@ -73,9 +76,7 @@ if ('POST' === $_SERVER['REQUEST_METHOD']) {
             update_post_meta($organizer_id, 'banner_image_id', $banner_attachment_id);
         }
     }
-    echo '<pre>';
-    var_dump($_POST);
-    echo '</pre>';
+
     if (isset($_POST['post_title'])) {
         $organizer_name = sanitize_text_field($_POST['post_title']);
         wp_update_post(array(
