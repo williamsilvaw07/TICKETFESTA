@@ -3638,9 +3638,6 @@ function display_upcoming_events_for_user_with_view_order_button() {
         // Use the first line, if there are multiple lines, append '...'
         return count($lines) > 1 ? $lines[0] . '...' : $title;
     }
-
-    
-    echo '<h2>Upcoming Events You Have Tickets For:</h2>';
     echo '<div class="loadingAnimation">
     <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1366 768" xml:space="preserve">
         <style type="text/css">
@@ -3660,7 +3657,12 @@ function display_upcoming_events_for_user_with_view_order_button() {
     </svg>
 </div>';
 
+
     echo '<div class="allTicketsContainer">'; // Open the main container for all tickets here
+    
+    echo '<h2>Upcoming Events You Have Tickets For:</h2>';
+   
+    
     if (!empty($customer_orders)) {
         foreach ($customer_orders as $customer_order) {
             $order_url = $customer_order->get_view_order_url();
