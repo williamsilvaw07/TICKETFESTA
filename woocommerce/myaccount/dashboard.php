@@ -310,10 +310,9 @@ jQuery(document).ready(function($) {
 	    padding: 21px 16px 5px 16px;
 	}
 hr {
-    width: 100%;
+	width: 90%;
     border: 1px solid #efefef;
-	margin-bottom: 11px;
-    margin-top: 11px;
+    margin: 17px auto 11px auto;
 }
 /* Main Ticket Style */
 .ticketContainer{
@@ -360,11 +359,7 @@ display:none;
     font-weight: 700;
     margin-bottom: 10px;
 }
-hr{
-    width: 90%;
-    border: 1px solid #efefef;
-	margin: 19px auto;
-}
+
 .ticketDetail , .ticketSubDetail , .eventaddress{
     font-size: 14px!important;
     font-weight: 500;
