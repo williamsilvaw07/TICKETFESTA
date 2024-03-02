@@ -31,9 +31,6 @@ $organizer_id = get_the_ID(); // Get the organizer post ID
 <?php
 // Check if the form has been submitted
 if ('POST' === $_SERVER['REQUEST_METHOD']) {
-    echo '<pre>';
-    var_dump($_POST);
-    echo '</pre>';
     // Include WordPress file handling functions
     require_once(ABSPATH . 'wp-admin/includes/file.php'); 
 
@@ -83,35 +80,6 @@ if ('POST' === $_SERVER['REQUEST_METHOD']) {
             'ID' => $organizer_id,
             'post_title' => $organizer_name
         ));
-    }
-
-    // $organizer_description = get_post_meta( $organizer_id, 'organizer_description', true ) ? get_post_meta( $organizer_id, 'organizer_description', true ) : ''; 
-    // $organizer_email       = get_post_meta( $organizer_id, '_OrganizerEmail', true ) ? get_post_meta( $organizer_id, '_OrganizerEmail', true ) : ''; 
-    // $organizer_facebook    = get_post_meta( $organizer_id, 'facebook_url', true ) ? get_post_meta( $organizer_id, 'facebook_url', true ) : ''; 
-    // $organizer_twitter     = get_post_meta( $organizer_id, 'twitter_url', true ) ? get_post_meta( $organizer_id, 'twitter_url', true ) : ''; 
-    // $organizer_instagram   = get_post_meta( $organizer_id, 'instagram_url', true ) ? get_post_meta( $organizer_id, 'instagram_url', true ) : ''; 
-    
-
-    if (isset($_POST['organizer_description'])) {
-        $organizer_description = sanitize_text_field($_POST['organizer_description']);
-        
-        update_post_meta($organizer_id, 'organizer_description', $organizer_description);
-    }
-    if (isset($_POST['organizer_email'])) {
-        $organizer_email = sanitize_email($_POST['organizer_email']);
-        update_post_meta($organizer_id, '_OrganizerEmail', $organizer_email);
-    }
-    if (isset($_POST['organizer_facebook'])) {
-        $organizer_facebook = sanitize_url($_POST['organizer_facebook']);
-        update_post_meta($organizer_id, 'organizer_facebook', $organizer_facebook);
-    }
-    if (isset($_POST['organizer_twitter'])) {
-        $organizer_twitter = sanitize_url($_POST['organizer_twitter']);
-        update_post_meta($organizer_id, 'organizer_twitter', $organizer_twitter);
-    }
-    if (isset($_POST['organizer_instagram'])) {
-        $organizer_instagram = sanitize_url($_POST['organizer_instagram']);
-        update_post_meta($organizer_id, 'organizer_instagram', $organizer_instagram);
     }
 
     // Redirect after form submission

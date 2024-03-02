@@ -1536,9 +1536,7 @@ function ajax_update_organizer_information()
         $organizer_instagram = sanitize_url($_POST['organizer_instagram']);
         update_post_meta($organizer_id, 'organizer_instagram', $organizer_instagram);
     }
-
-    var_dump($_POST);
-    die();
+    exit();
 }
 
 add_action('wp_ajax_update_organizer_information', 'ajax_update_organizer_information');
