@@ -81,6 +81,42 @@ if ('POST' === $_SERVER['REQUEST_METHOD']) {
         ));
     }
 
+    if (isset($_POST['post_title'])) {
+        $organizer_name = sanitize_text_field($_POST['post_title']);
+        wp_update_post(array(
+            'ID' => $organizer_id,
+            'post_title' => $organizer_name
+        ));
+    }
+
+    // $organizer_description = get_post_meta( $organizer_id, 'organizer_description', true ) ? get_post_meta( $organizer_id, 'organizer_description', true ) : ''; 
+    // $organizer_email       = get_post_meta( $organizer_id, '_OrganizerEmail', true ) ? get_post_meta( $organizer_id, '_OrganizerEmail', true ) : ''; 
+    // $organizer_facebook    = get_post_meta( $organizer_id, 'facebook_url', true ) ? get_post_meta( $organizer_id, 'facebook_url', true ) : ''; 
+    // $organizer_twitter     = get_post_meta( $organizer_id, 'twitter_url', true ) ? get_post_meta( $organizer_id, 'twitter_url', true ) : ''; 
+    // $organizer_instagram   = get_post_meta( $organizer_id, 'instagram_url', true ) ? get_post_meta( $organizer_id, 'instagram_url', true ) : ''; 
+    
+    if (isset($_POST['organizer_description'])) {
+        $organizer_description = sanitize_text_field($_POST['organizer_description']);
+        
+        update_post_meta($organizer_id, 'organizer_description', $organizer_description);
+    }
+    if (isset($_POST['organizer_email'])) {
+        $organizer_email = sanitize_email($_POST['organizer_email']);
+        update_post_meta($organizer_email, '_OrganizerEmail', $organizer_email);
+    }
+    if (isset($_POST['organizer_facebook'])) {
+        $organizer_facebook = sanitize_url($_POST['organizer_facebook']);
+        update_post_meta($organizer_email, 'organizer_facebook', $organizer_facebook);
+    }
+    if (isset($_POST['organizer_twitter'])) {
+        $organizer_twitter = sanitize_url($_POST['organizer_twitter']);
+        update_post_meta($organizer_email, 'organizer_twitter', $organizer_twitter);
+    }
+    if (isset($_POST['organizer_instagram'])) {
+        $organizer_instagram = sanitize_url($_POST['organizer_instagram']);
+        update_post_meta($organizer_email, 'organizer_instagram', $organizer_instagram);
+    }
+
     // Redirect after form submission
     wp_redirect('https://thaynna-william.co.uk/dashboard/organisers-list/?organizer_updated=true');
     exit;
@@ -183,12 +219,12 @@ if ($banner_image_id) {
         <!-- Organizer Title -->
         <?php 
             $organizer_name        = esc_attr( tribe_get_organizer() ); 
-            $organizer_description = esc_attr( tribe_get_organizer() ); 
-            $organizer_id = isset($_GET['id']) ? $_GET['id'] : ''; 
-            $organizer_email = get_post_meta( $organizer_id, '_OrganizerEmail', true ); 
-            $organizer_facebook = '';
-            $organizer_twitter = '';
-            $organizer_instagram = '';
+            $organizer_id          = isset($_GET['id']) ? $_GET['id'] : ''; 
+            $organizer_description = get_post_meta( $organizer_id, 'organizer_description', true ) ? get_post_meta( $organizer_id, 'organizer_description', true ) : ''; 
+            $organizer_email       = get_post_meta( $organizer_id, '_OrganizerEmail', true ) ? get_post_meta( $organizer_id, '_OrganizerEmail', true ) : ''; 
+            $organizer_facebook    = get_post_meta( $organizer_id, 'facebook_url', true ) ? get_post_meta( $organizer_id, 'facebook_url', true ) : 'facebook.com'; 
+            $organizer_twitter     = get_post_meta( $organizer_id, 'twitter_url', true ) ? get_post_meta( $organizer_id, 'twitter_url', true ) : 'twitter.com'; 
+            $organizer_instagram   = get_post_meta( $organizer_id, 'instagram_url', true ) ? get_post_meta( $organizer_id, 'instagram_url', true ) : 'instagram.com'; 
             // echo '<pre>';
             // var_dump(get_post_meta( $organizer_id ));
             // echo '</pre>';
@@ -230,7 +266,7 @@ if ($banner_image_id) {
                 <small class="req"><?php esc_html_e( '(required)', 'tribe-events-community' ); ?></small>
             </label>
             <i class="social-icon fa fa-facebook" aria-hidden="true"></i>
-            <input type="text" name="organizer_facebook" id="organizer_facebook" value="<?php echo esc_attr( $organizer_facebook ); ?>" readonly/>
+            <input type="text" name="organizer_facebook" id="organizer_facebook" value="<?php echo esc_url( $organizer_facebook ); ?>" readonly/>
             <svg class="edit_svg_click organizer_facebook_edit_btn" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#d3fa16" viewBox="0 0 24 24"><path d="M4 16.668V20h3.333l9.83-9.83-3.333-3.332zm15.74-9.075a.885.885 0 0 0 0-1.253l-2.08-2.08a.885.885 0 0 0-1.253 0L14.78 5.886l3.333 3.333zM6 17l8-8 1 1-8 8z"></path></svg>
         </div>
 
@@ -240,7 +276,7 @@ if ($banner_image_id) {
                 <small class="req"><?php esc_html_e( '(required)', 'tribe-events-community' ); ?></small>
             </label>
             <i class="social-icon fa fa-twitter" aria-hidden="true"></i>
-            <input type="text" name="organizer_twitter" id="organizer_twitter" value="<?php echo esc_attr( $organizer_twitter ); ?>" readonly/>
+            <input type="text" name="organizer_twitter" id="organizer_twitter" value="<?php echo esc_url( $organizer_twitter ); ?>" readonly/>
             <svg class="edit_svg_click organizer_twitter_edit_btn" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#d3fa16" viewBox="0 0 24 24"><path d="M4 16.668V20h3.333l9.83-9.83-3.333-3.332zm15.74-9.075a.885.885 0 0 0 0-1.253l-2.08-2.08a.885.885 0 0 0-1.253 0L14.78 5.886l3.333 3.333zM6 17l8-8 1 1-8 8z"></path></svg>
         </div>
 
@@ -250,7 +286,7 @@ if ($banner_image_id) {
                 <small class="req"><?php esc_html_e( '(required)', 'tribe-events-community' ); ?></small>
             </label>
             <i class="social-icon fa fa-instagram" aria-hidden="true"></i>
-            <input type="text" name="organizer_instagram" id="organizer_instagram" value="<?php echo esc_attr( $organizer_instagram ); ?>" readonly/>
+            <input type="text" name="organizer_instagram" id="organizer_instagram" value="<?php echo  esc_url( $organizer_instagram ); ?>" readonly/>
             <svg class="edit_svg_click organizer_instagram_edit_btn" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#d3fa16" viewBox="0 0 24 24"><path d="M4 16.668V20h3.333l9.83-9.83-3.333-3.332zm15.74-9.075a.885.885 0 0 0 0-1.253l-2.08-2.08a.885.885 0 0 0-1.253 0L14.78 5.886l3.333 3.333zM6 17l8-8 1 1-8 8z"></path></svg>
         </div>
 
