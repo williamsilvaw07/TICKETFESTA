@@ -331,7 +331,9 @@ document.addEventListener('DOMContentLoaded', function() {
         if (isEditIconClicked) {
             e.preventDefault(); // Prevent default form submission only if edit icon clicked
 
-            var titleValue = inputTitle.value.trim();
+            var titleValue = document.querySelector('input[name="post_title"]').value.trim();
+            var organizer_description = document.querySelector('input[name="organizer_description"]').value.trim();
+            var organizer_email = document.querySelector('input[name="organizer_email"]').value.trim();
 
             // AJAX request to check the title
             var xhr = new XMLHttpRequest();
@@ -349,7 +351,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 }
             };
-            xhr.send('action=check_organizer_name&organizer_name=' + encodeURIComponent(titleValue));
+            xhr.send('action=check_organizer_name&organizer_name=' + encodeURIComponent(titleValue, organizer_description, organizer_email));
         }
         // If edit icon not clicked, form submits normally
     });
