@@ -3639,8 +3639,11 @@ function display_upcoming_events_for_user_with_view_order_button() {
         return count($lines) > 1 ? $lines[0] . '...' : $title;
     }
 
-    echo '<h2 class="container-fluid ">Your Upcoming Event Tickets</h2>';
-
+    echo '<div class="event-tickets-header">';
+    echo '<h2 class="container-fluid">Your Event Tickets</h2>';
+    echo '<p>Below you\'ll find the tickets for events you\'re attending soon. Keep track of dates and details right here!</p>';
+    echo '</div>'; // Close the event-tickets-header div
+    
 
     echo '<div class="loadingAnimation">
     <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1366 768" xml:space="preserve">

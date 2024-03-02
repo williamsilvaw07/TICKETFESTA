@@ -433,7 +433,8 @@ display:none;
     justify-content: space-around;
 }
 .container-fluid h2{
-	font-weight: 800;
+    font-weight: bold!important;
+
     padding-bottom: 33px;
 }
 
