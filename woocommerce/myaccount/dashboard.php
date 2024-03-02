@@ -392,15 +392,22 @@ hr{
     font-weight: 300;
 
 }
-
+.view_ticket_btn{
+	background:#d3fa16;
+	color:black;
+}
 .view_event_btn {
+   
+	background:black;
+	color:white;
+}
+.view_event_btn  , .view_ticket_btn{
     white-space: nowrap;
     font-size: 12px!important;
     padding: 5px 15px !important;
     border-radius: 4px!important;
     padding-bottom: 3px!important;
-	background:black;
-	color:white;
+
 }
 
 
