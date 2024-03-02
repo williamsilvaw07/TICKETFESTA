@@ -244,16 +244,25 @@ $follower_count = count($followers_array);
             <input type="submit" value="<?php echo ucfirst($follower_text); ?>" nanme="submit" class="follow-button"> 
         </form>
         <div class="organizer_text_profile">
-        <?php
-
-            if($organizer_description){
-        ?>
+        <?php if($organizer_description){ ?>
             <p class="description"> <?php echo $organizer_description ;?> </p>
+        <?php } ?>
 
-        <?php
-            }
-        
-        ?>
+        <?php if($organizer_email){ ?>
+            <p class="organizer_email"> <?php echo $organizer_email ;?> </p>
+        <?php } ?>
+
+        <?php if($organizer_facebook){ ?>
+            <p class="organizer_facebook"> <?php echo $organizer_facebook ;?> </p>
+        <?php } ?>
+
+        <?php if($organizer_twitter){ ?>
+            <p class="organizer_twitter"> <?php echo $organizer_twitter ;?> </p>
+        <?php } ?>
+
+        <?php if($organizer_instagram){ ?>
+            <p class="organizer_instagram"> <?php echo $organizer_instagram ;?> </p>
+        <?php } ?>
         </div>
 </div>
 <?php 
