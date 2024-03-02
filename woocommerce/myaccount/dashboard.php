@@ -163,14 +163,11 @@ jQuery(document).ready(function($) {
 
 ////FUNCTION TO ADD THE EVENT IMAGE AS A BACKGROUND 
 jQuery(document).ready(function($) {
-    // Now that the document is fully loaded, show the ticket container
-    $('.ticketContainer').css('display', 'block');
-
     $('.ticketImage').each(function() {
         // Get the src of the img element
         var imgSrc = $(this).find('img').attr('src');
 
-        // Set the background image of the .event-image div to the src of the img
+        // Set the background image of the .ticketImage div to the src of the img
         $(this).css({
             'background-image': 'url(' + imgSrc + ')',
             'background-size': 'cover',
@@ -191,7 +188,7 @@ jQuery(document).ready(function($) {
             'z-index': '1'
         });
 
-        // Append the glass effect overlay to the .event-image div
+        // Append the glass effect overlay to the .ticketImage div
         $(this).append(glassEffect);
 
         // Ensure the img element stays visible on top of the glass effect
@@ -200,6 +197,9 @@ jQuery(document).ready(function($) {
             'z-index': '2'
         });
     });
+
+    // After setting background images for all .ticketImage divs, display the ticket containers
+    $('.ticketContainer').css('display', 'block');
 });
 
 
