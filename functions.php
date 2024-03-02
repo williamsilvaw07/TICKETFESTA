@@ -3630,7 +3630,7 @@ function display_upcoming_events_for_user_with_view_order_button() {
     ));
 
 
-    function truncate_title($title, $maxLength = 40) {
+    function truncate_title($title, $maxLength = 30) {
         // Break the title into lines with a maximum length, without breaking words
         $wrapped = wordwrap($title, $maxLength, "\n", true);
         // Split the string into lines
@@ -3696,7 +3696,7 @@ function display_upcoming_events_for_user_with_view_order_button() {
                             </div>
 
                              <div class="ticket_inner_div ">
-                             <div class="ticketTitle"><?php echo truncate_title($event_title, 40); ?></div>
+                             <div class="ticketTitle"><?php echo truncate_title($event_title, 30); ?></div>
                             <div class="eventaddress"><?php echo $event_address; ?> <a class="opne_on_map_link" href="<?php echo $map_link; ?>" target="_blank">Open on Map</a></div>
                             <hr>
                             <div class="ticketDetail">
