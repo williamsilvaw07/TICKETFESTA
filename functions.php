@@ -1516,7 +1516,8 @@ function ajax_update_organizer_information()
     $organizer_description = sanitize_text_field($_POST['organizer_description']);
     $organizer_id = sanitize_text_field($_POST['organizer_id']);
     update_post_meta($organizer_id, 'organizer_description', $organizer_description);
-
+    var_dump($_POST);
+    die();
 }
 
 add_action('wp_ajax_update_organizer_information', 'ajax_update_organizer_information');
