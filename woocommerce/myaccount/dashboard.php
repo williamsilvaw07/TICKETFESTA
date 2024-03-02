@@ -341,7 +341,7 @@ hr {
     background-color: white;
     color: #1a1a1a!important;
     border-radius: 12px;
-    max-width: 300px;
+    max-width: 280px;
 	height: fit-content;
     width: 100%;
 

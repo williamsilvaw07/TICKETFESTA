@@ -3638,8 +3638,10 @@ function display_upcoming_events_for_user_with_view_order_button() {
         // Use the first line, if there are multiple lines, append '...'
         return count($lines) > 1 ? $lines[0] . '...' : $title;
     }
- echo '<div class="allTicketsContainer">'; 
+
     echo '<h2>Upcoming Events You Have Tickets For:</h2>';
+ echo '<div class="allTicketsContainer">'; 
+    
     
     
     
