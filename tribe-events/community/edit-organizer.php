@@ -365,6 +365,11 @@ document.addEventListener('DOMContentLoaded', function() {
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
         var organizer_description = document.querySelector('input[name="organizer_description"]').value.trim();
         //     var organizer_email = document.querySelector('input[name="organizer_email"]').value.trim();
+        // Get the query string portion of the URL
+        var queryString = window.location.search;
+
+        // Parse the query string into an object
+        var queryParams = new URLSearchParams(queryString);
         var organizer_id = queryParams.get('id');
         // Handle AJAX response
         xhr.onload = function() {
