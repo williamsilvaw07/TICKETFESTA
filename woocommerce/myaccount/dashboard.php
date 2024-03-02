@@ -314,7 +314,8 @@ hr {
     background-color: white;
     color: #1a1a1a!important;
     border-radius: 12px;
-	max-width: 350px;
+    max-width: 317px;
+
 
 }
 .ticketShadow{
@@ -337,6 +338,7 @@ display:none;
 hr{
     width: 90%;
     border: 1px solid #efefef;
+	margin: 19px auto;
 }
 .ticketDetail , .ticketSubDetail , .eventaddress{
     font-size: 14px!important;
