@@ -284,7 +284,7 @@ jQuery(document).ready(function($) {
 }
 
 .allTicketsContainer{
-    display: flex!important;
+    
     gap: 25px;
     align-items: flex-start;
     align-content: flex-start;
