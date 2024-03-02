@@ -157,9 +157,8 @@ jQuery(document).ready(function($) {
 });
 
 
-
 jQuery(document).ready(function($) {
-    // Show the loading animation
+    // Initially show the loading animation
     $('.loadingAnimation').show();
 
     // Counter to keep track of loaded images
@@ -170,6 +169,7 @@ jQuery(document).ready(function($) {
     if (totalImages > 0) {
         $('.ticketImage img').each(function() {
             var imgSrc = $(this).attr('src');
+            // Create a temporary image to preload
             $('<img/>').on('load', function() {
                 loadedImages++;
                 // When an image is loaded, update its parent .ticketImage with a background
@@ -182,6 +182,7 @@ jQuery(document).ready(function($) {
                     'overflow': 'hidden'
                 });
 
+                // Create and append the glass effect overlay
                 var glassEffect = $('<div></div>').css({
                     'position': 'absolute',
                     'top': '0',
@@ -194,24 +195,28 @@ jQuery(document).ready(function($) {
                 });
 
                 parentTicketImage.append(glassEffect);
+                // Ensure the img element stays visible on top of the glass effect
                 parentTicketImage.find('img').css({
                     'position': 'relative',
                     'z-index': '2'
                 });
 
-                // If all images are loaded, fade in the ticket containers
+                // If all images are loaded, fade out the loading animation and fade in the ticket containers
                 if (loadedImages === totalImages) {
-                    $('.loadingAnimation').fadeOut();
-                    $('.ticketContainer').fadeIn();
+                    $('.loadingAnimation').fadeOut('slow', function() {
+                        $('.ticketContainer').fadeIn('slow');
+                    });
                 }
-            }).attr('src', imgSrc);
+            }).attr('src', imgSrc); // Trigger the load event
         });
     } else {
-        // If there are no images, directly fade in the ticket containers
-        $('.loadingAnimation').fadeOut();
-        $('.ticketContainer').fadeIn();
+        // If there are no images to load, directly transition from loading to tickets
+        $('.loadingAnimation').fadeOut('slow', function() {
+            $('.ticketContainer').fadeIn('slow');
+        });
     }
 });
+
 
 
 </script>
