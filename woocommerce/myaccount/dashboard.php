@@ -363,7 +363,7 @@ hr{
     border-radius: 3px;
     padding: 3px 6px;
 }
-.woocommerce-Price-amount bdi{
+.ticketDetail .woocommerce-Price-amount bdi , .ticketDetail .woocommerce-Price-currencySymbol{
 	color:black!important
 }
 .ticket-detail-title{
