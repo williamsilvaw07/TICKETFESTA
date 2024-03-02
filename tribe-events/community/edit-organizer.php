@@ -239,6 +239,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     inputTitle.removeAttribute('readonly'); // Enable editing
                     inputTitle.focus(); // Optionally, focus on the input field
                     isEditIconClicked = true;
+                    inputField.value = '';
                 } else {
                     inputTitle.setAttribute('readonly', 'readonly'); // Disable editing
                     isEditIconClicked = false;
@@ -250,24 +251,24 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     
     }
-    function input_value_remove(inputTitle, editIcon){
-        var editIcon = document.querySelector(editIcon);
-        var inputField = document.querySelector(inputTitle);
+    // function input_value_remove(inputTitle, editIcon){
+    //     var editIcon = document.querySelector(editIcon);
+    //     var inputField = document.querySelector(inputTitle);
 
-        if (editIcon && inputField) {
-            editIcon.addEventListener('click', function() {
-                // Clear the input field
-                inputField.value = '';
+    //     if (editIcon && inputField) {
+    //         editIcon.addEventListener('click', function() {
+    //             // Clear the input field
+    //             inputField.value = '';
 
-                // Remove readonly attribute and focus on the input field
-                inputField.removeAttribute('readonly');
-                inputField.focus();
-            });
-        } else {
-            console.error('Edit icon or input field not found');
-        }
+    //             // Remove readonly attribute and focus on the input field
+    //             inputField.removeAttribute('readonly');
+    //             inputField.focus();
+    //         });
+    //     } else {
+    //         console.error('Edit icon or input field not found');
+    //     }
 
-    }
+    // }
     var form = document.querySelector('form');
     // Event listener for the form submission
     form.addEventListener('submit', function(e) {
