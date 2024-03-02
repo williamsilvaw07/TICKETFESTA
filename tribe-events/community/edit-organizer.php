@@ -184,7 +184,16 @@ if ($banner_image_id) {
         <?php 
             $organizer_name        = esc_attr( tribe_get_organizer() ); 
             $organizer_description = esc_attr( tribe_get_organizer() ); 
-            $organizer_email = esc_attr( tribe_get_organizer() ); 
+
+            $organizer_id = isset($_GET['id']) ? $_GET['id'] : ''; 
+
+            // Get the author ID of the post
+            $author_id = get_post_field('post_author', $organizer_id);
+
+            // Get the author's email using the author ID
+            $author_email = get_the_author_meta('user_email', $organizer_id);
+            $organizer_email = esc_attr( $author_email ); 
+
         ?>
         <div class="events-community-post-title">
             <label for="post_title" class="<?php echo ( $_POST && empty( $organizer_name ) ) ? 'error' : ''; ?>">
@@ -209,7 +218,7 @@ if ($banner_image_id) {
 
         <div class="events-community-post-title email">
             <label for="organizer_email" class="<?php echo ( $_POST && empty( $organizer_email ) ) ? 'error' : ''; ?>">
-                <?php printf( __( '%s Name:', 'tribe-events-community' ), $organizer_label_singular ); ?>
+                <?php printf( __( '%s Email:', 'tribe-events-community' ), $organizer_label_singular ); ?>
                 <small class="req"><?php esc_html_e( '(required)', 'tribe-events-community' ); ?></small>
             </label>
             <input type="email" name="organizer_email" id="organizer_email" value="<?php echo esc_attr( $organizer_email ); ?>" readonly/>
