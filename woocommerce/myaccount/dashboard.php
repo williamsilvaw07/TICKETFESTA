@@ -313,7 +313,9 @@ hr{
     border-radius: 3px;
     padding: 3px 6px;
 }
-
+.woocommerce-Price-amount bdi{
+	color:black!important
+}
 
     </style>
 
