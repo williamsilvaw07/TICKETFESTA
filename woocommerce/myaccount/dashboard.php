@@ -317,7 +317,7 @@ hr{
     border: 1px solid #efefef;
 }
 .ticketDetail , .ticketSubDetail{
-    font-size: 15px;
+    font-size: 15px!important;
     font-weight: 500;
    
 }
