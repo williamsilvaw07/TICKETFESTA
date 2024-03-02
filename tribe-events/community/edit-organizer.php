@@ -81,14 +81,6 @@ if ('POST' === $_SERVER['REQUEST_METHOD']) {
         ));
     }
 
-    if (isset($_POST['post_title'])) {
-        $organizer_name = sanitize_text_field($_POST['post_title']);
-        wp_update_post(array(
-            'ID' => $organizer_id,
-            'post_title' => $organizer_name
-        ));
-    }
-
     // $organizer_description = get_post_meta( $organizer_id, 'organizer_description', true ) ? get_post_meta( $organizer_id, 'organizer_description', true ) : ''; 
     // $organizer_email       = get_post_meta( $organizer_id, '_OrganizerEmail', true ) ? get_post_meta( $organizer_id, '_OrganizerEmail', true ) : ''; 
     // $organizer_facebook    = get_post_meta( $organizer_id, 'facebook_url', true ) ? get_post_meta( $organizer_id, 'facebook_url', true ) : ''; 
@@ -102,19 +94,19 @@ if ('POST' === $_SERVER['REQUEST_METHOD']) {
     }
     if (isset($_POST['organizer_email'])) {
         $organizer_email = sanitize_email($_POST['organizer_email']);
-        update_post_meta($organizer_email, '_OrganizerEmail', $organizer_email);
+        update_post_meta($organizer_id, '_OrganizerEmail', $organizer_email);
     }
     if (isset($_POST['organizer_facebook'])) {
         $organizer_facebook = sanitize_url($_POST['organizer_facebook']);
-        update_post_meta($organizer_email, 'organizer_facebook', $organizer_facebook);
+        update_post_meta($organizer_id, 'organizer_facebook', $organizer_facebook);
     }
     if (isset($_POST['organizer_twitter'])) {
         $organizer_twitter = sanitize_url($_POST['organizer_twitter']);
-        update_post_meta($organizer_email, 'organizer_twitter', $organizer_twitter);
+        update_post_meta($organizer_id, 'organizer_twitter', $organizer_twitter);
     }
     if (isset($_POST['organizer_instagram'])) {
         $organizer_instagram = sanitize_url($_POST['organizer_instagram']);
-        update_post_meta($organizer_email, 'organizer_instagram', $organizer_instagram);
+        update_post_meta($organizer_id, 'organizer_instagram', $organizer_instagram);
     }
 
     // Redirect after form submission
