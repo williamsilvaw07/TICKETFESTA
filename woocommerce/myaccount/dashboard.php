@@ -322,6 +322,7 @@ hr {
 }
 .ticketImage, .ticketImage img{
     max-height: 130px;
+	border-radius: 12px 12px 0px 0;
 }
 	.ticketImage img{
 		width: 200px;
@@ -340,6 +341,7 @@ hr {
     max-width: 300px;
 	height: fit-content;
     width: 100%;
+
 
 }
 .ticketShadow{
