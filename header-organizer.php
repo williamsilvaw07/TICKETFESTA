@@ -1948,7 +1948,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
             }
             input#organizer_facebook,
             input#organizer_twitter,
-            input#organizer_instagram,
+            input#organizer_instagram
             {
                 margin-left: 60px;
             }
