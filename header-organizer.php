@@ -1937,7 +1937,21 @@ html .tickets-sold-column , html .tribe-list-column-title {
                 margin: 0 !important;
 
             }
-
+            i.social-icon {
+                position: absolute;
+                font-size: 22px;
+                left: 24px;
+                border-radius: 10px;
+                background: #555;
+                color: #d3fa18;
+                padding: 12px;
+            }
+            input#organizer_facebook,
+            input#organizer_twitter,
+            input#organizer_instagram
+            {
+                margin-left: 60px;
+            }
             #eventCouponForm {
                 display: flex;
                 flex-direction: column;
