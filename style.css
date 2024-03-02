@@ -1593,7 +1593,9 @@ color: #555!important;
     max-width: 700px;
     margin: 20px;
 }
-
+.organizer_profile_bk {
+    height: 550px;
+}
 .event-tickets .tribe-tickets__tickets-item-details-content, .entry .entry-content .event-tickets .tribe-tickets__tickets-item-details-content {
     grid-row: 4;
 }

@@ -253,15 +253,27 @@ $follower_count = count($followers_array);
         <?php } ?>
 
         <?php if($organizer_facebook){ ?>
-            <span class="organizer_facebook"> <?php echo $organizer_facebook ;?> </span>
+            <span class="organizer_facebook">
+                <a href="<?php echo $organizer_facebook ;?>">
+                    <i class="social-icon fa fa-facebook" aria-hidden="true"></i>
+                </a> 
+            </span>
         <?php } ?>
 
         <?php if($organizer_twitter){ ?>
-            <span class="organizer_twitter"> <?php echo $organizer_twitter ;?> </span>
+            <span class="organizer_twitter">
+                <a href="<?php echo $organizer_twitter ;?>">
+                    <i class="social-icon fa fa-twitter" aria-hidden="true"></i>
+                </a> 
+            </span>
         <?php } ?>
 
         <?php if($organizer_instagram){ ?>
-            <span class="organizer_instagram"> <?php echo $organizer_instagram ;?> </span>
+            <span class="organizer_instagram">
+                <a href="<?php echo $organizer_instagram ;?>">
+                    <i class="social-icon fa fa-instagram" aria-hidden="true"></i>
+                </a> 
+            </span>
         <?php } ?>
 
         <br/>
