@@ -158,46 +158,68 @@ jQuery(document).ready(function($) {
 
 
 
-
 jQuery(document).ready(function($) {
-    // Initially show the loading animation
-    $('.loadingAnimation').show();
+    // Show loading animation initially
+    $('body').prepend('<div class="loadingAnimation"></div>'); // Assuming the loadingAnimation CSS is already defined as provided earlier
 
-    $('.ticketImage').each(function() {
-        var imgSrc = $(this).find('img').attr('src');
+    // Function to hide loading and show tickets
+    function hideLoadingAndShowTickets() {
+        $('.loadingAnimation').hide(); // Hide loading animation
+        $('.ticketContainer').fadeIn(); // Gradually show ticket containers for a smoother experience
+    }
 
-        $(this).css({
-            'background-image': 'url(' + imgSrc + ')',
-            'background-size': 'cover',
-            'background-position': 'center center',
-            'position': 'relative',
-            'overflow': 'hidden'
-        });
+    // Check if images are loaded
+    var images = $('.ticketImage img');
+    var imagesLoaded = 0;
 
-        var glassEffect = $('<div></div>').css({
-            'position': 'absolute',
-            'top': '0',
-            'left': '0',
-            'height': '100%',
-            'width': '100%',
-            'background': 'rgba(255, 255, 255, 0.4)',
-            'backdrop-filter': 'blur(8px)',
-            'z-index': '1'
-        });
+    images.each(function() {
+        var imgSrc = $(this).attr('src');
+        var newImg = new Image();
 
-        $(this).append(glassEffect);
-        $(this).find('img').css({
-            'position': 'relative',
-            'z-index': '2'
-        });
+        newImg.onload = function() {
+            imagesLoaded++;
+            $(this).closest('.ticketImage').css({
+                'background-image': 'url(' + this.src + ')',
+                'background-size': 'cover',
+                'background-position': 'center center',
+                'position': 'relative',
+                'overflow': 'hidden'
+            });
+
+            var glassEffect = $('<div></div>').css({
+                'position': 'absolute',
+                'top': '0',
+                'left': '0',
+                'height': '100%',
+                'width': '100%',
+                'background': 'rgba(255, 255, 255, 0.4)',
+                'backdrop-filter': 'blur(8px)',
+                'z-index': '1'
+            });
+
+            // Append the glass effect overlay
+            $(this).closest('.ticketImage').append(glassEffect);
+
+            // Ensure the original image stays on top
+            $(this).css({
+                'position': 'relative',
+                'z-index': '2'
+            });
+
+            // Once all images are loaded, hide the loading animation and show tickets
+            if (imagesLoaded === images.length) {
+                hideLoadingAndShowTickets();
+            }
+        };
+
+        newImg.src = imgSrc; // This triggers the loading and the onload event
     });
 
-    // After all ticket images have been processed, hide the loading animation and display the ticket containers
-    $('.loadingAnimation').hide();
-    $('.ticketContainer').css('display', 'flex');
+    // If there are no images, directly hide loading and show tickets
+    if (images.length === 0) {
+        hideLoadingAndShowTickets();
+    }
 });
-
-
 
 
 </script>
