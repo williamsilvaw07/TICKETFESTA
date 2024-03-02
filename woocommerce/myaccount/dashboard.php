@@ -159,15 +159,13 @@ jQuery(document).ready(function($) {
 
 
 
-
-
-////FUNCTION TO ADD THE EVENT IMAGE AS A BACKGROUND 
 jQuery(document).ready(function($) {
+    // Initially show the loading animation
+    $('.loadingAnimation').show();
+
     $('.ticketImage').each(function() {
-        // Get the src of the img element
         var imgSrc = $(this).find('img').attr('src');
 
-        // Set the background image of the .ticketImage div to the src of the img
         $(this).css({
             'background-image': 'url(' + imgSrc + ')',
             'background-size': 'cover',
@@ -176,7 +174,6 @@ jQuery(document).ready(function($) {
             'overflow': 'hidden'
         });
 
-        // Create a glass effect overlay
         var glassEffect = $('<div></div>').css({
             'position': 'absolute',
             'top': '0',
@@ -188,19 +185,18 @@ jQuery(document).ready(function($) {
             'z-index': '1'
         });
 
-        // Append the glass effect overlay to the .ticketImage div
         $(this).append(glassEffect);
-
-        // Ensure the img element stays visible on top of the glass effect
         $(this).find('img').css({
             'position': 'relative',
             'z-index': '2'
         });
     });
 
-    // After setting background images for all .ticketImage divs, display the ticket containers
+    // After all ticket images have been processed, hide the loading animation and display the ticket containers
+    $('.loadingAnimation').hide();
     $('.ticketContainer').css('display', 'flex');
 });
+
 
 
 
@@ -215,6 +211,35 @@ jQuery(document).ready(function($) {
 
 
 <style>
+/* Loading Animation */
+.loadingAnimation {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* or adjust based on your layout */
+}
+
+.loadingAnimation:before {
+  content: '';
+  width: 50px;
+  height: 50px;
+  border: 5px solid rgba(0, 0, 0, 0.1);
+  border-top-color: #000;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+
+
 
 .ticketContainer {
     display: none; /* Initially hide the ticket container intill js is loadded */
