@@ -329,9 +329,10 @@ display:none;
 
 /* Ticket Content */
 .ticketTitle{
-font-size: 18px;
+	font-size: 15px;
     line-height: 22px;
     font-weight: 700;
+    margin-bottom: 10px;
 }
 hr{
     width: 90%;
