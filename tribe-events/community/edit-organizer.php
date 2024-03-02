@@ -199,7 +199,7 @@ if ($banner_image_id) {
 
         <div class="events-community-post-title">
             <label for="post_title" class="<?php echo ( $_POST && empty( $organizer_name ) ) ? 'error' : ''; ?>">
-                <?php printf( __( '%s Name:', 'tribe-events-community' ), $organizer_label_singular ); ?>
+                <?php printf( __( '%s Description:', 'tribe-events-community' ), $organizer_label_singular ); ?>
                 <small class="req"><?php esc_html_e( '(required)', 'tribe-events-community' ); ?></small>
             </label>
             <input type="textarea" name="organizer_description" id="organizer_description_input" value="<?php echo esc_attr( $organizer_name ); ?>" />
@@ -223,28 +223,33 @@ if ($banner_image_id) {
 
             ///FUNCTION TO DON'T ALLOW SAME Organizer Title  AND ON SVG ICON CLICK ALLOW TO EDIT AND ON SVG ICON CLICK CLEAR THE INPUT
 document.addEventListener('DOMContentLoaded', function() {
-    var form = document.querySelector('form');
-    var inputTitle = document.querySelector('input[name="post_title"]');
-    var editIcon = document.querySelector('.organizer_title_edit_btn');
-    var isEditIconClicked = false;
-
-    // Event listener for the SVG icon click
-    if (editIcon && inputTitle) {
-        editIcon.addEventListener('click', function() {
-            // Toggle the readonly attribute and the isEditIconClicked flag
-            if (inputTitle.hasAttribute('readonly')) {
-                inputTitle.removeAttribute('readonly'); // Enable editing
-                inputTitle.focus(); // Optionally, focus on the input field
-                isEditIconClicked = true;
-            } else {
-                inputTitle.setAttribute('readonly', 'readonly'); // Disable editing
-                isEditIconClicked = false;
-            }
-        });
-    } else {
-        console.error('Edit icon or input field not found');
+ 
+    remove_read_only('input[name="post_title"]', '.organizer_title_edit_btn');
+    
+    function remove_read_only(inputTitle, editIcon){
+        var inputTitle = document.querySelector(inputTitle);
+        var editIcon = document.querySelector(editIcon);
+        var isEditIconClicked = false;
+        // Event listener for the SVG icon click
+        if (editIcon && inputTitle) {
+            editIcon.addEventListener('click', function() {
+                // Toggle the readonly attribute and the isEditIconClicked flag
+                if (inputTitle.hasAttribute('readonly')) {
+                    inputTitle.removeAttribute('readonly'); // Enable editing
+                    inputTitle.focus(); // Optionally, focus on the input field
+                    isEditIconClicked = true;
+                } else {
+                    inputTitle.setAttribute('readonly', 'readonly'); // Disable editing
+                    isEditIconClicked = false;
+                }
+            });
+        } else {
+            console.error('Edit icon or input field not found');
+        }
+    
     }
 
+    var form = document.querySelector('form');
     // Event listener for the form submission
     form.addEventListener('submit', function(e) {
         if (isEditIconClicked) {
