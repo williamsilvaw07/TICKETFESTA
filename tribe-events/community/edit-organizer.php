@@ -197,7 +197,7 @@ if ($banner_image_id) {
             
         </div>
 
-        <div class="events-community-post-title">
+        <div class="events-community-post-title ">
             <label for="organizer_description_input" class="<?php echo ( $_POST && empty( $organizer_name ) ) ? 'error' : ''; ?>">
                 <?php printf( __( '%s Description:', 'tribe-events-community' ), $organizer_label_singular ); ?>
                 <small class="req"><?php esc_html_e( '(required)', 'tribe-events-community' ); ?></small>
@@ -244,12 +244,30 @@ document.addEventListener('DOMContentLoaded', function() {
                     isEditIconClicked = false;
                 }
             });
+            input_value_remove(inputTitle, editIcon);
         } else {
             console.error('Edit icon or input field not found');
         }
     
     }
+    function input_value_remove(inputTitle, editIcon){
+        var editIcon = document.querySelector(editIcon);
+        var inputField = document.querySelector(inputTitle);
 
+        if (editIcon && inputField) {
+            editIcon.addEventListener('click', function() {
+                // Clear the input field
+                inputField.value = '';
+
+                // Remove readonly attribute and focus on the input field
+                inputField.removeAttribute('readonly');
+                inputField.focus();
+            });
+        } else {
+            console.error('Edit icon or input field not found');
+        }
+
+    }
     var form = document.querySelector('form');
     // Event listener for the form submission
     form.addEventListener('submit', function(e) {
@@ -297,6 +315,8 @@ document.addEventListener("DOMContentLoaded", function() {
     } else {
         console.error('Edit icon or input field not found');
     }
+
+
 });
 
 </script>
