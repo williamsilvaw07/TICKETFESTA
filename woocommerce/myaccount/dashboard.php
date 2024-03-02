@@ -316,7 +316,12 @@ hr{
 .woocommerce-Price-amount bdi{
 	color:black!important
 }
+.ticket-detail-title{
+	color: black!important;
+    font-size: 13px;
+    font-weight: 300;
 
+}
     </style>
 
 
