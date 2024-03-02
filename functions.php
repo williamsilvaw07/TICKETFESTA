@@ -1,8 +1,4 @@
-
 <?php
-
-
-
 
 ///MY ACCOUNT FUNCTION 
 function custom_limit_orders_per_page( $args ) {
@@ -86,8 +82,6 @@ function woocommerce_cart_item_name_event_title( $title, $values, $cart_item_key
  
     return $title;
 }
-
-
 
 /**
  * Flux checkout - Allow custom CSS files.
@@ -300,23 +294,25 @@ function iam00_return_ticket_associate_with_event()
         $eventId = (int) $_POST['event_id'];
         global $wpdb;
         $results = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}postmeta WHERE meta_key = '_tribe_wooticket_for_event' AND meta_value = {$eventId}");
+        // $results = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}postmeta WHERE meta_key = '_tribe_wooticket_for_event'");
 
         $ids = [];
 
         foreach ($results as $key => $value) {
             $ids[] = $value->post_id;
         }
-        $args = array(
-            'include' => $ids, // Replace with your actual product IDs
-            'return' => 'objects' // Ensure product objects are returned
-        );
-        $products = wc_get_products($args);
 
         $response = [];
-
-        foreach ($products as $product) {
-            // Access product data:
-            $response[$product->get_id()] = $product->get_name();
+        if(sizeof($results)>0){
+            $args = array(
+                'include' => $ids, // Replace with your actual product IDs
+                'return' => 'objects' // Ensure product objects are returned
+            );
+            $products = wc_get_products($args);
+            foreach ($products as $product) {
+                // Access product data:
+                $response[$product->get_id()] = $product->get_name();
+            }
         }
 
         wp_send_json_success($response, 200);
@@ -701,16 +697,21 @@ function iam00_edit_coupon_action()
         $description = isset($_POST['description']) ? $_POST['description'] : '';
         $usage_limit = isset($_POST['usage_limit']) ? $_POST['usage_limit'] : 1;
 
-        //Check if coupon name unique
-        if (wc_get_coupon_id_by_code($coupon_code)) {
-            $response_data = array(
-                'message' => 'Coupon already exists with the code: ' . $coupon_code,
-            );
-            wp_send_json_success($response_data, 422);
-            die();
-        }
+       
         //Create coupon associate with the product id
         $coupon = new WC_Coupon($couponId);
+
+         //Check if coupon name unique
+         if($coupon_code != $coupon->get_code()){
+            if (wc_get_coupon_id_by_code($coupon_code)) {
+                $response_data = array(
+                    'message' => 'Coupon already exists with the code: ' . $coupon_code,
+                );
+                wp_send_json_success($response_data, 422);
+                die();
+            }
+        }
+
         // Set coupon properties
         $coupon->set_code($coupon_code);
         $coupon->set_product_ids($product_ids);
@@ -3488,7 +3489,7 @@ function add_extra_fees_for_products( $cart ) {
     }
 
     if($extra_fee !== 0){
-        $cart->add_fee( 'Sites Fee ', $extra_fee ); 
+        $cart->add_fee( 'Sites Fee ', $extra_fee );
     }
 }
 
@@ -3686,63 +3687,3 @@ function display_upcoming_events_for_user_with_view_order_button() {
 }
 
 add_action('woocommerce_account_dashboard', 'display_upcoming_events_for_user_with_view_order_button');
-
-
-
-
-
-
-
-
-
-
-
-
-
-// update product images
-function update_featured_image_of_tribe_events($post_id) {
-    // Check if the saved post is of post type 'tribe_events'
-    if (get_post_type($post_id) === 'tribe_events') {
-        // Get the current featured image of post 123
-        $featured_image_id = get_post_thumbnail_id($post_id);
-
-        // If post 123 doesn't have a featured image, exit the function
-        if (!$featured_image_id) {
-            return;
-        }
-        $product_ids = get_product_ids_by_event_id($post_id);
-
-        foreach($product_ids as $product_id){
-        
-            // Update the featured image of the current post to match post 123
-            set_post_thumbnail($product_id, $featured_image_id);
-        }
-    }
-}
-
-// Hook the function to run when a post is saved or updated
-// add_action('save_post', 'update_featured_image_of_tribe_events');
-
-function get_product_ids_by_event_id($event_id){
-
-    global $wpdb;
-
-    // Your WordPress database prefix
-    $table_name = $wpdb->prefix . 'postmeta';
-    
-    // SQL query
-    $sql = "SELECT post_id
-            FROM $table_name
-            WHERE meta_key = '_tribe_wooticket_for_event'
-            AND meta_value = $event_id";
-    
-    // Execute the query
-    $product_ids = $wpdb->get_results($sql);
-    
-    // Extracting product IDs from the results
-    $product_ids_array = array();
-    foreach ($product_ids as $product_id) {
-        $product_ids_array[] = $product_id->post_id;
-    }
-    return $product_ids_array;
-}
