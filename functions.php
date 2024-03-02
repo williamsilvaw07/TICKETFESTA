@@ -3661,6 +3661,7 @@ function display_upcoming_events_for_user_with_view_order_button() {
 </g>
 </svg>
                     </div>
+<div class="allTicketsContainer">
 
                     <div class="ticketContainer">
                         <div class="ticket">
@@ -3709,5 +3710,6 @@ function display_upcoming_events_for_user_with_view_order_button() {
         echo "<p>You currently have no tickets for upcoming events.</p>";
     }
 }
+echo '</div>'; // Close the main container for all tickets
 
 add_action('woocommerce_account_dashboard', 'display_upcoming_events_for_user_with_view_order_button');
