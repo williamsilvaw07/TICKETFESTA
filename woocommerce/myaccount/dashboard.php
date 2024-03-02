@@ -199,7 +199,7 @@ jQuery(document).ready(function($) {
     });
 
     // After setting background images for all .ticketImage divs, display the ticket containers
-    $('.ticketContainer').css('display', 'block');
+    $('.ticketContainer').css('display', 'flex');
 });
 
 
@@ -234,7 +234,7 @@ hr {
 }
 /* Main Ticket Style */
 .ticketContainer{
-    display: flex;
+   
     flex-direction: column;
     align-items: center;
 }
