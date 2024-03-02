@@ -238,9 +238,7 @@ jQuery(document).ready(function($) {
 
 
 <style>
-	.allTicketsContainer_main{
-		display:none
-	}
+
 	.loadingAnimation{
 		display:block
 	}
