@@ -263,6 +263,8 @@ $follower_count = count($followers_array);
         <?php if($organizer_instagram){ ?>
             <span class="organizer_instagram"> <?php echo $organizer_instagram ;?> </span>
         <?php } ?>
+
+        <br/>
         </div>
 </div>
 <?php 
