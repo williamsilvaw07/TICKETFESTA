@@ -223,7 +223,7 @@ jQuery(document).ready(function($) {
   content: '';
   width: 50px;
   height: 50px;
-  border: 5px solid rgba(0, 0, 0, 0.1);
+  border: 5px solid rgba(255, 2550, 255, 0.1);
   border-top-color: #000;
   border-radius: 50%;
   animation: spin 1s linear infinite;
