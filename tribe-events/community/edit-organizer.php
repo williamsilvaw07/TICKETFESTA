@@ -184,15 +184,11 @@ if ($banner_image_id) {
         <?php 
             $organizer_name        = esc_attr( tribe_get_organizer() ); 
             $organizer_description = esc_attr( tribe_get_organizer() ); 
-
             $organizer_id = isset($_GET['id']) ? $_GET['id'] : ''; 
-
-            // Get the author ID of the post
-            $author_id = get_post_field('post_author', $organizer_id);
-
-            // Get the author's email using the author ID
-            $author_email = get_the_author_meta('user_email', $author_id);
-            $organizer_email = esc_attr( $author_email ); 
+            echo '<pre>';
+            var_dump(get_post_meta( $organizer_id ));
+            echo '</pre>';
+            $organizer_email = esc_attr( $organizer_id ); 
 
         ?>
         <div class="events-community-post-title">
