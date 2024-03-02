@@ -223,8 +223,10 @@ jQuery(document).ready(function($) {
 
 
 
-
 <style>
+	.loadingAnimation{
+		display:block
+	}
 .grey {
   stroke-dasharray: 788 790;
   stroke-dashoffset: 789;
