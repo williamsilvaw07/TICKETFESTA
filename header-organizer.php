@@ -2954,6 +2954,10 @@ html .tickets-sold-column , html .tribe-list-column-title {
                     transition: margin-left .3s ease-in-out;
                     margin-left: 63px !important;
                 }
+                .main-sidebar {
+    max-width: 62px;
+
+}
             }
 
 
