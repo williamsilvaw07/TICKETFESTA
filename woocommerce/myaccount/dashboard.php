@@ -216,30 +216,51 @@ jQuery(document).ready(function($) {
 
 
 <style>
-/* Loading Animation */
-.loadingAnimation {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh; /* or adjust based on your layout */
+.grey {
+  stroke-dasharray: 788 790;
+  stroke-dashoffset: 789;
+  animation: draw_0 3200ms infinite, fade 3200ms infinite;
 }
 
-.loadingAnimation:before {
-  content: '';
-  width: 50px;
-  height: 50px;
-  border: 5px solid rgba(255, 2550, 255, 0.1);
-  border-top-color: #000;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
+.blue {
+  stroke-dasharray: 788 790;
+  stroke-dashoffset: 789;
+  animation: draw_1 3200ms infinite, fade 3200ms infinite;
 }
 
-@keyframes spin {
+@keyframes fade {
   0% {
-    transform: rotate(0deg);
+    stroke-opacity: 1;
+  }
+  80% {
+    stroke-opacity: 1;
   }
   100% {
-    transform: rotate(360deg);
+    stroke-opacity: 0;
+  }
+}
+
+@keyframes draw_0 {
+  9.375% {
+    stroke-dashoffset: 789
+  }
+  39.375% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes draw_1 {
+  35.625% {
+    stroke-dashoffset: 789
+  }
+  65.625% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: 0;
   }
 }
 
