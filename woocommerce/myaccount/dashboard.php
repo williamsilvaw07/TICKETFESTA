@@ -298,7 +298,7 @@ hr {
     align-items: center;
 }
 .ticketImage, .ticketImage img{
-	max-height:150px
+    max-height: 130px;
 }
 	.ticketImage img{
 		width: 200px;
@@ -315,6 +315,7 @@ hr {
     color: #1a1a1a!important;
     border-radius: 12px;
     max-width: 317px;
+	height: fit-content;
 
 
 }
