@@ -392,6 +392,22 @@ hr{
     font-weight: 300;
 
 }
+
+.view_event_btn {
+    white-space: nowrap;
+    font-size: 12px!important;
+    padding: 5px 15px !important;
+    border-radius: 4px!important;
+    padding-bottom: 3px!important;
+	background:black;
+	color:white;
+}
+
+
+
+
+
+
     </style>
 
 
