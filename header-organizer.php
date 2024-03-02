@@ -1946,6 +1946,12 @@ html .tickets-sold-column , html .tribe-list-column-title {
                 color: #d3fa18;
                 padding: 12px;
             }
+            input#organizer_facebook,
+            input#organizer_twitter,
+            input#organizer_instagram,
+            {
+                margin-left: 60px;
+            }
             #eventCouponForm {
                 display: flex;
                 flex-direction: column;
