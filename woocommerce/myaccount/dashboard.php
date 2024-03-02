@@ -163,6 +163,9 @@ jQuery(document).ready(function($) {
 
 ////FUNCTION TO ADD THE EVENT IMAGE AS A BACKGROUND 
 jQuery(document).ready(function($) {
+    // Now that the document is fully loaded, show the ticket container
+    $('.ticketContainer').css('display', 'block');
+
     $('.ticketImage').each(function() {
         // Get the src of the img element
         var imgSrc = $(this).find('img').attr('src');
@@ -183,7 +186,7 @@ jQuery(document).ready(function($) {
             'left': '0',
             'height': '100%',
             'width': '100%',
-            'background': 'rgba(0, 0, 0, 0.4)',
+            'background': 'rgba(255, 255, 255, 0.4)',
             'backdrop-filter': 'blur(8px)',
             'z-index': '1'
         });
@@ -212,6 +215,14 @@ jQuery(document).ready(function($) {
 
 
 <style>
+
+.ticketContainer {
+    display: none; /* Initially hide the ticket container intill js is loadded */
+}
+
+
+
+
 	.ticket_inner_div{
 		padding:5px 10px
 	}
