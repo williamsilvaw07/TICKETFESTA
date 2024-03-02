@@ -355,6 +355,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // });
 
     form.addEventListener('submit', function(e) {
+        e.preventDefault();
          // Collect form data
         var formData = new FormData(this);
 
@@ -362,7 +363,9 @@ document.addEventListener('DOMContentLoaded', function() {
         var xhr = new XMLHttpRequest();
         xhr.open('POST', ajaxurl, true);
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-
+        var organizer_description = document.querySelector('input[name="organizer_description"]').value.trim();
+        //     var organizer_email = document.querySelector('input[name="organizer_email"]').value.trim();
+        //     var organizer_id = queryParams.get('id');
         // Handle AJAX response
         xhr.onload = function() {
             if (xhr.status >= 200 && xhr.status < 400) {
@@ -375,7 +378,7 @@ document.addEventListener('DOMContentLoaded', function() {
         };
 
         // Send the request
-        xhr.send('action=update_organizer_information&' + formData);
+        xhr.send('action=update_organizer_information&organizer_description' + organizer_description);
 
         // if (isEditIconClicked) {
         //     e.preventDefault(); // Prevent default form submission only if edit icon clicked
