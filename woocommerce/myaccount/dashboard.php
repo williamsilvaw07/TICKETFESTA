@@ -432,7 +432,10 @@ display:none;
     display: flex;
     justify-content: space-around;
 }
-
+.container-fluid h2{
+	font-weight: 800;
+    padding-bottom: 33px;
+}
 
 
 
