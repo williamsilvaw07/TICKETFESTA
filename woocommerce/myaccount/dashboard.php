@@ -283,7 +283,7 @@ jQuery(document).ready(function($) {
 
 
 	.ticket_inner_div{
-		padding:5px 10px
+	    padding: 21px 16px 5px 16px;
 	}
 hr {
     width: 100%;
@@ -410,7 +410,11 @@ hr{
 
 }
 
-
+.ticketlowerSubDetail{
+	padding: 5px 10px 21px 10px;
+    display: flex;
+    justify-content: space-around;
+}
 
 
 
