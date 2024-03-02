@@ -652,7 +652,8 @@ if (!defined('ABSPATH')) {
 
 
 
-            .organizer_title_edit_btn {
+            .organizer_title_edit_btn,
+            .edit_svg_click {
                 position: absolute;
                 right: 10px;
 
@@ -2077,7 +2078,8 @@ html .tickets-sold-column , html .tribe-list-column-title {
                 height: 34px;
             }
 
-            .organizer_title_edit_btn {
+            .organizer_title_edit_btn,
+            .edit_svg_click {
                 background: #555;
                 border-radius: 100px;
                 width: 45px;
