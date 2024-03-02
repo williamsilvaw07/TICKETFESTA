@@ -432,13 +432,14 @@ display:none;
     display: flex;
     justify-content: space-around;
 }
-.container-fluid h2{
+.event-tickets-header h2{
     font-weight: bold!important;
-
     padding-bottom: 33px;
 }
 
-
+.event-tickets-header p{
+font-size:17px
+}
 
 
 
