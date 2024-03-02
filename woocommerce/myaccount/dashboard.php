@@ -168,68 +168,6 @@ jQuery(document).ready(function($) {
 
 
 
-jQuery(document).ready(function($) {
-    // Initially show the loading animation.
-    $('.loadingAnimation').css('display', 'block');
-
-    var totalImages = $('.ticketImage img').length;
-    var loadedImages = 0;
-
-    // Function to check if all images are loaded.
-    function checkAllImagesLoaded() {
-        if (loadedImages === totalImages) {
-            // Once all images are loaded, hide the loading animation and show the ticket containers.
-            $('.loadingAnimation').fadeOut('fast', function() {
-                // Ensure the ticket containers are displayed flexibly after fading in.
-                $('.allTicketsContainer').hide().css('display', 'flex').fadeIn('slow');
-            });
-        }
-    }
-
-    if (totalImages > 0) {
-        $('.ticketImage img').each(function() {
-            var imgSrc = $(this).attr('src');
-            // Create a new image to load in the background.
-            $('<img/>').on('load', function() {
-                loadedImages++;
-                // Apply background image and glass effect to the parent .ticketImage div.
-                var parentTicketImage = $('.ticketImage img[src="' + imgSrc + '"]').closest('.ticketImage');
-                parentTicketImage.css({
-                    'background-image': 'url(' + imgSrc + ')',
-                    'background-size': 'cover',
-                    'background-position': 'center center',
-                    'position': 'relative',
-                    'overflow': 'hidden'
-                });
-                
-                var glassEffect = $('<div></div>').css({
-                    'position': 'absolute',
-                    'top': '0',
-                    'left': '0',
-                    'height': '100%',
-                    'width': '100%',
-                    'background': 'rgba(255, 255, 255, 0.4)',
-                    'backdrop-filter': 'blur(8px)',
-                    'z-index': '1'
-                });
-
-                parentTicketImage.append(glassEffect);
-                parentTicketImage.find('img').css({
-                    'position': 'relative',
-                    'z-index': '2'
-                });
-
-                // Check if all images are loaded.
-                checkAllImagesLoaded();
-            }).attr('src', imgSrc);
-        });
-    } else {
-        // If there are no images to load, directly show the ticket containers.
-        $('.loadingAnimation').fadeOut('fast', function() {
-            $('.allTicketsContainer').hide().css('display', 'flex').fadeIn('slow');
-        });
-    }
-});
 
 </script>
 
