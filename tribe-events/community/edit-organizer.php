@@ -87,6 +87,9 @@ if ('POST' === $_SERVER['REQUEST_METHOD']) {
     // $organizer_twitter     = get_post_meta( $organizer_id, 'twitter_url', true ) ? get_post_meta( $organizer_id, 'twitter_url', true ) : ''; 
     // $organizer_instagram   = get_post_meta( $organizer_id, 'instagram_url', true ) ? get_post_meta( $organizer_id, 'instagram_url', true ) : ''; 
     
+    echo '<pre>';
+    var_dump($_POST);
+    echo '</pre>';
     if (isset($_POST['organizer_description'])) {
         $organizer_description = sanitize_text_field($_POST['organizer_description']);
         
