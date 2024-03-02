@@ -3643,6 +3643,8 @@ function display_upcoming_events_for_user_with_view_order_button() {
                     $map_link = "https://maps.google.com/?q=" . urlencode($event_address);
 
                     ?>
+                    <div class="loadingAnimation"></div>
+
                     <div class="ticketContainer">
                         <div class="ticket">
                             <div class="ticketImage">
