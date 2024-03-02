@@ -326,36 +326,36 @@ document.addEventListener('DOMContentLoaded', function() {
     
     }
 
-    var form = document.querySelector('form');
-    // Event listener for the form submission
-    form.addEventListener('submit', function(e) {
-        if (isEditIconClicked) {
-            e.preventDefault(); // Prevent default form submission only if edit icon clicked
+    // var form = document.querySelector('form');
+    // // Event listener for the form submission
+    // form.addEventListener('submit', function(e) {
+    //     if (isEditIconClicked) {
+    //         e.preventDefault(); // Prevent default form submission only if edit icon clicked
 
-            var titleValue = document.querySelector('input[name="post_title"]').value.trim();
-            var organizer_description = document.querySelector('input[name="organizer_description"]').value.trim();
-            var organizer_email = document.querySelector('input[name="organizer_email"]').value.trim();
+    //         var titleValue = document.querySelector('input[name="post_title"]').value.trim();
+    //         var organizer_description = document.querySelector('input[name="organizer_description"]').value.trim();
+    //         var organizer_email = document.querySelector('input[name="organizer_email"]').value.trim();
 
-            // AJAX request to check the title
-            var xhr = new XMLHttpRequest();
-            xhr.open('POST', '/wp-admin/admin-ajax.php', true);
-            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            xhr.onload = function() {
-                if (this.status === 200) {
-                    if (this.responseText === '') {
-                        // Name is unique, proceed to submit the form
-                        form.submit();
-                    } else {
-                        // Name is not unique, show error message
-                        alert(this.responseText);
-                        isEditIconClicked = false; // Reset flag
-                    }
-                }
-            };
-            xhr.send('action=check_organizer_name&organizer_name=' + encodeURIComponent(titleValue));
-        }
-        // If edit icon not clicked, form submits normally
-    });
+    //         // AJAX request to check the title
+    //         var xhr = new XMLHttpRequest();
+    //         xhr.open('POST', '/wp-admin/admin-ajax.php', true);
+    //         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    //         xhr.onload = function() {
+    //             if (this.status === 200) {
+    //                 if (this.responseText === '') {
+    //                     // Name is unique, proceed to submit the form
+    //                     form.submit();
+    //                 } else {
+    //                     // Name is not unique, show error message
+    //                     alert(this.responseText);
+    //                     isEditIconClicked = false; // Reset flag
+    //                 }
+    //             }
+    //         };
+    //         xhr.send('action=check_organizer_name&organizer_name=' + encodeURIComponent(titleValue));
+    //     }
+    //     // If edit icon not clicked, form submits normally
+    // });
 });
 
 
