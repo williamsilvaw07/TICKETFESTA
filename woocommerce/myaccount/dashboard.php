@@ -303,7 +303,7 @@ hr {
 	.ticketImage img{
 		width: 200px;
     margin: 0 auto;
-	object-fit: contain;
+	object-fit: contain!important;
 
 	}
 	.ticketImage{
