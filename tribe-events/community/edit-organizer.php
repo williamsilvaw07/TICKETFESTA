@@ -185,10 +185,11 @@ if ($banner_image_id) {
             $organizer_name        = esc_attr( tribe_get_organizer() ); 
             $organizer_description = esc_attr( tribe_get_organizer() ); 
             $organizer_id = isset($_GET['id']) ? $_GET['id'] : ''; 
-            echo '<pre>';
-            var_dump(get_post_meta( $organizer_id ));
-            echo '</pre>';
-            $organizer_email = esc_attr( $organizer_id ); 
+            $organizer_email = get_post_meta( $organizer_id, '_OrganizerEmail', true ); 
+            // echo '<pre>';
+            // var_dump(get_post_meta( $organizer_id ));
+            // echo '</pre>';
+            // $organizer_email = esc_attr( $organizer_id ); 
 
         ?>
         <div class="events-community-post-title">
