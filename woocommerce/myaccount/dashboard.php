@@ -338,8 +338,8 @@ hr{
     width: 90%;
     border: 1px solid #efefef;
 }
-.ticketDetail , .ticketSubDetail{
-    font-size: 15px!important;
+.ticketDetail , .ticketSubDetail , .eventaddress{
+    font-size: 14px!important;
     font-weight: 500;
    
 }
