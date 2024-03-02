@@ -3628,7 +3628,7 @@ function display_upcoming_events_for_user_with_view_order_button() {
 
     
     echo '<h2>Upcoming Events You Have Tickets For:</h2>';
-
+    echo '<div class="allTicketsContainer">'; // Open the main container for all tickets here
     if (!empty($customer_orders)) {
         foreach ($customer_orders as $customer_order) {
             $order_url = $customer_order->get_view_order_url();
@@ -3672,7 +3672,7 @@ function display_upcoming_events_for_user_with_view_order_button() {
 </g>
 </svg>
                     </div>
-<div class="allTicketsContainer">
+
 
                     
                         <div class="ticket">

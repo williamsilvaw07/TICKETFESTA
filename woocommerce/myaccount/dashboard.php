@@ -223,8 +223,10 @@ jQuery(document).ready(function($) {
 
 
 
-
 <style>
+	.loadingAnimation{
+		display:block
+	}
 .grey {
   stroke-dasharray: 788 790;
   stroke-dashoffset: 789;
@@ -274,7 +276,7 @@ jQuery(document).ready(function($) {
 }
 
 .allTicketsContainer{
-    display: flex;
+    
     gap: 25px;
     align-items: flex-start;
     align-content: flex-start;
