@@ -201,14 +201,14 @@ jQuery(document).ready(function($) {
 
                 // If all images are loaded, fade in the ticket containers
                 if (loadedImages === totalImages) {
-                    $('.loadingAnimation').fadeOut();
+                    $('.loadingAnimation').hide();
                     $('.ticketContainer').fadeIn();
                 }
             }).attr('src', imgSrc);
         });
     } else {
         // If there are no images, directly fade in the ticket containers
-        $('.loadingAnimation').fadeOut();
+        $('.loadingAnimation').hide();
         $('.ticketContainer').fadeIn();
     }
 });
