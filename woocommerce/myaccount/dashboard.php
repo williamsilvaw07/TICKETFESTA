@@ -159,33 +159,39 @@ jQuery(document).ready(function($) {
 
 
 jQuery(document).ready(function($) {
-    // Show the loading animation
+    // Initially show the loading animation.
     $('.loadingAnimation').show();
 
-    // Counter to keep track of loaded images
+    // Counter for tracking the loaded images.
     var totalImages = $('.ticketImage img').length;
     var loadedImages = 0;
 
-    // Check if there are images to load
+    function finalizeDisplay() {
+        // Hide the loading animation and display the tickets container.
+        $('.loadingAnimation').fadeOut('fast', function() {
+            $('.allTicketsContainer').css('display', 'flex').hide().fadeIn('slow');
+        });
+    }
+
+    // If there are images within the ticketImage container.
     if (totalImages > 0) {
         $('.ticketImage img').each(function() {
-            var imgSrc = $(this).attr('src');
-            // Create a new Image object
-            var img = new Image();
-            // Define what happens once the image is loaded
-            img.onload = function() {
-                loadedImages++;
-                // When an image is loaded, update its parent .ticketImage with a background
-                var parentTicketImage = $('.ticketImage img[src="' + imgSrc + '"]').closest('.ticketImage');
-                parentTicketImage.css({
+            var imgElement = $(this); // Cache the current image element.
+            var imgSrc = imgElement.attr('src'); // Get the source of the image.
+
+            // Create a new Image object for preloading.
+            var imgPreload = new Image();
+            $(imgPreload).on('load', function() {
+                loadedImages++; // Increment the loaded images counter.
+
+                // Set the CSS of the parent .ticketImage based on the loaded image.
+                imgElement.closest('.ticketImage').css({
                     'background-image': 'url(' + imgSrc + ')',
                     'background-size': 'cover',
                     'background-position': 'center center',
                     'position': 'relative',
                     'overflow': 'hidden'
-                });
-
-                var glassEffect = $('<div></div>').css({
+                }).append($('<div></div>').css({
                     'position': 'absolute',
                     'top': '0',
                     'left': '0',
@@ -194,26 +200,26 @@ jQuery(document).ready(function($) {
                     'background': 'rgba(255, 255, 255, 0.4)',
                     'backdrop-filter': 'blur(8px)',
                     'z-index': '1'
-                });
+                }));
 
-                parentTicketImage.append(glassEffect);
-                parentTicketImage.find('img').css({
+                // Ensure the original img element is visible on top of the added effects.
+                imgElement.css({
                     'position': 'relative',
                     'z-index': '2'
                 });
 
-                // If all images are loaded, hide the loading animation and fade in the ticket containers
+                // If all images have been loaded, proceed to finalize the display.
                 if (loadedImages === totalImages) {
-                    $('.loadingAnimation').hide();
-                    $('.allTicketsContainer').hide().css('display', 'flex').fadeIn();
+                    finalizeDisplay();
                 }
-            };
-            img.src = imgSrc;
+            });
+
+            // Set the src attribute to trigger the load event.
+            imgPreload.src = imgSrc;
         });
     } else {
-        // If there are no images, directly fade in the ticket containers
-        $('.loadingAnimation').hide();
-        $('.allTicketsContainer').hide().css('display', 'flex').fadeIn();
+        // If there are no images to load, directly proceed to finalize the display.
+        finalizeDisplay();
     }
 });
 
