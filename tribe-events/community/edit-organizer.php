@@ -383,7 +383,7 @@ document.addEventListener('DOMContentLoaded', function() {
         };
 
         // Send the request
-        xhr.send('action=update_organizer_information&organizer_description=' + organizer_description & 'organizer_description=' + organizer_description);
+        xhr.send('action=update_organizer_information&organizer_description=' + organizer_description +'&organizer_id=' + organizer_id);
 
         // if (isEditIconClicked) {
         //     e.preventDefault(); // Prevent default form submission only if edit icon clicked
