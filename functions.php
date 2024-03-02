@@ -3690,7 +3690,7 @@ function display_upcoming_events_for_user_with_view_order_button() {
                             </div>
                             <div class="ticketSubDetail">
                                 <div class="code"><?php echo $customer_order->get_order_number(); ?></div>
-                                <div>Paid:&ensp;<?php echo $order_paid_date; ?></div> <!-- Displaying the order paid date -->
+                                <div><span class="ticket-detail-title">Paid:</span>&ensp;<?php echo $order_paid_date; ?></div> <!-- Displaying the order paid date -->
                             </div>
                             <div class="ticketlowerSubDetail">
                                 <a href="<?php echo $order_url; ?>"><button class="view_ticket_btn">View Ticket</button></a>
