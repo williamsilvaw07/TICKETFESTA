@@ -456,6 +456,17 @@ font-size:17px
     .allTicketsContainer {
     justify-content: center;
     }
+	.event-tickets-header {
+    padding-bottom: 20px;
+}
+.event-tickets-header h2{
+
+font-size:20px
+}
+
+.event-tickets-header p{
+font-size:14px
+}
 
 }
 
