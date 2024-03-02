@@ -3639,7 +3639,7 @@ function display_upcoming_events_for_user_with_view_order_button() {
         return count($lines) > 1 ? $lines[0] . '...' : $title;
     }
 
-    echo '<h2 class="container-fluid ">Upcoming Events You Have Tickets For:</h2>';
+    echo '<h2 class="container-fluid ">Your Upcoming Event Tickets</h2>';
 
 
     echo '<div class="loadingAnimation">
