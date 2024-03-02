@@ -329,16 +329,17 @@ display:none;
 
 /* Ticket Content */
 .ticketTitle{
-font-size: 18px;
-    line-height: 22px;
+	font-size: 15px;
+	line-height: 19px;
     font-weight: 700;
+    margin-bottom: 10px;
 }
 hr{
     width: 90%;
     border: 1px solid #efefef;
 }
-.ticketDetail , .ticketSubDetail{
-    font-size: 15px!important;
+.ticketDetail , .ticketSubDetail , .eventaddress{
+    font-size: 14px!important;
     font-weight: 500;
    
 }

@@ -3663,7 +3663,7 @@ function display_upcoming_events_for_user_with_view_order_button() {
                     </div>
 <div class="allTicketsContainer">
 
-                    <div class="ticketContainer">
+                    
                         <div class="ticket">
                             <div class="ticketImage">
                                 <img src="<?php echo $event_image_url; ?>" alt="Event Image">
@@ -3698,8 +3698,7 @@ function display_upcoming_events_for_user_with_view_order_button() {
                                 <a href="<?php echo $event_url; ?>"><button class="view_event_btn">Event Details</button></a>
                             </div>
                         </div>
-                        <div class="ticketShadow"></div>
-                    </div>
+                 
                     <?php
 
                     $displayed_event_ids[] = $event_id;
