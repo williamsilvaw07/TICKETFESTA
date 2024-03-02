@@ -253,15 +253,15 @@ $follower_count = count($followers_array);
         <?php } ?>
 
         <?php if($organizer_facebook){ ?>
-            <p class="organizer_facebook"> <?php echo $organizer_facebook ;?> </p>
+            <span class="organizer_facebook"> <?php echo $organizer_facebook ;?> </span>
         <?php } ?>
 
         <?php if($organizer_twitter){ ?>
-            <p class="organizer_twitter"> <?php echo $organizer_twitter ;?> </p>
+            <span class="organizer_twitter"> <?php echo $organizer_twitter ;?> </span>
         <?php } ?>
 
         <?php if($organizer_instagram){ ?>
-            <p class="organizer_instagram"> <?php echo $organizer_instagram ;?> </p>
+            <span class="organizer_instagram"> <?php echo $organizer_instagram ;?> </span>
         <?php } ?>
         </div>
 </div>
