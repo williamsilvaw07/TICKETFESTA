@@ -1596,6 +1596,17 @@ color: #555!important;
 .organizer_profile_bk {
     height: 550px;
 }
+span.social_icons_organizers {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 21px;
+}
+
+span.social_icons_organizers i.social-icon {
+    font-size: 18px;
+  
+}
 .event-tickets .tribe-tickets__tickets-item-details-content, .entry .entry-content .event-tickets .tribe-tickets__tickets-item-details-content {
     grid-row: 4;
 }
