@@ -169,30 +169,30 @@ jQuery(document).ready(function($) {
 
 
 jQuery(document).ready(function($) {
-    // Initially show the loading animation.
+    // Initially show the loading animation
     $('.loadingAnimation').css('display', 'block');
 
     var totalImages = $('.ticketImage img').length;
     var loadedImages = 0;
 
-    // Function to check if all images are loaded.
+    // Function to check if all images are loaded
     function checkAllImagesLoaded() {
         if (loadedImages === totalImages) {
-            // Once all images are loaded, hide the loading animation and show the ticket containers.
+            // Once all images are loaded, fade out the loading animation and then display the tickets container
             $('.loadingAnimation').fadeOut('fast', function() {
-                // Ensure the ticket containers are displayed flexibly after fading in.
-                $('.allTicketsContainer').hide().css('display', 'flex').fadeIn('slow');
+                // Set the tickets container to display flex after it's visible to ensure layout is correct
+                $('.allTicketsContainer').css('display', 'flex').hide().fadeIn('slow');
             });
         }
     }
 
+    // If there are images to load, set up a load event listener for each
     if (totalImages > 0) {
         $('.ticketImage img').each(function() {
             var imgSrc = $(this).attr('src');
-            // Create a new image to load in the background.
             $('<img/>').on('load', function() {
                 loadedImages++;
-                // Apply background image and glass effect to the parent .ticketImage div.
+                // Apply background styling and glass effect after each image is loaded
                 var parentTicketImage = $('.ticketImage img[src="' + imgSrc + '"]').closest('.ticketImage');
                 parentTicketImage.css({
                     'background-image': 'url(' + imgSrc + ')',
@@ -201,7 +201,7 @@ jQuery(document).ready(function($) {
                     'position': 'relative',
                     'overflow': 'hidden'
                 });
-                
+
                 var glassEffect = $('<div></div>').css({
                     'position': 'absolute',
                     'top': '0',
@@ -214,19 +214,16 @@ jQuery(document).ready(function($) {
                 });
 
                 parentTicketImage.append(glassEffect);
-                parentTicketImage.find('img').css({
-                    'position': 'relative',
-                    'z-index': '2'
-                });
+                parentTicketImage.find('img').css('position', 'relative').css('z-index', '2');
 
-                // Check if all images are loaded.
+                // Check if all images are loaded
                 checkAllImagesLoaded();
-            }).attr('src', imgSrc);
+            }).attr('src', imgSrc); // This triggers the load event
         });
     } else {
-        // If there are no images to load, directly show the ticket containers.
+        // If there are no images, directly fade in the ticket containers
         $('.loadingAnimation').fadeOut('fast', function() {
-            $('.allTicketsContainer').hide().css('display', 'flex').fadeIn('slow');
+            $('.allTicketsContainer').css('display', 'flex').hide().fadeIn('slow');
         });
     }
 });
