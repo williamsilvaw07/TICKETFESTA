@@ -3658,7 +3658,7 @@ function display_upcoming_events_for_user_with_view_order_button() {
                             <div class="ticketDetail">
     <div><span class="ticket-detail-title">Event Date:</span>&ensp;<?php echo date_i18n('F j, Y, g:i a', strtotime($event_start_date)); ?></div>
     <div><span class="ticket-detail-title">Ticket Quantity:</span>&ensp;<?php echo $ticket_quantity; ?></div>
-    <div><span class="ticket-detail-title">Order Total:</span>&ensp;<?php echo $order_total; ?></div>
+    <div><span class="ticket-detail-title">Order Total: £</span>&ensp;<?php echo $order_total; ?></div>
 </div>
 
                             </div>
