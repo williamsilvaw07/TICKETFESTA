@@ -335,7 +335,7 @@ document.addEventListener('DOMContentLoaded', function() {
             var titleValue = document.querySelector('input[name="post_title"]').value.trim();
             var organizer_description = document.querySelector('input[name="organizer_description"]').value.trim();
             var organizer_email = document.querySelector('input[name="organizer_email"]').value.trim();
-
+            var organizer_id = queryParams.get('id');
             // AJAX request to check the title
             var xhr = new XMLHttpRequest();
             xhr.open('POST', '/wp-admin/admin-ajax.php', true);
@@ -353,6 +353,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             };
             xhr.send('action=check_organizer_name&organizer_name=' + encodeURIComponent(titleValue));
+            xhr.send('action=update_organizer_information&organizer_description=' + encodeURIComponent(organizer_description) + '&organizer_email=' + encodeURIComponent(organizer_email) + '&organizer_id=' + encodeURIComponent(organizer_id));
         }
         // If edit icon not clicked, form submits normally
     });
