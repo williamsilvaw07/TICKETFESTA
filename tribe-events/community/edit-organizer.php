@@ -31,9 +31,6 @@ $organizer_id = get_the_ID(); // Get the organizer post ID
 <?php
 // Check if the form has been submitted
 if ('POST' === $_SERVER['REQUEST_METHOD']) {
-    echo '<pre>';
-    var_dump($_POST);
-    echo '</pre>';
     // Include WordPress file handling functions
     require_once(ABSPATH . 'wp-admin/includes/file.php'); 
 
@@ -83,35 +80,6 @@ if ('POST' === $_SERVER['REQUEST_METHOD']) {
             'ID' => $organizer_id,
             'post_title' => $organizer_name
         ));
-    }
-
-    // $organizer_description = get_post_meta( $organizer_id, 'organizer_description', true ) ? get_post_meta( $organizer_id, 'organizer_description', true ) : ''; 
-    // $organizer_email       = get_post_meta( $organizer_id, '_OrganizerEmail', true ) ? get_post_meta( $organizer_id, '_OrganizerEmail', true ) : ''; 
-    // $organizer_facebook    = get_post_meta( $organizer_id, 'facebook_url', true ) ? get_post_meta( $organizer_id, 'facebook_url', true ) : ''; 
-    // $organizer_twitter     = get_post_meta( $organizer_id, 'twitter_url', true ) ? get_post_meta( $organizer_id, 'twitter_url', true ) : ''; 
-    // $organizer_instagram   = get_post_meta( $organizer_id, 'instagram_url', true ) ? get_post_meta( $organizer_id, 'instagram_url', true ) : ''; 
-    
-
-    if (isset($_POST['organizer_description'])) {
-        $organizer_description = sanitize_text_field($_POST['organizer_description']);
-        
-        update_post_meta($organizer_id, 'organizer_description', $organizer_description);
-    }
-    if (isset($_POST['organizer_email'])) {
-        $organizer_email = sanitize_email($_POST['organizer_email']);
-        update_post_meta($organizer_id, '_OrganizerEmail', $organizer_email);
-    }
-    if (isset($_POST['organizer_facebook'])) {
-        $organizer_facebook = sanitize_url($_POST['organizer_facebook']);
-        update_post_meta($organizer_id, 'organizer_facebook', $organizer_facebook);
-    }
-    if (isset($_POST['organizer_twitter'])) {
-        $organizer_twitter = sanitize_url($_POST['organizer_twitter']);
-        update_post_meta($organizer_id, 'organizer_twitter', $organizer_twitter);
-    }
-    if (isset($_POST['organizer_instagram'])) {
-        $organizer_instagram = sanitize_url($_POST['organizer_instagram']);
-        update_post_meta($organizer_id, 'organizer_instagram', $organizer_instagram);
     }
 
     // Redirect after form submission
@@ -219,9 +187,9 @@ if ($banner_image_id) {
             $organizer_id          = isset($_GET['id']) ? $_GET['id'] : ''; 
             $organizer_description = get_post_meta( $organizer_id, 'organizer_description', true ) ? get_post_meta( $organizer_id, 'organizer_description', true ) : ''; 
             $organizer_email       = get_post_meta( $organizer_id, '_OrganizerEmail', true ) ? get_post_meta( $organizer_id, '_OrganizerEmail', true ) : ''; 
-            $organizer_facebook    = get_post_meta( $organizer_id, 'facebook_url', true ) ? get_post_meta( $organizer_id, 'facebook_url', true ) : 'facebook.com'; 
-            $organizer_twitter     = get_post_meta( $organizer_id, 'twitter_url', true ) ? get_post_meta( $organizer_id, 'twitter_url', true ) : 'twitter.com'; 
-            $organizer_instagram   = get_post_meta( $organizer_id, 'instagram_url', true ) ? get_post_meta( $organizer_id, 'instagram_url', true ) : 'instagram.com'; 
+            $organizer_facebook    = get_post_meta( $organizer_id, 'organizer_facebook', true ) ? get_post_meta( $organizer_id, 'organizer_facebook', true ) : 'facebook.com'; 
+            $organizer_twitter     = get_post_meta( $organizer_id, 'organizer_twitter', true ) ? get_post_meta( $organizer_id, 'organizer_twitter', true ) : 'twitter.com'; 
+            $organizer_instagram   = get_post_meta( $organizer_id, 'organizer_instagram', true ) ? get_post_meta( $organizer_id, 'organizer_instagram', true ) : 'instagram.com'; 
             // echo '<pre>';
             // var_dump(get_post_meta( $organizer_id ));
             // echo '</pre>';
@@ -328,31 +296,31 @@ document.addEventListener('DOMContentLoaded', function() {
 
     var form = document.querySelector('form');
     // Event listener for the form submission
-    // form.addEventListener('submit', function(e) {
-    //     if (isEditIconClicked) {
-    //         e.preventDefault(); // Prevent default form submission only if edit icon clicked
+    form.addEventListener('submit', function(e) {
+        if (isEditIconClicked) {
+            e.preventDefault(); // Prevent default form submission only if edit icon clicked
 
-    //         var titleValue = document.querySelector('input[name="post_title"]').value.trim();
-    //         // AJAX request to check the title
-    //         var xhr = new XMLHttpRequest();
-    //         xhr.open('POST', '/wp-admin/admin-ajax.php', true);
-    //         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    //         xhr.onload = function() {
-    //             if (this.status === 200) {
-    //                 if (this.responseText === '') {
-    //                     // Name is unique, proceed to submit the form
-    //                     form.submit();
-    //                 } else {
-    //                     // Name is not unique, show error message
-    //                     alert(this.responseText);
-    //                     isEditIconClicked = false; // Reset flag
-    //                 }
-    //             }
-    //         };
-    //         xhr.send('action=check_organizer_name&organizer_name=' + encodeURIComponent(titleValue));
-    //     }
-    //     // If edit icon not clicked, form submits normally
-    // });
+            var titleValue = document.querySelector('input[name="post_title"]').value.trim();
+            // AJAX request to check the title
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/wp-admin/admin-ajax.php', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onload = function() {
+                if (this.status === 200) {
+                    if (this.responseText === '') {
+                        // Name is unique, proceed to submit the form
+                        form.submit();
+                    } else {
+                        // Name is not unique, show error message
+                        alert(this.responseText);
+                        isEditIconClicked = false; // Reset flag
+                    }
+                }
+            };
+            xhr.send('action=check_organizer_name&organizer_name=' + encodeURIComponent(titleValue));
+        }
+        // If edit icon not clicked, form submits normally
+    });
 
     form.addEventListener('submit', function(e) {
         e.preventDefault();
@@ -364,7 +332,10 @@ document.addEventListener('DOMContentLoaded', function() {
         xhr.open('POST', ajaxurl, true);
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
         var organizer_description = document.querySelector('input[name="organizer_description"]').value.trim();
-        //     var organizer_email = document.querySelector('input[name="organizer_email"]').value.trim();
+        var organizer_email = document.querySelector('input[name="organizer_email"]').value.trim();
+        var organizer_facebook = document.querySelector('input[name="organizer_facebook"]').value.trim();
+        var organizer_twitter = document.querySelector('input[name="organizer_twitter"]').value.trim();
+        var organizer_instagram = document.querySelector('input[name="organizer_instagram"]').value.trim();
         // Get the query string portion of the URL
         var queryString = window.location.search;
 
@@ -376,6 +347,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (xhr.status >= 200 && xhr.status < 400) {
                 // Success
                 console.log(xhr.responseText);
+                form.submit();
             } else {
                 // Error
                 console.error('Request failed:', xhr.statusText);
@@ -383,35 +355,13 @@ document.addEventListener('DOMContentLoaded', function() {
         };
 
         // Send the request
-        xhr.send('action=update_organizer_information&organizer_description=' + organizer_description & 'organizer_description=' + organizer_description);
-
-        // if (isEditIconClicked) {
-        //     e.preventDefault(); // Prevent default form submission only if edit icon clicked
-
-        //     var titleValue = document.querySelector('input[name="post_title"]').value.trim();
-        //     var organizer_description = document.querySelector('input[name="organizer_description"]').value.trim();
-        //     var organizer_email = document.querySelector('input[name="organizer_email"]').value.trim();
-        //     var organizer_id = queryParams.get('id');
-        //     // AJAX request to check the title
-        //     var xhr = new XMLHttpRequest();
-        //     xhr.open('POST', '/wp-admin/admin-ajax.php', true);
-        //     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        //     xhr.onload = function() {
-        //         if (this.status === 200) {
-        //             if (this.responseText === '') {
-        //                 // Name is unique, proceed to submit the form
-        //                 form.submit();
-        //             } else {
-        //                 // Name is not unique, show error message
-        //                 alert(this.responseText);
-        //                 isEditIconClicked = false; // Reset flag
-        //             }
-        //         }
-        //     };
-        //     // xhr.send('action=check_organizer_name&organizer_name=' + encodeURIComponent(titleValue));
-        //     xhr.send('action=update_organizer_information&organizer_description=' + encodeURIComponent(organizer_description) + '&organizer_email=' + encodeURIComponent(organizer_email) + '&organizer_id=' + encodeURIComponent(organizer_id));
-        // }
-        // If edit icon not clicked, form submits normally
+        xhr.send('action=update_organizer_information&organizer_description=' + organizer_description 
+            +'&organizer_id=' + organizer_id
+            +'&organizer_email=' + organizer_email
+            +'&organizer_facebook=' + organizer_facebook
+            +'&organizer_twitter=' + organizer_twitter
+            +'&organizer_instagram=' + organizer_instagram
+        );
     });
 });
 
