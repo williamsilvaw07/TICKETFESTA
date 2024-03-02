@@ -330,7 +330,7 @@ display:none;
 /* Ticket Content */
 .ticketTitle{
 	font-size: 15px;
-    line-height: 22px;
+	line-height: 19px;
     font-weight: 700;
     margin-bottom: 10px;
 }
