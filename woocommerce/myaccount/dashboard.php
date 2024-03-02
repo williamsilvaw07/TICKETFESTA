@@ -202,14 +202,14 @@ jQuery(document).ready(function($) {
                 // If all images are loaded, fade in the ticket containers
                 if (loadedImages === totalImages) {
                     $('.loadingAnimation').hide();
-                    $('.ticketContainer').fadeIn();
+                    $('.allTicketsContainer').fadeIn();
                 }
             }).attr('src', imgSrc);
         });
     } else {
         // If there are no images, directly fade in the ticket containers
         $('.loadingAnimation').hide();
-        $('.ticketContainer').fadeIn();
+        $('.allTicketsContainer').fadeIn();
     }
 });
 
@@ -273,14 +273,19 @@ jQuery(document).ready(function($) {
   }
 }
 
+.allTicketsContainer{
+    display: flex;
+    gap: 25px;
+    align-items: flex-start;
+    align-content: flex-start;
+    justify-content: flex-start;
+    flex-wrap: wrap;
 
-
-.ticketContainer {
-    display: none; /* Initially hide the ticket container intill js is loadded */
 }
 
-
-
+.allTicketsContainer{
+    display: none; /* Initially hide the ticket container intill js is loadded */
+}
 
 	.ticket_inner_div{
 	    padding: 21px 16px 5px 16px;
