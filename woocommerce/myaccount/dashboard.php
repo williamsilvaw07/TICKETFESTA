@@ -443,6 +443,22 @@ display:none;
 
 
 
+
+
+
+
+
+
+
+
+@media (max-width: 600px) {
+    .allTicketsContainer {
+    justify-content: center;
+    }
+
+}
+
+
     </style>
 
 
