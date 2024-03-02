@@ -338,9 +338,9 @@ hr {
     background-color: white;
     color: #1a1a1a!important;
     border-radius: 12px;
-    max-width: 317px;
+    max-width: 300px;
 	height: fit-content;
-
+    width: 100%;
 
 }
 .ticketShadow{
