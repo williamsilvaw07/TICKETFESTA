@@ -219,6 +219,12 @@ $follower_count = count($followers_array);
     // Get the organizer's title/name
     $organizer_title = get_the_title( $organizer->ID );
 
+    $organizer_description = get_post_meta( $organizer->ID, 'organizer_description', true ) ? get_post_meta( $organizer->ID, 'organizer_description', true ) : ''; 
+    $organizer_email       = get_post_meta( $organizer->ID, '_OrganizerEmail', true ) ? get_post_meta( $organizer->ID, '_OrganizerEmail', true ) : ''; 
+    $organizer_facebook    = get_post_meta( $organizer->ID, 'organizer_facebook', true ) ? get_post_meta( $organizer->ID, 'organizer_facebook', true ) : ''; 
+    $organizer_twitter     = get_post_meta( $organizer->ID, 'organizer_twitter', true ) ? get_post_meta( $organizer->ID, 'organizer_twitter', true ) : ''; 
+    $organizer_instagram   = get_post_meta( $organizer->ID, 'organizer_instagram', true ) ? get_post_meta( $organizer->ID, 'organizer_instagram', true ) : ''; 
+    
     // Output the organizer's title/name wrapped in an h1 tag
     echo '<h1>' . esc_html( $organizer_title ) . '</h1>';
     ?>
@@ -237,6 +243,18 @@ $follower_count = count($followers_array);
             <input type="hidden" name="follow" value="<?php echo $follower_text;?>">
             <input type="submit" value="<?php echo ucfirst($follower_text); ?>" nanme="submit" class="follow-button"> 
         </form>
+        <div class="organizer_text_profile">
+        <?php
+
+            if($organizer_description){
+        ?>
+            <p class="description"> <?php echo $organizer_description ;?> </p>
+
+        <?php
+            }
+        
+        ?>
+        </div>
 </div>
 <?php 
 
