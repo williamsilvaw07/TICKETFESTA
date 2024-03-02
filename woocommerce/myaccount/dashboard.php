@@ -28,13 +28,11 @@ $allowed_html = array(
 );
 ?>
 
-<p>
+
 	<?php
 	
 	?>
-</p>
 
-<p>
 	<?php
 
 	printf(
@@ -44,7 +42,7 @@ $allowed_html = array(
 		esc_url( wc_get_endpoint_url( 'edit-account' ) )
 	);
 	?>
-</p>
+
 
 <?php
 	/**
