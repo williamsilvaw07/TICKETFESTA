@@ -316,7 +316,7 @@ hr{
     width: 90%;
     border: 1px solid #efefef;
 }
-.ticketDetail{
+.ticketDetail , .ticketSubDetail{
     font-size: 15px;
     font-weight: 500;
    
