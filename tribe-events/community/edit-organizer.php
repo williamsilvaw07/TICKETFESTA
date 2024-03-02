@@ -351,7 +351,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 }
             };
-            xhr.send('action=check_organizer_name&organizer_name=' + encodeURIComponent(titleValue, organizer_description, organizer_email));
+            xhr.send('action=check_organizer_name&organizer_name=' + encodeURIComponent(titleValue));
         }
         // If edit icon not clicked, form submits normally
     });
