@@ -365,7 +365,12 @@ document.addEventListener('DOMContentLoaded', function() {
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
         var organizer_description = document.querySelector('input[name="organizer_description"]').value.trim();
         //     var organizer_email = document.querySelector('input[name="organizer_email"]').value.trim();
-        //     var organizer_id = queryParams.get('id');
+        // Get the query string portion of the URL
+        var queryString = window.location.search;
+
+        // Parse the query string into an object
+        var queryParams = new URLSearchParams(queryString);
+        var organizer_id = queryParams.get('id');
         // Handle AJAX response
         xhr.onload = function() {
             if (xhr.status >= 200 && xhr.status < 400) {
@@ -378,7 +383,7 @@ document.addEventListener('DOMContentLoaded', function() {
         };
 
         // Send the request
-        xhr.send('action=update_organizer_information&organizer_description=' + organizer_description);
+        xhr.send('action=update_organizer_information&organizer_description=' + organizer_description & 'organizer_description=' + organizer_description);
 
         // if (isEditIconClicked) {
         //     e.preventDefault(); // Prevent default form submission only if edit icon clicked
