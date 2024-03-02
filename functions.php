@@ -1509,6 +1509,18 @@ add_action('wp_ajax_nopriv_check_organizer_name', 'ajax_check_organizer_name'); 
 
 //////////////////////END////////////////////////
 
+///update organizer information
+
+function ajax_update_organizer_information()
+{
+    $organizer_description = sanitize_text_field($_POST['organizer_description']);
+    $organizer_id = sanitize_text_field($_POST['organizer_id']);
+    update_post_meta($organizer_id, 'organizer_description', $organizer_description);
+
+}
+
+add_action('wp_ajax_update_organizer_information', 'ajax_update_organizer_information');
+add_action('wp_ajax_nopriv_update_organizer_information', 'ajax_update_organizer_information'); // If needed for non-logged in users
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
