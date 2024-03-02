@@ -267,7 +267,7 @@ hr{
     border: 1px solid #efefef;
 }
 .ticketDetail{
-    font-size: 1.1rem;
+    font-size: 15px;
     font-weight: 500;
    
 }
