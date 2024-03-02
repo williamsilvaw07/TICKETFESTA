@@ -180,7 +180,7 @@ jQuery(document).ready(function($) {
 
 <style>
 	.loadingAnimation{
-		display:block
+		display:block!important
 	}
 .grey {
   stroke-dasharray: 788 790;
