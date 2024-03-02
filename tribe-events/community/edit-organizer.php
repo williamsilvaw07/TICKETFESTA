@@ -355,6 +355,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // });
 
     form.addEventListener('submit', function(e) {
+        e.preventDefault();
          // Collect form data
         var formData = new FormData(this);
 
