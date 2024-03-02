@@ -170,7 +170,10 @@ jQuery(document).ready(function($) {
     if (totalImages > 0) {
         $('.ticketImage img').each(function() {
             var imgSrc = $(this).attr('src');
-            $('<img/>').on('load', function() {
+            // Create a new Image object
+            var img = new Image();
+            // Define what happens once the image is loaded
+            img.onload = function() {
                 loadedImages++;
                 // When an image is loaded, update its parent .ticketImage with a background
                 var parentTicketImage = $('.ticketImage img[src="' + imgSrc + '"]').closest('.ticketImage');
@@ -199,17 +202,18 @@ jQuery(document).ready(function($) {
                     'z-index': '2'
                 });
 
-                // If all images are loaded, fade in the ticket containers
+                // If all images are loaded, hide the loading animation and fade in the ticket containers
                 if (loadedImages === totalImages) {
                     $('.loadingAnimation').hide();
-                    $('.allTicketsContainer').fadeIn();
+                    $('.allTicketsContainer').hide().css('display', 'flex').fadeIn();
                 }
-            }).attr('src', imgSrc);
+            };
+            img.src = imgSrc;
         });
     } else {
         // If there are no images, directly fade in the ticket containers
         $('.loadingAnimation').hide();
-        $('.allTicketsContainer').fadeIn();
+        $('.allTicketsContainer').hide().css('display', 'flex').fadeIn();
     }
 });
 
