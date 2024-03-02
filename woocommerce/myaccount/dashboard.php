@@ -181,7 +181,7 @@ jQuery(document).ready(function($) {
             // Once all images are loaded, hide the loading animation and show the ticket containers.
             $('.loadingAnimation').fadeOut('fast', function() {
                 // Ensure the ticket containers are displayed flexibly after fading in.
-                $('.allTicketsContainer_main').hide().css('display', 'flex').fadeIn('slow');
+                $('.allTicketsContainer').hide().css('display', 'flex').fadeIn('slow');
             });
         }
     }
@@ -226,7 +226,7 @@ jQuery(document).ready(function($) {
     } else {
         // If there are no images to load, directly show the ticket containers.
         $('.loadingAnimation').fadeOut('fast', function() {
-            $('.allTicketsContainer_main').hide().css('display', 'flex').fadeIn('slow');
+            $('.allTicketsContainer').hide().css('display', 'flex').fadeIn('slow');
         });
     }
 });
