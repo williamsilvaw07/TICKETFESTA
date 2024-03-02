@@ -239,13 +239,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     inputTitle.removeAttribute('readonly'); // Enable editing
                     inputTitle.focus(); // Optionally, focus on the input field
                     isEditIconClicked = true;
-                    inputField.value = '';
+                    inputTitle.value = '';
                 } else {
                     inputTitle.setAttribute('readonly', 'readonly'); // Disable editing
                     isEditIconClicked = false;
                 }
             });
-            input_value_remove(inputTitle, editIcon);
         } else {
             console.error('Edit icon or input field not found');
         }
