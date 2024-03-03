@@ -3719,7 +3719,7 @@ if (!empty($event_address)) {
     echo '<div class="eventaddress">' . $event_address . ' <a class="open_on_map_link" href="' . $map_link . '" target="_blank">Open on Map</a></div>';
 } else {
     // If there is no address, you can choose to not display anything, or customize as needed
-    echo '<div class="eventaddress">Address not available</div>'; // Optional: Customize based on your preference
+    echo '<div class="eventaddress"></div>'; // Optional: Customize based on your preference
 }
 ?>
                             <hr>
