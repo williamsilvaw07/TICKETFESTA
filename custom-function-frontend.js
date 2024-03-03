@@ -246,20 +246,14 @@ jQuery(document).ready(function($) {
     jQuery('.events-community-submit').click(function(event) {
         // Check if #trive-select-event-images has the required class
         if (jQuery('#trive-select-event-images').hasClass('required')) {
-            // Prevent the default form submission behavior
-            event.preventDefault();
             // Append error message to .tribe-community-notice-error
             jQuery('.tribe-community-notice-error').append('<p>Image is required</p>');
         }
         if (jQuery('#event_tribe_organizer').hasClass('required')) {
-            // Prevent the default form submission behavior
-            event.preventDefault();
             // Append error message to .tribe-community-notice-error
             jQuery('.tribe-community-notice-error').append('<p>Organizer is required</p>');
         }
         if (jQuery('#saved_tribe_venue').hasClass('required')) {
-            // Prevent the default form submission behavior
-            event.preventDefault();
             // Append error message to .tribe-community-notice-error
             jQuery('.tribe-community-notice-error').append('<p>Vanue is required</p>');
         }
