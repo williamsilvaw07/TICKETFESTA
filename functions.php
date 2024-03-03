@@ -3820,54 +3820,45 @@ add_action('woocommerce_account_dashboard', 'display_upcoming_events_for_user_wi
 
 
 
+function display_user_all_orders_as_shortcode() {
+    ob_start();
 
-function display_user_order_tickets_as_shortcode($atts) {
-    // Shortcode attributes with defaults
-    $attributes = shortcode_atts([
-        'items_per_page' => 5, // Default number of items per page
-    ], $atts);
+    $user_id = get_current_user_id();
 
-    ob_start(); // Start output buffering
-
-    $user_id = get_current_user_id(); // Get the current user ID
-    $paged = isset($_GET['paged']) ? max(1, intval($_GET['paged'])) : 1; // Get current page number, default to 1
-
-    // Query for customer orders with pagination
-    $customer_orders = wc_get_orders([
+    // Fetch all completed orders for the user without pagination
+    $customer_orders = wc_get_orders(array(
         'customer' => $user_id,
         'status' => 'completed',
-        'paginate' => true,
-        'limit' => $attributes['items_per_page'],
-        'page' => $paged,
-    ]);
+        'limit' => -1, // Fetch all
+    ));
 
     echo '<div class="event-tickets-header">';
     echo '<h2 class="container-fluid">Your Event Tickets</h2>';
     echo '<p>Below you\'ll find tickets for events you\'re attending soon. Keep track of dates and details right here!</p>';
     echo '</div>';
 
-    echo '<div class="loadingAnimation">'; // Placeholder for loading animation
-    // Include SVG loading animation HTML here
+    echo '<div class="loadingAnimation">';
+    // SVG loading animation placeholder
     echo '</div>';
 
-    echo '<div class="allTicketsContainer">'; // Container for all tickets
+    echo '<div class="allTicketsContainer">';
 
-    if (!empty($customer_orders->orders)) {
-        foreach ($customer_orders->orders as $customer_order) {
+    if (!empty($customer_orders)) {
+        foreach ($customer_orders as $customer_order) {
             $order_url = $customer_order->get_view_order_url();
             $items = $customer_order->get_items();
 
             foreach ($items as $item_id => $item) {
-                // Extract details for each ticket/item
                 $event_id = get_post_meta($item->get_product_id(), '_tribe_wooticket_for_event', true);
                 $event_start_date = get_post_meta($event_id, '_EventStartDate', true);
                 $event_title = get_the_title($event_id);
                 $event_url = get_permalink($event_id);
-                $event_image_url = get_the_post_thumbnail_url($event_id, 'full') ?: 'placeholder.jpg';
+                $event_image_url = get_the_post_thumbnail_url($event_id, 'full') ?: 'placeholder-image-url';
                 $ticket_quantity = $item->get_quantity();
                 $order_total = $customer_order->get_formatted_order_total();
+                $event_address = tribe_get_address($event_id);
+                $map_link = !empty($event_address) ? "https://maps.google.com/?q=" . urlencode($event_address) : '';
 
-                // Display logic for each ticket goes here
                 ?>
                 <div class="ticket">
                     <div class="ticketImage">
@@ -3875,40 +3866,40 @@ function display_user_order_tickets_as_shortcode($atts) {
                     </div>
                     <div class="ticket_inner_div">
                         <div class="ticketTitle"><?php echo esc_html($event_title); ?></div>
+                        <?php if (!empty($event_address)): ?>
+                            <div class="eventaddress"><?php echo esc_html($event_address); ?>
+                                <a class="opne_on_map_link" href="<?php echo esc_url($map_link); ?>" target="_blank">Open on Map</a>
+                            </div>
+                        <?php endif; ?>
                         <hr>
                         <div class="ticketDetail">
-                            Event Date: <?php echo date_i18n('F j, Y, g:i a', strtotime($event_start_date)); ?><br>
-                            Ticket Quantity: <?php echo esc_html($ticket_quantity); ?><br>
-                            Order Total: <?php echo esc_html($order_total); ?>
+                            <div>Event Date: <?php echo date_i18n('F j, Y, g:i a', strtotime($event_start_date)); ?></div>
+                            <div>Ticket Quantity: <?php echo esc_html($ticket_quantity); ?></div>
+                            <div>Order Total: <?php echo esc_html($order_total); ?></div>
+                        </div>
+                        <div class="ticketRip">
+                            <div class="circleLeft"></div>
+                            <div class="ripLine"></div>
+                            <div class="circleRight"></div>
                         </div>
                         <div class="ticketSubDetail">
-                            <a href="<?php echo esc_url($order_url); ?>">View Ticket</a>
-                            <a href="<?php echo esc_url($event_url); ?>">Event Details</a>
+                            <div class="code"><?php echo esc_html($customer_order->get_order_number()); ?></div>
+                        </div>
+                        <div class="ticketlowerSubDetail">
+                            <a href="<?php echo esc_url($order_url); ?>"><button class="view_ticket_btn">View Ticket</button></a>
+                            <a href="<?php echo esc_url($event_url); ?>"><button class="view_event_btn">Event Details</button></a>
                         </div>
                     </div>
                 </div>
                 <?php
             }
         }
-
-        // Pagination logic
-        $total_pages = $customer_orders->max_num_pages;
-        if ($total_pages > 1) {
-            $current_page = max(1, get_query_var('paged'));
-            echo paginate_links([
-                'base' => esc_url_raw(add_query_arg('paged', '%#%', get_permalink())),
-                'format' => '?paged=%#%',
-                'current' => $current_page,
-                'total' => $total_pages,
-                'type' => 'list',
-            ]);
-        }
     } else {
         echo "<p>You currently have no tickets for upcoming events.</p>";
     }
 
-    echo '</div>'; // Close .allTicketsContainer
+    echo '</div>'; // Closing .allTicketsContainer
 
-    return ob_get_clean(); // Return the buffered content
+    return ob_get_clean();
 }
-add_shortcode('user_order_tickets', 'display_user_order_tickets_as_shortcode');
+add_shortcode('user_all_orders', 'display_user_all_orders_as_shortcode');
