@@ -19,6 +19,7 @@
 if ( ! defined( 'ABSPATH' ) ) {
     die( '-1' );
 }
+echo 'redirecting';
 wp_redirect('https://ticketfesta.co.uk/dashboard/organisers-list/?organizer_updated=true');
 
 $organizer_label_singular = tribe_get_organizer_label_singular();
