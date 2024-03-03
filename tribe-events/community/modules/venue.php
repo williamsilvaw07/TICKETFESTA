@@ -44,7 +44,7 @@ Venue Datails
 		<h3 class="<?php echo tribe_community_events_field_has_error( 'organizer' ) ? 'error' : ''; ?>">
 			<?php
 			printf( esc_html__( '%s Details', 'tribe-events-community' ), $venue_label_singular );
-			//echo tribe_community_required_field_marker( 'venue' );
+			echo tribe_community_required_field_marker( 'venue' );
 			?>
 		</h3>
 	</div>
