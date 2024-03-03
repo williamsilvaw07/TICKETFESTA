@@ -3825,7 +3825,7 @@ add_action('woocommerce_account_dashboard', 'display_upcoming_events_for_user_wi
 function display_user_order_tickets_as_shortcode($atts) {
     // Attributes and default values for the shortcode
     $attributes = shortcode_atts(array(
-        'items_per_page' => 5, // Default items per page
+        'items_per_page' => 50, // Default items per page
     ), $atts);
 
     // Start output buffering
