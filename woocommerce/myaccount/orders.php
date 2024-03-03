@@ -20,101 +20,202 @@
 defined( 'ABSPATH' ) || exit;
 
 do_action( 'woocommerce_before_account_orders', $has_orders );
-echo "Current Page: " . $paged;
 
-// Display the shortcode content.
-echo do_shortcode('[user_all_orders]');
+ ?>
 
-if ( $has_orders ) : 
-    // Your code for displaying orders goes here.
-    // This typically involves a loop through each order and displaying its details.
+<?php if ( $has_orders ) : ?>
 
-    // Example:
-    /*
-    foreach ( $customer_orders->orders as $customer_order ) {
-        $order      = wc_get_order( $customer_order ); // Get the order object.
-        $item_count = $order->get_item_count(); // Get item count in order.
+	<table class="woocommerce-orders-table woocommerce-MyAccount-orders shop_table shop_table_responsive my_account_orders account-orders-table">
+		<thead>
+			<tr>
+				<?php foreach ( wc_get_account_orders_columns() as $column_id => $column_name ) : ?>
+					<th class="woocommerce-orders-table__header woocommerce-orders-table__header-<?php echo esc_attr( $column_id ); ?>"><span class="nobr"><?php echo esc_html( $column_name ); ?></span></th>
+				<?php endforeach; ?>
+			</tr>
+		</thead>
 
-        echo '<div class="order">';
-        echo '<h3>Order Number: ' . $order->get_order_number() . '</h3>';
-        echo '<p>Order Date: ' . wc_format_datetime( $order->get_date_created() ) . '</p>';
-        echo '<p>Order Status: ' . wc_get_order_status_name( $order->get_status() ) . '</p>';
-        echo '<p>Items: ' . $item_count . '</p>';
-        echo '</div>';
+		<tbody>
+			<?php
+			foreach ( $customer_orders->orders as $customer_order ) {
+				$order      = wc_get_order( $customer_order ); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+				$item_count = $order->get_item_count() - $order->get_item_count_refunded();
+				?>
+				<tr class="woocommerce-orders-table__row woocommerce-orders-table__row--status-<?php echo esc_attr( $order->get_status() ); ?> order">
+					<?php foreach ( wc_get_account_orders_columns() as $column_id => $column_name ) : ?>
+						<td class="woocommerce-orders-table__cell woocommerce-orders-table__cell-<?php echo esc_attr( $column_id ); ?>" data-title="<?php echo esc_attr( $column_name ); ?>">
+							<?php if ( has_action( 'woocommerce_my_account_my_orders_column_' . $column_id ) ) : ?>
+								<?php do_action( 'woocommerce_my_account_my_orders_column_' . $column_id, $order ); ?>
+
+						
+
+
+
+
+
+
+								
+
+								<?php elseif ( 'order-number' === $column_id ) : ?>
+    <a class="oder_nm_link_main"href="<?php echo esc_url( $order->get_view_order_url() ); ?>">
+        <?php echo esc_html( _x( '#', 'hash before order number', 'woocommerce' ) . $order->get_order_number() ); ?>
+    </a>
+    <?php
+    // Loop through each order item
+    $items = $order->get_items();
+    foreach ($items as $item_id => $item) {
+        // Retrieve the associated event ID for the product
+        $product_id = $item->get_product_id();
+        $event_id = get_post_meta($product_id, '_tribe_wooticket_for_event', true);
+
+        if (!empty($event_id)) {
+            // Optionally, fetch and display the event title or other information
+            $event_post = get_post($event_id);
+            if ($event_post) {
+                // Display the event title inside the same div as h4
+                echo '<div class="order_event_container">';
+                echo '<div class="order_event_image">';
+                // If an event ID is found, fetch and display the event's featured image
+                $event_image_id = get_post_thumbnail_id($event_id);
+                if ($event_image_id) {
+                    $event_image_url = wp_get_attachment_image_url($event_image_id, 'full');
+                    if ($event_image_url) {
+                        echo '<img src="' . esc_url($event_image_url) . '" alt="Event Image" style="width:100%;max-width:300px;">';
+                    }
+                }
+                echo '</div>'; // Close the order_event_image div
+
+                echo '<div class="order_event_details">';
+				echo '<h5>' . esc_html(mb_substr($event_post->post_title, 0, 60)) . (mb_strlen($event_post->post_title) > 60 ? '...' : '') . '</h5>';
+
+                // Display the order number
+                echo '<p><span class="event_order_number_title">order number: </span>' . esc_html( _x( '#', 'order number label', 'woocommerce' ) . $order->get_order_number() ) . '</p>';
+                // Fetch the event start date and time
+                $event_start_date = get_post_meta($event_id, '_EventStartDate', true);
+                // Format the date and time for display
+                // Adjust the date format string as needed
+                if ($event_start_date) {
+					$formatted_date = date_i18n('d M Y, H:i', strtotime($event_start_date));
+
+                    echo '<p><span class="event_date_title">Event Date: </span>' . esc_html($formatted_date) . '</p>';
+                }
+                // Display the product name and quantity together
+				echo '<p><span class="ticket_type_title">Ticket Type: </span>' . esc_html($item->get_name()) . ' x ' . esc_html($item->get_quantity()) . '</p>';
+
+               
+                echo '</div>'; // Close the order_event_details div
+
+                echo '</div>'; // Close the order_event_container div
+            }
+        } else {
+            // If no event ID is found, optionally display a placeholder or message
+            echo '<p>No associated event found.</p>';
+        }
     }
-    */
-endif;
+    ?>
 
-do_action( 'woocommerce_after_account_orders', $has_orders );
-?>
 
+
+
+
+
+
+
+							<?php elseif ( 'order-date' === $column_id ) : ?>
+								<time datetime="<?php echo esc_attr( $order->get_date_created()->date( 'c' ) ); ?>"><?php echo esc_html( wc_format_datetime( $order->get_date_created() ) ); ?></time>
+
+							<?php elseif ( 'order-status' === $column_id ) : ?>
+								<?php echo esc_html( wc_get_order_status_name( $order->get_status() ) ); ?>
+
+								<?php elseif ( 'order-total' === $column_id ) : ?>
+    <?php
+    // Only display the formatted order total without item count.
+    echo wp_kses_post( $order->get_formatted_order_total() );
+    ?>
+
+
+							<?php elseif ( 'order-actions' === $column_id ) : ?>
+								<?php
+								$actions = wc_get_account_orders_actions( $order );
+
+								if ( ! empty( $actions ) ) {
+									foreach ( $actions as $key => $action ) { // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+										echo '<a href="' . esc_url( $action['url'] ) . '" class="woocommerce-button' . esc_attr( $wp_button_class ) . ' button ' . sanitize_html_class( $key ) . '">' . esc_html( $action['name'] ) . '</a>';
+									}
+								}
+								?>
+							<?php endif; ?>
+						</td>
+					<?php endforeach; ?>
+				</tr>
+				<?php
+			}
+			?>
+		</tbody>
+	</table>
+
+	<?php do_action( 'woocommerce_before_account_orders_pagination' ); ?>
+
+	<?php if ( 1 < $customer_orders->max_num_pages ) : ?>
+		<div class="woocommerce-pagination woocommerce-pagination--without-numbers woocommerce-Pagination">
+			<?php if ( 1 !== $current_page ) : ?>
+				<a class="woocommerce-button woocommerce-button--previous woocommerce-Button woocommerce-Button--previous button<?php echo esc_attr( $wp_button_class ); ?>" href="<?php echo esc_url( wc_get_endpoint_url( 'orders', $current_page - 1 ) ); ?>"><?php esc_html_e( 'Previous', 'woocommerce' ); ?></a>
+			<?php endif; ?>
+
+			<?php if ( intval( $customer_orders->max_num_pages ) !== $current_page ) : ?>
+				<a class="woocommerce-button woocommerce-button--next woocommerce-Button woocommerce-Button--next button<?php echo esc_attr( $wp_button_class ); ?>" href="<?php echo esc_url( wc_get_endpoint_url( 'orders', $current_page + 1 ) ); ?>"><?php esc_html_e( 'Next', 'woocommerce' ); ?></a>
+			<?php endif; ?>
+		</div>
+	<?php endif; ?>
+
+<?php else : ?>
+
+	<?php wc_print_notice( esc_html__( 'No order has been made yet.', 'woocommerce' ) . ' <a class="woocommerce-Button wc-forward button' . esc_attr( $wp_button_class ) . '" href="' . esc_url( apply_filters( 'woocommerce_return_to_shop_redirect', wc_get_page_permalink( 'shop' ) ) ) . '">' . esc_html__( 'Browse products', 'woocommerce' ) . '</a>', 'notice' ); // phpcs:ignore WooCommerce.Commenting.CommentHooks.MissingHookComment ?>
+
+<?php endif; ?>
+
+<?php do_action( 'woocommerce_after_account_orders', $has_orders ); ?>
 
 
 
 <script>
-
-
-
-	////JS TO ADD THE MAIN PRODUCT IMAGE ON THE BACKGROUND AND ADD THE LOCATION ON THE CUSTOM DIV 
-    document.addEventListener('DOMContentLoaded', function() {
-    var organizerProfileBkElement = document.querySelector('.organizer_profile_bk');
-    var titleElement = document.querySelector('.event-listing-main-div_main');
-
-    if (organizerProfileBkElement && titleElement) {
-        // Extracting the background image style from the organizer_profile_bk element
-        var backgroundImageStyle = organizerProfileBkElement.style.backgroundImage;
-
-        // Setting the extracted background image as the background for the tribe_organizer-template-default element
-        titleElement.style.backgroundImage = backgroundImageStyle;
-        titleElement.classList.add('organiser_background');
-    }
-});
-
-///////////END
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// Make the entire event card clickable without affecting interactive elements like buttons and links
 jQuery(document).ready(function($) {
-   // Find each .event-card element
-   $('.event-card').each(function() {
-        // Get the href attribute of the first <a> tag found within the .event-card
-        var link = $(this).find('a').attr('href');
+    $('.order_event_image').each(function() {
+        var $this = $(this); // Cache the current .order_event_image element
+        var imgSrc = $this.find('img').attr('src'); // Get the source of the contained image
 
-        // Check if the link is not undefined or empty
-        if (link) {
-            // Create a new <a> tag that wraps the entire .event-card contents
-            $(this).wrapInner('<a class="event-card-link" href="' + link + '"></a>');
+        // Check if the glass-effect background already exists to avoid duplicates
+        if ($this.children('.glass-effect-background').length === 0) {
+            // Create a new div for the glass-effect background
+            var glassEffectDiv = $('<div class="glass-effect-background"></div>').css({
+                'position': 'absolute',
+                'top': 0,
+                'left': 0,
+                'width': '100%',
+                'height': '100%',
+                'background-image': 'url(' + imgSrc + ')',
+                'background-size': 'cover',
+                'background-position': 'center center',
+				'background-position': 'center center',
+                'filter': 'blur(30px)',
+                'z-index': '0',
+                'border-radius': '8px', // Optional: adds rounded corners to the glass effect background
+                'border': '1px solid rgba(255, 255, 255, 0.18)' // Optional: adds a subtle border for more glass-like realism
+            });
+
+            // Insert the glass effect div as the first child of the .order_event_image element
+            $this.prepend(glassEffectDiv);
+
+            // Adjust the .order_event_image container styling
+            $this.css({
+                'position': 'relative',
+                'overflow': 'hidden'
+            });
+
+            // Ensure the original image remains clear and above the glass effect background
+            $this.find('img').css({
+                'position': 'relative',
+                'z-index': '2'
+            });
         }
     });
 });
@@ -122,326 +223,241 @@ jQuery(document).ready(function($) {
 
 
 
-
-
-
-
-
-
-
-
-
-jQuery(document).ready(function($) {
-    // Initially show the loading animation
-    $('.loadingAnimation').css('display', 'block');
-
-    var totalImages = $('.ticketImage img').length;
-    var loadedImages = 0;
-
-    // Function to check if all images are loaded
-    function checkAllImagesLoaded() {
-        if (loadedImages === totalImages) {
-            // Once all images are loaded, fade out the loading animation and then display the tickets container
-            $('.loadingAnimation').fadeOut('fast', function() {
-                // Set the tickets container to display flex after it's visible to ensure layout is correct
-                $('.allTicketsContainer').css('display', 'flex').hide().fadeIn('slow');
-            });
-        }
-    }
-
-    // If there are images to load, set up a load event listener for each
-    if (totalImages > 0) {
-        $('.ticketImage img').each(function() {
-            var imgSrc = $(this).attr('src');
-            $('<img/>').on('load', function() {
-                loadedImages++;
-                // Apply background styling and glass effect after each image is loaded
-                var parentTicketImage = $('.ticketImage img[src="' + imgSrc + '"]').closest('.ticketImage');
-                parentTicketImage.css({
-                    'background-image': 'url(' + imgSrc + ')',
-                    'background-size': 'cover',
-                    'background-position': 'center center',
-                    'position': 'relative',
-                    'overflow': 'hidden'
-                });
-
-                var glassEffect = $('<div></div>').css({
-                    'position': 'absolute',
-                    'top': '0',
-                    'left': '0',
-                    'height': '100%',
-                    'width': '100%',
-                    'background': 'rgba(255, 255, 255, 0.4)',
-                    'backdrop-filter': 'blur(8px)',
-                    'z-index': '1'
-                });
-
-                parentTicketImage.append(glassEffect);
-                parentTicketImage.find('img').css('position', 'relative').css('z-index', '2');
-
-                // Check if all images are loaded
-                checkAllImagesLoaded();
-            }).attr('src', imgSrc); // This triggers the load event
-        });
-    } else {
-        // If there are no images, directly fade in the ticket containers
-        $('.loadingAnimation').fadeOut('fast', function() {
-            $('.allTicketsContainer').css('display', 'flex').hide().fadeIn('slow');
-        });
-    }
-});
-
 </script>
-
-
-
-
 
 
 
 
 <style>
 
-	.loadingAnimation{
-		display:block
-	}
-.grey {
-  stroke-dasharray: 788 790;
-  stroke-dashoffset: 789;
-  animation: draw_0 3200ms infinite, fade 3200ms infinite;
-}
-
-.blue {
-  stroke-dasharray: 788 790;
-  stroke-dashoffset: 789;
-  animation: draw_1 3200ms infinite, fade 3200ms infinite;
-}
-
-@keyframes fade {
-  0% {
-    stroke-opacity: 1;
-  }
-  80% {
-    stroke-opacity: 1;
-  }
-  100% {
-    stroke-opacity: 0;
-  }
-}
-
-@keyframes draw_0 {
-  9.375% {
-    stroke-dashoffset: 789
-  }
-  39.375% {
-    stroke-dashoffset: 0;
-  }
-  100% {
-    stroke-dashoffset: 0;
-  }
-}
-
-@keyframes draw_1 {
-  35.625% {
-    stroke-dashoffset: 789
-  }
-  65.625% {
-    stroke-dashoffset: 0;
-  }
-  100% {
-    stroke-dashoffset: 0;
-  }
-}
-
-.allTicketsContainer{
-    
-    gap: 25px;
-    align-items: flex-start;
-    align-content: flex-start;
-    justify-content: flex-start;
-    flex-wrap: wrap;
-
-}
-
-.allTicketsContainer{
-    display: block; /* Initially hide the ticket container intill js is loadded */
-}
-
-	.ticket_inner_div{
-	    padding: 21px 16px 5px 16px;
-	}
-hr {
-	width: 90%;
-    border: 1px solid #efefef;
-    margin: 17px auto 11px auto;
-}
-/* Main Ticket Style */
-.ticketContainer{
-   
-    flex-direction: column;
+tr.woocommerce-orders-table__row , thead tr{
+    display: flex;
+    width: 100%;
+    align-content: center;
     align-items: center;
 }
-.ticketImage, .ticketImage img{
-    max-height: 130px;
-	border-radius: 12px 12px 0px 0;
-}
-	.ticketImage img{
-		width: 200px;
-    margin: 0 auto;
-	object-fit: contain!important;
 
-	}
-	.ticketImage{
-		    display: flex;
-	}
-.ticket{
-
-    background-color: white;
-    color: #1a1a1a!important;
-    border-radius: 12px;
-    max-width: 280px;
-	height: fit-content;
-    width: 100%;
-
-
-}
-.ticketShadow{
-display:none;
-    margin-top: 4px;
-    width: 95%;
-    height: 12px;
-    border-radius: 50%;
-    background-color: rgba(0, 0, 0, 0.4);
-    filter: blur(12px);
+.woocommerce-orders-table__cell-order-number , th.woocommerce-orders-table__header-order-number{
+	flex: 0 0 70%
 }
 
-/* Ticket Content */
-.ticketTitle{
-	font-size: 15px;
-	line-height: 19px;
-    font-weight: 700;
-    margin-bottom: 10px;
+.woocommerce-orders-table__cell-order-date , .woocommerce-orders-table__cell-order-total , .woocommerce-orders-table__cell-order-actions , .woocommerce-orders-table__header-order-actions , .woocommerce-orders-table__header-order-date , .woocommerce-orders-table__header-order-total{
+	flex: 1
 }
 
-.ticketDetail , .ticketSubDetail , .eventaddress{
-    font-size: 14px!important;
-    font-weight: 500;
-   
+.woocommerce-orders-table__cell-order-total .woocommerce-Price-amount{
+	font-size: 17px!important;
+    font-weight: 600!important;
 }
-.ticketSubDetail{
-    display: flex;
-    justify-content: space-between;
-    font-size: 1rem;
-    padding: 12px 16px;
-}
-.ticketSubDetail .code{
-    margin-right: 24px;
+.woocommerce table.shop_table td {
+    text-align: center;
 }
 
-/* Ticket Ripper */
-.ticketRip{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.woocommerce table.shop_table th{
+	padding-right:0!important;
+    text-align: center;
 }
-.circleLeft{
-    width: 12px;
-    height: 24px;
-    background-color: #1a1a1a;
-    border-radius: 0 12px 12px 0;
-}
-.ripLine{
-    width: 100%;
-    border-top: 3px solid #1a1a1a;
-    border-top-style: dashed ;
-}
-.circleRight{
-    width: 12px;
-    height: 24px;
-    background-color: #1a1a1a;
-    border-radius: 12px 0 0 12px;
-}
-
-.opne_on_map_link{
-	color: black!important;
-    text-decoration: none;
-    font-size: 12px;
-    border: 1px solid black;
-    border-radius: 3px;
-    padding: 3px 6px;
-}
-.ticketDetail .woocommerce-Price-amount bdi , .ticketDetail .woocommerce-Price-currencySymbol{
-	color:black!important
-}
-.ticket-detail-title{
-	color: black!important;
-    font-size: 13px;
-    font-weight: 300;
-
-}
-.view_ticket_btn{
-	background:#d3fa16;
-	color:black;
-}
-.view_event_btn {
-   
-	background:black;
-	color:white;
-}
-.view_event_btn  , .view_ticket_btn{
+.woocommerce table.my_account_orders .button {
     white-space: nowrap;
     font-size: 12px!important;
     padding: 5px 15px !important;
     border-radius: 4px!important;
-    padding-bottom: 3px!important;
-
+	padding-bottom: 3px!important;
+}
+.woocommerce table.my_account_orders .button:hover{
+	background: #d3fa16!important;
+    color: #000000!important;
+}
+.woocommerce table.shop_table .woocommerce-orders-table__header-order-number{
+	text-align: left!important;
+}
+.oder_nm_link_main{
+	display:none
 }
 
-.ticketlowerSubDetail{
-	padding: 5px 10px 21px 10px;
+.order_event_container{
     display: flex;
-    justify-content: space-around;
-}
-.event-tickets-header {
-    padding-bottom: 33px;
-}
-.event-tickets-header h2{
-    font-weight: bold!important;
+    flex-direction: row;
+    align-content: center;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 15px;
+	padding: 15px 0
 
-}
 
-.event-tickets-header p{
-font-size:17px
 }
 
 
+.order_event_image {
+    width: 100%;
+    height: 100%;
+    max-width: 250px;
+    max-height: 200px;
+}
 
 
 
+.order_event_image::before {
 
-
-
-
-@media (max-width: 600px) {
-    .allTicketsContainer {
+}
+.order_event_image{
+	border-radius: 6px;
+	display: flex;
+    align-content: center;
     justify-content: center;
-    }
-	.event-tickets-header {
-    padding-bottom: 20px;
-}
-.event-tickets-header h2{
-
-font-size:20px
+    align-items: center;
+	
 }
 
-.event-tickets-header p{
-font-size:14px
+.order_event_image img{
+    width: 100%;
+    max-width: 200px!important;
+	max-height: 150px;
+	object-fit: contain;
+}
+
+.order_event_details{
+	display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: space-between;
+    gap: 8px;
+	text-align: left;
+	
+}
+
+.order_event_details h5{
+	font-weight: 600;
+    font-size: 17px;
+    margin: 0;
+}
+
+
+.order_event_details p{
+    margin: 0;
+}
+.order_event_details span{
+	font-weight: 600;
+    text-transform: capitalize;
+}
+.woocommerce-orders-table__header-order-status , .woocommerce-orders-table__cell-order-status{
+	display:none!important
+}
+
+
+
+
+@media (max-width: 1350x) {
+	.order_event_image {
+    width: 100%;
+    height: 100%;
+    max-width: 175px;
+    max-height: 130px;
+}
+
+}
+
+@media (max-width: 1294px) {
+	.woocommerce-orders-table__cell-order-number , th.woocommerce-orders-table__header-order-number{
+	flex: 0 0 50%
+}
+
+.woocommerce-orders-table__cell-order-date , .woocommerce-orders-table__cell-order-total , .woocommerce-orders-table__cell-order-actions , .woocommerce-orders-table__header-order-actions , .woocommerce-orders-table__header-order-date , .woocommerce-orders-table__header-order-total{
+	flex: 1
+}
+
+}
+
+@media (max-width: 1180px) {
+	.order_event_container {
+
+    flex-wrap: wrap;
 }
 
 }
 
 
-    </style>
+@media (max-width: 950px) {
+	tr.woocommerce-orders-table__row {
+    display: flex!important;
+    width: 100%;
+    align-content: center;
+    flex-direction: column;
+}
+thead{
+display:none!important
+}
+.woocommerce-orders-table__cell-order-total:before , .woocommerce-orders-table__cell-order-date:before , .order_event_details span{
+    color: #aaa!important;
+    text-transform: capitalize!important;
+    padding-left: 6px!important;
+	font-weight: 300!important;
+	font-size: 14px;
 
+}
+.woocommerce-orders-table__cell-order-date:before{
+	content: "Transaction Date"!important;
+
+}
+.woocommerce-orders-table__cell-order-total:before{
+	content: "Total";
+ 
+
+}
+
+.woocommerce-orders-table__cell-order-tota , .woocommerce-orders-table__cell-order-date , .woocommerce-orders-table__cell-order-total , .woocommerce-orders-table__cell-order-actions{
+	display: flex!important;
+    text-align: right!important;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+ .woocommerce-account .woocommerce-orders-table__cell {
+	padding-bottom:5px!important;
+	padding-top:0!important;
+}
+
+.order_event_container {
+    justify-content: center;
+
+	padding-bottom: 0px!important;
+}
+.woocommerce-orders-table__cell-order-number:before , .woocommerce-orders-table__cell-order-actions:before{
+	display:none!important
+}
+.order_event_details {
+	align-items: center;
+}
+html .woocommerce-account  .woocommerce-orders-table__cell-order-total{
+	padding-bottom:10px!important
+}
+
+
+.woocommerce table.shop_table td {
+    text-align: center;
+    font-size: 16px!important;
+}
+
+.order_event_details h5 {
+    text-align: center;
+}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	</style>
 
 <?php
