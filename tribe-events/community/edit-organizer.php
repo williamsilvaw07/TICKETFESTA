@@ -19,6 +19,7 @@
 if ( ! defined( 'ABSPATH' ) ) {
     die( '-1' );
 }
+wp_redirect('https://ticketfesta.co.uk/dashboard/organisers-list/?organizer_updated=true');
 
 $organizer_label_singular = tribe_get_organizer_label_singular();
 $organizer_id = get_the_ID(); // Get the organizer post ID
@@ -190,10 +191,6 @@ if ($banner_image_id) {
             $organizer_facebook    = get_post_meta( $organizer_id, 'organizer_facebook', true ) ? get_post_meta( $organizer_id, 'organizer_facebook', true ) : 'facebook.com'; 
             $organizer_twitter     = get_post_meta( $organizer_id, 'organizer_twitter', true ) ? get_post_meta( $organizer_id, 'organizer_twitter', true ) : 'twitter.com'; 
             $organizer_instagram   = get_post_meta( $organizer_id, 'organizer_instagram', true ) ? get_post_meta( $organizer_id, 'organizer_instagram', true ) : 'instagram.com'; 
-            // echo '<pre>';
-            // var_dump(get_post_meta( $organizer_id ));
-            // echo '</pre>';
-            // $organizer_email = esc_attr( $organizer_id ); 
 
         ?>
         <div class="events-community-post-title">
