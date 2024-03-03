@@ -253,7 +253,7 @@ jQuery(document).ready(function($) {
             // Append error message to .tribe-community-notice-error
             jQuery('.tribe-community-notice-error').append('<p>Organizer is required</p>');
         }
-        if (jQuery('#saved_tribe_venue').hasClass('required')) {
+        if (jQuery('#event_tribe_venue').hasClass('required')) {
             // Append error message to .tribe-community-notice-error
             jQuery('.tribe-community-notice-error').append('<p>Vanue is required</p>');
         }
