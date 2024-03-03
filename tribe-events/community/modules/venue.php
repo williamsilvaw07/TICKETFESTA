@@ -77,6 +77,8 @@ Venue Datails
         	var selectedValue = jQuery(this).val();
         	if(selectedValue != -1 || selectedValue != ''){
 				jQuery('#event_tribe_venue').removeClass('required');
+			}else{
+				jQuery('#event_tribe_venue').addClass('required');
 			}
     	});
 	</script>
