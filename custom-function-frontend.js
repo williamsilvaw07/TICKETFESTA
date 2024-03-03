@@ -223,6 +223,11 @@ jQuery(document).ready(function($) {
         }
     });
 
+    var selectedValue = jQuery('#event_image').val();
+    if(selectedValue == ''){
+        jQuery('#trive-select-event-images').addClass('required');
+    }
+
     jQuery(document).on('change', '#event_image', function() {
         // When the select field changes, log its value to the console
         var selectedValue = jQuery(this).val();
