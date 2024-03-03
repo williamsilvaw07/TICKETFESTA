@@ -71,7 +71,15 @@ Venue Datails
 		$metabox->render();
 		?>
 	</table>
-
+	<script>
+		jQuery(document).on('change', '#saved_tribe_venue', function() {
+        // When the select field changes, log its value to the console
+        	var selectedValue = jQuery(this).val();
+        	if(selectedValue != -1 || selectedValue != ''){
+				jQuery('#event_tribe_venue').removeClass('required');
+			}
+    	});
+	</script>
 	<?php
 	/**
 	 * Allow developers to hook and add content to the end of this section
