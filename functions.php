@@ -3864,7 +3864,7 @@ function display_user_order_tickets_as_shortcode($atts) {
                 $event_start_date = get_post_meta($event_id, '_EventStartDate', true);
                 $event_title = get_the_title($event_id);
                 $event_url = get_permalink($event_id);
-                $event_image_url = get_the_post_thumbnail_url($event_id, 'full') ?: 'https://yourdefaultimageurl.com/default.jpg';
+                $event_image_url = get_the_post_thumbnail_url($event_id, 'small') ?: 'https://yourdefaultimageurl.com/default.jpg';
                 $ticket_quantity = $item->get_quantity();
                 $order_total = $customer_order->get_formatted_order_total();
                 $event_address = tribe_get_address($event_id);
