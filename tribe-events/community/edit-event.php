@@ -708,7 +708,7 @@ $event_url = esc_attr($event_url);
         // Click event for the .tribe-remove-upload link
         $('.tribe-remove-upload').click(function (e) {
             e.preventDefault(); // Prevent the default action of the link
-
+            jQuery('#event_image').val() = '';
             // Remove the background image from the .tribe-image-upload-area div
             $('.tribe-image-upload-area').css('background-image', 'none');
             // Show the <h2> and <p> elements again
