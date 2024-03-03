@@ -264,7 +264,7 @@ jQuery(document).ready(function($) {
 }
 
 .allTicketsContainer{
-    display: none; /* Initially hide the ticket container intill js is loadded */
+    display: block; /* Initially hide the ticket container intill js is loadded */
 }
 
 	.ticket_inner_div{
