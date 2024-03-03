@@ -214,6 +214,20 @@ jQuery(document).ready(function($) {
             jQuery('#event_tribe_venue').addClass('required');
         }
     });
+
+    jQuery(document).on('change', '#saved_tribe_organizer', function() {
+        // When the select field changes, log its value to the console
+        var selectedValue = jQuery(this).val();
+        if(selectedValue != '-1'){
+            console.log('value: ', selectedValue, 'remove class required');
+            jQuery('#event_tribe_organizer').removeClass('required');
+        }else{
+            console.log('value: ', selectedValue,'add class required');
+            jQuery('#event_tribe_organizer').addClass('required');
+        }
+    });
+
+
 });
 
 
