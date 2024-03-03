@@ -207,8 +207,10 @@ jQuery(document).ready(function($) {
         // When the select field changes, log its value to the console
         var selectedValue = jQuery(this).val();
         if(selectedValue != -1 || selectedValue != ''){
+            console.log('remove class required');
             jQuery('#event_tribe_venue').removeClass('required');
         }else{
+            console.log('add class required');
             jQuery('#event_tribe_venue').addClass('required');
         }
     });
