@@ -3907,17 +3907,20 @@ function display_user_order_tickets_as_shortcode($atts) {
             }
         }
 
-        $total_pages = $customer_orders->max_num_pages;
-        if ($total_pages > 1) {
-            $current_page = max(1, get_query_var('paged'));
-            echo paginate_links(array(
-                'base' => get_pagenum_link(1) . '%_%',
-                'format' => 'page/%#%',
-                'current' => $current_page,
-                'total' => $total_pages,
-                'type' => 'list',
-            ));
-        }
+     // Pagination logic
+$total_pages = $customer_orders->max_num_pages;
+if ($total_pages > 1) {
+    $current_page = max(1, get_query_var('paged'));
+    $pagination_base = home_url('/my-events/%_%'); // Change '/my-events/' to match the actual page slug
+    
+    echo paginate_links(array(
+        'base' => $pagination_base, // Adjust base
+        'format' => 'page/%#%', // Adjust format if needed
+        'current' => $current_page,
+        'total' => $total_pages,
+        'type' => 'list',
+    ));
+}
     } else {
         echo "<p>You currently have no tickets for upcoming events.</p>";
     }
