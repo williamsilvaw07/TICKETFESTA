@@ -19,10 +19,6 @@
 if ( ! defined( 'ABSPATH' ) ) {
     die( '-1' );
 }
-echo 'redirecting';
-$redirect_url = 'https://ticketfesta.co.uk/dashboard/organisers-list/?organizer_updated=true';
-wp_redirect('https://ticketfesta.co.uk/dashboard/organisers-list/?organizer_updated=true');
-header("Location: $redirect_url");
 
 $organizer_label_singular = tribe_get_organizer_label_singular();
 $organizer_id = get_the_ID(); // Get the organizer post ID
@@ -85,9 +81,18 @@ if ('POST' === $_SERVER['REQUEST_METHOD']) {
             'post_title' => $organizer_name
         ));
     }
+    ?>
+    <script>
+    // Specify the URL you want to redirect to
+    var redirectUrl = 'https://ticketfesta.co.uk/dashboard/organisers-list/?organizer_updated=true';
 
+        // Perform the redirect
+        window.location.href = redirectUrl;
+
+    </script>
+    <?php
     // Redirect after form submission
-    wp_redirect('https://ticketfesta.co.uk/dashboard/organisers-list/?organizer_updated=true');
+    // wp_redirect('https://ticketfesta.co.uk/dashboard/organisers-list/?organizer_updated=true');
     exit;
 }
 
