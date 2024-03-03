@@ -3822,9 +3822,6 @@ add_action('woocommerce_account_dashboard', 'display_upcoming_events_for_user_wi
 
 
 
-
-
-
 function display_user_order_tickets_as_shortcode($atts) {
     // Attributes and default values for the shortcode
     $attributes = shortcode_atts(array(
@@ -3863,7 +3860,6 @@ function display_user_order_tickets_as_shortcode($atts) {
             $items = $customer_order->get_items();
 
             foreach ($items as $item_id => $item) {
-                // Assuming $item has the necessary methods to get event details
                 $event_id = get_post_meta($item->get_product_id(), '_tribe_wooticket_for_event', true);
                 $event_start_date = get_post_meta($event_id, '_EventStartDate', true);
                 $event_title = get_the_title($event_id);
@@ -3874,7 +3870,6 @@ function display_user_order_tickets_as_shortcode($atts) {
                 $event_address = tribe_get_address($event_id);
                 $map_link = !empty($event_address) ? "https://maps.google.com/?q=" . urlencode($event_address) : '';
 
-                // Ticket display logic
                 ?>
                 <div class="ticket">
                     <div class="ticketImage">
@@ -3912,13 +3907,12 @@ function display_user_order_tickets_as_shortcode($atts) {
             }
         }
 
-        // Pagination logic
         $total_pages = $customer_orders->max_num_pages;
         if ($total_pages > 1) {
             $current_page = max(1, get_query_var('paged'));
             echo paginate_links(array(
                 'base' => get_pagenum_link(1) . '%_%',
-                'format' => '?paged=%#%',
+                'format' => 'page/%#%',
                 'current' => $current_page,
                 'total' => $total_pages,
                 'type' => 'list',
