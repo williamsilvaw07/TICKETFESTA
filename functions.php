@@ -3710,13 +3710,13 @@ function display_upcoming_events_for_user_with_view_order_button() {
 
                              <div class="ticket_inner_div ">
                              <div class="ticketTitle"><?php echo truncate_title($event_title, 30); ?></div>
-                           <?php // Check if the event address is not empty
+                            <?php // Check if the event address is not empty
 if (!empty($event_address)) {
     // Encode the address for URL use
     $map_link = "https://maps.google.com/?q=" . urlencode($event_address);
 
     // Display the address and the "Open on Map" button
-    echo '<div class="eventaddress">' . $event_address . ' <a class="open_on_map_link" href="' . $map_link . '" target="_blank">Open on Map</a></div>';
+    echo '<div class="eventaddress">' . $event_address . ' <a class="opne_on_map_link" href="' . $map_link . '" target="_blank">Map</a></div>';
 } else {
     // If there is no address, you can choose to not display anything, or customize as needed
     echo '<div class="eventaddress"></div>'; // Optional: Customize based on your preference
