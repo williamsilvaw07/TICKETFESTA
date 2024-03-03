@@ -72,15 +72,15 @@ Venue Datails
 		?>
 	</table>
 	<script>
-		jQuery(document).on('change', '#saved_tribe_venue', function() {
-        // When the select field changes, log its value to the console
-        	var selectedValue = jQuery(this).val();
-        	if(selectedValue != -1 || selectedValue != ''){
-				jQuery('#event_tribe_venue').removeClass('required');
-			}else{
-				jQuery('#event_tribe_venue').addClass('required');
-			}
-    	});
+		// jQuery(document).on('change', '#saved_tribe_venue', function() {
+        // // When the select field changes, log its value to the console
+        // 	var selectedValue = jQuery(this).val();
+        // 	if(selectedValue != -1 || selectedValue != ''){
+		// 		jQuery('#event_tribe_venue').removeClass('required');
+		// 	}else{
+		// 		jQuery('#event_tribe_venue').addClass('required');
+		// 	}
+    	// });
 	</script>
 	<?php
 	/**
