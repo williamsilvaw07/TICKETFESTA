@@ -3826,81 +3826,81 @@ add_action('woocommerce_account_dashboard', 'display_upcoming_events_for_user_wi
 
 
 
-function display_user_all_orders_as_shortcode() {
-    // Ensure WC is installed and user is logged in
-    if (!function_exists('wc_get_orders') || !is_user_logged_in()) {
-        return 'You must be logged in to view this.';
-    }
 
-    ob_start();
+
+
+
+function display_user_all_orders_shortcode() {
+    if (!function_exists('wc_get_orders') || !is_user_logged_in()) {
+        return '<p>You must be logged in to view this content.</p>';
+    }
 
     $user_id = get_current_user_id();
-
-    $customer_orders = wc_get_orders(array(
+    $customer_orders = wc_get_orders([
         'customer' => $user_id,
         'status' => 'completed',
-        'limit' => -1, // Fetch all completed orders
-    ));
+        'limit' => -1, // No limit
+    ]);
 
-    echo '<div class="event-tickets-header">';
-    echo '<h2>Your Event Tickets</h2>';
-    echo '<p>Below you\'ll find tickets for the events you\'re attending. Keep track of dates and details here!</p>';
-    echo '</div>';
+    ob_start(); // Start output buffering
+    ?>
 
-    echo '<div class="allTicketsContainer">';
-    if (!empty($customer_orders)) {
-        foreach ($customer_orders as $customer_order) {
-            $order_url = $customer_order->get_view_order_url();
-            $items = $customer_order->get_items();
-            foreach ($items as $item_id => $item) {
-                $event_id = get_post_meta($item->get_product_id(), '_tribe_wooticket_for_event', true);
-                if (!$event_id) continue; // Skip if no event ID
+<div class="event-tickets-header">
+    <h2 class="container-fluid">Your Event Tickets</h2>
+    <p>Below you'll find tickets for events you're attending soon. Keep track of dates and details right here!</p>
+</div>
+<div class="allTicketsContainer">
+    <?php foreach ($customer_orders as $customer_order) : 
+        $order_url = $customer_order->get_view_order_url();
+        $items = $customer_order->get_items();
+        foreach ($items as $item_id => $item) :
+            $event_id = get_post_meta($item->get_product_id(), '_tribe_wooticket_for_event', true);
+            $event_start_date = get_post_meta($event_id, '_EventStartDate', true);
+            $event_title = get_the_title($event_id);
+            $event_url = get_permalink($event_id);
+            $event_image_url = get_the_post_thumbnail_url($event_id, 'thumbnail') ?: 'https://yourdefaultimageurl.com/default.jpg'; // Using thumbnail size for faster loading
+            $ticket_quantity = $item->get_quantity();
+            $order_total = $customer_order->get_formatted_order_total();
+            $event_address = tribe_get_address($event_id);
+            $map_link = !empty($event_address) ? "https://maps.google.com/?q=" . urlencode($event_address) : '';
+    ?>
+    <div class="ticket">
+        <div class="ticketImage">
+            <img src="<?php echo esc_url($event_image_url); ?>" alt="Event Image">
+        </div>
+        <div class="ticket_inner_div">
+            <div class="ticketTitle"><?php echo esc_html($event_title); ?></div>
+            <?php if (!empty($event_address)) : ?>
+            <div class="eventaddress"><?php echo esc_html($event_address); ?>
+                <a class="opne_on_map_link" href="<?php echo esc_url($map_link); ?>" target="_blank">Map</a>
+            </div>
+            <?php endif; ?>
+            <hr>
+            <div class="ticketDetail">
+                <div>Event Date: <?php echo date_i18n('F j, Y, g:i a', strtotime($event_start_date)); ?></div>
+                <div>Ticket Quantity: <?php echo esc_html($ticket_quantity); ?></div>
+                <div>Order Total: <?php echo esc_html($order_total); ?></div>
+            </div>
+            <div class="ticketRip">
+                <div class="circleLeft"></div>
+                <div class="ripLine"></div>
+                <div class="circleRight"></div>
+            </div>
+            <div class="ticketSubDetail">
+                <div class="code"><?php echo esc_html($customer_order->get_order_number()); ?></div>
+                <!-- Paid Date display logic here if needed -->
+            </div>
+            <div class="ticketlowerSubDetail">
+                <a href="<?php echo esc_url($order_url); ?>"><button class="view_ticket_btn">View Ticket</button></a>
+                <a href="<?php echo esc_url($event_url); ?>"><button class="view_event_btn">Event Details</button></a>
+            </div>
+        </div>
+    </div>
+    <?php endforeach; endforeach; ?>
+</div>
 
-                $event_start_date = get_post_meta($event_id, '_EventStartDate', true);
-                $event_title = get_the_title($event_id);
-                $event_url = get_permalink($event_id);
-                $event_image_url = get_the_post_thumbnail_url($event_id, 'medium') ?: 'placeholder-image-url';
-                $ticket_quantity = $item->get_quantity();
-                $order_total = $customer_order->get_formatted_order_total();
-                $event_address = tribe_get_address($event_id);
-                $map_link = $event_address ? "https://maps.google.com/?q=" . urlencode($event_address) : '';
-
-                echo '<div class="ticket">';
-                echo '<div class="ticketImage"><img src="' . esc_url($event_image_url) . '" alt="' . esc_attr($event_title) . '"></div>';
-                echo '<div class="ticket_inner_div">';
-                echo '<div class="ticketTitle">' . esc_html($event_title) . '</div>';
-                if (!empty($event_address)) {
-                    echo '<div class="eventaddress">' . esc_html($event_address);
-                    if ($map_link) {
-                        echo ' <a class="open_on_map_link" href="' . esc_url($map_link) . '" target="_blank">Map</a>';
-                    }
-                    echo '</div>';
-                }
-                echo '<hr>';
-                echo '<div class="ticketDetail">';
-                echo '<div>Event Date: ' . date_i18n('F j, Y, g:i a', strtotime($event_start_date)) . '</div>';
-                echo '<div>Ticket Quantity: ' . esc_html($ticket_quantity) . '</div>';
-                echo '<div>Order Total: ' . esc_html($order_total) . '</div>';
-                echo '</div>';
-                echo '<div class="ticketRip">';
-                echo '<div class="circleLeft"></div><div class="ripLine"></div><div class="circleRight"></div>';
-                echo '</div>';
-                echo '<div class="ticketSubDetail">';
-                echo '<div class="code">' . esc_html($customer_order->get_order_number()) . '</div>';
-                // Optionally display paid date here
-                echo '</div>';
-                echo '<div class="ticketlowerSubDetail">';
-                echo '<a href="' . esc_url($order_url) . '"><button class="view_ticket_btn">View Ticket</button></a>';
-                echo '<a href="' . esc_url($event_url) . '"><button class="view_event_btn">Event Details</button></a>';
-                echo '</div></div></div>';
-            }
-        }
-    } else {
-        echo "<p>You currently have no tickets for upcoming events.</p>";
-    }
-    echo '</div>'; // Close .allTicketsContainer
-
-    // Return the output
-    return ob_get_clean();
+    <?php
+    $content = ob_get_clean(); // End output buffering and get the contents
+    return $content;
 }
-add_shortcode('user_all_orders', 'display_user_all_orders_as_shortcode');
+add_shortcode('user_all_orders', 'display_user_all_orders_shortcode');
