@@ -20,15 +20,29 @@
 defined( 'ABSPATH' ) || exit;
 
 do_action( 'woocommerce_before_account_orders', $has_orders );
+
+// Display the shortcode content.
 echo do_shortcode('[user_order_tickets]');
- ?>
 
-<?php if ( $has_orders ) : ?>
+if ( $has_orders ) : 
+    // Your code for displaying orders goes here.
+    // This typically involves a loop through each order and displaying its details.
 
+    // Example:
+    /*
+    foreach ( $customer_orders->orders as $customer_order ) {
+        $order      = wc_get_order( $customer_order ); // Get the order object.
+        $item_count = $order->get_item_count(); // Get item count in order.
 
+        echo '<div class="order">';
+        echo '<h3>Order Number: ' . $order->get_order_number() . '</h3>';
+        echo '<p>Order Date: ' . wc_format_datetime( $order->get_date_created() ) . '</p>';
+        echo '<p>Order Status: ' . wc_get_order_status_name( $order->get_status() ) . '</p>';
+        echo '<p>Items: ' . $item_count . '</p>';
+        echo '</div>';
+    }
+    */
+endif;
 
-<?php do_action( 'woocommerce_after_account_orders', $has_orders ); ?>
-
-
-
-<?php
+do_action( 'woocommerce_after_account_orders', $has_orders );
+?>
