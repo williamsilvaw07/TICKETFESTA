@@ -3710,7 +3710,7 @@ function display_upcoming_events_for_user_with_view_order_button() {
 
                              <div class="ticket_inner_div ">
                              <div class="ticketTitle"><?php echo truncate_title($event_title, 30); ?></div>
-                            <div class="eventaddress"><?php echo $event_address; ?> <a class="opne_on_map_link" href="<?php echo $map_link; ?>" target="_blank">Open on Map</a></div>
+                            <div class="eventaddress"><?php echo $event_address; ?> <a class="opne_on_map_link" href="<?php echo $map_link; ?>" target="_blank">Map</a></div>
                             <hr>
                             <div class="ticketDetail">
     <div><span class="ticket-detail-title">Event Date:</span>&ensp;<?php echo date_i18n('F j, Y, g:i a', strtotime($event_start_date)); ?></div>
