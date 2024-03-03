@@ -206,7 +206,7 @@ jQuery(document).ready(function($) {
     jQuery(document).on('change', '#saved_tribe_venue', function() {
         // When the select field changes, log its value to the console
         var selectedValue = jQuery(this).val();
-        if(selectedValue != -1 || selectedValue != ''){
+        if(selectedValue !== '-1' || selectedValue !== ''){
             console.log('value: ', selectedValue, 'remove class required');
             jQuery('#event_tribe_venue').removeClass('required');
         }else{
