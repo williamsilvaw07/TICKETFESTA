@@ -23,7 +23,7 @@ do_action( 'woocommerce_before_account_orders', $has_orders );
 echo "Current Page: " . $paged;
 
 // Display the shortcode content.
-echo do_shortcode('[user_order_tickets]');
+echo do_shortcode('[user_all_orders]');
 
 if ( $has_orders ) : 
     // Your code for displaying orders goes here.
