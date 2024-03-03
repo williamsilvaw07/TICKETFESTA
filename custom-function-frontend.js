@@ -224,7 +224,9 @@ jQuery(document).ready(function($) {
     });
 
     var selectedValue = jQuery('#event_image').val();
-    if(selectedValue == ''){
+    var preview_image  = jQuery('.tribe-community-events-preview-image').val()
+
+    if(selectedValue == '' && preview_image != ''){
         jQuery('#trive-select-event-images').addClass('required');
     }
 
