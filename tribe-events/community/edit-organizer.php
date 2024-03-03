@@ -20,7 +20,9 @@ if ( ! defined( 'ABSPATH' ) ) {
     die( '-1' );
 }
 echo 'redirecting';
+$redirect_url = 'https://ticketfesta.co.uk/dashboard/organisers-list/?organizer_updated=true';
 wp_redirect('https://ticketfesta.co.uk/dashboard/organisers-list/?organizer_updated=true');
+header("Location: $redirect_url");
 
 $organizer_label_singular = tribe_get_organizer_label_singular();
 $organizer_id = get_the_ID(); // Get the organizer post ID
