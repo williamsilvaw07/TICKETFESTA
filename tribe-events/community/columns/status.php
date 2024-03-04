@@ -44,7 +44,7 @@ echo '</div>'; // End event-title-image div
     }
 
     if ($canView) {
-        echo '<span class="view"><a href="' . esc_url($event_link) . '">' . esc_html__('View', 'tribe-events-community') . '</a></span>';
+       
     }
 
     if ($canEdit) {
