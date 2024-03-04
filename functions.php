@@ -1715,7 +1715,7 @@ function shortcode_revenue() {
     <div class='sales-card today_sale_admin_dashboard'>
         <div class='sales-card-content'>
             <div class='sales-today'>
-                <h5 class='admin_dashboard_sales-label card_admin_dashboard'>Revenue Overview</h5>
+                <h5 class='admin_dashboard_sales-label card_admin_dashboard'>Lifetime Revenue</h5>
                 <div class='admin_dashboard_sales-amount'>£" . esc_html(number_format($total_sales_lifetime, 2)) . " <span class='admin_dashboard_sales-amount_span'>GBP</span></div>
             </div>
             <!-- <div class='debug-info' style='background-color: #f7f7f7; margin-top: 20px; padding: 10px; border-radius: 5px;'>$order_debug_info</div> -->
@@ -3942,6 +3942,12 @@ function custom_user_profile_shortcode() {
 
     $current_user = wp_get_current_user();
     $user_id = $current_user->ID;
+    $message = ''; // Initialize message variable
+
+    // Check for success message
+    if (isset($_GET['updated']) && $_GET['updated'] == 'true') {
+        $message = '<div class="success">Profile updated successfully.</div>';
+    }
 
     // Check if form has been submitted
     if ('POST' == $_SERVER['REQUEST_METHOD'] && !empty($_POST['action']) && $_POST['action'] == 'update-user') {
@@ -3960,13 +3966,13 @@ function custom_user_profile_shortcode() {
             wp_set_password($_POST['pass1'], $user_id);
         }
 
-        // Redirect to avoid resubmission
-        wp_redirect(get_permalink());
+        // Redirect to avoid resubmission, include query parameter for success message
+        wp_redirect(add_query_arg('updated', 'true', get_permalink()));
         exit;
     }
 
     // Form HTML
-    $output = '<form method="post" id="adduser" action="' . get_permalink() . '">
+    $output = $message . '<form method="post" id="adduser" action="' . get_permalink() . '">
         <p><label for="first-name">First Name</label><br />
         <input type="text" name="first-name" id="first-name" value="' . esc_attr($current_user->first_name) . '" /></p>
         
