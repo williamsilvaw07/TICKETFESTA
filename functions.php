@@ -3931,3 +3931,54 @@ add_action('wp_loaded', 'set_all_products_featured_image_to_event_image');
 ///////END
 
 
+
+
+
+
+
+//////FUNCTION TO CREATE A SHORTCODE TO UPDATE ORGINSER USER ACCOUNT SETTING 
+
+function custom_user_profile_shortcode() {
+    if (!is_user_logged_in()) return 'You need to be logged in to edit your profile.';
+
+    $current_user = wp_get_current_user();
+
+    // Check if form has been submitted
+    if ('POST' == $_SERVER['REQUEST_METHOD'] && !empty($_POST['action']) && $_POST['action'] == 'update-user') {
+        // Update user information
+        if (!empty($_POST['email'])) {
+            wp_update_user([
+                'ID' => $current_user->ID,
+                'user_email' => esc_attr($_POST['email']),
+            ]);
+        }
+        if (!empty($_POST['first-name'])) {
+            update_user_meta($current_user->ID, 'first_name', esc_attr($_POST['first-name']));
+        }
+        if (!empty($_POST['last-name'])) {
+            update_user_meta($current_user->ID, 'last_name', esc_attr($_POST['last-name']));
+        }
+
+        // Redirect to avoid resubmission
+        wp_redirect(get_permalink());
+        exit;
+    }
+
+    // Form HTML
+    $output = '<form method="post" id="adduser" action="' . get_permalink() . '">
+        <p><label for="first-name">First Name</label><br />
+        <input type="text" name="first-name" id="first-name" value="' . esc_attr($current_user->first_name) . '" /></p>
+        
+        <p><label for="last-name">Last Name</label><br />
+        <input type="text" name="last-name" id="last-name" value="' . esc_attr($current_user->last_name) . '" /></p>
+        
+        <p><label for="email">Email</label><br />
+        <input type="text" name="email" id="email" value="' . esc_attr($current_user->user_email) . '" /></p>
+        
+        <p><input name="updateuser" type="submit" id="updateuser" class="submit button" value="Update Profile" /></p>
+        <input name="action" type="hidden" id="action" value="update-user" />
+    </form>';
+
+    return $output;
+}
+add_shortcode('custom_user_profile', 'custom_user_profile_shortcode');
