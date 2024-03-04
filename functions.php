@@ -1718,8 +1718,8 @@ function shortcode_revenue() {
                 <h5 class='admin_dashboard_sales-label card_admin_dashboard'>Revenue Overview</h5>
                 <div class='admin_dashboard_sales-amount'>£" . esc_html(number_format($total_sales_lifetime, 2)) . " <span class='admin_dashboard_sales-amount_span'>GBP</span></div>
             </div>
-            <div class='debug-info' style='background-color: #f7f7f7; margin-top: 20px; padding: 10px; border-radius: 5px;'>$order_debug_info</div>
-        </div>
+            <!-- <div class='debug-info' style='background-color: #f7f7f7; margin-top: 20px; padding: 10px; border-radius: 5px;'>$order_debug_info</div> -->
+            </div>
     </div>";
 }
 add_shortcode('revenue', 'shortcode_revenue');
