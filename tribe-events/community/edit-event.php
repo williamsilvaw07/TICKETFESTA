@@ -1169,7 +1169,7 @@ jQuery(document).ready(function($) {
         display:none!important
     }
 
-    #Tribe__Tickets_Plus__Commerce__WooCommerce__Main_ticket_global_stock > div:first-child {
+    #Tribe__Tickets_Plus__Commerce__WooCommerce__Main_ticket_global_stock:first-child {
     display: none !important;
 }
 
