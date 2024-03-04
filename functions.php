@@ -3542,115 +3542,291 @@ require_once get_stylesheet_directory() . '/option-page.php';
 
 
 
-///FUNCTION TO SHOW TH EUPLCING EVENTS FROM THE ORGINSISER THE USER FOLLOWES 
-
-function ticketfeasta_display_following_organizers_events_dashboard()
+/////FUNCTION TO SHOW ONLY UPCOMING EVENT WHICH THE USER HAS TICKET FOR ON THE MYACCOUNT DAHSBOAD
+function display_upcoming_events_for_user_with_view_order_button()
 {
     $user_id = get_current_user_id();
-    $following_array = get_user_meta($user_id, 'following', true);
-    $following_array = json_decode($following_array, true);
-    ?>
-    <h1>Events from Organizers You Follow:</h1>
-    <?php
-    if (json_last_error() !== JSON_ERROR_NONE || empty($following_array)) {
-        ?>
-        <p>You are not following any organizers with upcoming events.</p>
-        <?php
-        return;
+    $displayed_event_ids = array();
+    $customer_orders = wc_get_orders(
+        array(
+            'meta_key' => '_customer_user',
+            'meta_value' => $user_id,
+            'post_status' => array('wc-completed'),
+        )
+    );
+
+
+    function truncate_title($title, $maxLength = 30)
+    {
+        // Break the title into lines with a maximum length, without breaking words
+        $wrapped = wordwrap($title, $maxLength, "\n", true);
+        // Split the string into lines
+        $lines = explode("\n", $wrapped);
+        // Use the first line, if there are multiple lines, append '...'
+        return count($lines) > 1 ? $lines[0] . '...' : $title;
     }
 
-    foreach ($following_array as $organizer_id) {
-        $args = array(
-            'post_type' => 'tribe_events',
-            'posts_per_page' => -1,
-            'meta_query' => array(
-                array(
-                    'key' => '_EventOrganizerID',
-                    'value' => $organizer_id,
-                    'compare' => '=',
-                ),
-            ),
-            'meta_key' => '_EventStartDate',
-            'orderby' => 'meta_value',
-            'order' => 'ASC',
-            'meta_value' => date('Y-m-d H:i:s'), // Ensure the event is in the future.
-            'meta_compare' => '>='
-        );
+    echo '<div class="event-tickets-header">';
+    echo '<h2 class="container-fluid">Your Event Tickets</h2>';
+    echo '<p>Below you\'ll find the tickets for events you\'re attending soon. Keep track of dates and details right here!</p>';
+    echo '</div>'; // Close the event-tickets-header div
 
-        $events_query = new WP_Query($args);
 
-        if ($events_query->have_posts()) {
-            $organizer_name = get_the_title($organizer_id);
-            $organizer_url = get_permalink($organizer_id);
-            $organizer_img = get_the_post_thumbnail_url($organizer_id, 'medium') ?: 'https://ticketfesta.co.uk/wp-content/uploads/2024/02/placeholder-4.png';
-            ?>
-            <div class='organizer-block'>
-                <div class='organizer-block_inner'>
-                    <a href='<?php echo esc_url($organizer_url); ?>'>
-                        <img src='<?php echo esc_url($organizer_img); ?>' alt='<?php echo esc_attr($organizer_name); ?>'
-                            class='organizer-image' />
-                    </a>
-                    <h6><a href='<?php echo esc_url($organizer_url); ?>'>
-                            <?php echo esc_html($organizer_name); ?>
-                        </a></h6>
-                </div>
-                <div class='organizer-block_events_inner'>
-                    <?php
-                    while ($events_query->have_posts()):
-                        $events_query->the_post();
-                        $event_id = get_the_ID();
-                        $event_url = get_the_permalink();
-                        $event_img = get_the_post_thumbnail_url($event_id, 'large') ?: 'https://ticketfesta.co.uk/wp-content/uploads/2024/02/placeholder-4.png';
-                        $event_start_date_time = tribe_get_start_date($event_id, false, 'D, j M Y g:i a');
-                        $event_price = tribe_get_cost($event_id, true);
-                        ?>
-                        <div class="event-card">
-                            <div class="event-image">
-                                <a href="<?php echo esc_url($event_url); ?>">
-                                    <img src="<?php echo esc_url($event_img); ?>" alt="<?php the_title(); ?>">
-                                </a>
-                            </div>
-                            <div class="event-details">
-                                <div class="event-content">
-                                    <h2 class="event-title"><a href="<?php echo esc_url($event_url); ?>">
-                                            <?php echo mb_strimwidth(get_the_title(), 0, 60, '...'); ?>
-                                        </a></h2>
+    echo '<div class="loadingAnimation">
+    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1366 768" xml:space="preserve">
+        <style type="text/css">
+            .st0{fill:none;stroke:#d3fa16;stroke-width:9;stroke-miterlimit:10;}
+            .st1{fill:none;stroke:#d3fa16;stroke-width:9;stroke-miterlimit:10;}
+        </style>
+        <g>
+            <path class="st0 grey" d="M772.5,347c-6.2-14-2.4-29.5,8.4-35.8c1.1-0.6,1.4-2.2,0.8-3.7l-8.5-19.1c-3.4-7.6-11.2-11.4-17.5-8.6
+                l-201,89.5c-6.3,2.8-8.7,11.2-5.3,18.8c0,0,6.4,14.3,8.5,19.1c0.6,1.4,2,2.2,3.3,1.8c12-3.8,26,3.7,32.3,17.7s2.4,29.5-8.4,35.8
+                c-1.1,0.6-1.4,2.2-0.8,3.7l8.5,19.1c3.4,7.6,11.2,11.4,17.5,8.6l201-89.5c6.3-2.8,8.7-11.2,5.3-18.8l-8.5-19.1
+                c-0.6-1.4-2-2.2-3.3-1.8C792.8,368.5,778.7,361,772.5,347z"></path>
+            <path class="st1 blue" d="M772.5,347c-6.2-14-2.4-29.5,8.4-35.8c1.1-0.6,1.4-2.2,0.8-3.7l-8.5-19.1c-3.4-7.6-11.2-11.4-17.5-8.6
+                l-201,89.5c-6.3,2.8-8.7,11.2-5.3,18.8c0,0,6.4,14.3,8.5,19.1c0.6,1.4,2,2.2,3.3,1.8c12-3.8,26,3.7,32.3,17.7s2.4,29.5-8.4,35.8
+                c-1.1,0.6-1.4,2.2-0.8,3.7l8.5,19.1c3.4,7.6,11.2,11.4,17.5,8.6l201-89.5c6.3-2.8,8.7-11.2,5.3-18.8l-8.5-19.1
+                c-0.6-1.4-2-2.2-3.3-1.8C792.8,368.5,778.7,361,772.5,347z"></path>
+        </g>
+    </svg>
+</div>';
 
-                                    <div class="event-day">
-                                        <?php echo esc_html($event_start_date_time); ?>
-                                    </div>
-                                    <div class="event-time-location">
-                                        <span class="event-time">
-                                            <?php echo tribe_get_start_date(null, false, 'g:i a'); ?> -
-                                            <?php echo tribe_get_end_date(null, false, 'g:i a'); ?>
-                                        </span>
-                                        <span class="event-location">
-                                            <?php echo tribe_get_venue(); ?>
-                                        </span>
-                                    </div>
-                                    <div class="event-price">
-                                        <?php echo esc_html($event_price); ?>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <?php
-                    endwhile;
+
+
+
+
+
+
+    echo '<div class="allTicketsContainer">'; // Open the main container for all tickets here
+
+
+
+    if (!empty($customer_orders)) {
+        foreach ($customer_orders as $customer_order) {
+            $order_url = $customer_order->get_view_order_url();
+            $items = $customer_order->get_items();
+            $order_paid_date = $customer_order->get_date_paid() ? $customer_order->get_date_paid()->date('d/m/y') : 'N/A';
+
+
+            foreach ($items as $item_id => $item) {
+                $event_id = get_post_meta($item->get_product_id(), '_tribe_wooticket_for_event', true);
+                if (in_array($event_id, $displayed_event_ids) || empty($event_id)) {
+                    continue;
+                }
+
+                $event_start_date = get_post_meta($event_id, '_EventStartDate', true);
+                if (strtotime($event_start_date) > current_time('timestamp')) {
+                    $event_title = get_the_title($event_id);
+                    $event_url = get_permalink($event_id);
+                    $event_image_url = get_the_post_thumbnail_url($event_id, 'full') ?: 'https://ticketfesta.co.uk/wp-content/uploads/2024/02/placeholder-4.png';
+                    $ticket_quantity = $item->get_quantity();
+                    $order_total = $customer_order->get_formatted_order_total();
+                    $event_address = tribe_get_address($event_id);
+                    // Encode the address for URL use
+                    $map_link = "https://maps.google.com/?q=" . urlencode($event_address);
+
                     ?>
-                </div> <!-- Close organizer-block_events_inner -->
-            </div> <!-- Close organizer-block -->
-            <?php
-            wp_reset_postdata();
+
+
+
+
+                    <div class="ticket">
+                        <div class="ticketImage">
+                            <img src="<?php echo $event_image_url; ?>" alt="Event Image">
+                        </div>
+
+                        <div class="ticket_inner_div ">
+                            <div class="ticketTitle">
+                                <?php echo truncate_title($event_title, 30); ?>
+                            </div>
+                            <?php // Check if the event address is not empty
+                                                if (!empty($event_address)) {
+                                                    // Encode the address for URL use
+                                                    $map_link = "https://maps.google.com/?q=" . urlencode($event_address);
+
+                                                    // Display the address and the "Open on Map" button
+                                                    echo '<div class="eventaddress">' . $event_address . ' <a class="opne_on_map_link" href="' . $map_link . '" target="_blank">Map</a></div>';
+                                                } else {
+                                                    // If there is no address, you can choose to not display anything, or customize as needed
+                                                    echo '<div class="eventaddress"></div>'; // Optional: Customize based on your preference
+                                                }
+                                                ?>
+                            <hr>
+                            <div class="ticketDetail">
+                                <div><span class="ticket-detail-title">Event Date:</span>&ensp;
+                                    <?php echo date_i18n('F j, Y, g:i a', strtotime($event_start_date)); ?>
+                                </div>
+                                <div><span class="ticket-detail-title">Ticket Quantity:</span>&ensp;
+                                    <?php echo $ticket_quantity; ?>
+                                </div>
+                                <div>
+                                    <span class="ticket-detail-title">Order Total:</span>
+                                    <span class="woocommerce-Price-amount amount"><bdi>
+                                            <?php echo $order_total; ?>
+                                        </bdi></span>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <div class="ticketRip">
+                            <div class="circleLeft"></div>
+                            <div class="ripLine"></div>
+                            <div class="circleRight"></div>
+                        </div>
+                        <div class="ticketSubDetail">
+                            <div class="code">
+                                <?php echo $customer_order->get_order_number(); ?>
+                            </div>
+                            <div><span class="ticket-detail-title">Paid:</span>&ensp;
+                                <?php echo $order_paid_date; ?>
+                            </div> <!-- Displaying the order paid date -->
+                        </div>
+                        <div class="ticketlowerSubDetail">
+                            <a href="<?php echo $order_url; ?>"><button class="view_ticket_btn">View Ticket</button></a>
+                            <a href="<?php echo $event_url; ?>"><button class="view_event_btn">Event Details</button></a>
+                        </div>
+                    </div>
+
+                    <?php
+
+                    $displayed_event_ids[] = $event_id;
+                }
+            }
         }
+    } else {
+        echo "<p>You currently have no tickets for upcoming events.</p>";
     }
 }
+echo '</div>'; // Close the main container for all tickets
 
-add_action('woocommerce_account_following_endpoint', 'ticketfeasta_display_following_organizers_events_dashboard');
-
-
-
+add_action('woocommerce_account_dashboard', 'display_upcoming_events_for_user_with_view_order_button');
 
 
 
 
 
+
+
+
+
+
+
+
+
+
+/////FUNCTION TO ADD SHORTCODE  FOR ALL ORDERS FROM USER 
+
+function display_user_all_orders_shortcode() {
+    if (!function_exists('wc_get_orders') || !is_user_logged_in()) {
+        return '<p>You must be logged in to view this content.</p>';
+    }
+
+    $user_id = get_current_user_id();
+    $customer_orders = wc_get_orders([
+        'customer' => $user_id,
+        'status' => 'completed',
+        'limit' => -1, // No limit
+    ]);
+
+    ob_start(); // Start output buffering
+    ?>
+
+<div class="event-tickets-header">
+    <h2 class="container-fluid">Your Event Tickets</h2>
+    <p>Below you'll find tickets for events you're attending soon. Keep track of dates and details right here!</p>
+</div>
+<div class="allTicketsContainer">
+    <?php foreach ($customer_orders as $customer_order) : 
+        $order_url = $customer_order->get_view_order_url();
+        $items = $customer_order->get_items();
+        foreach ($items as $item_id => $item) :
+            $event_id = get_post_meta($item->get_product_id(), '_tribe_wooticket_for_event', true);
+            $event_start_date = get_post_meta($event_id, '_EventStartDate', true);
+            $event_title = get_the_title($event_id);
+            $event_url = get_permalink($event_id);
+            $event_image_url = get_the_post_thumbnail_url($event_id, 'thumbnail') ?: 'https://yourdefaultimageurl.com/default.jpg'; // Using thumbnail size for faster loading
+            $ticket_quantity = $item->get_quantity();
+            $order_total = $customer_order->get_formatted_order_total();
+            $event_address = tribe_get_address($event_id);
+            $map_link = !empty($event_address) ? "https://maps.google.com/?q=" . urlencode($event_address) : '';
+    ?>
+    <div class="ticket">
+        <div class="ticketImage">
+            <img src="<?php echo esc_url($event_image_url); ?>" alt="Event Image">
+        </div>
+        <div class="ticket_inner_div">
+            <div class="ticketTitle"><?php echo esc_html($event_title); ?></div>
+            <?php if (!empty($event_address)) : ?>
+            <div class="eventaddress"><?php echo esc_html($event_address); ?>
+                <a class="opne_on_map_link" href="<?php echo esc_url($map_link); ?>" target="_blank">Map</a>
+            </div>
+            <?php endif; ?>
+            <hr>
+            <div class="ticketDetail">
+                <div>Event Date: <?php echo date_i18n('F j, Y, g:i a', strtotime($event_start_date)); ?></div>
+                <div>Ticket Quantity: <?php echo esc_html($ticket_quantity); ?></div>
+                <div>Order Total: <?php echo esc_html($order_total); ?></div>
+            </div>
+            <div class="ticketRip">
+                <div class="circleLeft"></div>
+                <div class="ripLine"></div>
+                <div class="circleRight"></div>
+            </div>
+            <div class="ticketSubDetail">
+                <div class="code"><?php echo esc_html($customer_order->get_order_number()); ?></div>
+                <!-- Paid Date display logic here if needed -->
+            </div>
+            <div class="ticketlowerSubDetail">
+                <a href="<?php echo esc_url($order_url); ?>"><button class="view_ticket_btn">View Ticket</button></a>
+                <a href="<?php echo esc_url($event_url); ?>"><button class="view_event_btn">Event Details</button></a>
+            </div>
+        </div>
+    </div>
+    <?php endforeach; endforeach; ?>
+</div>
+
+    <?php
+    $content = ob_get_clean(); // End output buffering and get the contents
+    return $content;
+}
+add_shortcode('user_all_orders', 'display_user_all_orders_shortcode');
+
+
+
+
+
+
+////FUNCTINO TO ADD THE PRODUCT IMAGE TO THE ORDER DEATILS SECTION 
+
+function display_order_item_product_image( $item_id, $item, $order ) {
+    // Get the product object
+    $product = $item->get_product();
+    // Check if the product exists
+    if ( $product ) {
+        // Get the product image URL. Adjust the size as needed ('thumbnail', 'medium', 'full', etc.)
+        $image_url = $product->get_image( 'small' ); // This returns an <img> tag
+        // Output the product image
+        echo '<div class="product-image" style="float: left; margin-right: 10px;">' . $image_url . '</div>';
+    }
+}
+add_action( 'woocommerce_order_item_meta_start', 'display_order_item_product_image', 10, 3 );
+
+
+
+
+
+///FUNCTION TO CHANGE THE WORD "PRODUCT" TO "TICKET"
+
+function change_product_text_to_ticket( $translated_text, $text, $domain ) {
+    // Ensure we are in the WooCommerce domain to prevent unnecessary replacements
+    if ( 'woocommerce' === $domain ) {
+        // Replace 'Product' and its plural form with 'Ticket'
+        $translated_text = str_replace( 'Product', 'Ticket', $translated_text );
+        $translated_text = str_replace( 'product', 'ticket', $translated_text );
+        $translated_text = str_replace( 'Products', 'Tickets', $translated_text );
+        $translated_text = str_replace( 'products', 'tickets', $translated_text );
+    }
+    return $translated_text;
+}
+add_filter( 'gettext', 'change_product_text_to_ticket', 20, 3 );
