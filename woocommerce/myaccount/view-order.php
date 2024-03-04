@@ -54,3 +54,12 @@ printf(
 <?php endif; ?>
 
 <?php do_action( 'woocommerce_view_order', $order_id ); ?>
+
+
+
+
+
+<style>
+
+
+</style>
