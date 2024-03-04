@@ -3944,20 +3944,11 @@ function custom_user_profile_shortcode() {
 
     $current_user = wp_get_current_user();
     $user_id = $current_user->ID;
-    $success_message = get_transient('user_' . $user_id . '_update_message');
 
     // Check if form has been submitted and verify the nonce
     if ('POST' == $_SERVER['REQUEST_METHOD'] && !empty($_POST['action']) && $_POST['action'] == 'update-user' && wp_verify_nonce($_POST['_wpnonce'], 'update_user_' . $user_id)) {
         // Update user information here, including the address and phone fields
         // Remember to sanitize and validate all input
-
-        // Example update
-        if (!empty($_POST['phone'])) {
-            update_user_meta($user_id, 'phone', sanitize_text_field($_POST['phone']));
-        }
-
-        // Set a success message using transients
-        set_transient('user_' . $user_id . '_update_message', 'Your profile has been updated successfully.', 45);
 
         // Redirect to avoid resubmission
         wp_redirect(get_permalink());
@@ -3967,16 +3958,8 @@ function custom_user_profile_shortcode() {
     // Form HTML using Bootstrap layout
     $output = '
     <div class="container setting_page_admin">
-        <h1 class="tribe-community-events-list-title ">Edit Profile</h1>';
-
-    // Display success message if set
-    if ($success_message) {
-        $output .= '<div class="alert alert-success" role="alert">' . esc_html($success_message) . '</div>';
-        // Delete the transient to ensure message is shown only once
-        delete_transient('user_' . $user_id . '_update_message');
-    }
-
-    $output .= '<form class="orgerinser_settings_form" method="post" id="adduser" action="' . get_permalink() . '">
+        <h1>Edit Profile</h1>
+        <form class="orgerinser_settings_form" method="post" id="adduser" action="' . get_permalink() . '">
             ' . wp_nonce_field('update_user_' . $user_id, '_wpnonce', true, false) . '
             <input name="action" type="hidden" id="action" value="update-user" />
             <div class="row">
@@ -4007,11 +3990,26 @@ function custom_user_profile_shortcode() {
                         <input type="text" class="form-control" name="phone" id="phone" value="' . esc_attr(get_user_meta($user_id, 'phone', true)) . '">
                     </div>
                 </div>
-            </div>';
+            </div>
 
-    // Include additional address fields and password change fields as per your needs here
+            <!-- Add address fields here -->
 
-    $output .= '<div class="form-group">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="pass1">New Password</label>
+                        <input type="password" class="form-control" name="pass1" id="pass1">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="pass2">Confirm New Password</label>
+                        <input type="password" class="form-control" name="pass2" id="pass2">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
                 <button type="submit" class="btn btn-primary">Update Profile</button>
             </div>
         </form>
