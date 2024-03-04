@@ -1119,4 +1119,9 @@ $event_url = esc_attr($event_url);
         background-color: #2C2C2C;
         /* Set this to the background color of the progress bar */
     }
+
+
+    .ticket_form_total_capacity , .tribe-ticket-control-wrap__ctas{
+        display:none
+    }
 </style>
