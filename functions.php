@@ -1706,6 +1706,50 @@ function get_ticket_info($user_id)
 
 
 
+function shortcode_revenue() {
+    $user_id = get_current_user_id();
+    $ticket_info = get_ticket_info($user_id);
+    $total_sales_lifetime = $ticket_info['total_sales_lifetime'];
+
+    // Initialize an empty string to hold the debug information for each order
+    $order_debug_info = '';
+
+    // Fetch orders for the current user
+    $customer_orders = wc_get_orders(array(
+        'meta_key' => '_customer_user',
+        'meta_value' => $user_id,
+        'post_status' => array('wc-completed'),
+        'limit' => -1, // Remove the limit or set it according to your needs
+    ));
+
+    foreach ($customer_orders as $order) {
+        // Append order ID and total to the debug string
+        $order_debug_info .= 'Order ID: ' . $order->get_id() . ' - Total: £' . number_format($order->get_total(), 2) . "<br>";
+    }
+
+    return '
+    <div class="sales-card today_sale_admin_dashboard">
+        <div class="sales-card-content ">
+            <div class="sales-today ">
+                <h5 class="admin_dashboard_sales-label card_admin_dashboard ">Revenue Overview</h5>
+                <div class="admin_dashboard_sales-amount ">£' . esc_html(number_format($total_sales_lifetime, 2)) . ' <span class="admin_dashboard_sales-amount_span">GBP</span></div>              
+            </div>
+            <!-- Additional sections can go here -->
+            <!-- Debug information for development purposes -->
+            <div class="debug-info" style="background-color: #f7f7f7; margin-top: 20px; padding: 10px; border-radius: 5px;">
+                <strong>Order Breakdown:</strong><br>
+                ' . $order_debug_info . '
+            </div>
+        </div>
+    </div>';
+}
+add_shortcode('revenue', 'shortcode_revenue');
+
+
+
+
+
+
 
 function get_total_sales_for_previous_day($user_id)
 {
@@ -1875,35 +1919,6 @@ add_shortcode('valid_tickets_sold', 'shortcode_valid_tickets_sold');
 
 
 
-
-
-
-function shortcode_revenue() {
-    $ticket_info = get_ticket_info(get_current_user_id());
-    $total_sales_lifetime = $ticket_info['total_sales_lifetime'];
-
-    // Debug section - convert array to readable string for debugging
-    $debug_info = '<pre>' . esc_html(print_r($ticket_info, true)) . '</pre>';
-
-    return '
-    <div class="sales-card today_sale_admin_dashboard">
-        <div class="sales-card-content ">
-            <div class="sales-today ">
-                <h5 class="admin_dashboard_sales-label card_admin_dashboard ">Revenue Overview</h5>
-                <div class="admin_dashboard_sales-amount ">£' . esc_html(number_format($total_sales_lifetime, 2)) . ' <span class="admin_dashboard_sales-amount_span">GBP</span></div>
-                <div class="admin_dashboard_sales-amount_view_full_report">
-            
-                </div>                
-            </div>
-            <!-- Debug information for development purposes -->
-            <div class="debug-info" style="background-color: #f7f7f7; margin-top: 20px; padding: 10px; border-radius: 5px;">
-                <strong>Debug Information:</strong>
-                ' . $debug_info . '
-            </div>
-        </div>
-    </div>';
-}
-add_shortcode('revenue', 'shortcode_revenue');
 
 
 
