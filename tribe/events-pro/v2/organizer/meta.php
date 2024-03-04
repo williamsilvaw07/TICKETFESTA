@@ -1870,7 +1870,7 @@ input.follow-button {
 
 
     .organizer_profile_bk {
-        min-height: 340px;
+        min-height: 340px!important;
 }
     .single-tribe_organizer .image_profile_text_main_continer img {
         border-radius: 100px;
