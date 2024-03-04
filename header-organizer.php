@@ -91,7 +91,7 @@ if (!defined('ABSPATH')) {
                 <nav class="lower_admin_dashboard-sidebar">
                     <ul class="admin_dashboard-sidebar-list lower_admin_dashboard-sidebar-list">
                         <li class="admin_dashboard-sidebar-item">
-                            <a href="/organiser-settings/"><i class="fas fa-cog"></i><span
+                            <a href="/organisers-setting/"><i class="fas fa-cog"></i><span
                                     class="nav-text">Settings</span></a>
                         </li>
                         <li class="admin_dashboard-sidebar-item">
