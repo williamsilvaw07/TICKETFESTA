@@ -1722,8 +1722,6 @@ function shortcode_revenue() {
 }
 add_shortcode('revenue', 'shortcode_revenue');
 
-
-
  
 
 
