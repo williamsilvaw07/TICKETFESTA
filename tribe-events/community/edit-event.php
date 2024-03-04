@@ -1168,4 +1168,9 @@ jQuery(document).ready(function($) {
     .tribe-ticket-control-wrap , .tribe-ticket-control-wrap__ctas , #ticket_type_options {
         display:none!important
     }
+
+    .Tribe__Tickets_Plus__Commerce__WooCommerce__Main_ticket_global_stock > div:first-child {
+    display: none !important;
+}
+
 </style>
