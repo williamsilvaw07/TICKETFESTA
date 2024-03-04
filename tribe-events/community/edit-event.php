@@ -903,6 +903,9 @@ jQuery(document).ready(function($) {
         }
     }
 
+    // Adjust the CSS for "Unlimited capacity" radio button
+    $('#Tribe__Tickets_Plus__Commerce__WooCommerce__Main_unlimited').css('margin-right', '25px');
+
     // Run the check immediately in case the page loads with the form already visible
     checkAndClickRadioButton();
 
@@ -917,7 +920,6 @@ jQuery(document).ready(function($) {
         intervalId = setInterval(checkAndClickRadioButton, 500);
     });
 });
-
 
 
 </script>
