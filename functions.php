@@ -3945,10 +3945,10 @@ function custom_user_profile_shortcode() {
     $current_user = wp_get_current_user();
     $user_id = $current_user->ID;
 
-    // Check if form has been submitted
-    if ('POST' == $_SERVER['REQUEST_METHOD'] && !empty($_POST['action']) && $_POST['action'] == 'update-user') {
+    // Check if form has been submitted and verify the nonce
+    if ('POST' == $_SERVER['REQUEST_METHOD'] && !empty($_POST['action']) && $_POST['action'] == 'update-user' && wp_verify_nonce($_POST['_wpnonce'], 'update_user_' . $user_id)) {
         // Update user information here, including the address and phone fields
-        // Remember to perform security checks, like nonce verification
+        // Remember to sanitize and validate all input
 
         // Redirect to avoid resubmission
         wp_redirect(get_permalink());
@@ -3960,6 +3960,8 @@ function custom_user_profile_shortcode() {
     <div class="container">
         <h1>Edit Profile</h1>
         <form method="post" id="adduser" action="' . get_permalink() . '">
+            ' . wp_nonce_field('update_user_' . $user_id, '_wpnonce', true, false) . '
+            <input name="action" type="hidden" id="action" value="update-user" />
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
@@ -3975,17 +3977,22 @@ function custom_user_profile_shortcode() {
                 </div>
             </div>
 
-            <div class="form-group">
-                <label for="email">Email (cannot be changed)</label>
-                <input type="email" class="form-control" name="email" id="email" value="' . esc_attr($current_user->user_email) . '" readonly>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="email">Email (cannot be changed)</label>
+                        <input type="email" class="form-control" name="email" id="email" value="' . esc_attr($current_user->user_email) . '" readonly>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="phone">Phone</label>
+                        <input type="text" class="form-control" name="phone" id="phone" value="' . esc_attr(get_user_meta($user_id, 'phone', true)) . '">
+                    </div>
+                </div>
             </div>
 
-            <div class="form-group">
-                <label for="phone">Phone</label>
-                <input type="text" class="form-control" name="phone" id="phone" value="' . esc_attr(get_user_meta($user_id, 'phone', true)) . '">
-            </div>
-
-            <!-- Repeat the above pattern for address line 1, address line 2, city, postcode/ZIP, country/region, state/county -->
+            <!-- Add address fields here -->
 
             <div class="row">
                 <div class="col-md-6">
