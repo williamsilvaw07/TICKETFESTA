@@ -1715,23 +1715,24 @@ function shortcode_revenue() {
         'limit' => -1, // Ensure all completed orders are fetched
     ));
 
-    // Initialize variables to accumulate total sales and prepare debug info
+    // Initialize variables for accumulating sales and preparing debug info
     $total_sales_lifetime_calculated = 0;
     $order_debug_info = '';
 
     foreach ($customer_orders as $order) {
-        // Add each order's total to the calculated total sales
-        $total_sales_lifetime_calculated += $order->get_total();
-
         foreach ($order->get_items() as $item) {
+            // Calculate item's subtotal (quantity * price) without considering discounts
+            $item_subtotal = $item->get_subtotal(); // Get the line subtotal before discounts
+            $total_sales_lifetime_calculated += $item_subtotal;
+
             $product_id = $item->get_product_id();
             $event_id = get_post_meta($product_id, '_tribe_wooticket_for_event', true);
             $event_title = get_the_title($event_id);
             $event_author_id = get_post_field('post_author', $event_id);
             $event_author_name = get_the_author_meta('display_name', $event_author_id);
 
-            // Append order ID, total, event information, and event creator to the debug string
-            $order_debug_info .= 'Order ID: ' . $order->get_id() . ' - Total: £' . number_format($order->get_total(), 2) . " - Event: " . esc_html($event_title) . " - Created by: " . esc_html($event_author_name) . "<br>";
+            // Append order ID, item subtotal, event information, and event creator to the debug string
+            $order_debug_info .= 'Order ID: ' . $order->get_id() . ' - Subtotal: £' . number_format($item_subtotal, 2) . " - Event: " . esc_html($event_title) . " - Created by: " . esc_html($event_author_name) . "<br>";
         }
     }
 
