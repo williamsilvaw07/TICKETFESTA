@@ -2,6 +2,36 @@
 
 
 
+/////FUNCTION TO AUTO COMPLEATE THE ORDERS 
+add_action('woocommerce_payment_complete', 'auto_complete_digital_orders');
+
+function auto_complete_digital_orders($order_id) {
+    $order = wc_get_order($order_id);
+
+    if (!$order) {
+        return;
+    }
+
+    $items = $order->get_items();
+
+    foreach ($items as $item) {
+        $product = $item->get_product();
+
+        // Check if there's any non-downloadable product.
+        if (!$product->is_downloadable()) {
+            return; // Exit if any product is not downloadable.
+        }
+    }
+
+    // If all items are downloadable, update order status to completed.
+    $order->update_status('completed');
+}
+
+
+
+
+
+
 ////FUNCTION TO ADD THE EVENT TITLE ON THE TICKET/PRODUCT FRONTEND 
 /**
  * Example for adding event data to WooCommerce checkout for Events Calendar tickets.
