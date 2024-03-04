@@ -81,7 +81,7 @@ printf(
 .tribe-event-details  span{
     margin: 10px 0!important;
 }
-.tribe-attendee-meta{
+.tribe-attendee-meta , .tec-tickets__wallet-plus-component-apple-wallet-button-link .tribe-common-a11y-hidden{
     display:none
 }
 .woocommerce-customer-details{
@@ -91,6 +91,7 @@ printf(
     font-weight: 700;
     font-size: 35px;
 }
+
 
 
 
