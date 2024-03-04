@@ -886,16 +886,23 @@ $event_url = esc_attr($event_url);
 
 
 
-
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM fully loaded and parsed');
+
     if (document.getElementById('ticket_title_add')) {
+        console.log('#ticket_title_add found on the page');
+
         var ownCapacityRadio = document.getElementById('Tribe__Tickets_Plus__Commerce__WooCommerce__Main_own');
         if (ownCapacityRadio) {
+            console.log('Found the radio button with ID Tribe__Tickets_Plus__Commerce__WooCommerce__Main_own. Clicking it now.');
             ownCapacityRadio.click();
+        } else {
+            console.log('Radio button with ID Tribe__Tickets_Plus__Commerce__WooCommerce__Main_own not found.');
         }
+    } else {
+        console.log('#ticket_title_add not found on the page');
     }
 });
-
 
 
 </script>
