@@ -1634,17 +1634,15 @@ add_shortcode('organizer_attendees_report', 'my_tribe_community_tickets_attendee
 
 
 
-
 function get_ticket_info($user_id) {
     $today = date('Y-m-d');
     $total_sales_today = 0;
     $total_tickets_sold_today = 0;
     $total_sales_lifetime = 0;
     $total_tickets_sold_lifetime = 0;
-    $total_tickets_sold_previous_day = 0;
+    $order_details = []; // Initialize an array for detailed order information
 
-    $total_sales_previous_day = get_total_sales_for_previous_day($user_id);
-
+    // Fetch orders
     $orders = wc_get_orders(array(
         'status' => array('wc-completed'),
         'limit' => -1,
@@ -1656,7 +1654,6 @@ function get_ticket_info($user_id) {
 
         $order_date = $order->get_date_created()->format('Y-m-d');
         $is_today = ($order_date === $today);
-        $is_previous_day = ($order_date === date('Y-m-d', strtotime('-1 day')));
 
         foreach ($order->get_items() as $item) {
             $product_id = $item->get_product_id();
@@ -1665,65 +1662,68 @@ function get_ticket_info($user_id) {
 
             if ($event_author == $user_id) {
                 $quantity = $item->get_quantity();
-                $item_subtotal = $item->get_subtotal(); // Using subtotal to account for potential discounts
-                
+                $subtotal = $item->get_subtotal(); // Using item subtotal
+
+                // Collecting event title and creator name
+                $event_title = get_the_title($event_id);
+                $event_creator_name = get_the_author_meta('display_name', $event_author);
+
                 $total_tickets_sold_lifetime += $quantity;
-                $total_sales_lifetime += $item_subtotal;
+                $total_sales_lifetime += $subtotal;
 
                 if ($is_today) {
                     $total_tickets_sold_today += $quantity;
-                    $total_sales_today += $item_subtotal;
+                    $total_sales_today += $subtotal;
                 }
 
-                if ($is_previous_day) {
-                    $total_tickets_sold_previous_day += $quantity;
-                }
+                // Adding order debug info
+                $order_details[] = [
+                    'order_id' => $order->get_id(),
+                    'subtotal' => $subtotal,
+                    'event_title' => $event_title,
+                    'event_creator_name' => $event_creator_name,
+                ];
             }
         }
     }
 
-    return array(
+    return [
         'total_sales_today' => $total_sales_today,
         'total_tickets_sold_today' => $total_tickets_sold_today,
         'total_sales_lifetime' => $total_sales_lifetime,
         'total_tickets_sold_lifetime' => $total_tickets_sold_lifetime,
-        'total_sales_previous_day' => $total_sales_previous_day,
-        'total_tickets_sold_previous_day' => $total_tickets_sold_previous_day,
-    );
+        'order_details' => $order_details, // Include detailed order information
+    ];
 }
-
 
 
 
 function shortcode_revenue() {
     $user_id = get_current_user_id();
     $ticket_info = get_ticket_info($user_id);
-    $total_sales_lifetime_calculated = $ticket_info['total_sales_lifetime'];
+    $total_sales_lifetime = $ticket_info['total_sales_lifetime'];
     $order_details = $ticket_info['order_details'];
 
-    $order_debug_info = '';
+    // Building the order debug info
+    $order_debug_info = "<strong>Order Breakdown:</strong><br>";
     foreach ($order_details as $detail) {
-        $order_debug_info .= "Order ID: {$detail['order_id']} - Subtotal: £" . number_format($detail['subtotal'], 2) . " - Event: {$detail['event_title']} - Created by: {$detail['event_creator']}<br>";
+        $order_debug_info .= "Order ID: {$detail['order_id']}, Subtotal: £" . number_format($detail['subtotal'], 2);
+        $order_debug_info .= ", Event: {$detail['event_title']}, Created by: {$detail['event_creator_name']}<br>";
     }
 
-    return '
-    <div class="sales-card today_sale_admin_dashboard">
-        <div class="sales-card-content ">
-            <div class="sales-today ">
-                <h5 class="admin_dashboard_sales-label card_admin_dashboard ">Revenue Overview</h5>
-                <div class="admin_dashboard_sales-amount ">£' . esc_html(number_format($total_sales_lifetime_calculated, 2)) . ' <span class="admin_dashboard_sales-amount_span">GBP</span></div>              
+    return "
+    <div class='sales-card today_sale_admin_dashboard'>
+        <div class='sales-card-content'>
+            <div class='sales-today'>
+                <h5 class='admin_dashboard_sales-label card_admin_dashboard'>Revenue Overview</h5>
+                <div class='admin_dashboard_sales-amount'>£" . esc_html(number_format($total_sales_lifetime, 2)) . " <span class='admin_dashboard_sales-amount_span'>GBP</span></div>
             </div>
-            <!-- Debug information for development purposes -->
-            <div class="debug-info" style="background-color: #f7f7f7; margin-top: 20px; padding: 10px; border-radius: 5px;">
-                <strong>Order Breakdown:</strong><br>
-                ' . $order_debug_info . '
-            </div>
+            <div class='debug-info' style='background-color: #f7f7f7; margin-top: 20px; padding: 10px; border-radius: 5px;'>$order_debug_info</div>
         </div>
-    </div>';
+    </div>";
 }
 add_shortcode('revenue', 'shortcode_revenue');
 
- 
 
 
 function get_total_sales_for_previous_day($user_id)
