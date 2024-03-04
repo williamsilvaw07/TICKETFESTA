@@ -3672,13 +3672,7 @@ function display_upcoming_events_for_user_with_view_order_button() {
         return;
     }
 
-    $user_id = get_current_user_id();
-    $displayed_event_ids = array();
-    $customer_orders = wc_get_orders(array(
-        'meta_key' => '_customer_user',
-        'meta_value' => $user_id,
-        'post_status' => array('wc-completed'),
-    ));
+
 
     echo '<div class="event-tickets-header">';
     echo '<h2 class="container-fluid">Your Event Tickets</h2>';
