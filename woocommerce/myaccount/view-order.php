@@ -78,7 +78,7 @@ printf(
     max-width: 900px;
 }
 
-.tribe-event-details em span{
+.tribe-event-details  span{
     margin: 10px 0!important;
 }
 
