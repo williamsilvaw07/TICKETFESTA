@@ -3943,99 +3943,68 @@ function custom_user_profile_shortcode() {
     $current_user = wp_get_current_user();
     $user_id = $current_user->ID;
 
-    // Check if form has been submitted and nonce is verified
-    if ('POST' == $_SERVER['REQUEST_METHOD'] && !empty($_POST['action']) && $_POST['action'] == 'update-user' && wp_verify_nonce($_POST['_wpnonce'], 'update-user_' . $user_id)) {
-        // Update user information as before (skipping for brevity)
+    // Check if form has been submitted
+    if ('POST' == $_SERVER['REQUEST_METHOD'] && !empty($_POST['action']) && $_POST['action'] == 'update-user') {
+
+        // Update user information
+        if (!empty($_POST['email'])) wp_update_user(['ID' => $user_id, 'user_email' => esc_attr($_POST['email'])]);
+        if (!empty($_POST['first-name'])) update_user_meta($user_id, 'first_name', esc_attr($_POST['first-name']));
+        if (!empty($_POST['last-name'])) update_user_meta($user_id, 'last_name', esc_attr($_POST['last-name']));
+        if (!empty($_POST['phone'])) update_user_meta($user_id, 'phone', esc_attr($_POST['phone']));
+
+        // Password change
+        if (!empty($_POST['pass1']) && !empty($_POST['pass2']) && $_POST['pass1'] === $_POST['pass2']) {
+            wp_set_password($_POST['pass1'], $user_id);
+        }
 
         // Redirect to avoid resubmission
         wp_redirect(get_permalink());
         exit;
     }
 
-    // Get user meta for address fields
-    $address = get_user_meta($user_id, 'address', true);
-    $phone = get_user_meta($user_id, 'phone', true);
-
-    $output = '
-    <div class="user-profile-form-wrapper">
+    // Form HTML
+    $output = '<div class="user-profile-form-wrapper">
         <h1>Edit Profile</h1>
-        <form method="post" id="adduser" action="' . get_permalink() . '" class="form-horizontal">
-            ' . wp_nonce_field('update-user_' . $user_id, '_wpnonce', true, false) . '
-            <input name="action" type="hidden" id="action" value="update-user" />
-
-            <div class="row mb-3">
-                <div class="col">
-                    <label for="first-name" class="form-label">First Name</label>
-                    <input type="text" name="first-name" id="first-name" value="' . esc_attr($current_user->first_name) . '" class="form-control">
-                </div>
-                <div class="col">
-                    <label for="last-name" class="form-label">Last Name</label>
-                    <input type="text" name="last-name" id="last-name" value="' . esc_attr($current_user->last_name) . '" class="form-control">
+        <form method="post" id="adduser" action="' . get_permalink() . '">
+            <div class="form-group row">
+                <label for="first-name" class="col-sm-2 col-form-label">First Name</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="first-name" id="first-name" value="' . esc_attr($current_user->first_name) . '">
                 </div>
             </div>
-
-            <div class="mb-3">
-                <label for="email" class="form-label">Email (cannot be changed)</label>
-                <input type="email" name="email" id="email" value="' . esc_attr($current_user->user_email) . '" class="form-control" readonly>
-            </div>
-
-            <div class="row mb-3">
-                <div class="col">
-                    <label for="address-line1" class="form-label">Address Line 1</label>
-                    <input type="text" name="address-line1" id="address-line1" value="' . esc_attr($address['line1'] ?? '') . '" class="form-control">
-                </div>
-                <div class="col">
-                    <label for="address-line2" class="form-label">Address Line 2</label>
-                    <input type="text" name="address-line2" id="address-line2" value="' . esc_attr($address['line2'] ?? '') . '" class="form-control">
+            <div class="form-group row">
+                <label for="last-name" class="col-sm-2 col-form-label">Last Name</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="last-name" id="last-name" value="' . esc_attr($current_user->last_name) . '">
                 </div>
             </div>
-
-            <div class="row mb-3">
-                <div class="col-md-6">
-                    <label for="city" class="form-label">City</label>
-                    <input type="text" name="city" id="city" value="' . esc_attr($address['city'] ?? '') . '" class="form-control">
-                </div>
-                <div class="col-md-6">
-                    <label for="postcode" class="form-label">Postcode / ZIP</label>
-                    <input type="text" name="postcode" id="postcode" value="' . esc_attr($address['postcode'] ?? '') . '" class="form-control">
+            <div class="form-group row">
+                <label for="email" class="col-sm-2 col-form-label">Email</label>
+                <div class="col-sm-10">
+                    <input type="email" class="form-control" name="email" id="email" value="' . esc_attr($current_user->user_email) . '" readonly>
                 </div>
             </div>
-
-            <div class="row mb-3">
-                <div class="col-md-6">
-                    <label for="country" class="form-label">Country/Region</label>
-                    <select name="country" id="country" class="form-select">
-                        <option value="">Select a country...</option>
-                        <option value="US">United States</option>
-                        <option value="CA">Canada</option>
-                        <option value="GB">United Kingdom</option>
-                        <option value="AU">Australia</option>
-                        <!-- Add more countries as needed -->
-                    </select>
-                </div>
-                <div class="col-md-6">
-                    <label for="state" class="form-label">State / County</label>
-                    <input type="text" name="state" id="state" value="' . esc_attr($address['state'] ?? '') . '" class="form-control">
+            <div class="form-group row">
+                <label for="phone" class="col-sm-2 col-form-label">Phone</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="phone" id="phone" value="' . esc_attr(get_user_meta($user_id, 'phone', true)) . '">
                 </div>
             </div>
-
-            <div class="mb-3">
-                <label for="phone" class="form-label">Phone</label>
-                <input type="text" name="phone" id="phone" value="' . esc_attr($phone ?? '') . '" class="form-control">
-            </div>
-
-            <div class="row mb-3">
-                <div class="col">
-                    <label for="pass1" class="form-label">New Password</label>
-                    <input type="password" name="pass1" id="pass1" class="form-control">
+            <div class="form-group row">
+                <label for="pass1" class="col-sm-2 col-form-label">New Password</label>
+                <div class="col-sm-4">
+                    <input type="password" class="form-control" name="pass1" id="pass1">
                 </div>
-                <div class="col">
-                    <label for="pass2" class="form-label">Confirm New Password</label>
-                    <input type="password" name="pass2" id="pass2" class="form-control">
+                <label for="pass2" class="col-sm-2 col-form-label">Confirm New Password</label>
+                <div class="col-sm-4">
+                    <input type="password" class="form-control" name="pass2" id="pass2">
                 </div>
             </div>
-
-            <p><input name="updateuser" type="submit" id="updateuser" class="submit button btn btn-primary" value="Update Profile"></p>
+            <div class="form-group row">
+                <div class="col-sm-10">
+                    <button type="submit" class="btn btn-primary">Update Profile</button>
+                </div>
+            </div>
         </form>
     </div>';
 
