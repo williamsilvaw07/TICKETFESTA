@@ -73,9 +73,14 @@ printf(
     color: white!important;
     text-decoration: none;
 }
+.tribe-event-details{
+    width: 100%;
+    max-width: 900px;
+}
 
-
-
+.tribe-event-details em span{
+    margin: 10px 0
+}
 
 
 
