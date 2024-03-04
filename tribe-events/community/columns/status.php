@@ -44,11 +44,11 @@ echo '</div>'; // End event-title-image div
     }
 
     if ($canView) {
-       
+        echo '<span class="view"><a href="' . esc_url($event_link) . '">' . esc_html__('View', 'tribe-events-community') . '</a></span>';
     }
 
     if ($canEdit) {
-        echo tribe('community.main')->getEditButton($event, __('Edit', 'tribe-events-community'), '<span class="edit wp-admin events-cal"> ', '</span>');
+       
     }
 
     if ($canDelete) {
