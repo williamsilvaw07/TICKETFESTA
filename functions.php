@@ -3944,7 +3944,7 @@ function custom_user_profile_shortcode() {
     $user_id = $current_user->ID;
 
     // Check if form has been submitted and nonce is verified
-    if ('POST' == $_SERVER['REQUEST_METHOD'] && !empty($_POST['action']) && $_POST['action'] == 'update-user' && check_admin_referer('update-user_' . $user_id)) {
+    if ('POST' == $_SERVER['REQUEST_METHOD'] && !empty($_POST['action']) && $_POST['action'] == 'update-user' && wp_verify_nonce($_POST['_wpnonce'], 'update-user_' . $user_id)) {
         // Update user information as before (skipping for brevity)
 
         // Redirect to avoid resubmission
@@ -3958,10 +3958,6 @@ function custom_user_profile_shortcode() {
     $output .= '<form class="row g-3" method="post" id="adduser" action="' . get_permalink() . '">';
     $output .= wp_nonce_field('update-user_' . $user_id, '_wpnonce', true, false);
     $output .= '<div class="col-md-6">';
-    $output .= '<label for="user_login" class="form-label">Username</label>';
-    $output .= '<input type="text" class="form-control" id="user_login" value="' . esc_attr($current_user->user_login) . '" disabled>';
-    $output .= '</div>';
-    $output .= '<div class="col-md-6">';
     $output .= '<label for="email" class="form-label">Email</label>';
     $output .= '<input type="email" class="form-control" name="email" id="email" value="' . esc_attr($current_user->user_email) . '">';
     $output .= '</div>';
@@ -3973,13 +3969,32 @@ function custom_user_profile_shortcode() {
     $output .= '<label for="last-name" class="form-label">Last Name</label>';
     $output .= '<input type="text" class="form-control" name="last-name" id="last-name" value="' . esc_attr($current_user->last_name) . '">';
     $output .= '</div>';
-    // Include other fields like address, password, etc., in similar fashion
+
+    // Address fields
+    $output .= '<div class="col-12">';
+    $output .= '<label for="address" class="form-label">Address</label>';
+    $output .= '<input type="text" class="form-control" name="address" id="address" value="' . esc_attr(get_user_meta($user_id, 'address', true)) . '">';
+    $output .= '</div>';
+
+    // Password update fields
+    $output .= '<div class="col-md-6">';
+    $output .= '<label for="pass1" class="form-label">New Password</label>';
+    $output .= '<input type="password" class="form-control" name="pass1" id="pass1">';
+    $output .= '</div>';
+    $output .= '<div class="col-md-6">';
+    $output .= '<label for="pass2" class="form-label">Confirm New Password</label>';
+    $output .= '<input type="password" class="form-control" name="pass2" id="pass2">';
+    $output .= '</div>';
+
     $output .= '<div class="col-12">';
     $output .= '<button type="submit" name="updateuser" id="updateuser" class="btn btn-primary">Update Profile</button>';
     $output .= '</div>';
     $output .= '<input name="action" type="hidden" id="action" value="update-user" />';
     $output .= '</form>';
     $output .= '</div>';
+
+    // Add jQuery for fade-out effect on username
+    $output .= '<script>jQuery(document).ready(function($) { $("#user_login").fadeOut("slow"); });</script>';
 
     return $output;
 }
