@@ -14,7 +14,7 @@ $notes = $order->get_customer_order_notes();
                     <div class="woocommerce-OrderUpdate-text comment-text">
                         <p class="woocommerce-OrderUpdate-meta meta"><?php echo date_i18n( esc_html__( 'l jS \o\f F Y, h:ia', 'woocommerce' ), strtotime( $note->comment_date ) ); ?></p>
                         <div class="woocommerce-OrderUpdate-description description">
-                            <?php echo wpautop( wptexturize( $note->comment_content ) ); ?>
+                          
                         </div>
                         <div class="clear"></div>
                     </div>
