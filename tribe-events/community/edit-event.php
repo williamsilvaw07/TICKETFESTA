@@ -887,20 +887,31 @@ $event_url = esc_attr($event_url);
 
 
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('DOM fully loaded and parsed');
+    var toggleButton = document.getElementById('ticket_form_toggle');
 
-    if (document.getElementById('ticket_title_add')) {
-        console.log('#ticket_title_add found on the page');
+    // Listen for clicks on the toggle button
+    if (toggleButton) {
+        toggleButton.addEventListener('click', function() {
+            console.log('Toggle button clicked');
 
-        var ownCapacityRadio = document.getElementById('Tribe__Tickets_Plus__Commerce__WooCommerce__Main_own');
-        if (ownCapacityRadio) {
-            console.log('Found the radio button with ID Tribe__Tickets_Plus__Commerce__WooCommerce__Main_own. Clicking it now.');
-            ownCapacityRadio.click();
-        } else {
-            console.log('Radio button with ID Tribe__Tickets_Plus__Commerce__WooCommerce__Main_own not found.');
-        }
+            // Check if an input has been selected
+            if (document.querySelector('input[name="tribe-ticket[mode]"]:checked')) {
+                console.log('An input has been selected');
+
+                // Find the radio button for own capacity
+                var ownCapacityRadio = document.getElementById('Tribe__Tickets_Plus__Commerce__WooCommerce__Main_own');
+                if (ownCapacityRadio) {
+                    console.log('Found the radio button for own capacity. Clicking it now.');
+                    ownCapacityRadio.click();
+                } else {
+                    console.log('Radio button for own capacity not found.');
+                }
+            } else {
+                console.log('No input selected yet.');
+            }
+        });
     } else {
-        console.log('#ticket_title_add not found on the page');
+        console.log('Toggle button not found on the page');
     }
 });
 
