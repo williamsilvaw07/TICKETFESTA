@@ -366,15 +366,14 @@ document.querySelectorAll('.event-status-form select[name="event_status"]').forE
  * This is particularly useful for dynamically generated content where certain actions need to be restricted or hidden
  * from the user interface without altering the server-side code or the original HTML source.
  */
-document.addEventListener('DOMContentLoaded', function() {
+window.onload = function() {
     var editLinks = document.querySelectorAll('a[rel="nofollow"]');
     editLinks.forEach(function(link) {
         if (link.textContent.trim() === 'Edit') {
             link.parentNode.removeChild(link);
         }
     });
-});
-
+};
 
 
 
