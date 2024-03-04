@@ -3286,3 +3286,371 @@ function ticketfeasta_follow($organizer_id, $user_id)
 
 
 
+
+////////FUNCTION TO CREATE A SIGN UP FORM FOR THE ORGANIZER
+// Function to display the custom registration form
+function custom_user_registration_form()
+{
+    if (is_user_logged_in()) {
+        return 'You are already logged in.';
+    }
+
+    $html = '<form action="' . esc_url($_SERVER['REQUEST_URI']) . '" method="post">';
+    $html .= '<p><label for="first_name">First Name <strong>*</strong></label>';
+    $html .= '<input type="text" name="first_name" id="first_name" required></p>';
+    $html .= '<p><label for="last_name">Last Name <strong>*</strong></label>';
+    $html .= '<input type="text" name="last_name" id="last_name" required></p>';
+    $html .= '<p><label for="email">Email <strong>*</strong></label>';
+    $html .= '<input type="email" name="email" id="email" required></p>';
+    $html .= '<p><label for="password">Password <strong>*</strong></label>';
+    $html .= '<input type="password" name="password" id="password" required></p>';
+    $html .= '<p><label for="organizer_title">Organizer Title <strong>*</strong></label>';
+    $html .= '<input type="text" name="organizer_title" id="organizer_title" required></p>';
+    $html .= '<p><input type="submit" name="submit" value="Register"></p>';
+    $html .= '</form>';
+    $html .= '<p>Already have an account? <a href="' . home_url('/custom-login') . '">Login here</a>.</p>';
+
+    return $html;
+}
+
+// Function to handle the registration process
+function custom_user_registration()
+{
+    if (isset($_POST['first_name']) && isset($_POST['last_name']) && isset($_POST['email']) && isset($_POST['password']) && !is_user_logged_in()) {
+        $first_name = sanitize_text_field($_POST['first_name']);
+        $last_name = sanitize_text_field($_POST['last_name']);
+        $email = sanitize_email($_POST['email']);
+        $password = $_POST['password'];
+        $organizer_title = sanitize_text_field($_POST['organizer_title']);
+
+        $user_id = wp_create_user($email, $password, $email); // Username is set to email
+
+        if (!is_wp_error($user_id)) {
+            // Update user meta for first name and last name
+            update_user_meta($user_id, 'first_name', $first_name);
+            update_user_meta($user_id, 'last_name', $last_name);
+
+            // Assign the 'organiser' role to the user
+            $user = new WP_User($user_id);
+            $user->set_role('organiser');
+
+            // Automatically log the user in
+            wp_set_current_user($user_id);
+            wp_set_auth_cookie($user_id);
+
+            // Create the organizer post
+            $organizer_data = array(
+                'post_title' => $organizer_title, // Use the organizer title for the post title
+                'post_content' => '',
+                'post_status' => 'publish',
+                'post_type' => 'tribe_organizer',
+                'post_author' => $user_id
+            );
+            $organizer_id = wp_insert_post($organizer_data);
+
+            if (!is_wp_error($organizer_id)) {
+                update_user_meta($user_id, '_tribe_organizer_id', $organizer_id);
+
+                // Redirect to the specified page
+                wp_redirect('/dashboard');
+                exit;
+            } else {
+                echo 'Error creating organizer.';
+            }
+        } else {
+            echo 'Error creating user.';
+        }
+    }
+}
+
+// Function to register the shortcode
+function register_custom_registration_shortcode()
+{
+    add_shortcode('custom_registration_form', 'custom_user_registration_form');
+}
+
+// Hooking up the functions to WordPress
+add_action('init', 'register_custom_registration_shortcode');
+add_action('init', 'custom_user_registration');
+//////END
+
+
+
+
+
+///FUNCTION FOR ADMIN ORGANIZER LOGIN FORM
+function restrict_access_and_show_login_form()
+{
+    if (is_page_template('organizer-template.php')) {
+        if (!is_user_logged_in()) {
+            wp_redirect(home_url('/custom-login'));
+            exit;
+        }
+
+        $user = wp_get_current_user();
+        if (!in_array('organiser', (array) $user->roles) && !in_array('administrator', (array) $user->roles)) {
+            wp_redirect(home_url('/custom-login'));
+            exit;
+        }
+    }
+}
+add_action('template_redirect', 'restrict_access_and_show_login_form');
+//////END
+
+
+
+
+
+
+
+
+
+
+
+
+
+////SEARCH FUNCTION POP UP
+function custom_search_popup()
+{
+    ?>
+    <div id="searchPopup" class="search-popup">
+        <div id="searchOverlay" class="search-overlay"></div>
+        <div id="searchContent" class="search-content">
+            <!-- Close button with an "X" icon -->
+            <button id="closePopup" class="close-popup">&#10005;</button>
+            <!-- &#10005; is the HTML entity for a heavy multiplication X used as a close icon -->
+            <?php echo do_shortcode('[events-calendar-search placeholder="Search Events" show-events="5" disable-past-events="true" layout="medium" content-type="advance"]'); ?>
+        </div>
+    </div>
+    <?php
+}
+add_action('wp_footer', 'custom_search_popup');
+function enqueue_custom_frontend_js()
+{
+    // Get the version of your script file to ensure the browser doesn't cache old versions.
+    $script_version = filemtime(get_stylesheet_directory() . '/custom-function-frontend.js');
+
+    // Enqueue your custom script, the 'get_stylesheet_directory_uri()' function points to your child theme's root directory.
+    wp_enqueue_script('custom-frontend-js', get_stylesheet_directory_uri() . '/custom-function-frontend.js', array('jquery'), $script_version, true);
+}
+
+// Hook your custom function into 'wp_enqueue_scripts' action.
+add_action('wp_enqueue_scripts', 'enqueue_custom_frontend_js');
+
+
+
+// for registration 
+add_action('xoo_el_created_customer', 'ticketfesta_organizer_register', 10, 2);
+
+function ticketfesta_organizer_register($customer_id, $new_customer_data)
+{
+    $create_organizer = isset($_POST['create-organizer']) ? $_POST['create-organizer'] : '';
+    $organizer_title = isset($_POST['organizer-title']) ? $_POST['organizer-title'] : str_replace('.', '-', $new_customer_data['user_login']);
+
+    if ($create_organizer !== '') {
+        $post_data = array(
+            'post_type' => 'tribe_organizer',
+            'post_status' => 'publish',
+            'post_title' => $organizer_title,
+            'post_author' => $customer_id
+        );
+
+        $post_id = wp_insert_post($post_data);
+        $image_url = 'https://ticketfesta.co.uk/wp-content/uploads/2024/02/5034901-200.png';
+
+        // Get the attachment ID
+        $attachment_id = attachment_url_to_postid($image_url);
+        set_post_thumbnail($post_id, $attachment_id);
+        update_user_meta($customer_id, 'current_organizer', $post_id);
+        $user = get_userdata($customer_id);
+        $user->set_role('organiser');
+    }
+
+}
+
+add_action('xoo_el_registration_redirect', 'ticketfesta_registration_redirect', 10, 2);
+
+function ticketfesta_registration_redirect($redirect, $new_customer)
+{
+    $create_organizer = isset($_POST['create-organizer']) ? $_POST['create-organizer'] : '';
+    if ($create_organizer !== '') {
+        $site_url = home_url();
+        $dashboard_url = trailingslashit($site_url) . 'dashboard/';
+        $redirect = $dashboard_url;
+    }
+
+    return $redirect;
+}
+
+
+add_action('xoo_el_login_redirect', 'ticketfesta_login_redirect', 10, 2);
+
+function ticketfesta_login_redirect($redirect, $user)
+{
+    $current_organizer = get_user_meta($user->ID, 'current_organizer', true);
+
+    if ($current_organizer !== '') {
+        $site_url = home_url();
+        $dashboard_url = trailingslashit($site_url) . 'dashboard/';
+        $redirect = $dashboard_url;
+    }
+    return $redirect;
+
+}
+
+
+
+add_action('woocommerce_cart_calculate_fees', 'add_extra_fees_for_products');
+
+function add_extra_fees_for_products($cart)
+{
+    $extra_fee = 0;
+    // Loop through each cart item
+    foreach ($cart->get_cart() as $cart_item_key => $cart_item) {
+        // Get the product ID
+        $product_id = $cart_item['product_id'];
+
+        // Calculate extra fee based on product price
+        $product_price = $cart_item['data']->get_price();
+        $quantity = $cart_item['quantity'];
+        if ($product_price < 50) {
+            $extra_fee += ($product_price * .03 + 0.02) * $quantity;
+        } elseif ($product_price > 50) {
+            $extra_fee += ($product_price * .01 + 0.02) * $quantity;
+        }
+
+    }
+
+    if ($extra_fee !== 0) {
+        $cart->add_fee('Sites Fee ', $extra_fee);
+    }
+}
+
+require_once get_stylesheet_directory() . '/option-page.php';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+///FUNCTION TO SHOW TH EUPLCING EVENTS FROM THE ORGINSISER THE USER FOLLOWES 
+
+function ticketfeasta_display_following_organizers_events_dashboard()
+{
+    $user_id = get_current_user_id();
+    $following_array = get_user_meta($user_id, 'following', true);
+    $following_array = json_decode($following_array, true);
+    ?>
+    <h1>Events from Organizers You Follow:</h1>
+    <?php
+    if (json_last_error() !== JSON_ERROR_NONE || empty($following_array)) {
+        ?>
+        <p>You are not following any organizers with upcoming events.</p>
+        <?php
+        return;
+    }
+
+    foreach ($following_array as $organizer_id) {
+        $args = array(
+            'post_type' => 'tribe_events',
+            'posts_per_page' => -1,
+            'meta_query' => array(
+                array(
+                    'key' => '_EventOrganizerID',
+                    'value' => $organizer_id,
+                    'compare' => '=',
+                ),
+            ),
+            'meta_key' => '_EventStartDate',
+            'orderby' => 'meta_value',
+            'order' => 'ASC',
+            'meta_value' => date('Y-m-d H:i:s'), // Ensure the event is in the future.
+            'meta_compare' => '>='
+        );
+
+        $events_query = new WP_Query($args);
+
+        if ($events_query->have_posts()) {
+            $organizer_name = get_the_title($organizer_id);
+            $organizer_url = get_permalink($organizer_id);
+            $organizer_img = get_the_post_thumbnail_url($organizer_id, 'medium') ?: 'https://ticketfesta.co.uk/wp-content/uploads/2024/02/placeholder-4.png';
+            ?>
+            <div class='organizer-block'>
+                <div class='organizer-block_inner'>
+                    <a href='<?php echo esc_url($organizer_url); ?>'>
+                        <img src='<?php echo esc_url($organizer_img); ?>' alt='<?php echo esc_attr($organizer_name); ?>'
+                            class='organizer-image' />
+                    </a>
+                    <h6><a href='<?php echo esc_url($organizer_url); ?>'>
+                            <?php echo esc_html($organizer_name); ?>
+                        </a></h6>
+                </div>
+                <div class='organizer-block_events_inner'>
+                    <?php
+                    while ($events_query->have_posts()):
+                        $events_query->the_post();
+                        $event_id = get_the_ID();
+                        $event_url = get_the_permalink();
+                        $event_img = get_the_post_thumbnail_url($event_id, 'large') ?: 'https://ticketfesta.co.uk/wp-content/uploads/2024/02/placeholder-4.png';
+                        $event_start_date_time = tribe_get_start_date($event_id, false, 'D, j M Y g:i a');
+                        $event_price = tribe_get_cost($event_id, true);
+                        ?>
+                        <div class="event-card">
+                            <div class="event-image">
+                                <a href="<?php echo esc_url($event_url); ?>">
+                                    <img src="<?php echo esc_url($event_img); ?>" alt="<?php the_title(); ?>">
+                                </a>
+                            </div>
+                            <div class="event-details">
+                                <div class="event-content">
+                                    <h2 class="event-title"><a href="<?php echo esc_url($event_url); ?>">
+                                            <?php echo mb_strimwidth(get_the_title(), 0, 60, '...'); ?>
+                                        </a></h2>
+
+                                    <div class="event-day">
+                                        <?php echo esc_html($event_start_date_time); ?>
+                                    </div>
+                                    <div class="event-time-location">
+                                        <span class="event-time">
+                                            <?php echo tribe_get_start_date(null, false, 'g:i a'); ?> -
+                                            <?php echo tribe_get_end_date(null, false, 'g:i a'); ?>
+                                        </span>
+                                        <span class="event-location">
+                                            <?php echo tribe_get_venue(); ?>
+                                        </span>
+                                    </div>
+                                    <div class="event-price">
+                                        <?php echo esc_html($event_price); ?>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <?php
+                    endwhile;
+                    ?>
+                </div> <!-- Close organizer-block_events_inner -->
+            </div> <!-- Close organizer-block -->
+            <?php
+            wp_reset_postdata();
+        }
+    }
+}
+
+add_action('woocommerce_account_following_endpoint', 'ticketfeasta_display_following_organizers_events_dashboard');
+
+
+
+
+
+
+
+
