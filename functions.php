@@ -1878,11 +1878,12 @@ add_shortcode('valid_tickets_sold', 'shortcode_valid_tickets_sold');
 
 
 
-
-function shortcode_revenue()
-{
+function shortcode_revenue() {
     $ticket_info = get_ticket_info(get_current_user_id());
     $total_sales_lifetime = $ticket_info['total_sales_lifetime'];
+
+    // Debug section - convert array to readable string for debugging
+    $debug_info = '<pre>' . esc_html(print_r($ticket_info, true)) . '</pre>';
 
     return '
     <div class="sales-card today_sale_admin_dashboard">
@@ -1894,14 +1895,15 @@ function shortcode_revenue()
             
                 </div>                
             </div>
-            <!-- Additional sections can go here -->
+            <!-- Debug information for development purposes -->
+            <div class="debug-info" style="background-color: #f7f7f7; margin-top: 20px; padding: 10px; border-radius: 5px;">
+                <strong>Debug Information:</strong>
+                ' . $debug_info . '
+            </div>
         </div>
     </div>';
 }
 add_shortcode('revenue', 'shortcode_revenue');
-
-
-
 
 
 
