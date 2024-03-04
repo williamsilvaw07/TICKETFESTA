@@ -2815,6 +2815,8 @@ html .tickets-sold-column , html .tribe-list-column-title {
 
         .setting_page_admin{
             padding-top: 50px;
+            max-width:900px;
+            margin:0 auto
         }
 .orgerinser_settings_form{
     background-color: rgb(26, 26, 26);
@@ -2827,6 +2829,8 @@ html .tickets-sold-column , html .tribe-list-column-title {
 .orgerinser_settings_form button{
     background: #d3fa16!important;
     color: #000000!important;
+    font-size:12px!important;
+    margin-top:30px
 }
         /******end */
 
