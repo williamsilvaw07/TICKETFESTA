@@ -41,7 +41,7 @@ if (!defined('ABSPATH')) {
                 <nav class="admin_dashboard-sidebar">
                     <ul class="admin_dashboard-sidebar-list">
                         <li class="admin_dashboard-sidebar-item">
-                            <a href="/dashboard/">
+                            <a href="https://ticketfesta.co.uk/">
                                 <i class="fas fa-home"></i><span class="nav-text">Dashboard</span>
                             </a>
 
