@@ -91,7 +91,10 @@ printf(
     font-weight: 700;
     font-size: 35px;
 }
-
+.tec-tickets__wallet-plus-passes-container{
+    gap: 29px;
+    margin-top: 17px;
+}
 
 
 
