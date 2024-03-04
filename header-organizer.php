@@ -32,7 +32,7 @@ if (!defined('ABSPATH')) {
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
-            <a href="/dashboard/" class="brand-link">
+            <a href="https://ticketfesta.co.uk/" class="brand-link">
                 <img src="https://ticketfesta.co.uk/wp-content/uploads/2024/02/Group-195-2.png" alt=""
                     class="brand-image img-circle elevation-3">
                 <span class="brand-text font-weight-light"></span>
