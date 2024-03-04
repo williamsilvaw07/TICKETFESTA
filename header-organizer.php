@@ -2812,6 +2812,10 @@ html .tickets-sold-column , html .tribe-list-column-title {
 
         /*****setting page***/ 
 
+
+        .setting_page_admin{
+            padding-top: 50px;
+        }
 .orgerinser_settings_form{
     background-color: rgb(26, 26, 26);
     position: relative;
