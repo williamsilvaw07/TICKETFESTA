@@ -4011,6 +4011,7 @@ function custom_user_profile_shortcode() {
                     <!-- Add more countries as needed -->
                 </select>
             </div>
+            </div>
 
             <div class="row mb-3">
                 <div class="col-md-6">
