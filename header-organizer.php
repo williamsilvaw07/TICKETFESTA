@@ -217,6 +217,9 @@ if (!defined('ABSPATH')) {
 
 
         <style>
+            header {
+    background-color: inherit!important;
+}
             body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .main-footer {
                 display: none !important
             }
