@@ -3937,26 +3937,27 @@ add_action('wp_loaded', 'set_all_products_featured_image_to_event_image');
 
 
 //////FUNCTION TO CREATE A SHORTCODE TO UPDATE ORGINSER USER ACCOUNT SETTING 
-
 function custom_user_profile_shortcode() {
     if (!is_user_logged_in()) return 'You need to be logged in to edit your profile.';
 
     $current_user = wp_get_current_user();
+    $user_id = $current_user->ID;
 
     // Check if form has been submitted
     if ('POST' == $_SERVER['REQUEST_METHOD'] && !empty($_POST['action']) && $_POST['action'] == 'update-user') {
+
+        // Security checks (nonce, etc.) should go here
+
         // Update user information
-        if (!empty($_POST['email'])) {
-            wp_update_user([
-                'ID' => $current_user->ID,
-                'user_email' => esc_attr($_POST['email']),
-            ]);
-        }
-        if (!empty($_POST['first-name'])) {
-            update_user_meta($current_user->ID, 'first_name', esc_attr($_POST['first-name']));
-        }
-        if (!empty($_POST['last-name'])) {
-            update_user_meta($current_user->ID, 'last_name', esc_attr($_POST['last-name']));
+        if (!empty($_POST['email'])) wp_update_user(['ID' => $user_id, 'user_email' => esc_attr($_POST['email'])]);
+        if (!empty($_POST['first-name'])) update_user_meta($user_id, 'first_name', esc_attr($_POST['first-name']));
+        if (!empty($_POST['last-name'])) update_user_meta($user_id, 'last_name', esc_attr($_POST['last-name']));
+        if (!empty($_POST['address'])) update_user_meta($user_id, 'address', esc_attr($_POST['address']));
+        if (!empty($_POST['phone'])) update_user_meta($user_id, 'phone', esc_attr($_POST['phone']));
+
+        // Password change
+        if (!empty($_POST['pass1']) && !empty($_POST['pass2']) && $_POST['pass1'] === $_POST['pass2']) {
+            wp_set_password($_POST['pass1'], $user_id);
         }
 
         // Redirect to avoid resubmission
@@ -3974,6 +3975,18 @@ function custom_user_profile_shortcode() {
         
         <p><label for="email">Email</label><br />
         <input type="text" name="email" id="email" value="' . esc_attr($current_user->user_email) . '" /></p>
+        
+        <p><label for="address">Address</label><br />
+        <input type="text" name="address" id="address" value="' . esc_attr(get_user_meta($user_id, 'address', true)) . '" /></p>
+        
+        <p><label for="phone">Phone</label><br />
+        <input type="text" name="phone" id="phone" value="' . esc_attr(get_user_meta($user_id, 'phone', true)) . '" /></p>
+        
+        <p><label for="pass1">New Password</label><br />
+        <input type="password" name="pass1" id="pass1" /></p>
+        
+        <p><label for="pass2">Confirm New Password</label><br />
+        <input type="password" name="pass2" id="pass2" /></p>
         
         <p><input name="updateuser" type="submit" id="updateuser" class="submit button" value="Update Profile" /></p>
         <input name="action" type="hidden" id="action" value="update-user" />
