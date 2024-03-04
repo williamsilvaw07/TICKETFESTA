@@ -884,40 +884,36 @@ $event_url = esc_attr($event_url);
 
 ///FUNCTION TO AUTO CLICK THE 
 
+
+
 document.addEventListener('DOMContentLoaded', function() {
     var toggleButton = document.getElementById('ticket_form_toggle');
-    var intervalId;
-
-    // Function to check and click the radio button
-    function checkAndClickRadioButton() {
-        // Find the radio button for own capacity
-        var ownCapacityRadio = document.getElementById('Tribe__Tickets_Plus__Commerce__WooCommerce__Main_own');
-
-        if (ownCapacityRadio && !ownCapacityRadio.hasAttribute('checked')) {
-            console.log('Clicking the own capacity radio button.');
-            ownCapacityRadio.click();
-
-            // Check if the radio button is now checked
-            if (ownCapacityRadio.checked) {
-                console.log('Own capacity radio button is now checked.');
-                clearInterval(intervalId); // Stop checking
-            }
-        }
-    }
 
     // Listen for clicks on the toggle button
     if (toggleButton) {
         toggleButton.addEventListener('click', function() {
             console.log('Toggle button clicked');
 
-            // Start checking and clicking the radio button every 500 milliseconds
-            intervalId = setInterval(checkAndClickRadioButton, 500);
+            // Check if an input has been selected
+            if (document.querySelector('input[name="tribe-ticket[mode]"]:checked')) {
+                console.log('An input has been selected');
+
+                // Find the radio button for own capacity
+                var ownCapacityRadio = document.getElementById('Tribe__Tickets_Plus__Commerce__WooCommerce__Main_own');
+                if (ownCapacityRadio) {
+                    console.log('Found the radio button for own capacity. Clicking it now.');
+                    ownCapacityRadio.click();
+                } else {
+                    console.log('Radio button for own capacity not found.');
+                }
+            } else {
+                console.log('No input selected yet.');
+            }
         });
     } else {
         console.log('Toggle button not found on the page');
     }
 });
-
 
 
 </script>
