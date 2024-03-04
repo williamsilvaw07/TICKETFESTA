@@ -1165,7 +1165,7 @@ jQuery(document).ready(function($) {
     }
 
 
-    .tribe-ticket-control-wrap , .tribe-ticket-control-wrap__ctas , #ticket_type_options{
+    .tribe-ticket-control-wrap , .tribe-ticket-control-wrap__ctas , #ticket_type_options , .ticket_form_right{
         display:none!important
     }
 </style>
