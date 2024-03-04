@@ -3924,3 +3924,18 @@ function display_order_item_product_image( $item_id, $item, $order ) {
     }
 }
 add_action( 'woocommerce_order_item_meta_start', 'display_order_item_product_image', 10, 3 );
+
+
+
+function change_product_text_to_ticket( $translated_text, $text, $domain ) {
+    // Ensure we are in the WooCommerce domain to prevent unnecessary replacements
+    if ( 'woocommerce' === $domain ) {
+        // Replace 'Product' and its plural form with 'Ticket'
+        $translated_text = str_replace( 'Product', 'Ticket', $translated_text );
+        $translated_text = str_replace( 'product', 'ticket', $translated_text );
+        $translated_text = str_replace( 'Products', 'Tickets', $translated_text );
+        $translated_text = str_replace( 'products', 'tickets', $translated_text );
+    }
+    return $translated_text;
+}
+add_filter( 'gettext', 'change_product_text_to_ticket', 20, 3 );
