@@ -84,7 +84,13 @@ printf(
 .tribe-attendee-meta{
     display:none
 }
-
+.woocommerce-customer-details{
+    margin-top: 45px;  
+}
+.woocommerce-order-details__title , .tribe-common-h4 , .woocommerce-column__title{
+    font-weight: 700;
+    font-size: 35px;
+}
 
 
 
