@@ -3959,7 +3959,7 @@ function custom_user_profile_shortcode() {
     $output = '
     <div class="container">
         <h1>Edit Profile</h1>
-        <form method="post" id="adduser" action="' . get_permalink() . '">
+        <form class="orgerinser_settings_form" method="post" id="adduser" action="' . get_permalink() . '">
             ' . wp_nonce_field('update_user_' . $user_id, '_wpnonce', true, false) . '
             <input name="action" type="hidden" id="action" value="update-user" />
             <div class="row">
