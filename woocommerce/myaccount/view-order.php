@@ -69,4 +69,22 @@ printf(
     border-radius: 12px;
 
 }
+.tribe-event-details a{
+    color: white!important;
+    text-decoration: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </style>
