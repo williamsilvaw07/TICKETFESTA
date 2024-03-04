@@ -3648,7 +3648,7 @@ function ticketfeasta_display_following_organizers_events_dashboard()
 add_action('woocommerce_account_following_endpoint', 'ticketfeasta_display_following_organizers_events_dashboard');
 
 
-
+///
 
 
 
