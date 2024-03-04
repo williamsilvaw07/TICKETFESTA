@@ -3904,3 +3904,23 @@ function display_user_all_orders_shortcode() {
     return $content;
 }
 add_shortcode('user_all_orders', 'display_user_all_orders_shortcode');
+
+
+
+
+
+
+
+
+function display_order_item_product_image( $item_id, $item, $order ) {
+    // Get the product object
+    $product = $item->get_product();
+    // Check if the product exists
+    if ( $product ) {
+        // Get the product image URL. Adjust the size as needed ('thumbnail', 'medium', 'full', etc.)
+        $image_url = $product->get_image( 'thumbnail' ); // This returns an <img> tag
+        // Output the product image
+        echo '<div class="product-image" style="float: left; margin-right: 10px;">' . $image_url . '</div>';
+    }
+}
+add_action( 'woocommerce_order_item_meta_start', 'display_order_item_product_image', 10, 3 );
