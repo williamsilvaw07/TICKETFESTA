@@ -3657,13 +3657,7 @@ add_action('woocommerce_account_following_endpoint', 'ticketfeasta_display_follo
 
 /////FUNCTION TO SHOW ONLY UPCOMING EVENT WHICH THE USER HAS TICKET FOR ON THE MYACCOUNT DAHSBOAD
 // Ensure truncate_title function is only defined once.
-if (!function_exists('truncate_title')) {
-    function truncate_title($title, $maxLength = 30) {
-        $wrapped = wordwrap($title, $maxLength, "\n", true);
-        $lines = explode("\n", $wrapped);
-        return count($lines) > 1 ? $lines[0] . '...' : $title;
-    }
-}
+
 
 // Add the action only if the current page is part of the My Account section.
 add_action('init', 'add_display_upcoming_events_action');
@@ -3673,6 +3667,13 @@ function add_display_upcoming_events_action() {
     }
 }
 
+if (!function_exists('truncate_title')) {
+    function truncate_title($title, $maxLength = 30) {
+        $wrapped = wordwrap($title, $maxLength, "\n", true);
+        $lines = explode("\n", $wrapped);
+        return count($lines) > 1 ? $lines[0] . '...' : $title;
+    }
+}
 function display_upcoming_events_for_user_with_view_order_button() {
     $user_id = get_current_user_id();
     $displayed_event_ids = array();
