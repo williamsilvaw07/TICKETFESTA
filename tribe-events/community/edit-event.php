@@ -878,6 +878,24 @@ $event_url = esc_attr($event_url);
             });
         });
     });
+
+
+
+
+///FUNCTION TO AUTO CLICK THE 
+
+
+
+
+jQuery(document).ready(function($) {
+    $('#Tribe__Tickets_Plus__Commerce__WooCommerce__Main_own').click();
+});
+
+
+
+
+
+
 </script>
 
 
@@ -1121,7 +1139,7 @@ $event_url = esc_attr($event_url);
     }
 
 
-    .tribe-ticket-control-wrap, .tribe-ticket-control-wrap__ctas{
+    .tribe-ticket-control-wrap , .tribe-ticket-control-wrap__ctas , #ticket_type_options{
         display:none!important
     }
 </style>
