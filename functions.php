@@ -3944,11 +3944,20 @@ function custom_user_profile_shortcode() {
 
     $current_user = wp_get_current_user();
     $user_id = $current_user->ID;
+    $success_message = get_transient('user_' . $user_id . '_update_message');
 
     // Check if form has been submitted and verify the nonce
     if ('POST' == $_SERVER['REQUEST_METHOD'] && !empty($_POST['action']) && $_POST['action'] == 'update-user' && wp_verify_nonce($_POST['_wpnonce'], 'update_user_' . $user_id)) {
         // Update user information here, including the address and phone fields
         // Remember to sanitize and validate all input
+
+        // Example update
+        if (!empty($_POST['phone'])) {
+            update_user_meta($user_id, 'phone', sanitize_text_field($_POST['phone']));
+        }
+
+        // Set a success message using transients
+        set_transient('user_' . $user_id . '_update_message', 'Your profile has been updated successfully.', 45);
 
         // Redirect to avoid resubmission
         wp_redirect(get_permalink());
@@ -3958,58 +3967,55 @@ function custom_user_profile_shortcode() {
     // Form HTML using Bootstrap layout
     $output = '
     <div class="container setting_page_admin">
-        <h1>Edit Profile</h1>
-        <form class="orgerinser_settings_form" method="post" id="adduser" action="' . get_permalink() . '">
+        <h1>Edit Profile</h1>';
+
+    // Display success message if set
+    if ($success_message) {
+        $output .= '<div class="alert alert-success" role="alert">' . esc_html($success_message) . '</div>';
+        // Delete the transient to ensure message is shown only once
+        delete_transient('user_' . $user_id . '_update_message');
+    }
+
+    $output .= '<form method="post" id="adduser" action="' . get_permalink() . '" class="form-horizontal">
             ' . wp_nonce_field('update_user_' . $user_id, '_wpnonce', true, false) . '
             <input name="action" type="hidden" id="action" value="update-user" />
+
             <div class="row">
                 <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="first-name">First Name</label>
-                        <input type="text" class="form-control" name="first-name" id="first-name" value="' . esc_attr($current_user->first_name) . '">
-                    </div>
+                    <label for="first-name" class="form-label">First Name</label>
+                    <input type="text" name="first-name" id="first-name" value="' . esc_attr($current_user->first_name) . '" class="form-control">
                 </div>
                 <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="last-name">Last Name</label>
-                        <input type="text" class="form-control" name="last-name" id="last-name" value="' . esc_attr($current_user->last_name) . '">
-                    </div>
+                    <label for="last-name" class="form-label">Last Name</label>
+                    <input type="text" name="last-name" id="last-name" value="' . esc_attr($current_user->last_name) . '" class="form-control">
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="email">Email (cannot be changed)</label>
-                        <input type="email" class="form-control" name="email" id="email" value="' . esc_attr($current_user->user_email) . '" readonly>
-                    </div>
+                    <label for="email" class="form-label">Email (cannot be changed)</label>
+                    <input type="email" name="email" id="email" value="' . esc_attr($current_user->user_email) . '" class="form-control" readonly>
                 </div>
                 <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="phone">Phone</label>
-                        <input type="text" class="form-control" name="phone" id="phone" value="' . esc_attr(get_user_meta($user_id, 'phone', true)) . '">
-                    </div>
+                    <label for="phone" class="form-label">Phone</label>
+                    <input type="text" name="phone" id="phone" value="' . esc_attr(get_user_meta($user_id, 'phone', true)) . '" class="form-control">
                 </div>
             </div>
 
-            <!-- Add address fields here -->
+            <!-- Include additional address fields here -->
 
             <div class="row">
                 <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="pass1">New Password</label>
-                        <input type="password" class="form-control" name="pass1" id="pass1">
-                    </div>
+                    <label for="pass1" class="form-label">New Password</label>
+                    <input type="password" name="pass1" id="pass1" class="form-control">
                 </div>
                 <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="pass2">Confirm New Password</label>
-                        <input type="password" class="form-control" name="pass2" id="pass2">
-                    </div>
+                    <label for="pass2" class="form-label">Confirm New Password</label>
+                    <input type="password" name="pass2" id="pass2" class="form-control">
                 </div>
             </div>
 
-            <div class="form-group">
+            <div class="mt-3">
                 <button type="submit" class="btn btn-primary">Update Profile</button>
             </div>
         </form>
@@ -4017,4 +4023,4 @@ function custom_user_profile_shortcode() {
 
     return $output;
 }
-add_shortcode('organiser_account_info', 'custom_user_profile_shortcode');
+add_shortcode('custom_user_profile', 'custom_user_profile_shortcode');
