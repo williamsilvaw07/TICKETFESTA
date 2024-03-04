@@ -1706,19 +1706,20 @@ function shortcode_revenue() {
         $order_debug_info .= "Order ID: {$detail['order_id']} - Subtotal: £" . number_format($detail['subtotal'], 2) . " - Event: {$detail['event_title']} - Created by: {$detail['event_creator']}<br>";
     }
 
-    return "
-    <div class='sales-card today_sale_admin_dashboard'>
-        <div class='sales-card-content '>
-            <div class='sales-today '>
-                <h5 class='admin_dashboard_sales-label card_admin_dashboard '>Revenue Overview</h5>
-                <div class='admin_dashboard_sales-amount '>£" . esc_html(number_format($total_sales_lifetime_calculated, 2)) . " <span class='admin_dashboard_sales-amount_span'>GBP</span></div>              
+    return '
+    <div class="sales-card today_sale_admin_dashboard">
+        <div class="sales-card-content ">
+            <div class="sales-today ">
+                <h5 class="admin_dashboard_sales-label card_admin_dashboard ">Revenue Overview</h5>
+                <div class="admin_dashboard_sales-amount ">£' . esc_html(number_format($total_sales_lifetime_calculated, 2)) . ' <span class="admin_dashboard_sales-amount_span">GBP</span></div>              
             </div>
-            <div class='debug-info' style='background-color: #f7f7f7; margin-top: 20px; padding: 10px; border-radius: 5px;'>
+            <!-- Debug information for development purposes -->
+            <div class="debug-info" style="background-color: #f7f7f7; margin-top: 20px; padding: 10px; border-radius: 5px;">
                 <strong>Order Breakdown:</strong><br>
-                $order_debug_info
+                ' . $order_debug_info . '
             </div>
         </div>
-    </div>";
+    </div>';
 }
 add_shortcode('revenue', 'shortcode_revenue');
 
