@@ -3653,7 +3653,7 @@ add_action('woocommerce_account_following_endpoint', 'ticketfeasta_display_follo
 
 
 
-// Function to truncate title without breaking words
+// Ensure the function to truncate title doesn't get redeclared
 if (!function_exists('truncate_title')) {
     function truncate_title($title, $maxLength = 30) {
         $wrapped = wordwrap($title, $maxLength, "\n", true);
@@ -3662,22 +3662,22 @@ if (!function_exists('truncate_title')) {
     }
 }
 
-// Function to display upcoming events for the user
+// Display upcoming events for the user
 function display_upcoming_events_for_user_with_view_order_button() {
     $user_id = get_current_user_id();
-    $displayed_event_ids = array();
-    $customer_orders = wc_get_orders(array(
+    $displayed_event_ids = [];
+    $customer_orders = wc_get_orders([
         'meta_key' => '_customer_user',
         'meta_value' => $user_id,
-        'post_status' => array('wc-completed'),
-    ));
+        'post_status' => ['wc-completed'],
+    ]);
 
     echo '<div class="event-tickets-header">';
     echo '<h2 class="container-fluid">Your Event Tickets</h2>';
     echo '<p>Below you\'ll find the tickets for events you\'re attending soon. Keep track of dates and details right here!</p>';
     echo '</div>';
 
-    echo '<div class="loadingAnimation">'; // Include your SVG loading animation HTML here
+    echo '<div class="loadingAnimation">'; // Include SVG loading animation HTML here
     echo '</div>';
 
     echo '<div class="allTicketsContainer">';
@@ -3698,9 +3698,41 @@ function display_upcoming_events_for_user_with_view_order_button() {
                 $event_address = tribe_get_address($event_id);
                 $map_link = !empty($event_address) ? "https://maps.google.com/?q=" . urlencode($event_address) : '';
 
-                // Display each ticket here
-                // Note: Convert PHP echo statements into direct HTML where needed
-
+                // Output for each ticket
+                ?>
+                <div class="ticket">
+                    <div class="ticketImage">
+                        <img src="<?php echo esc_url($event_image_url); ?>" alt="Event Image">
+                    </div>
+                    <div class="ticket_inner_div">
+                        <div class="ticketTitle"><?php echo esc_html(truncate_title($event_title, 30)); ?></div>
+                        <?php if (!empty($event_address)): ?>
+                            <div class="eventaddress"><?php echo esc_html($event_address); ?>
+                                <a class="opne_on_map_link" href="<?php echo esc_url($map_link); ?>" target="_blank">Open on Map</a>
+                            </div>
+                        <?php endif; ?>
+                        <hr>
+                        <div class="ticketDetail">
+                            <div>Event Date: <?php echo esc_html(date_i18n('F j, Y, g:i a', strtotime($event_start_date))); ?></div>
+                            <div>Ticket Quantity: <?php echo esc_html($ticket_quantity); ?></div>
+                            <div>Order Total: <?php echo wp_kses_post($order_total); ?></div>
+                        </div>
+                        <div class="ticketRip">
+                            <div class="circleLeft"></div>
+                            <div class="ripLine"></div>
+                            <div class="circleRight"></div>
+                        </div>
+                        <div class="ticketSubDetail">
+                            <div class="code"><?php echo esc_html($customer_order->get_order_number()); ?></div>
+                            <div>Paid: <?php // Display paid date if available ?></div>
+                        </div>
+                        <div class="ticketlowerSubDetail">
+                            <a href="<?php echo esc_url($order_url); ?>"><button class="view_ticket_btn">View Ticket</button></a>
+                            <a href="<?php echo esc_url($event_url); ?>"><button class="view_event_btn">Event Details</button></a>
+                        </div>
+                    </div>
+                </div>
+                <?php
                 $displayed_event_ids[] = $event_id;
             }
         }
@@ -3710,7 +3742,7 @@ function display_upcoming_events_for_user_with_view_order_button() {
         echo "<p>You currently have no tickets for upcoming events.</p>";
     }
 
-    echo '</div>'; // Closing .allTicketsContainer
+    echo '</div>'; // Close .allTicketsContainer
 }
 add_action('woocommerce_account_dashboard', 'display_upcoming_events_for_user_with_view_order_button');
 
