@@ -66,7 +66,7 @@ printf(
 
 }
 .product-image img{
-    border-radius: 12px;
+    border-radius: 6px;
 
 }
 .tribe-event-details a{
