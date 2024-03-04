@@ -3950,16 +3950,20 @@ function custom_user_profile_shortcode() {
     }
 
     // Check if form has been submitted
-    if ('POST' == $_SERVER['REQUEST_METHOD'] && !empty($_POST['action']) && $_POST['action'] == 'update-user') {
-
-        // Security checks (nonce, etc.) should go here
+    if ('POST' == $_SERVER['REQUEST_METHOD'] && !empty($_POST['action']) && $_POST['action'] == 'update-user' && check_admin_referer('update-user_' . $user_id)) {
 
         // Update user information
-        if (!empty($_POST['email'])) wp_update_user(['ID' => $user_id, 'user_email' => esc_attr($_POST['email'])]);
+        if (!empty($_POST['email']) && is_email($_POST['email']) && email_exists($_POST['email']) == $user_id) wp_update_user(['ID' => $user_id, 'user_email' => esc_attr($_POST['email'])]);
         if (!empty($_POST['first-name'])) update_user_meta($user_id, 'first_name', esc_attr($_POST['first-name']));
         if (!empty($_POST['last-name'])) update_user_meta($user_id, 'last_name', esc_attr($_POST['last-name']));
-        if (!empty($_POST['address'])) update_user_meta($user_id, 'address', esc_attr($_POST['address']));
-        if (!empty($_POST['phone'])) update_user_meta($user_id, 'phone', esc_attr($_POST['phone']));
+        // Address fields
+        if (!empty($_POST['address_1'])) update_user_meta($user_id, 'billing_address_1', esc_attr($_POST['address_1']));
+        if (!empty($_POST['address_2'])) update_user_meta($user_id, 'billing_address_2', esc_attr($_POST['address_2']));
+        if (!empty($_POST['city'])) update_user_meta($user_id, 'billing_city', esc_attr($_POST['city']));
+        if (!empty($_POST['postcode'])) update_user_meta($user_id, 'billing_postcode', esc_attr($_POST['postcode']));
+        if (!empty($_POST['country'])) update_user_meta($user_id, 'billing_country', esc_attr($_POST['country']));
+        if (!empty($_POST['state'])) update_user_meta($user_id, 'billing_state', esc_attr($_POST['state']));
+        if (!empty($_POST['phone'])) update_user_meta($user_id, 'billing_phone', esc_attr($_POST['phone']));
 
         // Password change
         if (!empty($_POST['pass1']) && !empty($_POST['pass2']) && $_POST['pass1'] === $_POST['pass2']) {
@@ -3972,7 +3976,10 @@ function custom_user_profile_shortcode() {
     }
 
     // Form HTML
-    $output = $message . '<form method="post" id="adduser" action="' . get_permalink() . '">
+    $output = "<div class='custom-profile-wrapper'><h1>Edit Profile</h1><div class='custom-profile-form'>" . $message;
+    $output .= '<form method="post" id="adduser" action="' . get_permalink() . '">';
+    $output .= wp_nonce_field('update-user_' . $user_id, '_wpnonce', true, false);
+    $output .= '
         <p><label for="first-name">First Name</label><br />
         <input type="text" name="first-name" id="first-name" value="' . esc_attr($current_user->first_name) . '" /></p>
         
@@ -3980,13 +3987,29 @@ function custom_user_profile_shortcode() {
         <input type="text" name="last-name" id="last-name" value="' . esc_attr($current_user->last_name) . '" /></p>
         
         <p><label for="email">Email</label><br />
-        <input type="text" name="email" id="email" value="' . esc_attr($current_user->user_email) . '" /></p>
+        <input type="email" name="email" id="email" value="' . esc_attr($current_user->user_email) . '" /></p>
         
-        <p><label for="address">Address</label><br />
-        <input type="text" name="address" id="address" value="' . esc_attr(get_user_meta($user_id, 'address', true)) . '" /></p>
+        <!-- Address Fields -->
+        <p><label for="address_1">Address Line 1</label><br />
+        <input type="text" name="address_1" id="address_1" value="' . esc_attr(get_user_meta($user_id, 'billing_address_1', true)) . '" /></p>
+        
+        <p><label for="address_2">Address Line 2 (optional)</label><br />
+        <input type="text" name="address_2" id="address_2" value="' . esc_attr(get_user_meta($user_id, 'billing_address_2', true)) . '" /></p>
+        
+        <p><label for="city">City</label><br />
+        <input type="text" name="city" id="city" value="' . esc_attr(get_user_meta($user_id, 'billing_city', true)) . '" /></p>
+        
+        <p><label for="postcode">Postcode</label><br />
+        <input type="text" name="postcode" id="postcode" value="' . esc_attr(get_user_meta($user_id, 'billing_postcode', true)) . '" /></p>
+        
+        <p><label for="country">Country</label><br />
+        <input type="text" name="country" id="country" value="' . esc_attr(get_user_meta($user_id, 'billing_country', true)) . '" /></p>
+        
+        <p><label for="state">State / County</label><br />
+        <input type="text" name="state" id="state" value="' . esc_attr(get_user_meta($user_id, 'billing_state', true)) . '" /></p>
         
         <p><label for="phone">Phone</label><br />
-        <input type="text" name="phone" id="phone" value="' . esc_attr(get_user_meta($user_id, 'phone', true)) . '" /></p>
+        <input type="text" name="phone" id="phone" value="' . esc_attr(get_user_meta($user_id, 'billing_phone', true)) . '" /></p>
         
         <p><label for="pass1">New Password</label><br />
         <input type="password" name="pass1" id="pass1" /></p>
@@ -3996,7 +4019,7 @@ function custom_user_profile_shortcode() {
         
         <p><input name="updateuser" type="submit" id="updateuser" class="submit button" value="Update Profile" /></p>
         <input name="action" type="hidden" id="action" value="update-user" />
-    </form>';
+    </form></div></div>';
 
     return $output;
 }
