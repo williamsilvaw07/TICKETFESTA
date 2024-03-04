@@ -885,26 +885,39 @@ $event_url = esc_attr($event_url);
 ///FUNCTION TO AUTO CLICK THE 
 
 jQuery(document).ready(function($) {
-    // Check and click the radio button when the toggle button is clicked
-    $('#ticket_form_toggle').click(function() {
-        var intervalId = setInterval(function() {
-            var ownCapacityRadio = $('#Tribe__Tickets_Plus__Commerce__WooCommerce__Main_own');
-            if (ownCapacityRadio.length && !ownCapacityRadio.prop('checked')) {
-                console.log('Auto-checking the own capacity radio button.');
-                ownCapacityRadio.prop('checked', true).trigger('change');
-                
-                // Apply CSS with !important using jQuery
-                $("#Tribe__Tickets_Plus__Commerce__WooCommerce__Main_unlimited").css("cssText", "margin-right: 25px !important;");
+    var intervalId;
 
-                // Check if the radio button is now checked
-                if (ownCapacityRadio.prop('checked')) {
-                    console.log('Own capacity radio button is now checked.');
-                    clearInterval(intervalId); // Stop the interval
-                }
+    function checkAndClickRadioButton() {
+        var ownCapacityRadio = $('#Tribe__Tickets_Plus__Commerce__WooCommerce__Main_own');
+
+        // If the radio button exists and isn't already checked, click it
+        if (ownCapacityRadio.length && !ownCapacityRadio.prop('checked')) {
+            console.log('Clicking the own capacity radio button...');
+            ownCapacityRadio.prop('checked', true).trigger('change');
+
+            // Check if the radio button is now checked
+            if (ownCapacityRadio.prop('checked')) {
+                console.log('Own capacity radio button is now checked.');
+                clearInterval(intervalId); // Stop checking
             }
-        }, 500);
+        }
+    }
+
+    // Run the check immediately in case the page loads with the form already visible
+    checkAndClickRadioButton();
+
+    // Listen for clicks on the form toggle button to start checking
+    $('#ticket_form_toggle').on('click', function() {
+        console.log('Toggle button clicked.');
+
+        // Ensure we're not setting multiple intervals
+        clearInterval(intervalId);
+
+        // Start checking and clicking the radio button every 500 milliseconds
+        intervalId = setInterval(checkAndClickRadioButton, 500);
     });
 });
+
 
 
 </script>
