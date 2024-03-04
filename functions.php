@@ -3956,57 +3956,55 @@ function custom_user_profile_shortcode() {
     $address = get_user_meta($user_id, 'address', true);
     $phone = get_user_meta($user_id, 'phone', true);
 
-     // Form HTML
-     $output = '
-     <div class="user-profile-form-wrapper">
-         <h1>Edit Profile</h1>
-         <form method="post" id="adduser" action="' . get_permalink() . '" class="form-horizontal">
-             ' . wp_nonce_field('update-user') . '
-             <input name="action" type="hidden" id="action" value="update-user" />
-             
-             <div class="row mb-3">
-                 <div class="col-md-6">
-                     <label for="first-name" class="form-label">First Name</label>
-                     <input type="text" name="first-name" id="first-name" value="' . esc_attr($current_user->first_name) . '" class="form-control">
-                 </div>
-                 <div class="col-md-6">
-                     <label for="last-name" class="form-label">Last Name</label>
-                     <input type="text" name="last-name" id="last-name" value="' . esc_attr($current_user->last_name) . '" class="form-control">
-                 </div>
-             </div>
- 
-             <div class="row mb-3">
-                 <div class="col-md-12">
-                     <label for="email" class="form-label">Email (cannot be changed)</label>
-                     <input type="email" name="email" id="email" value="' . esc_attr($current_user->user_email) . '" class="form-control" readonly>
-                 </div>
-             </div>
- 
-             <div class="row mb-3">
-                 <!-- Add all address fields here with proper Bootstrap grid classes -->
-                 <div class="col-md-12">
-                     <label for="address-line1" class="form-label">Address</label>
-                     <input type="text" name="address-line1" id="address-line1" value="' . esc_attr(get_user_meta($user_id, 'address-line1', true)) . '" class="form-control">
-                 </div>
-                 <!-- Repeat for additional address fields like address line 2, city, state, and zip -->
-             </div>
- 
-             <div class="row mb-3">
-                 <div class="col-md-6">
-                     <label for="pass1" class="form-label">New Password</label>
-                     <input type="password" name="pass1" id="pass1" class="form-control">
-                 </div>
-                 <div class="col-md-6">
-                     <label for="pass2" class="form-label">Confirm New Password</label>
-                     <input type="password" name="pass2" id="pass2" class="form-control">
-                 </div>
-             </div>
- 
-             <p><input name="updateuser" type="submit" id="updateuser" class="submit button btn btn-primary" value="Update Profile"></p>
-         </form>
-     </div>';
- 
- 
-     return $output;
- }
- add_shortcode('custom_user_profile', 'custom_user_profile_shortcode');
+
+    // Form HTML
+    $output = '
+    <div class="user-profile-form-wrapper">
+        <h1>Edit Profile</h1>
+        <form method="post" id="adduser" action="' . get_permalink() . '" class="form-horizontal">
+            ' . wp_nonce_field('update-user') . '
+            <input name="action" type="hidden" id="action" value="update-user" />
+
+            <div class="row mb-3">
+                <div class="col">
+                    <label for="first-name" class="form-label">First Name</label>
+                    <input type="text" name="first-name" id="first-name" value="' . esc_attr($current_user->first_name) . '" class="form-control">
+                </div>
+                <div class="col">
+                    <label for="last-name" class="form-label">Last Name</label>
+                    <input type="text" name="last-name" id="last-name" value="' . esc_attr($current_user->last_name) . '" class="form-control">
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="email" class="form-label">Email (cannot be changed)</label>
+                <input type="email" name="email" id="email" value="' . esc_attr($current_user->user_email) . '" class="form-control" readonly>
+            </div>
+
+            <!-- Add the rest of your address fields here -->
+            <div class="mb-3">
+                <label for="address-line1" class="form-label">Address Line 1</label>
+                <input type="text" name="address-line1" id="address-line1" value="' . esc_attr($user_meta['address_line1'][0] ?? '') . '" class="form-control">
+            </div>
+
+            <!-- Repeat for address line 2, city, state, zip -->
+            <!-- Additional address fields here -->
+
+            <div class="row mb-3">
+                <div class="col">
+                    <label for="pass1" class="form-label">New Password</label>
+                    <input type="password" name="pass1" id="pass1" class="form-control">
+                </div>
+                <div class="col">
+                    <label for="pass2" class="form-label">Confirm New Password</label>
+                    <input type="password" name="pass2" id="pass2" class="form-control">
+                </div>
+            </div>
+
+            <p><input name="updateuser" type="submit" id="updateuser" class="submit button btn btn-primary" value="Update Profile"></p>
+        </form>
+    </div>';
+
+    return $output;
+}
+add_shortcode('custom_user_profile', 'custom_user_profile_shortcode');
