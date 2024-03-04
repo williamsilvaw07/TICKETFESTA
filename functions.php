@@ -1,67 +1,5 @@
 <?php
 
-///MY ACCOUNT FUNCTION 
-function custom_limit_orders_per_page($args)
-{
-    $args['limit'] = 2; // Set this to how many orders you want per page.
-    return $args;
-}
-add_filter('woocommerce_my_account_my_orders_query', 'custom_limit_orders_per_page', 10, 1);
-
-
-
-add_filter('gettext', 'custom_replace_text', 20, 3);
-function custom_replace_text($translated_text, $text, $domain)
-{
-    if ('Date' === $text) {
-        $translated_text = 'Transaction Date';
-    }
-    return $translated_text;
-}
-
-
-
-//////FUNCTION TO ADD THE EVENT IMAGE TO THE TICKET/PRODUCT MAIN IMAGE  
-
-function set_all_products_featured_image_to_event_image()
-{
-    // Query all products.
-    $args = array(
-        'post_type' => 'product',
-        'posts_per_page' => -1, // Retrieve all products
-        'fields' => 'ids', // Retrieve only the IDs for performance
-    );
-
-    $product_ids = get_posts($args);
-
-    foreach ($product_ids as $product_id) {
-        // Retrieve the associated event ID for each product.
-        $event_id = get_post_meta($product_id, '_tribe_wooticket_for_event', true);
-
-        if (!empty($event_id)) {
-            // Get the event's featured image ID.
-            $event_image_id = get_post_thumbnail_id($event_id);
-
-            if (!empty($event_image_id)) {
-                // Set the event's image as the product's featured image.
-                set_post_thumbnail($product_id, $event_image_id);
-                error_log("Product ID {$product_id} featured image updated to event ID {$event_id}'s image.");
-            } else {
-                error_log("Event ID {$event_id} does not have a featured image.");
-            }
-        } else {
-            error_log("Product ID {$product_id} does not have an associated event.");
-        }
-    }
-}
-
-// Optionally, you can trigger this function with a specific action, hook, or manually.
-add_action('wp_loaded', 'set_all_products_featured_image_to_event_image');
-
-///////END
-
-
-
 
 
 ////FUNCTION TO ADD THE EVENT TITLE ON THE TICKET/PRODUCT FRONTEND 
@@ -3934,3 +3872,70 @@ function change_product_text_to_ticket( $translated_text, $text, $domain ) {
     return $translated_text;
 }
 add_filter( 'gettext', 'change_product_text_to_ticket', 20, 3 );
+
+
+
+
+
+
+///MY ACCOUNT FUNCTION 
+function custom_limit_orders_per_page($args)
+{
+    $args['limit'] = 2; // Set this to how many orders you want per page.
+    return $args;
+}
+add_filter('woocommerce_my_account_my_orders_query', 'custom_limit_orders_per_page', 10, 1);
+
+
+
+add_filter('gettext', 'custom_replace_text', 20, 3);
+function custom_replace_text($translated_text, $text, $domain)
+{
+    if ('Date' === $text) {
+        $translated_text = 'Transaction Date';
+    }
+    return $translated_text;
+}
+
+
+
+//////FUNCTION TO ADD THE EVENT IMAGE TO THE TICKET/PRODUCT MAIN IMAGE  
+
+function set_all_products_featured_image_to_event_image()
+{
+    // Query all products.
+    $args = array(
+        'post_type' => 'product',
+        'posts_per_page' => -1, // Retrieve all products
+        'fields' => 'ids', // Retrieve only the IDs for performance
+    );
+
+    $product_ids = get_posts($args);
+
+    foreach ($product_ids as $product_id) {
+        // Retrieve the associated event ID for each product.
+        $event_id = get_post_meta($product_id, '_tribe_wooticket_for_event', true);
+
+        if (!empty($event_id)) {
+            // Get the event's featured image ID.
+            $event_image_id = get_post_thumbnail_id($event_id);
+
+            if (!empty($event_image_id)) {
+                // Set the event's image as the product's featured image.
+                set_post_thumbnail($product_id, $event_image_id);
+                error_log("Product ID {$product_id} featured image updated to event ID {$event_id}'s image.");
+            } else {
+                error_log("Event ID {$event_id} does not have a featured image.");
+            }
+        } else {
+            error_log("Product ID {$product_id} does not have an associated event.");
+        }
+    }
+}
+
+// Optionally, you can trigger this function with a specific action, hook, or manually.
+add_action('wp_loaded', 'set_all_products_featured_image_to_event_image');
+
+///////END
+
+
