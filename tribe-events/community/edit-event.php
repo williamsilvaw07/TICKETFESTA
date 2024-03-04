@@ -1121,7 +1121,7 @@ $event_url = esc_attr($event_url);
     }
 
 
-    .ticket_form_total_capacity , .tribe-ticket-control-wrap__ctas{
+    .tribe-ticket-control-wrap, .tribe-ticket-control-wrap__ctas{
         display:none!important
     }
 </style>
