@@ -1888,10 +1888,10 @@ function shortcode_revenue()
     <div class="sales-card today_sale_admin_dashboard">
         <div class="sales-card-content ">
             <div class="sales-today ">
-                <h5 class="admin_dashboard_sales-label card_admin_dashboard ">Revenue</h5>
+                <h5 class="admin_dashboard_sales-label card_admin_dashboard ">Revenue Overview</h5>
                 <div class="admin_dashboard_sales-amount ">£' . esc_html(number_format($total_sales_lifetime, 2)) . ' <span class="admin_dashboard_sales-amount_span">GBP</span></div>
                 <div class="admin_dashboard_sales-amount_view_full_report">
-                    <a href="YOUR_LINK_HERE">View Full Breakdown</a>
+            
                 </div>                
             </div>
             <!-- Additional sections can go here -->
