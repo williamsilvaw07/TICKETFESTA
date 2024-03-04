@@ -97,7 +97,9 @@ printf(
 }
 
 
-
+.order-again{
+    display:none
+}
 
 
 
