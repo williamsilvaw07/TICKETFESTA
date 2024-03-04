@@ -4001,11 +4001,15 @@ function custom_user_profile_shortcode() {
                     <input type="text" name="postcode" id="postcode" value="' . esc_attr($address['postcode'] ?? '') . '" class="form-control">
                 </div>
                 <div class="col-md-4">
-                    <label for="country" class="form-label">Country/Region</label>
-                    <select name="country" id="country" class="form-select">
-                        <!-- Populate with countries -->
-                    </select>
-                </div>
+                <label for="country" class="form-label">Country/Region</label>
+                <select name="country" id="country" class="form-select">
+                    <option value="">Select a country...</option>
+                    <option value="US" <?php echo (esc_attr($address['country'] ?? '') == 'US') ? 'selected' : ''; ?>>United States</option>
+                    <option value="CA" <?php echo (esc_attr($address['country'] ?? '') == 'CA') ? 'selected' : ''; ?>>Canada</option>
+                    <option value="GB" <?php echo (esc_attr($address['country'] ?? '') == 'GB') ? 'selected' : ''; ?>>United Kingdom</option>
+                    <option value="AU" <?php echo (esc_attr($address['country'] ?? '') == 'AU') ? 'selected' : ''; ?>>Australia</option>
+                    <!-- Add more countries as needed -->
+                </select>
             </div>
 
             <div class="row mb-3">
