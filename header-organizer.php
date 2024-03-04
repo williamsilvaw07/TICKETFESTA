@@ -2830,7 +2830,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
     background: #d3fa16!important;
     color: #000000!important;
     font-size:12px!important;
-    margin-top:30px
+    margin-top:10px
 }
         /******end */
 
