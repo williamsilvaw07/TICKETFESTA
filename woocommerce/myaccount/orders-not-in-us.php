@@ -20,7 +20,7 @@
 defined( 'ABSPATH' ) || exit;
 
 do_action( 'woocommerce_before_account_orders', $has_orders );
-echo do_shortcode('[user_order_tickets]');
+
  ?>
 
 <?php if ( $has_orders ) : ?>
