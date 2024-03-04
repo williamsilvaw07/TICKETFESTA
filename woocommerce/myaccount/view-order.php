@@ -60,6 +60,13 @@ printf(
 
 
 <style>
+.product-image{
 
+    max-width: 200px;
 
+}
+.product-image img{
+    border-radius: 12px;
+
+}
 </style>
