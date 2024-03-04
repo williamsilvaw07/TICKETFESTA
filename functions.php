@@ -3656,43 +3656,63 @@ add_action('woocommerce_account_following_endpoint', 'ticketfeasta_display_follo
 
 
 /////FUNCTION TO SHOW ONLY UPCOMING EVENT WHICH THE USER HAS TICKET FOR ON THE MYACCOUNT DAHSBOAD
-// Function to truncate titles
-if (!function_exists('truncate_title')) {
-    function truncate_title($title, $maxLength = 30) {
-        $wrapped = wordwrap($title, $maxLength, "\n", true);
-        $lines = explode("\n", $wrapped);
-        return count($lines) > 1 ? $lines[0] . '...' : $title;
-    }
-}
-
-// Function to display upcoming events on the My Account dashboard
-function display_upcoming_events_for_user_with_view_order_button() {
-    // Ensure this runs only on the My Account page
-    if (!is_account_page()) {
-        return;
-    }
-
+/*
+function display_upcoming_events_for_user_with_view_order_button()
+{
     $user_id = get_current_user_id();
     $displayed_event_ids = array();
-    $customer_orders = wc_get_orders(array(
-        'meta_key' => '_customer_user',
-        'meta_value' => $user_id,
-        'post_status' => array('wc-completed'),
-    ));
+    $customer_orders = wc_get_orders(
+        array(
+            'meta_key' => '_customer_user',
+            'meta_value' => $user_id,
+            'post_status' => array('wc-completed'),
+        )
+    );
+
+
+    function truncate_title($title, $maxLength = 30)
+    {
+        // Break the title into lines with a maximum length, without breaking words
+        $wrapped = wordwrap($title, $maxLength, "\n", true);
+        // Split the string into lines
+        $lines = explode("\n", $wrapped);
+        // Use the first line, if there are multiple lines, append '...'
+        return count($lines) > 1 ? $lines[0] . '...' : $title;
+    }
 
     echo '<div class="event-tickets-header">';
     echo '<h2 class="container-fluid">Your Event Tickets</h2>';
     echo '<p>Below you\'ll find the tickets for events you\'re attending soon. Keep track of dates and details right here!</p>';
-    echo '</div>';
+    echo '</div>'; // Close the event-tickets-header div
 
-    echo '<div class="loadingAnimation">...Your SVG animation...</div>';
 
-    echo '<div class="allTicketsContainer">';
+    echo '<div class="loadingAnimation">
+    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1366 768" xml:space="preserve">
+        <style type="text/css">
+            .st0{fill:none;stroke:#d3fa16;stroke-width:9;stroke-miterlimit:10;}
+            .st1{fill:none;stroke:#d3fa16;stroke-width:9;stroke-miterlimit:10;}
+        </style>
+        <g>
+            <path class="st0 grey" d="M772.5,347c-6.2-14-2.4-29.5,8.4-35.8c1.1-0.6,1.4-2.2,0.8-3.7l-8.5-19.1c-3.4-7.6-11.2-11.4-17.5-8.6
+                l-201,89.5c-6.3,2.8-8.7,11.2-5.3,18.8c0,0,6.4,14.3,8.5,19.1c0.6,1.4,2,2.2,3.3,1.8c12-3.8,26,3.7,32.3,17.7s2.4,29.5-8.4,35.8
+                c-1.1,0.6-1.4,2.2-0.8,3.7l8.5,19.1c3.4,7.6,11.2,11.4,17.5,8.6l201-89.5c6.3-2.8,8.7-11.2,5.3-18.8l-8.5-19.1
+                c-0.6-1.4-2-2.2-3.3-1.8C792.8,368.5,778.7,361,772.5,347z"></path>
+            <path class="st1 blue" d="M772.5,347c-6.2-14-2.4-29.5,8.4-35.8c1.1-0.6,1.4-2.2,0.8-3.7l-8.5-19.1c-3.4-7.6-11.2-11.4-17.5-8.6
+                l-201,89.5c-6.3,2.8-8.7,11.2-5.3,18.8c0,0,6.4,14.3,8.5,19.1c0.6,1.4,2,2.2,3.3,1.8c12-3.8,26,3.7,32.3,17.7s2.4,29.5-8.4,35.8
+                c-1.1,0.6-1.4,2.2-0.8,3.7l8.5,19.1c3.4,7.6,11.2,11.4,17.5,8.6l201-89.5c6.3-2.8,8.7-11.2,5.3-18.8l-8.5-19.1
+                c-0.6-1.4-2-2.2-3.3-1.8C792.8,368.5,778.7,361,772.5,347z"></path>
+        </g>
+    </svg>
+</div>';
+
+    echo '<div class="allTicketsContainer">'; // Open the main container for all tickets here
+
     if (!empty($customer_orders)) {
         foreach ($customer_orders as $customer_order) {
             $order_url = $customer_order->get_view_order_url();
             $items = $customer_order->get_items();
             $order_paid_date = $customer_order->get_date_paid() ? $customer_order->get_date_paid()->date('d/m/y') : 'N/A';
+
 
             foreach ($items as $item_id => $item) {
                 $event_id = get_post_meta($item->get_product_id(), '_tribe_wooticket_for_event', true);
@@ -3704,12 +3724,12 @@ function display_upcoming_events_for_user_with_view_order_button() {
                 if (strtotime($event_start_date) > current_time('timestamp')) {
                     $event_title = get_the_title($event_id);
                     $event_url = get_permalink($event_id);
-                    $event_image_url = get_the_post_thumbnail_url($event_id, 'full') ?: 'https://yourplaceholderimageurl.com/placeholder.png';
+                    $event_image_url = get_the_post_thumbnail_url($event_id, 'full') ?: 'https://ticketfesta.co.uk/wp-content/uploads/2024/02/placeholder-4.png';
                     $ticket_quantity = $item->get_quantity();
                     $order_total = $customer_order->get_formatted_order_total();
                     $event_address = tribe_get_address($event_id);
-                    $map_link = !empty($event_address) ? "https://maps.google.com/?q=" . urlencode($event_address) : '';
-
+                    // Encode the address for URL use
+                    $map_link = "https://maps.google.com/?q=" . urlencode($event_address);
 
                     ?>
 
@@ -3784,9 +3804,9 @@ function display_upcoming_events_for_user_with_view_order_button() {
 }
 echo '</div>'; // Close the main container for all tickets
 
-add_action('woocommerce_checkout', 'display_upcoming_events_for_user_with_view_order_button');
+add_action('woocommerce_account_dashboard', 'display_upcoming_events_for_user_with_view_order_button');
 
-
+*/
 
 
 
