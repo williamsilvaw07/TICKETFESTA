@@ -81,7 +81,9 @@ printf(
 .tribe-event-details  span{
     margin: 10px 0!important;
 }
-
+.tribe-attendee-meta{
+    display:none
+}
 
 
 
