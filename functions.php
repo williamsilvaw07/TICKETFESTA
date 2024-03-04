@@ -3956,8 +3956,6 @@ function custom_user_profile_shortcode() {
     $address = get_user_meta($user_id, 'address', true);
     $phone = get_user_meta($user_id, 'phone', true);
 
-
-    // Form HTML
     $output = '
     <div class="user-profile-form-wrapper">
         <h1>Edit Profile</h1>
@@ -4006,5 +4004,5 @@ function custom_user_profile_shortcode() {
     </div>';
 
     return $output;
-}
-add_shortcode('custom_user_profile', 'custom_user_profile_shortcode');
+ }
+ add_shortcode('custom_user_profile', 'custom_user_profile_shortcode');
