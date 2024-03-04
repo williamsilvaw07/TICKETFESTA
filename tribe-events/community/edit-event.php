@@ -883,34 +883,39 @@ $event_url = esc_attr($event_url);
 
 
 ///FUNCTION TO AUTO CLICK THE 
-jQuery(document).ready(function($) {
-    // Apply CSS style directly to the "Unlimited capacity" radio button
-    $('#Tribe__Tickets_Plus__Commerce__WooCommerce__Main_unlimited').css('margin-right', '25px');
 
-    // Function to auto-click the "Own capacity" radio button
-    function autoClickOwnCapacity() {
-        var ownCapacityRadio = $('#Tribe__Tickets_Plus__Commerce__WooCommerce__Main_own');
+document.addEventListener('DOMContentLoaded', function() {
+    var toggleButton = document.getElementById('ticket_form_toggle');
+    var intervalId;
 
-        // Check if the radio button exists and is not already checked
-        if (ownCapacityRadio.length && !ownCapacityRadio.prop('checked')) {
-            console.log('Auto-clicking the "Own capacity" radio button.');
-            ownCapacityRadio.prop('checked', true).trigger('change');
+    // Function to check and click the radio button
+    function checkAndClickRadioButton() {
+        // Find the radio button for own capacity
+        var ownCapacityRadio = document.getElementById('Tribe__Tickets_Plus__Commerce__WooCommerce__Main_own');
+
+        if (ownCapacityRadio && !ownCapacityRadio.hasAttribute('checked')) {
+            console.log('Clicking the own capacity radio button.');
+            ownCapacityRadio.click();
+
+            // Check if the radio button is now checked
+            if (ownCapacityRadio.checked) {
+                console.log('Own capacity radio button is now checked.');
+                clearInterval(intervalId); // Stop checking
+            }
         }
     }
 
-    // Function to apply CSS to the "Unlimited capacity" radio button after clicking toggle
-    function applyCssToUnlimitedCapacity() {
-        $('#Tribe__Tickets_Plus__Commerce__WooCommerce__Main_unlimited').css('margin-right', '25px');
-    }
+    // Listen for clicks on the toggle button
+    if (toggleButton) {
+        toggleButton.addEventListener('click', function() {
+            console.log('Toggle button clicked');
 
-    // Listen for clicks on the toggle button and auto-click the "Own capacity" radio button
-    $('#ticket_form_toggle').on('click', function() {
-        // Wait a bit for the form to fully toggle
-        setTimeout(function() {
-            autoClickOwnCapacity();
-            applyCssToUnlimitedCapacity();
-        }, 500); // Adjust time as necessary based on how long it takes for your form to toggle
-    });
+            // Start checking and clicking the radio button every 500 milliseconds
+            intervalId = setInterval(checkAndClickRadioButton, 500);
+        });
+    } else {
+        console.log('Toggle button not found on the page');
+    }
 });
 
 
@@ -1162,7 +1167,3 @@ jQuery(document).ready(function($) {
         display:none!important
     }
 </style>
-
-
-
-<?php
