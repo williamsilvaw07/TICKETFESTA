@@ -95,8 +95,9 @@ if (!defined('ABSPATH')) {
                                     class="nav-text">Settings</span></a>
                         </li>
                         <li class="admin_dashboard-sidebar-item">
-                            <a href="#"><i class="fas fa-sign-out-alt"></i><span class="nav-text">Logout</span></a>
-                        </li>
+    <a href="<?php echo esc_url(wp_logout_url(home_url())); ?>"><i class="fas fa-sign-out-alt"></i><span class="nav-text">Logout</span></a>
+</li>
+
                     </ul>
                 </nav>
             </div>
