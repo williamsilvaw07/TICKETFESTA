@@ -79,7 +79,7 @@ printf(
 }
 
 .tribe-event-details em span{
-    margin: 10px 0
+    margin: 10px 0!important;
 }
 
 
