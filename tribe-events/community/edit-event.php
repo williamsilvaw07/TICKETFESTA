@@ -895,6 +895,8 @@ jQuery(document).ready(function($) {
             console.log('Clicking the own capacity radio button...');
             ownCapacityRadio.prop('checked', true).trigger('change');
 
+                // Apply CSS with !important using jQuery
+                $("#Tribe__Tickets_Plus__Commerce__WooCommerce__Main_unlimited").css("cssText", "margin-right: 25px !important;");
             // Check if the radio button is now checked
             if (ownCapacityRadio.prop('checked')) {
                 console.log('Own capacity radio button is now checked.');
