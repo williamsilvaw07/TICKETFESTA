@@ -883,39 +883,34 @@ $event_url = esc_attr($event_url);
 
 
 ///FUNCTION TO AUTO CLICK THE 
+jQuery(document).ready(function($) {
+    // Listen for clicks on the toggle button
+    $('#ticket_form_toggle').on('click', function() {
+        console.log('Toggle button clicked');
+        var intervalId;
 
-document.addEventListener('DOMContentLoaded', function() {
-    var toggleButton = document.getElementById('ticket_form_toggle');
-    var intervalId;
+        // Function to check and click the radio button
+        function checkAndClickRadioButton() {
+            var ownCapacityRadio = $('#Tribe__Tickets_Plus__Commerce__WooCommerce__Main_own');
 
-    // Function to check and click the radio button
-    function checkAndClickRadioButton() {
-        // Find the radio button for own capacity
-        var ownCapacityRadio = document.getElementById('Tribe__Tickets_Plus__Commerce__WooCommerce__Main_own');
+            if (ownCapacityRadio.length && !ownCapacityRadio.is(':checked')) {
+                console.log('Clicking the own capacity radio button.');
+                ownCapacityRadio.click();
 
-        if (ownCapacityRadio && !ownCapacityRadio.hasAttribute('checked')) {
-            console.log('Clicking the own capacity radio button.');
-            ownCapacityRadio.click();
-
-            // Check if the radio button is now checked
-            if (ownCapacityRadio.checked) {
-                console.log('Own capacity radio button is now checked.');
-                clearInterval(intervalId); // Stop checking
+                // Check if the radio button is now checked
+                if (ownCapacityRadio.is(':checked')) {
+                    console.log('Own capacity radio button is now checked.');
+                    clearInterval(intervalId); // Stop checking
+                }
             }
         }
-    }
 
-    // Listen for clicks on the toggle button
-    if (toggleButton) {
-        toggleButton.addEventListener('click', function() {
-            console.log('Toggle button clicked');
+        // Start checking and clicking the radio button every 500 milliseconds
+        intervalId = setInterval(checkAndClickRadioButton, 500);
 
-            // Start checking and clicking the radio button every 500 milliseconds
-            intervalId = setInterval(checkAndClickRadioButton, 500);
-        });
-    } else {
-        console.log('Toggle button not found on the page');
-    }
+        // Using jQuery to add CSS style to the unlimited capacity radio button
+        $('#Tribe__Tickets_Plus__Commerce__WooCommerce__Main_unlimited').css('margin-right', '25px');
+    });
 });
 
 
