@@ -3653,6 +3653,66 @@ add_action('woocommerce_account_following_endpoint', 'ticketfeasta_display_follo
 
 
 
+// Function to truncate title without breaking words
+if (!function_exists('truncate_title')) {
+    function truncate_title($title, $maxLength = 30) {
+        $wrapped = wordwrap($title, $maxLength, "\n", true);
+        $lines = explode("\n", $wrapped);
+        return count($lines) > 1 ? $lines[0] . '...' : $title;
+    }
+}
+
+// Function to display upcoming events for the user
+function display_upcoming_events_for_user_with_view_order_button() {
+    $user_id = get_current_user_id();
+    $displayed_event_ids = array();
+    $customer_orders = wc_get_orders(array(
+        'meta_key' => '_customer_user',
+        'meta_value' => $user_id,
+        'post_status' => array('wc-completed'),
+    ));
+
+    echo '<div class="event-tickets-header">';
+    echo '<h2 class="container-fluid">Your Event Tickets</h2>';
+    echo '<p>Below you\'ll find the tickets for events you\'re attending soon. Keep track of dates and details right here!</p>';
+    echo '</div>';
+
+    echo '<div class="loadingAnimation">'; // Include your SVG loading animation HTML here
+    echo '</div>';
+
+    echo '<div class="allTicketsContainer">';
+
+    foreach ($customer_orders as $customer_order) {
+        $order_url = $customer_order->get_view_order_url();
+        $items = $customer_order->get_items();
+
+        foreach ($items as $item_id => $item) {
+            $event_id = get_post_meta($item->get_product_id(), '_tribe_wooticket_for_event', true);
+            if (!in_array($event_id, $displayed_event_ids) && !empty($event_id)) {
+                $event_start_date = get_post_meta($event_id, '_EventStartDate', true);
+                $event_title = get_the_title($event_id);
+                $event_url = get_permalink($event_id);
+                $event_image_url = get_the_post_thumbnail_url($event_id, 'full') ?: 'https://ticketfesta.co.uk/wp-content/uploads/2024/02/placeholder-4.png';
+                $ticket_quantity = $item->get_quantity();
+                $order_total = $customer_order->get_formatted_order_total();
+                $event_address = tribe_get_address($event_id);
+                $map_link = !empty($event_address) ? "https://maps.google.com/?q=" . urlencode($event_address) : '';
+
+                // Display each ticket here
+                // Note: Convert PHP echo statements into direct HTML where needed
+
+                $displayed_event_ids[] = $event_id;
+            }
+        }
+    }
+
+    if (empty($displayed_event_ids)) {
+        echo "<p>You currently have no tickets for upcoming events.</p>";
+    }
+
+    echo '</div>'; // Closing .allTicketsContainer
+}
+add_action('woocommerce_account_dashboard', 'display_upcoming_events_for_user_with_view_order_button');
 
 
 
