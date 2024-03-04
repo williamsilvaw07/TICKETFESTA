@@ -887,15 +887,15 @@ $event_url = esc_attr($event_url);
 jQuery(document).ready(function($) {
     var intervalId;
 
-    // Function to auto-click the radio button
     function checkAndClickRadioButton() {
         var ownCapacityRadio = $('#Tribe__Tickets_Plus__Commerce__WooCommerce__Main_own');
 
+        // If the radio button exists and isn't already checked, click it
         if (ownCapacityRadio.length && !ownCapacityRadio.prop('checked')) {
-            console.log('Attempting to click the own capacity radio button...');
+            console.log('Clicking the own capacity radio button...');
             ownCapacityRadio.prop('checked', true).trigger('change');
 
-            // Additional check to see if the radio button is checked after clicking
+            // Check if the radio button is now checked
             if (ownCapacityRadio.prop('checked')) {
                 console.log('Own capacity radio button is now checked.');
                 clearInterval(intervalId); // Stop checking
@@ -903,11 +903,14 @@ jQuery(document).ready(function($) {
         }
     }
 
-    // Listen for clicks on the toggle button
-    $('#ticket_form_toggle').on('click', function() {
-        console.log('Toggle button clicked, starting to check and click the radio button.');
+    // Run the check immediately in case the page loads with the form already visible
+    checkAndClickRadioButton();
 
-        // Clear any existing intervals to prevent multiple instances
+    // Listen for clicks on the form toggle button to start checking
+    $('#ticket_form_toggle').on('click', function() {
+        console.log('Toggle button clicked.');
+
+        // Ensure we're not setting multiple intervals
         clearInterval(intervalId);
 
         // Start checking and clicking the radio button every 500 milliseconds
