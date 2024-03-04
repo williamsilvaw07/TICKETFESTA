@@ -887,12 +887,14 @@ $event_url = esc_attr($event_url);
 
 
 
-jQuery(document).ready(function($) {
-    $('#Tribe__Tickets_Plus__Commerce__WooCommerce__Main_own').click();
+document.addEventListener('DOMContentLoaded', function() {
+    if (document.getElementById('ticket_title_add')) {
+        var ownCapacityRadio = document.getElementById('Tribe__Tickets_Plus__Commerce__WooCommerce__Main_own');
+        if (ownCapacityRadio) {
+            ownCapacityRadio.click();
+        }
+    }
 });
-
-
-
 
 
 
