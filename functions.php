@@ -3918,7 +3918,7 @@ function display_order_item_product_image( $item_id, $item, $order ) {
     // Check if the product exists
     if ( $product ) {
         // Get the product image URL. Adjust the size as needed ('thumbnail', 'medium', 'full', etc.)
-        $image_url = $product->get_image( 'thumbnail' ); // This returns an <img> tag
+        $image_url = $product->get_image( 'small' ); // This returns an <img> tag
         // Output the product image
         echo '<div class="product-image" style="float: left; margin-right: 10px;">' . $image_url . '</div>';
     }
