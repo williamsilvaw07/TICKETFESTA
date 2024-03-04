@@ -3672,15 +3672,17 @@ function display_upcoming_events_for_user_with_view_order_button() {
         'post_status' => ['wc-completed'],
     ]);
 
-    echo '<div class="event-tickets-header">';
-    echo '<h2 class="container-fluid">Your Event Tickets</h2>';
-    echo '<p>Below you\'ll find the tickets for events you\'re attending soon. Keep track of dates and details right here!</p>';
-    echo '</div>';
-
-    echo '<div class="loadingAnimation">'; // Include SVG loading animation HTML here
-    echo '</div>';
-
-    echo '<div class="allTicketsContainer">';
+    // HTML structure starts here
+    ?>
+    <div class="event-tickets-header">
+        <h2 class="container-fluid">Your Event Tickets</h2>
+        <p>Below you'll find the tickets for events you're attending soon. Keep track of dates and details right here!</p>
+    </div>
+    <div class="loadingAnimation">
+        <!-- Include SVG loading animation HTML here -->
+    </div>
+    <div class="allTicketsContainer">
+    <?php
 
     foreach ($customer_orders as $customer_order) {
         $order_url = $customer_order->get_view_order_url();
@@ -3692,7 +3694,7 @@ function display_upcoming_events_for_user_with_view_order_button() {
                 $event_start_date = get_post_meta($event_id, '_EventStartDate', true);
                 $event_title = get_the_title($event_id);
                 $event_url = get_permalink($event_id);
-                $event_image_url = get_the_post_thumbnail_url($event_id, 'full') ?: 'https://ticketfesta.co.uk/wp-content/uploads/2024/02/placeholder-4.png';
+                $event_image_url = get_the_post_thumbnail_url($event_id, 'thumbnail') ?: 'https://yourdefaultimageurl.com/default.jpg'; // Use 'thumbnail' for smaller image size
                 $ticket_quantity = $item->get_quantity();
                 $order_total = $customer_order->get_formatted_order_total();
                 $event_address = tribe_get_address($event_id);
@@ -3707,9 +3709,9 @@ function display_upcoming_events_for_user_with_view_order_button() {
                     <div class="ticket_inner_div">
                         <div class="ticketTitle"><?php echo esc_html(truncate_title($event_title, 30)); ?></div>
                         <?php if (!empty($event_address)): ?>
-                            <div class="eventaddress"><?php echo esc_html($event_address); ?>
-                                <a class="opne_on_map_link" href="<?php echo esc_url($map_link); ?>" target="_blank">Open on Map</a>
-                            </div>
+                        <div class="eventaddress"><?php echo esc_html($event_address); ?>
+                            <a class="opne_on_map_link" href="<?php echo esc_url($map_link); ?>" target="_blank">Open on Map</a>
+                        </div>
                         <?php endif; ?>
                         <hr>
                         <div class="ticketDetail">
@@ -3742,7 +3744,9 @@ function display_upcoming_events_for_user_with_view_order_button() {
         echo "<p>You currently have no tickets for upcoming events.</p>";
     }
 
-    echo '</div>'; // Close .allTicketsContainer
+    ?>
+    </div> <!-- .allTicketsContainer -->
+    <?php
 }
 add_action('woocommerce_account_dashboard', 'display_upcoming_events_for_user_with_view_order_button');
 
