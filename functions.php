@@ -1708,33 +1708,35 @@ function get_ticket_info($user_id)
 
 function shortcode_revenue() {
     $user_id = get_current_user_id();
-    $ticket_info = get_ticket_info($user_id);
-    $total_sales_lifetime = $ticket_info['total_sales_lifetime'];
-
-    // Initialize an empty string to hold the debug information for each order
-    $order_debug_info = '';
 
     // Fetch orders for the current user
     $customer_orders = wc_get_orders(array(
         'meta_key' => '_customer_user',
         'meta_value' => $user_id,
         'post_status' => array('wc-completed'),
-        'limit' => -1, // Remove the limit or set it according to your needs
+        'limit' => -1, // Ensure all completed orders are fetched
     ));
 
+    // Initialize variables to accumulate total sales and prepare debug info
+    $total_sales_lifetime_calculated = 0;
+    $order_debug_info = '';
+
     foreach ($customer_orders as $order) {
+        // Add each order's total to the calculated total sales
+        $total_sales_lifetime_calculated += $order->get_total();
+
         // Append order ID and total to the debug string
         $order_debug_info .= 'Order ID: ' . $order->get_id() . ' - Total: £' . number_format($order->get_total(), 2) . "<br>";
     }
 
+    // Return the structured HTML including the calculated total and debug info
     return '
     <div class="sales-card today_sale_admin_dashboard">
         <div class="sales-card-content ">
             <div class="sales-today ">
                 <h5 class="admin_dashboard_sales-label card_admin_dashboard ">Revenue Overview</h5>
-                <div class="admin_dashboard_sales-amount ">£' . esc_html(number_format($total_sales_lifetime, 2)) . ' <span class="admin_dashboard_sales-amount_span">GBP</span></div>              
+                <div class="admin_dashboard_sales-amount ">£' . esc_html(number_format($total_sales_lifetime_calculated, 2)) . ' <span class="admin_dashboard_sales-amount_span">GBP</span></div>              
             </div>
-            <!-- Additional sections can go here -->
             <!-- Debug information for development purposes -->
             <div class="debug-info" style="background-color: #f7f7f7; margin-top: 20px; padding: 10px; border-radius: 5px;">
                 <strong>Order Breakdown:</strong><br>
