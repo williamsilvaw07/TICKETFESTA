@@ -3958,7 +3958,7 @@ function custom_user_profile_shortcode() {
     // Form HTML using Bootstrap layout
     $output = '
     <div class="container setting_page_admin">
-        <h1>Edit Profile</h1>
+        <h1 class="tribe-community-events-list-title ">Edit Profile</h1>
         <form class="orgerinser_settings_form" method="post" id="adduser" action="' . get_permalink() . '">
             ' . wp_nonce_field('update_user_' . $user_id, '_wpnonce', true, false) . '
             <input name="action" type="hidden" id="action" value="update-user" />
