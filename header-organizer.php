@@ -2824,7 +2824,10 @@ html .tickets-sold-column , html .tribe-list-column-title {
     width: 100% !important;
 }
 
-
+.orgerinser_settings_form button{
+    background: #d3fa16!important;
+    color: #000000!important;
+}
         /******end */
 
             /********sales and atendde rports page **** */
