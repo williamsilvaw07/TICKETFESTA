@@ -73,6 +73,7 @@ $blocked_columns = apply_filters( 'tribe_community_events_list_columns_blocked',
     <span for="filter-events">Sort by:</span>
     <select name="filter-events" id="filter-events">
     <option value="all" selected>All Events</option>
+    <option value="upcoming">Upcoming Events</option>
         <option value="published">Published Events</option>
         <option value="draft">Draft Events</option>
         <option value="past">Past Events</option>
@@ -363,9 +364,8 @@ document.querySelectorAll('.event-status-form select[name="event_status"]').forE
 
 
 
-
-    //FUNCTION FOR THE SORT BY BUUTON 
-    jQuery(document).ready(function($) {
+// FUNCTION FOR THE SORT BY BUTTON
+jQuery(document).ready(function($) {
 
 $('#filter-events').on('change', function() {
     var selectedValue = $(this).val();
@@ -386,6 +386,22 @@ $('#filter-events').on('change', function() {
         return eventDate < today;
     }
 
+    // Function to check if the event date is in the future
+    function isUpcomingEvent(eventDateElem) {
+        var day = parseInt(eventDateElem.find('.start-date-day .value').text());
+        var month = eventDateElem.find('.start-date-month .value').text();
+        var year = parseInt(eventDateElem.find('.start-date-year .value').text());
+
+        var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        var monthNumber = monthNames.indexOf(month) + 1;
+
+        var eventDate = new Date(year, monthNumber - 1, day);
+        var today = new Date();
+        today.setHours(0,0,0,0);
+
+        return eventDate >= today;
+    }
+
     var rows = $('#tribe-community-events-list tbody tr');
     rows.hide();
 
@@ -400,6 +416,8 @@ $('#filter-events').on('change', function() {
         } else if (selectedValue === 'draft' && status === 'draft') {
             row.show();
         } else if (selectedValue === 'past' && isPastEvent(eventDateElem)) {
+            row.show();
+        } else if (selectedValue === 'upcoming' && isUpcomingEvent(eventDateElem)) { // Added condition for upcoming events
             row.show();
         } else if (selectedValue === 'all') {
             row.show();
