@@ -884,21 +884,20 @@ $event_url = esc_attr($event_url);
 
 ///FUNCTION TO AUTO CLICK THE 
 
-document.addEventListener('DOMContentLoaded', function() {
-    var toggleButton = document.getElementById('ticket_form_toggle');
+jQuery(document).ready(function($) {
     var intervalId;
 
     // Function to check and click the radio button
     function checkAndClickRadioButton() {
         // Find the radio button for own capacity
-        var ownCapacityRadio = document.getElementById('Tribe__Tickets_Plus__Commerce__WooCommerce__Main_own');
+        var ownCapacityRadio = $('#Tribe__Tickets_Plus__Commerce__WooCommerce__Main_own');
 
-        if (ownCapacityRadio && !ownCapacityRadio.hasAttribute('checked')) {
+        if (ownCapacityRadio.length && !ownCapacityRadio.is(':checked')) {
             console.log('Clicking the own capacity radio button.');
             ownCapacityRadio.click();
 
             // Check if the radio button is now checked
-            if (ownCapacityRadio.checked) {
+            if (ownCapacityRadio.is(':checked')) {
                 console.log('Own capacity radio button is now checked.');
                 clearInterval(intervalId); // Stop checking
             }
@@ -906,16 +905,12 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Listen for clicks on the toggle button
-    if (toggleButton) {
-        toggleButton.addEventListener('click', function() {
-            console.log('Toggle button clicked');
+    $('#ticket_form_toggle').on('click', function() {
+        console.log('Toggle button clicked');
 
-            // Start checking and clicking the radio button every 500 milliseconds
-            intervalId = setInterval(checkAndClickRadioButton, 500);
-        });
-    } else {
-        console.log('Toggle button not found on the page');
-    }
+        // Start checking and clicking the radio button every 500 milliseconds
+        intervalId = setInterval(checkAndClickRadioButton, 500);
+    });
 });
 
 
