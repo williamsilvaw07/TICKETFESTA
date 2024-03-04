@@ -41,7 +41,7 @@ if (!defined('ABSPATH')) {
                 <nav class="admin_dashboard-sidebar">
                     <ul class="admin_dashboard-sidebar-list">
                         <li class="admin_dashboard-sidebar-item">
-                            <a href="https://thaynna-william.co.uk/dashboard/">
+                            <a href="/dashboard/">
                                 <i class="fas fa-home"></i><span class="nav-text">Dashboard</span>
                             </a>
 
@@ -74,11 +74,11 @@ if (!defined('ABSPATH')) {
                                     class="nav-text">Gallery</span></a>
                         </li>
                         <li class="admin_dashboard-sidebar-item admin_dashboard-coming-soon">
-                            <a href="https://thaynna-william.co.uk/organizer-eventsdd"><i
+                            <a href="/organizer-eventsdd"><i
                                     class="fas fa-bullhorn"></i><span class="nav-text">Affiliate Marketing</span></a>
                         </li>
                         <li class="admin_dashboard-sidebar-item admin_dashboard-coming-soon">
-                            <a href="https://thaynna-william.co.uk/organizer-eventsdd"><i
+                            <a href="organizer-eventsdd"><i
                                     class="fas fa-envelope"></i><span class="nav-text">Email Marketing</span></a>
                         </li>
                     </ul>
