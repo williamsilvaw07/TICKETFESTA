@@ -1251,6 +1251,7 @@ background-position: center top;
     max-height: 475px;
     object-fit: contain;
     backdrop-filter: blur(100px)!important;
+    -webkit-backdrop-filter: blur(100px)!important;
 }
 .main_single_event_div{
     display: flex;
