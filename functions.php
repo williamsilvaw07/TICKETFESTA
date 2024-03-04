@@ -4028,4 +4028,5 @@ function custom_user_profile_shortcode() {
 
     return $output;
 }
-add_shortcode('custom_user_profile', 'custom_user_profile_shortcode');
+add_shortcode('organiser_account_info', 'custom_user_profile_shortcode');
+
