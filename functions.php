@@ -1635,44 +1635,65 @@ add_shortcode('organizer_attendees_report', 'my_tribe_community_tickets_attendee
 
 
 
-
 function get_ticket_info($user_id) {
-    // Fetch orders for the current user
-    $customer_orders = wc_get_orders(array(
-        'meta_key' => '_customer_user',
-        'meta_value' => $user_id,
-        'post_status' => array('wc-completed'),
-        'limit' => -1, // Ensure all completed orders are fetched
+    $today = date('Y-m-d');
+    $total_sales_today = 0;
+    $total_tickets_sold_today = 0;
+    $total_sales_lifetime = 0;
+    $total_tickets_sold_lifetime = 0;
+    $total_tickets_sold_previous_day = 0;
+
+    $total_sales_previous_day = get_total_sales_for_previous_day($user_id);
+
+    $orders = wc_get_orders(array(
+        'status' => array('wc-completed'),
+        'limit' => -1,
+        'type' => 'shop_order',
     ));
 
-    $total_sales_lifetime_calculated = 0;
-    $order_details = [];
+    foreach ($orders as $order) {
+        if (!($order instanceof WC_Order)) continue;
 
-    foreach ($customer_orders as $order) {
+        $order_date = $order->get_date_created()->format('Y-m-d');
+        $is_today = ($order_date === $today);
+        $is_previous_day = ($order_date === date('Y-m-d', strtotime('-1 day')));
+
         foreach ($order->get_items() as $item) {
-            $item_subtotal = $item->get_subtotal(); // Get the line subtotal before discounts
-            $total_sales_lifetime_calculated += $item_subtotal;
-
             $product_id = $item->get_product_id();
             $event_id = get_post_meta($product_id, '_tribe_wooticket_for_event', true);
-            $event_title = get_the_title($event_id);
-            $event_author_id = get_post_field('post_author', $event_id);
-            $event_author_name = get_the_author_meta('display_name', $event_author_id);
+            $event_author = get_post_field('post_author', $event_id);
 
-            $order_details[] = [
-                'order_id' => $order->get_id(),
-                'subtotal' => $item_subtotal,
-                'event_title' => $event_title,
-                'event_creator' => $event_author_name,
-            ];
+            if ($event_author == $user_id) {
+                $quantity = $item->get_quantity();
+                $item_subtotal = $item->get_subtotal(); // Using subtotal to account for potential discounts
+                
+                $total_tickets_sold_lifetime += $quantity;
+                $total_sales_lifetime += $item_subtotal;
+
+                if ($is_today) {
+                    $total_tickets_sold_today += $quantity;
+                    $total_sales_today += $item_subtotal;
+                }
+
+                if ($is_previous_day) {
+                    $total_tickets_sold_previous_day += $quantity;
+                }
+            }
         }
     }
 
-    return [
-        'total_sales_lifetime' => $total_sales_lifetime_calculated,
-        'order_details' => $order_details,
-    ];
+    return array(
+        'total_sales_today' => $total_sales_today,
+        'total_tickets_sold_today' => $total_tickets_sold_today,
+        'total_sales_lifetime' => $total_sales_lifetime,
+        'total_tickets_sold_lifetime' => $total_tickets_sold_lifetime,
+        'total_sales_previous_day' => $total_sales_previous_day,
+        'total_tickets_sold_previous_day' => $total_tickets_sold_previous_day,
+    );
 }
+
+
+
 
 function shortcode_revenue() {
     $user_id = get_current_user_id();
@@ -1703,7 +1724,7 @@ add_shortcode('revenue', 'shortcode_revenue');
 
 
 
-
+ 
 
 
 function get_total_sales_for_previous_day($user_id)
