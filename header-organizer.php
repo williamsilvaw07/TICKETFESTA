@@ -2808,6 +2808,21 @@ html .tickets-sold-column , html .tribe-list-column-title {
 
 
 
+
+
+        /*****setting page***/ 
+
+.orgerinser_settings_form{
+    background-color: rgb(26, 26, 26);
+    position: relative;
+    padding: 17px;
+    border-radius: 10px !important;
+    width: 100% !important;
+}
+
+
+        /******end */
+
             /********sales and atendde rports page **** */
 
             #tribe-tickets-plus-woocommerce-orders-report {}
