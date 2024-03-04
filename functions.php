@@ -3656,28 +3656,31 @@ add_action('woocommerce_account_following_endpoint', 'ticketfeasta_display_follo
 
 
 /////FUNCTION TO SHOW ONLY UPCOMING EVENT WHICH THE USER HAS TICKET FOR ON THE MYACCOUNT DAHSBOAD
-function display_upcoming_events_for_user_with_view_order_button()
-{
-    $user_id = get_current_user_id();
-    $displayed_event_ids = array();
-    $customer_orders = wc_get_orders(
-        array(
-            'meta_key' => '_customer_user',
-            'meta_value' => $user_id,
-            'post_status' => array('wc-completed'),
-        )
-    );
-
-
-    function truncate_title($title, $maxLength = 30)
-    {
-        // Break the title into lines with a maximum length, without breaking words
+// Ensure truncate_title function is only defined once.
+if (!function_exists('truncate_title')) {
+    function truncate_title($title, $maxLength = 30) {
         $wrapped = wordwrap($title, $maxLength, "\n", true);
-        // Split the string into lines
         $lines = explode("\n", $wrapped);
-        // Use the first line, if there are multiple lines, append '...'
         return count($lines) > 1 ? $lines[0] . '...' : $title;
     }
+}
+
+// Add the action only if the current page is part of the My Account section.
+add_action('init', 'add_display_upcoming_events_action');
+function add_display_upcoming_events_action() {
+    if (function_exists('is_account_page') && is_account_page()) {
+        add_action('woocommerce_account_dashboard', 'display_upcoming_events_for_user_with_view_order_button');
+    }
+}
+
+function display_upcoming_events_for_user_with_view_order_button() {
+    $user_id = get_current_user_id();
+    $displayed_event_ids = array();
+    $customer_orders = wc_get_orders(array(
+        'meta_key' => '_customer_user',
+        'meta_value' => $user_id,
+        'post_status' => array('wc-completed'),
+    ));
 
     echo '<div class="event-tickets-header">';
     echo '<h2 class="container-fluid">Your Event Tickets</h2>';
@@ -3802,6 +3805,10 @@ function display_upcoming_events_for_user_with_view_order_button()
     }
 }
 echo '</div>'; // Close the main container for all tickets
+
+add_action('woocommerce_account_dashboard', 'display_upcoming_events_for_user_with_view_order_button');
+
+
 
 
 
