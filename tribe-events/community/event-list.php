@@ -360,20 +360,6 @@ document.querySelectorAll('.event-status-form select[name="event_status"]').forE
 
 
 <script>
-/**
- * This function removes all "Edit" links from the page. It targets <a> elements with the attribute rel="nofollow"
- * and checks if the text content of the link is exactly "Edit". If a match is found, the link is removed from the DOM.
- * This is particularly useful for dynamically generated content where certain actions need to be restricted or hidden
- * from the user interface without altering the server-side code or the original HTML source.
- */
-window.onload = function() {
-    var editLinks = document.querySelectorAll('a[rel="nofollow"]');
-    editLinks.forEach(function(link) {
-        if (link.textContent.trim() === 'Edit') {
-            link.parentNode.removeChild(link);
-        }
-    });
-};
 
 
 
