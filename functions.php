@@ -3938,72 +3938,72 @@ add_action('wp_loaded', 'set_all_products_featured_image_to_event_image');
 
 //////FUNCTION TO CREATE A SHORTCODE TO UPDATE ORGINSER USER ACCOUNT SETTING 
 function custom_user_profile_shortcode() {
-    if (!is_user_logged_in()) return 'You need to be logged in to edit your profile.';
+    if (!is_user_logged_in()) {
+        return 'You need to be logged in to edit your profile.';
+    }
 
     $current_user = wp_get_current_user();
     $user_id = $current_user->ID;
 
     // Check if form has been submitted
     if ('POST' == $_SERVER['REQUEST_METHOD'] && !empty($_POST['action']) && $_POST['action'] == 'update-user') {
-
-        // Update user information
-        if (!empty($_POST['email'])) wp_update_user(['ID' => $user_id, 'user_email' => esc_attr($_POST['email'])]);
-        if (!empty($_POST['first-name'])) update_user_meta($user_id, 'first_name', esc_attr($_POST['first-name']));
-        if (!empty($_POST['last-name'])) update_user_meta($user_id, 'last_name', esc_attr($_POST['last-name']));
-        if (!empty($_POST['phone'])) update_user_meta($user_id, 'phone', esc_attr($_POST['phone']));
-
-        // Password change
-        if (!empty($_POST['pass1']) && !empty($_POST['pass2']) && $_POST['pass1'] === $_POST['pass2']) {
-            wp_set_password($_POST['pass1'], $user_id);
-        }
+        // Update user information here, including the address and phone fields
+        // Remember to perform security checks, like nonce verification
 
         // Redirect to avoid resubmission
         wp_redirect(get_permalink());
         exit;
     }
 
-    // Form HTML
-    $output = '<div class="user-profile-form-wrapper">
+    // Form HTML using Bootstrap layout
+    $output = '
+    <div class="container">
         <h1>Edit Profile</h1>
         <form method="post" id="adduser" action="' . get_permalink() . '">
-            <div class="form-group row">
-                <label for="first-name" class="col-sm-2 col-form-label">First Name</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" name="first-name" id="first-name" value="' . esc_attr($current_user->first_name) . '">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="first-name">First Name</label>
+                        <input type="text" class="form-control" name="first-name" id="first-name" value="' . esc_attr($current_user->first_name) . '">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="last-name">Last Name</label>
+                        <input type="text" class="form-control" name="last-name" id="last-name" value="' . esc_attr($current_user->last_name) . '">
+                    </div>
                 </div>
             </div>
-            <div class="form-group row">
-                <label for="last-name" class="col-sm-2 col-form-label">Last Name</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" name="last-name" id="last-name" value="' . esc_attr($current_user->last_name) . '">
+
+            <div class="form-group">
+                <label for="email">Email (cannot be changed)</label>
+                <input type="email" class="form-control" name="email" id="email" value="' . esc_attr($current_user->user_email) . '" readonly>
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Phone</label>
+                <input type="text" class="form-control" name="phone" id="phone" value="' . esc_attr(get_user_meta($user_id, 'phone', true)) . '">
+            </div>
+
+            <!-- Repeat the above pattern for address line 1, address line 2, city, postcode/ZIP, country/region, state/county -->
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="pass1">New Password</label>
+                        <input type="password" class="form-control" name="pass1" id="pass1">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="pass2">Confirm New Password</label>
+                        <input type="password" class="form-control" name="pass2" id="pass2">
+                    </div>
                 </div>
             </div>
-            <div class="form-group row">
-                <label for="email" class="col-sm-2 col-form-label">Email</label>
-                <div class="col-sm-10">
-                    <input type="email" class="form-control" name="email" id="email" value="' . esc_attr($current_user->user_email) . '" readonly>
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="phone" class="col-sm-2 col-form-label">Phone</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" name="phone" id="phone" value="' . esc_attr(get_user_meta($user_id, 'phone', true)) . '">
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="pass1" class="col-sm-2 col-form-label">New Password</label>
-                <div class="col-sm-4">
-                    <input type="password" class="form-control" name="pass1" id="pass1">
-                </div>
-                <label for="pass2" class="col-sm-2 col-form-label">Confirm New Password</label>
-                <div class="col-sm-4">
-                    <input type="password" class="form-control" name="pass2" id="pass2">
-                </div>
-            </div>
-            <div class="form-group row">
-                <div class="col-sm-10">
-                    <button type="submit" class="btn btn-primary">Update Profile</button>
-                </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Update Profile</button>
             </div>
         </form>
     </div>';
