@@ -2990,38 +2990,41 @@ add_filter('woocommerce_account_menu_items', 'ticketfeasta_following_link_my_acc
 
 function ticketfeasta_following()
 {
-    $user_id = wp_get_current_user()->id;
+    $user_id = wp_get_current_user()->ID; // Fixed to use ->ID for consistency
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (isset($_POST['following_id'])) {
-            $organiser_to_unfollow = $_POST['following_id'];
+            $organiser_to_unfollow = sanitize_text_field($_POST['following_id']); // Ensure sanitization
             ticketfeasta_remove_follower($organiser_to_unfollow, $user_id);
             ticketfeasta_unfollow($organiser_to_unfollow, $user_id);
         }
     }
 
     echo '<h3>Following List:</h3>';
-    $user_id = wp_get_current_user()->id;
     $following_array = get_user_meta($user_id, 'following', true);
-    $following_array = json_decode($following_array, true);
-    if (json_last_error() !== JSON_ERROR_NONE) {
-        $following_array = array();
-    }
-    if (count($following_array) === 0) {
-        echo "<p class='empty-following'>You are not following anyone.</p>";
-    }
+    $following_array = json_decode($following_array, true) ?: []; // Simplify the check for JSON errors and fallback
 
-    foreach ($following_array as $following) {
-        $organiser_name = get_the_title($following);
-        ?>
-        <form method="POST">
-            <input type="hidden" name="following_id" value="<?php echo $following; ?>">
-            <label>
-                <?php echo $organiser_name; ?>
-            </label>
-            <input type="submit" value="<?php echo "Unfollow"; ?>" nanme="submit" class="unfollow-button">
-        </form>
-        <?php
+    if (empty($following_array)) {
+        echo "<p class='empty-following'>You are not following anyone.</p>";
+    } else {
+        foreach ($following_array as $following) {
+            $organiser_name = get_the_title($following);
+            $organiser_img_url = get_the_post_thumbnail_url($following, 'thumbnail'); // 'thumbnail' size can be changed as needed
+            ?>
+            <div class="organiser-following-item">
+                <form method="POST">
+                    <input type="hidden" name="following_id" value="<?php echo esc_attr($following); ?>">
+                    <div class="organiser-info">
+                        <?php if ($organiser_img_url): ?>
+                            <img src="<?php echo esc_url($organiser_img_url); ?>" alt="<?php echo esc_attr($organiser_name); ?>" class="organiser-thumbnail">
+                        <?php endif; ?>
+                        <label><?php echo esc_html($organiser_name); ?></label>
+                    </div>
+                    <input type="submit" value="Unfollow" name="submit" class="unfollow-button">
+                </form>
+            </div>
+            <?php
+        }
     }
 }
 
