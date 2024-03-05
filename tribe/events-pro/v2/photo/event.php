@@ -23,6 +23,27 @@ $trimmed_title = mb_strimwidth(get_the_title($event->ID), 0, 60, '...');
 ?>
 
 
+    <!-- Overlay Background -->
+    <div class="overlay" style="display: none;"></div>
+
+
+
+<?php
+
+$classes = get_post_class( [ 'tribe-common-g-col', 'tribe-events-pro-photo__event' ], $event->ID );
+if ( ! empty( $event->featured ) ) {
+    $classes[] = 'tribe-events-pro-photo__event--featured';
+}
+
+// Retrieve venue and organizer details
+$venue_id = tribe_get_venue_id($event->ID);
+$venue_name = tribe_get_venue($event->ID);
+$venue_city = tribe_get_city($event->ID);
+$organizer_ids = tribe_get_organizer_ids($event->ID);
+$organizer_names = array_map('tribe_get_organizer', $organizer_ids);
+?>
+<article <?php tribe_classes( $classes ) ?>>
+
 <div class="loading_svg_div">
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1366 768" xml:space="preserve">
         <style type="text/css">
@@ -44,26 +65,6 @@ $trimmed_title = mb_strimwidth(get_the_title($event->ID), 0, 60, '...');
 
 <div class="main_content_loading_div">
 
-    <!-- Overlay Background -->
-    <div class="overlay" style="display: none;"></div>
-
-
-
-<?php
-
-$classes = get_post_class( [ 'tribe-common-g-col', 'tribe-events-pro-photo__event' ], $event->ID );
-if ( ! empty( $event->featured ) ) {
-    $classes[] = 'tribe-events-pro-photo__event--featured';
-}
-
-// Retrieve venue and organizer details
-$venue_id = tribe_get_venue_id($event->ID);
-$venue_name = tribe_get_venue($event->ID);
-$venue_city = tribe_get_city($event->ID);
-$organizer_ids = tribe_get_organizer_ids($event->ID);
-$organizer_names = array_map('tribe_get_organizer', $organizer_ids);
-?>
-<article <?php tribe_classes( $classes ) ?>>
  <!-- Share Button -->
  <button class="share_btn">
   <i class="fas fa-share-alt"></i>
@@ -209,7 +210,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
-    
+
 // Make the entire event card clickable without affecting interactive elements like buttons and links
 document.addEventListener('DOMContentLoaded', function() {
     var articles = document.querySelectorAll('.tribe-events-pro-photo__event');
@@ -411,9 +412,9 @@ jQuery(document).ready(function($) {
     });
 });
 </script>
-
-</article>
 </div>
+</article>
+
 <style>
 
 /****LOADING  ANIMATION STYLES*****/
