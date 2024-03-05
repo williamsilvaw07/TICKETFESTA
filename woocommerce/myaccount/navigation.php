@@ -561,7 +561,15 @@ text-align: left;
     object-fit: cover; 
 }
 
-
+.organiser-following-item{
+    display: flex;
+    gap: 15px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: flex-start;
+    align-items: center;
+}
 
 
 /*********END */
