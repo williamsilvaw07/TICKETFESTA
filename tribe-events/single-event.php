@@ -374,7 +374,7 @@ $norefunds = get_post_meta($event_id, 'norefunds', true);
 
 
 <?php if ($allage === 'on'): ?>
-    <div class="all_age_div"><span class="14+_div_emoji">⚠️</span> <span class="14+_div_text">All Ages</span></div>
+    <div class="all_age_div"><span class="14+_div_emoji">👪</span> <span class="14+_div_text">All Ages</span></div>
 <?php endif; ?>
 
 <?php if ($over14 === 'on'): ?>
