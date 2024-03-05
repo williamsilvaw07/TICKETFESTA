@@ -3010,7 +3010,9 @@ function ticketfeasta_following() {
         foreach ($following_array as $following) {
             $organiser_name = get_the_title($following);
             $organiser_img_url = get_the_post_thumbnail_url($following, 'thumbnail');
-            $organiser_profile_link = get_author_posts_url(get_post_field('post_author', $following));
+            // Assuming 'organizer' is the slug for the custom post type of organizers
+            $organiser_profile_link = get_permalink($following); // This gets the link to the organizer's profile page if it's a custom post type
+
             ?>
             <div class="organiser-following-item">
                 <?php if ($organiser_img_url): ?>
@@ -3023,7 +3025,7 @@ function ticketfeasta_following() {
                             <input type="hidden" name="following_id" value="<?php echo esc_attr($following); ?>">
                             <input type="submit" value="Unfollow" name="submit" class="unfollow-button">
                         </form>
-                        <a href="<?php echo esc_url($organiser_profile_link); ?>" class="profile-link-button">Profile</a>
+                        <a href="<?php echo esc_url($organiser_profile_link); ?>" class="profile-link-button">Organizer Profile</a>
                     </div>
                 </div>
             </div>
