@@ -976,7 +976,7 @@ body .social_sharing_links{
 body .share_btn{
     z-index: 9; 
     background: white!important;
-    border-radius: 100px;
+    border-radius: 100px!important;
     width: 30px;
     height: 30px;
     color: black;
