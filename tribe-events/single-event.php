@@ -1951,7 +1951,7 @@ html .single-tribe_events .tribe-tickets__tickets-footer{
     width: 100%;
 }
 .btn_price_span {
-    font-size: 20px;
+    font-size: 19px;
     padding-left: 4px;
 }
 
