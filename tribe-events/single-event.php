@@ -1011,7 +1011,7 @@ jQuery(document).ready(function() {
 
 /***SHARE BUTTON*/
 .share_btn{
-    display: block;
+    display: block!important;
     z-index: 9;
 }
 .type-tribe_events {
