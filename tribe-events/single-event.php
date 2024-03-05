@@ -121,6 +121,11 @@ $cost  = tribe_get_formatted_cost( $event_id );
 
     <!-- Popup div for sharing link -->
 
+     <!-- Share Button -->
+ <button class="share_btn">
+  <i class="fas fa-share-alt"></i>
+</button>
+
     <div class="share_btn_event" style="display: none;">
     <button class="close_popup" aria-label="Close">&times;</button>
     <h3>Share with friends</h3>
