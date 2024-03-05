@@ -590,41 +590,45 @@ jQuery(document).ready(function(){
 
 
 
-///FUNCTION FOR MOBILE TICKET POPUP AND CALCUTATE THE LOWEST ANDD HIGHT PRICE RANGE AND IF ITS 0.00 SHOW FREE
+///FUNCTION FOR MOBILE TICKET POPUP AND CALCUTATE THE LOWEST ANDD HIGHT PRICE RANGE AND IF ITS 0.00 SHOW FREE, IF NO TICKET HIDE THE SECTION 
 
 jQuery(document).ready(function() {
 
 
+    
     let minPrice = Infinity;
     let maxPrice = 0;
+    let priceFound = false; // Flag to track if any valid price was found
 
     $('.tribe-tickets__tickets-item').each(function() {
         let price = parseFloat($(this).data('ticket-price'));
-        
-        if (price < minPrice) {
-            minPrice = price;
-        }
-        if (price > maxPrice) {
-            maxPrice = price;
+        if (!isNaN(price)) { // Check if price is a valid number
+            priceFound = true; // Valid price found
+            if (price < minPrice) {
+                minPrice = price;
+            }
+            if (price > maxPrice) {
+                maxPrice = price;
+            }
         }
     });
 
-    // Determine the price range or "Free" label
-    let priceText;
-    if (minPrice === 0 && maxPrice !== 0) {
-        // Scenario for "Free - £maxPrice"
-        priceText = 'Free - £' + maxPrice.toFixed(2);
-    } else if (minPrice === 0 && maxPrice === 0) {
-        // All tickets are free
-        priceText = 'Free';
+    // Determine the price range or "Free" label and update or hide price section
+    if (priceFound) {
+        let priceText;
+        if (minPrice === 0 && maxPrice !== 0) {
+            priceText = 'Free - £' + maxPrice.toFixed(2);
+        } else if (minPrice === 0 && maxPrice === 0) {
+            priceText = 'Free';
+        } else {
+            priceText = '£' + minPrice.toFixed(2) + ' - £' + maxPrice.toFixed(2);
+        }
+
+        $('.btn_price_span').text(priceText);
     } else {
-        // General case with min and max prices
-        priceText = '£' + minPrice.toFixed(2) + ' - £' + maxPrice.toFixed(2);
+        // Hide the price section if no valid prices found
+        $('.buttonticket_for_mobile').hide();
     }
-
-    $('.btn_price_span').text(priceText);
-
-
 
 
 
