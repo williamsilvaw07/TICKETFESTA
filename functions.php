@@ -1502,19 +1502,19 @@ function ajax_update_organizer_information()
     if($organizer_email && $organizer_email != 'example@website.com'){
         update_post_meta($organizer_id, '_OrganizerEmail', $organizer_email);
     }
-    // if($organizer_facebook && $organizer_facebook != 'http://www.facebook.com'){
+    // if($organizer_facebook && $organizer_facebook != 'http://facebook.com'){
     //     update_post_meta($organizer_id, 'organizer_facebook', $organizer_facebook);
     // }
 
-    // if($organizer_twitter && $organizer_twitter != 'http://www.twitter.com'){
+    // if($organizer_twitter && $organizer_twitter != 'http://twitter.com'){
     //     update_post_meta($organizer_id, 'organizer_twitter', $organizer_twitter);
     // }
 
-    // if($organizer_instagram && $organizer_instagram != 'http://www.instagram.com'){
+    // if($organizer_instagram && $organizer_instagram != 'http://instagram.com'){
     //     update_post_meta($organizer_id, 'organizer_instagram', $organizer_instagram);
     // }
     
-    var_dump($organizer_twitter);
+    var_dump($organizer_email);
     die();
 }
 

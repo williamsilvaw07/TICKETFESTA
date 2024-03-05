@@ -194,6 +194,10 @@ if ($banner_image_id) {
         <?php 
             $organizer_name        = esc_attr( tribe_get_organizer() ); 
             $organizer_id          = isset($_GET['id']) ? $_GET['id'] : ''; 
+            delete_post_meta($organizer_id, '_OrganizerEmail');
+            delete_post_meta($organizer_id, 'organizer_facebook');
+            delete_post_meta($organizer_id, 'organizer_instagram');
+
             $organizer_description = get_post_meta( $organizer_id, 'organizer_description', true ) ? get_post_meta( $organizer_id, 'organizer_description', true ) : ''; 
             $organizer_email       = get_post_meta( $organizer_id, '_OrganizerEmail', true ) ? get_post_meta( $organizer_id, '_OrganizerEmail', true ) : 'example@website.com'; 
             delete_post_meta($organizer_id, 'organizer_twitter');
