@@ -118,6 +118,44 @@ $cost  = tribe_get_formatted_cost( $event_id );
                 }
            ?>
 			<?php echo tribe_event_featured_image( $event_id, 'full', false ); ?>
+
+    <!-- Popup div for sharing link -->
+
+    <div class="share_btn_event" style="display: none;">
+    <button class="close_popup" aria-label="Close">&times;</button>
+    <h3>Share with friends</h3>
+    <div class="social_sharing_links">
+        <!-- Facebook -->
+        <a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo urlencode(esc_url( tribe_get_event_link($event) )); ?>" target="_blank" aria-label="Share on Facebook">
+            <i class="fab fa-facebook-f"></i>
+        </a>
+        <!-- Twitter -->
+        <a href="https://twitter.com/intent/tweet?url=<?php echo urlencode(esc_url( tribe_get_event_link($event) )); ?>&text=Check%20out%20this%20event!" target="_blank" aria-label="Share on Twitter">
+            <i class="fab fa-twitter"></i>
+        </a>
+        <!-- Messenger -->
+        <a href="fb-messenger://share?link=<?php echo urlencode(esc_url( tribe_get_event_link($event) )); ?>" target="_blank" aria-label="Share on Messenger">
+            <i class="fab fa-facebook-messenger"></i>
+        </a>
+        <!-- WhatsApp -->
+        <a href="https://wa.me/?text=<?php echo urlencode(esc_url( tribe_get_event_link($event) )); ?>" target="_blank" aria-label="Share on WhatsApp">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+    </div>
+    <div class="share_event_url">
+        <span class="share_popup_box_title">Event URL</span>
+        <div class="share_event_url_inner">
+            <span class="eventUrl"><?php echo esc_url( tribe_get_event_link($event) ); ?></span>
+            <button class="copyButton" aria-label="Copy URL">
+                <i class="fas fa-copy"></i>
+            </button>
+        </div>
+    </div>
+    <span class="copyMessage" style="display: none;">Link copied!</span>
+</div>
+
+
+
 <!-- Event featured image, END -->
       </div>
 
