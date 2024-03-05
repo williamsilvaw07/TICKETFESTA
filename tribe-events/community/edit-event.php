@@ -208,11 +208,8 @@ $event_url = esc_attr($event_url);
 
 
         <?php
-// At the top of your edit-event.php, assuming you're inside the WordPress loop or have the $event_id variable set
 $event_description = get_post_meta($event_id, 'event_description', true);
 ?>
-
-<!-- The rest of your HTML form -->
 
 <!-- Quill Editor for Event Description -->
 <div id="quill-editor" style="height: 200px;"></div>
@@ -237,19 +234,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Load existing content into the editor
     var eventDescriptionValue = document.getElementById('event_description').value;
-    if (eventDescriptionValue.includes('<img')) {
-        // If the event description contains images, set them properly
-        var tempDiv = document.createElement('div');
-        tempDiv.innerHTML = eventDescriptionValue;
-        var images = tempDiv.getElementsByTagName('img');
-        for (var i = 0; i < images.length; i++) {
-            var imgSrc = images[i].getAttribute('src');
-            images[i].setAttribute('src', 'data:image/jpeg;base64,' + imgSrc);
-        }
-        quill.root.innerHTML = tempDiv.innerHTML;
-    } else {
-        quill.root.innerHTML = eventDescriptionValue;
-    }
+    quill.root.innerHTML = eventDescriptionValue;
 
     // Save content back to the hidden input on form submit
     var form = document.querySelector('form'); // Ensure this selector targets your actual form
@@ -258,6 +243,8 @@ document.addEventListener('DOMContentLoaded', function () {
     };
 });
 </script>
+
+
 
 
 

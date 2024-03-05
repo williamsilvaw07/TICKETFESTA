@@ -2622,35 +2622,12 @@ add_action('save_post_tribe_events', 'save_event_extra_options', 10, 3);
 function save_event_description($post_id) {
     // Check if the custom field 'event_description' is set in the submitted form
     if (isset($_POST['event_description'])) {
-        // Define allowed HTML tags and attributes for sanitization
-        $allowed_tags = array(
-            'a' => array(
-                'href' => array(),
-                'title' => array(),
-                'target' => array(),
-            ),
-            'br' => array(),
-            'em' => array(),
-            'strong' => array(),
-            'p' => array(),
-            'img' => array( // Allow img tags and define allowed attributes
-                'src' => array(),
-                'alt' => array(),
-                'class' => array(),
-                'width' => array(),
-                'height' => array(),
-            ),
-            // Add any other tags and attributes as needed
-        );
-
-        // Sanitize the submitted event description
-        $event_description = wp_kses($_POST['event_description'], $allowed_tags);
-
-        // Save/Update the sanitized event description in the post meta
+        // Sanitize and save the event description
+        $event_description = wp_kses_post($_POST['event_description']);
         update_post_meta($post_id, 'event_description', $event_description);
     }
 }
-add_action('save_post', 'save_event_description'); // Hook into save_post to save custom field data
+add_action('save_post', 'save_event_description');
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
