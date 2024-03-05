@@ -571,13 +571,21 @@ jQuery(document).ready(function($) {
 
 
 
+//Function if the ticket price is 00.00 then show the text free
 
 jQuery(document).ready(function(){
     $('.tribe-tickets__tickets-item').each(function() {
         var price = $(this).find('.tribe-amount').text();
         if (price === '0.00') {
-            $(this).find('.tribe-tickets__tickets-sale-price').text('Free');
+            $(this).find('.tribe-tickets__tickets-sale-price').html('<span class="free-text">Free</span>');
         }
+    });
+
+    // Apply CSS styles directly to the "Free" text
+    $('.free-text').css({
+        'color': '#d3fa16',
+        'font-size': '22px',
+        'font-weight': '600'
     });
 });
 
