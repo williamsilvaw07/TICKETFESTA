@@ -551,7 +551,9 @@ text-align: left;
 
 
 /****FOLLOWING PAGE  */
-
+h2{
+    font-weight: 700;
+}
 .organiser-following-item img{
     border: 2px solid white;
     border-radius: 100px;
