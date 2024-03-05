@@ -589,9 +589,10 @@ text-align: left;
     color: black!important;
     background-color: #fff;
     border-radius: 4px;
-    padding: 5px 10px;
+    padding: 5px 10px!important;
     font-size: 14px;
     text-transform: capitalize;
+    text-decoration: none;
 }
 
 
