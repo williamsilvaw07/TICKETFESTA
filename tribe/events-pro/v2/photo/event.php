@@ -49,7 +49,8 @@ $organizer_names = array_map('tribe_get_organizer', $organizer_ids);
     <?php endif; ?>
 
     <!-- Overlay Background -->
-    <div class="overlay" style="display: none;"></div>
+    <div class="custom-overlay"></div>
+
 
     <!-- Popup div for sharing link -->
 
@@ -231,46 +232,35 @@ jQuery(document).ready(function($) {
    
 
 
-
-   // Show the popup and overlay when the share button is clicked
-   $('.share_btn').click(function(event) {
-        event.preventDefault(); // Prevent the default action
-        // Show the overlay
-        $('.custom-overlay').fadeIn();
-        // Show the popup
-        $(this).nextAll('.share_btn_event').first().fadeIn().css({
+ // Show the popup and overlay when the share button is clicked
+ $('.share_btn').on('click', function(event) {
+        event.preventDefault();
+        $('.custom-overlay').fadeIn(); // Show the custom overlay
+        $('.share_btn_event').fadeIn().css({
             'position': 'fixed',
             'top': '50%',
             'left': '50%',
             'transform': 'translate(-50%, -50%)',
-            'z-index': '1002' // Ensure this is above the overlay
+            'z-index': '1001' // Make sure this is above the overlay z-index
         });
-        // Prevent clicks within the popup from closing it
-        $('.share_btn_event').click(function(event) {
-            event.stopPropagation();
-        });
+        event.stopPropagation(); // Prevent the event from bubbling up to the document
     });
 
-    // Close the popup and overlay when the close button is clicked
-    $('.close_popup').click(function() {
-        $('.share_btn_event').fadeOut(); // Hide the share button event popup
-        $('.custom-overlay').fadeOut(); // Hide the custom overlay
+    // Close the popup and hide the overlay when clicking the close button
+    $('.close_popup').on('click', function() {
+        $('.share_btn_event, .custom-overlay').fadeOut(); // Hide both the popup and the overlay
     });
 
-    // Listen for clicks on the document
-    $(document).click(function(event) {
-        // If the clicked element is not the popup nor a descendant of the popup and not the share button
-        if (!$(event.target).closest('.share_btn_event').length && !$(event.target).is('.share_btn')) {
-            // Hide the popup and the overlay
-            $('.share_btn_event').fadeOut();
-            $('.custom-overlay').fadeOut();
+    // Close the popup and hide the overlay when clicking outside
+    $(document).on('click', function(event) {
+        if (!$(event.target).closest('.share_btn_event, .share_btn').length) {
+            $('.share_btn_event, .custom-overlay').fadeOut(); // Hide both the popup and the overlay
         }
     });
 
-    // Also close the popup and overlay when clicking on the overlay
-    $('.custom-overlay').click(function() {
-        $('.share_btn_event').fadeOut();
-        $(this).fadeOut();
+    // Prevent the popup from closing when clicking inside it
+    $('.share_btn_event').on('click', function(event) {
+        event.stopPropagation();
     });
     // The section for copying the URL has been removed
 
@@ -463,19 +453,17 @@ body .share_btn{
     height: 30px;
 }
 
-.overlay {
-
+.custom-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     display: none;
-    z-index: 1000;
-    
-    /* Overlay blur - this could be adjusted if you want the background content to be blurred as well */
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(5px); /* For Safari */
+    background-color: rgba(0, 0, 0, 0.5); /* Dark overlay */
+    z-index: 1000; /* Ensure this is below the popup z-index to keep the popup above the overlay */
 }
 
 
