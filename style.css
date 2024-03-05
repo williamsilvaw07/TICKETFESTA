@@ -980,6 +980,7 @@ body .share_btn{
     width: 30px;
     height: 30px;
     color: black;
+    padding: inherit;
 }
 
 .overlay {
