@@ -245,9 +245,12 @@ jQuery(document).ready(function($) {
 
     jQuery('.events-community-submit').click(function(event) {
         if (jQuery('#event_tribe_organizer').hasClass('required')) {
-            // Append error message to .tribe-community-notice-error
-            jQuery('.tribe-community-notice-error').append('<p>Organizer is required</p>');
+            setTimeout(function() {
+                // Append error message to .tribe-community-notice-error
+                jQuery('.tribe-community-notice-error').append('<p>Organizer is required</p>');
+            }, 500); 
         }
+        
         if (jQuery('#trive-select-event-images').hasClass('required')) { console.log('vanue '); 
             setTimeout(function() {
                 jQuery('.tribe-community-notice-error').append('<p>Image is required</p>');
