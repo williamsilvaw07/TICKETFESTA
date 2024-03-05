@@ -2619,31 +2619,7 @@ add_action('save_post_tribe_events', 'save_event_extra_options', 10, 3);
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////END////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// Add a filter to modify content before saving, if needed
-function my_custom_image_handling($content) {
-    // Custom handling or filtering of image src or other attributes here
-    // For example, adjusting image paths or adding default attributes
-    return $content; // Make sure to return the modified content
-}
-add_filter('the_content', 'my_custom_image_handling');
-
-// Save the event description, ensuring to do all necessary security and sanity checks
 function save_event_description($post_id) {
-    // Security check - Verify nonce
-    if (!isset($_POST['your_nonce_field']) || !wp_verify_nonce($_POST['your_nonce_field'], 'your_action')) {
-        return;
-    }
-
-    // Permission check - Ensure user has permission to edit the post
-    if (!current_user_can('edit_post', $post_id)) {
-        return;
-    }
-
-    // Ensure this is the correct post type if necessary
-    if (get_post_type($post_id) !== 'your_custom_post_type') {
-        return; // Replace 'your_custom_post_type' with your actual post type
-    }
-
     // Check if the custom field 'event_description' is set in the submitted form
     if (isset($_POST['event_description'])) {
         // Define allowed HTML tags and attributes for sanitization
@@ -2675,7 +2651,6 @@ function save_event_description($post_id) {
     }
 }
 add_action('save_post', 'save_event_description'); // Hook into save_post to save custom field data
-?>
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
