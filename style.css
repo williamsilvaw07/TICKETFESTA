@@ -619,6 +619,9 @@ a.tribe-button.tribe-button-primary.add-new , .organizers_add_new_btn{
     font-weight: 400!important;
 
 }
+.tribe-community-events .tribe-community-notice-error p:last-child {
+    display: block!important;
+}
 /*****END******/
 
 
