@@ -1959,6 +1959,10 @@ html .single-tribe_events .tribe-tickets__tickets-footer{
 .event-tickets .tribe-tickets__tickets-item{
     gap: 5px;
 }
+.event-tickets .tribe-tickets__tickets-item-quantity {
+    gap: 7px;
+    margin-top: 10px;
+}
 }
 
 
