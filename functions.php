@@ -2988,13 +2988,12 @@ add_filter('woocommerce_account_menu_items', 'ticketfeasta_following_link_my_acc
 // ------------------
 // 4. Add content to the new tab
 
-function ticketfeasta_following()
-{
-    $user_id = wp_get_current_user()->ID; // Fixed to use ->ID for consistency
+function ticketfeasta_following() {
+    $user_id = wp_get_current_user()->ID;
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (isset($_POST['following_id'])) {
-            $organiser_to_unfollow = sanitize_text_field($_POST['following_id']); // Ensure sanitization
+            $organiser_to_unfollow = sanitize_text_field($_POST['following_id']);
             ticketfeasta_remove_follower($organiser_to_unfollow, $user_id);
             ticketfeasta_unfollow($organiser_to_unfollow, $user_id);
         }
@@ -3002,26 +3001,32 @@ function ticketfeasta_following()
 
     echo '<h3>Following List:</h3>';
     $following_array = get_user_meta($user_id, 'following', true);
-    $following_array = json_decode($following_array, true) ?: []; // Simplify the check for JSON errors and fallback
+    $following_array = json_decode($following_array, true) ?: [];
 
     if (empty($following_array)) {
         echo "<p class='empty-following'>You are not following anyone.</p>";
     } else {
         foreach ($following_array as $following) {
             $organiser_name = get_the_title($following);
-            $organiser_img_url = get_the_post_thumbnail_url($following, 'thumbnail'); // 'thumbnail' size can be changed as needed
+            $organiser_img_url = get_the_post_thumbnail_url($following, 'thumbnail');
+            $organiser_profile_link = get_author_posts_url(get_post_field('post_author', $following));
             ?>
-            <div class="organiser-following-item">
-                <form method="POST">
-                    <input type="hidden" name="following_id" value="<?php echo esc_attr($following); ?>">
-                    <div class="organiser-info">
-                        <?php if ($organiser_img_url): ?>
-                            <img src="<?php echo esc_url($organiser_img_url); ?>" alt="<?php echo esc_attr($organiser_name); ?>" class="organiser-thumbnail">
-                        <?php endif; ?>
-                        <label><?php echo esc_html($organiser_name); ?></label>
+            <div class="organiser-following-item" style="margin-bottom: 20px; border: 1px solid #ccc; padding: 10px; border-radius: 5px;">
+                <div class="organiser-info" style="display: flex; align-items: center;">
+                    <?php if ($organiser_img_url): ?>
+                        <img src="<?php echo esc_url($organiser_img_url); ?>" alt="<?php echo esc_attr($organiser_name); ?>" class="organiser-thumbnail" style="width: 50px; height: 50px; border-radius: 50%; margin-right: 15px;">
+                    <?php endif; ?>
+                    <div style="flex-grow: 1;">
+                        <strong><?php echo esc_html($organiser_name); ?></strong>
                     </div>
-                    <input type="submit" value="Unfollow" name="submit" class="unfollow-button">
-                </form>
+                    <div style="text-align: right;">
+                        <form method="POST" style="display: inline-block;">
+                            <input type="hidden" name="following_id" value="<?php echo esc_attr($following); ?>">
+                            <input type="submit" value="Unfollow" name="submit" class="unfollow-button" style="cursor: pointer; margin-right: 10px;">
+                        </form>
+                        <a href="<?php echo esc_url($organiser_profile_link); ?>" class="profile-link-button" style="cursor: pointer; background-color: #007bff; color: white; padding: 5px 10px; border-radius: 5px; text-decoration: none;">Profile</a>
+                    </div>
+                </div>
             </div>
             <?php
         }
