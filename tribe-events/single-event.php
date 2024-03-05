@@ -589,9 +589,8 @@ if (!empty($sponsor_logos_ids)) : ?>
 
 //FUNCTION TO SHOW LOADING EFFECT AND WHEN JS IS FULLY LOADED  HIDE AND SHOW CONTENT
 document.addEventListener("DOMContentLoaded", function() {
-        // This function is called when the document is fully loaded.
-        // It's a good place to hide the loader and show the main content.
-        showMainContent();
+        // Wait for 500 milliseconds after the document is fully loaded before showing main content
+        setTimeout(showMainContent, 500);
     });
 
     function showMainContent() {
