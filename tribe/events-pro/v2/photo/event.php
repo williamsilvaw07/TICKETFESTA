@@ -228,8 +228,14 @@ jQuery(document).ready(function($) {
 
 
     jQuery(document).ready(function($) {
-    // Show the popup when the share button is clicked
-    $('.share_btn').click(function() {
+   
+
+
+
+         // Show the popup when the share button is clicked
+    $('.share_btn').click(function(event) {
+        event.preventDefault(); // Prevent the default action
+
         $('.overlay').show();
         $(this).nextAll('.share_btn_event').first().show().css({
             'position': 'fixed',
