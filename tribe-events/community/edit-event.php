@@ -935,7 +935,7 @@ jQuery(document).ready(function($) {
 }
 
 .tribe-community-events .tribe-community-notice{
-    background-color: rgb(26, 26, 26);
+    background-color: rgb(26, 26, 26)!important;
 }
 
 
