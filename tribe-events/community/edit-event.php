@@ -934,7 +934,7 @@ jQuery(document).ready(function($) {
     font-weight: 700!important;
 }
 
-.tribe-community-events .tribe-community-notice {
+html .tribe-community-notice {
     background-color: rgb(26, 26, 26)!important;
 }
 
