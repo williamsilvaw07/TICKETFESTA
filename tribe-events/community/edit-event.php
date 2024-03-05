@@ -207,13 +207,9 @@ $event_url = esc_attr($event_url);
 
 
 
-<!-- Include stylesheet -->
-<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 
-<!-- Include the Quill library -->
-<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 
-<?php
+        <?php
 // Assuming $event_id is defined and contains the ID of the event being edited.
 $event_description = get_post_meta($event_id, 'event_description', true);
 ?>
@@ -227,15 +223,52 @@ $event_description = get_post_meta($event_id, 'event_description', true);
 </div>
 
 <script>
+// Function to handle image uploads
+function imageHandler() {
+    var input = document.createElement('input');
+    input.setAttribute('type', 'file');
+    input.click();
+
+    input.onchange = function() {
+        var file = input.files[0];
+        var formData = new FormData();
+        formData.append('image', file);
+        
+        fetch('path_to_your_image_upload_handler.php', {
+            method: 'POST',
+            body: formData,
+        })
+        .then(response => response.json())
+        .then(result => {
+            if(result.success && result.file_path) {
+                var range = quill.getSelection();
+                quill.insertEmbed(range.index, 'image', result.file_path);
+            } else {
+                console.error('Upload failed:', result.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    };
+}
+
 document.addEventListener('DOMContentLoaded', function() {
+    var toolbarOptions = [
+        ['bold', 'italic', 'underline', 'strike'],
+        ['image', 'video'], // Ensure 'video' is included here if you want that functionality
+        // other toolbar options
+    ];
+
     var quill = new Quill('#quill-editor', {
         theme: 'snow',
         modules: {
-            toolbar: [
-    [{ header: [1, 2, false] }],
-    ['bold', 'italic', 'underline'],
-    ['image', 'video'] // Ensure 'video' is included here if you want that functionality
-]
+            toolbar: {
+                container: toolbarOptions,
+                handlers: {
+                    'image': imageHandler
+                }
+            }
         }
     });
 
