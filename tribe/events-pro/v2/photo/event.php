@@ -19,6 +19,11 @@
  // Trim the event title here before displaying it
 $trimmed_title = mb_strimwidth(get_the_title($event->ID), 0, 60, '...');
 
+?>
+    <!-- Overlay Background -->
+    <div class="custom-overlay"></div>
+
+<?php
 
 
 $classes = get_post_class( [ 'tribe-common-g-col', 'tribe-events-pro-photo__event' ], $event->ID );
@@ -48,8 +53,7 @@ $organizer_names = array_map('tribe_get_organizer', $organizer_ids);
         </div>
     <?php endif; ?>
 
-    <!-- Overlay Background -->
-    <div class="custom-overlay"></div>
+
 
 
     <!-- Popup div for sharing link -->
