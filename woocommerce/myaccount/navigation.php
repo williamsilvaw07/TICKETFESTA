@@ -593,9 +593,16 @@ text-align: left;
     font-size: 14px;
     text-transform: capitalize;
     text-decoration: none;
+    display: block;
+    width: fit-content;
+    line-height: 24px;
 }
 
-
+.organiser-actions{
+    display: flex;
+    gap: 14px;
+    margin-top: 10px; 
+}
 
 
 
