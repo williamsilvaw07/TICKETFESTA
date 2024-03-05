@@ -608,14 +608,20 @@ jQuery(document).ready(function() {
         }
     });
 
-    // Check if the lowest price is 0 to display "Free"
-    if (minPrice === 0) {
-        $('.btn_price_span').text('Free');
+    // Determine the price range or "Free" label
+    let priceText;
+    if (minPrice === 0 && maxPrice !== 0) {
+        // Scenario for "Free - £maxPrice"
+        priceText = 'Free - £' + maxPrice.toFixed(2);
+    } else if (minPrice === 0 && maxPrice === 0) {
+        // All tickets are free
+        priceText = 'Free';
     } else {
-        // Otherwise, show the price range, including the case where min and max are the same (only one price)
-        let priceRangeText = minPrice === maxPrice ? '£' + minPrice.toFixed(2) : '£' + minPrice.toFixed(2) + ' - £' + maxPrice.toFixed(2);
-        $('.btn_price_span').text(priceRangeText);
+        // General case with min and max prices
+        priceText = '£' + minPrice.toFixed(2) + ' - £' + maxPrice.toFixed(2);
     }
+
+    $('.btn_price_span').text(priceText);
 
 
 
