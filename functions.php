@@ -1499,7 +1499,7 @@ function ajax_update_organizer_information()
     if($organizer_description){
         update_post_meta($organizer_id, 'organizer_description', $organizer_description);
     }
-    if($organizer_email){
+    if($organizer_email && $organizer_email != 'example@website.com'){
         update_post_meta($organizer_id, '_OrganizerEmail', $organizer_email);
     }
 
