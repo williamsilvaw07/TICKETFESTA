@@ -112,6 +112,13 @@ if (!defined('ABSPATH')) {
 
         <script>
 
+
+
+
+
+
+
+
             ////FUNCTION FO RTHE M=SIDE BAR MENU CLICK AND SHOW SUBMENU 
             document.querySelectorAll('.admin_dashboard-has-submenu > a').forEach(function (anchor) {
                 anchor.addEventListener('click', function (event) {
