@@ -207,88 +207,44 @@ $event_url = esc_attr($event_url);
 
 
 
-
-
         <?php
-// Assuming $event_id is defined and contains the ID of the event being edited.
+// At the top of your edit-event.php, assuming you're inside the WordPress loop or have the $event_id variable set
 $event_description = get_post_meta($event_id, 'event_description', true);
 ?>
 
-<!-- extra options section -->
-<div class="event_decp_div hover_section extra_options_section">
-    <h2>Event Description</h2>
-    <!-- Create the editor container -->
-    <div id="quill-editor" style="height: 200px;"></div>
-    <input type="hidden" name="event_description" id="event_description">
-</div>
+<!-- The rest of your HTML form -->
+
+<!-- Quill Editor for Event Description -->
+<div id="quill-editor" style="height: 200px;"></div>
+<input type="hidden" name="event_description" id="event_description" value="<?php echo esc_attr($event_description); ?>">
+
+<!-- Include Quill JS library -->
+<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 
 <script>
-// Function to handle image uploads
-function imageHandler() {
-    var input = document.createElement('input');
-    input.setAttribute('type', 'file');
-    input.click();
-
-    input.onchange = function() {
-        var file = input.files[0];
-        var formData = new FormData();
-        formData.append('image', file);
-        
-        fetch('path_to_your_image_upload_handler.php', {
-            method: 'POST',
-            body: formData,
-        })
-        .then(response => response.json())
-        .then(result => {
-            if(result.success && result.file_path) {
-                var range = quill.getSelection();
-                quill.insertEmbed(range.index, 'image', result.file_path);
-            } else {
-                console.error('Upload failed:', result.message);
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-    };
-}
-
-document.addEventListener('DOMContentLoaded', function() {
-    var toolbarOptions = [
-        ['bold', 'italic', 'underline', 'strike'],
-        ['image', 'video'], // Ensure 'video' is included here if you want that functionality
-        // other toolbar options
-    ];
-
+document.addEventListener('DOMContentLoaded', function () {
     var quill = new Quill('#quill-editor', {
         theme: 'snow',
         modules: {
-            toolbar: {
-                container: toolbarOptions,
-                handlers: {
-                    'image': imageHandler
-                }
-            }
+            toolbar: [
+                ['bold', 'italic', 'underline'],
+                [{'list': 'ordered'}, {'list': 'bullet'}],
+                ['link', 'image']
+            ]
         }
     });
 
-    // Decode and set the content
-    <?php if ($event_description): ?>
-    quill.root.innerHTML = <?php echo json_encode($event_description); ?>;
-    <?php endif; ?>
+    // Load existing content into the editor
+    quill.root.innerHTML = document.getElementById('event_description').value;
 
-    // Ensure the content of the Quill editor is saved
-    var form = document.querySelector('form');
+    // Save content back to the hidden input on form submit
+    var form = document.querySelector('form'); // Ensure this selector targets your actual form
     form.onsubmit = function() {
-        var eventDescriptionInput = document.querySelector('input[name="event_description"]');
-        eventDescriptionInput.value = quill.root.innerHTML;
+        document.getElementById('event_description').value = quill.root.innerHTML;
     };
 });
 </script>
-
-
-
-
 
 
 

@@ -352,12 +352,11 @@ if (!empty($agendas) && is_array($agendas)) {
 }
 ?>
 
-
-<!-- Event ABOUT FULL DECP -->
 <?php
-// In single-event.php
+// Assuming $event_id is defined and contains the ID of the event being edited
 $event_description = get_post_meta($event_id, 'event_description', true);
 
+// Allowed HTML tags for output
 $allowed_html = array(
     'a' => array(
         'href' => array(),
@@ -367,36 +366,19 @@ $allowed_html = array(
     'br' => array(),
     'em' => array(),
     'strong' => array(),
+    'p' => array(),
     'img' => array(
         'src' => array(),
         'alt' => array(),
-        'width' => array(),
-        'height' => array(),
         'class' => array(),
-    ),
-    'iframe' => array(
-        'src' => array(),
         'width' => array(),
         'height' => array(),
-        'frameborder' => array(),
-        'allowfullscreen' => array(),
     ),
-    'video' => array(
-        'controls' => array(),
-    ),
-    'source' => array(
-        'src' => array(),
-        'type' => array(),
-    ),
+    // Add additional allowed tags as needed
 );
 
 echo wp_kses($event_description, $allowed_html);
-
 ?>
-
-<div class="single_event_page_description">
-    <?php echo wp_kses_post($event_description); ?>
-</div>
 
 
 
