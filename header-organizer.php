@@ -117,11 +117,15 @@ if (!defined('ABSPATH')) {
 
 jQuery$(document).ready(function() {
     $('.tribe-community-notice p').each(function() {
-        $(this).html($(this).html().replace(/[(),|]/g, ''));
+        var originalText = $(this).html();
+        console.log("Original Text: " + originalText); // Log original text
+
+        var modifiedText = originalText.replace(/[(),|]/g, '');
+        console.log("Modified Text: " + modifiedText); // Log modified text
+
+        $(this).html(modifiedText);
     });
 });
-
-
 
 
 
