@@ -581,11 +581,9 @@ jQuery(document).ready(function(){
         }
     });
 
-    // Apply CSS styles directly to the "Free" text
-    $('.free-text').css({
-        'color': '#d3fa16',
-        'font-size': '22px',
-        'font-weight': '600'
+    // Apply CSS styles with !important to the "Free" text
+    $('.free-text').each(function(){
+        $(this).attr('style', 'color: #d3fa16 !important; font-size: 22px !important; font-weight: 600 !important;');
     });
 });
 
