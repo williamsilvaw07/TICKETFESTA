@@ -609,7 +609,10 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
             <?php echo $organizer_description ?>
         </div>
         <?php if($organizer_email){ ?>
-            <p class="organizer_email"> <?php echo $organizer_email ;?> </p>
+            <p class="organizer_email"> 
+                <i class="fa fa-envelope" aria-hidden="true"></i> 
+                <?php echo $organizer_email ;?> 
+            </p>
         <?php } ?>
         <span class="social_icons_organizers">
             <?php if($organizer_facebook){ ?>
