@@ -602,7 +602,7 @@ a.tribe-button.tribe-button-primary.add-new , .organizers_add_new_btn{
 }
 .tribe-community-events .tribe-community-notice p{
     color: #d3fa16 !important;
-    font-size: 20px!important;
+    font-size: 17px!important;
     font-weight: 700!important;
 }
 .tribe-community-events .tribe-community-notice p:last-child{
@@ -610,10 +610,7 @@ a.tribe-button.tribe-button-primary.add-new , .organizers_add_new_btn{
 }
 .tribe-community-events .tribe-community-notice a{
     font-size: 12px;
-    padding: 5px 15px !important;
-    background: #d5d5d5;
-    border-radius: 4px;
-    color: black;
+    color: rgb(255, 255, 255);
     font-weight: 500!important;
 }
 
