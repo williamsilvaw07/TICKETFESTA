@@ -205,6 +205,48 @@ $event_url = esc_attr($event_url);
 
 
 
+
+
+<!-- Include stylesheet -->
+<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+
+<!-- Include the Quill library -->
+<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+
+
+ <!-- extra options section -->
+<div class="event_decp_div hover_section extra_options_section">
+    <h2>Event description</h2>
+    <!-- Create an editor container -->
+    <div id="quill-editor" style="height: 200px;"></div>
+</div>
+
+
+<script>
+  var quill = new Quill('#quill-editor', {
+    theme: 'snow', // Specify theme in configuration
+    modules: {
+        toolbar: [
+            [{ header: [1, 2, false] }],
+            ['bold', 'italic', 'underline'],
+            ['image', 'video'] // Include image and video options
+        ]
+    }
+  });
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
         <!-- extra options section -->
         <div class="event_decp_div hover_section extra_options_section">
             <h2>Event Extra Information</h2>
@@ -220,7 +262,7 @@ $event_url = esc_attr($event_url);
                         <label for="allage">Is the event for All Ages?</label>
                         </div>
 
-                        
+
                         <div class="admin_event_extra_info_input">
                         <input type="checkbox" id="over14" name="over14" <?php checked(get_post_meta($event_id, 'over14', true), 'on'); ?> />
                         <label for="over14">Is the event for over 14 years old?</label>
