@@ -236,7 +236,20 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // Load existing content into the editor
-    quill.root.innerHTML = document.getElementById('event_description').value;
+    var eventDescriptionValue = document.getElementById('event_description').value;
+    if (eventDescriptionValue.includes('<img')) {
+        // If the event description contains images, set them properly
+        var tempDiv = document.createElement('div');
+        tempDiv.innerHTML = eventDescriptionValue;
+        var images = tempDiv.getElementsByTagName('img');
+        for (var i = 0; i < images.length; i++) {
+            var imgSrc = images[i].getAttribute('src');
+            images[i].setAttribute('src', 'data:image/jpeg;base64,' + imgSrc);
+        }
+        quill.root.innerHTML = tempDiv.innerHTML;
+    } else {
+        quill.root.innerHTML = eventDescriptionValue;
+    }
 
     // Save content back to the hidden input on form submit
     var form = document.querySelector('form'); // Ensure this selector targets your actual form

@@ -352,6 +352,14 @@ if (!empty($agendas) && is_array($agendas)) {
 }
 ?>
 
+
+
+
+
+
+
+
+<!-- Event ABOUT FULL DECP -->
 <?php
 // Assuming $event_id is defined and contains the ID of the event being edited
 $event_description = get_post_meta($event_id, 'event_description', true);
@@ -379,6 +387,12 @@ $allowed_html = array(
 
 echo wp_kses($event_description, $allowed_html);
 ?>
+
+
+<div class="single_event_page_description">
+    <?php echo wp_kses_post($event_description); ?>
+</div>
+
 
 
 
