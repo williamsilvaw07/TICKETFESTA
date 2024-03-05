@@ -1002,6 +1002,65 @@ jQuery(document).ready(function() {
 
 
 
+
+
+
+////SHARE BTUTOTN FUNCTION 
+
+
+
+
+
+jQuery(document).ready(function($) {
+    // Show the popup when the share button is clicked
+    $('.share_btn').click(function() {
+        $('.overlay').show();
+        $(this).nextAll('.share_btn_event').first().show().css({
+            'position': 'fixed',
+            'top': '50%',
+            'left': '50%',
+            'transform': 'translate(-50%, -50%)',
+            'z-index': '1001'
+        });
+    });
+
+    // Close the popup and hide the overlay when the close button is clicked
+    $('.close_popup').click(function() {
+        $('.share_btn_event').hide();
+        $('.overlay').hide();
+    });
+
+    // Also close the popup and hide the overlay when clicking outside of the popup (on the overlay)
+    $(document).on('click', '.overlay', function() {
+        $('.share_btn_event').hide();
+        $('.overlay').hide();
+    });
+
+    // The section for copying the URL has been removed
+
+
+
+    
+
+  // Copy to clipboard functionality
+  $(document).ready(function() { // Ensure the DOM is fully loaded
+    $(document).on('click', '.copyButton', function() {
+        var eventUrlText = $(this).siblings('.eventUrl').text();
+        var $button = $(this); // Reference to the clicked button
+
+        navigator.clipboard.writeText(eventUrlText).then(function() {
+            // Attempt to display the message directly without relying on siblings, for troubleshooting
+            $('.copyMessage').text('Link copied!').css('display', 'block').delay(3000).fadeOut(400);
+        }).catch(function(error) {
+            console.error('Error copying text:', error);
+        });
+    });
+});
+
+})
+
+
+
     </script>
 
 
