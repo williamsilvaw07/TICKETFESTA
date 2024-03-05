@@ -211,16 +211,9 @@ $event_url = esc_attr($event_url);
 // At the top of your edit-event.php, assuming you're inside the WordPress loop or have the $event_id variable set
 $event_description = get_post_meta($event_id, 'event_description', true);
 ?>
-
-<!-- The rest of your HTML form -->
-
 <!-- Quill Editor for Event Description -->
 <div id="quill-editor" style="height: 200px;"></div>
 <input type="hidden" name="event_description" id="event_description" value="<?php echo esc_attr($event_description); ?>">
-
-<!-- Include Quill JS library -->
-<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
-<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
@@ -230,7 +223,8 @@ document.addEventListener('DOMContentLoaded', function () {
             toolbar: [
                 ['bold', 'italic', 'underline'],
                 [{'list': 'ordered'}, {'list': 'bullet'}],
-                ['link', 'image']
+                [{'header': [1, 2, 3, 4, 5, 6, false]}], // Added heading styles
+                ['link', 'image', 'video'] // Added video embed function
             ]
         }
     });
