@@ -569,9 +569,13 @@ text-align: left;
     align-content: center;
     justify-content: flex-start;
     align-items: center;
+    margin: 17px 0 41px 0
 }
 
-
+.organiser-details strong{
+    font-size: 20px;
+    text-transform: capitalize;
+}
 /*********END */
 
 
