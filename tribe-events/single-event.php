@@ -1964,6 +1964,9 @@ html .single-tribe_events .tribe-tickets__tickets-footer{
     right: 5%;
     top: 27%;
 }
+.event-tickets .tribe-tickets__tickets-item{
+    gap: 5px;
+}
 }
 
 
