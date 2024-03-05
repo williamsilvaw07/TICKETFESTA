@@ -613,7 +613,18 @@ a.tribe-button.tribe-button-primary.add-new , .organizers_add_new_btn{
     color: rgb(255, 255, 255)!important;
     font-weight: 500!important;
 }
+html  .tribe-community-notice-error p{
+    color: #ffffff !important;
+    font-size: 17px!important;
+    font-weight: 400!important;
 
+}
+html .tribe-community-events .tribe-community-notice-error p:last-child {
+    display: block!important;
+    color: #ffffff !important;
+    font-size: 17px!important;
+    font-weight: 400!important;
+}
 /*****END******/
 
 
