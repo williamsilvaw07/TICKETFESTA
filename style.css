@@ -613,7 +613,7 @@ a.tribe-button.tribe-button-primary.add-new , .organizers_add_new_btn{
     color: rgb(255, 255, 255)!important;
     font-weight: 500!important;
 }
-.tribe-community-notice-error p{
+html  .tribe-community-notice-error p{
     color: #ffffff !important;
     font-size: 17px!important;
     font-weight: 400!important;
