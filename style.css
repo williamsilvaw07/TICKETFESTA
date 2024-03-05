@@ -605,6 +605,9 @@ a.tribe-button.tribe-button-primary.add-new , .organizers_add_new_btn{
     font-size: 20px!important;
     font-weight: 700!important;
 }
+.tribe-community-events .tribe-community-notice p:last-child{
+    display: none!important;
+}
 .tribe-community-events .tribe-community-notice a{
     font-size: 12px;
     padding: 5px 15px !important;
