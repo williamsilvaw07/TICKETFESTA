@@ -1955,15 +1955,7 @@ html .single-tribe_events .tribe-tickets__tickets-footer{
     padding-left: 4px;
 }
 
-.tribe-tickets__tickets-item {
-    position: relative!important
-}
-.tribe-tickets__tickets-item-quantity{
-    width: fit-content!important;
-    position: absolute!important;
-    right: 5%;
-    top: 27%;
-}
+
 .event-tickets .tribe-tickets__tickets-item{
     gap: 5px;
 }
