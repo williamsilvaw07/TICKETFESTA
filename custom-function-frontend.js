@@ -245,15 +245,24 @@ jQuery(document).ready(function($) {
     if(!jQuery('.tribe-tickets-editor-table-tickets-body').length){
         jQuery('#ticket_form_toggle').addClass('required');
     }
-    jQuery('.tribe-section-tickets').click(function(event){
+    jQuery('.section-toggle').click(function(event){
+        if(jQuery('.tribe-tickets-editor-table-tickets-body').length){
+            jQuery('#ticket_form_toggle').removeClass('required');
+        }else{
+            jQuery('#ticket_form_toggle').addClass('required');
+        }
+    });
+    jQuery('#tribetickets').click(function(event){
         setTimeout(function() {
             if(jQuery('.tribe-tickets-editor-table-tickets-body').length){
-                jQuery('#ticket_form_toggle').addClass('required');
-            }else{
                 jQuery('#ticket_form_toggle').removeClass('required');
+            }else{
+                jQuery('#ticket_form_toggle').addClass('required');
             }
-        }, 500); 
+        }, 2000); 
+
     });
+    
     jQuery('.events-community-submit').click(function(event) {
         if (jQuery('#event_tribe_organizer').hasClass('required')) {
             setTimeout(function() {
