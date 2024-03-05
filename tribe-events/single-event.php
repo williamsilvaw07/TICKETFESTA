@@ -365,7 +365,7 @@ if (!empty($agendas) && is_array($agendas)) {
 $event_id = get_the_ID(); // Get the current event ID
 
 // Retrieve age restrictions
-$allage = get_post_meta($event_id, 'over18', true);
+$allage = get_post_meta($event_id, 'allage', true);
 $over14 = get_post_meta($event_id, 'over14', true);
 $over15 = get_post_meta($event_id, 'over15', true);
 $over18 = get_post_meta($event_id, 'over18', true);
