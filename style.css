@@ -1664,13 +1664,11 @@ color: #555!important;
     max-width: 700px;
     margin: 20px;
 }
-.organizer_profile_bk {
-    height: 550px;
-}
+
 span.social_icons_organizers {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: left;
     column-gap: 21px;
 }
 
