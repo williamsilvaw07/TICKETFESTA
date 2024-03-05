@@ -241,8 +241,28 @@ jQuery(document).ready(function($) {
             jQuery('#trive-select-event-images').addClass('required');
         }
     });
+    
+    if(!jQuery('.tribe-tickets-editor-table-tickets-body').length){
+        jQuery('#ticket_form_toggle').addClass('required');
+    }
+    jQuery('.section-toggle').click(function(event){
+        if(jQuery('.tribe-tickets-editor-table-tickets-body').length){
+            jQuery('#ticket_form_toggle').removeClass('required');
+        }else{
+            jQuery('#ticket_form_toggle').addClass('required');
+        }
+    });
+    jQuery('#tribetickets').click(function(event){
+        setTimeout(function() {
+            if(jQuery('.tribe-tickets-editor-table-tickets-body').length){
+                jQuery('#ticket_form_toggle').removeClass('required');
+            }else{
+                jQuery('#ticket_form_toggle').addClass('required');
+            }
+        }, 2000); 
 
-
+    });
+    
     jQuery('.events-community-submit').click(function(event) {
         if (jQuery('#event_tribe_organizer').hasClass('required')) {
             setTimeout(function() {
@@ -250,16 +270,23 @@ jQuery(document).ready(function($) {
                 jQuery('.tribe-community-notice-error').append('<p>Organizer is required</p>');
             }, 500); 
         }
-        
-        if (jQuery('#trive-select-event-images').hasClass('required')) { console.log('vanue '); 
+
+        if (jQuery('#trive-select-event-images').hasClass('required')) { 
             setTimeout(function() {
                 jQuery('.tribe-community-notice-error').append('<p>Image is required</p>');
             }, 500); 
         }
 
-        if (jQuery('#event_tribe_venue').hasClass('required')) { console.log('vanue '); 
+        if (jQuery('#event_tribe_venue').hasClass('required')) { 
             setTimeout(function() {
                 jQuery('.tribe-community-notice-error').append('<p>Vanue is required</p>');
+            }, 500); 
+        }
+
+
+        if (jQuery('#ticket_form_toggle').hasClass('required')) { 
+            setTimeout(function() {
+                jQuery('.tribe-community-notice-error').append('<p>Please add a ticket.</p>');
             }, 500); 
         }
     });
