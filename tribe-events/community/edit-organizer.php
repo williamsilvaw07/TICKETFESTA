@@ -87,7 +87,7 @@ if ('POST' === $_SERVER['REQUEST_METHOD']) {
     var redirectUrl = 'https://ticketfesta.co.uk/dashboard/organisers-list/?organizer_updated=true';
 
         // Perform the redirect
-        // window.location.href = redirectUrl;
+        window.location.href = redirectUrl;
 
     </script>
     <?php
@@ -194,14 +194,8 @@ if ($banner_image_id) {
         <?php 
             $organizer_name        = esc_attr( tribe_get_organizer() ); 
             $organizer_id          = isset($_GET['id']) ? $_GET['id'] : ''; 
-            delete_post_meta($organizer_id, '_OrganizerEmail');
-            delete_post_meta($organizer_id, 'organizer_facebook');
-            delete_post_meta($organizer_id, 'organizer_instagram');
-
             $organizer_description = get_post_meta( $organizer_id, 'organizer_description', true ) ? get_post_meta( $organizer_id, 'organizer_description', true ) : ''; 
             $organizer_email       = get_post_meta( $organizer_id, '_OrganizerEmail', true ) ? get_post_meta( $organizer_id, '_OrganizerEmail', true ) : 'example@website.com'; 
-            delete_post_meta($organizer_id, 'organizer_twitter');
-
             $organizer_facebook    = get_post_meta( $organizer_id, 'organizer_facebook', true ) ? get_post_meta( $organizer_id, 'organizer_facebook', true ) : 'facebook.com'; 
             $organizer_twitter     = get_post_meta( $organizer_id, 'organizer_twitter', true ) ? get_post_meta( $organizer_id, 'organizer_twitter', true ) : 'twitter.com'; 
             $organizer_instagram   = get_post_meta( $organizer_id, 'organizer_instagram', true ) ? get_post_meta( $organizer_id, 'organizer_instagram', true ) : 'instagram.com'; 
@@ -358,7 +352,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (xhr.status >= 200 && xhr.status < 400) {
                 // Success
                 console.log(xhr.responseText);
-             //   form.submit();
+                form.submit();
             } else {
                 // Error
                 console.error('Request failed:', xhr.statusText);
