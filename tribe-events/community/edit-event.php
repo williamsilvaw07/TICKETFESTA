@@ -213,11 +213,17 @@ $event_url = esc_attr($event_url);
 <!-- Include the Quill library -->
 <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 
+<?php
+// Assuming $event_id is defined and contains the ID of the event being edited.
+$event_description = get_post_meta($event_id, 'event_description', true);
+?>
+
 <!-- extra options section -->
 <div class="event_decp_div hover_section extra_options_section">
     <h2>Event Description</h2>
+    <!-- Create the editor container -->
     <div id="quill-editor" style="height: 200px;"></div>
-    <input type="hidden" name="event_description" id="event_description" value="">
+    <input type="hidden" name="event_description" id="event_description" value="<?php echo esc_attr($event_description); ?>">
 </div>
 
 <script>
@@ -232,12 +238,14 @@ var quill = new Quill('#quill-editor', {
     }
 });
 
+// Set the content of the Quill editor to the saved content
+quill.root.innerHTML = <?php echo json_encode($event_description); ?>;
+
 // Update hidden field on form submit
 document.querySelector('form').addEventListener('submit', function() {
     document.querySelector('#event_description').value = quill.root.innerHTML;
 });
 </script>
-
 
 
 
