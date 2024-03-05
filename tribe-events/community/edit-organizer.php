@@ -22,6 +22,27 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $organizer_label_singular = tribe_get_organizer_label_singular();
 $organizer_id = get_the_ID(); // Get the organizer post ID
+
+// Define the image URL
+$image_url = 'https://ticketfesta.co.uk/wp-content/uploads/2024/01/default-avatar-photo-placeholder-profile-icon-vector-80x80.jpg';
+
+// Get the attachment ID of the image by its URL
+$image_id = attachment_url_to_postid($image_url);
+
+// Check if the attachment ID was found
+if ($image_id) {
+    // Specify the post ID to which you want to set the featured image
+    $post_id = 123; // Replace 123 with your post ID
+
+    // Set the post thumbnail (featured image)
+    set_post_thumbnail($organizer_id, $image_id);
+} else {
+    echo 'Image not found.';
+}
+
+
+
+
 ?>
 <a href="/dashboard/organisers-list/">
 <div class="organizer_edit_back_btn_main">
