@@ -2619,35 +2619,36 @@ add_action('save_post_tribe_events', 'save_event_extra_options', 10, 3);
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////END////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
+function my_custom_image_handling($content) {
+    // Custom handling or filtering of image src or other attributes
+    return $content;
+}
+add_filter('the_content', 'my_custom_image_handling');
 function save_event_description($post_id) {
+    // Security and permission checks (example)
+    if (!isset($_POST['your_nonce_field']) || !wp_verify_nonce($_POST['your_nonce_field'], 'your_action')) return;
+    if (!current_user_can('edit_post', $post_id)) return;
+
     // Check for your specific post type if necessary
+    if (get_post_type($post_id) !== 'your_custom_post_type') return; // Adjust 'your_custom_post_type'
+
     if (isset($_POST['event_description'])) {
-        // Define allowed HTML tags and attributes
-        $allowed_tags = array(
-            'a' => array('href' => array(), 'title' => array()),
-            'br' => array(),
-            'em' => array(),
-            'strong' => array(),
-            'p' => array(),
-            'img' => array( // Allow img tags
-                'src' => array(),
-                'alt' => array(),
-                'class' => array(),
-                'width' => array(),
-                'height' => array()
-            ),
+        $allowed_tags = [
+            'a' => ['href' => [], 'title' => []],
+            'br' => [],
+            'em' => [],
+            'strong' => [],
+            'p' => [],
+            'img' => ['src' => [], 'alt' => [], 'class' => [], 'width' => [], 'height' => []],
             // Add any other tags and attributes you want to allow
-        );
+        ];
 
-        // Sanitize the input
         $event_description = wp_kses($_POST['event_description'], $allowed_tags);
-
-        // Update the post meta
         update_post_meta($post_id, 'event_description', $event_description);
     }
 }
-add_action('save_post', 'save_event_description'); // Adjust 'save_post' if you're working with a custom post type.
+add_action('save_post', 'save_event_description');
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
