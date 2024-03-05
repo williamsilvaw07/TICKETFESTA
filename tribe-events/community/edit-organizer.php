@@ -24,7 +24,7 @@ $organizer_label_singular = tribe_get_organizer_label_singular();
 $organizer_id = get_the_ID(); // Get the organizer post ID
 
 // Define the image URL
-$image_url = 'https://ticketfesta.co.uk/wp-content/uploads/2024/01/default-avatar-photo-placeholder-profile-icon-vector-80x80.jpg';
+$image_url = 'https://ticketfesta.co.uk/wp-content/uploads/2024/01/default-avatar-photo-placeholder-profile-icon-vector-1.jpg';
 
 // Get the attachment ID of the image by its URL
 $image_id = attachment_url_to_postid($image_url);
