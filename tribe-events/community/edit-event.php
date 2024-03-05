@@ -926,6 +926,20 @@ jQuery(document).ready(function($) {
 
 
 <style>
+
+
+/****page after edit page****/
+
+.my-events-header h2.my-events {
+    font-weight: 700!important;
+}
+
+.tribe-community-events .tribe-community-notice {
+    background-color: rgb(26, 26, 26)!important;
+}
+
+
+/*****END******/
     .accordion-header {
         cursor: pointer;
         padding: 10px;
@@ -1172,5 +1186,6 @@ jQuery(document).ready(function($) {
     #Tribe__Tickets_Plus__Commerce__WooCommerce__Main_ticket_global_stock:first-child {
     display: none !important;
 }
+
 
 </style>
