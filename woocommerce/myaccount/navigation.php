@@ -586,7 +586,7 @@ text-align: left;
 
 }
 .organiser-following-item .profile-link-button{
-    color: #ffffff;
+    color: black;
     background-color: #fff;
     border-radius: 4px;
     padding: 5px 10px;
