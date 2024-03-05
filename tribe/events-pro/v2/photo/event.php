@@ -232,7 +232,7 @@ jQuery(document).ready(function($) {
 
 
 
-         // Show the popup when the share button is clicked
+    // Show the popup when the share button is clicked
     $('.share_btn').click(function(event) {
         event.preventDefault(); // Prevent the default action
 
@@ -253,11 +253,11 @@ jQuery(document).ready(function($) {
     });
 
     // Also close the popup and hide the overlay when clicking outside of the popup (on the overlay)
-    $(document).on('click', '.overlay', function() {
+    $(document).on('click', '.overlay', function(event) {
+        event.stopPropagation(); // Stop the event from propagating to underlying elements
         $('.share_btn_event').hide();
         $('.overlay').hide();
     });
-
     // The section for copying the URL has been removed
 
 
