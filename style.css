@@ -1095,7 +1095,15 @@ body .share_btn{
 
 
 
-
+    @media (max-width: 960px) {
+  
+        .eventUrl{
+            white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 100%; 
+        }
+    }
 
 
 @media (max-width: 500px) {
