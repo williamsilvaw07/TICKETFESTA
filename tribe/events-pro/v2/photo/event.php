@@ -232,32 +232,30 @@ jQuery(document).ready(function($) {
 
 
 
-    // Show the popup when the share button is clicked
-    $('.share_btn').click(function(event) {
-        event.preventDefault(); // Prevent the default action of the button
-        $('.overlay').fadeIn(); // Use fadeIn for a smoother appearance
-        $(this).next('.share_btn_event').css({
+  // Show the popup when the share button is clicked
+  $('.share_btn').click(function(event) {
+        event.preventDefault(); // Prevent the default action
+        $('.overlay').fadeIn(); // Show the overlay
+        $(this).nextAll('.share_btn_event').first().fadeIn().css({
             'position': 'fixed',
             'top': '50%',
             'left': '50%',
             'transform': 'translate(-50%, -50%)',
             'z-index': '1001'
-        }).fadeIn(); // Use fadeIn for a smoother appearance
+        });
     });
 
     // Close the popup and hide the overlay when the close button is clicked
     $('.close_popup').click(function() {
-        $('.share_btn_event').fadeOut(); // Use fadeOut for a smoother disappearance
-        $('.overlay').fadeOut(); // Use fadeOut for a smoother disappearance
+        $('.share_btn_event').fadeOut(); // Hide the share button event popup
+        $('.overlay').fadeOut(); // Hide the overlay
     });
 
-    // Also close the popup and hide the overlay when clicking outside of the popup (on the overlay)
+    // Prevent navigation when clicking outside the popup to close it
     $(document).on('click', '.overlay', function(event) {
-        event.preventDefault(); // Prevent default behavior
-        event.stopPropagation(); // Stop the event from propagating
-        event.stopImmediatePropagation(); // Prevent any parent handlers from being executed
-        $('.share_btn_event').fadeOut(); // Use fadeOut for consistency
-        $('.overlay').fadeOut(); // Use fadeOut for consistency
+        event.preventDefault(); // Prevent default action
+        $('.share_btn_event').fadeOut(); // Hide the share button event popup
+        $(this).fadeOut(); // Hide the overlay
     });
     // The section for copying the URL has been removed
 
