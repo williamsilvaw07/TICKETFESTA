@@ -534,6 +534,12 @@ body .share_btn{
     .share_btn{
         display:block!important
     }
+    .eventUrl{
+        white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%; 
+    }
 }
 
 @media (max-width: 700px) {
