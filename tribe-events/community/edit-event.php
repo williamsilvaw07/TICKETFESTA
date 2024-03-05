@@ -232,10 +232,10 @@ document.addEventListener('DOMContentLoaded', function() {
         theme: 'snow',
         modules: {
             toolbar: [
-                [{ header: [1, 2, false] }],
-                ['bold', 'italic', 'underline'],
-                ['image', 'code-block']
-            ]
+    [{ header: [1, 2, false] }],
+    ['bold', 'italic', 'underline'],
+    ['image', 'video'] // Ensure 'video' is included here if you want that functionality
+]
         }
     });
 

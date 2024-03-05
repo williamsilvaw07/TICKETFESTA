@@ -355,7 +355,43 @@ if (!empty($agendas) && is_array($agendas)) {
 
 <!-- Event ABOUT FULL DECP -->
 <?php
+// In single-event.php
 $event_description = get_post_meta($event_id, 'event_description', true);
+
+$allowed_html = array(
+    'a' => array(
+        'href' => array(),
+        'title' => array(),
+        'target' => array(),
+    ),
+    'br' => array(),
+    'em' => array(),
+    'strong' => array(),
+    'img' => array(
+        'src' => array(),
+        'alt' => array(),
+        'width' => array(),
+        'height' => array(),
+        'class' => array(),
+    ),
+    'iframe' => array(
+        'src' => array(),
+        'width' => array(),
+        'height' => array(),
+        'frameborder' => array(),
+        'allowfullscreen' => array(),
+    ),
+    'video' => array(
+        'controls' => array(),
+    ),
+    'source' => array(
+        'src' => array(),
+        'type' => array(),
+    ),
+);
+
+echo wp_kses($event_description, $allowed_html);
+
 ?>
 
 <div class="single_event_page_description">
