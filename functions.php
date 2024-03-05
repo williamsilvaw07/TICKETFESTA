@@ -1734,11 +1734,17 @@ function shortcode_revenue() {
     $total_sales_lifetime = $ticket_info['total_sales_lifetime'];
     $order_details = $ticket_info['order_details'];
 
+    // Logging the total sales lifetime for debugging
+    error_log("Total Sales Lifetime for user ID {$user_id}: £" . number_format($total_sales_lifetime, 2));
+
     // Building the order debug info
     $order_debug_info = "<strong>Order Breakdown:</strong><br>";
     foreach ($order_details as $detail) {
         $order_debug_info .= "Order ID: {$detail['order_id']}, Subtotal: £" . number_format($detail['subtotal'], 2);
         $order_debug_info .= ", Event: {$detail['event_title']}, Created by: {$detail['event_creator_name']}<br>";
+
+        // Logging each order detail for debugging
+        error_log("Order ID: {$detail['order_id']}, Subtotal: £" . number_format($detail['subtotal'], 2) . ", Event: {$detail['event_title']}, Created by: {$detail['event_creator_name']}");
     }
 
     return "
@@ -1753,7 +1759,6 @@ function shortcode_revenue() {
     </div>";
 }
 add_shortcode('revenue', 'shortcode_revenue');
-
 
 
 function get_total_sales_for_previous_day($user_id)
