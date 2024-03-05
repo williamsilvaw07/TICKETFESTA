@@ -2619,35 +2619,63 @@ add_action('save_post_tribe_events', 'save_event_extra_options', 10, 3);
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////END////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+// Add a filter to modify content before saving, if needed
 function my_custom_image_handling($content) {
-    // Custom handling or filtering of image src or other attributes
-    return $content;
+    // Custom handling or filtering of image src or other attributes here
+    // For example, adjusting image paths or adding default attributes
+    return $content; // Make sure to return the modified content
 }
 add_filter('the_content', 'my_custom_image_handling');
+
+// Save the event description, ensuring to do all necessary security and sanity checks
 function save_event_description($post_id) {
-    // Security and permission checks (example)
-    if (!isset($_POST['your_nonce_field']) || !wp_verify_nonce($_POST['your_nonce_field'], 'your_action')) return;
-    if (!current_user_can('edit_post', $post_id)) return;
+    // Security check - Verify nonce
+    if (!isset($_POST['your_nonce_field']) || !wp_verify_nonce($_POST['your_nonce_field'], 'your_action')) {
+        return;
+    }
 
-    // Check for your specific post type if necessary
-    if (get_post_type($post_id) !== 'your_custom_post_type') return; // Adjust 'your_custom_post_type'
+    // Permission check - Ensure user has permission to edit the post
+    if (!current_user_can('edit_post', $post_id)) {
+        return;
+    }
 
+    // Ensure this is the correct post type if necessary
+    if (get_post_type($post_id) !== 'your_custom_post_type') {
+        return; // Replace 'your_custom_post_type' with your actual post type
+    }
+
+    // Check if the custom field 'event_description' is set in the submitted form
     if (isset($_POST['event_description'])) {
-        $allowed_tags = [
-            'a' => ['href' => [], 'title' => []],
-            'br' => [],
-            'em' => [],
-            'strong' => [],
-            'p' => [],
-            'img' => ['src' => [], 'alt' => [], 'class' => [], 'width' => [], 'height' => []],
-            // Add any other tags and attributes you want to allow
-        ];
+        // Define allowed HTML tags and attributes for sanitization
+        $allowed_tags = array(
+            'a' => array(
+                'href' => array(),
+                'title' => array(),
+                'target' => array(),
+            ),
+            'br' => array(),
+            'em' => array(),
+            'strong' => array(),
+            'p' => array(),
+            'img' => array( // Allow img tags and define allowed attributes
+                'src' => array(),
+                'alt' => array(),
+                'class' => array(),
+                'width' => array(),
+                'height' => array(),
+            ),
+            // Add any other tags and attributes as needed
+        );
 
+        // Sanitize the submitted event description
         $event_description = wp_kses($_POST['event_description'], $allowed_tags);
+
+        // Save/Update the sanitized event description in the post meta
         update_post_meta($post_id, 'event_description', $event_description);
     }
 }
-add_action('save_post', 'save_event_description');
+add_action('save_post', 'save_event_description'); // Hook into save_post to save custom field data
+?>
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
