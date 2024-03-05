@@ -592,41 +592,53 @@ jQuery(document).ready(function(){
 
 
 jQuery(document).ready(function() {
-    var btns = jQuery('.getticketbtn, #scroll-to-tickets');  // Selecting elements with class 'getticketbtn' and the ID 'scroll-to-tickets'
-    var linkViewAttendee = jQuery('.tribe-link-view-attendee');
-    var ticketsForm = jQuery('.tribe-common.event-tickets.tribe-tickets__tickets-wrapper');
-    var originalLocation = ticketsForm.parent();
+    var btns = jQuery('.getticketbtn, #scroll-to-tickets');
+var linkViewAttendee = jQuery('.tribe-link-view-attendee');
+var ticketsForm = jQuery('.tribe-common.event-tickets.tribe-tickets__tickets-wrapper');
+var originalLocation = ticketsForm.parent();
 
-    // Function to get the lowest ticket price
-    function getLowestTicketPrice() {
-        var lowestPrice = null;
+// Function to get the lowest and highest ticket prices
+function getTicketPriceRange() {
+    var lowestPrice = null;
+    var highestPrice = null;
 
-        // Loop through each ticket item
-        jQuery('.tribe-tickets__tickets-item').each(function() {
-            // Get the price of the current ticket
-            var price = parseFloat(jQuery(this).data('ticket-price'));
+    // Loop through each ticket item
+    jQuery('.tribe-tickets__tickets-item').each(function() {
+        // Get the price of the current ticket
+        var price = parseFloat(jQuery(this).data('ticket-price'));
 
-            // Check if this price is lower than the current lowest price
-            if (lowestPrice === null || price < lowestPrice) {
-                lowestPrice = price;
+        // Initialize lowestPrice and highestPrice with the first ticket price
+        if (lowestPrice === null || price < lowestPrice) {
+            lowestPrice = price;
+        }
+        if (highestPrice === null || price > highestPrice) {
+            highestPrice = price;
+        }
+    });
+
+    return { lowestPrice, highestPrice };
+}
+
+// Function to display the lowest and highest price or "Free" if lowest price is 0.00
+function displayTicketPriceRange() {
+    var priceRange = getTicketPriceRange();
+    if (priceRange.lowestPrice !== null) {
+        if (priceRange.lowestPrice === 0) {
+            // Display "Free" if the lowest price is 0.00
+            jQuery('.btn_price_span').html('<span class="free-text" style="color: #d3fa16!important; font-size: 22px!important; font-weight: 600!important;">Free</span>');
+        } else {
+            var priceText = '£' + priceRange.lowestPrice.toFixed(2);
+            // Display a range if the highest price is different from the lowest price
+            if (priceRange.highestPrice !== priceRange.lowestPrice) {
+                priceText += ' - £' + priceRange.highestPrice.toFixed(2);
             }
-        });
-
-        return lowestPrice;
-    }
-
-    // Function to display the lowest price
-    function displayLowestPrice() {
-        var lowestPrice = getLowestTicketPrice();
-        if (lowestPrice !== null) {
-            // Display the lowest price in elements with class .btn_price_span
-            jQuery('.btn_price_span').text('£' + lowestPrice.toFixed(2));
+            jQuery('.btn_price_span').text(priceText);
         }
     }
+}
 
-    // Call the function to display the lowest price
-    displayLowestPrice();
-
+// Call the function to display the price range or "Free"
+displayTicketPriceRange();
     // Event listener for buttons and scroll-to-tickets
     btns.each(function() {
         jQuery(this).on('click', function() {
