@@ -576,6 +576,31 @@ text-align: left;
     font-size: 20px;
     text-transform: capitalize;
 }
+.organiser-following-item .unfollow-button{
+    color: #ffffff;
+    background-color: #ea4335;
+    border-radius: 4px;
+    padding: 5px 10px;
+    font-size: 14px;
+    text-transform: capitalize;
+
+}
+.organiser-following-item .profile-link-button{
+    color: #ffffff;
+    background-color: #fff;
+    border-radius: 4px;
+    padding: 5px 10px;
+    font-size: 14px;
+    text-transform: capitalize;
+}
+
+
+
+
+
+
+
+
 /*********END */
 
 

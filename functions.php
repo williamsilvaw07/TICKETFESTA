@@ -3025,7 +3025,7 @@ function ticketfeasta_following() {
                             <input type="hidden" name="following_id" value="<?php echo esc_attr($following); ?>">
                             <input type="submit" value="Unfollow" name="submit" class="unfollow-button">
                         </form>
-                        <a href="<?php echo esc_url($organiser_profile_link); ?>" class="profile-link-button">Organizer Profile</a>
+                        <a href="<?php echo esc_url($organiser_profile_link); ?>" class="profile-link-button">See Events</a>
                     </div>
                 </div>
             </div>
