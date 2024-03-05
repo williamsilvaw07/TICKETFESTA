@@ -592,47 +592,13 @@ jQuery(document).ready(function(){
 
 
 jQuery(document).ready(function() {
-    // Function to calculate the lowest and highest ticket prices
-    function calculateTicketPriceRange() {
-        let lowestPrice = null;
-        let highestPrice = null;
+    var btns = jQuery('.getticketbtn, #scroll-to-tickets');  // Selecting elements with class 'getticketbtn' and the ID 'scroll-to-tickets'
+    var linkViewAttendee = jQuery('.tribe-link-view-attendee');
+    var ticketsForm = jQuery('.tribe-common.event-tickets.tribe-tickets__tickets-wrapper');
+    var originalLocation = ticketsForm.parent();
 
-        // Loop through each ticket item to find lowest and highest prices
-        $('.tribe-tickets__tickets-item').each(function() {
-            let price = parseFloat($(this).data('ticket-price'));
+    
 
-            if (lowestPrice === null || price < lowestPrice) {
-                lowestPrice = price;
-            }
-            if (highestPrice === null || price > highestPrice) {
-                highestPrice = price;
-            }
-        });
-
-        return { lowestPrice, highestPrice };
-    }
-
-    // Function to display the price range or "Free"
-    function displayTicketPrice() {
-        let { lowestPrice, highestPrice } = calculateTicketPriceRange();
-
-        if (lowestPrice !== null) {
-            if (lowestPrice === 0) {
-                // Display "Free" for lowest price of 0
-                $('.btn_price_span').html('<span class="free-text" style="color: #d3fa16!important; font-size: 22px!important; font-weight: 600!important;">Free</span>');
-            } else {
-                let priceText = '£' + lowestPrice.toFixed(2);
-                // Display price range if there's a difference between the highest and lowest prices
-                if (highestPrice !== lowestPrice) {
-                    priceText += ' - £' + highestPrice.toFixed(2);
-                }
-                $('.btn_price_span').text(priceText);
-            }
-        }
-    }
-
-    // Initial call to display ticket price or "Free"
-    displayTicketPrice();
     // Event listener for buttons and scroll-to-tickets
     btns.each(function() {
         jQuery(this).on('click', function() {
