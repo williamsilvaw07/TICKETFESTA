@@ -81,6 +81,13 @@ $cost  = tribe_get_formatted_cost( $event_id );
 
 
 
+    <!-- Overlay Background -->
+    <div class="overlay" style="display: none;"></div>
+
+
+
+
+
      <p class="tribe-events-back">
 		<a href="<?php echo esc_url( tribe_get_events_link() ); ?>"> <?php printf( '&laquo; ' . esc_html_x( 'All %s', '%s Events plural label', 'the-events-calendar' ), $events_label_plural ); ?></a>
 	</p>
