@@ -2620,19 +2620,37 @@ add_action('save_post_tribe_events', 'save_event_extra_options', 10, 3);
 ///////////////////END////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // In functions.php
 function save_event_description($post_id) {
-    // Check user permissions, nonces, etc., here before proceeding
-
     if (!isset($_POST['event_description'])) {
         return;
     }
 
-    $event_description = $_POST['event_description']; // Directly saving this, consider security implications
+    // Define allowed HTML tags and attributes
+    $allowed_tags = array(
+        'a' => array(
+            'href' => array(),
+            'title' => array()
+        ),
+        'br' => array(),
+        'em' => array(),
+        'strong' => array(),
+        'p' => array(),
+        'img' => array( // Allow img tags
+            'src' => array(),
+            'alt' => array(),
+            'class' => array(),
+            'width' => array(),
+            'height' => array()
+        ),
+        // Add any other tags and attributes you want to allow
+    );
+
+    // Sanitize the input
+    $event_description = wp_kses($_POST['event_description'], $allowed_tags);
 
     // Update the post meta
     update_post_meta($post_id, 'event_description', $event_description);
 }
 add_action('save_post_tribe_events', 'save_event_description', 10, 3);
-
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
