@@ -595,7 +595,7 @@ jQuery(document).ready(function(){
 jQuery(document).ready(function() {
 
 
-    
+
     let minPrice = Infinity;
     let maxPrice = 0;
     let priceFound = false; // Flag to track if any valid price was found
@@ -1955,7 +1955,7 @@ html .single-tribe_events .tribe-tickets__tickets-footer{
     width: 100%;
 }
 .btn_price_span {
-    font-size: 19px;
+    font-size: 19px!important;
     padding-left: 4px;
 }
 
