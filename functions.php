@@ -3006,30 +3006,30 @@ function ticketfeasta_following() {
     if (empty($following_array)) {
         echo "<p class='empty-following'>You are not following anyone.</p>";
     } else {
+        echo '<div class="organiser-following-list">';
         foreach ($following_array as $following) {
             $organiser_name = get_the_title($following);
             $organiser_img_url = get_the_post_thumbnail_url($following, 'thumbnail');
             $organiser_profile_link = get_author_posts_url(get_post_field('post_author', $following));
             ?>
-            <div class="organiser-following-item" style="margin-bottom: 20px; border: 1px solid #ccc; padding: 10px; border-radius: 5px;">
-                <div class="organiser-info" style="display: flex; align-items: center;">
-                    <?php if ($organiser_img_url): ?>
-                        <img src="<?php echo esc_url($organiser_img_url); ?>" alt="<?php echo esc_attr($organiser_name); ?>" class="organiser-thumbnail" style="width: 50px; height: 50px; border-radius: 50%; margin-right: 15px;">
-                    <?php endif; ?>
-                    <div style="flex-grow: 1;">
-                        <strong><?php echo esc_html($organiser_name); ?></strong>
-                    </div>
-                    <div style="text-align: right;">
+            <div class="organiser-following-item">
+                <?php if ($organiser_img_url): ?>
+                    <img src="<?php echo esc_url($organiser_img_url); ?>" alt="<?php echo esc_attr($organiser_name); ?>" class="organiser-thumbnail">
+                <?php endif; ?>
+                <div class="organiser-details">
+                    <strong><?php echo esc_html($organiser_name); ?></strong>
+                    <div class="organiser-actions">
                         <form method="POST" style="display: inline-block;">
                             <input type="hidden" name="following_id" value="<?php echo esc_attr($following); ?>">
-                            <input type="submit" value="Unfollow" name="submit" class="unfollow-button" style="cursor: pointer; margin-right: 10px;">
+                            <input type="submit" value="Unfollow" name="submit" class="unfollow-button">
                         </form>
-                        <a href="<?php echo esc_url($organiser_profile_link); ?>" class="profile-link-button" style="cursor: pointer; background-color: #007bff; color: white; padding: 5px 10px; border-radius: 5px; text-decoration: none;">Profile</a>
+                        <a href="<?php echo esc_url($organiser_profile_link); ?>" class="profile-link-button">Profile</a>
                     </div>
                 </div>
             </div>
             <?php
         }
+        echo '</div>';
     }
 }
 
