@@ -1955,7 +1955,18 @@ html .single-tribe_events .tribe-tickets__tickets-footer{
     padding-left: 4px;
 }
 
+.tribe-tickets__tickets-item {
+    position: relative; 
 }
+.tribe-tickets__tickets-item-quantity{
+    width: fit-content;
+    position: absolute;
+    right: 5%;
+    top: 27%;
+}
+}
+
+
 @media screen and (max-width: 670px) {
     .about_event_inner {
         flex-direction: column;
@@ -2086,41 +2097,6 @@ html .single-tribe_events .tribe-tickets__tickets-footer{
 
 
 
-
-
-  @media (max-width: 768px) { /* Adjusts for mobile devices */
-    .tribe-tickets__tickets-item-extra {
-        display: flex!important;
-        justify-content: space-between!important;
-        align-items: center!important;
-    }
-
-    .tribe-tickets__tickets-item-extra > div {
-        flex: 1!important;/* Ensures that the price and availability take up equal space */
-    }
-
-    .tribe-tickets__tickets-item-quantity {
-        display: flex!important;
-        justify-content: space-between!important;
-        align-items: center!important;
-    }
-
-    .tribe-tickets__tickets-item-quantity > div,
-    .tribe-tickets__tickets-item-quantity > button {
-        flex: 1!important; /* Equal space allocation for quantity buttons and input */
-    }
-
-    /* Optional: Additional styling to decrease button and input sizes for better fit */
-    .tribe-tickets__tickets-item-quantity-remove,
-    .tribe-tickets__tickets-item-quantity-add,
-    .tribe-tickets__tickets-item-quantity-number-input {
-        max-width: 40px!important; /* Adjust based on preference */
-    }
-
-    .tribe-tickets__tickets-item-quantity-number-input {
-        text-align: center!important;
-    }
-}
 
 
 </style>
