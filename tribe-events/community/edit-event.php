@@ -213,28 +213,30 @@ $event_url = esc_attr($event_url);
 <!-- Include the Quill library -->
 <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 
-
- <!-- extra options section -->
+<!-- extra options section -->
 <div class="event_decp_div hover_section extra_options_section">
-    <h2>Event description</h2>
-    <!-- Create an editor container -->
+    <h2>Event Description</h2>
     <div id="quill-editor" style="height: 200px;"></div>
+    <input type="hidden" name="event_description" id="event_description" value="">
 </div>
 
-
 <script>
-  var quill = new Quill('#quill-editor', {
-    theme: 'snow', // Specify theme in configuration
+var quill = new Quill('#quill-editor', {
+    theme: 'snow',
     modules: {
         toolbar: [
             [{ header: [1, 2, false] }],
             ['bold', 'italic', 'underline'],
-            ['image', 'video'] // Include image and video options
+            ['image', 'video']
         ]
     }
-  });
-</script>
+});
 
+// Update hidden field on form submit
+document.querySelector('form').addEventListener('submit', function() {
+    document.querySelector('#event_description').value = quill.root.innerHTML;
+});
+</script>
 
 
 
