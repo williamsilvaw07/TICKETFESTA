@@ -1474,6 +1474,9 @@ background-position: center top;
 */
 
 
+.tribe-tickets__tickets-item-content-title{
+    text-transform: capitalize!important;
+}
   .tribe-events-event-image{
 
     margin-bottom:0!important;
