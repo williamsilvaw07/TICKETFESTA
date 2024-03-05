@@ -232,39 +232,45 @@ jQuery(document).ready(function($) {
 
 
 
-    // Show the popup when the share button is clicked
-    $('.share_btn').click(function(event) {
+   // Show the popup and overlay when the share button is clicked
+   $('.share_btn').click(function(event) {
         event.preventDefault(); // Prevent the default action
-        event.stopPropagation(); // Stop the event from propagating to higher elements
-
+        // Show the overlay
+        $('.custom-overlay').fadeIn();
         // Show the popup
         $(this).nextAll('.share_btn_event').first().fadeIn().css({
             'position': 'fixed',
             'top': '50%',
             'left': '50%',
             'transform': 'translate(-50%, -50%)',
-            'z-index': '1001'
+            'z-index': '1002' // Ensure this is above the overlay
+        });
+        // Prevent clicks within the popup from closing it
+        $('.share_btn_event').click(function(event) {
+            event.stopPropagation();
         });
     });
 
-    // Close the popup when the close button is clicked
-    $('.close_popup').click(function(event) {
-        event.preventDefault(); // Prevent the default action
+    // Close the popup and overlay when the close button is clicked
+    $('.close_popup').click(function() {
         $('.share_btn_event').fadeOut(); // Hide the share button event popup
+        $('.custom-overlay').fadeOut(); // Hide the custom overlay
     });
 
     // Listen for clicks on the document
     $(document).click(function(event) {
-        // If the clicked element is not the popup nor a descendant of the popup
+        // If the clicked element is not the popup nor a descendant of the popup and not the share button
         if (!$(event.target).closest('.share_btn_event').length && !$(event.target).is('.share_btn')) {
-            // Hide the popup
+            // Hide the popup and the overlay
             $('.share_btn_event').fadeOut();
+            $('.custom-overlay').fadeOut();
         }
     });
 
-    // Prevent closing the popup when clicking inside it
-    $('.share_btn_event').click(function(event) {
-        event.stopPropagation(); // Stop the event from propagating to the document
+    // Also close the popup and overlay when clicking on the overlay
+    $('.custom-overlay').click(function() {
+        $('.share_btn_event').fadeOut();
+        $(this).fadeOut();
     });
     // The section for copying the URL has been removed
 
