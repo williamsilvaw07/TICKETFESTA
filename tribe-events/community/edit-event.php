@@ -215,6 +215,10 @@ $event_url = esc_attr($event_url);
 
                 <div class="admin_event_extra_info_inputs">
                     <div class="admin_event_extra_info_input">
+
+                    <input type="checkbox" id="allage" name="allage" <?php checked(get_post_meta($event_id, 'allage', true), 'on'); ?> />
+                        <label for="allage">Is the event for All Ages?</label>
+
                         <input type="checkbox" id="over14" name="over14" <?php checked(get_post_meta($event_id, 'over14', true), 'on'); ?> />
                         <label for="over14">Is the event for over 14 years old?</label>
                     </div>

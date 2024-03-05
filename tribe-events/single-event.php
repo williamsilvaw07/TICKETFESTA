@@ -365,11 +365,17 @@ if (!empty($agendas) && is_array($agendas)) {
 $event_id = get_the_ID(); // Get the current event ID
 
 // Retrieve age restrictions
+$allage = get_post_meta($event_id, 'over18', true);
 $over14 = get_post_meta($event_id, 'over14', true);
 $over15 = get_post_meta($event_id, 'over15', true);
 $over18 = get_post_meta($event_id, 'over18', true);
 $norefunds = get_post_meta($event_id, 'norefunds', true);
 ?>
+
+
+<?php if ($allage === 'on'): ?>
+    <div class="all_age_div"><span class="14+_div_emoji">⚠️</span> <span class="14+_div_text">All Ages</span></div>
+<?php endif; ?>
 
 <?php if ($over14 === 'on'): ?>
     <div class="14+_div"><span class="14+_div_emoji">⚠️</span> <span class="14+_div_text">Over 14+ ONLY</span></div>

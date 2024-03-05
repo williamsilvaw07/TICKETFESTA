@@ -2600,6 +2600,9 @@ function save_event_extra_options($post_id, $post, $update)
     $over14 = isset($_POST['over14']) ? 'on' : '';
     update_post_meta($post_id, 'over14', $over14);
 
+    $allage = isset($_POST['allage']) ? 'on' : '';
+    update_post_meta($post_id, 'allage', $allage);
+
     // Save 'over 15' option
     $over15 = isset($_POST['over15']) ? 'on' : '';
     update_post_meta($post_id, 'over15', $over15);
