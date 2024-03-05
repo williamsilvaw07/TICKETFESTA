@@ -456,7 +456,7 @@ body .share_btn{
     width: 100%;
     height: 100%;
     display: none;
-    z-index: 1000;
+    z-index: 1000000;
     
     /* Overlay blur - this could be adjusted if you want the background content to be blurred as well */
     backdrop-filter: blur(5px);
