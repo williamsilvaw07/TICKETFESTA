@@ -590,6 +590,7 @@ jQuery(document).ready(function(){
 
 
 
+///FUNCTION FOR MOBILE TICKET POPUP AND CALCUTATE THE LOWEST ANDD HIGHT PRICE RANGE AND IF ITS 0.00 SHOW FREE
 
 jQuery(document).ready(function() {
 
@@ -2082,6 +2083,44 @@ html .single-tribe_events .tribe-tickets__tickets-footer{
 
   }
 
+
+
+
+
+
+  @media (max-width: 768px) { /* Adjusts for mobile devices */
+    .tribe-tickets__tickets-item-extra {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .tribe-tickets__tickets-item-extra > div {
+        flex: 1; /* Ensures that the price and availability take up equal space */
+    }
+
+    .tribe-tickets__tickets-item-quantity {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .tribe-tickets__tickets-item-quantity > div,
+    .tribe-tickets__tickets-item-quantity > button {
+        flex: 1; /* Equal space allocation for quantity buttons and input */
+    }
+
+    /* Optional: Additional styling to decrease button and input sizes for better fit */
+    .tribe-tickets__tickets-item-quantity-remove,
+    .tribe-tickets__tickets-item-quantity-add,
+    .tribe-tickets__tickets-item-quantity-number-input {
+        max-width: 40px; /* Adjust based on preference */
+    }
+
+    .tribe-tickets__tickets-item-quantity-number-input {
+        text-align: center;
+    }
+}
 
 
 </style>
