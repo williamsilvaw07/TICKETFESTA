@@ -590,7 +590,7 @@ if (!empty($sponsor_logos_ids)) : ?>
 //FUNCTION TO SHOW LOADING EFFECT AND WHEN JS IS FULLY LOADED  HIDE AND SHOW CONTENT
 document.addEventListener("DOMContentLoaded", function() {
         // Wait for 500 milliseconds after the document is fully loaded before showing main content
-        setTimeout(showMainContent, 500);
+        setTimeout(showMainContent, 1000);
     });
 
     function showMainContent() {
