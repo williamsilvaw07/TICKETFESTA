@@ -572,6 +572,15 @@ jQuery(document).ready(function($) {
 
 
 
+jQuery(document).ready(function(){
+    $('.tribe-tickets__tickets-item').each(function() {
+        var price = $(this).find('.tribe-amount').text();
+        if (price === '0.00') {
+            $(this).find('.tribe-tickets__tickets-sale-price').text('Free');
+        }
+    });
+});
+
 
 
 
