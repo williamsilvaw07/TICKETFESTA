@@ -2999,7 +2999,7 @@ function ticketfeasta_following() {
         }
     }
 
-    echo '<h3>Following List:</h3>';
+    echo '<h2>Your Following List</h2>';
     $following_array = get_user_meta($user_id, 'following', true);
     $following_array = json_decode($following_array, true) ?: [];
 
