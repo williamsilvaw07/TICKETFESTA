@@ -598,8 +598,16 @@ a.tribe-button.tribe-button-primary.add-new , .organizers_add_new_btn{
 
 .tribe-community-events .tribe-community-notice {
     background-color: rgb(26, 26, 26)!important;
-}
 
+}
+.tribe-community-events .tribe-community-notice p{
+    color: #d3fa16 !important;
+    font-size: 20px!important;
+    font-weight: 700!important;
+}
+.tribe-community-events .tribe-community-notice a{
+
+}
 
 /*****END******/
 
