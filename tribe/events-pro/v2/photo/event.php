@@ -23,27 +23,6 @@ $trimmed_title = mb_strimwidth(get_the_title($event->ID), 0, 60, '...');
 ?>
 
 
-    <!-- Overlay Background -->
-    <div class="overlay" style="display: none;"></div>
-
-
-
-<?php
-
-$classes = get_post_class( [ 'tribe-common-g-col', 'tribe-events-pro-photo__event' ], $event->ID );
-if ( ! empty( $event->featured ) ) {
-    $classes[] = 'tribe-events-pro-photo__event--featured';
-}
-
-// Retrieve venue and organizer details
-$venue_id = tribe_get_venue_id($event->ID);
-$venue_name = tribe_get_venue($event->ID);
-$venue_city = tribe_get_city($event->ID);
-$organizer_ids = tribe_get_organizer_ids($event->ID);
-$organizer_names = array_map('tribe_get_organizer', $organizer_ids);
-?>
-<article <?php tribe_classes( $classes ) ?>>
-
 <div class="loading_svg_div">
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1366 768" xml:space="preserve">
         <style type="text/css">
@@ -65,6 +44,26 @@ $organizer_names = array_map('tribe_get_organizer', $organizer_ids);
 
 <div class="main_content_loading_div">
 
+    <!-- Overlay Background -->
+    <div class="overlay" style="display: none;"></div>
+
+
+
+<?php
+
+$classes = get_post_class( [ 'tribe-common-g-col', 'tribe-events-pro-photo__event' ], $event->ID );
+if ( ! empty( $event->featured ) ) {
+    $classes[] = 'tribe-events-pro-photo__event--featured';
+}
+
+// Retrieve venue and organizer details
+$venue_id = tribe_get_venue_id($event->ID);
+$venue_name = tribe_get_venue($event->ID);
+$venue_city = tribe_get_city($event->ID);
+$organizer_ids = tribe_get_organizer_ids($event->ID);
+$organizer_names = array_map('tribe_get_organizer', $organizer_ids);
+?>
+<article <?php tribe_classes( $classes ) ?>>
  <!-- Share Button -->
  <button class="share_btn">
   <i class="fas fa-share-alt"></i>
@@ -184,31 +183,6 @@ $organizer_names = array_map('tribe_get_organizer', $organizer_ids);
     </div>
 
     <script>
-
-
-//FUNCTION TO SHOW LOADING EFFECT AND WHEN JS IS FULLY LOADED  HIDE AND SHOW CONTENT
-document.addEventListener("DOMContentLoaded", function() {
-        // Wait for 500 milliseconds after the document is fully loaded before showing main content
-        setTimeout(showMainContent, 1000);
-    });
-
-    function showMainContent() {
-        // Hide the loading animation
-        var loadingDiv = document.querySelector('.loading_svg_div');
-        if (loadingDiv) {
-            loadingDiv.style.display = 'none';
-        }
-
-        // Show the main content
-        var mainContentDiv = document.querySelector('.main_content_loading_div');
-        if (mainContentDiv) {
-            mainContentDiv.style.display = 'block'; // Or 'flex', 'grid' etc. depending on your layout
-        }
-    }
-
-    ////END
-
-
 
 
 // Make the entire event card clickable without affecting interactive elements like buttons and links
@@ -412,71 +386,10 @@ jQuery(document).ready(function($) {
     });
 });
 </script>
-</div>
+
 </article>
-
+</div>
 <style>
-
-/****LOADING  ANIMATION STYLES*****/
-.loading_svg_div {
-        display: block; /* Or whatever display mode you prefer */
-    }
-
-    .main_content_loading_div {
-        display: none;
-    }
-.grey {
-  stroke-dasharray: 788 790;
-  stroke-dashoffset: 789;
-  animation: draw_0 3200ms infinite, fade 3200ms infinite;
-}
-
-.blue {
-  stroke-dasharray: 788 790;
-  stroke-dashoffset: 789;
-  animation: draw_1 3200ms infinite, fade 3200ms infinite;
-}
-
-@keyframes fade {
-  0% {
-    stroke-opacity: 1;
-  }
-  80% {
-    stroke-opacity: 1;
-  }
-  100% {
-    stroke-opacity: 0;
-  }
-}
-
-@keyframes draw_0 {
-  9.375% {
-    stroke-dashoffset: 789
-  }
-  39.375% {
-    stroke-dashoffset: 0;
-  }
-  100% {
-    stroke-dashoffset: 0;
-  }
-}
-
-@keyframes draw_1 {
-  35.625% {
-    stroke-dashoffset: 789
-  }
-  65.625% {
-    stroke-dashoffset: 0;
-  }
-  100% {
-    stroke-dashoffset: 0;
-  }
-}
-
-
-/*****END******/
-
-
 
 /****Tags */
 .tribe-events .tribe-events-c-small-cta__stock {
