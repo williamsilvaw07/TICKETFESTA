@@ -531,6 +531,9 @@ body .share_btn{
         margin: 5px;
         max-width: calc(50% - 10px); /* Adjusted to 50% for 2 items per row */
     }
+    .share_btn{
+        display:block!important
+    }
 }
 
 @media (max-width: 700px) {
