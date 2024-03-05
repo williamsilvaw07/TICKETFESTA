@@ -19,12 +19,15 @@
  // Trim the event title here before displaying it
 $trimmed_title = mb_strimwidth(get_the_title($event->ID), 0, 60, '...');
 
+
 ?>
+
     <!-- Overlay Background -->
-    <div class="custom-overlay"></div>
+    <div class="overlay" style="display: none;"></div>
+
+
 
 <?php
-
 
 $classes = get_post_class( [ 'tribe-common-g-col', 'tribe-events-pro-photo__event' ], $event->ID );
 if ( ! empty( $event->featured ) ) {
@@ -52,9 +55,6 @@ $organizer_names = array_map('tribe_get_organizer', $organizer_ids);
             <img src="https://ticketfesta.co.uk/wp-content/uploads/2024/02/placeholder-1-1.png" alt="Placeholder Image">
         </div>
     <?php endif; ?>
-
-
-
 
     <!-- Popup div for sharing link -->
 
@@ -233,39 +233,30 @@ jQuery(document).ready(function($) {
 
 
     jQuery(document).ready(function($) {
-   
-
-
- // Show the popup and overlay when the share button is clicked
- $('.share_btn').on('click', function(event) {
-        event.preventDefault();
-        $('.custom-overlay').fadeIn(); // Show the custom overlay
-        $('.share_btn_event').fadeIn().css({
+    // Show the popup when the share button is clicked
+    $('.share_btn').click(function() {
+        $('.overlay').show();
+        $(this).nextAll('.share_btn_event').first().show().css({
             'position': 'fixed',
             'top': '50%',
             'left': '50%',
             'transform': 'translate(-50%, -50%)',
-            'z-index': '1001' // Make sure this is above the overlay z-index
+            'z-index': '1001'
         });
-        event.stopPropagation(); // Prevent the event from bubbling up to the document
     });
 
-    // Close the popup and hide the overlay when clicking the close button
-    $('.close_popup').on('click', function() {
-        $('.share_btn_event, .custom-overlay').fadeOut(); // Hide both the popup and the overlay
+    // Close the popup and hide the overlay when the close button is clicked
+    $('.close_popup').click(function() {
+        $('.share_btn_event').hide();
+        $('.overlay').hide();
     });
 
-    // Close the popup and hide the overlay when clicking outside
-    $(document).on('click', function(event) {
-        if (!$(event.target).closest('.share_btn_event, .share_btn').length) {
-            $('.share_btn_event, .custom-overlay').fadeOut(); // Hide both the popup and the overlay
-        }
+    // Also close the popup and hide the overlay when clicking outside of the popup (on the overlay)
+    $(document).on('click', '.overlay', function() {
+        $('.share_btn_event').hide();
+        $('.overlay').hide();
     });
 
-    // Prevent the popup from closing when clicking inside it
-    $('.share_btn_event').on('click', function(event) {
-        event.stopPropagation();
-    });
     // The section for copying the URL has been removed
 
 
@@ -457,17 +448,19 @@ body .share_btn{
     height: 30px;
 }
 
-.custom-overlay {
+.overlay {
+
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     display: none;
+    z-index: 1000;
+    
+    /* Overlay blur - this could be adjusted if you want the background content to be blurred as well */
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(5px); /* For Safari */
-    background-color: rgba(0, 0, 0, 0.5); /* Dark overlay */
-    z-index: 1000; /* Ensure this is below the popup z-index to keep the popup above the overlay */
 }
 
 
