@@ -1007,6 +1007,19 @@ jQuery(document).ready(function() {
 
 <style>
 
+
+
+/***SHARE BUTTON*/
+.share_btn{
+    display: block;
+    z-index: 9;
+}
+.type-tribe_events {
+    position: relative;
+}
+/*end***/
+
+
 .glass-effect {
     background-size: cover;
     background-position: center;; 
@@ -1217,37 +1230,9 @@ html body .single_event_sections {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
     .tribe-events-event-meta_venue .tribe-events-meta-group-details , .tribe-events-meta-group-organizer  , .tribe-events-meta-group-organizer{
 display:none!important
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     
