@@ -1108,59 +1108,7 @@ body .share_btn{
 
 @media (max-width: 500px) {
 
-    .main_bk_home_main_div{
-        height: 0vh!important;
-    
-    }
-    .home_main_heading {
-        top: 37%;
-    } 
-
-    .home  .tribe-events .tribe-events-header {
-        align-items: center;
-        flex-direction: row-reverse;
-        flex-wrap: wrap;
-        position: relative;
-        width: 100%!important;
-        padding: 0!important;
-        padding-bottom: 26px!important;
-    }
-    .elementor-element-679702c{
-        margin-top: 30px!important;
-    }
-    .home .entry-header , html  .tribe-events-c-view-selector {
-        display: none!important;
-    }
-    .home .container .site-content .content-area {
-        width: auto;
-        margin-top: -31px!important;
-        }
-        .home header {
-            width: 100%!important;
-            margin: 0 auto;
-            }
-            
-        .home .elementor-3943 .elementor-element.elementor-element-9d845b1:not(.elementor-motion-effects-element-type-background), .elementor-3943 .elementor-element.elementor-element-9ee88e6:not(.elementor-motion-effects-element-type-background), .home header {
-            background-color: #1A1A1A!important;
-        }
-        .elementor-3943 .elementor-element.elementor-element-9ee88e6:not(.elementor-motion-effects-element-type-background), .elementor-3943 .elementor-element.elementor-element-9ee88e6 > .elementor-motion-effects-container > .elementor-motion-effects-layer {
-            background-color: #1A1A1A!important;
-        }
-        .tribe-events-c-top-bar{
-            display: block!important;
-        }
-        .tribe-events .tribe-events-c-events-bar {
-            display: flex;
-            transform: scale(0.8);
-            gap: 13px;
-            background: inherit;
-            box-shadow: inherit!important;
-        
-        }
-        .tribe-events-c-top-bar span{
-            font-size: 16px!important;
-        
-        }
+ 
 }
 /*******end*****/
 
