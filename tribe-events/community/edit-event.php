@@ -223,27 +223,33 @@ $event_description = get_post_meta($event_id, 'event_description', true);
     <h2>Event Description</h2>
     <!-- Create the editor container -->
     <div id="quill-editor" style="height: 200px;"></div>
-    <input type="hidden" name="event_description" id="event_description" value="<?php echo esc_attr($event_description); ?>">
+    <input type="hidden" name="event_description" id="event_description">
 </div>
 
 <script>
-var quill = new Quill('#quill-editor', {
-    theme: 'snow',
-    modules: {
-        toolbar: [
-            [{ header: [1, 2, false] }],
-            ['bold', 'italic', 'underline'],
-            ['image', 'video']
-        ]
-    }
-});
+document.addEventListener('DOMContentLoaded', function() {
+    var quill = new Quill('#quill-editor', {
+        theme: 'snow',
+        modules: {
+            toolbar: [
+                [{ header: [1, 2, false] }],
+                ['bold', 'italic', 'underline'],
+                ['image', 'code-block']
+            ]
+        }
+    });
 
-// Set the content of the Quill editor to the saved content
-quill.root.innerHTML = <?php echo json_encode($event_description); ?>;
+    // Decode and set the content
+    <?php if ($event_description): ?>
+    quill.root.innerHTML = <?php echo json_encode($event_description); ?>;
+    <?php endif; ?>
 
-// Update hidden field on form submit
-document.querySelector('form').addEventListener('submit', function() {
-    document.querySelector('#event_description').value = quill.root.innerHTML;
+    // Ensure the content of the Quill editor is saved
+    var form = document.querySelector('form');
+    form.onsubmit = function() {
+        var eventDescriptionInput = document.querySelector('input[name="event_description"]');
+        eventDescriptionInput.value = quill.root.innerHTML;
+    };
 });
 </script>
 
