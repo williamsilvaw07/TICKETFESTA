@@ -232,9 +232,11 @@ jQuery(document).ready(function($) {
 
 
 
- // Show the popup when the share button is clicked
- $('.share_btn').click(function(event) {
+    // Show the popup when the share button is clicked
+    $('.share_btn').click(function(event) {
         event.preventDefault(); // Prevent the default action
+        event.stopPropagation(); // Stop the event from propagating to higher elements
+
         // Show the popup
         $(this).nextAll('.share_btn_event').first().fadeIn().css({
             'position': 'fixed',
@@ -243,14 +245,11 @@ jQuery(document).ready(function($) {
             'transform': 'translate(-50%, -50%)',
             'z-index': '1001'
         });
-        // Prevent clicks within the popup from closing it
-        $('.share_btn_event').click(function(event) {
-            event.stopPropagation();
-        });
     });
 
     // Close the popup when the close button is clicked
-    $('.close_popup').click(function() {
+    $('.close_popup').click(function(event) {
+        event.preventDefault(); // Prevent the default action
         $('.share_btn_event').fadeOut(); // Hide the share button event popup
     });
 
@@ -261,6 +260,11 @@ jQuery(document).ready(function($) {
             // Hide the popup
             $('.share_btn_event').fadeOut();
         }
+    });
+
+    // Prevent closing the popup when clicking inside it
+    $('.share_btn_event').click(function(event) {
+        event.stopPropagation(); // Stop the event from propagating to the document
     });
     // The section for copying the URL has been removed
 
