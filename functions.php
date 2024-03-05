@@ -2988,40 +2988,50 @@ add_filter('woocommerce_account_menu_items', 'ticketfeasta_following_link_my_acc
 // ------------------
 // 4. Add content to the new tab
 
-function ticketfeasta_following()
-{
-    $user_id = wp_get_current_user()->id;
+function ticketfeasta_following() {
+    $user_id = wp_get_current_user()->ID;
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (isset($_POST['following_id'])) {
-            $organiser_to_unfollow = $_POST['following_id'];
+            $organiser_to_unfollow = sanitize_text_field($_POST['following_id']);
             ticketfeasta_remove_follower($organiser_to_unfollow, $user_id);
             ticketfeasta_unfollow($organiser_to_unfollow, $user_id);
         }
     }
 
-    echo '<h3>Following List:</h3>';
-    $user_id = wp_get_current_user()->id;
+    echo '<h2>Your Following List</h2>';
     $following_array = get_user_meta($user_id, 'following', true);
-    $following_array = json_decode($following_array, true);
-    if (json_last_error() !== JSON_ERROR_NONE) {
-        $following_array = array();
-    }
-    if (count($following_array) === 0) {
-        echo "<p class='empty-following'>You are not following anyone.</p>";
-    }
+    $following_array = json_decode($following_array, true) ?: [];
 
-    foreach ($following_array as $following) {
-        $organiser_name = get_the_title($following);
-        ?>
-        <form method="POST">
-            <input type="hidden" name="following_id" value="<?php echo $following; ?>">
-            <label>
-                <?php echo $organiser_name; ?>
-            </label>
-            <input type="submit" value="<?php echo "Unfollow"; ?>" nanme="submit" class="unfollow-button">
-        </form>
-        <?php
+    if (empty($following_array)) {
+        echo "<p class='empty-following'>You are not following anyone.</p>";
+    } else {
+        echo '<div class="organiser-following-list">';
+        foreach ($following_array as $following) {
+            $organiser_name = get_the_title($following);
+            $organiser_img_url = get_the_post_thumbnail_url($following, 'thumbnail');
+            // Assuming 'organizer' is the slug for the custom post type of organizers
+            $organiser_profile_link = get_permalink($following); // This gets the link to the organizer's profile page if it's a custom post type
+
+            ?>
+            <div class="organiser-following-item">
+                <?php if ($organiser_img_url): ?>
+                    <img src="<?php echo esc_url($organiser_img_url); ?>" alt="<?php echo esc_attr($organiser_name); ?>" class="organiser-thumbnail">
+                <?php endif; ?>
+                <div class="organiser-details">
+                    <strong><?php echo esc_html($organiser_name); ?></strong>
+                    <div class="organiser-actions">
+                        <form method="POST" style="display: inline-block;">
+                            <input type="hidden" name="following_id" value="<?php echo esc_attr($following); ?>">
+                            <input type="submit" value="Unfollow" name="submit" class="unfollow-button">
+                        </form>
+                        <a href="<?php echo esc_url($organiser_profile_link); ?>" class="profile-link-button">See Events</a>
+                    </div>
+                </div>
+            </div>
+            <?php
+        }
+        echo '</div>';
     }
 }
 
@@ -3524,6 +3534,7 @@ require_once get_stylesheet_directory() . '/option-page.php';
 
 ///FUNCTION TO SHOW THE UPCOMING EVENTS FROM THE ORGINSISER THE USER FOLLOWES 
 
+/*
 function ticketfeasta_display_following_organizers_events_dashboard()
 {
     $user_id = get_current_user_id();
@@ -3626,7 +3637,7 @@ function ticketfeasta_display_following_organizers_events_dashboard()
 }
 
 add_action('woocommerce_account_following_endpoint', 'ticketfeasta_display_following_organizers_events_dashboard');
-
+*/
 
 
 

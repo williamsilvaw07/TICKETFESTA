@@ -613,7 +613,7 @@ a.tribe-button.tribe-button-primary.add-new , .organizers_add_new_btn{
     color: rgb(255, 255, 255)!important;
     font-weight: 500!important;
 }
-html  .tribe-community-notice-error p{
+html .tribe-community-events .tribe-community-notice-error p{
     color: #ffffff !important;
     font-size: 17px!important;
     font-weight: 400!important;
@@ -1607,15 +1607,6 @@ input.follow-button {
 }
 
 /* my account  unfollow button style */
-
-input.unfollow-button {
-    background: #e14545b8;
-    border-radius: 10px;
-    color: #fff;
-    margin-top: 15px;
-    margin-left: 15px;
-    padding: 2px 15px;
-}
 
 .xoo-aff-input-group .xoo-aff-input-icon{
 
