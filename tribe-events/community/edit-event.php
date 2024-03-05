@@ -928,18 +928,7 @@ jQuery(document).ready(function($) {
 <style>
 
 
-/****page after edit page****/
 
-.my-events-header h2.my-events {
-    font-weight: 700!important;
-}
-
-html .tribe-community-notice {
-    background-color: rgb(26, 26, 26)!important;
-}
-
-
-/*****END******/
     .accordion-header {
         cursor: pointer;
         padding: 10px;

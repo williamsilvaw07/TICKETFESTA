@@ -578,6 +578,53 @@ a.tribe-button.tribe-button-primary.add-new , .organizers_add_new_btn{
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+/****page after edit page****/
+
+.my-events-header h2.my-events {
+    font-weight: 700!important;
+}
+
+.tribe-community-events .tribe-community-notice {
+    background-color: rgb(26, 26, 26)!important;
+}
+
+
+/*****END******/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /****HOME BANNER******/
 
 .home header:first-child{
