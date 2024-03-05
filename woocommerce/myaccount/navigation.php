@@ -550,6 +550,24 @@ text-align: left;
 
 
 
+/****FOLLOWING PAGE  */
+
+.organiser-following-item img{
+    border: 2px solid white;
+    border-radius: 100px;
+    max-width: 90px;
+    width: 100%;
+    height: auto;
+    object-fit: cover; 
+}
+
+
+
+
+/*********END */
+
+
+
 @media (max-width: 890px) {
     .event-listing {
     display: grid;
