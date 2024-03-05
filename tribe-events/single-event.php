@@ -2094,6 +2094,9 @@ html .single-tribe_events .tribe-tickets__tickets-footer{
 
     gap: 15px;
 }
+.getticketbtn svg{
+    display:none
+}
 
   }
 
