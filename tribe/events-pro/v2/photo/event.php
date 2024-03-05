@@ -232,10 +232,10 @@ jQuery(document).ready(function($) {
 
 
 
-  // Show the popup when the share button is clicked
-  $('.share_btn').click(function(event) {
+ // Show the popup when the share button is clicked
+ $('.share_btn').click(function(event) {
         event.preventDefault(); // Prevent the default action
-        $('.overlay').fadeIn(); // Show the overlay
+        // Show the popup
         $(this).nextAll('.share_btn_event').first().fadeIn().css({
             'position': 'fixed',
             'top': '50%',
@@ -243,19 +243,24 @@ jQuery(document).ready(function($) {
             'transform': 'translate(-50%, -50%)',
             'z-index': '1001'
         });
+        // Prevent clicks within the popup from closing it
+        $('.share_btn_event').click(function(event) {
+            event.stopPropagation();
+        });
     });
 
-    // Close the popup and hide the overlay when the close button is clicked
+    // Close the popup when the close button is clicked
     $('.close_popup').click(function() {
         $('.share_btn_event').fadeOut(); // Hide the share button event popup
-        $('.overlay').fadeOut(); // Hide the overlay
     });
 
-    // Prevent navigation when clicking outside the popup to close it
-    $(document).on('click', '.overlay', function(event) {
-        event.preventDefault(); // Prevent default action
-        $('.share_btn_event').fadeOut(); // Hide the share button event popup
-        $(this).fadeOut(); // Hide the overlay
+    // Listen for clicks on the document
+    $(document).click(function(event) {
+        // If the clicked element is not the popup nor a descendant of the popup
+        if (!$(event.target).closest('.share_btn_event').length && !$(event.target).is('.share_btn')) {
+            // Hide the popup
+            $('.share_btn_event').fadeOut();
+        }
     });
     // The section for copying the URL has been removed
 
@@ -456,7 +461,7 @@ body .share_btn{
     width: 100%;
     height: 100%;
     display: none;
-    z-index: 1000000;
+    z-index: 1000;
     
     /* Overlay blur - this could be adjusted if you want the background content to be blurred as well */
     backdrop-filter: blur(5px);
