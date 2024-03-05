@@ -594,16 +594,12 @@ jQuery(document).ready(function(){
 jQuery(document).ready(function() {
 
 
- // Initialize variables to store the minimum and maximum prices
- let minPrice = Infinity;
+    let minPrice = Infinity;
     let maxPrice = 0;
 
-    // Loop through each ticket item to find the min and max prices
     $('.tribe-tickets__tickets-item').each(function() {
-        // Extract the price for each ticket
-        var price = parseFloat($(this).data('ticket-price'));
+        let price = parseFloat($(this).data('ticket-price'));
         
-        // Update min and max prices
         if (price < minPrice) {
             minPrice = price;
         }
@@ -612,18 +608,13 @@ jQuery(document).ready(function() {
         }
     });
 
-    // Check for the case where there are no tickets (or free only)
-    if (minPrice === Infinity) {
-        minPrice = 0; // or set to "Free" if you prefer
-    }
-
-    // Update the text to show the price range
-    // Handle the case where all tickets are free
-    if (minPrice === 0 && maxPrice === 0) {
+    // Check if the lowest price is 0 to display "Free"
+    if (minPrice === 0) {
         $('.btn_price_span').text('Free');
     } else {
-        // Show the range
-        $('.btn_price_span').text('£' + minPrice.toFixed(2) + ' - £' + maxPrice.toFixed(2));
+        // Otherwise, show the price range, including the case where min and max are the same (only one price)
+        let priceRangeText = minPrice === maxPrice ? '£' + minPrice.toFixed(2) : '£' + minPrice.toFixed(2) + ' - £' + maxPrice.toFixed(2);
+        $('.btn_price_span').text(priceRangeText);
     }
 
 
@@ -631,7 +622,7 @@ jQuery(document).ready(function() {
 
 
 
-
+    
     var btns = jQuery('.getticketbtn, #scroll-to-tickets');  // Selecting elements with class 'getticketbtn' and the ID 'scroll-to-tickets'
     var linkViewAttendee = jQuery('.tribe-link-view-attendee');
     var ticketsForm = jQuery('.tribe-common.event-tickets.tribe-tickets__tickets-wrapper');
