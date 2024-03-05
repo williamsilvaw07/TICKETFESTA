@@ -2991,7 +2991,6 @@ function ticketfeasta_following()
     }
 
     foreach ($following_array as $following) {
-        echo $following;
         $organiser_name = get_the_title($following);
         ?>
         <form method="POST">
