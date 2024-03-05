@@ -590,8 +590,46 @@ jQuery(document).ready(function(){
 
 
 
+///FUNCTION FOR MOBILE TICKET POPUP AND CALCUTATE THE LOWEST ANDD HIGHT PRICE RANGE AND IF ITS 0.00 SHOW FREE
 
 jQuery(document).ready(function() {
+
+
+    let minPrice = Infinity;
+    let maxPrice = 0;
+
+    $('.tribe-tickets__tickets-item').each(function() {
+        let price = parseFloat($(this).data('ticket-price'));
+        
+        if (price < minPrice) {
+            minPrice = price;
+        }
+        if (price > maxPrice) {
+            maxPrice = price;
+        }
+    });
+
+    // Determine the price range or "Free" label
+    let priceText;
+    if (minPrice === 0 && maxPrice !== 0) {
+        // Scenario for "Free - £maxPrice"
+        priceText = 'Free - £' + maxPrice.toFixed(2);
+    } else if (minPrice === 0 && maxPrice === 0) {
+        // All tickets are free
+        priceText = 'Free';
+    } else {
+        // General case with min and max prices
+        priceText = '£' + minPrice.toFixed(2) + ' - £' + maxPrice.toFixed(2);
+    }
+
+    $('.btn_price_span').text(priceText);
+
+
+
+
+
+
+    
     var btns = jQuery('.getticketbtn, #scroll-to-tickets');  // Selecting elements with class 'getticketbtn' and the ID 'scroll-to-tickets'
     var linkViewAttendee = jQuery('.tribe-link-view-attendee');
     var ticketsForm = jQuery('.tribe-common.event-tickets.tribe-tickets__tickets-wrapper');
@@ -2045,6 +2083,44 @@ html .single-tribe_events .tribe-tickets__tickets-footer{
 
   }
 
+
+
+
+
+
+  @media (max-width: 768px) { /* Adjusts for mobile devices */
+    .tribe-tickets__tickets-item-extra {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .tribe-tickets__tickets-item-extra > div {
+        flex: 1; /* Ensures that the price and availability take up equal space */
+    }
+
+    .tribe-tickets__tickets-item-quantity {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .tribe-tickets__tickets-item-quantity > div,
+    .tribe-tickets__tickets-item-quantity > button {
+        flex: 1; /* Equal space allocation for quantity buttons and input */
+    }
+
+    /* Optional: Additional styling to decrease button and input sizes for better fit */
+    .tribe-tickets__tickets-item-quantity-remove,
+    .tribe-tickets__tickets-item-quantity-add,
+    .tribe-tickets__tickets-item-quantity-number-input {
+        max-width: 40px; /* Adjust based on preference */
+    }
+
+    .tribe-tickets__tickets-item-quantity-number-input {
+        text-align: center;
+    }
+}
 
 
 </style>
