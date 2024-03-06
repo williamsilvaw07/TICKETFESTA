@@ -1414,10 +1414,12 @@ function display_edit_create_vanues()
             <!-- Address Title Field -->
             <label for="venue_address">Address:</label>
             <input type="text" id="venue_address" name="venue_address" value="<?php echo esc_attr($venue->post_title); ?>" /><br />
+            <br />
 
             <!-- Address Title Field -->
-            <label for="venue_address">Address:</label>
-            <input type="text" id="venue_address" name="venue_address" value="<?php echo esc_attr($venue->post_title); ?>" /><br />
+            <label for="venue_city">City:</label>
+            <input type="text" id="venue_city" name="venue_city" value="<?php echo esc_attr($venue->post_title); ?>" /><br />
+            <br />
 
             <label for="venue_description">Country:</label><br />
             <select class="tribe-dropdown tribe-dropdown-created" id="EventCountry" name="venue[Country]" tabindex="-1"
@@ -1672,10 +1674,12 @@ function display_edit_create_vanues()
             <!-- State or Province  Field -->
             <label for="venue_state">State or Province:</label>
             <input type="text" id="venue_state" name="venue_state" value="<?php echo esc_attr($venue->post_title); ?>" /><br />
+            <br />
 
             <!-- Postal Code  Field -->
             <label for="venue_postcode">Postal Code:</label>
             <input type="text" id="venue_postcode" name="venue_postcode" value="<?php echo esc_attr($venue->post_title); ?>" /><br />
+            <br />
 
 
             <!-- Show Map -->
