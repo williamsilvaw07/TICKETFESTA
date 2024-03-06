@@ -1315,7 +1315,7 @@ function display_user_created_vanues()
             jQuery.ajax({
                 url: ajaxurl,
                 type: 'POST',
-                dataType : 'json'
+                dataType : 'json',
                 data: {
                     'action': 'delete_vanue',
                     'vanue_id': vanueID

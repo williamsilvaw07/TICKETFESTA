@@ -161,7 +161,34 @@ document.addEventListener('DOMContentLoaded', function() {
 
 jQuery(document).ready(function($) {
     // jQuery code to be executed when the DOM is ready
-       
+    
+    function deleteVanue(vanueID) {
+        console.log('Delete vanue called with ID:', vanueID);
+
+        if (!confirm('Are you sure you want to delete this vanue?')) {
+            return;
+        }
+
+        jQuery.ajax({
+            url: ajaxurl,
+            type: 'POST',
+            dataType : 'json',
+            data: {
+                'action': 'delete_vanue',
+                'vanue_id': vanueID
+            },
+            success: function(response) {
+                alert(response.data.message);
+                jQuery('#organizer-row-' + vanueID).remove(); // Remove the row from the table
+            },
+            fail: function(response){
+                console.log('AJAX error:', response);
+                alert('Failed to delete: ' );
+            }
+        });
+    }
+
+
     function update_site_fees(){
     
         var ticketAmount = parseFloat(jQuery('.tribe-amount').text().trim()).toFixed(2);
