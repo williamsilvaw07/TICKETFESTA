@@ -320,6 +320,17 @@ jQuery(document).ready(function($) {
 
     autoSelectCountry();
 
+    // change vanue edit link 
+    jQuery('.vanue-container').on('click', function() {
+        var vanueId  = jQuery('#saved_tribe_venue').val()
+
+        // Get the href value from the clicked element's child
+        var newHref = 'https://ticketfesta.co.uk/edit-vanues/?id=' + vanueId; // Replace 'new_href_value' with the desired new href value
+
+        // Update the href attribute of the child element
+        jQuery(this).find('.edit-linked-post-link > a').attr('href', newHref);
+    });
+
 });
 // auto select country for edit vanue
 function autoSelectCountry(){

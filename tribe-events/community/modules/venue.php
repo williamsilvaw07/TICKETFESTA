@@ -33,7 +33,7 @@ if ( ! isset( $event ) ) {
 	$event = null;
 }
 ?>
-<div class="event_decp_div hover_section">
+<div class="event_decp_div hover_section vanue-container">
 <h2>
 Venue Datails
 </h2>
