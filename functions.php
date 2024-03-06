@@ -1389,6 +1389,13 @@ function register_vanues_shortcode()
 
 add_action('init', 'register_vanues_shortcode');
 
+function display_edit_create_vanues(){
+
+    echo 'display_edit_create_vanues';
+
+}
+add_shortcode('edit_create_vanues', 'display_edit_create_vanues');
+
 function get_organizer_id_shortcode_function($atts)
 {
     $atts = shortcode_atts(
