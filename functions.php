@@ -1398,6 +1398,14 @@ function display_edit_create_vanues()
     echo '<pre>';
     var_dump(get_post_meta( $post_id ));
     echo '</pre>';
+
+    $address     = get_post_meta( $post_id, '_VenueAddress', true);
+    $city        = get_post_meta( $post_id, '_VenueCity', true);
+    $country     = get_post_meta( $post_id, '_VenueCountry', true);
+    $province    = get_post_meta( $post_id, '_VenueStateProvince', true);
+    $zip         = get_post_meta( $post_id, '_VenueZip', true);
+    $ShowMap     = get_post_meta( $post_id, '_EventShowMap', true);
+    $ShowMapLink = get_post_meta( $post_id, '_EventShowMapLink', true);
     // Check if the venue exists and is of the correct post type
     if ($venue && $venue->post_type == 'tribe_venue') {
         ?>
@@ -1406,8 +1414,6 @@ function display_edit_create_vanues()
             <label for="venue_title">Venue Title:</label>
             <input type="text" id="venue_title" name="venue_title" value="<?php echo esc_attr($venue->post_title); ?>" />
             <br />
-
-           
             
             <!-- Address Title Field -->
             <label for="venue_address">Address:</label>
