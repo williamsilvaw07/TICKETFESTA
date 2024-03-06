@@ -1309,7 +1309,7 @@ function display_user_created_vanues()
         function deleteVanue(vanueID) {
             console.log('Delete vanue called with ID:', vanueID);
 
-            if (!confirm('Are you sure you want to delete this organizer?')) {
+            if (!confirm('Are you sure you want to delete this vanue?')) {
                 return;
             }
 
