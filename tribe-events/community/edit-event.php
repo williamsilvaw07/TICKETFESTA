@@ -230,6 +230,29 @@ function initializeQuill() {
     var eventDescriptionValue = document.getElementById('event_description').value;
     quill.clipboard.dangerouslyPasteHTML(eventDescriptionValue);
 
+    // Modify image src on editor-change event
+    quill.on('editor-change', function(eventName, ...args) {
+        if (eventName === 'text-change') {
+            // Handle text changes if needed
+        } else if (eventName === 'selection-change') {
+            // Handle selection changes if needed
+        } else if (eventName === 'editor-change') {
+            // Handle editor changes
+            var delta = args[0];
+            if (delta.ops) {
+                delta.ops.forEach(function(op) {
+                    if (op.insert && op.insert.image) {
+                        // Modify the image src to include "data:" prefix
+                        var imgElement = quill.root.querySelector('img[src="' + op.insert.image + '"]');
+                        if (imgElement) {
+                            imgElement.src = 'data:' + op.insert.image;
+                        }
+                    }
+                });
+            }
+        }
+    });
+
     // Save content back to the hidden input on form submit
     var form = document.querySelector('form'); // Ensure this selector targets your actual form
     form.onsubmit = function() {
