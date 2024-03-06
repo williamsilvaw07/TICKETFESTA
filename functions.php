@@ -1539,7 +1539,7 @@ function ajax_delete_organizer()
 }
 add_action('wp_ajax_delete_organizer', 'ajax_delete_organizer');
 
-function ajax_delete_vanue(){
+function delete_vanue(){
 
     echo 'delete vanue';
     header('Content-Type: application/json'); // Ensure JSON response
@@ -1548,10 +1548,6 @@ function ajax_delete_vanue(){
 
     if (!$vanue_id) {
         wp_send_json_error('Invalid Vanue ID');
-        die();
-    }
-    if (!current_user_can('delete_post', $vanue_id)) {
-        wp_send_json_error('No permission to delete this organizer');
         die();
     }
     $result = wp_delete_post($vanue_id, true);
@@ -1566,8 +1562,8 @@ function ajax_delete_vanue(){
 }
 
 
-add_action('wp_ajax_delete_vaune', 'ajax_delete_vanue');
-add_action('wp_ajax_nopriv_delete_vaune', 'ajax_delete_vanue');
+add_action('wp_ajax_delete_vaune', 'delete_vanue');
+add_action('wp_ajax_nopriv_delete_vaune', 'delete_vanue');
 
 
 
