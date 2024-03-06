@@ -1317,23 +1317,28 @@ function display_user_created_vanues()
             //     'action': 'delete_vanue',
             //     'vanue_id': vanueID
             // };
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', ajaxurl, true); // Use ajaxurl provided by WordPress
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            var data = 'action=delete_vanue&vanue_id=' + vanueID; 
+            xhr.send(data);
 
-            jQuery.ajax({
-                url: ajaxurl,
-                type: 'POST',
-                data: {
-                    'action': 'delete_vanue',
-                    'vanue_id': vanueID
-                },
-                success: function(response) {
-                    alert(response.data.message);
-                    jQuery('#organizer-row-' + vanueID).remove(); // Remove the row from the table
-                },
-                fail: function(response){
-                    console.log('AJAX error:', response);
-                    alert('Failed to delete: ' );
-                }
-            });
+            // jQuery.ajax({
+            //     url: ajaxurl,
+            //     type: 'POST',
+            //     data: {
+            //         'action': 'delete_vanue',
+            //         'vanue_id': vanueID
+            //     },
+            //     success: function(response) {
+            //         alert(response.data.message);
+            //         jQuery('#organizer-row-' + vanueID).remove(); // Remove the row from the table
+            //     },
+            //     fail: function(response){
+            //         console.log('AJAX error:', response);
+            //         alert('Failed to delete: ' );
+            //     }
+            // });
 
             // jQuery.post(ajaxurl, data, function (response) {
             //     console.log('AJAX response:', response);
@@ -1538,7 +1543,8 @@ function ajax_delete_vanue(){
 
     echo 'delete vanue';
     header('Content-Type: application/json'); // Ensure JSON response
-    $vanue_id = isset($_POST['vanue_id']) ? intval($_POST['vanue_id']) : 0;
+    // $vanue_id = isset($_POST['vanue_id']) ? intval($_POST['vanue_id']) : 0;
+    $vanue_id = isset($_GET['vanue_id']) ? intval($_GET['vanue_id']) : 0;
 
     if (!$vanue_id) {
         wp_send_json_error('Invalid Vanue ID');
@@ -1562,13 +1568,6 @@ function ajax_delete_vanue(){
 
 add_action('wp_ajax_delete_vaune', 'ajax_delete_vanue');
 add_action('wp_ajax_nopriv_delete_vaune', 'ajax_delete_vanue');
-
-
-
-
-
-
-
 
 
 
