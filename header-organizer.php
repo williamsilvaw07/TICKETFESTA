@@ -66,6 +66,12 @@ if (!defined('ABSPATH')) {
                                     class="nav-text">Organizers</span></a>
                         </li>
 
+                        
+                        <li class="admin_dashboard-sidebar-item">
+                            <a href="/dashboard/vanue-list/"><i class="fa fa-map-marker"></i><span
+                                    class="nav-text">Vanue</span></a>
+                        </li>
+
                         <li class="admin_dashboard-sidebar-item">
                             <a href="/organizer-finance/">
                                 <i class="fas fa-university"></i><span class="nav-text">Finance</span>
