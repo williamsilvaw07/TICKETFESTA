@@ -1770,3 +1770,7 @@ span.social_icons_organizers i.social-icon {
 .user-vanues-list tbody tr, .user-vanues-list thead tr {
     grid-template-columns: 35% 65%!important;
 }
+
+.user-vanues-list{
+    max-width: 400px;
+}
