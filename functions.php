@@ -1442,7 +1442,7 @@ function display_user_created_vanues()
 }
 function register_vanues_shortcode()
 {
-    add_shortcode('event_vanues', 'display_user_created_organizers');
+    add_shortcode('event_vanues', 'display_user_created_vanues');
 }
 
 add_action('init', 'register_vanues_shortcode');
