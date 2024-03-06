@@ -1414,17 +1414,17 @@ function display_edit_create_vanues()
             
             <!-- Address Title Field -->
             <label for="venue_address">Address:</label>
-            <input type="text" id="venue_address" name="venue_address" value="<?php echo esc_attr($venue->post_title); ?>" /><br />
+            <input type="text" id="venue_address" name="venue_address" value="<?php echo esc_attr($address); ?>" /><br />
             <br />
 
             <!-- Address Title Field -->
             <label for="venue_city">City:</label>
-            <input type="text" id="venue_city" name="venue_city" value="<?php echo esc_attr($venue->post_title); ?>" /><br />
+            <input type="text" id="venue_city" name="venue_city" value="<?php echo esc_attr($city); ?>" /><br />
             <br />
 
-            <label for="venue_description">Country:</label>
-            <select class="tribe-dropdown tribe-dropdown-created" id="EventCountry" name="venue[Country]" tabindex="-1"
-                aria-hidden="true">
+            <label for="venue_country">Country:</label>
+            <select class="tribe-dropdown tribe-dropdown-created" id="venue_country" name="venue_country" 
+                >
                 <option value="">Select a Country:</option>
                 <option value="Åland Islands">Åland Islands</option>
                 <option value="Afghanistan" >Afghanistan</option>
@@ -1674,22 +1674,22 @@ function display_edit_create_vanues()
 
             <!-- State or Province  Field -->
             <label for="venue_state">State or Province:</label>
-            <input type="text" id="venue_state" name="venue_state" value="<?php echo esc_attr($venue->post_title); ?>" /><br />
+            <input type="text" id="venue_state" name="venue_state" value="<?php echo esc_attr($province); ?>" /><br />
             <br />
 
             <!-- Postal Code  Field -->
             <label for="venue_postcode">Postal Code:</label>
-            <input type="text" id="venue_postcode" name="venue_postcode" value="<?php echo esc_attr($venue->post_title); ?>" /><br />
+            <input type="text" id="venue_postcode" name="venue_postcode" value="<?php echo esc_attr($zip); ?>" /><br />
             <br />
 
 
             <!-- Show Map -->
             <label for="vanue_map">Show Map:</label>
-            <input type="checkbox" id="vanue_map" name="vanue_map" <?php checked(get_post_meta($post_id, 'checkbox1_meta_key', true), 'on'); ?> />
+            <input type="checkbox" id="vanue_map" name="vanue_map" <?php if($ShowMap == '1') echo 'checked'; ?> />
             <br/>
             <!-- Map Link -->
             <label for="map_link">Map Link:</label>
-            <input type="checkbox" id="map_link" name="map_link" <?php checked(get_post_meta($post_id, 'checkbox2_meta_key', true), 'on'); ?> />
+            <input type="checkbox" id="map_link" name="map_link" <?php if($ShowMapLink == '1') echo 'checked'; ?>/>
             <br/>
 
 
@@ -1712,8 +1712,15 @@ if (isset($_POST['update_venue'])) {
     }
 
     // Get and sanitize form data
-    $venue_id = isset($_POST['venue_id']) ? intval($_POST['venue_id']) : 0;
+    $venue_id    = isset($_POST['venue_id']) ? intval($_POST['venue_id']) : 0;
     $venue_title = isset($_POST['venue_title']) ? sanitize_text_field($_POST['venue_title']) : '';
+    $address     = isset($_POST['venue_address']) ? sanitize_text_field($_POST['venue_address']) : '';
+    $city        = isset($_POST['venue_city']) ? sanitize_text_field($_POST['venue_city']) : '';
+    $country     = isset($_POST['venue_country']) ? sanitize_text_field($_POST['venue_country']) : '';
+    $province    = isset($_POST['venue_state']) ? sanitize_text_field($_POST['venue_state']) : '';
+    $postcode    = isset($_POST['venue_postcode']) ? sanitize_text_field($_POST['venue_postcode']) : '';
+    $ShowMap     = isset($_POST['vanue_map']) ? sanitize_text_field($_POST['vanue_map']) : '';
+    $ShowMapLink = isset($_POST['map_link']) ? sanitize_text_field($_POST['map_link']) : '';
 
     // Update venue data
     $updated_venue_data = array(
