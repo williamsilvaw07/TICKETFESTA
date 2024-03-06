@@ -210,8 +210,8 @@ $event_description = get_post_meta($event_id, 'event_description', true);
 <div id="quill-editor" style="height: 200px;"></div>
 <input type="hidden" name="event_description" id="event_description" value="<?php echo esc_attr($event_description); ?>">
 
-<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
-<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+<script src="https://cdn.quilljs.com/1.3.7/quill.js"></script>
+<link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
