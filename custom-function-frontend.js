@@ -318,6 +318,22 @@ jQuery(document).ready(function($) {
         }
     });
 
-});
+    autoSelectCountry();
 
+});
+// auto select country for edit vanue
+function autoSelectCountry(){
+    var selectElement = document.getElementById("venue_country");
+
+    // Get the data-country value
+    var countryValue = selectElement.getAttribute("data-country");
+
+    // Loop through options and select the one that matches the data-country value
+    for (var i = 0; i < selectElement.options.length; i++) {
+        if (selectElement.options[i].value === countryValue) {
+            selectElement.selectedIndex = i;
+            break;
+        }
+    }
+}
 

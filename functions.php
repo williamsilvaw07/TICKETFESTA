@@ -1394,8 +1394,7 @@ function display_edit_create_vanues()
 {
     $post_id = isset($_GET['id']) ? $_GET['id'] :  '0';
     // Retrieve the venue data by post ID
-    $venue = get_post($post_id);
-var_dump(get_post_meta($post_id));
+    $venue       = get_post($post_id);
     $address     = get_post_meta( $post_id, '_VenueAddress', true);
     $city        = get_post_meta( $post_id, '_VenueCity', true);
     $country     = get_post_meta( $post_id, '_VenueCountry', true);
