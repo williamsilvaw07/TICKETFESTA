@@ -214,56 +214,101 @@ $event_description = get_post_meta($event_id, 'event_description', true);
 <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 
         
-        <script>
-function initializeQuill() {
-  var quill = new Quill('#quill-editor', {
-    theme: 'snow',
-    modules: {
-      toolbar: [
-        ['bold', 'italic', 'underline'],
-        [{'list': 'ordered'}, {'list': 'bullet'}],
-        ['link', 'image', 'video']
-      ]
-    }
-  });
-
-  // Load existing content into the editor
-  var eventDescriptionValue = document.getElementById('event_description').value;
-  quill.root.innerHTML = eventDescriptionValue;
-
-  // Save content back to the hidden input on form submit
-  var form = document.querySelector('form'); // Ensure this selector targets your actual form
-  form.onsubmit = function() {
-    var quillContent = quill.root.innerHTML;
-
-    // Option 1: Manual image handling with proper concatenation (if you must)
-    var quillImages = quillContent.match(/<img[^>]*>/g); // Assuming image elements are standalone
-    if (quillImages) {
-      for (var i = 0; i < quillImages.length; i++) {
-        var img = document.createElement('img');
-        var quillImage = quillImages[i];
-
-        // Extract data URI from the image element (assuming it's a data URI)
-        var dataUriMatch = quillImage.match(/src="data:([^"]*);base64,([^"]*)"/);
-        if (dataUriMatch) {
-          img.src = "data:" + dataUriMatch[1] + ";base64," + dataUriMatch[2];
-          quillContent = quillContent.replace(quillImage, img.outerHTML); // Replace image HTML with created element
+       <script lang="ts">
+export function imageHandler(this: any) {
+  const input = document.createElement("input");
+  input.setAttribute("type", "file");
+  input.click();
+  input.onchange = async () => {
+    if(input.files === null) return;
+    const file = input.files[0];
+    if (/^image\//.test(file.type)) {
+      try {
+        // get current position of cursor
+        const range = this.quill.getSelection(true);
+        // insert uploading gif as placeholder
+        this.quill.insertEmbed(range.index, 'video', uploadPlaceholder);
+        // set cursor position to after placeholder image
+        // for better usability: user can continue typing
+        // while image gets uploaded, then placeholder is replaced
+        // with s3 url
+        this.quill.setSelection(range.index + 1);
+        const resp = await S3.upload(file);
+        this.quill.deleteText(range.index, 1);
+        if(resp !== S3.S3ERRORS.upload.catch) {
+          const range = this.quill.getSelection();
+          this.quill.insertEmbed(range.index, "image", resp);
+          this.quill.setSelection(range.index + 1);
+        }
+      } catch(error) {
+        if(error instanceof Error) {
+          ElNotification({
+            type: 'error',
+            message: error.message,
+            duration: 3500,
+          })
         }
       }
+    } else {
+      ElNotification({
+        type: 'info',
+        message: 'Only images are allowed - please select another file',
+        duration: 2500,
+      })
     }
-
-    // Option 2: Use Quill's image handler (recommended)
-    // Assuming you have the image data in Base64 format (imageBase64Data)
-    // quill.insertEmbed(quill.getModule('toolbar').getTool('image'), 'base64', imageBase64Data);
-
-    document.getElementById('event_description').value = quillContent;
   };
-
-  console.log('Quill initialized successfully');
 }
 
-initializeQuill();
-
+export default defineComponent({
+   name: "Editor"
+   components: {
+      quillEditor
+   },
+   data() {
+      quill: null,
+      editorOptions: {
+        theme: "snow",
+        modules: {
+          toolbar: {
+            container: [
+              [
+                'bold',
+                'italic',
+                'underline',
+                'strike',
+                {'font': [] },
+                {'align': [] },
+                'image'
+              ],
+              [
+                'blockquote',
+                'link',
+                { 'header': [1,2,3,4,5,6] },
+                { 'list': 'ordered' },
+                { 'list': 'bullet' },
+                { 'size': ['small', false, 'large', 'huge'] },
+                { 'color': [] },
+                { 'background': [] }
+              ],
+            ],
+            handlers: {
+              image: imageHandler,
+            },
+          },
+        },
+      },
+   },
+   methods: {
+     onEditorChange(quill: any) {
+      this.$emit('update:modelValue', quill.html);
+    },
+    onEditorReady(quill: any) {
+      quill.blur();
+      window.scrollTo(0,0);
+      this.quill = quill;
+    },
+   }
+})
 </script>
 
 
