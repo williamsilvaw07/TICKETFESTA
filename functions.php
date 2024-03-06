@@ -1402,7 +1402,6 @@ function display_edit_create_vanues()
     $province    = get_post_meta( $post_id, '_VenueStateProvince', true);
     $zip         = get_post_meta( $post_id, '_VenueZip', true);
     $ShowMap     = get_post_meta( $post_id, '_EventShowMap', true);
-    var_dump(get_post_meta( $post_id) );
     $ShowMapLink = get_post_meta( $post_id, '_EventShowMapLink', true);
     // Check if the venue exists and is of the correct post type
     if ($venue && $venue->post_type == 'tribe_venue') {
@@ -1424,7 +1423,7 @@ function display_edit_create_vanues()
             <br />
 
             <label for="venue_country">Country:</label>
-            <select class="tribe-dropdown tribe-dropdown-created" id="venue_country" name="venue_country" 
+            <select data-country="<?php echo $country; ?>" class="tribe-dropdown tribe-dropdown-created" id="venue_country" name="venue_country" 
                 >
                 <option value="">Select a Country:</option>
                 <option value="Åland Islands">Åland Islands</option>
@@ -1730,6 +1729,13 @@ if (isset($_POST['update_venue'])) {
     );
 
     wp_update_post($updated_venue_data);
+    update_post_meta($venue_id, '_VenueAddress', $address);
+    update_post_meta($venue_id, '_VenueCity', $city);
+    update_post_meta($venue_id, '_VenueCountry', $country);
+    update_post_meta($venue_id, '_VenueStateProvince', $province);
+    update_post_meta($venue_id, '_VenueZip', $zip);
+    update_post_meta($venue_id, '_EventShowMap', $ShowMap);
+    update_post_meta($venue_id, '_EventShowMapLink', $ShowMapLink);
 
     // Redirect after update
     wp_redirect('https://ticketfesta.co.uk/dashboard/vanues-list/');
