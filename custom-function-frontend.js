@@ -240,6 +240,17 @@ jQuery(document).ready(function($) {
         }
     });
 
+    jQuery(document).on('change', 'input[name="venue[Address][]"]', function() {
+        var vanueAddress = jQuery('input[name="venue[Address][]"]').val();
+        if(vanueAddress != ''){
+            jQuery('#event_tribe_venue').removeClass('required');
+        }else{
+            jQuery('#event_tribe_venue').addClass('required');
+        }
+    
+    });
+
+
     jQuery(document).on('change', '#saved_tribe_organizer', function() {
         // When the select field changes, log its value to the console
         var selectedValue = jQuery(this).val();
