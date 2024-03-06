@@ -1278,6 +1278,177 @@ function register_organizers_shortcode()
 
 add_action('init', 'register_organizers_shortcode');
 
+
+function display_user_created_vanues()
+{
+
+    // Define ajaxurl for the JavaScript
+    ?>
+    <script type="text/javascript">
+        var ajaxurl = "<?php echo admin_url('admin-ajax.php'); ?>";
+    </script>
+    <?php
+
+    if (!is_user_logged_in()) {
+        return 'You need to be logged in to view this page.'; // Only display for logged-in users
+    }
+
+    ob_start(); // Start output buffering
+
+    // Create a nonce for the AJAX request
+    $nonce = wp_create_nonce('create_new_organizer_nonce');
+
+    echo '<div class="organizers-header">';
+    echo '<h2>Your Organizers</h2>'; // Title
+    echo '<a class="organizers_add_new_btn" href="javascript:void(0);" onclick="createNewOrganizer()">Create New Organizer</a>';
+    echo '<input type="hidden" id="create_new_organizer_nonce" value="' . esc_attr($nonce) . '" />';
+    echo '</div>';
+
+    // JavaScript for createNewOrganizer
+    ?>
+    <script>
+        function createNewOrganizer() {
+            console.log('Attempting to create a new organizer...'); // Debugging line
+
+            var nonce = document.querySelector('#create_new_organizer_nonce').value;
+
+            fetch('/wp-admin/admin-ajax.php?action=create_new_organizer', {
+                method: 'POST',
+                credentials: 'same-origin',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: 'nonce=' + nonce
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Response received:', data); // Debugging line
+
+                    if (data.success && data.data && data.data.organizer_id) {
+                        console.log('Redirecting to organizer ID:', data.data.organizer_id); // Debugging line
+                        window.location.href = '/edit-organisers/?id=' + data.data.organizer_id;
+                    } else {
+                        console.error('Unexpected response:', data);
+                        alert('Unexpected response received. Check console for details.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error caught in fetch request:', error);
+                    alert('Error creating new organizer. Check console for details.');
+                });
+        }
+
+
+        function deleteOrganizer(organizerId) {
+            console.log('Delete organizer called with ID:', organizerId);
+
+            if (!confirm('Are you sure you want to delete this organizer?')) {
+                return;
+            }
+
+            var data = {
+                'action': 'delete_organizer',
+                'organizer_id': organizerId
+            };
+
+            jQuery.post(ajaxurl, data, function (response) {
+                console.log('AJAX response:', response);
+
+                if (response.success) {
+                    alert(response.data.message);
+                    jQuery('#organizer-row-' + organizerId).remove(); // Remove the row from the table
+                } else {
+                    var message = response.data && response.data.message ? response.data.message : 'Unknown error occurred';
+                    console.log('Error message:', message);
+                    alert(message);
+                }
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                console.log('AJAX error:', textStatus, errorThrown);
+                alert('Failed to delete: ' + errorThrown);
+            });
+
+
+
+
+
+
+
+
+        }
+    </script>
+    <?php
+
+    $current_user_id = get_current_user_id();
+    $default_organizer_id = get_default_organizer_id_for_current_user();
+
+    $args = array(
+        'post_type' => 'tribe_organizer',
+        'posts_per_page' => -1,
+        'author' => $current_user_id,
+    );
+
+    $organizer_query = new WP_Query($args);
+
+
+    if ($organizer_query->have_posts()) {
+        echo '<table id="user-organizers-list" style="width: 100%;">';
+        echo '<thead>';
+        echo '<tr>';
+        echo '<th>Organizer Logo</th>';
+        echo '<th>Organizer Name</th>';
+        echo '<th>Actions</th>';
+        echo '</tr>';
+        echo '</thead>';
+        echo '<tbody>';
+
+        while ($organizer_query->have_posts()) {
+            $organizer_query->the_post();
+            $organizer_id = get_the_ID();
+            $edit_url = esc_url("/edit-organisers/?id={$organizer_id}");
+            $profile_url = tribe_get_organizer_link($organizer_id, false, false); // Get URL only
+
+            echo '<tr id="organizer-row-' . $organizer_id . '">'; // Unique ID for each row
+            echo '<td>' . get_the_post_thumbnail($organizer_id, 'thumbnail') . '</td>';
+
+            $organizer_title = get_the_title();
+            if ($organizer_id == $default_organizer_id) {
+                $organizer_title .= ' (Default)';
+            }
+            echo '<td>' . $organizer_title . '</td>';
+
+            echo '<td class="action-links">';
+            echo '<a href="' . $edit_url . '" class="edit-link action-link">Edit</a>';
+            // Only show delete link if it's not the default organizer
+            if ($organizer_id != $default_organizer_id) {
+                echo '<a href="javascript:void(0);" onclick="deleteOrganizer(' . $organizer_id . ')" class="delete-link action-link">Delete</a>';
+            }
+            echo '<a href="' . $profile_url . '" class="profile-link action-link">View Profile</a>';
+            echo '</td>';
+            echo '</tr>';
+        }
+
+        echo '</tbody>';
+        echo '</table>';
+
+        wp_reset_postdata();
+    } else {
+        echo 'No organizers found.';
+    }
+
+    return ob_get_clean(); // Return the buffered output
+}
+function register_vanues_shortcode()
+{
+    add_shortcode('event_vanues', 'display_user_created_organizers');
+}
+
+add_action('init', 'register_vanues_shortcode');
+
 function get_organizer_id_shortcode_function($atts)
 {
     $atts = shortcode_atts(
