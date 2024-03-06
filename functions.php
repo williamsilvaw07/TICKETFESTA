@@ -1300,60 +1300,22 @@ function display_user_created_vanues()
 
     echo '<div class="organizers-header">';
     echo '<h2>Your Vanues</h2>'; // Title
-    echo '<a class="organizers_add_new_btn" href="javascript:void(0);" onclick="createNewVanues()">Create New Organizer</a>';
-    echo '<input type="hidden" id="create_new_organizer_nonce" value="' . esc_attr($nonce) . '" />';
     echo '</div>';
 
     // JavaScript for createNewOrganizer
     ?>
     <script>
-        function createNewVanues() {
-            console.log('Attempting to create a new organizer...'); // Debugging line
 
-            var nonce = document.querySelector('#create_new_organizer_nonce').value;
-
-            fetch('/wp-admin/admin-ajax.php?action=create_new_organizer', {
-                method: 'POST',
-                credentials: 'same-origin',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                body: 'nonce=' + nonce
-            })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    console.log('Response received:', data); // Debugging line
-
-                    if (data.success && data.data && data.data.organizer_id) {
-                        console.log('Redirecting to organizer ID:', data.data.organizer_id); // Debugging line
-                        window.location.href = '/edit-organisers/?id=' + data.data.organizer_id;
-                    } else {
-                        console.error('Unexpected response:', data);
-                        alert('Unexpected response received. Check console for details.');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error caught in fetch request:', error);
-                    alert('Error creating new organizer. Check console for details.');
-                });
-        }
-
-
-        function deleteOrganizer(organizerId) {
-            console.log('Delete organizer called with ID:', organizerId);
+        function deleteVanue(vanueID) {
+            console.log('Delete vanue called with ID:', vanueID);
 
             if (!confirm('Are you sure you want to delete this organizer?')) {
                 return;
             }
 
             var data = {
-                'action': 'delete_organizer',
-                'organizer_id': organizerId
+                'action': 'delete_vanue',
+                'vanue_id': vanueID
             };
 
             jQuery.post(ajaxurl, data, function (response) {
@@ -1361,7 +1323,7 @@ function display_user_created_vanues()
 
                 if (response.success) {
                     alert(response.data.message);
-                    jQuery('#organizer-row-' + organizerId).remove(); // Remove the row from the table
+                    jQuery('#organizer-row-' + vanueID).remove(); // Remove the row from the table
                 } else {
                     var message = response.data && response.data.message ? response.data.message : 'Unknown error occurred';
                     console.log('Error message:', message);
@@ -1371,20 +1333,11 @@ function display_user_created_vanues()
                 console.log('AJAX error:', textStatus, errorThrown);
                 alert('Failed to delete: ' + errorThrown);
             });
-
-
-
-
-
-
-
-
         }
     </script>
     <?php
 
     $current_user_id = get_current_user_id();
-    $default_organizer_id = get_default_organizer_id_for_current_user();
 
     $args = array(
         'post_type' => 'tribe_venue',
@@ -1392,10 +1345,10 @@ function display_user_created_vanues()
         'author' => $current_user_id,
     );
 
-    $organizer_query = new WP_Query($args);
+    $vanue_query = new WP_Query($args);
 
 
-    if ($organizer_query->have_posts()) {
+    if ($vanue_query->have_posts()) {
         echo '<table id="user-organizers-list" class="user-vanues-list"style="width: 100%;">';
         echo '<thead>';
         echo '<tr>';
@@ -1405,24 +1358,20 @@ function display_user_created_vanues()
         echo '</thead>';
         echo '<tbody>';
 
-        while ($organizer_query->have_posts()) {
-            $organizer_query->the_post();
-            $organizer_id = get_the_ID();
-            $edit_url = esc_url("/edit-organisers/?id={$organizer_id}");
-            echo '<tr id="organizer-row-' . $organizer_id . '">'; // Unique ID for each row
+        while ($vanue_query->have_posts()) {
+            $vanue_query->the_post();
+            $vanue_id = get_the_ID();
+            $edit_url = esc_url("/edit-vanues/?id={$vanue_id}");
+            echo '<tr id="organizer-row-' . $vanue_id . '">'; // Unique ID for each row
 
-            $organizer_title = get_the_title();
-            if ($organizer_id == $default_organizer_id) {
-                $organizer_title .= ' (Default)';
-            }
-            echo '<td>' . $organizer_title . '</td>';
+            $vanue_title = get_the_title();
+
+            echo '<td>' . $vanue_title . '</td>';
 
             echo '<td class="action-links">';
             echo '<a href="' . $edit_url . '" class="edit-link action-link">Edit</a>';
             // Only show delete link if it's not the default organizer
-            if ($organizer_id != $default_organizer_id) {
-                echo '<a href="javascript:void(0);" onclick="deleteOrganizer(' . $organizer_id . ')" class="delete-link action-link">Delete</a>';
-            }
+                echo '<a href="javascript:void(0);" onclick="deleteVanue(' . $vanue_id . ')" class="delete-link action-link">Delete</a>';
             echo '</td>';
             echo '</tr>';
         }
@@ -1568,8 +1517,36 @@ function ajax_delete_organizer()
 }
 add_action('wp_ajax_delete_organizer', 'ajax_delete_organizer');
 
+function ajax_delete_vanue(){
+
+    header('Content-Type: application/json'); // Ensure JSON response
+
+    $vanue_id = isset($_POST['vanue_id']) ? intval($_POST['vanue_id']) : 0;
+
+    if (!$vanue_id) {
+        wp_send_json_error('Invalid Vanue ID');
+        die();
+    }
+
+    if (!current_user_can('delete_post', $vanue_id)) {
+        wp_send_json_error('No permission to delete this organizer');
+        die();
+    }
+
+    $result = wp_delete_post($vanue_id, true);
+
+    if ($result) {
+        wp_send_json_success(array('message' => 'Vanue deleted successfully'));
+    } else {
+        wp_send_json_error('Deletion failed');
+    }
+
+    die();
+}
 
 
+add_action('wp_ajax_delete_vaune', 'ajax_delete_vanue');
+add_action('wp_ajax_nopriv_delete_vaune', 'ajax_delete_vanue');
 
 
 
