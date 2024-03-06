@@ -221,7 +221,7 @@ function initializeQuill() {
             toolbar: [
                 ['bold', 'italic', 'underline'],
                 [{'list': 'ordered'}, {'list': 'bullet'}],
-                ['link', 'image']
+                ['link', 'image', 'video']
             ]
         }
     });
