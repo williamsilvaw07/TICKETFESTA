@@ -1317,7 +1317,7 @@ function display_user_created_vanues()
                 type: 'POST',
                 dataType : 'json',
                 data: {
-                    'action': 'delete_vanue',
+                    'action': 'delete_organizer',
                     'vanue_id': vanueID
                 },
                 success: function(response) {
