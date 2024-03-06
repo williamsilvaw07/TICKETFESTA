@@ -1409,8 +1409,6 @@ function display_user_created_vanues()
             $organizer_query->the_post();
             $organizer_id = get_the_ID();
             $edit_url = esc_url("/edit-organisers/?id={$organizer_id}");
-            $profile_url = tribe_get_organizer_link($organizer_id, false, false); // Get URL only
-
             echo '<tr id="organizer-row-' . $organizer_id . '">'; // Unique ID for each row
 
             $organizer_title = get_the_title();
@@ -1425,7 +1423,6 @@ function display_user_created_vanues()
             if ($organizer_id != $default_organizer_id) {
                 echo '<a href="javascript:void(0);" onclick="deleteOrganizer(' . $organizer_id . ')" class="delete-link action-link">Delete</a>';
             }
-            echo '<a href="' . $profile_url . '" class="profile-link action-link">View Profile</a>';
             echo '</td>';
             echo '</tr>';
         }
