@@ -1515,7 +1515,6 @@ add_action('wp_ajax_delete_organizer', 'ajax_delete_organizer');
 
 function delete_vanue_trive(){
 
-    echo 'delete vanue';
     $vanue_id = isset($_POST['vanue_id']) ? intval($_POST['vanue_id']) : 0;
     // $vanue_id = isset($_GET['vanue_id']) ? intval($_GET['vanue_id']) : 0;
 
