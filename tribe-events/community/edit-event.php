@@ -235,6 +235,8 @@ document.addEventListener('DOMContentLoaded', function () {
     form.onsubmit = function() {
         document.getElementById('event_description').value = quill.root.innerHTML;
     };
+        console.log('Quill initialized successfully'); // Add this line
+
 });
 </script>
        
