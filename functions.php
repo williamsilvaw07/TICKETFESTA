@@ -1683,11 +1683,11 @@ function display_edit_create_vanues()
 
 
             <!-- Show Map -->
-            <label for="vanue_map">Show Map:</label><br/>
+            <label for="vanue_map">Show Map:</label>
             <input type="checkbox" id="vanue_map" name="vanue_map" <?php checked(get_post_meta($post_id, 'checkbox1_meta_key', true), 'on'); ?> />
             <br/>
             <!-- Map Link -->
-            <label for="map_link">Map Link:</label><br/>
+            <label for="map_link">Map Link:</label>
             <input type="checkbox" id="map_link" name="map_link" <?php checked(get_post_meta($post_id, 'checkbox2_meta_key', true), 'on'); ?> />
             <br/>
 
