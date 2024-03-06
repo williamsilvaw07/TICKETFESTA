@@ -1396,7 +1396,7 @@ function display_user_created_vanues()
 
 
     if ($organizer_query->have_posts()) {
-        echo '<table id="user-organizers-list" style="width: 100%;">';
+        echo '<table id="user-organizers-list vanues" style="width: 100%;">';
         echo '<thead>';
         echo '<tr>';
         echo '<th>Organizer Name</th>';
