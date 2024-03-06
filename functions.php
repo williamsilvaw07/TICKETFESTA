@@ -1312,16 +1312,6 @@ function display_user_created_vanues()
                 return;
             }
 
-            // var data = {
-            //     'action': 'delete_vanue',
-            //     'vanue_id': vanueID
-            // };
-            // var xhr = new XMLHttpRequest();
-            // xhr.open('POST', ajaxurl, true); // Use ajaxurl provided by WordPress
-            // xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            // var data = 'action=delete_vanue&vanue_id=' + vanueID; 
-            // xhr.send(data);
-            // dataType : 'json'
             jQuery.ajax({
                 url: ajaxurl,
                 type: 'POST',
@@ -1339,22 +1329,6 @@ function display_user_created_vanues()
                     alert('Failed to delete: ' );
                 }
             });
-
-            // jQuery.post(ajaxurl, data, function (response) {
-            //     console.log('AJAX response:', response);
-
-            //     if (response.success) {
-            //         alert(response.data.message);
-            //         jQuery('#organizer-row-' + vanueID).remove(); // Remove the row from the table
-            //     } else {
-            //         var message = response.data && response.data.message ? response.data.message : 'Unknown error occurred';
-            //         console.log('Error message:', message);
-            //         alert(message);
-            //     }
-            // }).fail(function (jqXHR, textStatus, errorThrown) {
-            //     console.log('AJAX error:', textStatus, errorThrown);
-            //     alert('Failed to delete: ' + errorThrown);
-            // });
         }
     </script>
     <?php
