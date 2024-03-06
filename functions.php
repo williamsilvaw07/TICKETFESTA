@@ -1520,7 +1520,7 @@ add_action('wp_ajax_delete_organizer', 'ajax_delete_organizer');
 function ajax_delete_vanue(){
 
     header('Content-Type: application/json'); // Ensure JSON response
-
+var_dump($_POST);
     $vanue_id = isset($_POST['vanue_id']) ? intval($_POST['vanue_id']) : 0;
 
     if (!$vanue_id) {
@@ -1531,7 +1531,6 @@ function ajax_delete_vanue(){
         wp_send_json_error('No permission to delete this organizer');
         die();
     }
-var_dump($_POST);
     $result = wp_delete_post($vanue_id, true);
 
     if ($result) {
