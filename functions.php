@@ -1390,8 +1390,57 @@ function register_vanues_shortcode()
 add_action('init', 'register_vanues_shortcode');
 
 function display_edit_create_vanues(){
+        $post_id = '5173';
+        // Retrieve the venue data by post ID
+        $venue = get_post($post_id);
 
-    echo 'display_edit_create_vanues';
+        // Check if the venue exists and is of the correct post type
+        if ($venue && $venue->post_type == 'tribe_venue') {
+            ?>
+            <form method="post" action="">
+                <!-- Venue Title Field -->
+                <label for="venue_title">Venue Title:</label>
+                <input type="text" id="venue_title" name="venue_title" value="<?php echo esc_attr($venue->post_title); ?>"/><br/>
+    
+                <!-- Venue Description Field -->
+                <label for="venue_description">Venue Description:</label><br/>
+                <textarea id="venue_description" name="venue_description"><?php echo esc_textarea($venue->post_content); ?></textarea><br/>
+    
+                <!-- Submit Button -->
+                <input type="submit" name="update_venue" value="Update Venue"/>
+                <input type="hidden" name="venue_id" value="<?php echo $post_id; ?>"/>
+                <?php wp_nonce_field('update_venue_action', 'update_venue_nonce'); ?>
+            </form>
+            <?php
+        } else {
+            echo 'Venue not found.';
+        }
+    }
+    
+    // Handle form submission
+    if (isset($_POST['update_venue'])) {
+        // Verify nonce
+        if (!isset($_POST['update_venue_nonce']) || !wp_verify_nonce($_POST['update_venue_nonce'], 'update_venue_action')) {
+            die('Security check failed');
+        }
+    
+        // Get and sanitize form data
+        $venue_id = isset($_POST['venue_id']) ? intval($_POST['venue_id']) : 0;
+        $venue_title = isset($_POST['venue_title']) ? sanitize_text_field($_POST['venue_title']) : '';
+        $venue_description = isset($_POST['venue_description']) ? sanitize_textarea_field($_POST['venue_description']) : '';
+    
+        // Update venue data
+        $updated_venue_data = array(
+            'ID'           => $venue_id,
+            'post_title'   => $venue_title,
+            'post_content' => $venue_description,
+        );
+    
+        wp_update_post($updated_venue_data);
+    
+        // Redirect after update
+        wp_redirect('https://ticketfesta.co.uk/dashboard/vanues-list/');
+        exit;
 
 }
 add_shortcode('edit_create_vanues', 'display_edit_create_vanues');
