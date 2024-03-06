@@ -212,30 +212,14 @@ $event_description = get_post_meta($event_id, 'event_description', true);
 
 <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
-
 <?php
-function addDataPrefixToImages($quillContent) {
-    // Use regular expression to match and modify image sources
-    $pattern = '/<img\s+decoding="async"\s+src="([^"]+)"\s*\/?>/';
-
-    // Add "data:" prefix to the base64-encoded image
-    $quillContentWithPrefix = preg_replace_callback($pattern, function($matches) {
-        return str_replace($matches[1], 'data:' . $matches[1], $matches[0]);
-    }, $quillContent);
-
-    return $quillContentWithPrefix;
+function replace_text($text) {
+	$text = str_replace('<img src="image/', '<img src="data:image/', $text);
+	
+	return $text;
 }
-
-// Example usage:
-$quillContent = '<p>Some text here.</p><img decoding="async" src="image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAWAAAAC1CAYAAABh5SVkAAAAAXNSR0IArs4c6QAAIABJREFUeF7svQmAHVWVPv7dWt/+ek9v6XQ6OwkJYQkaZF9FZFVRRwYdYRRBVHQGGXVwFwXGZRQV1FF+uAvihuzIErYQEkL2vbuT3re3v9ru/f/PrapOJ0RMIJgE3tPQSb969apOVX333O9+5zsMlVclApUIVCJQicABiQA7IN9a+dJKBCoRqESgEgFUALhyE1QiUIlAJQIHKAIVAD5Aga98bSUClQhUIlAB4Mo9UIlAJQKVCBygCFQA+AAFvvK1lQhUIlCJQAWAK/dAJQKVCFQicIAiUAHgAxT4ytdWIlCJQCUCFQCu3AOVCFQiUInAAYpABYAPUOArX1uJQCUClQhUALhyDxyUERBilQFs1QBVAwargPw0IDuDY7TDdXLNglvNnBcaGBurgmLFIJQYAANQGITKAIV';
-
-$quillContentWithPrefix = addDataPrefixToImages($quillContent);
-
-// Output the modified Quill content
-echo $quillContentWithPrefix;
+add_filter('the_content', 'replace_text');
 ?>
-
-
         
         <script>
 function initializeQuill() {
