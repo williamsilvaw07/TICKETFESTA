@@ -1733,7 +1733,7 @@ if (isset($_POST['update_venue'])) {
     update_post_meta($venue_id, '_VenueCity', $city);
     update_post_meta($venue_id, '_VenueCountry', $country);
     update_post_meta($venue_id, '_VenueStateProvince', $province);
-    update_post_meta($venue_id, '_VenueZip', $zip);
+    update_post_meta($venue_id, '_VenueZip', $postcode);
     update_post_meta($venue_id, '_EventShowMap', $ShowMap);
     update_post_meta($venue_id, '_EventShowMapLink', $ShowMapLink);
 
