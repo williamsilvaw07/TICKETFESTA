@@ -1402,7 +1402,7 @@ function display_edit_create_vanues()
     $province    = get_post_meta( $post_id, '_VenueStateProvince', true);
     $zip         = get_post_meta( $post_id, '_VenueZip', true);
     $ShowMap     = get_post_meta( $post_id, '_EventShowMap', true);
-    var_dump(get_post_meta( $post_id );
+    var_dump(get_post_meta( $post_id) );
     $ShowMapLink = get_post_meta( $post_id, '_EventShowMapLink', true);
     // Check if the venue exists and is of the correct post type
     if ($venue && $venue->post_type == 'tribe_venue') {
