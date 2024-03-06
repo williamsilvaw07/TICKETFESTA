@@ -1301,7 +1301,6 @@ function display_user_created_vanues()
     echo '<div class="organizers-header">';
     echo '<h2>Your Vanues</h2>'; // Title
     echo '</div>';
-
     // JavaScript for createNewOrganizer
     ?>
     <script>
@@ -1317,28 +1316,29 @@ function display_user_created_vanues()
             //     'action': 'delete_vanue',
             //     'vanue_id': vanueID
             // };
-            var xhr = new XMLHttpRequest();
-            xhr.open('POST', ajaxurl, true); // Use ajaxurl provided by WordPress
-            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            var data = 'action=delete_vanue&vanue_id=' + vanueID; 
-            xhr.send(data);
-
-            // jQuery.ajax({
-            //     url: ajaxurl,
-            //     type: 'POST',
-            //     data: {
-            //         'action': 'delete_vanue',
-            //         'vanue_id': vanueID
-            //     },
-            //     success: function(response) {
-            //         alert(response.data.message);
-            //         jQuery('#organizer-row-' + vanueID).remove(); // Remove the row from the table
-            //     },
-            //     fail: function(response){
-            //         console.log('AJAX error:', response);
-            //         alert('Failed to delete: ' );
-            //     }
-            // });
+            // var xhr = new XMLHttpRequest();
+            // xhr.open('POST', ajaxurl, true); // Use ajaxurl provided by WordPress
+            // xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            // var data = 'action=delete_vanue&vanue_id=' + vanueID; 
+            // xhr.send(data);
+            // dataType : 'json'
+            jQuery.ajax({
+                url: ajaxurl,
+                type: 'POST',
+                dataType : 'json'
+                data: {
+                    'action': 'delete_vanue',
+                    'vanue_id': vanueID
+                },
+                success: function(response) {
+                    alert(response.data.message);
+                    jQuery('#organizer-row-' + vanueID).remove(); // Remove the row from the table
+                },
+                fail: function(response){
+                    console.log('AJAX error:', response);
+                    alert('Failed to delete: ' );
+                }
+            });
 
             // jQuery.post(ajaxurl, data, function (response) {
             //     console.log('AJAX response:', response);
@@ -1542,7 +1542,6 @@ add_action('wp_ajax_delete_organizer', 'ajax_delete_organizer');
 function delete_vanue(){
 
     echo 'delete vanue';
-    header('Content-Type: application/json'); // Ensure JSON response
     // $vanue_id = isset($_POST['vanue_id']) ? intval($_POST['vanue_id']) : 0;
     $vanue_id = isset($_GET['vanue_id']) ? intval($_GET['vanue_id']) : 0;
 
