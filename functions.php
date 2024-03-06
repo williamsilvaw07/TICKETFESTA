@@ -1313,26 +1313,43 @@ function display_user_created_vanues()
                 return;
             }
 
-            var data = {
-                'action': 'delete_vanue',
-                'vanue_id': vanueID
-            };
+            // var data = {
+            //     'action': 'delete_vanue',
+            //     'vanue_id': vanueID
+            // };
 
-            jQuery.post(ajaxurl, data, function (response) {
-                console.log('AJAX response:', response);
-
-                if (response.success) {
+            jQuery.ajax({
+                url: ajaxurl,
+                type: 'POST',
+                data: {
+                    'action': 'delete_vanue',
+                    'vanue_id': vanueID
+                },
+                success: function(response) {
                     alert(response.data.message);
                     jQuery('#organizer-row-' + vanueID).remove(); // Remove the row from the table
-                } else {
-                    var message = response.data && response.data.message ? response.data.message : 'Unknown error occurred';
-                    console.log('Error message:', message);
-                    alert(message);
+                },
+                fail: function(response){
+                    console.log('AJAX error:', response);
+                    alert('Failed to delete: ' );
                 }
-            }).fail(function (jqXHR, textStatus, errorThrown) {
-                console.log('AJAX error:', textStatus, errorThrown);
-                alert('Failed to delete: ' + errorThrown);
             });
+
+            // jQuery.post(ajaxurl, data, function (response) {
+            //     console.log('AJAX response:', response);
+
+            //     if (response.success) {
+            //         alert(response.data.message);
+            //         jQuery('#organizer-row-' + vanueID).remove(); // Remove the row from the table
+            //     } else {
+            //         var message = response.data && response.data.message ? response.data.message : 'Unknown error occurred';
+            //         console.log('Error message:', message);
+            //         alert(message);
+            //     }
+            // }).fail(function (jqXHR, textStatus, errorThrown) {
+            //     console.log('AJAX error:', textStatus, errorThrown);
+            //     alert('Failed to delete: ' + errorThrown);
+            // });
         }
     </script>
     <?php
@@ -1520,7 +1537,7 @@ add_action('wp_ajax_delete_organizer', 'ajax_delete_organizer');
 function ajax_delete_vanue(){
 
     header('Content-Type: application/json'); // Ensure JSON response
-var_dump($_POST);
+    var_dump($_POST);
     $vanue_id = isset($_POST['vanue_id']) ? intval($_POST['vanue_id']) : 0;
 
     if (!$vanue_id) {
