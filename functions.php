@@ -1685,11 +1685,11 @@ var_dump(get_post_meta($post_id));
 
             <!-- Show Map -->
             <label for="vanue_map">Show Map:</label>
-            <input type="checkbox" id="vanue_map" name="vanue_map" <?php if($ShowMap == '1') echo 'checked'; ?> />
+            <input type="checkbox" id="vanue_map" name="vanue_map" <?php if($ShowMap == '1') echo 'checked'; ?>  value='1' />
             <br/>
             <!-- Map Link -->
             <label for="map_link">Map Link:</label>
-            <input type="checkbox" id="map_link" name="map_link" <?php if($ShowMapLink == '1') echo 'checked'; ?>/>
+            <input type="checkbox" id="map_link" name="map_link" <?php if($ShowMapLink == '1') echo 'checked'; ?> value='1' />
             <br/>
 
 
@@ -1719,8 +1719,8 @@ if (isset($_POST['update_venue'])) {
     $country     = isset($_POST['venue_country']) ? sanitize_text_field($_POST['venue_country']) : '';
     $province    = isset($_POST['venue_state']) ? sanitize_text_field($_POST['venue_state']) : '';
     $postcode    = isset($_POST['venue_postcode']) ? sanitize_text_field($_POST['venue_postcode']) : '';
-    $ShowMap     = isset($_POST['vanue_map']) ? sanitize_text_field($_POST['vanue_map']) : '';
-    $ShowMapLink = isset($_POST['map_link']) ? sanitize_text_field($_POST['map_link']) : '';
+    $ShowMap     = isset($_POST['vanue_map']) ? sanitize_text_field($_POST['vanue_map']) : '0';
+    $ShowMapLink = isset($_POST['map_link']) ? sanitize_text_field($_POST['map_link']) : '0';
     var_dump($ShowMap);
     die();
     // Update venue data
