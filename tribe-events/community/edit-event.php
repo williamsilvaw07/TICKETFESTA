@@ -215,16 +215,9 @@ $event_description = get_post_meta($event_id, 'event_description', true);
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-    var quill = new Quill('#quill-editor', {
-        theme: 'snow',
-        modules: {
-            toolbar: [
-                ['bold', 'italic', 'underline'],
-                [{'list': 'ordered'}, {'list': 'bullet'}],
-                ['link', 'image']
-            ]
-        }
-    });
+    var quill = new Quill('#editor-container', {
+            theme: 'snow' // You can choose different themes like 'snow' or 'bubble'
+        });
 
     // Load existing content into the editor
     var eventDescriptionValue = document.getElementById('event_description').value;
