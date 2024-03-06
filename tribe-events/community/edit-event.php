@@ -214,7 +214,7 @@ $event_description = get_post_meta($event_id, 'event_description', true);
 <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 
 <script>
-document.addEventListener('DOMContentLoaded', function () {
+function initializeQuill() {
     var quill = new Quill('#quill-editor', {
         theme: 'snow',
         modules: {
@@ -235,9 +235,12 @@ document.addEventListener('DOMContentLoaded', function () {
     form.onsubmit = function() {
         document.getElementById('event_description').value = quill.root.innerHTML;
     };
-        console.log('Quill initialized successfully'); // Add this line
 
-});
+    console.log('Quill initialized successfully');
+}
+
+initializeQuill();
+
 </script>
        
 
