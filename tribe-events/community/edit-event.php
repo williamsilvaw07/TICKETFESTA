@@ -228,7 +228,7 @@ function initializeQuill() {
 
     // Load existing content into the editor
     var eventDescriptionValue = document.getElementById('event_description').value;
-    quill.root.innerHTML = eventDescriptionValue;
+    quill.clipboard.dangerouslyPasteHTML(eventDescriptionValue);
 
     // Save content back to the hidden input on form submit
     var form = document.querySelector('form'); // Ensure this selector targets your actual form
@@ -240,8 +240,8 @@ function initializeQuill() {
 }
 
 initializeQuill();
-
 </script>
+
        
 
 
