@@ -216,31 +216,54 @@ $event_description = get_post_meta($event_id, 'event_description', true);
 
         <script>
 function initializeQuill() {
-    var quill = new Quill('#quill-editor', {
-        theme: 'snow',
-        modules: {
-            toolbar: [
-                ['bold', 'italic', 'underline'],
-                [{'list': 'ordered'}, {'list': 'bullet'}],
-                ['link', 'image', 'video']
-            ]
+  var quill = new Quill('#quill-editor', {
+    theme: 'snow',
+    modules: {
+      toolbar: [
+        ['bold', 'italic', 'underline'],
+        [{'list': 'ordered'}, {'list': 'bullet'}],
+        ['link', 'image', 'video']
+      ]
+    }
+  });
+
+  // Load existing content into the editor
+  var eventDescriptionValue = document.getElementById('event_description').value;
+  quill.root.innerHTML = eventDescriptionValue;
+
+  // Save content back to the hidden input on form submit
+  var form = document.querySelector('form'); // Ensure this selector targets your actual form
+  form.onsubmit = function() {
+    var quillContent = quill.root.innerHTML;
+
+    // Option 1: Manual image handling with proper concatenation (if you must)
+    var quillImages = quillContent.match(/<img[^>]*>/g); // Assuming image elements are standalone
+    if (quillImages) {
+      for (var i = 0; i < quillImages.length; i++) {
+        var img = document.createElement('img');
+        var quillImage = quillImages[i];
+
+        // Extract data URI from the image element (assuming it's a data URI)
+        var dataUriMatch = quillImage.match(/src="data:([^"]*);base64,([^"]*)"/);
+        if (dataUriMatch) {
+          img.src = "data:" + dataUriMatch[1] + ";base64," + dataUriMatch[2];
+          quillContent = quillContent.replace(quillImage, img.outerHTML); // Replace image HTML with created element
         }
-    });
+      }
+    }
 
-    // Load existing content into the editor
-    var eventDescriptionValue = document.getElementById('event_description').value;
-    quill.clipboard.dangerouslyPasteHTML(eventDescriptionValue);
+    // Option 2: Use Quill's image handler (recommended)
+    // Assuming you have the image data in Base64 format (imageBase64Data)
+    // quill.insertEmbed(quill.getModule('toolbar').getTool('image'), 'base64', imageBase64Data);
 
-    // Save content back to the hidden input on form submit
-    var form = document.querySelector('form'); // Ensure this selector targets your actual form
-    form.onsubmit = function() {
-        document.getElementById('event_description').value = quill.root.innerHTML;
-    };
+    document.getElementById('event_description').value = quillContent;
+  };
 
-    console.log('Quill initialized successfully');
+  console.log('Quill initialized successfully');
 }
 
 initializeQuill();
+
 </script>
 
 
