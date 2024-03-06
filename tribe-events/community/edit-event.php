@@ -213,7 +213,8 @@ $event_description = get_post_meta($event_id, 'event_description', true);
 <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 
-<script>
+
+        <script>
 function initializeQuill() {
     var quill = new Quill('#quill-editor', {
         theme: 'snow',
@@ -228,10 +229,6 @@ function initializeQuill() {
 
     // Load existing content into the editor
     var eventDescriptionValue = document.getElementById('event_description').value;
-
-    // Add "data:" prefix to image src in the initial content
-    eventDescriptionValue = eventDescriptionValue.replace(/<img\s+decoding="async"\s+src="([^"]+)"\s*\/?>/g, '<img decoding="async" src="data:$1" />');
-
     quill.clipboard.dangerouslyPasteHTML(eventDescriptionValue);
 
     // Save content back to the hidden input on form submit
