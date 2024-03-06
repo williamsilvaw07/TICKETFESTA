@@ -1392,10 +1392,12 @@ add_action('init', 'register_vanues_shortcode');
 
 function display_edit_create_vanues()
 {
-    $post_id = '5173';
+    $post_id = isset($_GET['id']) ? $_GET['id'] :  '0';
     // Retrieve the venue data by post ID
     $venue = get_post($post_id);
-
+    echo '<pre>';
+    var_dump(get_post_meta( $post_id ));
+    echo '</pre>';
     // Check if the venue exists and is of the correct post type
     if ($venue && $venue->post_type == 'tribe_venue') {
         ?>
