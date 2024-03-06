@@ -1721,8 +1721,6 @@ if (isset($_POST['update_venue'])) {
     $postcode    = isset($_POST['venue_postcode']) ? sanitize_text_field($_POST['venue_postcode']) : '';
     $ShowMap     = isset($_POST['vanue_map']) ? sanitize_text_field($_POST['vanue_map']) : '0';
     $ShowMapLink = isset($_POST['map_link']) ? sanitize_text_field($_POST['map_link']) : '0';
-    var_dump($ShowMap);
-    die();
     // Update venue data
     $updated_venue_data = array(
         'ID' => $venue_id,
