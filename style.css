@@ -1768,7 +1768,5 @@ span.social_icons_organizers i.social-icon {
 
 
 .user-vanues-list tbody tr, .user-vanues-list thead tr {
-    grid-template-columns: 35% 65%;
-    display: grid;
-    overflow: visible;
+    grid-template-columns: 35% 65%!important;
 }
