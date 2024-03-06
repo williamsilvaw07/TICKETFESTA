@@ -1536,6 +1536,7 @@ add_action('wp_ajax_delete_organizer', 'ajax_delete_organizer');
 
 function ajax_delete_vanue(){
 
+    echo 'delete vanue';
     header('Content-Type: application/json'); // Ensure JSON response
     $vanue_id = isset($_POST['vanue_id']) ? intval($_POST['vanue_id']) : 0;
 
