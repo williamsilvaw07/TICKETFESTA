@@ -1395,9 +1395,6 @@ function display_edit_create_vanues()
     $post_id = isset($_GET['id']) ? $_GET['id'] :  '0';
     // Retrieve the venue data by post ID
     $venue = get_post($post_id);
-    echo '<pre>';
-    var_dump(get_post_meta( $post_id ));
-    echo '</pre>';
 
     $address     = get_post_meta( $post_id, '_VenueAddress', true);
     $city        = get_post_meta( $post_id, '_VenueCity', true);
@@ -1425,7 +1422,7 @@ function display_edit_create_vanues()
             <input type="text" id="venue_city" name="venue_city" value="<?php echo esc_attr($venue->post_title); ?>" /><br />
             <br />
 
-            <label for="venue_description">Country:</label><br />
+            <label for="venue_description">Country:</label>
             <select class="tribe-dropdown tribe-dropdown-created" id="EventCountry" name="venue[Country]" tabindex="-1"
                 aria-hidden="true">
                 <option value="">Select a Country:</option>
