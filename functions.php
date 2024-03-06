@@ -1405,7 +1405,7 @@ function display_edit_create_vanues()
             <input type="text" id="venue_title" name="venue_title" value="<?php echo esc_attr($venue->post_title); ?>" /><br />
 
             <!-- Venue Description Field -->
-            <label for="venue_description">Venue Description:</label><br />
+            <label for="venue_description">Venue Description:</label>
             <textarea id="venue_description"
                 name="venue_description"><?php echo esc_textarea($venue->post_content); ?>
             </textarea>
