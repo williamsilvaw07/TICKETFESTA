@@ -1527,7 +1527,7 @@ function ajax_delete_vanue(){
         wp_send_json_error('Invalid Vanue ID');
         die();
     }
-
+var_dump($_POST['vanue_id']);
     if (!current_user_can('delete_post', $vanue_id)) {
         wp_send_json_error('No permission to delete this organizer');
         die();
