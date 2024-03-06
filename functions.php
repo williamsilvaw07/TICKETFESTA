@@ -1317,7 +1317,7 @@ function display_user_created_vanues()
                 type: 'POST',
                 dataType : 'json',
                 data: {
-                    'action': 'delete_organizer',
+                    'action': 'delete_vanue_trive',
                     'vanue_id': vanueID
                 },
                 success: function(response) {
@@ -1513,11 +1513,11 @@ function ajax_delete_organizer()
 }
 add_action('wp_ajax_delete_organizer', 'ajax_delete_organizer');
 
-function delete_vanue(){
+function delete_vanue_trive(){
 
     echo 'delete vanue';
-    // $vanue_id = isset($_POST['vanue_id']) ? intval($_POST['vanue_id']) : 0;
-    $vanue_id = isset($_GET['vanue_id']) ? intval($_GET['vanue_id']) : 0;
+    $vanue_id = isset($_POST['vanue_id']) ? intval($_POST['vanue_id']) : 0;
+    // $vanue_id = isset($_GET['vanue_id']) ? intval($_GET['vanue_id']) : 0;
 
     if (!$vanue_id) {
         wp_send_json_error('Invalid Vanue ID');
@@ -1535,8 +1535,8 @@ function delete_vanue(){
 }
 
 
-add_action('wp_ajax_delete_vaune', 'delete_vanue');
-add_action('wp_ajax_nopriv_delete_vaune', 'delete_vanue');
+add_action('wp_ajax_delete_vanue_trive', 'delete_vanue_trive');
+add_action('wp_ajax_nopriv_delete_vanue_trive', 'delete_vanue_trive');
 
 
 
