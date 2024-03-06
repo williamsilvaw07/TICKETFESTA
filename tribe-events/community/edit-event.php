@@ -212,14 +212,7 @@ $event_description = get_post_meta($event_id, 'event_description', true);
 
 <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
-<?php
-function replace_text($text) {
-	$text = str_replace('<img src="image/', '<img src="data:image/', $text);
-	
-	return $text;
-}
-add_filter('the_content', 'replace_text');
-?>
+
         
         <script>
 function initializeQuill() {
