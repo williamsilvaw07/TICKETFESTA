@@ -1397,7 +1397,7 @@ function display_edit_create_vanues(){
         // Check if the venue exists and is of the correct post type
         if ($venue && $venue->post_type == 'tribe_venue') {
             ?>
-            <form method="post" action="">
+            <form method="post" action="" class="edit-vanue-form">
                 <!-- Venue Title Field -->
                 <label for="venue_title">Venue Title:</label>
                 <input type="text" id="venue_title" name="venue_title" value="<?php echo esc_attr($venue->post_title); ?>"/><br/>
