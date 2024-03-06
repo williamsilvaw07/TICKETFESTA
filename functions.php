@@ -1402,14 +1402,10 @@ function display_edit_create_vanues()
         <form method="post" action="" class="edit-vanue-form">
             <!-- Venue Title Field -->
             <label for="venue_title">Venue Title:</label>
-            <input type="text" id="venue_title" name="venue_title" value="<?php echo esc_attr($venue->post_title); ?>" /><br />
-
-            <!-- Venue Description Field -->
-            <label for="venue_description">Venue Description:</label>
-            <textarea id="venue_description"
-                name="venue_description"><?php echo esc_textarea($venue->post_content); ?>
-            </textarea>
+            <input type="text" id="venue_title" name="venue_title" value="<?php echo esc_attr($venue->post_title); ?>" />
             <br />
+
+           
             
             <!-- Address Title Field -->
             <label for="venue_address">Address:</label>
@@ -1713,13 +1709,11 @@ if (isset($_POST['update_venue'])) {
     // Get and sanitize form data
     $venue_id = isset($_POST['venue_id']) ? intval($_POST['venue_id']) : 0;
     $venue_title = isset($_POST['venue_title']) ? sanitize_text_field($_POST['venue_title']) : '';
-    $venue_description = isset($_POST['venue_description']) ? sanitize_textarea_field($_POST['venue_description']) : '';
 
     // Update venue data
     $updated_venue_data = array(
         'ID' => $venue_id,
-        'post_title' => $venue_title,
-        'post_content' => $venue_description,
+        'post_title' => $venue_title
     );
 
     wp_update_post($updated_venue_data);
