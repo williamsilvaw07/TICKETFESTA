@@ -1377,7 +1377,7 @@ function display_user_created_vanues()
 
         wp_reset_postdata();
     } else {
-        echo 'No organizers found.';
+        echo 'No Vanues found.';
     }
 
     return ob_get_clean(); // Return the buffered output
