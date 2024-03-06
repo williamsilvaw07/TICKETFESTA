@@ -1299,15 +1299,15 @@ function display_user_created_vanues()
     $nonce = wp_create_nonce('create_new_organizer_nonce');
 
     echo '<div class="organizers-header">';
-    echo '<h2>Your Organizers</h2>'; // Title
-    echo '<a class="organizers_add_new_btn" href="javascript:void(0);" onclick="createNewOrganizer()">Create New Organizer</a>';
+    echo '<h2>Your Vanues</h2>'; // Title
+    echo '<a class="organizers_add_new_btn" href="javascript:void(0);" onclick="createNewVanues()">Create New Organizer</a>';
     echo '<input type="hidden" id="create_new_organizer_nonce" value="' . esc_attr($nonce) . '" />';
     echo '</div>';
 
     // JavaScript for createNewOrganizer
     ?>
     <script>
-        function createNewOrganizer() {
+        function createNewVanues() {
             console.log('Attempting to create a new organizer...'); // Debugging line
 
             var nonce = document.querySelector('#create_new_organizer_nonce').value;
@@ -1387,7 +1387,7 @@ function display_user_created_vanues()
     $default_organizer_id = get_default_organizer_id_for_current_user();
 
     $args = array(
-        'post_type' => 'tribe_organizer',
+        'post_type' => 'tribe_venue',
         'posts_per_page' => -1,
         'author' => $current_user_id,
     );
@@ -1399,7 +1399,6 @@ function display_user_created_vanues()
         echo '<table id="user-organizers-list" style="width: 100%;">';
         echo '<thead>';
         echo '<tr>';
-        echo '<th>Organizer Logo</th>';
         echo '<th>Organizer Name</th>';
         echo '<th>Actions</th>';
         echo '</tr>';
@@ -1413,7 +1412,6 @@ function display_user_created_vanues()
             $profile_url = tribe_get_organizer_link($organizer_id, false, false); // Get URL only
 
             echo '<tr id="organizer-row-' . $organizer_id . '">'; // Unique ID for each row
-            echo '<td>' . get_the_post_thumbnail($organizer_id, 'thumbnail') . '</td>';
 
             $organizer_title = get_the_title();
             if ($organizer_id == $default_organizer_id) {
