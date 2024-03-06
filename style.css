@@ -1774,3 +1774,12 @@ span.social_icons_organizers i.social-icon {
 .user-vanues-list{
     max-width: 400px!important;
 }
+
+form.edit-vanue-form {
+    display: block;
+    padding: 30px;
+    margin: 0 auto;
+    max-width: 700px;
+    background: #1a1a1a;
+    border-radius: 10px;
+}
