@@ -47,19 +47,28 @@ get_header('organizer'); // Include the header
 <script>
 
 
-document.addEventListener("DOMContentLoaded", function(event) { 
-    console.log('DOMContentLoaded event fired');
-    setTimeout(function() {
-        console.log('Hiding SVG');
+(function() {
+    function hideSvg() {
         const svgDiv = document.querySelector('.loading_svg_div');
         if (svgDiv) {
-            svgDiv.style.display = 'none';
-            console.log('SVG should now be hidden');
+            // Wait for 1 second after JS load, then add the 'hidden' class
+            setTimeout(function() {
+                svgDiv.classList.add('hidden');
+                console.log('SVG should now be hidden');
+            }, 1000);
         } else {
             console.log('SVG div not found');
         }
-    }, 1000); // Keep the loading SVG for an additional second after JS load
-});
+    }
+
+    if (document.readyState === "loading") {
+        // If the document is still loading, wait for the DOMContentLoaded event
+        document.addEventListener("DOMContentLoaded", hideSvg);
+    } else {
+        // If the DOMContentLoaded event has already fired, hide the SVG immediately
+        hideSvg();
+    }
+})();
 
 
 
@@ -73,6 +82,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
     position: absolute;
 
     }
+    .hidden {
+    display: none !important;
+}
 .grey {
   stroke-dasharray: 788 790;
   stroke-dashoffset: 789;
