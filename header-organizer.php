@@ -1451,7 +1451,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
             }
 
             .admin_dashboard_main_customer_info span {
-                font-size: 12px;
+                font-size: 13px;
                 color: #aaa;
                 font-weight: 100;
             }
