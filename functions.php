@@ -2183,8 +2183,11 @@ function get_ticket_info($user_id)
     );
 echo count($orders);
     foreach ($orders as $order) {
-        if (!($order instanceof WC_Order))
+        if (!($order instanceof WC_Order)){
+            echo 'order id rejected: ' . $order->get_id() . '<br/>';
             continue;
+        }
+
 
         $order_date = $order->get_date_created()->format('Y-m-d');
         $is_today = ($order_date === $today);
