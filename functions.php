@@ -2599,7 +2599,7 @@ function recent_activity_shortcode($atts)
 {
     $atts = shortcode_atts(
         array(
-            'limit' => 4,
+            'limit' => 9,
             'page' => 1
         ),
         $atts,
@@ -2615,7 +2615,7 @@ function recent_activity_shortcode($atts)
 
 
     <div class="admin_dashboard_main_recent_activity">
-        <h2>Recent Activity <span>Last 24h</span></h2>
+        <h2>Recent Activity <span class="admin_dashboard_lower_other_day ">Last 24h</span></h2>
         <div class="admin_dashboard_main_activity_titles">
             <div>Customer</div>
             <div>Product</div>
