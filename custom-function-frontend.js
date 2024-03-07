@@ -189,8 +189,9 @@ jQuery(document).ready(function($) {
         var quantity = parseInt(jQuery(this).find('.tribe-tickets__tickets-item-quantity-number-input').val());
         var ticketSiteFee = get_tribe_ticket_fee(ticketAmount, quantity );
         var total_fee =  parseFloat(ticketAmount) * parseFloat(quantity) + parseFloat(ticketSiteFee);
+        var oldTotal = parseFloat(jQuery('.tribe-tickets__tickets-footer-total .tribe-amount').text().trim()).toFixed(2);
         total_fee = ticketAmount == 0 ? 0 : total_fee;
-        console.log('quantity :', quantity);
+        total_fee = oldTotal + total_fee;
         jQuery('.tribe-tickets__tickets-footer-total .tribe-amount').text(total_fee.toFixed(2)); 
     });
 
