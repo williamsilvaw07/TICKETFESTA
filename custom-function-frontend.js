@@ -192,7 +192,7 @@ jQuery(document).ready(function($) {
         var oldTotal = parseFloat(jQuery('.tribe-tickets__tickets-footer-total .tribe-amount').text().trim()).toFixed(2);
         total_fee = ticketAmount == 0 ? 0 : total_fee;
         total_fee = oldTotal + total_fee;
-        jQuery('.tribe-tickets__tickets-footer-total .tribe-amount').text(total_fee.toFixed(2)); 
+        jQuery('.tribe-tickets__tickets-footer-total .tribe-amount').text(total_fee); 
     });
 
     $('.tribe-tickets__tickets-item').each(function() {
