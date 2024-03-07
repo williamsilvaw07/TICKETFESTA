@@ -45,35 +45,16 @@ get_header('organizer'); // Include the header
 <!-- /.content-wrapper -->
 
 <script>
-
-
-(function() {
-    function hideSvg() {
-        const svgDiv = document.querySelector('.loading_svg_div');
-        if (svgDiv) {
-            // Wait for 1 second after JS load, then add the 'hidden' class
-            setTimeout(function() {
-                svgDiv.classList.add('hidden');
-                console.log('SVG should now be hidden');
-            }, 1000);
-        } else {
-            console.log('SVG div not found');
-        }
-    }
-
-    if (document.readyState === "loading") {
-        // If the document is still loading, wait for the DOMContentLoaded event
-        document.addEventListener("DOMContentLoaded", hideSvg);
+setTimeout(function() {
+    const svgDiv = document.querySelector('.loading_svg_div');
+    if (svgDiv) {
+        svgDiv.classList.add('hidden');
+        console.log('SVG should now be hidden');
     } else {
-        // If the DOMContentLoaded event has already fired, hide the SVG immediately
-        hideSvg();
+        console.log('SVG div not found');
     }
-})();
-
-
-
+}, 1000); // Adjust the timing as needed
 </script>
-
 <style>
     .loading_svg_div{
         background-color: rgb(26, 26, 26);
