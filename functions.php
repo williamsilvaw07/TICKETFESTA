@@ -2193,7 +2193,7 @@ function get_ticket_info($user_id)
             $product_id = $item->get_product_id();
             $event_id = get_post_meta($product_id, '_tribe_wooticket_for_event', true);
             $event_author = get_post_field('post_author', $event_id);
-
+            echo '$event_author : '. $event_author.'<br/>';
             if ($event_author == $user_id) {
                 $quantity = $item->get_quantity();
                 $subtotal = $item->get_subtotal(); // Using item subtotal
@@ -2241,8 +2241,8 @@ function shortcode_revenue()
     $order_details = $ticket_info['order_details'];
 
     // Building the order debug info
-    $order_debug_info = "<strong>Order Breakdown:</strong><br>" . count($order_details);
-    
+    $order_debug_info = "<strong>Order Breakdown:</strong>" . count($order_details). '<br/>';
+
     foreach ($order_details as $detail) {
         $order_debug_info .= "Order ID: {$detail['order_id']}, Subtotal: £" . number_format($detail['subtotal'], 2) . '<br/>';
         // $order_debug_info .= ", Event: {$detail['event_title']}, Created by: {$detail['event_creator_name']}<br>";
