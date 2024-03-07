@@ -183,16 +183,34 @@ jQuery(document).ready(function($) {
     }
 
 
-    jQuery('.tribe-tickets__tickets-item').click(function(){
-        var ticketAmount = parseFloat(jQuery(this).find('.tribe-amount').text().trim()).toFixed(2);
-        ticketAmount = ticketAmount == 'NaN' ? 0 : ticketAmount;
-        var quantity = parseInt(jQuery(this).find('.tribe-tickets__tickets-item-quantity-number-input').val());
-        var ticketSiteFee = get_tribe_ticket_fee(ticketAmount, quantity );
-        var total_fee =  parseFloat(ticketAmount) * parseFloat(quantity) + parseFloat(ticketSiteFee);
-        var oldTotal = parseFloat(jQuery('.tribe-tickets__tickets-footer-total .tribe-amount').text().trim()).toFixed(2);
-        total_fee = ticketAmount == 0 ? 0 : total_fee;
-        total_fee = parseFloat(oldTotal) + parseFloat(total_fee).toFixed(2);
-        jQuery('.tribe-tickets__tickets-footer-total .tribe-amount').text(total_fee); 
+    // jQuery('.tribe-tickets__tickets-item').click(function(){
+    //     var ticketAmount = parseFloat(jQuery(this).find('.tribe-amount').text().trim()).toFixed(2);
+    //     ticketAmount = ticketAmount == 'NaN' ? 0 : ticketAmount;
+    //     var quantity = parseInt(jQuery(this).find('.tribe-tickets__tickets-item-quantity-number-input').val());
+    //     var ticketSiteFee = get_tribe_ticket_fee(ticketAmount, quantity );
+    //     var total_fee =  parseFloat(ticketAmount) * parseFloat(quantity) + parseFloat(ticketSiteFee);
+    //     var oldTotal = parseFloat(jQuery('.tribe-tickets__tickets-footer-total .tribe-amount').text().trim()).toFixed(2);
+    //     total_fee = ticketAmount == 0 ? 0 : total_fee;
+    //     total_fee = parseFloat(oldTotal + total_fee).toFixed(2);
+    //     jQuery('.tribe-tickets__tickets-footer-total .tribe-amount').text(total_fee); 
+    // });
+
+    jQuery('.tribe-tickets__tickets-item').click(function() {
+        var total_fee = 0;
+    
+        // Iterate over each .tribe-tickets__tickets-item
+        jQuery('.tribe-tickets__tickets-item').each(function() {
+            var ticketAmount = parseFloat(jQuery(this).find('.tribe-amount').text().trim()).toFixed(2);
+            ticketAmount = isNaN(ticketAmount) ? 0 : parseFloat(ticketAmount);
+            var quantity = parseInt(jQuery(this).find('.tribe-tickets__tickets-item-quantity-number-input').val());
+            var ticketSiteFee = get_tribe_ticket_fee(ticketAmount, quantity);
+            if(ticketAmount != 0){
+                total_fee += (ticketAmount * quantity) + parseFloat(ticketSiteFee);
+            }
+        });
+    
+        // Update the total fee displayed in the footer
+        jQuery('.tribe-tickets__tickets-footer-total .tribe-amount').text(total_fee.toFixed(2)); 
     });
 
     $('.tribe-tickets__tickets-item').each(function() {
