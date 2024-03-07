@@ -2199,8 +2199,9 @@ function get_ticket_info($user_id)
             $order_id = $order->get_id();
 
             if($order_id == 2184){
-                echo "event_author : $event_author event id: $event_id <br/>";
-            
+                echo "event_author : $event_author event id:";
+                var_dump($event_id);
+                echo '<br/>';
             }
             if ($event_author == $user_id) {
                 // $srNo++;
