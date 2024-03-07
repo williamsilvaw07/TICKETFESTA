@@ -23,8 +23,6 @@ if (!defined('ABSPATH')) {
     <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
     <?php wp_head(); ?>
 </head>
-
-<body <?php body_class("hold-transition sidebar-mini dark-mode"); ?> <?php generate_do_microdata('body'); ?>>
 <div class="loading_svg_div">
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1366 768" xml:space="preserve">
         <style type="text/css">
@@ -43,6 +41,8 @@ if (!defined('ABSPATH')) {
         </g>
     </svg>
 </div>
+<body <?php body_class("hold-transition sidebar-mini dark-mode"); ?> <?php generate_do_microdata('body'); ?>>
+
 
 
 
@@ -3671,15 +3671,34 @@ html .tickets-sold-column , html .tribe-list-column-title {
 
 
 
-
 <script>
+jQuery(document).ready(function($) {
+    // Disable scrolling when the loading SVG is shown
+    $('html, body').css({
+        overflow: 'hidden',
+        height: '100%'
+    });
 
+    // Wait for 1.2 seconds after the document is ready
+    setTimeout(function() {
+        // Select the SVG div and add the 'hidden_loading_svg' class to hide it
+        $('.loading_svg_div').addClass('hidden_loading_svg');
+        console.log('SVG should now be hidden');
 
+        // Re-enable scrolling after the SVG is hidden
+        $('html, body').css({
+            overflow: 'auto',
+            height: 'auto'
+        });
 
+        // After hiding the SVG, wait another 1 second to perform further actions
+        setTimeout(function() {
+            console.log('Performing another action 1 second after hiding the SVG');
+            // Any subsequent actions can be placed here
+        }, 1000);
+    }, 1200);
+});
 </script>
-
-
-
 <style>
  
 .loading_svg_div{
