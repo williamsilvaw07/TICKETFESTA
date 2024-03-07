@@ -45,12 +45,24 @@ get_header('organizer'); // Include the header
 <!-- /.content-wrapper -->
 
 <script>
+
+
 document.addEventListener("DOMContentLoaded", function(event) { 
-    // Assuming your JS is fully loaded at this point or listen for a specific JS event that signifies it's done
+    console.log('DOMContentLoaded event fired');
     setTimeout(function() {
-        document.querySelector('.loading_svg_div').style.display = 'none';
+        console.log('Hiding SVG');
+        const svgDiv = document.querySelector('.loading_svg_div');
+        if (svgDiv) {
+            svgDiv.style.display = 'none';
+            console.log('SVG should now be hidden');
+        } else {
+            console.log('SVG div not found');
+        }
     }, 1000); // Keep the loading SVG for an additional second after JS load
 });
+
+
+
 </script>
 
 <style>
