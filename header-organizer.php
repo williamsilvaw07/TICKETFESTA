@@ -3687,8 +3687,8 @@ html .tickets-sold-column , html .tribe-list-column-title {
     width: 100vw;
     height: 100vh;
     z-index: 10000000000000;
-    position: fixed; /* Use fixed to ensure it covers the whole screen including where it would scroll */
-    display: flex;
+    position: fixed; 
+    top:50%;/* Use fixed to ensure it covers the whole screen including where it would scroll */
     align-items: center; /* Fixed typo from align-content to align-items for vertical alignment */
     justify-content: center;
 
