@@ -2203,7 +2203,7 @@ function get_ticket_info($user_id)
                 var_dump($event_id);
                 echo '<br/>';
             }
-            if ($event_author == $user_id) {
+            if ($event_author == $user_id && $event_id != false) {
                 // $srNo++;
                 // echo "order id $srNo accepted:  $order_id <br/>";
 
