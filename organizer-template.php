@@ -76,7 +76,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 .grey {
   stroke-dasharray: 788 790;
   stroke-dashoffset: 789;
-  animation: draw_0 3200ms infinite, fade 3200ms infinite;
+  animation: draw_0 3200ms infinite, fade 1200ms infinite;
 }
 
 .blue {
