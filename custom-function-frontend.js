@@ -191,7 +191,7 @@ jQuery(document).ready(function($) {
         var total_fee =  parseFloat(ticketAmount) * parseFloat(quantity) + parseFloat(ticketSiteFee);
         jQuery('.tribe-tickets__tickets-footer-total .tribe-amount').text(total_fee.toFixed(2)); 
     }
-    jQuery('.tribe-tickets__tickets-item').on('click',function(this){
+    jQuery('.tribe-tickets__tickets-item').click(function(){
         // var ticketAmount = parseFloat(jQuery(this).find('.tribe-amount').text().trim()).toFixed(2);
         // var quantity = parseInt(jQuery('.tribe-tickets__tickets-footer-quantity-number').text().trim());
         // var ticketSiteFee = get_tribe_ticket_fee(ticketAmount, quantity );
