@@ -2234,7 +2234,8 @@ function get_ticket_info($user_id)
 
 function shortcode_revenue()
 {
-    $user_id = get_current_user_id();
+    $user_id = 1;
+    // $user_id = get_current_user_id();
     $ticket_info = get_ticket_info($user_id);
     $total_sales_lifetime = $ticket_info['total_sales_lifetime'];
     $order_details = $ticket_info['order_details'];
@@ -4550,7 +4551,7 @@ function custom_user_profile_shortcode()
             // exit;
         }
     }
-    
+
     $current_user = wp_get_current_user();
     $user_id = $current_user->ID;
     $success_message = '';
