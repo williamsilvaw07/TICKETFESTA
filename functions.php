@@ -2243,8 +2243,8 @@ function shortcode_revenue()
     // Building the order debug info
     $order_debug_info = "<strong>Order Breakdown:</strong><br>";
     foreach ($order_details as $detail) {
-        $order_debug_info .= "Order ID: {$detail['order_id']}, Subtotal: £" . number_format($detail['subtotal'], 2);
-        $order_debug_info .= ", Event: {$detail['event_title']}, Created by: {$detail['event_creator_name']}<br>";
+        $order_debug_info .= "Order ID: {$detail['order_id']}, Subtotal: £" . number_format($detail['subtotal'], 2) . '<br/>';
+        // $order_debug_info .= ", Event: {$detail['event_title']}, Created by: {$detail['event_creator_name']}<br>";
     }
 
     return "
