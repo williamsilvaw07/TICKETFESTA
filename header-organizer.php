@@ -24,7 +24,7 @@ if (!defined('ABSPATH')) {
     <?php wp_head(); ?>
 </head>
 <div class="loading_svg_div">
-<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1366 768" xml:space="preserve">
+<svg version="1.1" id="Layer_1" width="500px" height="300px" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1366 768" xml:space="preserve">
         <style type="text/css">
             .st0{fill:none;stroke:#ffff;stroke-width:3;stroke-miterlimit:10;}
             .st1{fill:none;stroke:#d3fa16;stroke-width:9;stroke-miterlimit:10;}
@@ -3688,6 +3688,10 @@ width: 100vw;
 height:100vh;
 z-index: 10000000000000;
 position: absolute;
+display: flex;
+    align-content: center;
+    justify-content: center;
+
 
 }
 .hidden_loading_svg {
