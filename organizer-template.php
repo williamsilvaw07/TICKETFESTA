@@ -44,7 +44,23 @@ get_header('organizer'); // Include the header
 </div>
 <!-- /.content-wrapper -->
 
+<script>
+document.addEventListener("DOMContentLoaded", function(event) { 
+    // Assuming your JS is fully loaded at this point or listen for a specific JS event that signifies it's done
+    setTimeout(function() {
+        document.querySelector('.loading_svg_div').style.display = 'none';
+    }, 1000); // Keep the loading SVG for an additional second after JS load
+});
+</script>
+
 <style>
+    .loading_svg_div{
+        background-color: rgb(26, 26, 26);
+    width: 100%;
+    z-index: 10000000000000;
+    position: absolute;
+
+    }
 .grey {
   stroke-dasharray: 788 790;
   stroke-dashoffset: 789;
