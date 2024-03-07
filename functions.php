@@ -4547,10 +4547,13 @@ function custom_user_profile_shortcode()
 
             // Redirect to avoid form resubmission with a success message
             wp_redirect(add_query_arg('profile-updated', 'true', get_permalink()));
-            exit;
+            // exit;
         }
     }
-
+    
+    $current_user = wp_get_current_user();
+    $user_id = $current_user->ID;
+    $success_message = '';
     // Check for the 'profile-updated' query parameter to display the success message
     if (isset($_GET['profile-updated']) && $_GET['profile-updated'] == 'true') {
         $success_message = '<div class="alert alert-success" role="alert">Your profile has been updated successfully.</div>';
