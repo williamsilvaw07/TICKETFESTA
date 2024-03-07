@@ -185,7 +185,7 @@ jQuery(document).ready(function($) {
 
     function update_site_fees(this){
         var ticketAmount = parseFloat(jQuery(this).find('.tribe-amount').text().trim()).toFixed(2);
-        ticketAmount = ticketAmount == NaN ? 0 : ticketAmount;
+        // ticketAmount = ticketAmount == NaN ? 0 : ticketAmount;
         var quantity = parseInt(jQuery('.tribe-tickets__tickets-footer-quantity-number').text().trim());
         var ticketSiteFee = get_tribe_ticket_fee(ticketAmount, quantity );
         var total_fee =  parseFloat(ticketAmount) * parseFloat(quantity) + parseFloat(ticketSiteFee);
