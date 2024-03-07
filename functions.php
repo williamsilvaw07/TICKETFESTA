@@ -2181,7 +2181,6 @@ function get_ticket_info($user_id)
             'type' => 'shop_order',
         )
     );
-echo count($orders);
     $srNo = 0;
     foreach ($orders as $order) {
         if (!($order instanceof WC_Order)){
@@ -2200,7 +2199,7 @@ echo count($orders);
             $order_id = $order->get_id();
 
             if($order_id == 2184){
-                echo "event_author : $event_author  <br/>";
+                echo "event_author : $event_author event id: $event_id <br/>";
             
             }
             if ($event_author == $user_id) {
