@@ -193,7 +193,7 @@ jQuery(document).ready(function($) {
         jQuery('.tribe-tickets__tickets-footer-total .tribe-amount').text(total_fee.toFixed(2)); 
     }
     jQuery('.tribe-tickets__tickets-item').click(function(){
-        update_site_fees(this)
+        // update_site_fees(this)
     });
 
     $('.tribe-tickets__tickets-item').each(function() {
