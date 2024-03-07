@@ -3950,6 +3950,7 @@ function ticketfesta_organizer_register($customer_id, $new_customer_data)
         $attachment_id = attachment_url_to_postid($image_url);
         set_post_thumbnail($post_id, $attachment_id);
         update_user_meta($customer_id, 'current_organizer', $post_id);
+        update_user_meta($customer_id, '_tribe_organizer_id', $post_id);
         $organizer_email = get_userdata($customer_id)->user_email;
         update_post_meta($post_id, '_OrganizerEmail', $organizer_email);
         $user = get_userdata($customer_id);
