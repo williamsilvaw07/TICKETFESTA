@@ -3710,13 +3710,13 @@ display: none !important;
 .grey {
 stroke-dasharray: 788 790;
 stroke-dashoffset: 789;
-animation: draw_0 3200ms infinite, fade 3200ms infinite;
+animation: draw_0 2200ms infinite, fade 2200ms infinite;
 }
 
 .blue {
 stroke-dasharray: 788 790;
 stroke-dashoffset: 789;
-animation: draw_1 3200ms infinite, fade 3200ms infinite;
+animation: draw_1 2200ms infinite, fade 2200ms infinite;
 }
 
 @keyframes fade {
