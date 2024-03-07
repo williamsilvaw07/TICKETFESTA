@@ -2600,7 +2600,7 @@ function recent_activity_shortcode($atts)
     $atts = shortcode_atts(
         array(
             'limit' => 9,
-            'page' => 1
+            'page' => 4
         ),
         $atts,
         'recent_activity'
