@@ -2235,6 +2235,49 @@ function get_ticket_info($user_id)
 }
 
 
+// Check if WooCommerce is active
+if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_option('active_plugins')))) {
+
+    // Ensure your custom function exists to avoid breaking the site
+    if (!function_exists('get_ticket_info')) {
+        // Define get_ticket_info or make sure it's included before calling it
+        function get_ticket_info($user_id) {
+            // Your logic here to fetch ticket info
+            // Placeholder return structure
+            return [
+                'total_sales_lifetime' => 0, // Default to 0
+                'order_details' => [] // Default to empty array
+            ];
+        }
+    }
+
+    // Define the shortcode function
+    function shortcode_revenue() {
+        $user_id = get_current_user_id();
+        $ticket_info = get_ticket_info($user_id);
+        $total_sales_lifetime = $ticket_info['total_sales_lifetime'];
+        $currency_symbol = get_woocommerce_currency_symbol();
+        $currency_code = get_woocommerce_currency();
+
+        return "
+        <div class='sales-card today_sale_admin_dashboard'>
+            <div class='sales-card-content'>
+                <div class='sales-today'>
+                    <h5 class='admin_dashboard_sales-label card_admin_dashboard'>Lifetime Revenue</h5>
+                    <div class='admin_dashboard_sales-amount'>" . esc_html($currency_symbol) . esc_html(number_format($total_sales_lifetime, 2)) . " <span class='admin_dashboard_sales-amount_span'>" . esc_html($currency_code) . "</span></div>
+                </div>
+            </div>
+        </div>";
+    }
+    add_shortcode('revenue', 'shortcode_revenue');
+
+} else {
+    // WooCommerce is not active, you may want to handle this case.
+    function woocommerce_not_active_notice() {
+        echo '<div class="error"><p>WooCommerce must be active for the "Revenue" shortcode to work.</p></div>';
+    }
+    add_action('admin_notices', 'woocommerce_not_active_notice');
+}
 
 
 
