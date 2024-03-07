@@ -246,14 +246,6 @@ if (!defined('ABSPATH')) {
             });
 
 
-
-document.addEventListener("DOMContentLoaded", function(event) { 
-    // Assuming your JS is fully loaded at this point or listen for a specific JS event that signifies it's done
-    setTimeout(function() {
-        document.querySelector('.loading_svg_div').style.display = 'none';
-    }, 1000); // Keep the loading SVG for an additional second after JS load
-});
-
         </script>
 
 
@@ -264,61 +256,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 
         <style>
-
-
-
-.grey {
-  stroke-dasharray: 788 790;
-  stroke-dashoffset: 789;
-  animation: draw_0 3200ms infinite, fade 3200ms infinite;
-}
-
-.blue {
-  stroke-dasharray: 788 790;
-  stroke-dashoffset: 789;
-  animation: draw_1 3200ms infinite, fade 3200ms infinite;
-}
-
-@keyframes fade {
-  0% {
-    stroke-opacity: 1;
-  }
-  80% {
-    stroke-opacity: 1;
-  }
-  100% {
-    stroke-opacity: 0;
-  }
-}
-
-@keyframes draw_0 {
-  9.375% {
-    stroke-dashoffset: 789
-  }
-  39.375% {
-    stroke-dashoffset: 0;
-  }
-  100% {
-    stroke-dashoffset: 0;
-  }
-}
-
-@keyframes draw_1 {
-  35.625% {
-    stroke-dashoffset: 789
-  }
-  65.625% {
-    stroke-dashoffset: 0;
-  }
-  100% {
-    stroke-dashoffset: 0;
-  }
-}
-
-
-
-
-
+            
             header {
     background-color: inherit!important;
 }
