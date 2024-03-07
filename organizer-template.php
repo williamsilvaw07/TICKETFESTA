@@ -57,7 +57,7 @@ jQuery(document).ready(function($) {
             console.log('Performing another action 1 second after hiding the SVG');
             // Any subsequent actions can be placed here
         }, 1000);
-    }, 1000);
+    }, 2000);
 });
 </script>
 
