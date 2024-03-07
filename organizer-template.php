@@ -10,7 +10,7 @@ get_header('organizer'); // Include the header
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1366 768" xml:space="preserve">
         <style type="text/css">
             .st0{fill:none;stroke:#d3fa16;stroke-width:9;stroke-miterlimit:10;}
-            .st1{fill:none;stroke:#d3fa16;stroke-width:9;stroke-miterlimit:10;}
+            .st1{fill:none;stroke:#w3fa16;stroke-width:9;stroke-miterlimit:10;}
         </style>
         <g>
             <path class="st0 grey" d="M772.5,347c-6.2-14-2.4-29.5,8.4-35.8c1.1-0.6,1.4-2.2,0.8-3.7l-8.5-19.1c-3.4-7.6-11.2-11.4-17.5-8.6
