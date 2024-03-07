@@ -2236,28 +2236,6 @@ function get_ticket_info($user_id)
 
 
 
-function shortcode_revenue() {
-    $user_id = get_current_user_id();
-    $ticket_info = get_ticket_info($user_id);
-    $total_sales_lifetime = $ticket_info['total_sales_lifetime'];
-    $order_details = $ticket_info['order_details'];
-
-    // Fetch the current WooCommerce currency symbol and code dynamically
-    $currency_symbol = get_woocommerce_currency_symbol();
-    $currency_code = get_woocommerce_currency();
-
-    // Use the dynamic currency symbol and code for the total sales lifetime
-    return "
-    <div class='sales-card today_sale_admin_dashboard'>
-        <div class='sales-card-content'>
-            <div class='sales-today'>
-                <h5 class='admin_dashboard_sales-label card_admin_dashboard'>Lifetime Revenue</h5>
-                <div class='admin_dashboard_sales-amount'>" . esc_html($currency_symbol . number_format($total_sales_lifetime, 2)) . " <span class='admin_dashboard_sales-amount_span'>" . esc_html($currency_code) . "</span></div>
-            </div>
-    </div>";
-}
-add_shortcode('revenue', 'shortcode_revenue');
-
 
 
 function get_total_sales_for_previous_day($user_id)
