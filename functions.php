@@ -2182,6 +2182,7 @@ function get_ticket_info($user_id)
         )
     );
 echo count($orders);
+    $srNo = 0;
     foreach ($orders as $order) {
         if (!($order instanceof WC_Order)){
             echo 'order id rejected: ' . $order->get_id() . '<br/>';
@@ -2197,6 +2198,10 @@ echo count($orders);
             $event_id = get_post_meta($product_id, '_tribe_wooticket_for_event', true);
             $event_author = get_post_field('post_author', $event_id);
             if ($event_author == $user_id) {
+                $srNo++;
+                $order_id = $order->get_id();
+                echo "order id $srNo accepted:  $order_id <br/>";
+
                 $quantity = $item->get_quantity();
                 $subtotal = $item->get_subtotal(); // Using item subtotal
 
