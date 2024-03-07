@@ -1,11 +1,12 @@
 <?php
- ///dd
+///dd
 
 
 /////FUNCTION TO AUTO COMPLEATE THE ORDERS 
 add_action('woocommerce_payment_complete', 'auto_complete_digital_orders');
 
-function auto_complete_digital_orders($order_id) {
+function auto_complete_digital_orders($order_id)
+{
     $order = wc_get_order($order_id);
 
     if (!$order) {
@@ -126,8 +127,8 @@ function add_custom_class_to_order_rows()
 {
     ?>
     <script type="text/javascript">
-        jQuery(document).ready(function ($) {
-            $('.woocommerce-orders-table__row').each(function () {
+        jQuery(document).ready(function($) {
+            $('.woocommerce-orders-table__row').each(function() {
                 $(this).addClass('coupon-style');
             });
         });
@@ -163,9 +164,9 @@ function move_custom_welcome_message_script()
         // Add inline JavaScript to move the welcome message and show it
         ?>
         <script type="text/javascript">
-            jQuery(document).ready(function ($) {
+            jQuery(document).ready(function($) {
                 // Move the welcome message to just above the <ul> inside the navigation
-                var welcomeMessage = $('#custom-welcome-message');
+                var welcomeMessage=$('#custom-welcome-message');
                 welcomeMessage.prependTo('.woocommerce-MyAccount-navigation');
                 // Now display the message
                 welcomeMessage.show();
@@ -181,10 +182,10 @@ function change_view_order_text_script()
         // Add inline JavaScript to change the "View" buttons to "View Tickets"
         ?>
         <script type="text/javascript">
-            jQuery(document).ready(function ($) {
+            jQuery(document).ready(function($) {
                 // Change the text of each "View" button to "View Tickets"
-                $('.woocommerce-MyAccount-orders .woocommerce-button').each(function () {
-                    if ($(this).text().trim() === 'View') {
+                $('.woocommerce-MyAccount-orders .woocommerce-button').each(function() {
+                    if($(this).text().trim()==='View') {
                         $(this).text('View Tickets');
                     }
                 });
@@ -1111,7 +1112,7 @@ function display_user_created_organizers()
     // Define ajaxurl for the JavaScript
     ?>
     <script type="text/javascript">
-        var ajaxurl = "<?php echo admin_url('admin-ajax.php'); ?>";
+        var ajaxurl="<?php echo admin_url('admin-ajax.php'); ?>";
     </script>
     <?php
 
@@ -1139,66 +1140,66 @@ function display_user_created_organizers()
         function createNewOrganizer() {
             console.log('Attempting to create a new organizer...'); // Debugging line
 
-            var nonce = document.querySelector('#create_new_organizer_nonce').value;
+            var nonce=document.querySelector('#create_new_organizer_nonce').value;
 
-            fetch('/wp-admin/admin-ajax.php?action=create_new_organizer', {
+            fetch('/wp-admin/admin-ajax.php?action=create_new_organizer',{
                 method: 'POST',
                 credentials: 'same-origin',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 },
-                body: 'nonce=' + nonce
+                body: 'nonce='+nonce
             })
                 .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
+                    if(!response.ok) {
+                        throw new Error(`HTTP error! status: ${ response.status }`);
                     }
                     return response.json();
                 })
                 .then(data => {
-                    console.log('Response received:', data); // Debugging line
+                    console.log('Response received:',data); // Debugging line
 
-                    if (data.success && data.data && data.data.organizer_id) {
-                        console.log('Redirecting to organizer ID:', data.data.organizer_id); // Debugging line
-                        window.location.href = '/edit-organisers/?id=' + data.data.organizer_id;
+                    if(data.success&&data.data&&data.data.organizer_id) {
+                        console.log('Redirecting to organizer ID:',data.data.organizer_id); // Debugging line
+                        window.location.href='/edit-organisers/?id='+data.data.organizer_id;
                     } else {
-                        console.error('Unexpected response:', data);
+                        console.error('Unexpected response:',data);
                         alert('Unexpected response received. Check console for details.');
                     }
                 })
                 .catch(error => {
-                    console.error('Error caught in fetch request:', error);
+                    console.error('Error caught in fetch request:',error);
                     alert('Error creating new organizer. Check console for details.');
                 });
         }
 
 
         function deleteOrganizer(organizerId) {
-            console.log('Delete organizer called with ID:', organizerId);
+            console.log('Delete organizer called with ID:',organizerId);
 
-            if (!confirm('Are you sure you want to delete this organizer?')) {
+            if(!confirm('Are you sure you want to delete this organizer?')) {
                 return;
             }
 
-            var data = {
+            var data={
                 'action': 'delete_organizer',
                 'organizer_id': organizerId
             };
 
-            jQuery.post(ajaxurl, data, function (response) {
-                console.log('AJAX response:', response);
+            jQuery.post(ajaxurl,data,function(response) {
+                console.log('AJAX response:',response);
 
-                if (response.success) {
+                if(response.success) {
                     alert(response.data.message);
-                    jQuery('#organizer-row-' + organizerId).remove(); // Remove the row from the table
+                    jQuery('#organizer-row-'+organizerId).remove(); // Remove the row from the table
                 } else {
-                    var message = response.data && response.data.message ? response.data.message : 'Unknown error occurred';
-                    console.log('Error message:', message);
+                    var message=response.data&&response.data.message? response.data.message:'Unknown error occurred';
+                    console.log('Error message:',message);
                     alert(message);
                 }
-            }).fail(function (jqXHR, textStatus, errorThrown) {
-                console.log('AJAX error:', textStatus, errorThrown);
-                alert('Failed to delete: ' + errorThrown);
+            }).fail(function(jqXHR,textStatus,errorThrown) {
+                console.log('AJAX error:',textStatus,errorThrown);
+                alert('Failed to delete: '+errorThrown);
             });
 
 
@@ -1277,6 +1278,469 @@ function register_organizers_shortcode()
 }
 
 add_action('init', 'register_organizers_shortcode');
+
+
+function display_user_created_vanues()
+{
+
+    // Define ajaxurl for the JavaScript
+    ?>
+    <script type="text/javascript">
+        var ajaxurl="<?php echo admin_url('admin-ajax.php'); ?>";
+    </script>
+    <?php
+
+    if (!is_user_logged_in()) {
+        return 'You need to be logged in to view this page.'; // Only display for logged-in users
+    }
+
+    ob_start(); // Start output buffering
+
+    // Create a nonce for the AJAX request
+    $nonce = wp_create_nonce('create_new_organizer_nonce');
+
+    echo '<div class="organizers-header">';
+    echo '<h2>Your Vanues</h2>'; // Title
+    echo '</div>';
+    // JavaScript for createNewOrganizer
+    ?>
+    <script>
+
+        function deleteVanue(vanueID) {
+            console.log('Delete vanue called with ID:',vanueID);
+
+            if(!confirm('Are you sure you want to delete this vanue?')) {
+                return;
+            }
+
+            jQuery.ajax({
+                url: ajaxurl,
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    'action': 'delete_vanue_trive',
+                    'vanue_id': vanueID
+                },
+                success: function(response) {
+                    alert(response.data.message);
+                    jQuery('#organizer-row-'+vanueID).remove(); // Remove the row from the table
+                },
+                fail: function(response) {
+                    console.log('AJAX error:',response);
+                    alert('Failed to delete: ');
+                }
+            });
+        }
+    </script>
+    <?php
+
+    $current_user_id = get_current_user_id();
+
+    $args = array(
+        'post_type' => 'tribe_venue',
+        'posts_per_page' => -1,
+        'author' => $current_user_id,
+    );
+
+    $vanue_query = new WP_Query($args);
+
+
+    if ($vanue_query->have_posts()) {
+        echo '<table id="user-organizers-list" class="user-vanues-list"style="width: 100%;">';
+        echo '<thead>';
+        echo '<tr>';
+        echo '<th>Vanue Name</th>';
+        echo '<th>Actions</th>';
+        echo '</tr>';
+        echo '</thead>';
+        echo '<tbody>';
+
+        while ($vanue_query->have_posts()) {
+            $vanue_query->the_post();
+            $vanue_id = get_the_ID();
+            $edit_url = esc_url("/edit-vanues/?id={$vanue_id}");
+            echo '<tr id="organizer-row-' . $vanue_id . '">'; // Unique ID for each row
+
+            $vanue_title = get_the_title();
+
+            echo '<td>' . $vanue_title . '</td>';
+
+            echo '<td class="action-links">';
+            echo '<a href="' . $edit_url . '" class="edit-link action-link">Edit</a>';
+            // Only show delete link if it's not the default organizer
+            echo '<a href="javascript:void(0);" onclick="deleteVanue(' . $vanue_id . ')" class="delete-link action-link">Delete</a>';
+            echo '</td>';
+            echo '</tr>';
+        }
+
+        echo '</tbody>';
+        echo '</table>';
+
+        wp_reset_postdata();
+    } else {
+        echo 'No Vanues found.';
+    }
+
+    return ob_get_clean(); // Return the buffered output
+}
+function register_vanues_shortcode()
+{
+    add_shortcode('event_vanues', 'display_user_created_vanues');
+}
+
+add_action('init', 'register_vanues_shortcode');
+
+function display_edit_create_vanues()
+{
+    $post_id = isset($_GET['id']) ? $_GET['id'] :  '0';
+    // Retrieve the venue data by post ID
+    $venue       = get_post($post_id);
+    $address     = get_post_meta( $post_id, '_VenueAddress', true);
+    $city        = get_post_meta( $post_id, '_VenueCity', true);
+    $country     = get_post_meta( $post_id, '_VenueCountry', true);
+    $province    = get_post_meta( $post_id, '_VenueStateProvince', true);
+    $zip         = get_post_meta( $post_id, '_VenueZip', true);
+    $ShowMap     = get_post_meta( $post_id, '_EventShowMap', true);
+    $ShowMapLink = get_post_meta( $post_id, '_EventShowMapLink', true);
+    // Check if the venue exists and is of the correct post type
+    if ($venue && $venue->post_type == 'tribe_venue') {
+        ?>
+        <form method="post" action="" class="edit-vanue-form">
+            <!-- Venue Title Field -->
+            <label for="venue_title">Venue Title:</label>
+            <input type="text" id="venue_title" name="venue_title" value="<?php echo esc_attr($venue->post_title); ?>" />
+            <br />
+            
+            <!-- Address Title Field -->
+            <label for="venue_address">Address:</label>
+            <input type="text" id="venue_address" name="venue_address" value="<?php echo esc_attr($address); ?>" /><br />
+            <br />
+
+            <!-- Address Title Field -->
+            <label for="venue_city">City:</label>
+            <input type="text" id="venue_city" name="venue_city" value="<?php echo esc_attr($city); ?>" /><br />
+            <br />
+
+            <label for="venue_country">Country:</label>
+            <select data-country="<?php echo $country; ?>" class="tribe-dropdown tribe-dropdown-created" id="venue_country" name="venue_country" 
+                >
+                <option value="">Select a Country:</option>
+                <option value="Åland Islands">Åland Islands</option>
+                <option value="Afghanistan" >Afghanistan</option>
+                <option value="Albania">Albania</option>
+                <option value="Algeria">Algeria</option>
+                <option value="American Samoa">American Samoa</option>
+                <option value="Andorra">Andorra</option>
+                <option value="Angola">Angola</option>
+                <option value="Anguilla">Anguilla</option>
+                <option value="Antarctica">Antarctica</option>
+                <option value="Antigua and Barbuda">Antigua and Barbuda</option>
+                <option value="Argentina">Argentina</option>
+                <option value="Armenia">Armenia</option>
+                <option value="Aruba">Aruba</option>
+                <option value="Australia">Australia</option>
+                <option value="Austria">Austria</option>
+                <option value="Azerbaijan">Azerbaijan</option>
+                <option value="Bahamas">Bahamas</option>
+                <option value="Bahrain">Bahrain</option>
+                <option value="Bangladesh">Bangladesh</option>
+                <option value="Barbados">Barbados</option>
+                <option value="Belarus">Belarus</option>
+                <option value="Belgium">Belgium</option>
+                <option value="Belize">Belize</option>
+                <option value="Benin">Benin</option>
+                <option value="Bermuda">Bermuda</option>
+                <option value="Bhutan">Bhutan</option>
+                <option value="Bolivia">Bolivia</option>
+                <option value="Bosnia and Herzegovina">Bosnia and Herzegovina</option>
+                <option value="Botswana">Botswana</option>
+                <option value="Bouvet Island">Bouvet Island</option>
+                <option value="Brazil">Brazil</option>
+                <option value="British Indian Ocean Territory">British Indian Ocean Territory</option>
+                <option value="Brunei Darussalam">Brunei Darussalam</option>
+                <option value="Bulgaria">Bulgaria</option>
+                <option value="Burkina Faso">Burkina Faso</option>
+                <option value="Burundi">Burundi</option>
+                <option value="Côte d'Ivoire">Côte d'Ivoire</option>
+                <option value="Cambodia">Cambodia</option>
+                <option value="Cameroon">Cameroon</option>
+                <option value="Canada">Canada</option>
+                <option value="Cape Verde">Cape Verde</option>
+                <option value="Cayman Islands">Cayman Islands</option>
+                <option value="Central African Republic">Central African Republic</option>
+                <option value="Chad">Chad</option>
+                <option value="Chile">Chile</option>
+                <option value="China">China</option>
+                <option value="Christmas Island">Christmas Island</option>
+                <option value="Cocos (Keeling) Islands">Cocos (Keeling) Islands</option>
+                <option value="Collectivity of Saint Martin">Collectivity of Saint Martin</option>
+                <option value="Colombia">Colombia</option>
+                <option value="Comoros">Comoros</option>
+                <option value="Congo">Congo</option>
+                <option value="Congo, Democratic Republic of the">Congo, Democratic Republic of the</option>
+                <option value="Cook Islands">Cook Islands</option>
+                <option value="Costa Rica">Costa Rica</option>
+                <option value="Croatia (Local Name: Hrvatska)">Croatia (Local Name: Hrvatska)</option>
+                <option value="Cuba">Cuba</option>
+                <option value="Curaçao">Curaçao</option>
+                <option value="Cyprus">Cyprus</option>
+                <option value="Czech Republic">Czech Republic</option>
+                <option value="Denmark">Denmark</option>
+                <option value="Djibouti">Djibouti</option>
+                <option value="Dominica">Dominica</option>
+                <option value="Dominican Republic">Dominican Republic</option>
+                <option value="East Timor">East Timor</option>
+                <option value="Ecuador">Ecuador</option>
+                <option value="Egypt">Egypt</option>
+                <option value="El Salvador">El Salvador</option>
+                <option value="Equatorial Guinea">Equatorial Guinea</option>
+                <option value="Eritrea">Eritrea</option>
+                <option value="Estonia">Estonia</option>
+                <option value="Ethiopia">Ethiopia</option>
+                <option value="Falkland Islands (Malvinas)">Falkland Islands (Malvinas)</option>
+                <option value="Faroe Islands">Faroe Islands</option>
+                <option value="Fiji">Fiji</option>
+                <option value="Finland">Finland</option>
+                <option value="France">France</option>
+                <option value="French Guiana">French Guiana</option>
+                <option value="French Polynesia">French Polynesia</option>
+                <option value="French Southern Territories">French Southern Territories</option>
+                <option value="Gabon">Gabon</option>
+                <option value="Gambia">Gambia</option>
+                <option value="Georgia">Georgia</option>
+                <option value="Germany">Germany</option>
+                <option value="Ghana">Ghana</option>
+                <option value="Gibraltar">Gibraltar</option>
+                <option value="Greece">Greece</option>
+                <option value="Greenland">Greenland</option>
+                <option value="Grenada">Grenada</option>
+                <option value="Guadeloupe">Guadeloupe</option>
+                <option value="Guam">Guam</option>
+                <option value="Guatemala">Guatemala</option>
+                <option value="Guinea">Guinea</option>
+                <option value="Guinea-Bissau">Guinea-Bissau</option>
+                <option value="Guyana">Guyana</option>
+                <option value="Haiti">Haiti</option>
+                <option value="Heard and McDonald Islands">Heard and McDonald Islands</option>
+                <option value="Holy See (Vatican City State)">Holy See (Vatican City State)</option>
+                <option value="Honduras">Honduras</option>
+                <option value="Hong Kong">Hong Kong</option>
+                <option value="Hungary">Hungary</option>
+                <option value="Iceland">Iceland</option>
+                <option value="India">India</option>
+                <option value="Indonesia">Indonesia</option>
+                <option value="Iran, Islamic Republic of">Iran, Islamic Republic of</option>
+                <option value="Iraq">Iraq</option>
+                <option value="Ireland">Ireland</option>
+                <option value="Israel">Israel</option>
+                <option value="Italy">Italy</option>
+                <option value="Jamaica">Jamaica</option>
+                <option value="Japan">Japan</option>
+                <option value="Jordan">Jordan</option>
+                <option value="Kazakhstan">Kazakhstan</option>
+                <option value="Kenya">Kenya</option>
+                <option value="Kiribati">Kiribati</option>
+                <option value="Korea, Democratic People's Republic of">Korea, Democratic People's Republic of</option>
+                <option value="Korea, Republic of">Korea, Republic of</option>
+                <option value="Kuwait">Kuwait</option>
+                <option value="Kyrgyzstan">Kyrgyzstan</option>
+                <option value="Lao People's Democratic Republic">Lao People's Democratic Republic</option>
+                <option value="Latvia">Latvia</option>
+                <option value="Lebanon">Lebanon</option>
+                <option value="Lesotho">Lesotho</option>
+                <option value="Liberia">Liberia</option>
+                <option value="Libya">Libya</option>
+                <option value="Liechtenstein">Liechtenstein</option>
+                <option value="Lithuania">Lithuania</option>
+                <option value="Luxembourg">Luxembourg</option>
+                <option value="Macau">Macau</option>
+                <option value="Madagascar">Madagascar</option>
+                <option value="Malawi">Malawi</option>
+                <option value="Malaysia">Malaysia</option>
+                <option value="Maldives">Maldives</option>
+                <option value="Mali">Mali</option>
+                <option value="Malta">Malta</option>
+                <option value="Marshall Islands">Marshall Islands</option>
+                <option value="Martinique">Martinique</option>
+                <option value="Mauritania">Mauritania</option>
+                <option value="Mauritius">Mauritius</option>
+                <option value="Mayotte">Mayotte</option>
+                <option value="Mexico">Mexico</option>
+                <option value="Micronesia, Federated States of">Micronesia, Federated States of</option>
+                <option value="Moldova, Republic of">Moldova, Republic of</option>
+                <option value="Monaco">Monaco</option>
+                <option value="Mongolia">Mongolia</option>
+                <option value="Montenegro">Montenegro</option>
+                <option value="Montserrat">Montserrat</option>
+                <option value="Morocco">Morocco</option>
+                <option value="Mozambique">Mozambique</option>
+                <option value="Myanmar">Myanmar</option>
+                <option value="Namibia">Namibia</option>
+                <option value="Nauru">Nauru</option>
+                <option value="Nepal">Nepal</option>
+                <option value="Netherlands">Netherlands</option>
+                <option value="New Caledonia">New Caledonia</option>
+                <option value="New Zealand">New Zealand</option>
+                <option value="Nicaragua">Nicaragua</option>
+                <option value="Niger">Niger</option>
+                <option value="Nigeria">Nigeria</option>
+                <option value="Niue">Niue</option>
+                <option value="Norfolk Island">Norfolk Island</option>
+                <option value="North Macedonia">North Macedonia</option>
+                <option value="Northern Mariana Islands">Northern Mariana Islands</option>
+                <option value="Norway">Norway</option>
+                <option value="Oman">Oman</option>
+                <option value="Pakistan">Pakistan</option>
+                <option value="Palau">Palau</option>
+                <option value="Panama">Panama</option>
+                <option value="Papua New Guinea">Papua New Guinea</option>
+                <option value="Paraguay">Paraguay</option>
+                <option value="Peru">Peru</option>
+                <option value="Philippines">Philippines</option>
+                <option value="Pitcairn">Pitcairn</option>
+                <option value="Poland">Poland</option>
+                <option value="Portugal">Portugal</option>
+                <option value="Puerto Rico">Puerto Rico</option>
+                <option value="Qatar">Qatar</option>
+                <option value="Reunion">Reunion</option>
+                <option value="Romania">Romania</option>
+                <option value="Russian Federation">Russian Federation</option>
+                <option value="Rwanda">Rwanda</option>
+                <option value="São Tomé and Príncipe">São Tomé and Príncipe</option>
+                <option value="Saint Barthélemy">Saint Barthélemy</option>
+                <option value="Saint Helena">Saint Helena</option>
+                <option value="Saint Kitts and Nevis">Saint Kitts and Nevis</option>
+                <option value="Saint Lucia">Saint Lucia</option>
+                <option value="Saint Pierre and Miquelon">Saint Pierre and Miquelon</option>
+                <option value="Saint Vincent and The Grenadines">Saint Vincent and The Grenadines</option>
+                <option value="Samoa">Samoa</option>
+                <option value="San Marino">San Marino</option>
+                <option value="Saudi Arabia">Saudi Arabia</option>
+                <option value="Senegal">Senegal</option>
+                <option value="Serbia">Serbia</option>
+                <option value="Seychelles">Seychelles</option>
+                <option value="Sierra Leone">Sierra Leone</option>
+                <option value="Singapore">Singapore</option>
+                <option value="Sint Maarten">Sint Maarten</option>
+                <option value="Slovakia (Slovak Republic)">Slovakia (Slovak Republic)</option>
+                <option value="Slovenia">Slovenia</option>
+                <option value="Solomon Islands">Solomon Islands</option>
+                <option value="Somalia">Somalia</option>
+                <option value="South Africa">South Africa</option>
+                <option value="South Georgia, South Sandwich Islands">South Georgia, South Sandwich Islands</option>
+                <option value="Spain">Spain</option>
+                <option value="Sri Lanka">Sri Lanka</option>
+                <option value="Sudan">Sudan</option>
+                <option value="Suriname">Suriname</option>
+                <option value="Svalbard and Jan Mayen Islands">Svalbard and Jan Mayen Islands</option>
+                <option value="Swaziland">Swaziland</option>
+                <option value="Sweden">Sweden</option>
+                <option value="Switzerland">Switzerland</option>
+                <option value="Syrian Arab Republic">Syrian Arab Republic</option>
+                <option value="Taiwan">Taiwan</option>
+                <option value="Tajikistan">Tajikistan</option>
+                <option value="Tanzania, United Republic of">Tanzania, United Republic of</option>
+                <option value="Thailand">Thailand</option>
+                <option value="Togo">Togo</option>
+                <option value="Tokelau">Tokelau</option>
+                <option value="Tonga">Tonga</option>
+                <option value="Trinidad and Tobago">Trinidad and Tobago</option>
+                <option value="Tunisia">Tunisia</option>
+                <option value="Turkey">Turkey</option>
+                <option value="Turkmenistan">Turkmenistan</option>
+                <option value="Turks and Caicos Islands">Turks and Caicos Islands</option>
+                <option value="Tuvalu">Tuvalu</option>
+                <option value="Uganda">Uganda</option>
+                <option value="Ukraine">Ukraine</option>
+                <option value="United Arab Emirates">United Arab Emirates</option>
+                <option value="United Kingdom">United Kingdom</option>
+                <option value="United States">United States</option>
+                <option value="United States Minor Outlying Islands">United States Minor Outlying Islands</option>
+                <option value="Uruguay">Uruguay</option>
+                <option value="Uzbekistan">Uzbekistan</option>
+                <option value="Vanuatu">Vanuatu</option>
+                <option value="Venezuela">Venezuela</option>
+                <option value="Viet Nam">Viet Nam</option>
+                <option value="Virgin Islands (British)">Virgin Islands (British)</option>
+                <option value="Virgin Islands (U.S.)">Virgin Islands (U.S.)</option>
+                <option value="Wallis and Futuna Islands">Wallis and Futuna Islands</option>
+                <option value="Western Sahara">Western Sahara</option>
+                <option value="Yemen">Yemen</option>
+                <option value="Zambia">Zambia</option>
+                <option value="Zimbabwe">Zimbabwe</option>
+            </select>
+            <br/>
+
+            <!-- State or Province  Field -->
+            <label for="venue_state">State or Province:</label>
+            <input type="text" id="venue_state" name="venue_state" value="<?php echo esc_attr($province); ?>" /><br />
+            <br />
+
+            <!-- Postal Code  Field -->
+            <label for="venue_postcode">Postal Code:</label>
+            <input type="text" id="venue_postcode" name="venue_postcode" value="<?php echo esc_attr($zip); ?>" /><br />
+            <br />
+
+
+            <!-- Show Map -->
+            <label for="vanue_map">Show Map:</label>
+            <input type="checkbox" id="vanue_map" name="vanue_map" <?php if($ShowMap == '1') echo 'checked'; ?>  value='1' />
+            <br/>
+            <!-- Map Link -->
+            <label for="map_link">Map Link:</label>
+            <input type="checkbox" id="map_link" name="map_link" <?php if($ShowMapLink == '1') echo 'checked'; ?> value='1' />
+            <br/>
+
+
+            <!-- Submit Button -->
+            <input type="submit" name="update_venue" value="Update Venue" />
+            <input type="hidden" name="venue_id" value="<?php echo $post_id; ?>" />
+            <?php wp_nonce_field('update_venue_action', 'update_venue_nonce'); ?>
+        </form>
+        <?php
+    } else {
+        echo 'Venue not found.';
+    }
+}
+
+// Handle form submission
+if (isset($_POST['update_venue'])) {
+    // Verify nonce
+    if (!isset($_POST['update_venue_nonce']) || !wp_verify_nonce($_POST['update_venue_nonce'], 'update_venue_action')) {
+        die('Security check failed');
+    }
+
+    // Get and sanitize form data
+    $venue_id    = isset($_POST['venue_id']) ? intval($_POST['venue_id']) : 0;
+    $venue_title = isset($_POST['venue_title']) ? sanitize_text_field($_POST['venue_title']) : '';
+    $address     = isset($_POST['venue_address']) ? sanitize_text_field($_POST['venue_address']) : '';
+    $city        = isset($_POST['venue_city']) ? sanitize_text_field($_POST['venue_city']) : '';
+    $country     = isset($_POST['venue_country']) ? sanitize_text_field($_POST['venue_country']) : '';
+    $province    = isset($_POST['venue_state']) ? sanitize_text_field($_POST['venue_state']) : '';
+    $postcode    = isset($_POST['venue_postcode']) ? sanitize_text_field($_POST['venue_postcode']) : '';
+    $ShowMap     = isset($_POST['vanue_map']) ? sanitize_text_field($_POST['vanue_map']) : '0';
+    $ShowMapLink = isset($_POST['map_link']) ? sanitize_text_field($_POST['map_link']) : '0';
+    // Update venue data
+    $updated_venue_data = array(
+        'ID' => $venue_id,
+        'post_title' => $venue_title
+    );
+
+    wp_update_post($updated_venue_data);
+    update_post_meta($venue_id, '_VenueAddress', $address);
+    update_post_meta($venue_id, '_VenueCity', $city);
+    update_post_meta($venue_id, '_VenueCountry', $country);
+    update_post_meta($venue_id, '_VenueStateProvince', $province);
+    update_post_meta($venue_id, '_VenueZip', $postcode);
+    update_post_meta($venue_id, '_EventShowMap', $ShowMap);
+    update_post_meta($venue_id, '_EventShowMapLink', $ShowMapLink);
+
+    // Redirect after update
+    wp_redirect('https://ticketfesta.co.uk/dashboard/vanues-list/');
+    exit;
+
+}
+add_shortcode('edit_create_vanues', 'display_edit_create_vanues');
 
 function get_organizer_id_shortcode_function($atts)
 {
@@ -1402,15 +1866,30 @@ function ajax_delete_organizer()
 }
 add_action('wp_ajax_delete_organizer', 'ajax_delete_organizer');
 
+function delete_vanue_trive()
+{
+
+    $vanue_id = isset($_POST['vanue_id']) ? intval($_POST['vanue_id']) : 0;
+    // $vanue_id = isset($_GET['vanue_id']) ? intval($_GET['vanue_id']) : 0;
+
+    if (!$vanue_id) {
+        wp_send_json_error('Invalid Vanue ID');
+        die();
+    }
+    $result = wp_delete_post($vanue_id, true);
+
+    if ($result) {
+        wp_send_json_success(array('message' => 'Vanue deleted successfully'));
+    } else {
+        wp_send_json_error('Deletion failed');
+    }
+
+    die();
+}
 
 
-
-
-
-
-
-
-
+add_action('wp_ajax_delete_vanue_trive', 'delete_vanue_trive');
+add_action('wp_ajax_nopriv_delete_vanue_trive', 'delete_vanue_trive');
 
 
 
@@ -1491,29 +1970,29 @@ add_action('wp_ajax_nopriv_check_organizer_name', 'ajax_check_organizer_name'); 
 function ajax_update_organizer_information()
 {
     $organizer_description = sanitize_text_field($_POST['organizer_description']);
-    $organizer_id          = sanitize_text_field($_POST['organizer_id']);
-    $organizer_email       = isset($_POST['organizer_email']) ? sanitize_email($_POST['organizer_email']) : '';
-    $organizer_facebook    = isset($_POST['organizer_facebook']) ? sanitize_url($_POST['organizer_facebook']) : '';
-    $organizer_twitter     = isset($_POST['organizer_twitter']) ? sanitize_url($_POST['organizer_twitter']) : '';
-    $organizer_instagram   = isset($_POST['organizer_instagram']) ?  sanitize_url($_POST['organizer_instagram']) : '';
-    if($organizer_description){
+    $organizer_id = sanitize_text_field($_POST['organizer_id']);
+    $organizer_email = isset($_POST['organizer_email']) ? sanitize_email($_POST['organizer_email']) : '';
+    $organizer_facebook = isset($_POST['organizer_facebook']) ? sanitize_url($_POST['organizer_facebook']) : '';
+    $organizer_twitter = isset($_POST['organizer_twitter']) ? sanitize_url($_POST['organizer_twitter']) : '';
+    $organizer_instagram = isset($_POST['organizer_instagram']) ? sanitize_url($_POST['organizer_instagram']) : '';
+    if ($organizer_description) {
         update_post_meta($organizer_id, 'organizer_description', $organizer_description);
     }
-    if($organizer_email && $organizer_email != 'example@website.com'){
+    if ($organizer_email && $organizer_email != 'example@website.com') {
         update_post_meta($organizer_id, '_OrganizerEmail', $organizer_email);
     }
-    if($organizer_facebook && $organizer_facebook != 'http://facebook.com'){
+    if ($organizer_facebook && $organizer_facebook != 'http://facebook.com') {
         update_post_meta($organizer_id, 'organizer_facebook', $organizer_facebook);
     }
 
-    if($organizer_twitter && $organizer_twitter != 'http://twitter.com'){
+    if ($organizer_twitter && $organizer_twitter != 'http://twitter.com') {
         update_post_meta($organizer_id, 'organizer_twitter', $organizer_twitter);
     }
 
-    if($organizer_instagram && $organizer_instagram != 'http://instagram.com'){
+    if ($organizer_instagram && $organizer_instagram != 'http://instagram.com') {
         update_post_meta($organizer_id, 'organizer_instagram', $organizer_instagram);
     }
-    
+
     var_dump($_POST);
     die();
 }
@@ -1685,7 +2164,8 @@ add_shortcode('organizer_attendees_report', 'my_tribe_community_tickets_attendee
 
 
 
-function get_ticket_info($user_id) {
+function get_ticket_info($user_id)
+{
     $today = date('Y-m-d');
     $total_sales_today = 0;
     $total_tickets_sold_today = 0;
@@ -1694,14 +2174,20 @@ function get_ticket_info($user_id) {
     $order_details = []; // Initialize an array for detailed order information
 
     // Fetch orders
-    $orders = wc_get_orders(array(
-        'status' => array('wc-completed'),
-        'limit' => -1,
-        'type' => 'shop_order',
-    ));
+    $orders = wc_get_orders(
+        array(
+            'status' => array('wc-completed'),
+            'limit' => -1,
+            'type' => 'shop_order',
+        )
+    );
 
     foreach ($orders as $order) {
-        if (!($order instanceof WC_Order)) continue;
+        if (!($order instanceof WC_Order)){
+            echo 'order id rejected: ' . $order->get_id() . '<br/>';
+            continue;
+        }
+
 
         $order_date = $order->get_date_created()->format('Y-m-d');
         $is_today = ($order_date === $today);
@@ -1710,8 +2196,9 @@ function get_ticket_info($user_id) {
             $product_id = $item->get_product_id();
             $event_id = get_post_meta($product_id, '_tribe_wooticket_for_event', true);
             $event_author = get_post_field('post_author', $event_id);
+            $order_id = $order->get_id();
 
-            if ($event_author == $user_id) {
+            if ($event_author == $user_id && $event_id != false) {
                 $quantity = $item->get_quantity();
                 $subtotal = $item->get_subtotal(); // Using item subtotal
 
@@ -1749,16 +2236,18 @@ function get_ticket_info($user_id) {
 
 
 
-function shortcode_revenue() {
+function shortcode_revenue()
+{
     $user_id = get_current_user_id();
     $ticket_info = get_ticket_info($user_id);
     $total_sales_lifetime = $ticket_info['total_sales_lifetime'];
     $order_details = $ticket_info['order_details'];
 
     // Building the order debug info
-    $order_debug_info = "<strong>Order Breakdown:</strong><br>";
+    $order_debug_info = "<strong>Order Breakdown:</strong> <br/>";
+
     foreach ($order_details as $detail) {
-        $order_debug_info .= "Order ID: {$detail['order_id']}, Subtotal: £" . number_format($detail['subtotal'], 2);
+        $order_debug_info .= "Order ID: {$detail['order_id']}, Subtotal: £" . number_format($detail['subtotal'], 2) . '<br/>';
         $order_debug_info .= ", Event: {$detail['event_title']}, Created by: {$detail['event_creator_name']}<br>";
     }
 
@@ -2620,14 +3109,15 @@ add_action('save_post_tribe_events', 'save_event_extra_options', 10, 3);
 ///////////////////END////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 function save_event_description($post_id) {
-    // Check if the custom field 'event_description' is set in the submitted form
+    error_log('save_event_description function called');
     if (isset($_POST['event_description'])) {
-        // Sanitize and save the event description
         $event_description = wp_kses_post($_POST['event_description']);
         update_post_meta($post_id, 'event_description', $event_description);
+        error_log('Event description saved: ' . $event_description);
     }
 }
 add_action('save_post', 'save_event_description');
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2999,7 +3489,8 @@ add_filter('woocommerce_account_menu_items', 'ticketfeasta_following_link_my_acc
 // ------------------
 // 4. Add content to the new tab
 
-function ticketfeasta_following() {
+function ticketfeasta_following()
+{
     $user_id = wp_get_current_user()->ID;
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -3027,10 +3518,13 @@ function ticketfeasta_following() {
             ?>
             <div class="organiser-following-item">
                 <?php if ($organiser_img_url): ?>
-                    <img src="<?php echo esc_url($organiser_img_url); ?>" alt="<?php echo esc_attr($organiser_name); ?>" class="organiser-thumbnail">
+                    <img src="<?php echo esc_url($organiser_img_url); ?>" alt="<?php echo esc_attr($organiser_name); ?>"
+                        class="organiser-thumbnail">
                 <?php endif; ?>
                 <div class="organiser-details">
-                    <strong><?php echo esc_html($organiser_name); ?></strong>
+                    <strong>
+                        <?php echo esc_html($organiser_name); ?>
+                    </strong>
                     <div class="organiser-actions">
                         <form method="POST" style="display: inline-block;">
                             <input type="hidden" name="following_id" value="<?php echo esc_attr($following); ?>">
@@ -3461,6 +3955,9 @@ function ticketfesta_organizer_register($customer_id, $new_customer_data)
         $attachment_id = attachment_url_to_postid($image_url);
         set_post_thumbnail($post_id, $attachment_id);
         update_user_meta($customer_id, 'current_organizer', $post_id);
+        update_user_meta($customer_id, '_tribe_organizer_id', $post_id);
+        $organizer_email = get_userdata($customer_id)->user_email;
+        update_post_meta($post_id, '_OrganizerEmail', $organizer_email);
         $user = get_userdata($customer_id);
         $user->set_role('organiser');
     }
@@ -3821,7 +4318,8 @@ add_action('woocommerce_account_dashboard', 'display_upcoming_events_for_user_wi
 
 /////FUNCTION TO ADD SHORTCODE  FOR ALL ORDERS FROM USER 
 
-function display_user_all_orders_shortcode() {
+function display_user_all_orders_shortcode()
+{
     if (!function_exists('wc_get_orders') || !is_user_logged_in()) {
         return '<p>You must be logged in to view this content.</p>';
     }
@@ -3836,59 +4334,70 @@ function display_user_all_orders_shortcode() {
     ob_start(); // Start output buffering
     ?>
 
-<div class="event-tickets-header">
-    <h2 class="container-fluid">Your Event Tickets</h2>
-    <p>Below you'll find tickets for events you're attending soon. Keep track of dates and details right here!</p>
-</div>
-<div class="allTicketsContainer">
-    <?php foreach ($customer_orders as $customer_order) : 
-        $order_url = $customer_order->get_view_order_url();
-        $items = $customer_order->get_items();
-        foreach ($items as $item_id => $item) :
-            $event_id = get_post_meta($item->get_product_id(), '_tribe_wooticket_for_event', true);
-            $event_start_date = get_post_meta($event_id, '_EventStartDate', true);
-            $event_title = get_the_title($event_id);
-            $event_url = get_permalink($event_id);
-            $event_image_url = get_the_post_thumbnail_url($event_id, 'thumbnail') ?: 'https://yourdefaultimageurl.com/default.jpg'; // Using thumbnail size for faster loading
-            $ticket_quantity = $item->get_quantity();
-            $order_total = $customer_order->get_formatted_order_total();
-            $event_address = tribe_get_address($event_id);
-            $map_link = !empty($event_address) ? "https://maps.google.com/?q=" . urlencode($event_address) : '';
-    ?>
-    <div class="ticket">
-        <div class="ticketImage">
-            <img src="<?php echo esc_url($event_image_url); ?>" alt="Event Image">
-        </div>
-        <div class="ticket_inner_div">
-            <div class="ticketTitle"><?php echo esc_html($event_title); ?></div>
-            <?php if (!empty($event_address)) : ?>
-            <div class="eventaddress"><?php echo esc_html($event_address); ?>
-                <a class="opne_on_map_link" href="<?php echo esc_url($map_link); ?>" target="_blank">Map</a>
-            </div>
-            <?php endif; ?>
-            <hr>
-            <div class="ticketDetail">
-                <div>Event Date: <?php echo date_i18n('F j, Y, g:i a', strtotime($event_start_date)); ?></div>
-                <div>Ticket Quantity: <?php echo esc_html($ticket_quantity); ?></div>
-                <div>Order Total: <?php echo esc_html($order_total); ?></div>
-            </div>
-            <div class="ticketRip">
-                <div class="circleLeft"></div>
-                <div class="ripLine"></div>
-                <div class="circleRight"></div>
-            </div>
-            <div class="ticketSubDetail">
-                <div class="code"><?php echo esc_html($customer_order->get_order_number()); ?></div>
-                <!-- Paid Date display logic here if needed -->
-            </div>
-            <div class="ticketlowerSubDetail">
-                <a href="<?php echo esc_url($order_url); ?>"><button class="view_ticket_btn">View Ticket</button></a>
-                <a href="<?php echo esc_url($event_url); ?>"><button class="view_event_btn">Event Details</button></a>
-            </div>
-        </div>
+    <div class="event-tickets-header">
+        <h2 class="container-fluid">Your Event Tickets</h2>
+        <p>Below you'll find tickets for events you're attending soon. Keep track of dates and details right here!</p>
     </div>
-    <?php endforeach; endforeach; ?>
-</div>
+    <div class="allTicketsContainer">
+        <?php foreach ($customer_orders as $customer_order):
+            $order_url = $customer_order->get_view_order_url();
+            $items = $customer_order->get_items();
+            foreach ($items as $item_id => $item):
+                $event_id = get_post_meta($item->get_product_id(), '_tribe_wooticket_for_event', true);
+                $event_start_date = get_post_meta($event_id, '_EventStartDate', true);
+                $event_title = get_the_title($event_id);
+                $event_url = get_permalink($event_id);
+                $event_image_url = get_the_post_thumbnail_url($event_id, 'thumbnail') ?: 'https://yourdefaultimageurl.com/default.jpg'; // Using thumbnail size for faster loading
+                $ticket_quantity = $item->get_quantity();
+                $order_total = $customer_order->get_formatted_order_total();
+                $event_address = tribe_get_address($event_id);
+                $map_link = !empty($event_address) ? "https://maps.google.com/?q=" . urlencode($event_address) : '';
+                ?>
+                <div class="ticket">
+                    <div class="ticketImage">
+                        <img src="<?php echo esc_url($event_image_url); ?>" alt="Event Image">
+                    </div>
+                    <div class="ticket_inner_div">
+                        <div class="ticketTitle">
+                            <?php echo esc_html($event_title); ?>
+                        </div>
+                        <?php if (!empty($event_address)): ?>
+                            <div class="eventaddress">
+                                <?php echo esc_html($event_address); ?>
+                                <a class="opne_on_map_link" href="<?php echo esc_url($map_link); ?>" target="_blank">Map</a>
+                            </div>
+                        <?php endif; ?>
+                        <hr>
+                        <div class="ticketDetail">
+                            <div>Event Date:
+                                <?php echo date_i18n('F j, Y, g:i a', strtotime($event_start_date)); ?>
+                            </div>
+                            <div>Ticket Quantity:
+                                <?php echo esc_html($ticket_quantity); ?>
+                            </div>
+                            <div>Order Total:
+                                <?php echo esc_html($order_total); ?>
+                            </div>
+                        </div>
+                        <div class="ticketRip">
+                            <div class="circleLeft"></div>
+                            <div class="ripLine"></div>
+                            <div class="circleRight"></div>
+                        </div>
+                        <div class="ticketSubDetail">
+                            <div class="code">
+                                <?php echo esc_html($customer_order->get_order_number()); ?>
+                            </div>
+                            <!-- Paid Date display logic here if needed -->
+                        </div>
+                        <div class="ticketlowerSubDetail">
+                            <a href="<?php echo esc_url($order_url); ?>"><button class="view_ticket_btn">View Ticket</button></a>
+                            <a href="<?php echo esc_url($event_url); ?>"><button class="view_event_btn">Event Details</button></a>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; endforeach; ?>
+    </div>
 
     <?php
     $content = ob_get_clean(); // End output buffering and get the contents
@@ -3903,18 +4412,19 @@ add_shortcode('user_all_orders', 'display_user_all_orders_shortcode');
 
 ////FUNCTINO TO ADD THE PRODUCT IMAGE TO THE ORDER DEATILS SECTION 
 
-function display_order_item_product_image( $item_id, $item, $order ) {
+function display_order_item_product_image($item_id, $item, $order)
+{
     // Get the product object
     $product = $item->get_product();
     // Check if the product exists
-    if ( $product ) {
+    if ($product) {
         // Get the product image URL. Adjust the size as needed ('thumbnail', 'medium', 'full', etc.)
-        $image_url = $product->get_image( 'small' ); // This returns an <img> tag
+        $image_url = $product->get_image('small'); // This returns an <img> tag
         // Output the product image
         echo '<div class="product-image" style="float: left; margin-right: 10px;">' . $image_url . '</div>';
     }
 }
-add_action( 'woocommerce_order_item_meta_start', 'display_order_item_product_image', 10, 3 );
+add_action('woocommerce_order_item_meta_start', 'display_order_item_product_image', 10, 3);
 
 
 
@@ -3922,18 +4432,19 @@ add_action( 'woocommerce_order_item_meta_start', 'display_order_item_product_ima
 
 ///FUNCTION TO CHANGE THE WORD "PRODUCT" TO "TICKET"
 
-function change_product_text_to_ticket( $translated_text, $text, $domain ) {
+function change_product_text_to_ticket($translated_text, $text, $domain)
+{
     // Ensure we are in the WooCommerce domain to prevent unnecessary replacements
-    if ( 'woocommerce' === $domain ) {
+    if ('woocommerce' === $domain) {
         // Replace 'Product' and its plural form with 'Ticket'
-        $translated_text = str_replace( 'Product', 'Ticket', $translated_text );
-        $translated_text = str_replace( 'product', 'ticket', $translated_text );
-        $translated_text = str_replace( 'Products', 'Tickets', $translated_text );
-        $translated_text = str_replace( 'products', 'tickets', $translated_text );
+        $translated_text = str_replace('Product', 'Ticket', $translated_text);
+        $translated_text = str_replace('product', 'ticket', $translated_text);
+        $translated_text = str_replace('Products', 'Tickets', $translated_text);
+        $translated_text = str_replace('products', 'tickets', $translated_text);
     }
     return $translated_text;
 }
-add_filter( 'gettext', 'change_product_text_to_ticket', 20, 3 );
+add_filter('gettext', 'change_product_text_to_ticket', 20, 3);
 
 
 
@@ -4007,7 +4518,8 @@ add_action('wp_loaded', 'set_all_products_featured_image_to_event_image');
 
 
 //////FUNCTION TO CREATE A SHORTCODE TO UPDATE ORGINSER USER ACCOUNT SETTING 
-function custom_user_profile_shortcode() {
+function custom_user_profile_shortcode()
+{
     // Ensure the user is logged in
     if (!is_user_logged_in()) {
         return 'You need to be logged in to edit your profile.';
@@ -4040,10 +4552,13 @@ function custom_user_profile_shortcode() {
 
             // Redirect to avoid form resubmission with a success message
             wp_redirect(add_query_arg('profile-updated', 'true', get_permalink()));
-            exit;
+            // exit;
         }
     }
 
+    $current_user = wp_get_current_user();
+    $user_id = $current_user->ID;
+    $success_message = '';
     // Check for the 'profile-updated' query parameter to display the success message
     if (isset($_GET['profile-updated']) && $_GET['profile-updated'] == 'true') {
         $success_message = '<div class="alert alert-success" role="alert">Your profile has been updated successfully.</div>';
