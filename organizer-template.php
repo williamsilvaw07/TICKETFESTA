@@ -45,18 +45,23 @@ get_header('organizer'); // Include the header
 <!-- /.content-wrapper -->
 
 <script>
+
+
 setTimeout(function() {
-    const svgDiv = document.querySelector('.loading_svg_div');
-    if (svgDiv) {
-        svgDiv.classList.add('hidden');
-        console.log('SVG should now be hidden');
-    } else {
-        console.log('SVG div not found');
-    }
-}, 1000); // Adjust the timing as needed
+    svgDiv.style.display = 'none';
+    console.log('SVG should now be hidden directly through JS');
+}, 1000);
+
+
 </script>
 <style>
+    .loading_svg_div{
+        background-color: rgb(26, 26, 26);
+    width: 100%;
+    z-index: 10000000000000;
+    position: absolute;
 
+    }
     .hidden {
     display: none !important;
 }
