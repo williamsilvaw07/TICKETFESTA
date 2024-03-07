@@ -2241,7 +2241,8 @@ function shortcode_revenue()
     $order_details = $ticket_info['order_details'];
 
     // Building the order debug info
-    $order_debug_info = "<strong>Order Breakdown:</strong><br>";
+    $order_debug_info = "<strong>Order Breakdown:</strong><br>" . count($order_details);
+    
     foreach ($order_details as $detail) {
         $order_debug_info .= "Order ID: {$detail['order_id']}, Subtotal: £" . number_format($detail['subtotal'], 2) . '<br/>';
         // $order_debug_info .= ", Event: {$detail['event_title']}, Created by: {$detail['event_creator_name']}<br>";
