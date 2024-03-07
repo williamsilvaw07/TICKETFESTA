@@ -2246,15 +2246,6 @@ function shortcode_revenue() {
     $currency_symbol = get_woocommerce_currency_symbol();
     $currency_code = get_woocommerce_currency();
 
-    // Building the order debug info
-    $order_debug_info = "<strong>Order Breakdown:</strong> <br/>";
-
-    foreach ($order_details as $detail) {
-        // Use the dynamic currency symbol for each subtotal
-        $order_debug_info .= "Order ID: {$detail['order_id']}, Subtotal: " . $currency_symbol . number_format($detail['subtotal'], 2) . '<br/>';
-        $order_debug_info .= "Event: {$detail['event_title']}, Created by: {$detail['event_creator_name']}<br>";
-    }
-
     // Use the dynamic currency symbol and code for the total sales lifetime
     return "
     <div class='sales-card today_sale_admin_dashboard'>
