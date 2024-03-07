@@ -2181,7 +2181,7 @@ function get_ticket_info($user_id)
             'type' => 'shop_order',
         )
     );
-    $srNo = 0;
+
     foreach ($orders as $order) {
         if (!($order instanceof WC_Order)){
             echo 'order id rejected: ' . $order->get_id() . '<br/>';
@@ -2198,15 +2198,7 @@ function get_ticket_info($user_id)
             $event_author = get_post_field('post_author', $event_id);
             $order_id = $order->get_id();
 
-            if($order_id == 2184){
-                echo "event_author : $event_author event id:";
-                var_dump($event_id);
-                echo '<br/>';
-            }
             if ($event_author == $user_id && $event_id != false) {
-                // $srNo++;
-                // echo "order id $srNo accepted:  $order_id <br/>";
-
                 $quantity = $item->get_quantity();
                 $subtotal = $item->get_subtotal(); // Using item subtotal
 
@@ -2246,8 +2238,7 @@ function get_ticket_info($user_id)
 
 function shortcode_revenue()
 {
-    $user_id = 1;
-    // $user_id = get_current_user_id();
+    $user_id = get_current_user_id();
     $ticket_info = get_ticket_info($user_id);
     $total_sales_lifetime = $ticket_info['total_sales_lifetime'];
     $order_details = $ticket_info['order_details'];
