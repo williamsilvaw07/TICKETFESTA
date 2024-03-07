@@ -2851,7 +2851,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
 
         /*****setting page***/ 
 
-
+.
         .setting_page_admin{
             padding-top: 50px;
             max-width:900px;
@@ -2869,7 +2869,9 @@ html .tickets-sold-column , html .tribe-list-column-title {
     background: #d3fa16!important;
     color: #000000!important;
     font-size:12px!important;
-    margin-top:10px
+    margin-top:10px;
+    border:0px!important
+
 }
         /******end */
 
