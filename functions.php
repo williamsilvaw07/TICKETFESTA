@@ -2197,10 +2197,15 @@ echo count($orders);
             $product_id = $item->get_product_id();
             $event_id = get_post_meta($product_id, '_tribe_wooticket_for_event', true);
             $event_author = get_post_field('post_author', $event_id);
+            $order_id = $order->get_id();
+
+            if($order_id == 2184){
+                echo "event_author : $event_author  <br/>";
+            
+            }
             if ($event_author == $user_id) {
-                $srNo++;
-                $order_id = $order->get_id();
-                echo "order id $srNo accepted:  $order_id <br/>";
+                // $srNo++;
+                // echo "order id $srNo accepted:  $order_id <br/>";
 
                 $quantity = $item->get_quantity();
                 $subtotal = $item->get_subtotal(); // Using item subtotal
