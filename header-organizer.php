@@ -3696,6 +3696,8 @@ html .tickets-sold-column , html .tribe-list-column-title {
 .loading_svg_div svg{
     position: absolute;
     top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /
 }
 .hidden_loading_svg {
 display: none !important;
