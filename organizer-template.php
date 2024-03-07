@@ -82,7 +82,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 .blue {
   stroke-dasharray: 788 790;
   stroke-dashoffset: 789;
-  animation: draw_1 3200ms infinite, fade 2200ms infinite;
+  animation: draw_1 3200ms infinite, fade 1200ms infinite;
 }
 
 @keyframes fade {
