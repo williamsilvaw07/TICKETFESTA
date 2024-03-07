@@ -10,6 +10,7 @@ function get_tribe_ticket_fee(ticketAmount, quantity = 1){
 
     return ticketSiteFee.toFixed(2);
 }
+
 document.addEventListener('DOMContentLoaded', function() {
 
     // single product price
@@ -20,14 +21,6 @@ document.addEventListener('DOMContentLoaded', function() {
         var ticketSiteFee =  get_tribe_ticket_fee(ticketAmount);
         jQuery(this).append('<span class="site-fee-container">+ £<span class="ticket_site_fee">'+ticketSiteFee+'</span> Fee</span>');
     }); 
-
-    // jQuery('.tribe-tickets__tickets-footer-total').each(function() {
-    //     // Append a div element with the text "Sites Fees" to each item
-        
-    //     var ticketAmount = parseFloat(jQuery('.tribe-amount').text().trim()).toFixed(2);
-    //     var ticketSiteFee =  get_tribe_ticket_fee(ticketAmount);
-    //     $(this).append('<span class="site-fee-container">+£ <span class="ticket_site_fee tribe_total_fee">'+ticketSiteFee+'</span> fee</span>');
-    // }); 
 
 
     jQuery('.flux-checkout__login-button.login-button').each(function() {
