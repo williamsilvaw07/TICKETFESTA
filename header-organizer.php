@@ -3698,7 +3698,8 @@ jQuery(document).ready(function($) {
  
 .loading_svg_div{
     background-color: rgb(26, 26, 26);
-width: 100%;
+width: 100vw;
+height:100vh;
 z-index: 10000000000000;
 position: absolute;
 
