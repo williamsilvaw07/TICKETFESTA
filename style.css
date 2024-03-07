@@ -257,8 +257,8 @@ header{
 .elementor-element-0630e16{
     display: flex;
 }
-.sub-menu {
-    z-index: 9999;
+nav ul {
+    z-index: 999!important
 }
 
 
