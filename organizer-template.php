@@ -56,13 +56,7 @@ setTimeout(function() {
 }, 1000); // Adjust the timing as needed
 </script>
 <style>
-    .loading_svg_div{
-        background-color: rgb(26, 26, 26);
-    width: 100%;
-    z-index: 10000000000000;
-    position: absolute;
 
-    }
     .hidden {
     display: none !important;
 }
