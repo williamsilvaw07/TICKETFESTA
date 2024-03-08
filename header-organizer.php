@@ -1985,20 +1985,20 @@ html .tickets-sold-column , html .tribe-list-column-title {
             }
             i.social-icon {
                 position: absolute;
-                font-family: 'FontAwesome';
-    font-size: 15px;
-    left: 24px;
-    border-radius: 4px;
-    background: #555;
-    color: #d3fa18;
-    /* padding: 9px; */
-    height: 30px;
-    width: 30px;
-    text-align: center;
-    display: flex;
-    align-content: center;
-    justify-content: center;
-    align-items: center;
+                font-family: 'FontAwesome'!important;
+                font-size: 15px;
+                left: 24px;
+                border-radius: 4px;
+                background: #555;
+                color: #d3fa18;
+                /* padding: 9px; */
+                height: 30px;
+                width: 30px;
+                text-align: center;
+                display: flex;
+                align-content: center;
+                justify-content: center;
+                align-items: center;
             }
             input#organizer_facebook,
             input#organizer_twitter,
