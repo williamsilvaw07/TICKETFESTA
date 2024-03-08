@@ -1247,7 +1247,7 @@ jQuery(document).ready(function($) {
 }
 .quill-wrap{
     background: white;
-    border-radius:10px!important
+    border-radius:5px!important
   
 }
 .quill-wrap span{
@@ -1262,6 +1262,6 @@ jQuery(document).ready(function($) {
 }
 #toolbar{
     background: #c6c6c6;
-    border-radius:10px!important
+    border-radius: 5px 5px 0px 0px!important;
 }
 </style>
