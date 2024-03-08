@@ -86,7 +86,8 @@ add_action('wp_enqueue_scripts', 'my_theme_enqueue_scripts');
 
 function enqueue_font_awesome()
 {
-    wp_enqueue_style('font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css');
+    wp_enqueue_style( 'font-awesome', 'https://cdn.jsdelivr.net/npm/fontawesome@4.7.0/css/font-awesome.min.css', array(), '4.7.0' ); // Adjust version number if needed
+
 }
 add_action('wp_enqueue_scripts', 'enqueue_font_awesome');
 
@@ -4406,6 +4407,11 @@ function custom_user_profile_shortcode()
 }
 add_shortcode('custom_user_profile', 'custom_user_profile_shortcode');
 
+add_filter('kses_allowed_protocols', function ($protocols) {
+$protocols[] = 'data';
+
+return $protocols;
+});
 
 
 
