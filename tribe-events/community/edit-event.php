@@ -1264,4 +1264,7 @@ jQuery(document).ready(function($) {
     background: #c6c6c6;
     border-radius: 5px 5px 0px 0px!important;
 }
+.ql-font {
+    display:none!important
+}
 </style>
