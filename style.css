@@ -92,7 +92,7 @@ font-family: "Plus Jakarta Sans", Sans-serif;
 
 }
 .loading_svg_div svg{
-    transform: scale(3);
+
     position: absolute;
     top: 40%;
     left: 50%;
