@@ -159,7 +159,7 @@ if ($banner_image_id) {
 
         <!-- Organizer image element -->
         <?php 
-        $default_image = 'https://thaynna-william.co.uk/wp-content/uploads/2024/01/default-avatar-photo-placeholder-profile-icon-vector.jpg';
+        $default_image = '/wp-content/uploads/2024/01/default-avatar-photo-placeholder-profile-icon-vector.jpg';
         $image_src = !empty($organizer_thumbnail_url) ? $organizer_thumbnail_url : $default_image;
         ?>
         <div class="profile_img_svg_div">
