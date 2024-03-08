@@ -123,6 +123,29 @@ function organiser_image_gallery_shortcode() {
             font-weight: 700;
             padding: 0;
         }
+
+
+        .category-item {
+    position: relative;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5); /* semi-transparent overlay */
+    color: #ffffff; /* white text color */
+    visibility: hidden; /* hidden by default */
+    opacity: 0;
+    transition: visibility 0s, opacity 0.5s linear; /* smooth transition */
+}
+
+.category-item:hover .overlay {
+    visibility: visible;
+    opacity: 1;
+}
         
     </style>
 
