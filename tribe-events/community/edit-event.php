@@ -1238,7 +1238,5 @@ jQuery(document).ready(function($) {
 #tribetickets .input_block .ticket_form_right {
     margin-left: ih;
 }
-#ticket_price{
-    -webkit-text-fill-color: black!important;
-}
+
 </style>
