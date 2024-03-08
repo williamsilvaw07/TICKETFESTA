@@ -1300,4 +1300,7 @@ jQuery(document).ready(function($) {
     float: left;
     font-size: 15px;
 }
+.tribe-section-content-label label{
+    font-size:14px!important
+}
 </style>
