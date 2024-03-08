@@ -1607,7 +1607,7 @@ background: #2C2C2C!important;
     display: none;
     flex-direction: row;
     align-content: center;
-    background-color: rgb(26, 26, 26);
+    background-color: rgb(0, 0, 0);
     align-items: center;
     padding: 12px 18px;
     width: 100%;
