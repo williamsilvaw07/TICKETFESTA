@@ -1256,7 +1256,7 @@ jQuery(document).ready(function($) {
 #editor{
     color:black!important
 }
-.ql-toolbar.ql-snow {
+.ql-toolbar.ql-snow , .ql-container.ql-snow s {
     border: 0px!important
   
 }
