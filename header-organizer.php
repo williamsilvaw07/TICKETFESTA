@@ -2768,7 +2768,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
                 color: black !important
             }
             .account_storage{
-                margin-bottom:10px
+                margin-bottom:0px
             }
 .category-gallery{
     box-sizing: border-box;
