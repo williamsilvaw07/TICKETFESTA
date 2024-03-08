@@ -1280,7 +1280,8 @@ jQuery(document).ready(function($) {
   
 }
 .ql-editor{
-    min-height:150px!important
+    min-height:150px!important;
+    padding: 35px 15px;
 }
 #toolbar{
     background: #c6c6c6;
@@ -1294,5 +1295,9 @@ jQuery(document).ready(function($) {
     content: 'Save';
     padding-right: 0px;
     color: black;
+}
+.req{
+    float: left;
+    font-size: 15px;
 }
 </style>
