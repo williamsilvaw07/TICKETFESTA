@@ -1262,5 +1262,6 @@ jQuery(document).ready(function($) {
 }
 #toolbar{
     background: #c6c6c6;
+    border-radius:10px!important
 }
 </style>
