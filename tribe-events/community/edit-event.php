@@ -1257,7 +1257,7 @@ jQuery(document).ready(function($) {
     color:black!important
 }
 .ql-toolbar.ql-snow {
-    border: 0px important
+    border: 0px!important
   
 }
 </style>
