@@ -283,7 +283,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                     <div class="admin_event_extra_info_input">
                         <input type="checkbox" id="norefunds" name="norefunds" <?php checked(get_post_meta($event_id, 'norefunds', true), 'on'); ?> />
-                        <label for="norefunds">Accept refund?</label>
+                        <label for="norefunds">Accept refund ?</label>
                     </div>
                 </div>
             </div>
