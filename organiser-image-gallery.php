@@ -494,8 +494,8 @@ dropZone.addEventListener('drop', function(e) {
                 $attachment_src = wp_get_attachment_image_src($attachment_id, 'large')[0];
                 echo '<img src="' . esc_url($attachment_src) . '" alt="' . esc_attr($category_name) . '" />';
                 echo '<div class="overlay">';
-                echo '<h3>' . esc_html($category_name) . '</h3>';
-                echo '<h4>Organiser: ' . esc_html($cat_organiser) . '</h4>';
+                echo '<h4>' . esc_html($category_name) . '</h4>';
+                echo '<h5>Organiser: ' . esc_html($cat_organiser) . '</h5>';
                 echo '</div>'; // Close overlay div
             } else {
                 echo '<p>No thumbnail available</p>';
