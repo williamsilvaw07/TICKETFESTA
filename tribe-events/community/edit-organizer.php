@@ -128,7 +128,7 @@ $banner_image_url = $banner_image_id ? wp_get_attachment_image_url($banner_image
       <!-- Check if there's a banner image URL -->
       <?php
 // Set the default banner image URL
-$default_banner_image = '/wp-content/uploads/2024/01/Group-189-5.jpg';
+$default_banner_image = '/wp-content/uploads/2024/02/antoine-j-r3XvSBEQQLo-unsplash-2-min.jpg';
 
 // Get the banner image ID from post meta
 $banner_image_id = get_post_meta($organizer_id, 'banner_image_id', true);
