@@ -465,13 +465,14 @@ dropZone.addEventListener('drop', function(e) {
 
         // HTML markup for displaying categories with titles and thumbnails
         echo "<div style='max-width: 500px; width: 100%;'> <!-- Container div for max-width and responsiveness -->
+        <p>Account Storage u</p>
         <div class='progress' style='height: 20px; margin-top: 20px;'>
             <div class='progress-bar' role='progressbar' 
                 style='width: {$usage_percentage_formatted}%; padding: 0 10px;' 
                 aria-valuenow='{$account_mb_used}' 
                 aria-valuemin='0' 
                 aria-valuemax='{$total_mb}'>
-                Account storage used {$account_mb_used}/3 MB
+              Used {$account_mb_used}/3 MB
             </div>
         </div>
       </div>";
