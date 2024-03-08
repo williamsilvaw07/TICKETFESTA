@@ -284,7 +284,6 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 <!-- Event LISTING -->
 <div class="event-listing-main-div_main">
 
-
 <div class="event-listing-main-div organizer_profile_main_div_all organizer_main_div organizer_events_content">
 	<h3>Events</h3>
 <div class="event-listing_type"> 
@@ -512,13 +511,6 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 <!-- Event Gallery -->
 <div class="organizer_gallery_main organizer_main_div organizer_Gallery_content">
 <h3>Gallery</h3>
-<?php 
-// Dynamically build the shortcode with the organizer's ID
-$shortcode = '[tribe_events  filter-bar="true" view="photo" organizer="' . $organizer_id . '"]';
-// Execute the shortcode and echo its output
-echo do_shortcode($shortcode);
-
-?>
 <?php 
     $categories = get_categories(array(
         'taxonomy' => 'tec_organizer_category',
