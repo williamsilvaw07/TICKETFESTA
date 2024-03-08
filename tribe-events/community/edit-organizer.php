@@ -216,7 +216,7 @@ if ($banner_image_id) {
                 <?php printf( __( '%s Name:', 'tribe-events-community' ), $organizer_label_singular ); ?>
                 <small class="req"><?php esc_html_e( '(required)', 'tribe-events-community' ); ?></small>
             </label>
-            <input type="text" name="post_title" id="post_title_input" value="<?php echo esc_attr( $organizer_name ); ?>" readonly/>
+            <input type="text" placeholder="Organiser Name" name="post_title" id="post_title_input" value="<?php echo esc_attr( $organizer_name ); ?>" readonly/>
             <svg class="edit_svg_click organizer_title_edit_btn" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#d3fa16" viewBox="0 0 24 24"><path d="M4 16.668V20h3.333l9.83-9.83-3.333-3.332zm15.74-9.075a.885.885 0 0 0 0-1.253l-2.08-2.08a.885.885 0 0 0-1.253 0L14.78 5.886l3.333 3.333zM6 17l8-8 1 1-8 8z"></path></svg>
 
             
