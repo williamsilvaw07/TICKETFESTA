@@ -320,12 +320,12 @@ document.addEventListener('DOMContentLoaded', function () {
     <div id="cost-section" class="event-section" style="display: none;">
         <?php tribe_get_template_part('community/modules/cost'); ?>
 
-        <div class="input-group date" id="reservationdate" data-target-input="nearest">
+        <!-- <div class="input-group date" id="reservationdate" data-target-input="nearest">
             <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate">
             <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
                 <div class="input-group-text"><i class="fa fa-calendar"></i></div>
             </div>
-        </div>
+        </div> -->
 
         <?php tribe_get_template_part('community/modules/spam-control'); ?>
         <button class="next-section-btn" data-target="submit-section">Next</button>
