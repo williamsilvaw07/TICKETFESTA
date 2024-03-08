@@ -284,6 +284,11 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 <!-- Event LISTING -->
 <div class="event-listing-main-div_main">
 
+<?php 
+// Dynamically build the shortcode with the organizer's ID
+$shortcode = '[tribe_events organizer="' . $organizer_id . '"]';
+
+?>
 <div class="event-listing-main-div organizer_profile_main_div_all organizer_main_div organizer_events_content">
 	<h3>Events</h3>
 <div class="event-listing_type"> 
