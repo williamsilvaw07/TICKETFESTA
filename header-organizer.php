@@ -3671,34 +3671,9 @@ html .tickets-sold-column , html .tribe-list-column-title {
 
 
 
-<script>
-jQuery(document).ready(function($) {
-    // Disable scrolling when the loading SVG is shown
-    $('html, body').css({
-        overflow: 'hidden',
-        height: '100%'
-    });
 
-    // Wait for 1.2 seconds after the document is ready
-    setTimeout(function() {
-        // Select the SVG div and add the 'hidden_loading_svg' class to hide it
-        $('.loading_svg_div').addClass('hidden_loading_svg');
-        console.log('SVG should now be hidden');
 
-        // Re-enable scrolling after the SVG is hidden
-        $('html, body').css({
-            overflow: 'auto',
-            height: 'auto'
-        });
 
-        // After hiding the SVG, wait another 1 second to perform further actions
-        setTimeout(function() {
-            console.log('Performing another action 1 second after hiding the SVG');
-            // Any subsequent actions can be placed here
-        }, 1000);
-    }, 1200);
-});
-</script>
 <style>
  
 .loading_svg_div{
