@@ -2775,7 +2775,8 @@ html .tickets-sold-column , html .tribe-list-column-title {
     align-items: center;
     justify-content: flex-start;
     align-content: center;
-    gap:15px
+    gap:15px;
+    margin-top:20px
 }
             .category-item {
                 position: relative;
