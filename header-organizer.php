@@ -2860,7 +2860,13 @@ html .tickets-sold-column , html .tribe-list-column-title {
 
             }
 
-
+.elementor-element-c668104 {
+    background-color: rgb(26, 26, 26);
+    position: relative;
+    padding: 17px;
+    border-radius: 10px;
+    width: 100%;
+}
 
 
 
