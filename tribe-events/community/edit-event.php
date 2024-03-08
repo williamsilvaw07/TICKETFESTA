@@ -1251,8 +1251,10 @@ jQuery(document).ready(function($) {
   
 }
 .quill-wrap span{
-    color:black!important
+    color:black!important;
+    background-color: inherit!important;
 }
+
 #editor{
     color:black!important
 }
