@@ -284,11 +284,113 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 <!-- Event LISTING -->
 <div class="event-listing-main-div_main">
 
-<?php 
-// Dynamically build the shortcode with the organizer's ID
-$shortcode = '[tribe_events organizer="' . $organizer_id . '"]';
 
-?>
+<div class="event-listing-main-div organizer_profile_main_div_all organizer_main_div organizer_events_content">
+	<h3>Events</h3>
+<div class="event-listing_type"> 
+	<p class="live_events_link">Live Events </p>
+	<p class="past_events_link">Past Events</p>
+</div>
+
+
+
+<!-- Event past -->
+<div class=" past_event_listing_div">
+    <div class="event-listing">
+
+        <?php
+        $current_organizer_id = get_the_ID(); // Example: get_the_ID() or another method
+        $current_time = current_time('Y-m-d H:i:s');
+
+        // Define the query arguments to get past events for the current organizer
+        $past_events_args = array(
+            'post_type'      => 'tribe_events',
+            'posts_per_page' => -1, // Adjust number of posts per page as needed
+            'meta_query'     => array(
+                'relation' => 'AND',
+                array(
+                    'key'     => '_EventEndDate',
+                    'value'   => $current_time,
+                    'compare' => '<',
+                    'type'    => 'DATETIME'
+                ),
+                array(
+                    'key'     => '_EventOrganizerID',
+                    'value'   => $current_organizer_id,
+                    'compare' => '=',
+                ),
+            ),
+            'orderby'        => 'meta_value',
+            'meta_key'       => '_EventEndDate',
+            'order'          => 'DESC',
+        );
+
+        $past_events = new WP_Query($past_events_args);
+
+        if ($past_events->have_posts()) :
+            while ($past_events->have_posts()) : $past_events->the_post();
+                $event_url = get_the_permalink();
+                ?>
+                <div class="event-card">
+                <div class="past-event-tag">Past Event</div>
+                    <?php if (has_post_thumbnail()) : ?>
+                        <div class="event-image">
+                            <a href="<?php echo esc_url($event_url); ?>">
+                                <?php the_post_thumbnail('medium'); ?>
+                            </a>
+                        </div>
+                    <?php endif; ?>
+                    
+                    <div class="event-details">
+                        
+
+                        <div class="event-content">
+                        <h2 class="event-title">
+    <a href="<?php echo esc_url( $event_url ); ?>">
+        <?php echo mb_strimwidth(get_the_title(), 0, 60, '...'); ?>
+    </a>
+</h2>
+                            <div class="event-day">
+                            <?php 
+    // Format for the date and time
+    $event_start_date_time = tribe_get_start_date( $event_id, true, 'D, j M, H:i' );
+    
+    // Get the event's timezone object
+    $timezone = Tribe__Events__Timezones::get_event_timezone_string( $event_id );
+
+    // Create a DateTimeZone object from the event's timezone string
+    $dateTimeZone = new DateTimeZone($timezone);
+
+    // Create a DateTime object for the event's start date/time in the event's timezone
+    $dateTime = new DateTime( tribe_get_start_date( $event_id, false, 'Y-m-d H:i:s' ), $dateTimeZone );
+
+    // Format the DateTime object to get the timezone abbreviation
+    // Handles cases like BST/GMT dynamically based on the event's date and timezone
+    $timezone_abbr = $dateTime->format('T');
+
+    // Output the start date and time along with the timezone abbreviation in a span with a class
+    echo $event_start_date_time . ' <span class="event-timezone">' . $timezone_abbr . '</span>';
+    ?>
+                            </div>
+                            <div class="event-time-location">
+                                <span class="event-time"><?php echo tribe_get_start_date(null, false, 'g:i a'); ?> - <?php echo tribe_get_end_date(null, false, 'g:i a'); ?></span>
+                                <span class="event-location"><?php echo tribe_get_venue(); ?></span>
+                            </div>
+                            <div class="event-actions">
+                                <a href="<?php echo esc_url($event_url); ?>" class="btn-get-tickets">View Event</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <?php
+            endwhile;
+            wp_reset_postdata();
+        else :
+            echo '<p>No past events found.</p>';
+        endif;
+        ?>
+    </div>
+</div>
 <!-- Event past end -->
 
 
@@ -410,6 +512,11 @@ $shortcode = '[tribe_events organizer="' . $organizer_id . '"]';
 <!-- Event Gallery -->
 <div class="organizer_gallery_main organizer_main_div organizer_Gallery_content">
 <h3>Gallery</h3>
+<?php 
+// Dynamically build the shortcode with the organizer's ID
+$shortcode = '[tribe_events organizer="' . $organizer_id . '"]';
+
+?>
 <?php 
     $categories = get_categories(array(
         'taxonomy' => 'tec_organizer_category',
