@@ -1247,6 +1247,7 @@ jQuery(document).ready(function($) {
 }
 .quill-wrap{
     background: white;
+    border-radius:10px!important
   
 }
 .quill-wrap span{
