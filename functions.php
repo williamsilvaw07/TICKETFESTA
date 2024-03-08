@@ -854,10 +854,11 @@ add_action('wp_ajax_add_event', 'iam00_create_event');
 
 add_action('wp_enqueue_scripts', 'generatepress_child_style');
 function generatepress_child_style()
-{
+{        
+    wp_enqueue_style('fontawsome', get_stylesheet_directory_uri() . '/adminlte/plugins/fontawesome-free/css/all.min.css');
+
     if (is_page_template('organizer-template.php') || is_page_template('organizer-coupons.php')) {
         /** Call landing-page-template-one enqueue */
-        wp_enqueue_style('fontawsome', get_stylesheet_directory_uri() . '/adminlte/plugins/fontawesome-free/css/all.min.css');
         wp_enqueue_style('tempusdominus', get_stylesheet_directory_uri() . '/adminlte/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css');
         wp_enqueue_style('adminlte', get_stylesheet_directory_uri() . '/adminlte/css/adminlte.min.css');
 
