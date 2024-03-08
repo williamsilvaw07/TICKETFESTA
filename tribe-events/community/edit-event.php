@@ -1238,5 +1238,11 @@ jQuery(document).ready(function($) {
 #tribetickets .input_block .ticket_form_right {
     margin-left: ih;
 }
-
+.post_title{
+    font-size: 22px !important;
+    font-weight: 700 !important;
+    color: white !important;
+    margin-bottom: 13px;
+    padding: 0;
+}
 </style>
