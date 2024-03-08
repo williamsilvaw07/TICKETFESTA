@@ -3398,6 +3398,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
                     align-content: center;
                     flex-direction: row;
                     margin-bottom: 0 !important;
+                    gap: 13px;
                 }
 
                 .sidebar-mini.sidebar-collapse .main-sidebar,
