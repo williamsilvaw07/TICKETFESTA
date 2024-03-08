@@ -262,28 +262,28 @@ document.addEventListener('DOMContentLoaded', function () {
                     <div class="admin_event_extra_info_input">
 
                     <input type="checkbox" id="allage" name="allage" <?php checked(get_post_meta($event_id, 'allage', true), 'on'); ?> />
-                        <label for="allage">Is the event for All Ages?</label>
+                        <label for="allage">Event for All Ages?</label>
                         </div>
 
 
                         <div class="admin_event_extra_info_input">
                         <input type="checkbox" id="over14" name="over14" <?php checked(get_post_meta($event_id, 'over14', true), 'on'); ?> />
-                        <label for="over14">Is the event for over 14 years old?</label>
+                        <label for="over14">Event for over 14+ </label>
                     </div>
 
                     <div class="admin_event_extra_info_input">
                         <input type="checkbox" id="over15" name="over15" <?php checked(get_post_meta($event_id, 'over15', true), 'on'); ?> />
-                        <label for="over15">Is the event for over 15 years old?</label>
+                        <label for="over15">Event for over 15+</label>
                     </div>
 
                     <div class="admin_event_extra_info_input">
                         <input type="checkbox" id="over18" name="over18" <?php checked(get_post_meta($event_id, 'over18', true), 'on'); ?> />
-                        <label for="over18">Is the event for over 18 years old?</label>
+                        <label for="over18">Event for over 18+</label>
                     </div>
 
                     <div class="admin_event_extra_info_input">
                         <input type="checkbox" id="norefunds" name="norefunds" <?php checked(get_post_meta($event_id, 'norefunds', true), 'on'); ?> />
-                        <label for="norefunds">Accept refund requests?</label>
+                        <label for="norefunds">Accept refund?</label>
                     </div>
                 </div>
             </div>
