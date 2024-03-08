@@ -1289,4 +1289,10 @@ jQuery(document).ready(function($) {
 .ql-font {
     display:none!important
 }
+.ql-snow .ql-tooltip.ql-editing a.ql-action::after {
+    border-right: 0px;
+    content: 'Save';
+    padding-right: 0px;
+    color: black;
+}
 </style>
