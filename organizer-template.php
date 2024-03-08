@@ -5,8 +5,10 @@ Template Name: Organizer Template
 
 get_header('organizer'); // Include the header
 ?>
+
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
+
     <!-- Main content -->
     <div class="content">
         <div class="container-fluid">

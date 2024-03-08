@@ -81,6 +81,36 @@ $cost  = tribe_get_formatted_cost( $event_id );
 
 
 
+
+<div class="loading_svg_div">
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1366 768" xml:space="preserve">
+        <style type="text/css">
+            .st0{fill:none;stroke:#d3fa16;stroke-width:9;stroke-miterlimit:10;}
+            .st1{fill:none;stroke:#d3fa16;stroke-width:9;stroke-miterlimit:10;}
+        </style>
+        <g>
+            <path class="st0 grey" d="M772.5,347c-6.2-14-2.4-29.5,8.4-35.8c1.1-0.6,1.4-2.2,0.8-3.7l-8.5-19.1c-3.4-7.6-11.2-11.4-17.5-8.6
+                l-201,89.5c-6.3,2.8-8.7,11.2-5.3,18.8c0,0,6.4,14.3,8.5,19.1c0.6,1.4,2,2.2,3.3,1.8c12-3.8,26,3.7,32.3,17.7s2.4,29.5-8.4,35.8
+                c-1.1,0.6-1.4,2.2-0.8,3.7l8.5,19.1c3.4,7.6,11.2,11.4,17.5,8.6l201-89.5c6.3-2.8,8.7-11.2,5.3-18.8l-8.5-19.1
+                c-0.6-1.4-2-2.2-3.3-1.8C792.8,368.5,778.7,361,772.5,347z"></path>
+            <path class="st1 blue" d="M772.5,347c-6.2-14-2.4-29.5,8.4-35.8c1.1-0.6,1.4-2.2,0.8-3.7l-8.5-19.1c-3.4-7.6-11.2-11.4-17.5-8.6
+                l-201,89.5c-6.3,2.8-8.7,11.2-5.3,18.8c0,0,6.4,14.3,8.5,19.1c0.6,1.4,2,2.2,3.3,1.8c12-3.8,26,3.7,32.3,17.7s2.4,29.5-8.4,35.8
+                c-1.1,0.6-1.4,2.2-0.8,3.7l8.5,19.1c3.4,7.6,11.2,11.4,17.5,8.6l201-89.5c6.3-2.8,8.7-11.2,5.3-18.8l-8.5-19.1
+                c-0.6-1.4-2-2.2-3.3-1.8C792.8,368.5,778.7,361,772.5,347z"></path>
+        </g>
+    </svg>
+</div>
+
+<div class="main_content_loading_div">
+
+
+    <!-- Overlay Background -->
+    <div class="overlay" style="display: none;"></div>
+
+
+
+
+
      <p class="tribe-events-back">
 		<a href="<?php echo esc_url( tribe_get_events_link() ); ?>"> <?php printf( '&laquo; ' . esc_html_x( 'All %s', '%s Events plural label', 'the-events-calendar' ), $events_label_plural ); ?></a>
 	</p>
@@ -117,7 +147,51 @@ $cost  = tribe_get_formatted_cost( $event_id );
                     </div>";
                 }
            ?>
+            <button class="share_btn">
+  <i class="fas fa-share-alt"></i>
+</button>
 			<?php echo tribe_event_featured_image( $event_id, 'full', false ); ?>
+
+    <!-- Popup div for sharing link -->
+
+     <!-- Share Button -->
+
+
+    <div class="share_btn_event" style="display: none;">
+    <span class="close_popup" aria-label="Close">&times;</span>
+    <h3>Share with friends</h3>
+    <div class="social_sharing_links">
+        <!-- Facebook -->
+        <a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo urlencode(esc_url( tribe_get_event_link($event) )); ?>" target="_blank" aria-label="Share on Facebook">
+            <i class="fab fa-facebook-f"></i>
+        </a>
+        <!-- Twitter -->
+        <a href="https://twitter.com/intent/tweet?url=<?php echo urlencode(esc_url( tribe_get_event_link($event) )); ?>&text=Check%20out%20this%20event!" target="_blank" aria-label="Share on Twitter">
+            <i class="fab fa-twitter"></i>
+        </a>
+        <!-- Messenger -->
+        <a href="fb-messenger://share?link=<?php echo urlencode(esc_url( tribe_get_event_link($event) )); ?>" target="_blank" aria-label="Share on Messenger">
+            <i class="fab fa-facebook-messenger"></i>
+        </a>
+        <!-- WhatsApp -->
+        <a href="https://wa.me/?text=<?php echo urlencode(esc_url( tribe_get_event_link($event) )); ?>" target="_blank" aria-label="Share on WhatsApp">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+    </div>
+    <div class="share_event_url">
+        <span class="share_popup_box_title">Event URL</span>
+        <div class="share_event_url_inner">
+            <span class="eventUrl"><?php echo esc_url( tribe_get_event_link($event) ); ?></span>
+            <span class="copyButton" aria-label="Copy URL">
+                <i class="fas fa-copy"></i>
+            </span>
+        </div>
+    </div>
+    <span class="copyMessage" style="display: none;">Link copied!</span>
+</div>
+
+
+
 <!-- Event featured image, END -->
       </div>
 
@@ -279,7 +353,23 @@ if (!empty($agendas) && is_array($agendas)) {
 ?>
 
 
+
+
+
+
+
+
 <!-- Event ABOUT FULL DECP -->
+<?php
+$event_description = get_post_meta($event_id, 'event_description', true);
+?>
+
+<!-- Display Event Description -->
+<div class="event-description">
+    <?php echo wp_kses_post($event_description); ?>
+</div>
+
+
 
 
 
@@ -291,11 +381,17 @@ if (!empty($agendas) && is_array($agendas)) {
 $event_id = get_the_ID(); // Get the current event ID
 
 // Retrieve age restrictions
+$allage = get_post_meta($event_id, 'allage', true);
 $over14 = get_post_meta($event_id, 'over14', true);
 $over15 = get_post_meta($event_id, 'over15', true);
 $over18 = get_post_meta($event_id, 'over18', true);
 $norefunds = get_post_meta($event_id, 'norefunds', true);
 ?>
+
+
+<?php if ($allage === 'on'): ?>
+    <div class="all_age_div"><span class="14+_div_emoji">👪</span> <span class="14+_div_text">All Ages</span></div>
+<?php endif; ?>
 
 <?php if ($over14 === 'on'): ?>
     <div class="14+_div"><span class="14+_div_emoji">⚠️</span> <span class="14+_div_text">Over 14+ ONLY</span></div>
@@ -508,9 +604,41 @@ if (!empty($sponsor_logos_ids)) : ?>
 
 </div><!-- main conatiner end div div_lower_seconnd_section -->
 
-
+</div>
 
 <script>
+
+
+//FUNCTION TO SHOW LOADING EFFECT AND WHEN JS IS FULLY LOADED  HIDE AND SHOW CONTENT
+document.addEventListener("DOMContentLoaded", function() {
+        // Wait for 500 milliseconds after the document is fully loaded before showing main content
+        setTimeout(showMainContent, 1000);
+    });
+
+    function showMainContent() {
+        // Hide the loading animation
+        var loadingDiv = document.querySelector('.loading_svg_div');
+        if (loadingDiv) {
+            loadingDiv.style.display = 'none';
+        }
+
+        // Show the main content
+        var mainContentDiv = document.querySelector('.main_content_loading_div');
+        if (mainContentDiv) {
+            mainContentDiv.style.display = 'block'; // Or 'flex', 'grid' etc. depending on your layout
+        }
+    }
+
+    ////END
+
+
+
+
+
+
+
+
+
 
 jQuery(document).ready(function($) {
     var element = $('.buttonticket_for_mobile'); // Your target element
@@ -571,46 +699,75 @@ jQuery(document).ready(function($) {
 
 
 
+//Function if the ticket price is 00.00 then show the text free
+
+jQuery(document).ready(function(){
+    $('.tribe-tickets__tickets-item').each(function() {
+        var price = $(this).find('.tribe-amount').text();
+        if (price === '0.00') {
+            $(this).find('.tribe-tickets__tickets-sale-price').html('<span class="free-text">Free</span>');
+        }
+    });
+
+    // Apply CSS styles with !important to the "Free" text
+    $('.free-text').each(function(){
+        $(this).attr('style', 'color: #d3fa16 !important; font-size: 22px !important; font-weight: 600 !important;');
+    });
+});
 
 
 
 
+///FUNCTION FOR MOBILE TICKET POPUP AND CALCUTATE THE LOWEST ANDD HIGHT PRICE RANGE AND IF ITS 0.00 SHOW FREE, IF NO TICKET HIDE THE SECTION 
 
 jQuery(document).ready(function() {
+
+
+
+    let minPrice = Infinity;
+    let maxPrice = 0;
+    let priceFound = false; // Flag to track if any valid price was found
+
+    $('.tribe-tickets__tickets-item').each(function() {
+        let price = parseFloat($(this).data('ticket-price'));
+        if (!isNaN(price)) { // Check if price is a valid number
+            priceFound = true; // Valid price found
+            if (price < minPrice) {
+                minPrice = price;
+            }
+            if (price > maxPrice) {
+                maxPrice = price;
+            }
+        }
+    });
+
+    // Determine the price range or "Free" label and update or hide price section
+    if (priceFound) {
+        let priceText;
+        if (minPrice === 0 && maxPrice !== 0) {
+            priceText = 'Free - £' + maxPrice.toFixed(2);
+        } else if (minPrice === 0 && maxPrice === 0) {
+            priceText = 'Free';
+        } else {
+            priceText = '£' + minPrice.toFixed(2) + ' - £' + maxPrice.toFixed(2);
+        }
+
+        $('.btn_price_span').text(priceText);
+    } else {
+        // Hide the price section if no valid prices found
+        $('.buttonticket_for_mobile').hide();
+    }
+
+
+
+
+    
     var btns = jQuery('.getticketbtn, #scroll-to-tickets');  // Selecting elements with class 'getticketbtn' and the ID 'scroll-to-tickets'
     var linkViewAttendee = jQuery('.tribe-link-view-attendee');
     var ticketsForm = jQuery('.tribe-common.event-tickets.tribe-tickets__tickets-wrapper');
     var originalLocation = ticketsForm.parent();
 
-    // Function to get the lowest ticket price
-    function getLowestTicketPrice() {
-        var lowestPrice = null;
-
-        // Loop through each ticket item
-        jQuery('.tribe-tickets__tickets-item').each(function() {
-            // Get the price of the current ticket
-            var price = parseFloat(jQuery(this).data('ticket-price'));
-
-            // Check if this price is lower than the current lowest price
-            if (lowestPrice === null || price < lowestPrice) {
-                lowestPrice = price;
-            }
-        });
-
-        return lowestPrice;
-    }
-
-    // Function to display the lowest price
-    function displayLowestPrice() {
-        var lowestPrice = getLowestTicketPrice();
-        if (lowestPrice !== null) {
-            // Display the lowest price in elements with class .btn_price_span
-            jQuery('.btn_price_span').text('£' + lowestPrice.toFixed(2));
-        }
-    }
-
-    // Call the function to display the lowest price
-    displayLowestPrice();
+    
 
     // Event listener for buttons and scroll-to-tickets
     btns.each(function() {
@@ -929,10 +1086,139 @@ jQuery(document).ready(function() {
 
 
 
+
+
+
+////SHARE BTUTOTN FUNCTION 
+
+
+
+
+
+jQuery(document).ready(function($) {
+    // Show the popup when the share button is clicked
+    $('.share_btn').click(function() {
+        $('.overlay').show();
+        $(this).nextAll('.share_btn_event').first().show().css({
+            'position': 'fixed',
+            'top': '50%',
+            'left': '50%',
+            'transform': 'translate(-50%, -50%)',
+            'z-index': '1001'
+        });
+    });
+
+    // Close the popup and hide the overlay when the close button is clicked
+    $('.close_popup').click(function() {
+        $('.share_btn_event').hide();
+        $('.overlay').hide();
+    });
+
+    // Also close the popup and hide the overlay when clicking outside of the popup (on the overlay)
+    $(document).on('click', '.overlay', function() {
+        $('.share_btn_event').hide();
+        $('.overlay').hide();
+    });
+
+    // The section for copying the URL has been removed
+
+
+
+    
+
+  // Copy to clipboard functionality
+  $(document).ready(function() { // Ensure the DOM is fully loaded
+    $(document).on('click', '.copyButton', function() {
+        var eventUrlText = $(this).siblings('.eventUrl').text();
+        var $button = $(this); // Reference to the clicked button
+
+        navigator.clipboard.writeText(eventUrlText).then(function() {
+            // Attempt to display the message directly without relying on siblings, for troubleshooting
+            $('.copyMessage').text('Link copied!').css('display', 'block').delay(3000).fadeOut(400);
+        }).catch(function(error) {
+            console.error('Error copying text:', error);
+        });
+    });
+});
+
+})
+
+
+
     </script>
 
 
 <style>
+
+/****LOADING  ANIMATION STYLES*****/
+.loading_svg_div {
+        display: block; /* Or whatever display mode you prefer */
+    }
+
+    .main_content_loading_div {
+        display: none;
+    }
+.grey {
+  stroke-dasharray: 788 790;
+  stroke-dashoffset: 789;
+  animation: draw_0 3200ms infinite, fade 3200ms infinite;
+}
+
+.blue {
+  stroke-dasharray: 788 790;
+  stroke-dashoffset: 789;
+  animation: draw_1 3200ms infinite, fade 3200ms infinite;
+}
+
+@keyframes fade {
+  0% {
+    stroke-opacity: 1;
+  }
+  80% {
+    stroke-opacity: 1;
+  }
+  100% {
+    stroke-opacity: 0;
+  }
+}
+
+@keyframes draw_0 {
+  9.375% {
+    stroke-dashoffset: 789
+  }
+  39.375% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes draw_1 {
+  35.625% {
+    stroke-dashoffset: 789
+  }
+  65.625% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+
+/*****END******/
+
+/***SHARE BUTTON*/
+.share_btn{
+    display: block!important;
+    z-index: 9;
+}
+.type-tribe_events {
+    position: relative;
+}
+/*end***/
+
 
 .glass-effect {
     background-size: cover;
@@ -1144,37 +1430,9 @@ html body .single_event_sections {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
     .tribe-events-event-meta_venue .tribe-events-meta-group-details , .tribe-events-meta-group-organizer  , .tribe-events-meta-group-organizer{
 display:none!important
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     
@@ -1232,6 +1490,9 @@ background-position: center top;
 */
 
 
+.tribe-tickets__tickets-item-content-title{
+    text-transform: capitalize!important;
+}
   .tribe-events-event-image{
 
     margin-bottom:0!important;
@@ -1251,6 +1512,7 @@ background-position: center top;
     max-height: 475px;
     object-fit: contain;
     backdrop-filter: blur(100px)!important;
+    -webkit-backdrop-filter: blur(100px)!important;
 }
 .main_single_event_div{
     display: flex;
@@ -1345,7 +1607,7 @@ background: #2C2C2C!important;
     display: none;
     flex-direction: row;
     align-content: center;
-    background-color: rgb(26, 26, 26);
+    background-color: rgb(0, 0, 0);
     align-items: center;
     padding: 12px 18px;
     width: 100%;
@@ -1925,11 +2187,21 @@ html .single-tribe_events .tribe-tickets__tickets-footer{
     width: 100%;
 }
 .btn_price_span {
-    font-size: 20px;
+    font-size: 19px!important;
     padding-left: 4px;
 }
 
+
+.event-tickets .tribe-tickets__tickets-item{
+    gap: 5px;
 }
+.event-tickets .tribe-tickets__tickets-item-quantity {
+    gap: 7px;
+    margin-top: 10px;
+}
+}
+
+
 @media screen and (max-width: 670px) {
     .about_event_inner {
         flex-direction: column;
@@ -2054,8 +2326,14 @@ html .single-tribe_events .tribe-tickets__tickets-footer{
 
     gap: 15px;
 }
+.getticketbtn svg{
+    display:none
+}
 
   }
+
+
+
 
 
 

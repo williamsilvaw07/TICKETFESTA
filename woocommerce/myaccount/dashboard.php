@@ -28,25 +28,13 @@ $allowed_html = array(
 );
 ?>
 
-<p>
-	<?php
-	printf(
-		/* translators: 1: user display name 2: logout url */
-		wp_kses( __( 'Hello %1$s (not %1$s? <a href="%2$s">Log out</a>)', 'woocommerce' ), $allowed_html ),
-		'<strong>' . esc_html( $current_user->display_name ) . '</strong>',
-		esc_url( wc_logout_url() )
-	);
-	?>
-</p>
 
-<p>
 	<?php
-	/* translators: 1: Orders URL 2: Address URL 3: Account URL. */
-	$dashboard_desc = __( 'From your account dashboard you can view your <a href="%1$s">recent orders</a>, manage your <a href="%2$s">billing address</a>, and <a href="%3$s">edit your password and account details</a>.', 'woocommerce' );
-	if ( wc_shipping_enabled() ) {
-		/* translators: 1: Orders URL 2: Addresses URL 3: Account URL. */
-		$dashboard_desc = __( 'From your account dashboard you can view your <a href="%1$s">recent orders</a>, manage your <a href="%2$s">shipping and billing addresses</a>, and <a href="%3$s">edit your password and account details</a>.', 'woocommerce' );
-	}
+	
+	?>
+
+	<?php
+
 	printf(
 		wp_kses( $dashboard_desc, $allowed_html ),
 		esc_url( wc_get_endpoint_url( 'orders' ) ),
@@ -54,7 +42,7 @@ $allowed_html = array(
 		esc_url( wc_get_endpoint_url( 'edit-account' ) )
 	);
 	?>
-</p>
+
 
 <?php
 	/**
@@ -79,6 +67,11 @@ $allowed_html = array(
 	do_action( 'woocommerce_after_my_account' );
 
 /* Omit closing PHP tag at the end of PHP files to avoid "headers already sent" issues. */
+
+
+
+
+
 
 
 
@@ -161,45 +154,72 @@ jQuery(document).ready(function($) {
 
 
 
-////FUNCTION TO ADD THE EVENT IMAGE AS A BACKGROUND 
+
+
+
+
+
+
+
 jQuery(document).ready(function($) {
-    $('.ticketImage').each(function() {
-        // Get the src of the img element
-        var imgSrc = $(this).find('img').attr('src');
+    // Initially show the loading animation
+    $('.loadingAnimation').css('display', 'block');
 
-        // Set the background image of the .event-image div to the src of the img
-        $(this).css({
-            'background-image': 'url(' + imgSrc + ')',
-            'background-size': 'cover',
-            'background-position': 'center center',
-            'position': 'relative',
-            'overflow': 'hidden'
+    var totalImages = $('.ticketImage img').length;
+    var loadedImages = 0;
+
+    // Function to check if all images are loaded
+    function checkAllImagesLoaded() {
+        if (loadedImages === totalImages) {
+            // Once all images are loaded, fade out the loading animation and then display the tickets container
+            $('.loadingAnimation').fadeOut('fast', function() {
+                // Set the tickets container to display flex after it's visible to ensure layout is correct
+                $('.allTicketsContainer').css('display', 'flex').hide().fadeIn('slow');
+            });
+        }
+    }
+
+    // If there are images to load, set up a load event listener for each
+    if (totalImages > 0) {
+        $('.ticketImage img').each(function() {
+            var imgSrc = $(this).attr('src');
+            $('<img/>').on('load', function() {
+                loadedImages++;
+                // Apply background styling and glass effect after each image is loaded
+                var parentTicketImage = $('.ticketImage img[src="' + imgSrc + '"]').closest('.ticketImage');
+                parentTicketImage.css({
+                    'background-image': 'url(' + imgSrc + ')',
+                    'background-size': 'cover',
+                    'background-position': 'center center',
+                    'position': 'relative',
+                    'overflow': 'hidden'
+                });
+
+                var glassEffect = $('<div></div>').css({
+                    'position': 'absolute',
+                    'top': '0',
+                    'left': '0',
+                    'height': '100%',
+                    'width': '100%',
+                    'background': 'rgba(255, 255, 255, 0.4)',
+                    'backdrop-filter': 'blur(8px)',
+                    'z-index': '1'
+                });
+
+                parentTicketImage.append(glassEffect);
+                parentTicketImage.find('img').css('position', 'relative').css('z-index', '2');
+
+                // Check if all images are loaded
+                checkAllImagesLoaded();
+            }).attr('src', imgSrc); // This triggers the load event
         });
-
-        // Create a glass effect overlay
-        var glassEffect = $('<div></div>').css({
-            'position': 'absolute',
-            'top': '0',
-            'left': '0',
-            'height': '100%',
-            'width': '100%',
-            'background': 'rgba(0, 0, 0, 0.4)',
-            'backdrop-filter': 'blur(8px)',
-            'z-index': '1'
+    } else {
+        // If there are no images, directly fade in the ticket containers
+        $('.loadingAnimation').fadeOut('fast', function() {
+            $('.allTicketsContainer').css('display', 'flex').hide().fadeIn('slow');
         });
-
-        // Append the glass effect overlay to the .event-image div
-        $(this).append(glassEffect);
-
-        // Ensure the img element stays visible on top of the glass effect
-        $(this).find('img').css({
-            'position': 'relative',
-            'z-index': '2'
-        });
-    });
+    }
 });
-
-
 
 </script>
 
@@ -210,29 +230,95 @@ jQuery(document).ready(function($) {
 
 
 
-
 <style>
+
+	.loadingAnimation{
+		display:block
+	}
+.grey {
+  stroke-dasharray: 788 790;
+  stroke-dashoffset: 789;
+  animation: draw_0 3200ms infinite, fade 3200ms infinite;
+}
+
+.blue {
+  stroke-dasharray: 788 790;
+  stroke-dashoffset: 789;
+  animation: draw_1 3200ms infinite, fade 3200ms infinite;
+}
+
+@keyframes fade {
+  0% {
+    stroke-opacity: 1;
+  }
+  80% {
+    stroke-opacity: 1;
+  }
+  100% {
+    stroke-opacity: 0;
+  }
+}
+
+@keyframes draw_0 {
+  9.375% {
+    stroke-dashoffset: 789
+  }
+  39.375% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes draw_1 {
+  35.625% {
+    stroke-dashoffset: 789
+  }
+  65.625% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+.allTicketsContainer{
+    
+    gap: 25px;
+    align-items: flex-start;
+    align-content: flex-start;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+
+}
+
+.allTicketsContainer{
+    display: none; /* Initially hide the ticket container intill js is loadded */
+}
+
 	.ticket_inner_div{
-		padding:5px 10px
+	    padding: 21px 16px 5px 16px;
 	}
 hr {
-    width: 100%;
+	width: 90%;
     border: 1px solid #efefef;
-	margin-bottom: 11px;
-    margin-top: 11px;
+    margin: 17px auto 11px auto;
 }
 /* Main Ticket Style */
 .ticketContainer{
-    display: flex;
+   
     flex-direction: column;
     align-items: center;
 }
 .ticketImage, .ticketImage img{
-	max-height:150px
+    max-height: 130px;
+	border-radius: 12px 12px 0px 0;
 }
 	.ticketImage img{
 		width: 200px;
     margin: 0 auto;
+	object-fit: contain!important;
 
 	}
 	.ticketImage{
@@ -243,7 +329,10 @@ hr {
     background-color: white;
     color: #1a1a1a!important;
     border-radius: 12px;
-	max-width: 350px;
+    max-width: 280px;
+	height: fit-content;
+    width: 100%;
+
 
 }
 .ticketShadow{
@@ -258,16 +347,14 @@ display:none;
 
 /* Ticket Content */
 .ticketTitle{
-font-size: 18px;
-    line-height: 22px;
+	font-size: 15px;
+	line-height: 19px;
     font-weight: 700;
+    margin-bottom: 10px;
 }
-hr{
-    width: 90%;
-    border: 1px solid #efefef;
-}
-.ticketDetail{
-    font-size: 1.1rem;
+
+.ticketDetail , .ticketSubDetail , .eventaddress{
+    font-size: 14px!important;
     font-weight: 500;
    
 }
@@ -312,6 +399,75 @@ hr{
     border: 1px solid black;
     border-radius: 3px;
     padding: 3px 6px;
+}
+.ticketDetail .woocommerce-Price-amount bdi , .ticketDetail .woocommerce-Price-currencySymbol{
+	color:black!important
+}
+.ticket-detail-title{
+	color: black!important;
+    font-size: 13px;
+    font-weight: 300;
+
+}
+.view_ticket_btn{
+	background:#d3fa16;
+	color:black;
+}
+.view_event_btn {
+   
+	background:black;
+	color:white;
+}
+.view_event_btn  , .view_ticket_btn{
+    white-space: nowrap;
+    font-size: 12px!important;
+    padding: 5px 15px !important;
+    border-radius: 4px!important;
+    padding-bottom: 3px!important;
+
+}
+
+.ticketlowerSubDetail{
+	padding: 5px 10px 21px 10px;
+    display: flex;
+    justify-content: space-around;
+}
+.event-tickets-header {
+    padding-bottom: 33px;
+}
+.event-tickets-header h2{
+    font-weight: bold!important;
+
+}
+
+.event-tickets-header p{
+font-size:17px
+}
+
+
+
+
+
+
+
+
+
+@media (max-width: 600px) {
+    .allTicketsContainer {
+    justify-content: center;
+    }
+	.event-tickets-header {
+    padding-bottom: 20px;
+}
+.event-tickets-header h2{
+
+font-size:20px
+}
+
+.event-tickets-header p{
+font-size:14px
+}
+
 }
 
 

@@ -22,12 +22,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $organizer_label_singular = tribe_get_organizer_label_singular();
 $organizer_id = get_the_ID(); // Get the organizer post ID
+
+
+
 ?>
+<div class="organizer_title">
+<h2>Edit Organiser</h2>
+</div>
 <a href="/dashboard/organisers-list/">
+    <!--
 <div class="organizer_edit_back_btn_main">
 <div class="organizer_edit_back_btn"> <svg xmlns="http://www.w3.org/2000/svg" width="79" height="69" viewBox="0 0 79 69" fill="none">
             <path d="M73.3483 29.4643H15.7033L33.3467 8.27265C34.1717 7.28007 34.5687 6.0004 34.4502 4.71517C34.3317 3.42993 33.7075 2.24441 32.7149 1.4194C31.7223 0.594395 30.4426 0.19748 29.1574 0.315977C27.8721 0.434474 26.6866 1.05868 25.8616 2.05126L1.55931 31.214C1.39581 31.446 1.2496 31.6897 1.12187 31.9431C1.12187 32.1861 1.12187 32.3319 0.781639 32.575C0.561332 33.1323 0.445981 33.7255 0.441406 34.3247C0.445981 34.924 0.561332 35.5172 0.781639 36.0745C0.781639 36.3175 0.781638 36.4633 1.12187 36.7064C1.2496 36.9598 1.39581 37.2035 1.55931 37.4354L25.8616 66.5982C26.3186 67.1469 26.8909 67.5881 27.5377 67.8905C28.1846 68.1929 28.8901 68.3491 29.6042 68.348C30.7398 68.3502 31.8404 67.9547 32.7149 67.2301C33.207 66.822 33.6139 66.3209 33.9121 65.7554C34.2103 65.1899 34.394 64.5711 34.4527 63.9345C34.5114 63.2979 34.4439 62.656 34.2541 62.0455C34.0643 61.435 33.756 60.8679 33.3467 60.3768L15.7033 39.1852H73.3483C74.6374 39.1852 75.8737 38.6731 76.7852 37.7616C77.6967 36.8501 78.2088 35.6138 78.2088 34.3247C78.2088 33.0357 77.6967 31.7994 76.7852 30.8879C75.8737 29.9764 74.6374 29.4643 73.3483 29.4643Z" fill="#231F20"/>
-        </svg><p>Back</p></div></div></a>
+        </svg><p>Back</p></div></div></a> -->
 <?php
 // Check if the form has been submitted
 if ('POST' === $_SERVER['REQUEST_METHOD']) {
@@ -73,6 +80,7 @@ if ('POST' === $_SERVER['REQUEST_METHOD']) {
             update_post_meta($organizer_id, 'banner_image_id', $banner_attachment_id);
         }
     }
+
     if (isset($_POST['post_title'])) {
         $organizer_name = sanitize_text_field($_POST['post_title']);
         wp_update_post(array(
@@ -80,9 +88,18 @@ if ('POST' === $_SERVER['REQUEST_METHOD']) {
             'post_title' => $organizer_name
         ));
     }
+    ?>
+    <script>
+    // Specify the URL you want to redirect to
+    var redirectUrl = 'https://ticketfesta.co.uk/dashboard/organisers-list/?organizer_updated=true';
 
+        // Perform the redirect
+        window.location.href = redirectUrl;
+
+    </script>
+    <?php
     // Redirect after form submission
-    wp_redirect('https://thaynna-william.co.uk/dashboard/organisers-list/?organizer_updated=true');
+    // wp_redirect('https://ticketfesta.co.uk/dashboard/organisers-list/?organizer_updated=true');
     exit;
 }
 
@@ -94,6 +111,10 @@ $banner_image_id = get_post_meta($organizer_id, 'banner_image_id', true);
 $banner_image_url = $banner_image_id ? wp_get_attachment_image_url($banner_image_id, 'full') : '';
 
 ?>
+
+<div class="edit_organizer_main">
+
+
 
 <div id="tribe-community-events" class="form organizer">
     <?php tribe_get_template_part( 'community/modules/header-links' ); ?>
@@ -115,7 +136,7 @@ $banner_image_url = $banner_image_id ? wp_get_attachment_image_url($banner_image
       <!-- Check if there's a banner image URL -->
       <?php
 // Set the default banner image URL
-$default_banner_image = 'https://thaynna-william.co.uk/wp-content/uploads/2024/01/Group-189-5.jpg';
+$default_banner_image = '/wp-content/uploads/2024/02/antoine-j-r3XvSBEQQLo-unsplash-2-min.jpg';
 
 // Get the banner image ID from post meta
 $banner_image_id = get_post_meta($organizer_id, 'banner_image_id', true);
@@ -142,11 +163,11 @@ if ($banner_image_id) {
         </div>
         <div class="organizer_image_upload_function_container">
     <div class="organizer_image_upload_function">
-        <label><?php esc_html_e( 'Current Organizer Image:', 'tribe-events-community' ); ?></label>
+        <label><?php esc_html_e( '', 'tribe-events-community' ); ?></label>
 
         <!-- Organizer image element -->
         <?php 
-        $default_image = 'https://thaynna-william.co.uk/wp-content/uploads/2024/01/default-avatar-photo-placeholder-profile-icon-vector.jpg';
+        $default_image = '/wp-content/uploads/2024/01/default-avatar-photo-placeholder-profile-icon-vector.jpg';
         $image_src = !empty($organizer_thumbnail_url) ? $organizer_thumbnail_url : $default_image;
         ?>
         <div class="profile_img_svg_div">
@@ -177,23 +198,80 @@ if ($banner_image_id) {
 <input type="file" id="fileInput" name="fileInput" accept="image/jpeg" style="display:none;" onchange="validateAndDisplayImage(this.files)">
 
         
-        </div>
 
 
         <!-- Organizer Title -->
-        <?php $organizer_name = esc_attr( tribe_get_organizer() ); ?>
+        <?php 
+            $organizer_name        = esc_attr( tribe_get_organizer() ); 
+            $organizer_id          = isset($_GET['id']) ? $_GET['id'] : ''; 
+            $organizer_description = get_post_meta( $organizer_id, 'organizer_description', true ) ? get_post_meta( $organizer_id, 'organizer_description', true ) : ''; 
+            $organizer_email       = get_post_meta( $organizer_id, '_OrganizerEmail', true ) ? get_post_meta( $organizer_id, '_OrganizerEmail', true ) : 'example@gmail.com'; 
+            $organizer_facebook    = get_post_meta( $organizer_id, 'organizer_facebook', true ) ? get_post_meta( $organizer_id, 'organizer_facebook', true ) : 'facebook.com'; 
+            $organizer_twitter     = get_post_meta( $organizer_id, 'organizer_twitter', true ) ? get_post_meta( $organizer_id, 'organizer_twitter', true ) : 'twitter.com'; 
+            $organizer_instagram   = get_post_meta( $organizer_id, 'organizer_instagram', true ) ? get_post_meta( $organizer_id, 'organizer_instagram', true ) : 'instagram.com'; 
+
+        ?>
         <div class="events-community-post-title">
             <label for="post_title" class="<?php echo ( $_POST && empty( $organizer_name ) ) ? 'error' : ''; ?>">
                 <?php printf( __( '%s Name:', 'tribe-events-community' ), $organizer_label_singular ); ?>
                 <small class="req"><?php esc_html_e( '(required)', 'tribe-events-community' ); ?></small>
             </label>
-            <input type="text" name="post_title" id="post_title_input" value="<?php echo esc_attr( $organizer_name ); ?>" readonly/>
-
+            <input type="text" placeholder="Organiser Name" name="post_title" id="post_title_input" value="<?php echo esc_attr( $organizer_name ); ?>" readonly/>
             <svg class="edit_svg_click organizer_title_edit_btn" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#d3fa16" viewBox="0 0 24 24"><path d="M4 16.668V20h3.333l9.83-9.83-3.333-3.332zm15.74-9.075a.885.885 0 0 0 0-1.253l-2.08-2.08a.885.885 0 0 0-1.253 0L14.78 5.886l3.333 3.333zM6 17l8-8 1 1-8 8z"></path></svg>
 
             
         </div>
-        
+
+        <div class="events-community-post-title description ">
+            <label for="organizer_description_input"  class="<?php echo ( $_POST && empty( $organizer_description ) ) ? 'error' : ''; ?>">
+                <?php printf( __( '%s Description:', 'tribe-events-community' ), $organizer_label_singular ); ?>
+                <small class="req"><?php esc_html_e( '(required)', 'tribe-events-community' ); ?></small>
+            </label>
+
+            <input type="textarea" placeholder="Organiser Description" name="organizer_description" id="organizer_description_input" value="<?php echo esc_attr( $organizer_description ); ?>" readonly/>
+            <svg class="edit_svg_click organizer_description_edit_btn" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#d3fa16" viewBox="0 0 24 24"><path d="M4 16.668V20h3.333l9.83-9.83-3.333-3.332zm15.74-9.075a.885.885 0 0 0 0-1.253l-2.08-2.08a.885.885 0 0 0-1.253 0L14.78 5.886l3.333 3.333zM6 17l8-8 1 1-8 8z"></path></svg>
+
+        </div>
+
+        <div class="events-community-post-title email">
+            <label for="organizer_email" class="<?php echo ( $_POST && empty( $organizer_email ) ) ? 'error' : ''; ?>">
+                <?php printf( __( '%s Email:', 'tribe-events-community' ), $organizer_label_singular ); ?>
+                <small class="req"><?php esc_html_e( '(required)', 'tribe-events-community' ); ?></small>
+            </label>
+
+            <input type="email" placeholder="Organiser Email" name="organizer_email" id="organizer_email" value="<?php echo esc_attr( $organizer_email ); ?>" readonly/>
+            <svg class="edit_svg_click organizer_email_edit_btn" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#d3fa16" viewBox="0 0 24 24"><path d="M4 16.668V20h3.333l9.83-9.83-3.333-3.332zm15.74-9.075a.885.885 0 0 0 0-1.253l-2.08-2.08a.885.885 0 0 0-1.253 0L14.78 5.886l3.333 3.333zM6 17l8-8 1 1-8 8z"></path></svg>
+        </div>
+        <div class="events-community-post-title facebook">
+            <label for="organizer_facebook" class="<?php echo ( $_POST && empty( $organizer_facebook ) ) ? 'error' : ''; ?>">
+                <?php printf( __( '%s facebook:', 'tribe-events-community' ), $organizer_label_singular ); ?>
+                <small class="req"><?php esc_html_e( '(required)', 'tribe-events-community' ); ?></small>
+            </label>
+            <i class="social-icon fa fa-facebook" aria-hidden="true"></i>
+            <input type="text" name="organizer_facebook" id="organizer_facebook" value="<?php echo esc_url( $organizer_facebook ); ?>" readonly/>
+            <svg class="edit_svg_click organizer_facebook_edit_btn" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#d3fa16" viewBox="0 0 24 24"><path d="M4 16.668V20h3.333l9.83-9.83-3.333-3.332zm15.74-9.075a.885.885 0 0 0 0-1.253l-2.08-2.08a.885.885 0 0 0-1.253 0L14.78 5.886l3.333 3.333zM6 17l8-8 1 1-8 8z"></path></svg>
+        </div>
+
+        <div class="events-community-post-title twitter">
+            <label for="organizer_twitter" class="<?php echo ( $_POST && empty( $organizer_twitter ) ) ? 'error' : ''; ?>">
+                <?php printf( __( '%s twitter:', 'tribe-events-community' ), $organizer_label_singular ); ?>
+                <small class="req"><?php esc_html_e( '(required)', 'tribe-events-community' ); ?></small>
+            </label>
+            <i class="social-icon fa fa-twitter" aria-hidden="true"></i>
+            <input type="text" name="organizer_twitter" id="organizer_twitter" value="<?php echo esc_url( $organizer_twitter ); ?>" readonly/>
+            <svg class="edit_svg_click organizer_twitter_edit_btn" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#d3fa16" viewBox="0 0 24 24"><path d="M4 16.668V20h3.333l9.83-9.83-3.333-3.332zm15.74-9.075a.885.885 0 0 0 0-1.253l-2.08-2.08a.885.885 0 0 0-1.253 0L14.78 5.886l3.333 3.333zM6 17l8-8 1 1-8 8z"></path></svg>
+        </div>
+
+        <div class="events-community-post-title instagram">
+            <label for="organizer_instagram" class="<?php echo ( $_POST && empty( $organizer_instagram ) ) ? 'error' : ''; ?>">
+                <?php printf( __( '%s instagram:', 'tribe-events-community' ), $organizer_label_singular ); ?>
+                <small class="req"><?php esc_html_e( '(required)', 'tribe-events-community' ); ?></small>
+            </label>
+            <i class="social-icon fa fa-instagram" aria-hidden="true"></i>
+            <input type="text" name="organizer_instagram" id="organizer_instagram" value="<?php echo  esc_url( $organizer_instagram ); ?>" readonly/>
+            <svg class="edit_svg_click organizer_instagram_edit_btn" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#d3fa16" viewBox="0 0 24 24"><path d="M4 16.668V20h3.333l9.83-9.83-3.333-3.332zm15.74-9.075a.885.885 0 0 0 0-1.253l-2.08-2.08a.885.885 0 0 0-1.253 0L14.78 5.886l3.333 3.333zM6 17l8-8 1 1-8 8z"></path></svg>
+        </div>
+
 
 
         
@@ -201,35 +279,45 @@ if ($banner_image_id) {
 
             ///FUNCTION TO DON'T ALLOW SAME Organizer Title  AND ON SVG ICON CLICK ALLOW TO EDIT AND ON SVG ICON CLICK CLEAR THE INPUT
 document.addEventListener('DOMContentLoaded', function() {
-    var form = document.querySelector('form');
-    var inputTitle = document.querySelector('input[name="post_title"]');
-    var editIcon = document.querySelector('.organizer_title_edit_btn');
-    var isEditIconClicked = false;
+ 
+    remove_read_only('input[name="post_title"]', '.organizer_title_edit_btn');
+    remove_read_only('input[name="organizer_description"]', '.organizer_description_edit_btn');
+    remove_read_only('input[name="organizer_email"]', '.organizer_email_edit_btn');
+    remove_read_only('input[name="organizer_facebook"]', '.organizer_facebook_edit_btn');
+    remove_read_only('input[name="organizer_twitter"]', '.organizer_twitter_edit_btn');
+    remove_read_only('input[name="organizer_instagram"]', '.organizer_instagram_edit_btn');
 
-    // Event listener for the SVG icon click
-    if (editIcon && inputTitle) {
-        editIcon.addEventListener('click', function() {
-            // Toggle the readonly attribute and the isEditIconClicked flag
-            if (inputTitle.hasAttribute('readonly')) {
-                inputTitle.removeAttribute('readonly'); // Enable editing
-                inputTitle.focus(); // Optionally, focus on the input field
-                isEditIconClicked = true;
-            } else {
-                inputTitle.setAttribute('readonly', 'readonly'); // Disable editing
-                isEditIconClicked = false;
-            }
-        });
-    } else {
-        console.error('Edit icon or input field not found');
+    function remove_read_only(inputTitle, editIcon){
+        var inputTitle = document.querySelector(inputTitle);
+        var editIcon = document.querySelector(editIcon);
+        var isEditIconClicked = false;
+        // Event listener for the SVG icon click
+        if (editIcon && inputTitle) {
+            editIcon.addEventListener('click', function() {
+                // Toggle the readonly attribute and the isEditIconClicked flag
+                if (inputTitle.hasAttribute('readonly')) {
+                    inputTitle.removeAttribute('readonly'); // Enable editing
+                    inputTitle.focus(); // Optionally, focus on the input field
+                    isEditIconClicked = true;
+                    inputTitle.value = '';
+                } else {
+                    inputTitle.setAttribute('readonly', 'readonly'); // Disable editing
+                    isEditIconClicked = false;
+                }
+            });
+        } else {
+            console.error('Edit icon or input field not found');
+        }
+    
     }
 
+    var form = document.querySelector('form');
     // Event listener for the form submission
     form.addEventListener('submit', function(e) {
         if (isEditIconClicked) {
             e.preventDefault(); // Prevent default form submission only if edit icon clicked
 
-            var titleValue = inputTitle.value.trim();
-
+            var titleValue = document.querySelector('input[name="post_title"]').value.trim();
             // AJAX request to check the title
             var xhr = new XMLHttpRequest();
             xhr.open('POST', '/wp-admin/admin-ajax.php', true);
@@ -250,6 +338,48 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         // If edit icon not clicked, form submits normally
     });
+
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+         // Collect form data
+        var formData = new FormData(this);
+
+        // Send AJAX request to the WordPress backend
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', ajaxurl, true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+        var organizer_description = document.querySelector('input[name="organizer_description"]').value.trim();
+        var organizer_email = document.querySelector('input[name="organizer_email"]').value.trim();
+        var organizer_facebook = document.querySelector('input[name="organizer_facebook"]').value.trim();
+        var organizer_twitter = document.querySelector('input[name="organizer_twitter"]').value.trim();
+        var organizer_instagram = document.querySelector('input[name="organizer_instagram"]').value.trim();
+        // Get the query string portion of the URL
+        var queryString = window.location.search;
+
+        // Parse the query string into an object
+        var queryParams = new URLSearchParams(queryString);
+        var organizer_id = queryParams.get('id');
+        // Handle AJAX response
+        xhr.onload = function() {
+            if (xhr.status >= 200 && xhr.status < 400) {
+                // Success
+                console.log(xhr.responseText);
+                form.submit();
+            } else {
+                // Error
+                console.error('Request failed:', xhr.statusText);
+            }
+        };
+
+        // Send the request
+        xhr.send('action=update_organizer_information&organizer_description=' + organizer_description 
+            +'&organizer_id=' + organizer_id
+            +'&organizer_email=' + organizer_email
+            +'&organizer_facebook=' + organizer_facebook
+            +'&organizer_twitter=' + organizer_twitter
+            +'&organizer_instagram=' + organizer_instagram
+        );
+    });
 });
 
 
@@ -269,6 +399,8 @@ document.addEventListener("DOMContentLoaded", function() {
     } else {
         console.error('Edit icon or input field not found');
     }
+
+
 });
 
 </script>
@@ -323,7 +455,7 @@ document.addEventListener("DOMContentLoaded", function() {
         </div><!-- .tribe-events-community-footer -->
     </form>
 </div>
-
+</div>
 <script>
 // Function to validate and display the uploaded image
 function validateAndDisplayImage(files) {
@@ -454,6 +586,22 @@ if (bannerInput) {
 
 
 <style>
-
-
+.edit_organizer_main{
+        background-color: rgb(26, 26, 26);
+    position: relative;
+    padding: 17px;
+    border-radius: 10px !important;
+    width: 100% !important;
+}
+#organizer_description_input{
+    color:white;
+    width: 100%;
+    min-height: 120px;
+}
+.edit_organizer_main input{
+font-size:15px;
+font-weight:300
+}
 </style>
+
+</div>

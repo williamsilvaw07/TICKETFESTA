@@ -218,7 +218,6 @@ $follower_count = count($followers_array);
     // Assuming you have the organizer ID stored in $organizer->ID
     // Get the organizer's title/name
     $organizer_title = get_the_title( $organizer->ID );
-
     // Output the organizer's title/name wrapped in an h1 tag
     echo '<h1>' . esc_html( $organizer_title ) . '</h1>';
     ?>
@@ -589,7 +588,14 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 
 
 
-
+<?php
+    $organizer_description = get_post_meta( $organizer->ID, 'organizer_description', true ) ? get_post_meta( $organizer->ID, 'organizer_description', true ) : ''; 
+    $organizer_email       = get_post_meta( $organizer->ID, '_OrganizerEmail', true ) ? get_post_meta( $organizer->ID, '_OrganizerEmail', true ) : ''; 
+    $organizer_facebook    = get_post_meta( $organizer->ID, 'organizer_facebook', true ) ? get_post_meta( $organizer->ID, 'organizer_facebook', true ) : ''; 
+    $organizer_twitter     = get_post_meta( $organizer->ID, 'organizer_twitter', true ) ? get_post_meta( $organizer->ID, 'organizer_twitter', true ) : ''; 
+    $organizer_instagram   = get_post_meta( $organizer->ID, 'organizer_instagram', true ) ? get_post_meta( $organizer->ID, 'organizer_instagram', true ) : ''; 
+   
+?>
 
 
 
@@ -600,8 +606,37 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
         <h3>About</h3>
 
         <div class="organizer_about_main_inner_text">
-            <?php echo apply_filters('the_content', $organizer->post_content); ?>
+            <?php echo $organizer_description ?>
         </div>
+        <?php if($organizer_email){ ?>
+            <p class="organizer_email"> 
+                <i class="fa fa-envelope" aria-hidden="true"></i> 
+                <?php echo $organizer_email ;?> 
+            </p>
+        <?php } ?>
+        <span class="social_icons_organizers">
+            <?php if($organizer_facebook){ ?>
+                <span class="organizer_facebook">
+                    <a href="<?php echo $organizer_facebook ;?>">
+                        <i class="social-icon fa fa-facebook" aria-hidden="true"></i>
+                    </a> 
+                </span>
+            <?php } ?>
+            <?php if($organizer_twitter){ ?>
+                <span class="organizer_twitter">
+                    <a href="<?php echo $organizer_twitter ;?>">
+                        <i class="social-icon fa fa-twitter" aria-hidden="true"></i>
+                    </a> 
+                </span>
+            <?php } ?>
+            <?php if($organizer_instagram){ ?>
+                <span class="organizer_instagram">
+                    <a href="<?php echo $organizer_instagram ;?>">
+                        <i class="social-icon fa fa-instagram" aria-hidden="true"></i>
+                    </a> 
+                </span>
+            <?php } ?>
+        </span>
 
         <div class="organizer_about_main_inner_social">
             <?php
@@ -1725,7 +1760,7 @@ text-align: left;
   display:none
 }
 .organizer_about_main_inner{
-    text-align: center;
+    text-align: left;
     margin: 0 auto!important;
     display: flex;
     flex-direction: column;
@@ -1828,7 +1863,8 @@ input.follow-button {
 
 
     .organizer_profile_bk {
-        min-height: 340px;
+        min-height: 340px!important;
+        max-height: 340px!important;
 }
     .single-tribe_organizer .image_profile_text_main_continer img {
         border-radius: 100px;

@@ -20,6 +20,14 @@
 $trimmed_title = mb_strimwidth(get_the_title($event->ID), 0, 60, '...');
 
 
+?>
+
+    <!-- Overlay Background -->
+    <div class="overlay" style="display: none;"></div>
+
+
+
+<?php
 
 $classes = get_post_class( [ 'tribe-common-g-col', 'tribe-events-pro-photo__event' ], $event->ID );
 if ( ! empty( $event->featured ) ) {
@@ -47,9 +55,6 @@ $organizer_names = array_map('tribe_get_organizer', $organizer_ids);
             <img src="https://ticketfesta.co.uk/wp-content/uploads/2024/02/placeholder-1-1.png" alt="Placeholder Image">
         </div>
     <?php endif; ?>
-
-    <!-- Overlay Background -->
-    <div class="overlay" style="display: none;"></div>
 
     <!-- Popup div for sharing link -->
 
@@ -404,93 +409,6 @@ jQuery(document).ready(function($) {
     .copyButton img{
         max-width: 20px;
     }
-.share_btn_event {
-    background: white;
-    padding: 20px;
-    border-radius: 5px;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px); /* For Safari */
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Light black box shadow */
-
-}
-.share_btn i
-{position: relative;
-    right: 2px;
-    top: 1px;
-
-
-}
-body .social_sharing_links{
-    padding-bottom: 22px;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    gap: 17px;
-}
-.social_sharing_links i{
-    color:#1A1A1A!important
-}
-body .share_btn{
-    z-index: 9; 
-    background: white!important;
-    border-radius: 100px;
-    width: 30px;
-    height: 30px;
-}
-
-.overlay {
-
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: none;
-    z-index: 1000;
-    
-    /* Overlay blur - this could be adjusted if you want the background content to be blurred as well */
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px); /* For Safari */
-}
-
-
-.copyButton {
-    cursor: pointer;
-    margin-left: 10px;
-}
-
-.copyMessage {
-    margin-left: 10px;
-    color: #219f00!important;
-    font-size: 0.9em;
-    display: inline-block;
-    margin-top: 10px;
-
-}
-
-.close_popup {
-    display: block;
-    margin-top: 10px;
-    position: absolute;
-    right: 11px;
-    top: 6px;
-    font-size: 22px;
-}
-.share_btn_event h3{
-    color: black!important;
-    font-size: 20px;
-    margin-bottom: 20px;
-    background:white!important
-}
-.share_btn_event{
-    padding: 29px!important;
-    
-}
 .tribe-events-c-small-cta__stock{
     display:flex
 }
@@ -526,6 +444,10 @@ body .share_btn{
         margin: 5px;
         max-width: calc(50% - 10px); /* Adjusted to 50% for 2 items per row */
     }
+    .share_btn{
+        display:block!important
+    }
+
 }
 
 @media (max-width: 700px) {

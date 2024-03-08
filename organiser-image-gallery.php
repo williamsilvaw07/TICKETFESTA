@@ -5,6 +5,9 @@ add_shortcode('organiser_image_gallery', 'organiser_image_gallery_shortcode');
 function organiser_image_gallery_shortcode() {
     $account_mb_used = get_user_meta( get_current_user_id(), 'total_upload', true );
     $account_mb_used = $account_mb_used ? $account_mb_used : 0;
+    $usage_percentage = ($account_mb_used / $total_mb) * 100;
+    $usage_percentage_formatted = number_format($usage_percentage, 2); // Format to 2 decimal places if needed
+    
     ob_start(); ?>
 
     <!-- HTML structure for the image gallery -->
@@ -123,6 +126,10 @@ function organiser_image_gallery_shortcode() {
             font-weight: 700;
             padding: 0;
         }
+
+
+        
+        
     </style>
 
     <!-- Inline JavaScript for functionality -->
@@ -457,8 +464,20 @@ dropZone.addEventListener('drop', function(e) {
         }
 
         // HTML markup for displaying categories with titles and thumbnails
+        echo "<div style='max-width: 500px; width: 100%;'> <!-- Container div for max-width and responsiveness -->
+        <p class='account_storage'>Account Storage</p>
+        <div class='progress' style='height: 20px; margin-top: 20px;'>
+            <div class='progress-bar' role='progressbar' 
+                style='width: {$usage_percentage_formatted}%; padding: 0 10px;' 
+                aria-valuenow='{$account_mb_used}' 
+                aria-valuemin='0' 
+                aria-valuemax='{$total_mb}'>
+              Used {$account_mb_used}/3 MB
+            </div>
+        </div>
+      </div>";
         echo '<div class="category-gallery">';
-        echo "<p class='used-memomy'> Account used $account_mb_used/3 MB</p>";
+    
         foreach ($categories as $category) {
             $category_id = $category->term_id;
             $category_name = $category->name;
@@ -475,8 +494,8 @@ dropZone.addEventListener('drop', function(e) {
                 $attachment_src = wp_get_attachment_image_src($attachment_id, 'large')[0];
                 echo '<img src="' . esc_url($attachment_src) . '" alt="' . esc_attr($category_name) . '" />';
                 echo '<div class="overlay">';
-                echo '<h2>' . esc_html($category_name) . '</h2>';
-                echo '<h3>Organiser: ' . esc_html($cat_organiser) . '</h3>';
+                echo '<h4>' . esc_html($category_name) . '</h4>';
+                echo '<h5>Organiser: ' . esc_html($cat_organiser) . '</h5>';
                 echo '</div>'; // Close overlay div
             } else {
                 echo '<p>No thumbnail available</p>';

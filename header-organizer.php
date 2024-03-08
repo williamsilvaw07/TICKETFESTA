@@ -3,13 +3,19 @@ if (!defined('ABSPATH')) {
     exit; // Exit if accessed directly.
 }
 ?>
+
 <!DOCTYPE html>
 <html <?php language_attributes(); ?>>
 
+
+
 <head>
     <meta charset="<?php bloginfo('charset'); ?>">
+
+      <!--
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+ -->
     <!-- Include stylesheet -->
     <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 
@@ -17,8 +23,30 @@ if (!defined('ABSPATH')) {
     <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
     <?php wp_head(); ?>
 </head>
-
+<div class="loading_svg_div">
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1366 768" xml:space="preserve">
+        <style type="text/css">
+            .st0{fill:none;stroke:#ffff;stroke-width:3;stroke-miterlimit:10;}
+            .st1{fill:none;stroke:#d3fa16;stroke-width:9;stroke-miterlimit:10;}
+        </style>
+        <g>
+            <path class="st0 grey" d="M772.5,347c-6.2-14-2.4-29.5,8.4-35.8c1.1-0.6,1.4-2.2,0.8-3.7l-8.5-19.1c-3.4-7.6-11.2-11.4-17.5-8.6
+                l-201,89.5c-6.3,2.8-8.7,11.2-5.3,18.8c0,0,6.4,14.3,8.5,19.1c0.6,1.4,2,2.2,3.3,1.8c12-3.8,26,3.7,32.3,17.7s2.4,29.5-8.4,35.8
+                c-1.1,0.6-1.4,2.2-0.8,3.7l8.5,19.1c3.4,7.6,11.2,11.4,17.5,8.6l201-89.5c6.3-2.8,8.7-11.2,5.3-18.8l-8.5-19.1
+                c-0.6-1.4-2-2.2-3.3-1.8C792.8,368.5,778.7,361,772.5,347z"></path>
+            <path class="st1 blue" d="M772.5,347c-6.2-14-2.4-29.5,8.4-35.8c1.1-0.6,1.4-2.2,0.8-3.7l-8.5-19.1c-3.4-7.6-11.2-11.4-17.5-8.6
+                l-201,89.5c-6.3,2.8-8.7,11.2-5.3,18.8c0,0,6.4,14.3,8.5,19.1c0.6,1.4,2,2.2,3.3,1.8c12-3.8,26,3.7,32.3,17.7s2.4,29.5-8.4,35.8
+                c-1.1,0.6-1.4,2.2-0.8,3.7l8.5,19.1c3.4,7.6,11.2,11.4,17.5,8.6l201-89.5c6.3-2.8,8.7-11.2,5.3-18.8l-8.5-19.1
+                c-0.6-1.4-2-2.2-3.3-1.8C792.8,368.5,778.7,361,772.5,347z"></path>
+        </g>
+    </svg>
+</div>
 <body <?php body_class("hold-transition sidebar-mini dark-mode"); ?> <?php generate_do_microdata('body'); ?>>
+
+
+
+
+
 
     <div class="wrapper">
 
@@ -29,7 +57,7 @@ if (!defined('ABSPATH')) {
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
-            <a href="/dashboard/" class="brand-link">
+            <a href="https://ticketfesta.co.uk/" class="brand-link">
                 <img src="https://ticketfesta.co.uk/wp-content/uploads/2024/02/Group-195-2.png" alt=""
                     class="brand-image img-circle elevation-3">
                 <span class="brand-text font-weight-light"></span>
@@ -41,7 +69,7 @@ if (!defined('ABSPATH')) {
                 <nav class="admin_dashboard-sidebar">
                     <ul class="admin_dashboard-sidebar-list">
                         <li class="admin_dashboard-sidebar-item">
-                            <a href="https://thaynna-william.co.uk/dashboard/">
+                            <a href="https://ticketfesta.co.uk/dashboard/">
                                 <i class="fas fa-home"></i><span class="nav-text">Dashboard</span>
                             </a>
 
@@ -63,6 +91,12 @@ if (!defined('ABSPATH')) {
                                     class="nav-text">Organizers</span></a>
                         </li>
 
+                        
+                        <li class="admin_dashboard-sidebar-item">
+                            <a href="/dashboard/vanues-list/"><i class="fa fa-map-marker"></i><span
+                                    class="nav-text">Vanues</span></a>
+                        </li>
+
                         <li class="admin_dashboard-sidebar-item">
                             <a href="/organizer-finance/">
                                 <i class="fas fa-university"></i><span class="nav-text">Finance</span>
@@ -74,11 +108,11 @@ if (!defined('ABSPATH')) {
                                     class="nav-text">Gallery</span></a>
                         </li>
                         <li class="admin_dashboard-sidebar-item admin_dashboard-coming-soon">
-                            <a href="https://thaynna-william.co.uk/organizer-eventsdd"><i
+                            <a href="/organizer-eventsdd"><i
                                     class="fas fa-bullhorn"></i><span class="nav-text">Affiliate Marketing</span></a>
                         </li>
                         <li class="admin_dashboard-sidebar-item admin_dashboard-coming-soon">
-                            <a href="https://thaynna-william.co.uk/organizer-eventsdd"><i
+                            <a href="organizer-eventsdd"><i
                                     class="fas fa-envelope"></i><span class="nav-text">Email Marketing</span></a>
                         </li>
                     </ul>
@@ -88,12 +122,13 @@ if (!defined('ABSPATH')) {
                 <nav class="lower_admin_dashboard-sidebar">
                     <ul class="admin_dashboard-sidebar-list lower_admin_dashboard-sidebar-list">
                         <li class="admin_dashboard-sidebar-item">
-                            <a href="/organiser-settings/"><i class="fas fa-cog"></i><span
+                            <a href="/organisers-setting/"><i class="fas fa-cog"></i><span
                                     class="nav-text">Settings</span></a>
                         </li>
                         <li class="admin_dashboard-sidebar-item">
-                            <a href="#"><i class="fas fa-sign-out-alt"></i><span class="nav-text">Logout</span></a>
-                        </li>
+    <a href="<?php echo esc_url(wp_logout_url(home_url())); ?>"><i class="fas fa-sign-out-alt"></i><span class="nav-text">Logout</span></a>
+</li>
+
                     </ul>
                 </nav>
             </div>
@@ -107,6 +142,13 @@ if (!defined('ABSPATH')) {
 
 
         <script>
+
+
+
+
+
+
+
 
             ////FUNCTION FO RTHE M=SIDE BAR MENU CLICK AND SHOW SUBMENU 
             document.querySelectorAll('.admin_dashboard-has-submenu > a').forEach(function (anchor) {
@@ -217,6 +259,10 @@ if (!defined('ABSPATH')) {
 
 
         <style>
+            
+            header {
+    background-color: inherit!important;
+}
             body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .main-footer {
                 display: none !important
             }
@@ -604,9 +650,9 @@ if (!defined('ABSPATH')) {
                 margin-bottom: 0;
                 font-size: 13px;
                 text-align: center;
-                background: rgb(0 0 0 / 40%);
+                background: rgb(0 0 0 / 80%);
                 padding: 20px;
-                box-shadow: 0px 0px 42px 12px rgba(0, 0, 0, 0.25);
+    
                 backdrop-filter: blur(4px);
                 border-radius: 10px;
                 transform: translate(-50%, -50%);
@@ -652,7 +698,8 @@ if (!defined('ABSPATH')) {
 
 
 
-            .organizer_title_edit_btn {
+            .organizer_title_edit_btn,
+            .edit_svg_click {
                 position: absolute;
                 right: 10px;
 
@@ -1424,7 +1471,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
             }
 
             .admin_dashboard_main_customer_info span {
-                font-size: 12px;
+                font-size: 13px;
                 color: #aaa;
                 font-weight: 100;
             }
@@ -1936,7 +1983,28 @@ html .tickets-sold-column , html .tribe-list-column-title {
                 margin: 0 !important;
 
             }
-
+            i.social-icon {
+                position: absolute;
+    font-size: 15px;
+    left: 24px;
+    border-radius: 4px;
+    background: #555;
+    color: #d3fa18;
+    /* padding: 9px; */
+    height: 30px;
+    width: 30px;
+    text-align: center;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+            }
+            input#organizer_facebook,
+            input#organizer_twitter,
+            input#organizer_instagram
+            {
+                margin-left: 60px;
+            }
             #eventCouponForm {
                 display: flex;
                 flex-direction: column;
@@ -1969,14 +2037,14 @@ html .tickets-sold-column , html .tribe-list-column-title {
 
             html .page-template-organizer-template-php .events-community-post-title input {
                 background: inherit !important;
-                border-width: 0 !important;
-                font-size: 27px !important;
-                font-weight: 700 !important;
-                color: white !important;
-                box-shadow: inherit !important;
-                padding-left: 0;
-                margin-bottom: 9px;
-                margin-top: 0;
+    border-width: 0 !important;
+    font-size: 17px !important;
+    font-weight: 400 !important;
+    color: white !important;
+    box-shadow: inherit !important;
+    padding-left: 0;
+    margin-bottom: 9px;
+    margin-top: 0;
 
             }
 
@@ -2076,8 +2144,11 @@ html .tickets-sold-column , html .tribe-list-column-title {
                 width: 34px;
                 height: 34px;
             }
-
-            .organizer_title_edit_btn {
+            .events-community-post-title.description {
+          
+            }
+            .organizer_title_edit_btn,
+            .edit_svg_click {
                 background: #555;
                 border-radius: 100px;
                 width: 45px;
@@ -2696,34 +2767,45 @@ html .tickets-sold-column , html .tribe-list-column-title {
             .elementor-button-link_custom span {
                 color: black !important
             }
-
+            .account_storage{
+                margin-bottom:0px
+            }
+.category-gallery{
+    box-sizing: border-box;
+    display: flex!important;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
+    align-content: center;
+    gap:20px;
+    margin-top:30px
+}
             .category-item {
                 position: relative;
-                display: inline-block;
-                margin: 10px;
             }
 
             .category-item img {
                 display: block;
                 width: 100%;
                 height: auto;
-                max-width: 400px;
+                max-width: 350px;
 
             }
 
             .overlay {
                 position: absolute;
-                bottom: 0;
-                background: rgba(0, 0, 0, 0.5);
-                /* Dark overlay */
-                color: #ffffff;
-                /* Text color */
-                width: 100%;
-                opacity: 1;
-                color: white;
-                text-align: center;
-                padding: 20px;
-                transition: .5s ease;
+    bottom: 0%;
+    background: rgba(0, 0, 0, 0.5);
+    color: #ffffff;
+    width: 100%;
+    opacity: 1;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    transition: .5s ease;
+    display: block;
+    height: fit-content;
             }
 
             .category-item:hover .overlay {
@@ -2781,7 +2863,41 @@ html .tickets-sold-column , html .tribe-list-column-title {
 
             }
 
+.elementor-element-c668104 {
+    background-color: rgb(26, 26, 26);
+    position: relative;
+    padding: 17px;
+    border-radius: 10px;
+    width: 100%;
+}
 
+
+
+        /*****setting page***/ 
+
+.
+        .setting_page_admin{
+            padding-top: 50px;
+            max-width:900px;
+            margin:0 auto
+        }
+.orgerinser_settings_form{
+    background-color: rgb(26, 26, 26);
+    position: relative;
+    padding: 17px;
+    border-radius: 10px !important;
+    width: 100% !important;
+}
+
+.orgerinser_settings_form button{
+    background: #d3fa16!important;
+    color: #000000!important;
+    font-size:12px!important;
+    margin-top:10px;
+    border:0px!important
+
+}
+        /******end */
 
             /********sales and atendde rports page **** */
 
@@ -2798,9 +2914,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
                 /* Adjustments for tablets */
                 .overlay {
                     position: relative;
-                    /* Position overlay relative to its container */
-                    background: transparent;
-                    /* Optional: make the background transparent */
+                    background: #0000;
                 }
 
                 .overlay h2,
@@ -2936,6 +3050,10 @@ html .tickets-sold-column , html .tribe-list-column-title {
                     transition: margin-left .3s ease-in-out;
                     margin-left: 63px !important;
                 }
+                .main-sidebar {
+    max-width: 62px;
+
+}
             }
 
 
@@ -3289,12 +3407,13 @@ html .tickets-sold-column , html .tribe-list-column-title {
                     position: absolute;
                     display: flex;
                     width: 100%;
-                    justify-content: space-between;
+                    justify-content: space-evenly;
                     align-items: center;
-                    padding: 0 24px;
+                    padding: 0 10px;
                     align-content: center;
                     flex-direction: row;
                     margin-bottom: 0 !important;
+                    gap: 13px;
                 }
 
                 .sidebar-mini.sidebar-collapse .main-sidebar,
@@ -3322,7 +3441,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
 
                 .admin_dashboard-active a {
                     background: linear-gradient(180deg, rgba(211, 250, 22, 0.28) 0.01%, rgba(211, 250, 22, 0.00) 99.96%);
-                    width: 50px;
+                    width: 37px;
                     padding-top: 5px;
                 }
 
@@ -3570,3 +3689,33 @@ html .tickets-sold-column , html .tribe-list-column-title {
                 }
             }
         </style>
+
+
+
+
+
+
+<script>
+
+
+///finvtion for the svg  loader
+jQuery(document).ready(function($) {
+    // Wait for 1 second after the document is ready
+    setTimeout(function() {
+        // Select the SVG div and add the 'hidden' class
+        $('.loading_svg_div').addClass('hidden_loading_svg');
+        console.log('SVG should now be hidden');
+
+        // After hiding the SVG, wait another 1 second to perform further actions
+        setTimeout(function() {
+            console.log('Performing another action 1 second after hiding the SVG');
+            // Any subsequent actions can be placed here
+        }, 1000);
+    }, 1200);
+});
+</script>
+
+
+
+
+<?php

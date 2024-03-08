@@ -23,7 +23,7 @@ echo '<div class="event-details-wrapper">';
 // Event title and image
 echo '<div class="event-title-image">';
 if ($canEdit) {
-    echo '<a href="' . esc_url(tribe_community_events_edit_event_link($event->ID)) . '" class="event-link">';
+   
     echo $event_image;
     echo '<span class="title">' . get_the_title($event) . '</span>';
     echo '</a>';

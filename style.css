@@ -9,6 +9,7 @@
 
 
 
+ 
  /*******
  /*****GLOBO CSS****/
  body {
@@ -50,7 +51,7 @@
   .separate-containers .site-main {
     margin-bottom: 0!important;
   }
- h2,h3,h4,h5,h6, li , p , a , span{
+ h2,h3,h4,h5,h6, li , p , a{
     font-family: "Plus Jakarta Sans", Sans-serif!important;
   }
 
@@ -74,6 +75,84 @@ font-family: "Plus Jakarta Sans", Sans-serif;
 }
 
 /*****END***/
+
+
+/******LOADING SPINERR****/
+
+
+ 
+.loading_svg_div{
+    background-color: rgb(26, 26, 26);
+    width: 100vw;
+    height: 100vh;
+    z-index: 10000000000000;
+    position: fixed; 
+    align-items: center; /* Fixed typo from align-content to align-items for vertical alignment */
+    justify-content: center;
+
+}
+.loading_svg_div svg{
+
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%); /
+}
+.hidden_loading_svg {
+display: none !important;
+}
+.grey {
+stroke-dasharray: 788 790;
+stroke-dashoffset: 789;
+animation: draw_0 2200ms infinite, fade 2200ms infinite;
+}
+
+.blue {
+stroke-dasharray: 788 790;
+stroke-dashoffset: 789;
+animation: draw_1 2200ms infinite, fade 2200ms infinite;
+}
+
+@keyframes fade {
+0% {
+stroke-opacity: 1;
+}
+80% {
+stroke-opacity: 1;
+}
+100% {
+stroke-opacity: 0;
+}
+}
+
+@keyframes draw_0 {
+9.375% {
+stroke-dashoffset: 789
+}
+39.375% {
+stroke-dashoffset: 0;
+}
+100% {
+stroke-dashoffset: 0;
+}
+}
+
+@keyframes draw_1 {
+35.625% {
+stroke-dashoffset: 789
+}
+65.625% {
+stroke-dashoffset: 0;
+}
+100% {
+stroke-dashoffset: 0;
+}
+}
+
+
+
+
+/*****END*******/
 /***HEADER***/
 .elementor-element-9d845b1{
     width: 90%!important;
@@ -255,7 +334,9 @@ header{
 .elementor-element-0630e16{
     display: flex;
 }
-
+nav ul {
+    z-index: 999!important
+}
 
 
 
@@ -578,6 +659,77 @@ a.tribe-button.tribe-button-primary.add-new , .organizers_add_new_btn{
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+/****page after edit page****/
+
+.my-events-header h2.my-events {
+    font-weight: 700!important;
+}
+
+.tribe-community-events .tribe-community-notice {
+    background-color: rgb(26, 26, 26)!important;
+
+}
+.tribe-community-events .tribe-community-notice p{
+    color: #d3fa16 !important;
+    font-size: 17px!important;
+    font-weight: 700!important;
+}
+.tribe-community-events .tribe-community-notice p:last-child{
+    display: none!important;
+}
+.tribe-community-events .tribe-community-notice a{
+    font-size: 12px;
+    color: rgb(255, 255, 255)!important;
+    font-weight: 500!important;
+}
+html .tribe-community-events .tribe-community-notice-error p{
+    color: #ffffff !important;
+    font-size: 17px!important;
+    font-weight: 400!important;
+
+}
+html .tribe-community-events .tribe-community-notice-error p:last-child {
+    display: block!important;
+    color: #ffffff !important;
+    font-size: 17px!important;
+    font-weight: 400!important;
+}
+/*****END******/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /****HOME BANNER******/
 
 .home header:first-child{
@@ -871,6 +1023,96 @@ html .event-venue-city-organizer{
 
 }
 
+.share_btn_event {
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px); /* For Safari */
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Light black box shadow */
+
+}
+.share_btn i
+{position: relative;
+    right: 0px;
+    top: 1px;
+
+
+}
+body .social_sharing_links{
+    padding-bottom: 22px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 17px;
+}
+.social_sharing_links i{
+    color:#1A1A1A!important
+}
+body .share_btn{
+    z-index: 9; 
+    background: white!important;
+    border-radius: 100px!important;
+    width: 30px;
+    height: 30px;
+    color: black;
+    padding: inherit;
+}
+
+.overlay {
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    z-index: 1000;
+    
+    /* Overlay blur - this could be adjusted if you want the background content to be blurred as well */
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px); /* For Safari */
+}
+
+
+.copyButton {
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.copyMessage {
+    margin-left: 10px;
+    color: #219f00!important;
+    font-size: 0.9em;
+    display: inline-block;
+    margin-top: 10px;
+
+}
+
+.close_popup {
+    display: block;
+    margin-top: 10px;
+    position: absolute;
+    right: 11px;
+    top: 6px;
+    font-size: 22px;
+}
+.share_btn_event h3{
+    color: black!important;
+    font-size: 20px;
+    margin-bottom: 20px;
+    background:white!important
+}
+.share_btn_event{
+    padding: 29px!important;
+    
+}
+
 .share_btn{
     position: absolute;
     top:10px!important;
@@ -934,7 +1176,15 @@ html .event-venue-city-organizer{
 
 
 
-
+    @media (max-width: 960px) {
+  
+        .eventUrl{
+            white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 100%; 
+        }
+    }
 
 
 @media (max-width: 500px) {
@@ -980,14 +1230,7 @@ html .event-venue-city-organizer{
         .tribe-events-c-top-bar{
             display: block!important;
         }
-        .tribe-events .tribe-events-c-events-bar {
-            display: flex;
-            transform: scale(0.8);
-            gap: 13px;
-            background: inherit;
-            box-shadow: inherit!important;
-        
-        }
+   
         .tribe-events-c-top-bar span{
             font-size: 16px!important;
         
@@ -1537,15 +1780,6 @@ input.follow-button {
 
 /* my account  unfollow button style */
 
-input.unfollow-button {
-    background: #e14545b8;
-    border-radius: 10px;
-    color: #fff;
-    margin-top: 15px;
-    margin-left: 15px;
-    padding: 2px 15px;
-}
-
 .xoo-aff-input-group .xoo-aff-input-icon{
 
 color: #555!important;
@@ -1589,7 +1823,50 @@ color: #555!important;
     }
 }
 
+.organizer_text_profile p {
+    max-width: 700px;
+    margin: 20px;
+}
 
+span.social_icons_organizers {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    column-gap: 21px;
+}
+
+span.social_icons_organizers i.social-icon {
+    font-size: 18px;
+  
+}
 .event-tickets .tribe-tickets__tickets-item-details-content, .entry .entry-content .event-tickets .tribe-tickets__tickets-item-details-content {
     grid-row: 4;
+}
+
+
+
+
+.user-vanues-list tbody tr, .user-vanues-list thead tr {
+    grid-template-columns: 35% 65%!important;
+}
+
+.user-vanues-list{
+    max-width: 400px!important;
+}
+
+form.edit-vanue-form {
+    display: block;
+    padding: 30px;
+    margin: 0 auto;
+    max-width: 700px;
+    background: #1a1a1a;
+    border-radius: 10px;
+}
+
+
+
+
+
+.fa, .far, .fas {
+    font-family: "Font Awesome 5 Free" !important;
 }

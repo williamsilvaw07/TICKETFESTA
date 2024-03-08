@@ -33,13 +33,13 @@ if ( ! isset( $event ) ) {
 	$event = null;
 }
 ?>
-<div class="event_decp_div hover_section">
+<div class="event_decp_div hover_section vanue-container">
 <h2>
 Venue Datails
 </h2>
 <p>Help people in the area discover your event and let attendees know where to show up.
 </p>
-<div id="event_tribe_venue" class="tribe-section tribe-section-venue hover_section_content_show eventForm <?php echo tribe_community_events_single_geo_mode() ? 'tribe-single-geo-mode' : ''; ?>">
+<div id="event_tribe_venue" class="tribe-section tribe-section-venue required hover_section_content_show eventForm <?php echo tribe_community_events_single_geo_mode() ? 'tribe-single-geo-mode' : ''; ?>">
 	<div class="tribe-section-header">
 		<h3 class="<?php echo tribe_community_events_field_has_error( 'organizer' ) ? 'error' : ''; ?>">
 			<?php
@@ -71,7 +71,6 @@ Venue Datails
 		$metabox->render();
 		?>
 	</table>
-
 	<?php
 	/**
 	 * Allow developers to hook and add content to the end of this section

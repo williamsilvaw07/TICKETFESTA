@@ -203,6 +203,51 @@ $event_url = esc_attr($event_url);
         </div>
 
 
+<?php
+$event_description = get_post_meta($event_id, 'event_description', true);
+?>
+
+<div id="quill-editor" style="height: 200px;"></div>
+<input type="hidden" name="event_description" id="event_description" value="<?php echo esc_attr($event_description); ?>">
+
+<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var quill = new Quill('#quill-editor', {
+        theme: 'snow',
+        modules: {
+            toolbar: [
+                ['bold', 'italic', 'underline'],
+                [{'list': 'ordered'}, {'list': 'bullet'}],
+                ['link', 'image']
+            ]
+        }
+    });
+
+    // Load existing content into the editor
+    var eventDescriptionValue = document.getElementById('event_description').value;
+    quill.root.innerHTML = eventDescriptionValue;
+
+    // Save content back to the hidden input on form submit
+    var form = document.querySelector('form'); // Ensure this selector targets your actual form
+    form.onsubmit = function() {
+        document.getElementById('event_description').value = quill.root.innerHTML;
+    };
+});
+</script>
+
+
+
+       
+
+
+
+
+
+
+
 
 
         <!-- extra options section -->
@@ -215,6 +260,13 @@ $event_url = esc_attr($event_url);
 
                 <div class="admin_event_extra_info_inputs">
                     <div class="admin_event_extra_info_input">
+
+                    <input type="checkbox" id="allage" name="allage" <?php checked(get_post_meta($event_id, 'allage', true), 'on'); ?> />
+                        <label for="allage">Is the event for All Ages?</label>
+                        </div>
+
+
+                        <div class="admin_event_extra_info_input">
                         <input type="checkbox" id="over14" name="over14" <?php checked(get_post_meta($event_id, 'over14', true), 'on'); ?> />
                         <label for="over14">Is the event for over 14 years old?</label>
                     </div>
@@ -705,7 +757,7 @@ $event_url = esc_attr($event_url);
         // Click event for the .tribe-remove-upload link
         $('.tribe-remove-upload').click(function (e) {
             e.preventDefault(); // Prevent the default action of the link
-
+            jQuery('#event_image').val() = '';
             // Remove the background image from the .tribe-image-upload-area div
             $('.tribe-image-upload-area').css('background-image', 'none');
             // Show the <h2> and <p> elements again
@@ -875,10 +927,57 @@ $event_url = esc_attr($event_url);
             });
         });
     });
+
+
+
+
+///FUNCTION TO AUTO CLICK THE 
+
+jQuery(document).ready(function($) {
+    var intervalId;
+
+    function checkAndClickRadioButton() {
+        var ownCapacityRadio = $('#Tribe__Tickets_Plus__Commerce__WooCommerce__Main_own');
+
+        // If the radio button exists and isn't already checked, click it
+        if (ownCapacityRadio.length && !ownCapacityRadio.prop('checked')) {
+            console.log('Clicking the own capacity radio button...');
+            ownCapacityRadio.prop('checked', true).trigger('change');
+
+                // Apply CSS with !important using jQuery
+                $("#Tribe__Tickets_Plus__Commerce__WooCommerce__Main_unlimited").css("cssText", "margin-right: 25px !important;");
+            // Check if the radio button is now checked
+            if (ownCapacityRadio.prop('checked')) {
+                console.log('Own capacity radio button is now checked.');
+                clearInterval(intervalId); // Stop checking
+            }
+        }
+    }
+
+    // Run the check immediately in case the page loads with the form already visible
+    checkAndClickRadioButton();
+
+    // Listen for clicks on the form toggle button to start checking
+    $('#ticket_form_toggle').on('click', function() {
+        console.log('Toggle button clicked.');
+
+        // Ensure we're not setting multiple intervals
+        clearInterval(intervalId);
+
+        // Start checking and clicking the radio button every 500 milliseconds
+        intervalId = setInterval(checkAndClickRadioButton, 500);
+    });
+});
+
+
+
 </script>
 
 
 <style>
+
+
+
     .accordion-header {
         cursor: pointer;
         padding: 10px;
@@ -1116,4 +1215,15 @@ $event_url = esc_attr($event_url);
         background-color: #2C2C2C;
         /* Set this to the background color of the progress bar */
     }
+
+
+    .tribe-ticket-control-wrap , .tribe-ticket-control-wrap__ctas , #ticket_type_options {
+        display:none!important
+    }
+
+    #Tribe__Tickets_Plus__Commerce__WooCommerce__Main_ticket_global_stock:first-child {
+    display: none !important;
+}
+
+
 </style>

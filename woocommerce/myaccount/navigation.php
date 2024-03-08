@@ -279,6 +279,7 @@ jQuery(document).ready(function($) {
 
 
 
+
 <style>
 
 h1{
@@ -546,6 +547,71 @@ text-align: left;
 
 
 
+
+
+
+/****FOLLOWING PAGE  */
+h2{
+    font-weight: 700;
+}
+.organiser-following-item img{
+    border: 2px solid white;
+    border-radius: 100px;
+    max-width: 90px;
+    width: 100%;
+    height: auto;
+    object-fit: cover; 
+}
+
+.organiser-following-item{
+    display: flex;
+    gap: 15px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 17px 0 41px 0
+}
+
+.organiser-details strong{
+    font-size: 20px;
+    text-transform: capitalize;
+}
+.organiser-following-item .unfollow-button{
+    color: #ffffff;
+    background-color: #ea4335;
+    border-radius: 4px;
+    padding: 5px 10px;
+    font-size: 14px;
+    text-transform: capitalize;
+
+}
+.organiser-following-item .profile-link-button{
+    color: black!important;
+    background-color: #fff;
+    border-radius: 4px;
+    padding: 5px 10px!important;
+    font-size: 14px;
+    text-transform: capitalize;
+    text-decoration: none;
+    display: block;
+    width: fit-content;
+    line-height: 24px;
+}
+
+.organiser-actions{
+    display: flex;
+    gap: 14px;
+    margin-top: 10px; 
+}
+
+
+
+
+
+
+/*********END */
 
 
 

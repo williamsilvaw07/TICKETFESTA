@@ -1,61 +1,33 @@
 <?php
-
-///MY ACCOUNT FUNCTION 
-function custom_limit_orders_per_page( $args ) {
-    $args['limit'] = 2; // Set this to how many orders you want per page.
-    return $args;
-}
-add_filter( 'woocommerce_my_account_my_orders_query', 'custom_limit_orders_per_page', 10, 1 );
+///dd
 
 
+/////FUNCTION TO AUTO COMPLEATE THE ORDERS 
+add_action('woocommerce_payment_complete', 'auto_complete_digital_orders');
 
-add_filter( 'gettext', 'custom_replace_text', 20, 3 );
-function custom_replace_text( $translated_text, $text, $domain ) {
-    if ( 'Date' === $text ) {
-        $translated_text = 'Transaction Date';
+function auto_complete_digital_orders($order_id)
+{
+    $order = wc_get_order($order_id);
+
+    if (!$order) {
+        return;
     }
-    return $translated_text;
-}
 
+    $items = $order->get_items();
 
+    foreach ($items as $item) {
+        $product = $item->get_product();
 
-//////FUNCTION TO ADD THE EVENT IMAGE TO THE TICKET/PRODUCT MAIN IMAGE  
-
-function set_all_products_featured_image_to_event_image() {
-    // Query all products.
-    $args = array(
-        'post_type' => 'product',
-        'posts_per_page' => -1, // Retrieve all products
-        'fields' => 'ids', // Retrieve only the IDs for performance
-    );
-
-    $product_ids = get_posts($args);
-
-    foreach ($product_ids as $product_id) {
-        // Retrieve the associated event ID for each product.
-        $event_id = get_post_meta($product_id, '_tribe_wooticket_for_event', true);
-
-        if (!empty($event_id)) {
-            // Get the event's featured image ID.
-            $event_image_id = get_post_thumbnail_id($event_id);
-
-            if (!empty($event_image_id)) {
-                // Set the event's image as the product's featured image.
-                set_post_thumbnail($product_id, $event_image_id);
-                error_log("Product ID {$product_id} featured image updated to event ID {$event_id}'s image.");
-            } else {
-                error_log("Event ID {$event_id} does not have a featured image.");
-            }
-        } else {
-            error_log("Product ID {$product_id} does not have an associated event.");
+        // Check if there's any non-downloadable product.
+        if (!$product->is_downloadable()) {
+            return; // Exit if any product is not downloadable.
         }
     }
+
+    // If all items are downloadable, update order status to completed.
+    $order->update_status('completed');
 }
 
-// Optionally, you can trigger this function with a specific action, hook, or manually.
-add_action('wp_loaded', 'set_all_products_featured_image_to_event_image');
-
-///////END
 
 
 
@@ -66,20 +38,21 @@ add_action('wp_loaded', 'set_all_products_featured_image_to_event_image');
  * Example for adding event data to WooCommerce checkout for Events Calendar tickets.
  * @link https://theeventscalendar.com/support/forums/topic/event-title-and-date-in-cart/
  */
-add_filter( 'woocommerce_cart_item_name', 'woocommerce_cart_item_name_event_title', 10, 3 );
- 
-function woocommerce_cart_item_name_event_title( $title, $values, $cart_item_key ) {
-    $ticket_meta = get_post_meta( $values['product_id'] );
- 
+add_filter('woocommerce_cart_item_name', 'woocommerce_cart_item_name_event_title', 10, 3);
+
+function woocommerce_cart_item_name_event_title($title, $values, $cart_item_key)
+{
+    $ticket_meta = get_post_meta($values['product_id']);
+
     // Only do if ticket product
-    if ( array_key_exists( '_tribe_wooticket_for_event', $ticket_meta ) ) {
-        $event_id = absint( $ticket_meta[ '_tribe_wooticket_for_event' ][0] );
- 
-        if ( $event_id ) {
-            $title = sprintf( '%s for <a href="%s" target="_blank"><strong>%s</strong></a>', $title, get_permalink( $event_id ), get_the_title( $event_id ) );
+    if (array_key_exists('_tribe_wooticket_for_event', $ticket_meta)) {
+        $event_id = absint($ticket_meta['_tribe_wooticket_for_event'][0]);
+
+        if ($event_id) {
+            $title = sprintf('%s for <a href="%s" target="_blank"><strong>%s</strong></a>', $title, get_permalink($event_id), get_the_title($event_id));
         }
     }
- 
+
     return $title;
 }
 
@@ -90,27 +63,31 @@ function woocommerce_cart_item_name_event_title( $title, $values, $cart_item_key
  *
  * @return array
  */
-function flux_allow_custom_css_files( $sources ) {
-	$sources[] = 'http://site.com/wp-content/themes/storefront/style.css';
-	return $sources;
+function flux_allow_custom_css_files($sources)
+{
+    $sources[] = 'http://site.com/wp-content/themes/storefront/style.css';
+    return $sources;
 }
-add_filter( 'flux_checkout_allowed_sources', 'flux_allow_custom_css_files' );
+add_filter('flux_checkout_allowed_sources', 'flux_allow_custom_css_files');
 
-add_action( 'flux_before_layout', 'get_header' );
-add_action( 'flux_after_layout', 'get_footer' );
+add_action('flux_before_layout', 'get_header');
+add_action('flux_after_layout', 'get_footer');
 
 ////FONTASWER
 
 
-function my_theme_enqueue_scripts() {
+function my_theme_enqueue_scripts()
+{
     wp_enqueue_script('jquery');
 }
 add_action('wp_enqueue_scripts', 'my_theme_enqueue_scripts');
 
 
 
-function enqueue_font_awesome() {
-    wp_enqueue_style('font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css');
+function enqueue_font_awesome()
+{
+    wp_enqueue_style( 'font-awesome', 'https://cdn.jsdelivr.net/npm/fontawesome@4.7.0/css/font-awesome.min.css', array(), '4.7.0' ); // Adjust version number if needed
+
 }
 add_action('wp_enqueue_scripts', 'enqueue_font_awesome');
 
@@ -152,12 +129,12 @@ function add_custom_class_to_order_rows()
     ?>
     <script type="text/javascript">
         jQuery(document).ready(function($) {
-                $('.woocommerce-orders-table__row').each(function () {
-                    $(this).addClass('coupon-style');
-                });
+            $('.woocommerce-orders-table__row').each(function() {
+                $(this).addClass('coupon-style');
             });
-        </script>
-        <?php
+        });
+    </script>
+    <?php
 }
 add_action('wp_footer', 'add_custom_class_to_order_rows');
 
@@ -187,16 +164,16 @@ function move_custom_welcome_message_script()
     if (is_account_page()) {
         // Add inline JavaScript to move the welcome message and show it
         ?>
-                <script type="text/javascript">
-                    jQuery(document).ready(function ($) {
-                        // Move the welcome message to just above the <ul> inside the navigation
-                        var welcomeMessage = $('#custom-welcome-message');
-                        welcomeMessage.prependTo('.woocommerce-MyAccount-navigation');
-                        // Now display the message
-                        welcomeMessage.show();
-                    });
-                </script>
-                <?php
+        <script type="text/javascript">
+            jQuery(document).ready(function($) {
+                // Move the welcome message to just above the <ul> inside the navigation
+                var welcomeMessage=$('#custom-welcome-message');
+                welcomeMessage.prependTo('.woocommerce-MyAccount-navigation');
+                // Now display the message
+                welcomeMessage.show();
+            });
+        </script>
+        <?php
     }
 }
 add_action('wp_footer', 'move_custom_welcome_message_script');
@@ -205,17 +182,17 @@ function change_view_order_text_script()
     if (is_account_page()) {
         // Add inline JavaScript to change the "View" buttons to "View Tickets"
         ?>
-                <script type="text/javascript">
-                    jQuery(document).ready(function ($) {
-                        // Change the text of each "View" button to "View Tickets"
-                        $('.woocommerce-MyAccount-orders .woocommerce-button').each(function () {
-                            if ($(this).text().trim() === 'View') {
-                                $(this).text('View Tickets');
-                            }
-                        });
-                    });
-                </script>
-                <?php
+        <script type="text/javascript">
+            jQuery(document).ready(function($) {
+                // Change the text of each "View" button to "View Tickets"
+                $('.woocommerce-MyAccount-orders .woocommerce-button').each(function() {
+                    if($(this).text().trim()==='View') {
+                        $(this).text('View Tickets');
+                    }
+                });
+            });
+        </script>
+        <?php
     }
 }
 add_action('wp_footer', 'change_view_order_text_script');
@@ -303,7 +280,7 @@ function iam00_return_ticket_associate_with_event()
         }
 
         $response = [];
-        if(sizeof($results)>0){
+        if (sizeof($results) > 0) {
             $args = array(
                 'include' => $ids, // Replace with your actual product IDs
                 'return' => 'objects' // Ensure product objects are returned
@@ -327,16 +304,18 @@ function iam00_return_ticket_associate_with_event()
 }
 add_action('wp_ajax_get_event_ticket_action', 'iam00_return_ticket_associate_with_event'); // For logged-in users
 
-function dd($object){
+function dd($object)
+{
     echo "<pre>";
-    var_dump( $object);
+    var_dump($object);
     echo "</pre>";
     exit();
 }
 
-function iam00_get_coupon_associate_with_event($eventId){
-     // Set up query arguments
-     $args = array(
+function iam00_get_coupon_associate_with_event($eventId)
+{
+    // Set up query arguments
+    $args = array(
         'post_type' => 'product',
         'posts_per_page' => -1,
         'meta_query' => array(
@@ -379,7 +358,7 @@ function iam00_get_coupon_associate_with_event($eventId){
         var_dump($metaKeys);
     }
 
-    
+
     // Get all coupons
     $args = array(
         'post_type' => 'shop_coupon',
@@ -412,12 +391,12 @@ function iam00_return_coupon_associate_with_event()
         $coupons = iam00_get_coupon_associate_with_event($eventId);
         // Loop through each coupon
         foreach ($coupons as $coupon) {
-            
+
             $coupon = new WC_Coupon($coupon->ID);
-            
+
             $expire_date = $coupon->get_date_expires();
             $formatted_expire_date = $expire_date ? date('Y-m-d H:i', strtotime($expire_date)) : '';
-            
+
             $start_date = $coupon->get_date_created();
             $formatted_start_date = $start_date ? date('Y-m-d H:i', strtotime($start_date)) : '';
 
@@ -560,7 +539,7 @@ function iam00_create_woo_coupon_for_ticket()
 
 
         $expire_date = '';
-        if (isset($_POST['end_date_time']) && $_POST['end_date_time'] != '' ) {
+        if (isset($_POST['end_date_time']) && $_POST['end_date_time'] != '') {
             $expire_date = strtotime($_POST['end_date_time']);
             $coupon->set_date_expires($expire_date);
         }
@@ -574,7 +553,7 @@ function iam00_create_woo_coupon_for_ticket()
         // Save the coupon
         $coupon->save();
 
-        
+
         $formatted_expire_date = $expire_date ? date('Y-m-d H:i', strtotime($expire_date)) : '';
         $formatted_start_date = $expire_date ? date('Y-m-d H:i', strtotime($expire_date)) : '';
 
@@ -697,12 +676,12 @@ function iam00_edit_coupon_action()
         $description = isset($_POST['description']) ? $_POST['description'] : '';
         $usage_limit = isset($_POST['usage_limit']) ? $_POST['usage_limit'] : 1;
 
-       
+
         //Create coupon associate with the product id
         $coupon = new WC_Coupon($couponId);
 
-         //Check if coupon name unique
-         if($coupon_code != $coupon->get_code()){
+        //Check if coupon name unique
+        if ($coupon_code != $coupon->get_code()) {
             if (wc_get_coupon_id_by_code($coupon_code)) {
                 $response_data = array(
                     'message' => 'Coupon already exists with the code: ' . $coupon_code,
@@ -725,7 +704,7 @@ function iam00_edit_coupon_action()
 
 
         $expire_date = '';
-        if (isset($_POST['end_date']) && $_POST['end_date'] != '' ) {
+        if (isset($_POST['end_date']) && $_POST['end_date'] != '') {
             $expire_date = strtotime($_POST['end_date']);
             $coupon->set_date_expires($expire_date);
         }
@@ -739,7 +718,7 @@ function iam00_edit_coupon_action()
         // Save the coupon
         $coupon->save();
 
-        
+
         $formatted_expire_date = $expire_date ? date('Y-m-d H:i', strtotime($expire_date)) : '';
         $formatted_start_date = $expire_date ? date('Y-m-d H:i', strtotime($expire_date)) : '';
 
@@ -823,7 +802,7 @@ function iam00_delete_woo_coupon_for_ticket()
         if (get_post_type($coupon_id) === 'shop_coupon') {
             // Delete the coupon
             wp_delete_post($coupon_id, true); // Passing true as the second parameter permanently deletes the post
-            
+
             $response_data = array(
                 'message' => 'Coupon deleted successfully.',
             );
@@ -1133,166 +1112,166 @@ function display_user_created_organizers()
 
     // Define ajaxurl for the JavaScript
     ?>
-        <script type="text/javascript">
-            var ajaxurl = "<?php echo admin_url('admin-ajax.php'); ?>";
-        </script>
-        <?php
+    <script type="text/javascript">
+        var ajaxurl="<?php echo admin_url('admin-ajax.php'); ?>";
+    </script>
+    <?php
 
 
 
 
-        if (!is_user_logged_in()) {
-            return 'You need to be logged in to view this page.'; // Only display for logged-in users
-        }
+    if (!is_user_logged_in()) {
+        return 'You need to be logged in to view this page.'; // Only display for logged-in users
+    }
 
-        ob_start(); // Start output buffering
-    
-        // Create a nonce for the AJAX request
-        $nonce = wp_create_nonce('create_new_organizer_nonce');
+    ob_start(); // Start output buffering
 
-        echo '<div class="organizers-header">';
-        echo '<h2>Your Organizers</h2>'; // Title
-        echo '<a class="organizers_add_new_btn" href="javascript:void(0);" onclick="createNewOrganizer()">Create New Organizer</a>';
-        echo '<input type="hidden" id="create_new_organizer_nonce" value="' . esc_attr($nonce) . '" />';
-        echo '</div>';
+    // Create a nonce for the AJAX request
+    $nonce = wp_create_nonce('create_new_organizer_nonce');
 
-        // JavaScript for createNewOrganizer
-        ?>
-        <script>
-            function createNewOrganizer() {
-                console.log('Attempting to create a new organizer...'); // Debugging line
+    echo '<div class="organizers-header">';
+    echo '<h2>Your Organizers</h2>'; // Title
+    echo '<a class="organizers_add_new_btn" href="javascript:void(0);" onclick="createNewOrganizer()">Create New Organizer</a>';
+    echo '<input type="hidden" id="create_new_organizer_nonce" value="' . esc_attr($nonce) . '" />';
+    echo '</div>';
 
-                var nonce = document.querySelector('#create_new_organizer_nonce').value;
+    // JavaScript for createNewOrganizer
+    ?>
+    <script>
+        function createNewOrganizer() {
+            console.log('Attempting to create a new organizer...'); // Debugging line
 
-                fetch('/wp-admin/admin-ajax.php?action=create_new_organizer', {
-                    method: 'POST',
-                    credentials: 'same-origin',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded'
-                    },
-                    body: 'nonce=' + nonce
-                })
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error(`HTTP error! status: ${response.status}`);
-                        }
-                        return response.json();
-                    })
-                    .then(data => {
-                        console.log('Response received:', data); // Debugging line
+            var nonce=document.querySelector('#create_new_organizer_nonce').value;
 
-                        if (data.success && data.data && data.data.organizer_id) {
-                            console.log('Redirecting to organizer ID:', data.data.organizer_id); // Debugging line
-                            window.location.href = '/edit-organisers/?id=' + data.data.organizer_id;
-                        } else {
-                            console.error('Unexpected response:', data);
-                            alert('Unexpected response received. Check console for details.');
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error caught in fetch request:', error);
-                        alert('Error creating new organizer. Check console for details.');
-                    });
-            }
-
-
-            function deleteOrganizer(organizerId) {
-                console.log('Delete organizer called with ID:', organizerId);
-
-                if (!confirm('Are you sure you want to delete this organizer?')) {
-                    return;
-                }
-
-                var data = {
-                    'action': 'delete_organizer',
-                    'organizer_id': organizerId
-                };
-
-                jQuery.post(ajaxurl, data, function (response) {
-                    console.log('AJAX response:', response);
-
-                    if (response.success) {
-                        alert(response.data.message);
-                        jQuery('#organizer-row-' + organizerId).remove(); // Remove the row from the table
-                    } else {
-                        var message = response.data && response.data.message ? response.data.message : 'Unknown error occurred';
-                        console.log('Error message:', message);
-                        alert(message);
+            fetch('/wp-admin/admin-ajax.php?action=create_new_organizer',{
+                method: 'POST',
+                credentials: 'same-origin',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: 'nonce='+nonce
+            })
+                .then(response => {
+                    if(!response.ok) {
+                        throw new Error(`HTTP error! status: ${ response.status }`);
                     }
-                }).fail(function (jqXHR, textStatus, errorThrown) {
-                    console.log('AJAX error:', textStatus, errorThrown);
-                    alert('Failed to delete: ' + errorThrown);
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Response received:',data); // Debugging line
+
+                    if(data.success&&data.data&&data.data.organizer_id) {
+                        console.log('Redirecting to organizer ID:',data.data.organizer_id); // Debugging line
+                        window.location.href='/edit-organisers/?id='+data.data.organizer_id;
+                    } else {
+                        console.error('Unexpected response:',data);
+                        alert('Unexpected response received. Check console for details.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error caught in fetch request:',error);
+                    alert('Error creating new organizer. Check console for details.');
                 });
-
-
-
-
-
-
-
-
-            }
-        </script>
-        <?php
-
-        $current_user_id = get_current_user_id();
-        $default_organizer_id = get_default_organizer_id_for_current_user();
-
-        $args = array(
-            'post_type' => 'tribe_organizer',
-            'posts_per_page' => -1,
-            'author' => $current_user_id,
-        );
-
-        $organizer_query = new WP_Query($args);
-
-
-        if ($organizer_query->have_posts()) {
-            echo '<table id="user-organizers-list" style="width: 100%;">';
-            echo '<thead>';
-            echo '<tr>';
-            echo '<th>Organizer Logo</th>';
-            echo '<th>Organizer Name</th>';
-            echo '<th>Actions</th>';
-            echo '</tr>';
-            echo '</thead>';
-            echo '<tbody>';
-
-            while ($organizer_query->have_posts()) {
-                $organizer_query->the_post();
-                $organizer_id = get_the_ID();
-                $edit_url = esc_url("/edit-organisers/?id={$organizer_id}");
-                $profile_url = tribe_get_organizer_link($organizer_id, false, false); // Get URL only
-    
-                echo '<tr id="organizer-row-' . $organizer_id . '">'; // Unique ID for each row
-                echo '<td>' . get_the_post_thumbnail($organizer_id, 'thumbnail') . '</td>';
-
-                $organizer_title = get_the_title();
-                if ($organizer_id == $default_organizer_id) {
-                    $organizer_title .= ' (Default)';
-                }
-                echo '<td>' . $organizer_title . '</td>';
-
-                echo '<td class="action-links">';
-                echo '<a href="' . $edit_url . '" class="edit-link action-link">Edit</a>';
-                // Only show delete link if it's not the default organizer
-                if ($organizer_id != $default_organizer_id) {
-                    echo '<a href="javascript:void(0);" onclick="deleteOrganizer(' . $organizer_id . ')" class="delete-link action-link">Delete</a>';
-                }
-                echo '<a href="' . $profile_url . '" class="profile-link action-link">View Profile</a>';
-                echo '</td>';
-                echo '</tr>';
-            }
-
-            echo '</tbody>';
-            echo '</table>';
-
-            wp_reset_postdata();
-        } else {
-            echo 'No organizers found.';
         }
 
-        return ob_get_clean(); // Return the buffered output
+
+        function deleteOrganizer(organizerId) {
+            console.log('Delete organizer called with ID:',organizerId);
+
+            if(!confirm('Are you sure you want to delete this organizer?')) {
+                return;
+            }
+
+            var data={
+                'action': 'delete_organizer',
+                'organizer_id': organizerId
+            };
+
+            jQuery.post(ajaxurl,data,function(response) {
+                console.log('AJAX response:',response);
+
+                if(response.success) {
+                    alert(response.data.message);
+                    jQuery('#organizer-row-'+organizerId).remove(); // Remove the row from the table
+                } else {
+                    var message=response.data&&response.data.message? response.data.message:'Unknown error occurred';
+                    console.log('Error message:',message);
+                    alert(message);
+                }
+            }).fail(function(jqXHR,textStatus,errorThrown) {
+                console.log('AJAX error:',textStatus,errorThrown);
+                alert('Failed to delete: '+errorThrown);
+            });
+
+
+
+
+
+
+
+
+        }
+    </script>
+    <?php
+
+    $current_user_id = get_current_user_id();
+    $default_organizer_id = get_default_organizer_id_for_current_user();
+
+    $args = array(
+        'post_type' => 'tribe_organizer',
+        'posts_per_page' => -1,
+        'author' => $current_user_id,
+    );
+
+    $organizer_query = new WP_Query($args);
+
+
+    if ($organizer_query->have_posts()) {
+        echo '<table id="user-organizers-list" style="width: 100%;">';
+        echo '<thead>';
+        echo '<tr>';
+        echo '<th>Organizer Logo</th>';
+        echo '<th>Organizer Name</th>';
+        echo '<th>Actions</th>';
+        echo '</tr>';
+        echo '</thead>';
+        echo '<tbody>';
+
+        while ($organizer_query->have_posts()) {
+            $organizer_query->the_post();
+            $organizer_id = get_the_ID();
+            $edit_url = esc_url("/edit-organisers/?id={$organizer_id}");
+            $profile_url = tribe_get_organizer_link($organizer_id, false, false); // Get URL only
+
+            echo '<tr id="organizer-row-' . $organizer_id . '">'; // Unique ID for each row
+            echo '<td>' . get_the_post_thumbnail($organizer_id, 'thumbnail') . '</td>';
+
+            $organizer_title = get_the_title();
+            if ($organizer_id == $default_organizer_id) {
+                $organizer_title .= ' (Default)';
+            }
+            echo '<td>' . $organizer_title . '</td>';
+
+            echo '<td class="action-links">';
+            echo '<a href="' . $edit_url . '" class="edit-link action-link">Edit</a>';
+            // Only show delete link if it's not the default organizer
+            if ($organizer_id != $default_organizer_id) {
+                echo '<a href="javascript:void(0);" onclick="deleteOrganizer(' . $organizer_id . ')" class="delete-link action-link">Delete</a>';
+            }
+            echo '<a href="' . $profile_url . '" class="profile-link action-link">View Profile</a>';
+            echo '</td>';
+            echo '</tr>';
+        }
+
+        echo '</tbody>';
+        echo '</table>';
+
+        wp_reset_postdata();
+    } else {
+        echo 'No organizers found.';
+    }
+
+    return ob_get_clean(); // Return the buffered output
 }
 function register_organizers_shortcode()
 {
@@ -1300,6 +1279,231 @@ function register_organizers_shortcode()
 }
 
 add_action('init', 'register_organizers_shortcode');
+
+
+function display_user_created_vanues()
+{
+
+    // Define ajaxurl for the JavaScript
+    ?>
+    <script type="text/javascript">
+        var ajaxurl="<?php echo admin_url('admin-ajax.php'); ?>";
+    </script>
+    <?php
+
+    if (!is_user_logged_in()) {
+        return 'You need to be logged in to view this page.'; // Only display for logged-in users
+    }
+
+    ob_start(); // Start output buffering
+
+    // Create a nonce for the AJAX request
+    $nonce = wp_create_nonce('create_new_organizer_nonce');
+
+    echo '<div class="organizers-header">';
+    echo '<h2>Your Vanues</h2>'; // Title
+    echo '</div>';
+    // JavaScript for createNewOrganizer
+    ?>
+    <script>
+
+        function deleteVanue(vanueID) {
+            console.log('Delete vanue called with ID:',vanueID);
+
+            if(!confirm('Are you sure you want to delete this vanue?')) {
+                return;
+            }
+
+            jQuery.ajax({
+                url: ajaxurl,
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    'action': 'delete_vanue_trive',
+                    'vanue_id': vanueID
+                },
+                success: function(response) {
+                    alert(response.data.message);
+                    jQuery('#organizer-row-'+vanueID).remove(); // Remove the row from the table
+                },
+                fail: function(response) {
+                    console.log('AJAX error:',response);
+                    alert('Failed to delete: ');
+                }
+            });
+        }
+    </script>
+    <?php
+
+    $current_user_id = get_current_user_id();
+
+    $args = array(
+        'post_type' => 'tribe_venue',
+        'posts_per_page' => -1,
+        'author' => $current_user_id,
+    );
+
+    $vanue_query = new WP_Query($args);
+
+
+    if ($vanue_query->have_posts()) {
+        echo '<table id="user-organizers-list" class="user-vanues-list"style="width: 100%;">';
+        echo '<thead>';
+        echo '<tr>';
+        echo '<th>Vanue Name</th>';
+        echo '<th>Actions</th>';
+        echo '</tr>';
+        echo '</thead>';
+        echo '<tbody>';
+
+        while ($vanue_query->have_posts()) {
+            $vanue_query->the_post();
+            $vanue_id = get_the_ID();
+            $edit_url = esc_url("/edit-vanues/?id={$vanue_id}");
+            echo '<tr id="organizer-row-' . $vanue_id . '">'; // Unique ID for each row
+
+            $vanue_title = get_the_title();
+
+            echo '<td>' . $vanue_title . '</td>';
+
+            echo '<td class="action-links">';
+            echo '<a href="' . $edit_url . '" class="edit-link action-link">Edit</a>';
+            // Only show delete link if it's not the default organizer
+            echo '<a href="javascript:void(0);" onclick="deleteVanue(' . $vanue_id . ')" class="delete-link action-link">Delete</a>';
+            echo '</td>';
+            echo '</tr>';
+        }
+
+        echo '</tbody>';
+        echo '</table>';
+
+        wp_reset_postdata();
+    } else {
+        echo 'No Vanues found.';
+    }
+
+    return ob_get_clean(); // Return the buffered output
+}
+function register_vanues_shortcode()
+{
+    add_shortcode('event_vanues', 'display_user_created_vanues');
+}
+
+add_action('init', 'register_vanues_shortcode');
+
+function display_edit_create_vanues()
+{
+    $post_id = isset($_GET['id']) ? $_GET['id'] :  '0';
+    // Retrieve the venue data by post ID
+    $venue       = get_post($post_id);
+    $address     = get_post_meta( $post_id, '_VenueAddress', true);
+    $city        = get_post_meta( $post_id, '_VenueCity', true);
+    $country     = get_post_meta( $post_id, '_VenueCountry', true);
+    $province    = get_post_meta( $post_id, '_VenueStateProvince', true);
+    $zip         = get_post_meta( $post_id, '_VenueZip', true);
+    $ShowMap     = get_post_meta( $post_id, '_EventShowMap', true);
+    $ShowMapLink = get_post_meta( $post_id, '_EventShowMapLink', true);
+    // Check if the venue exists and is of the correct post type
+    if ($venue && $venue->post_type == 'tribe_venue') {
+        ?>
+        <h2>Edit Venue</h2>
+       <form method="post" action="" class="edit-vanue-form">
+
+<div class="form-group">
+    <label for="venue_title">Venue Title:</label>
+    <input type="text" class="form-control" id="venue_title" name="venue_title" value="<?php echo esc_attr($venue->post_title); ?>">
+</div>
+
+<div class="form-group">
+    <label for="venue_address">Address:</label>
+    <input type="text" class="form-control" id="venue_address" name="venue_address" value="<?php echo esc_attr($address); ?>">
+</div>
+
+<div class="form-group">
+    <label for="venue_city">City:</label>
+    <input type="text" class="form-control" id="venue_city" name="venue_city" value="<?php echo esc_attr($city); ?>">
+</div>
+
+<div class="form-group">
+    <label for="venue_country">Country:</label>
+    <select class="form-control" id="venue_country" name="venue_country">
+        <option value="">Select a Country:</option>
+        <option value="United States">United States</option>
+        <option value="United Kingdom">United Kingdom</option>
+        <option value="Austria">Austria</option>
+        <option value="Belgium">Belgium</option>
+        <!-- Additional countries as needed -->
+    </select>
+</div>
+<!--
+<div class="form-group">
+    <label for="venue_state">State or Province:</label>
+    <input type="text" class="form-control" id="venue_state" name="venue_state" value="<?php echo esc_attr($province); ?>">
+</div> -->
+
+<div class="form-group">
+    <label for="venue_postcode">Postal Code:</label>
+    <input type="text" class="form-control" id="venue_postcode" name="venue_postcode" value="<?php echo esc_attr($zip); ?>">
+</div>
+<!--
+<div class="form-check mb-2">
+    <input type="checkbox" class="form-check-input" id="vanue_map" name="vanue_map" <?php if($ShowMap == '1') echo 'checked'; ?>  value='1'>
+    <label class="form-check-label" for="vanue_map">Show Map</label>
+</div>
+
+<div class="form-check mb-2">
+    <input type="checkbox" class="form-check-input" id="map_link" name="map_link" <?php if($ShowMapLink == '1') echo 'checked'; ?> value='1'>
+    <label class="form-check-label" for="map_link">Map Link</label>
+</div> -->
+
+<button type="submit" class="btn btn-primary" name="update_venue">Update Venue</button>
+<input type="hidden" name="venue_id" value="<?php echo $post_id; ?>">
+<?php wp_nonce_field('update_venue_action', 'update_venue_nonce'); ?>
+</form>
+        <?php
+    } else {
+        echo 'Venue not found.';
+    }
+}
+
+// Handle form submission
+if (isset($_POST['update_venue'])) {
+    // Verify nonce
+    if (!isset($_POST['update_venue_nonce']) || !wp_verify_nonce($_POST['update_venue_nonce'], 'update_venue_action')) {
+        die('Security check failed');
+    }
+
+    // Get and sanitize form data
+    $venue_id    = isset($_POST['venue_id']) ? intval($_POST['venue_id']) : 0;
+    $venue_title = isset($_POST['venue_title']) ? sanitize_text_field($_POST['venue_title']) : '';
+    $address     = isset($_POST['venue_address']) ? sanitize_text_field($_POST['venue_address']) : '';
+    $city        = isset($_POST['venue_city']) ? sanitize_text_field($_POST['venue_city']) : '';
+    $country     = isset($_POST['venue_country']) ? sanitize_text_field($_POST['venue_country']) : '';
+    $province    = isset($_POST['venue_state']) ? sanitize_text_field($_POST['venue_state']) : '';
+    $postcode    = isset($_POST['venue_postcode']) ? sanitize_text_field($_POST['venue_postcode']) : '';
+    $ShowMap     = isset($_POST['vanue_map']) ? sanitize_text_field($_POST['vanue_map']) : '0';
+    $ShowMapLink = isset($_POST['map_link']) ? sanitize_text_field($_POST['map_link']) : '0';
+    // Update venue data
+    $updated_venue_data = array(
+        'ID' => $venue_id,
+        'post_title' => $venue_title
+    );
+
+    wp_update_post($updated_venue_data);
+    update_post_meta($venue_id, '_VenueAddress', $address);
+    update_post_meta($venue_id, '_VenueCity', $city);
+    update_post_meta($venue_id, '_VenueCountry', $country);
+    update_post_meta($venue_id, '_VenueStateProvince', $province);
+    update_post_meta($venue_id, '_VenueZip', $postcode);
+    update_post_meta($venue_id, '_EventShowMap', $ShowMap);
+    update_post_meta($venue_id, '_EventShowMapLink', $ShowMapLink);
+
+    // Redirect after update
+    wp_redirect('https://ticketfesta.co.uk/dashboard/vanues-list/');
+    exit;
+
+}
+add_shortcode('edit_create_vanues', 'display_edit_create_vanues');
 
 function get_organizer_id_shortcode_function($atts)
 {
@@ -1425,15 +1629,30 @@ function ajax_delete_organizer()
 }
 add_action('wp_ajax_delete_organizer', 'ajax_delete_organizer');
 
+function delete_vanue_trive()
+{
+
+    $vanue_id = isset($_POST['vanue_id']) ? intval($_POST['vanue_id']) : 0;
+    // $vanue_id = isset($_GET['vanue_id']) ? intval($_GET['vanue_id']) : 0;
+
+    if (!$vanue_id) {
+        wp_send_json_error('Invalid Vanue ID');
+        die();
+    }
+    $result = wp_delete_post($vanue_id, true);
+
+    if ($result) {
+        wp_send_json_success(array('message' => 'Vanue deleted successfully'));
+    } else {
+        wp_send_json_error('Deletion failed');
+    }
+
+    die();
+}
 
 
-
-
-
-
-
-
-
+add_action('wp_ajax_delete_vanue_trive', 'delete_vanue_trive');
+add_action('wp_ajax_nopriv_delete_vanue_trive', 'delete_vanue_trive');
 
 
 
@@ -1509,6 +1728,40 @@ add_action('wp_ajax_nopriv_check_organizer_name', 'ajax_check_organizer_name'); 
 
 //////////////////////END////////////////////////
 
+///update organizer information
+
+function ajax_update_organizer_information()
+{
+    $organizer_description = sanitize_text_field($_POST['organizer_description']);
+    $organizer_id = sanitize_text_field($_POST['organizer_id']);
+    $organizer_email = isset($_POST['organizer_email']) ? sanitize_email($_POST['organizer_email']) : '';
+    $organizer_facebook = isset($_POST['organizer_facebook']) ? sanitize_url($_POST['organizer_facebook']) : '';
+    $organizer_twitter = isset($_POST['organizer_twitter']) ? sanitize_url($_POST['organizer_twitter']) : '';
+    $organizer_instagram = isset($_POST['organizer_instagram']) ? sanitize_url($_POST['organizer_instagram']) : '';
+    if ($organizer_description) {
+        update_post_meta($organizer_id, 'organizer_description', $organizer_description);
+    }
+    if ($organizer_email && $organizer_email != 'example@website.com') {
+        update_post_meta($organizer_id, '_OrganizerEmail', $organizer_email);
+    }
+    if ($organizer_facebook && $organizer_facebook != 'http://facebook.com') {
+        update_post_meta($organizer_id, 'organizer_facebook', $organizer_facebook);
+    }
+
+    if ($organizer_twitter && $organizer_twitter != 'http://twitter.com') {
+        update_post_meta($organizer_id, 'organizer_twitter', $organizer_twitter);
+    }
+
+    if ($organizer_instagram && $organizer_instagram != 'http://instagram.com') {
+        update_post_meta($organizer_id, 'organizer_instagram', $organizer_instagram);
+    }
+
+    var_dump($_POST);
+    die();
+}
+
+add_action('wp_ajax_update_organizer_information', 'ajax_update_organizer_information');
+add_action('wp_ajax_nopriv_update_organizer_information', 'ajax_update_organizer_information'); // If needed for non-logged in users
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1674,8 +1927,6 @@ add_shortcode('organizer_attendees_report', 'my_tribe_community_tickets_attendee
 
 
 
-
-
 function get_ticket_info($user_id)
 {
     $today = date('Y-m-d');
@@ -1683,67 +1934,113 @@ function get_ticket_info($user_id)
     $total_tickets_sold_today = 0;
     $total_sales_lifetime = 0;
     $total_tickets_sold_lifetime = 0;
-    $total_tickets_sold_previous_day = 0; // Initialize the variable for tickets sold one day before
-
-    // Calculate the total sales for the previous day
-    $total_sales_previous_day = get_total_sales_for_previous_day($user_id);
+    $order_details = []; // Initialize an array for detailed order information
 
     // Fetch orders
     $orders = wc_get_orders(
         array(
-            'status' => array('completed'),
+            'status' => array('wc-completed'),
             'limit' => -1,
             'type' => 'shop_order',
         )
     );
 
     foreach ($orders as $order) {
-        // Skip if not an instance of WC_Order
-        if (!($order instanceof WC_Order)) {
+        if (!($order instanceof WC_Order)){
+            echo 'order id rejected: ' . $order->get_id() . '<br/>';
             continue;
         }
 
+
         $order_date = $order->get_date_created()->format('Y-m-d');
         $is_today = ($order_date === $today);
-        $is_previous_day = ($order_date === date('Y-m-d', strtotime('-1 day'))); // Check if the order is from the previous day
 
         foreach ($order->get_items() as $item) {
             $product_id = $item->get_product_id();
             $event_id = get_post_meta($product_id, '_tribe_wooticket_for_event', true);
             $event_author = get_post_field('post_author', $event_id);
+            $order_id = $order->get_id();
 
-            if ($event_author == $user_id) {
+            if ($event_author == $user_id && $event_id != false) {
                 $quantity = $item->get_quantity();
+                $subtotal = $item->get_subtotal(); // Using item subtotal
+
+                // Collecting event title and creator name
+                $event_title = get_the_title($event_id);
+                $event_creator_name = get_the_author_meta('display_name', $event_author);
+
                 $total_tickets_sold_lifetime += $quantity;
-                $total_sales_lifetime += $order->get_total();
+                $total_sales_lifetime += $subtotal;
 
                 if ($is_today) {
                     $total_tickets_sold_today += $quantity;
-                    $total_sales_today += $order->get_total();
+                    $total_sales_today += $subtotal;
                 }
 
-                // Check if it's from the previous day and add to the total tickets sold one day before
-                if ($is_previous_day) {
-                    $total_tickets_sold_previous_day += $quantity;
-                }
+                // Adding order debug info
+                $order_details[] = [
+                    'order_id' => $order->get_id(),
+                    'subtotal' => $subtotal,
+                    'event_title' => $event_title,
+                    'event_creator_name' => $event_creator_name,
+                ];
             }
         }
     }
 
-    return array(
+    return [
         'total_sales_today' => $total_sales_today,
         'total_tickets_sold_today' => $total_tickets_sold_today,
         'total_sales_lifetime' => $total_sales_lifetime,
         'total_tickets_sold_lifetime' => $total_tickets_sold_lifetime,
-        'total_sales_previous_day' => $total_sales_previous_day,
-        'total_tickets_sold_previous_day' => $total_tickets_sold_previous_day // Add total tickets sold one day before
-    );
+        'order_details' => $order_details, // Include detailed order information
+    ];
 }
 
 
+// Check if WooCommerce is active
+if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_option('active_plugins')))) {
 
+    // Ensure your custom function exists to avoid breaking the site
+    if (!function_exists('get_ticket_info')) {
+        // Define get_ticket_info or make sure it's included before calling it
+        function get_ticket_info($user_id) {
+            // Your logic here to fetch ticket info
+            // Placeholder return structure
+            return [
+                'total_sales_lifetime' => 0, // Default to 0
+                'order_details' => [] // Default to empty array
+            ];
+        }
+    }
 
+    // Define the shortcode function
+    function shortcode_revenue() {
+        $user_id = get_current_user_id();
+        $ticket_info = get_ticket_info($user_id);
+        $total_sales_lifetime = $ticket_info['total_sales_lifetime'];
+        $currency_symbol = get_woocommerce_currency_symbol();
+        $currency_code = get_woocommerce_currency();
 
+        return "
+        <div class='sales-card today_sale_admin_dashboard'>
+            <div class='sales-card-content'>
+                <div class='sales-today'>
+                    <h5 class='admin_dashboard_sales-label card_admin_dashboard'>Lifetime Revenue</h5>
+                    <div class='admin_dashboard_sales-amount'>" . esc_html($currency_symbol) . esc_html(number_format($total_sales_lifetime, 2)) . " <span class='admin_dashboard_sales-amount_span'>" . esc_html($currency_code) . "</span></div>
+                </div>
+            </div>
+        </div>";
+    }
+    add_shortcode('revenue', 'shortcode_revenue');
+
+} else {
+    // WooCommerce is not active, you may want to handle this case.
+    function woocommerce_not_active_notice() {
+        echo '<div class="error"><p>WooCommerce must be active for the "Revenue" shortcode to work.</p></div>';
+    }
+    add_action('admin_notices', 'woocommerce_not_active_notice');
+}
 
 
 
@@ -1919,33 +2216,6 @@ add_shortcode('valid_tickets_sold', 'shortcode_valid_tickets_sold');
 
 
 
-function shortcode_revenue()
-{
-    $ticket_info = get_ticket_info(get_current_user_id());
-    $total_sales_lifetime = $ticket_info['total_sales_lifetime'];
-
-    return '
-    <div class="sales-card today_sale_admin_dashboard">
-        <div class="sales-card-content ">
-            <div class="sales-today ">
-                <h5 class="admin_dashboard_sales-label card_admin_dashboard ">Revenue</h5>
-                <div class="admin_dashboard_sales-amount ">£' . esc_html(number_format($total_sales_lifetime, 2)) . ' <span class="admin_dashboard_sales-amount_span">GBP</span></div>
-                <div class="admin_dashboard_sales-amount_view_full_report">
-                    <a href="YOUR_LINK_HERE">View Full Breakdown</a>
-                </div>                
-            </div>
-            <!-- Additional sections can go here -->
-        </div>
-    </div>';
-}
-add_shortcode('revenue', 'shortcode_revenue');
-
-
-
-
-
-
-
 
 
 function shortcode_current_user_upcoming_live_events_count()
@@ -2092,7 +2362,7 @@ function recent_activity_shortcode($atts)
 {
     $atts = shortcode_atts(
         array(
-            'limit' => 4,
+            'limit' => 20,
             'page' => 1
         ),
         $atts,
@@ -2107,63 +2377,63 @@ function recent_activity_shortcode($atts)
 
 
 
-        <div class="admin_dashboard_main_recent_activity">
-            <h2>Recent Activity <span>Last 24h</span></h2>
-            <div class="admin_dashboard_main_activity_titles">
-                <div>Customer</div>
-                <div>Product</div>
-                <div>Status</div>
-                <div>Purchased</div>
-                <div>Amount</div>
-            </div>
-            <div class="admin_dashboard_main_activity_list">
-                <?php foreach ($latest_orders as $order_info): ?>
-                        <div class="admin_dashboard_main_activity_item">
-                            <div class="admin_dashboard_main_customer_info">
-                                <strong class="title">Customer</strong>
-                                <strong>
-                                    <?php echo esc_html($order_info->customer_name); ?>
-                                </strong>
-                                <span>
-                                    <?php echo esc_html($order_info->customer_email); ?>
-                                </span>
-                            </div>
-                            <div class="admin_dashboard_main_product">
-                                <strong class="title">Product</strong>
-                                <?php
-                                $product_names = implode(', ', $order_info->ticket_names);
-                                if (function_exists('mb_strlen') && function_exists('mb_substr')) {
-                                    echo esc_html(mb_strlen($product_names) > 20 ? mb_substr($product_names, 0, 20) . '...' : $product_names);
-                                } else {
-                                    echo esc_html(strlen($product_names) > 20 ? substr($product_names, 0, 20) . '...' : $product_names);
-                                }
-                                ?>
-                            </div>
-                            <div class="admin_dashboard_main_status">
-                                <strong class="title">Status</strong>
-                                <span class="status_result">
-                                    <?php echo esc_html($order_info->order_status); ?>
-                                </span>
-                            </div>
-                            <div class="admin_dashboard_main_retained">
-                                <strong class="title">Purchased</strong>
-                                <span class="time_info">
-                                    <?php echo esc_html($order_info->time_since); ?>
-                                </span>
-                            </div>
-                            <div class="admin_dashboard_main_amount">
-                                <strong class="title">Amount</strong>
-                                <?php echo wc_price($order_info->order_subtotal); ?>
-                            </div>
-                        </div>
-                <?php endforeach; ?>
-            </div>
+    <div class="admin_dashboard_main_recent_activity">
+        <h2>Recent Activity</h2>
+        <div class="admin_dashboard_main_activity_titles">
+            <div>Customer</div>
+            <div>Product</div>
+            <div>Status</div>
+            <div>Purchased</div>
+            <div>Amount</div>
         </div>
+        <div class="admin_dashboard_main_activity_list">
+            <?php foreach ($latest_orders as $order_info): ?>
+                <div class="admin_dashboard_main_activity_item">
+                    <div class="admin_dashboard_main_customer_info">
+                        <strong class="title">Customer</strong>
+                        <strong>
+                            <?php echo esc_html($order_info->customer_name); ?>
+                        </strong>
+                        <span>
+                            <?php echo esc_html($order_info->customer_email); ?>
+                        </span>
+                    </div>
+                    <div class="admin_dashboard_main_product">
+                        <strong class="title">Product</strong>
+                        <?php
+                        $product_names = implode(', ', $order_info->ticket_names);
+                        if (function_exists('mb_strlen') && function_exists('mb_substr')) {
+                            echo esc_html(mb_strlen($product_names) > 20 ? mb_substr($product_names, 0, 20) . '...' : $product_names);
+                        } else {
+                            echo esc_html(strlen($product_names) > 20 ? substr($product_names, 0, 20) . '...' : $product_names);
+                        }
+                        ?>
+                    </div>
+                    <div class="admin_dashboard_main_status">
+                        <strong class="title">Status</strong>
+                        <span class="status_result">
+                            <?php echo esc_html($order_info->order_status); ?>
+                        </span>
+                    </div>
+                    <div class="admin_dashboard_main_retained">
+                        <strong class="title">Purchased</strong>
+                        <span class="time_info">
+                            <?php echo esc_html($order_info->time_since); ?>
+                        </span>
+                    </div>
+                    <div class="admin_dashboard_main_amount">
+                        <strong class="title">Amount</strong>
+                        <?php echo wc_price($order_info->order_subtotal); ?>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
 
 
 
-        <?php
-        return ob_get_clean();
+    <?php
+    return ob_get_clean();
 }
 add_shortcode('recent_activity', 'recent_activity_shortcode');
 
@@ -2597,6 +2867,9 @@ function save_event_extra_options($post_id, $post, $update)
     $over14 = isset($_POST['over14']) ? 'on' : '';
     update_post_meta($post_id, 'over14', $over14);
 
+    $allage = isset($_POST['allage']) ? 'on' : '';
+    update_post_meta($post_id, 'allage', $allage);
+
     // Save 'over 15' option
     $over15 = isset($_POST['over15']) ? 'on' : '';
     update_post_meta($post_id, 'over15', $over15);
@@ -2613,6 +2886,15 @@ add_action('save_post_tribe_events', 'save_event_extra_options', 10, 3);
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////END////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+function save_event_description($post_id) {
+    error_log('save_event_description function called');
+    if (isset($_POST['event_description'])) {
+        $event_description = wp_kses_post($_POST['event_description']);
+        update_post_meta($post_id, 'event_description', $event_description);
+        error_log('Event description saved: ' . $event_description);
+    }
+}
+add_action('save_post', 'save_event_description');
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2800,28 +3082,28 @@ function display_bank_details_form()
     // Display the bank details form
     ob_start();
     ?>
-        <div class="sales-card today_sale_admin_dashboard admin_bank_details_card">
-            <h5 class="admin_dashboard_bank_details-label card_admin_dashboard">Bank Details</h5>
-            <form method="post" action="">
-                <label for="full_name">Full Name:</label>
-                <input type="text" name="full_name" id="full_name" placeholder="Full Name" required>
-                <label for="shortcode">Sort Code:</label>
-                <input type="text" name="shortcode" id="shortcode" placeholder="Sort Code" required pattern="[0-9]*">
-                <label for="account_number">Account Number:</label>
-                <input type="text" name="account_number" id="account_number" placeholder="Account Number" required
-                    pattern="[0-9]*">
-                <p>Bank details cannot be changed once saved. <a href="/terms-and-conditions/" target="_blank">Contact support
-                        for any updates.</a></p>
-                <div class="terms_condtion_bank_details">
-                    <input type="checkbox" name="terms" id="terms" required>
-                    <label id="term_bank_details" for="terms">I agree to the <a href="/terms-and-conditions/"
-                            target="_blank">Terms and Conditions</a>.</label>
-                </div>
-                <input class="terms_bank_details_submit_btn" type="submit" name="save_bank_details" value="Save Bank Details">
-            </form>
-        </div>
-        <?php
-        return $form_message . ob_get_clean();
+    <div class="sales-card today_sale_admin_dashboard admin_bank_details_card">
+        <h5 class="admin_dashboard_bank_details-label card_admin_dashboard">Bank Details</h5>
+        <form method="post" action="">
+            <label for="full_name">Full Name:</label>
+            <input type="text" name="full_name" id="full_name" placeholder="Full Name" required>
+            <label for="shortcode">Sort Code:</label>
+            <input type="text" name="shortcode" id="shortcode" placeholder="Sort Code" required pattern="[0-9]*">
+            <label for="account_number">Account Number:</label>
+            <input type="text" name="account_number" id="account_number" placeholder="Account Number" required
+                pattern="[0-9]*">
+            <p>Bank details cannot be changed once saved. <a href="/terms-and-conditions/" target="_blank">Contact support
+                    for any updates.</a></p>
+            <div class="terms_condtion_bank_details">
+                <input type="checkbox" name="terms" id="terms" required>
+                <label id="term_bank_details" for="terms">I agree to the <a href="/terms-and-conditions/"
+                        target="_blank">Terms and Conditions</a>.</label>
+            </div>
+            <input class="terms_bank_details_submit_btn" type="submit" name="save_bank_details" value="Save Bank Details">
+        </form>
+    </div>
+    <?php
+    return $form_message . ob_get_clean();
 }
 add_shortcode('bank_details_form', 'display_bank_details_form');
 
@@ -2851,26 +3133,26 @@ function add_bank_details_field($user)
 {
     $bank_details = get_user_meta($user->ID, 'bank_details', true);
     ?>
-        <div class="sales-card today_sale_admin_dashboard admin_bank_details_card">
-            <h5 class="admin_dashboard_bank_details-label card_admin_dashboard">Bank Details</h5>
-            <?php if (!empty($bank_details)): ?>
-                    <p class="bank-details-item">Full Name: <span>
-                            <?php echo esc_html($bank_details['full_name']); ?>
-                        </span></p>
-                    <p class="bank-details-item">Sort Code: <span>
-                            <?php echo esc_html($bank_details['shortcode']); ?>
-                        </span></p>
-                    <p class="bank-details-item">Account Number: <span>
-                            <?php echo esc_html($bank_details['account_number']); ?>
-                        </span></p>
-                    <form method="post" action="">
-                        <input type="submit" name="delete_bank_details" value="Delete Bank Details">
-                    </form>
-            <?php else: ?>
-                    <p>No bank details found.</p>
-            <?php endif; ?>
-        </div>
-        <?php
+    <div class="sales-card today_sale_admin_dashboard admin_bank_details_card">
+        <h5 class="admin_dashboard_bank_details-label card_admin_dashboard">Bank Details</h5>
+        <?php if (!empty($bank_details)): ?>
+            <p class="bank-details-item">Full Name: <span>
+                    <?php echo esc_html($bank_details['full_name']); ?>
+                </span></p>
+            <p class="bank-details-item">Sort Code: <span>
+                    <?php echo esc_html($bank_details['shortcode']); ?>
+                </span></p>
+            <p class="bank-details-item">Account Number: <span>
+                    <?php echo esc_html($bank_details['account_number']); ?>
+                </span></p>
+            <form method="post" action="">
+                <input type="submit" name="delete_bank_details" value="Delete Bank Details">
+            </form>
+        <?php else: ?>
+            <p>No bank details found.</p>
+        <?php endif; ?>
+    </div>
+    <?php
 }
 add_action('show_user_profile', 'add_bank_details_field');
 add_action('edit_user_profile', 'add_bank_details_field');
@@ -2921,26 +3203,26 @@ include get_stylesheet_directory() . '/organiser-image-gallery.php';
 function add_inline_custom_admin_css()
 {
     ?>
-        <style type="text/css">
-            .stellarwp-telemetry-modal {
-                position: fixed;
-                bottom: 0;
-                display: none !important;
-                right: 0;
-                width: 100%;
-                height: 100%;
-                background: rgba(0, 0, 0, 0.5);
-                z-index: 999999;
-                display: flex;
-                justify-content: center;
-                align-items: flex-start;
-                transition: all 0.3s ease-in-out;
-                visibility: hidden;
-                pointer-events: none;
-                opacity: 0;
-            }
-        </style>
-        <?php
+    <style type="text/css">
+        .stellarwp-telemetry-modal {
+            position: fixed;
+            bottom: 0;
+            display: none !important;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999999;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            transition: all 0.3s ease-in-out;
+            visibility: hidden;
+            pointer-events: none;
+            opacity: 0;
+        }
+    </style>
+    <?php
 }
 add_action('admin_head', 'add_inline_custom_admin_css');
 
@@ -2987,39 +3269,52 @@ add_filter('woocommerce_account_menu_items', 'ticketfeasta_following_link_my_acc
 
 function ticketfeasta_following()
 {
-    $user_id = wp_get_current_user()->id;
+    $user_id = wp_get_current_user()->ID;
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (isset($_POST['following_id'])) {
-            $organiser_to_unfollow = $_POST['following_id'];
+            $organiser_to_unfollow = sanitize_text_field($_POST['following_id']);
             ticketfeasta_remove_follower($organiser_to_unfollow, $user_id);
             ticketfeasta_unfollow($organiser_to_unfollow, $user_id);
         }
     }
 
-    echo '<h3>Following List:</h3>';
-    $user_id = wp_get_current_user()->id;
+    echo '<h2>Your Following List</h2>';
     $following_array = get_user_meta($user_id, 'following', true);
-    $following_array = json_decode($following_array, true);
-    if (json_last_error() !== JSON_ERROR_NONE) {
-        $following_array = array();
-    }
-    if (count($following_array) === 0) {
-        echo "<p class='empty-following'>You are not following anyone.</p>";
-    }
+    $following_array = json_decode($following_array, true) ?: [];
 
-    foreach ($following_array as $following) {
-        echo $following;
-        $organiser_name = get_the_title($following);
-        ?>
-                <form method="POST">
-                    <input type="hidden" name="following_id" value="<?php echo $following; ?>">
-                    <label>
-                        <?php echo $organiser_name; ?>
-                    </label>
-                    <input type="submit" value="<?php echo "Unfollow"; ?>" nanme="submit" class="unfollow-button">
-                </form>
-                <?php
+    if (empty($following_array)) {
+        echo "<p class='empty-following'>You are not following anyone.</p>";
+    } else {
+        echo '<div class="organiser-following-list">';
+        foreach ($following_array as $following) {
+            $organiser_name = get_the_title($following);
+            $organiser_img_url = get_the_post_thumbnail_url($following, 'thumbnail');
+            // Assuming 'organizer' is the slug for the custom post type of organizers
+            $organiser_profile_link = get_permalink($following); // This gets the link to the organizer's profile page if it's a custom post type
+
+            ?>
+            <div class="organiser-following-item">
+                <?php if ($organiser_img_url): ?>
+                    <img src="<?php echo esc_url($organiser_img_url); ?>" alt="<?php echo esc_attr($organiser_name); ?>"
+                        class="organiser-thumbnail">
+                <?php endif; ?>
+                <div class="organiser-details">
+                    <strong>
+                        <?php echo esc_html($organiser_name); ?>
+                    </strong>
+                    <div class="organiser-actions">
+                        <form method="POST" style="display: inline-block;">
+                            <input type="hidden" name="following_id" value="<?php echo esc_attr($following); ?>">
+                            <input type="submit" value="Unfollow" name="submit" class="unfollow-button">
+                        </form>
+                        <a href="<?php echo esc_url($organiser_profile_link); ?>" class="profile-link-button">See Events</a>
+                    </div>
+                </div>
+            </div>
+            <?php
+        }
+        echo '</div>';
     }
 }
 
@@ -3076,7 +3371,7 @@ function get_follower_by_organiser_id($organizer_id)
 function ticketfeasta_publish_tribe_events_on_first_update($post_id, $post, $update)
 {
     // check if it is not the first publish
-    if ( $update || 'publish' !== $post->post_status ) {
+    if ($update || 'publish' !== $post->post_status) {
         return;
     }
     if ($post->post_type == 'tribe_events') {
@@ -3267,7 +3562,8 @@ function ticketfeasta_follow($organizer_id, $user_id)
 
 ////////FUNCTION TO CREATE A SIGN UP FORM FOR THE ORGANIZER
 // Function to display the custom registration form
-function custom_user_registration_form() {
+function custom_user_registration_form()
+{
     if (is_user_logged_in()) {
         return 'You are already logged in.';
     }
@@ -3291,7 +3587,8 @@ function custom_user_registration_form() {
 }
 
 // Function to handle the registration process
-function custom_user_registration() {
+function custom_user_registration()
+{
     if (isset($_POST['first_name']) && isset($_POST['last_name']) && isset($_POST['email']) && isset($_POST['password']) && !is_user_logged_in()) {
         $first_name = sanitize_text_field($_POST['first_name']);
         $last_name = sanitize_text_field($_POST['last_name']);
@@ -3316,11 +3613,11 @@ function custom_user_registration() {
 
             // Create the organizer post
             $organizer_data = array(
-                'post_title'   => $organizer_title, // Use the organizer title for the post title
+                'post_title' => $organizer_title, // Use the organizer title for the post title
                 'post_content' => '',
-                'post_status'  => 'publish',
-                'post_type'    => 'tribe_organizer',
-                'post_author'  => $user_id
+                'post_status' => 'publish',
+                'post_type' => 'tribe_organizer',
+                'post_author' => $user_id
             );
             $organizer_id = wp_insert_post($organizer_data);
 
@@ -3340,7 +3637,8 @@ function custom_user_registration() {
 }
 
 // Function to register the shortcode
-function register_custom_registration_shortcode() {
+function register_custom_registration_shortcode()
+{
     add_shortcode('custom_registration_form', 'custom_user_registration_form');
 }
 
@@ -3354,7 +3652,8 @@ add_action('init', 'custom_user_registration');
 
 
 ///FUNCTION FOR ADMIN ORGANIZER LOGIN FORM
-function restrict_access_and_show_login_form() {
+function restrict_access_and_show_login_form()
+{
     if (is_page_template('organizer-template.php')) {
         if (!is_user_logged_in()) {
             wp_redirect(home_url('/custom-login'));
@@ -3384,20 +3683,23 @@ add_action('template_redirect', 'restrict_access_and_show_login_form');
 
 
 ////SEARCH FUNCTION POP UP
-function custom_search_popup() {
+function custom_search_popup()
+{
     ?>
     <div id="searchPopup" class="search-popup">
         <div id="searchOverlay" class="search-overlay"></div>
         <div id="searchContent" class="search-content">
             <!-- Close button with an "X" icon -->
-            <button id="closePopup" class="close-popup">&#10005;</button> <!-- &#10005; is the HTML entity for a heavy multiplication X used as a close icon -->
+            <button id="closePopup" class="close-popup">&#10005;</button>
+            <!-- &#10005; is the HTML entity for a heavy multiplication X used as a close icon -->
             <?php echo do_shortcode('[events-calendar-search placeholder="Search Events" show-events="5" disable-past-events="true" layout="medium" content-type="advance"]'); ?>
         </div>
     </div>
     <?php
 }
 add_action('wp_footer', 'custom_search_popup');
-function enqueue_custom_frontend_js() {
+function enqueue_custom_frontend_js()
+{
     // Get the version of your script file to ensure the browser doesn't cache old versions.
     $script_version = filemtime(get_stylesheet_directory() . '/custom-function-frontend.js');
 
@@ -3411,40 +3713,43 @@ add_action('wp_enqueue_scripts', 'enqueue_custom_frontend_js');
 
 
 // for registration 
-add_action( 'xoo_el_created_customer', 'ticketfesta_organizer_register', 10, 2);
+add_action('xoo_el_created_customer', 'ticketfesta_organizer_register', 10, 2);
 
-function ticketfesta_organizer_register($customer_id, $new_customer_data){
-    $create_organizer =  isset($_POST['create-organizer']) ? $_POST['create-organizer'] : '';
-    $organizer_title  =  isset($_POST['organizer-title']) ? $_POST['organizer-title'] : str_replace('.', '-', $new_customer_data['user_login']);
-    
-    if($create_organizer !== ''){
+function ticketfesta_organizer_register($customer_id, $new_customer_data)
+{
+    $create_organizer = isset($_POST['create-organizer']) ? $_POST['create-organizer'] : '';
+    $organizer_title = isset($_POST['organizer-title']) ? $_POST['organizer-title'] : str_replace('.', '-', $new_customer_data['user_login']);
+
+    if ($create_organizer !== '') {
         $post_data = array(
-            'post_type'   => 'tribe_organizer',
+            'post_type' => 'tribe_organizer',
             'post_status' => 'publish',
-            'post_title'  => $organizer_title,
+            'post_title' => $organizer_title,
             'post_author' => $customer_id
         );
-        
+
         $post_id = wp_insert_post($post_data);
-        $image_url = 'https://ticketfesta.co.uk/wp-content/uploads/2024/02/5034901-200.png';
-
-        // Get the attachment ID
-        $attachment_id = attachment_url_to_postid( $image_url );
-        set_post_thumbnail( $post_id, $attachment_id );
-        update_user_meta( $customer_id, 'current_organizer', $post_id );
-        $user = get_userdata( $customer_id );
-        $user->set_role( 'organiser' );
+        $image_url = 'https://ticketfesta.co.uk/wp-content/uploads/2024/01/default-avatar-photo-placeholder-profile-icon-vector-1.jpg';
+        $attachment_id = attachment_url_to_postid($image_url);
+        set_post_thumbnail($post_id, $attachment_id);
+        update_user_meta($customer_id, 'current_organizer', $post_id);
+        update_user_meta($customer_id, '_tribe_organizer_id', $post_id);
+        $organizer_email = get_userdata($customer_id)->user_email;
+        update_post_meta($post_id, '_OrganizerEmail', $organizer_email);
+        $user = get_userdata($customer_id);
+        $user->set_role('organiser');
     }
 
 }
 
-add_action( 'xoo_el_registration_redirect', 'ticketfesta_registration_redirect', 10, 2 );
+add_action('xoo_el_registration_redirect', 'ticketfesta_registration_redirect', 10, 2);
 
-function ticketfesta_registration_redirect($redirect, $new_customer){
-    $create_organizer =  isset($_POST['create-organizer']) ? $_POST['create-organizer'] : '';
-    if($create_organizer !== ''){
+function ticketfesta_registration_redirect($redirect, $new_customer)
+{
+    $create_organizer = isset($_POST['create-organizer']) ? $_POST['create-organizer'] : '';
+    if ($create_organizer !== '') {
         $site_url = home_url();
-        $dashboard_url = trailingslashit( $site_url ) . 'dashboard/';
+        $dashboard_url = trailingslashit($site_url) . 'dashboard/';
         $redirect = $dashboard_url;
     }
 
@@ -3452,14 +3757,15 @@ function ticketfesta_registration_redirect($redirect, $new_customer){
 }
 
 
-add_action( 'xoo_el_login_redirect', 'ticketfesta_login_redirect', 10, 2 );
+add_action('xoo_el_login_redirect', 'ticketfesta_login_redirect', 10, 2);
 
-function ticketfesta_login_redirect($redirect, $user){
-    $current_organizer = get_user_meta( $user->ID, 'current_organizer', true );
+function ticketfesta_login_redirect($redirect, $user)
+{
+    $current_organizer = get_user_meta($user->ID, 'current_organizer', true);
 
-    if($current_organizer !== ''){
+    if ($current_organizer !== '') {
         $site_url = home_url();
-        $dashboard_url = trailingslashit( $site_url ) . 'dashboard/';
+        $dashboard_url = trailingslashit($site_url) . 'dashboard/';
         $redirect = $dashboard_url;
     }
     return $redirect;
@@ -3468,28 +3774,29 @@ function ticketfesta_login_redirect($redirect, $user){
 
 
 
-add_action( 'woocommerce_cart_calculate_fees', 'add_extra_fees_for_products' );
+add_action('woocommerce_cart_calculate_fees', 'add_extra_fees_for_products');
 
-function add_extra_fees_for_products( $cart ) {
+function add_extra_fees_for_products($cart)
+{
     $extra_fee = 0;
     // Loop through each cart item
-    foreach ( $cart->get_cart() as $cart_item_key => $cart_item ) {
+    foreach ($cart->get_cart() as $cart_item_key => $cart_item) {
         // Get the product ID
         $product_id = $cart_item['product_id'];
-        
+
         // Calculate extra fee based on product price
         $product_price = $cart_item['data']->get_price();
         $quantity = $cart_item['quantity'];
-        if($product_price < 50){
+        if ($product_price < 50) {
             $extra_fee += ($product_price * .03 + 0.02) * $quantity;
-        }elseif($product_price > 50){
+        } elseif ($product_price > 50) {
             $extra_fee += ($product_price * .01 + 0.02) * $quantity;
         }
-        
+
     }
 
-    if($extra_fee !== 0){
-        $cart->add_fee( 'Sites Fee ', $extra_fee );
+    if ($extra_fee !== 0) {
+        $cart->add_fee('Sites Fee ', $extra_fee);
     }
 }
 
@@ -3509,9 +3816,11 @@ require_once get_stylesheet_directory() . '/option-page.php';
 
 
 
+///FUNCTION TO SHOW THE UPCOMING EVENTS FROM THE ORGINSISER THE USER FOLLOWES 
 
-
-function ticketfeasta_display_following_organizers_events_dashboard() {
+/*
+function ticketfeasta_display_following_organizers_events_dashboard()
+{
     $user_id = get_current_user_id();
     $following_array = get_user_meta($user_id, 'following', true);
     $following_array = json_decode($following_array, true);
@@ -3553,41 +3862,56 @@ function ticketfeasta_display_following_organizers_events_dashboard() {
             <div class='organizer-block'>
                 <div class='organizer-block_inner'>
                     <a href='<?php echo esc_url($organizer_url); ?>'>
-                        <img src='<?php echo esc_url($organizer_img); ?>' alt='<?php echo esc_attr($organizer_name); ?>' class='organizer-image'/>
+                        <img src='<?php echo esc_url($organizer_img); ?>' alt='<?php echo esc_attr($organizer_name); ?>'
+                            class='organizer-image' />
                     </a>
-                    <h6><a href='<?php echo esc_url($organizer_url); ?>'><?php echo esc_html($organizer_name); ?></a></h6>
+                    <h6><a href='<?php echo esc_url($organizer_url); ?>'>
+                            <?php echo esc_html($organizer_name); ?>
+                        </a></h6>
                 </div>
                 <div class='organizer-block_events_inner'>
-            <?php
-            while ($events_query->have_posts()) : $events_query->the_post();
-                $event_id = get_the_ID();
-                $event_url = get_the_permalink();
-                $event_img = get_the_post_thumbnail_url($event_id, 'large') ?: 'https://ticketfesta.co.uk/wp-content/uploads/2024/02/placeholder-4.png';
-                $event_start_date_time = tribe_get_start_date($event_id, false, 'D, j M Y g:i a');
-                $event_price = tribe_get_cost($event_id, true);
-                ?>
-                    <div class="event-card">
-                        <div class="event-image">
-                            <a href="<?php echo esc_url($event_url); ?>">
-                                <img src="<?php echo esc_url($event_img); ?>" alt="<?php the_title(); ?>">
-                            </a>
-                        </div>
-                        <div class="event-details">
-                            <div class="event-content">
-                            <h2 class="event-title"><a href="<?php echo esc_url($event_url); ?>"><?php echo mb_strimwidth(get_the_title(), 0, 60, '...'); ?></a></h2>
+                    <?php
+                    while ($events_query->have_posts()):
+                        $events_query->the_post();
+                        $event_id = get_the_ID();
+                        $event_url = get_the_permalink();
+                        $event_img = get_the_post_thumbnail_url($event_id, 'large') ?: 'https://ticketfesta.co.uk/wp-content/uploads/2024/02/placeholder-4.png';
+                        $event_start_date_time = tribe_get_start_date($event_id, false, 'D, j M Y g:i a');
+                        $event_price = tribe_get_cost($event_id, true);
+                        ?>
+                        <div class="event-card">
+                            <div class="event-image">
+                                <a href="<?php echo esc_url($event_url); ?>">
+                                    <img src="<?php echo esc_url($event_img); ?>" alt="<?php the_title(); ?>">
+                                </a>
+                            </div>
+                            <div class="event-details">
+                                <div class="event-content">
+                                    <h2 class="event-title"><a href="<?php echo esc_url($event_url); ?>">
+                                            <?php echo mb_strimwidth(get_the_title(), 0, 60, '...'); ?>
+                                        </a></h2>
 
-                                <div class="event-day"><?php echo esc_html($event_start_date_time); ?></div>
-                                <div class="event-time-location">
-                                    <span class="event-time"><?php echo tribe_get_start_date(null, false, 'g:i a'); ?> - <?php echo tribe_get_end_date(null, false, 'g:i a'); ?></span>
-                                    <span class="event-location"><?php echo tribe_get_venue(); ?></span>
+                                    <div class="event-day">
+                                        <?php echo esc_html($event_start_date_time); ?>
+                                    </div>
+                                    <div class="event-time-location">
+                                        <span class="event-time">
+                                            <?php echo tribe_get_start_date(null, false, 'g:i a'); ?> -
+                                            <?php echo tribe_get_end_date(null, false, 'g:i a'); ?>
+                                        </span>
+                                        <span class="event-location">
+                                            <?php echo tribe_get_venue(); ?>
+                                        </span>
+                                    </div>
+                                    <div class="event-price">
+                                        <?php echo esc_html($event_price); ?>
+                                    </div>
                                 </div>
-                                <div class="event-price"><?php echo esc_html($event_price); ?></div>
                             </div>
                         </div>
-                    </div>
-                <?php
-            endwhile;
-            ?>
+                        <?php
+                    endwhile;
+                    ?>
                 </div> <!-- Close organizer-block_events_inner -->
             </div> <!-- Close organizer-block -->
             <?php
@@ -3597,6 +3921,7 @@ function ticketfeasta_display_following_organizers_events_dashboard() {
 }
 
 add_action('woocommerce_account_following_endpoint', 'ticketfeasta_display_following_organizers_events_dashboard');
+*/
 
 
 
@@ -3605,18 +3930,57 @@ add_action('woocommerce_account_following_endpoint', 'ticketfeasta_display_follo
 
 
 
-
-
-function display_upcoming_events_for_user_with_view_order_button() {
+/////FUNCTION TO SHOW ONLY UPCOMING EVENT WHICH THE USER HAS TICKET FOR ON THE MYACCOUNT DAHSBOAD
+/*
+function display_upcoming_events_for_user_with_view_order_button()
+{
     $user_id = get_current_user_id();
     $displayed_event_ids = array();
-    $customer_orders = wc_get_orders(array(
-        'meta_key' => '_customer_user',
-        'meta_value' => $user_id,
-        'post_status' => array('wc-completed'),
-    ));
+    $customer_orders = wc_get_orders(
+        array(
+            'meta_key' => '_customer_user',
+            'meta_value' => $user_id,
+            'post_status' => array('wc-completed'),
+        )
+    );
 
-    echo '<h2>Upcoming Events You Have Tickets For:</h2>';
+
+    function truncate_title($title, $maxLength = 30)
+    {
+        // Break the title into lines with a maximum length, without breaking words
+        $wrapped = wordwrap($title, $maxLength, "\n", true);
+        // Split the string into lines
+        $lines = explode("\n", $wrapped);
+        // Use the first line, if there are multiple lines, append '...'
+        return count($lines) > 1 ? $lines[0] . '...' : $title;
+    }
+
+    echo '<div class="event-tickets-header">';
+    echo '<h2 class="container-fluid">Your Event Tickets</h2>';
+    echo '<p>Below you\'ll find the tickets for events you\'re attending soon. Keep track of dates and details right here!</p>';
+    echo '</div>'; // Close the event-tickets-header div
+
+
+    echo '<div class="loadingAnimation">
+    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1366 768" xml:space="preserve">
+        <style type="text/css">
+            .st0{fill:none;stroke:#d3fa16;stroke-width:9;stroke-miterlimit:10;}
+            .st1{fill:none;stroke:#d3fa16;stroke-width:9;stroke-miterlimit:10;}
+        </style>
+        <g>
+            <path class="st0 grey" d="M772.5,347c-6.2-14-2.4-29.5,8.4-35.8c1.1-0.6,1.4-2.2,0.8-3.7l-8.5-19.1c-3.4-7.6-11.2-11.4-17.5-8.6
+                l-201,89.5c-6.3,2.8-8.7,11.2-5.3,18.8c0,0,6.4,14.3,8.5,19.1c0.6,1.4,2,2.2,3.3,1.8c12-3.8,26,3.7,32.3,17.7s2.4,29.5-8.4,35.8
+                c-1.1,0.6-1.4,2.2-0.8,3.7l8.5,19.1c3.4,7.6,11.2,11.4,17.5,8.6l201-89.5c6.3-2.8,8.7-11.2,5.3-18.8l-8.5-19.1
+                c-0.6-1.4-2-2.2-3.3-1.8C792.8,368.5,778.7,361,772.5,347z"></path>
+            <path class="st1 blue" d="M772.5,347c-6.2-14-2.4-29.5,8.4-35.8c1.1-0.6,1.4-2.2,0.8-3.7l-8.5-19.1c-3.4-7.6-11.2-11.4-17.5-8.6
+                l-201,89.5c-6.3,2.8-8.7,11.2-5.3,18.8c0,0,6.4,14.3,8.5,19.1c0.6,1.4,2,2.2,3.3,1.8c12-3.8,26,3.7,32.3,17.7s2.4,29.5-8.4,35.8
+                c-1.1,0.6-1.4,2.2-0.8,3.7l8.5,19.1c3.4,7.6,11.2,11.4,17.5,8.6l201-89.5c6.3-2.8,8.7-11.2,5.3-18.8l-8.5-19.1
+                c-0.6-1.4-2-2.2-3.3-1.8C792.8,368.5,778.7,361,772.5,347z"></path>
+        </g>
+    </svg>
+</div>';
+
+    echo '<div class="allTicketsContainer">'; // Open the main container for all tickets here
 
     if (!empty($customer_orders)) {
         foreach ($customer_orders as $customer_order) {
@@ -3643,38 +4007,66 @@ function display_upcoming_events_for_user_with_view_order_button() {
                     $map_link = "https://maps.google.com/?q=" . urlencode($event_address);
 
                     ?>
-                    <div class="ticketContainer">
-                        <div class="ticket">
-                            <div class="ticketImage">
-                                <img src="<?php echo $event_image_url; ?>" alt="Event Image">
-                            </div>
 
-                             <div class="ticket_inner_div ">
-                            <div class="ticketTitle"><?php echo mb_strlen($event_title) > 60 ? mb_substr($event_title, 0, 60) . '...' : $event_title; ?></div>
-                            <div class="eventaddress"><?php echo $event_address; ?> <a class="opne_on_map_link" href="<?php echo $map_link; ?>" target="_blank">Open on Map</a></div>
+
+                    <div class="ticket">
+                        <div class="ticketImage">
+                            <img src="<?php echo $event_image_url; ?>" alt="Event Image">
+                        </div>
+
+                        <div class="ticket_inner_div ">
+                            <div class="ticketTitle">
+                                <?php echo truncate_title($event_title, 30); ?>
+                            </div>
+                            <?php // Check if the event address is not empty
+                                                if (!empty($event_address)) {
+                                                    // Encode the address for URL use
+                                                    $map_link = "https://maps.google.com/?q=" . urlencode($event_address);
+
+                                                    // Display the address and the "Open on Map" button
+                                                    echo '<div class="eventaddress">' . $event_address . ' <a class="opne_on_map_link" href="' . $map_link . '" target="_blank">Map</a></div>';
+                                                } else {
+                                                    // If there is no address, you can choose to not display anything, or customize as needed
+                                                    echo '<div class="eventaddress"></div>'; // Optional: Customize based on your preference
+                                                }
+                                                ?>
                             <hr>
                             <div class="ticketDetail">
-                                <div>Event Date:&ensp;<?php echo date_i18n('F j, Y, g:i a', strtotime($event_start_date)); ?></div>
-                                <div>Ticket Quantity:&ensp;<?php echo $ticket_quantity; ?></div>
-                                <div>Order Total:&ensp;<?php echo $order_total; ?></div>
+                                <div><span class="ticket-detail-title">Event Date:</span>&ensp;
+                                    <?php echo date_i18n('F j, Y, g:i a', strtotime($event_start_date)); ?>
                                 </div>
+                                <div><span class="ticket-detail-title">Ticket Quantity:</span>&ensp;
+                                    <?php echo $ticket_quantity; ?>
+                                </div>
+                                <div>
+                                    <span class="ticket-detail-title">Order Total:</span>
+                                    <span class="woocommerce-Price-amount amount"><bdi>
+                                            <?php echo $order_total; ?>
+                                        </bdi></span>
+                                </div>
+
                             </div>
-                            <div class="ticketRip">
-                                <div class="circleLeft"></div>
-                                <div class="ripLine"></div>
-                                <div class="circleRight"></div>
-                            </div>
-                            <div class="ticketSubDetail">
-                                <div class="code"><?php echo $customer_order->get_order_number(); ?></div>
-                                <div>Paid:&ensp;<?php echo $order_paid_date; ?></div> <!-- Displaying the order paid date -->
-                            </div>
-                            <div class="ticketlowerSubDetail">
-                                <a href="<?php echo $order_url; ?>"><button class="view_ticket_btn">View Ticket</button></a>
-                                <a href="<?php echo $event_url; ?>"><button class="view_event_btn">Event Details</button></a>
-                            </div>
+
                         </div>
-                        <div class="ticketShadow"></div>
+                        <div class="ticketRip">
+                            <div class="circleLeft"></div>
+                            <div class="ripLine"></div>
+                            <div class="circleRight"></div>
+                        </div>
+                        <div class="ticketSubDetail">
+                            <div class="code">
+                                <?php echo $customer_order->get_order_number(); ?>
+                            </div>
+                            <div><span class="ticket-detail-title">Paid:</span>&ensp;
+                                <?php echo $order_paid_date; ?>
+                            </div> <!-- Displaying the order paid date -->
+                        </div>
+                        <div class="ticketlowerSubDetail">
+                            <a href="<?php echo $order_url; ?>"><button class="view_ticket_btn">View Ticket</button></a>
+                            <a href="<?php echo $event_url; ?>"><button class="view_event_btn">Event Details</button></a>
+                        </div>
                     </div>
+
                     <?php
 
                     $displayed_event_ids[] = $event_id;
@@ -3685,5 +4077,343 @@ function display_upcoming_events_for_user_with_view_order_button() {
         echo "<p>You currently have no tickets for upcoming events.</p>";
     }
 }
+echo '</div>'; // Close the main container for all tickets
 
 add_action('woocommerce_account_dashboard', 'display_upcoming_events_for_user_with_view_order_button');
+
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+/////FUNCTION TO ADD SHORTCODE  FOR ALL ORDERS FROM USER 
+
+function display_user_all_orders_shortcode()
+{
+    if (!function_exists('wc_get_orders') || !is_user_logged_in()) {
+        return '<p>You must be logged in to view this content.</p>';
+    }
+
+    $user_id = get_current_user_id();
+    $customer_orders = wc_get_orders([
+        'customer' => $user_id,
+        'status' => 'completed',
+        'limit' => -1, // No limit
+    ]);
+
+    ob_start(); // Start output buffering
+    ?>
+
+    <div class="event-tickets-header">
+        <h2 class="container-fluid">Your Event Tickets</h2>
+        <p>Below you'll find tickets for events you're attending soon. Keep track of dates and details right here!</p>
+    </div>
+    <div class="allTicketsContainer">
+        <?php foreach ($customer_orders as $customer_order):
+            $order_url = $customer_order->get_view_order_url();
+            $items = $customer_order->get_items();
+            foreach ($items as $item_id => $item):
+                $event_id = get_post_meta($item->get_product_id(), '_tribe_wooticket_for_event', true);
+                $event_start_date = get_post_meta($event_id, '_EventStartDate', true);
+                $event_title = get_the_title($event_id);
+                $event_url = get_permalink($event_id);
+                $event_image_url = get_the_post_thumbnail_url($event_id, 'thumbnail') ?: 'https://yourdefaultimageurl.com/default.jpg'; // Using thumbnail size for faster loading
+                $ticket_quantity = $item->get_quantity();
+                $order_total = $customer_order->get_formatted_order_total();
+                $event_address = tribe_get_address($event_id);
+                $map_link = !empty($event_address) ? "https://maps.google.com/?q=" . urlencode($event_address) : '';
+                ?>
+                <div class="ticket">
+                    <div class="ticketImage">
+                        <img src="<?php echo esc_url($event_image_url); ?>" alt="Event Image">
+                    </div>
+                    <div class="ticket_inner_div">
+                        <div class="ticketTitle">
+                            <?php echo esc_html($event_title); ?>
+                        </div>
+                        <?php if (!empty($event_address)): ?>
+                            <div class="eventaddress">
+                                <?php echo esc_html($event_address); ?>
+                                <a class="opne_on_map_link" href="<?php echo esc_url($map_link); ?>" target="_blank">Map</a>
+                            </div>
+                        <?php endif; ?>
+                        <hr>
+                        <div class="ticketDetail">
+                            <div>Event Date:
+                                <?php echo date_i18n('F j, Y, g:i a', strtotime($event_start_date)); ?>
+                            </div>
+                            <div>Ticket Quantity:
+                                <?php echo esc_html($ticket_quantity); ?>
+                            </div>
+                            <div>Order Total:
+                                <?php echo esc_html($order_total); ?>
+                            </div>
+                        </div>
+                        <div class="ticketRip">
+                            <div class="circleLeft"></div>
+                            <div class="ripLine"></div>
+                            <div class="circleRight"></div>
+                        </div>
+                        <div class="ticketSubDetail">
+                            <div class="code">
+                                <?php echo esc_html($customer_order->get_order_number()); ?>
+                            </div>
+                            <!-- Paid Date display logic here if needed -->
+                        </div>
+                        <div class="ticketlowerSubDetail">
+                            <a href="<?php echo esc_url($order_url); ?>"><button class="view_ticket_btn">View Ticket</button></a>
+                            <a href="<?php echo esc_url($event_url); ?>"><button class="view_event_btn">Event Details</button></a>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; endforeach; ?>
+    </div>
+
+    <?php
+    $content = ob_get_clean(); // End output buffering and get the contents
+    return $content;
+}
+add_shortcode('user_all_orders', 'display_user_all_orders_shortcode');
+
+
+
+
+
+
+////FUNCTINO TO ADD THE PRODUCT IMAGE TO THE ORDER DEATILS SECTION 
+
+function display_order_item_product_image($item_id, $item, $order)
+{
+    // Get the product object
+    $product = $item->get_product();
+    // Check if the product exists
+    if ($product) {
+        // Get the product image URL. Adjust the size as needed ('thumbnail', 'medium', 'full', etc.)
+        $image_url = $product->get_image('small'); // This returns an <img> tag
+        // Output the product image
+        echo '<div class="product-image" style="float: left; margin-right: 10px;">' . $image_url . '</div>';
+    }
+}
+add_action('woocommerce_order_item_meta_start', 'display_order_item_product_image', 10, 3);
+
+
+
+
+
+///FUNCTION TO CHANGE THE WORD "PRODUCT" TO "TICKET"
+
+function change_product_text_to_ticket($translated_text, $text, $domain)
+{
+    // Ensure we are in the WooCommerce domain to prevent unnecessary replacements
+    if ('woocommerce' === $domain) {
+        // Replace 'Product' and its plural form with 'Ticket'
+        $translated_text = str_replace('Product', 'Ticket', $translated_text);
+        $translated_text = str_replace('product', 'ticket', $translated_text);
+        $translated_text = str_replace('Products', 'Tickets', $translated_text);
+        $translated_text = str_replace('products', 'tickets', $translated_text);
+    }
+    return $translated_text;
+}
+add_filter('gettext', 'change_product_text_to_ticket', 20, 3);
+
+
+
+
+
+
+///MY ACCOUNT FUNCTION 
+function custom_limit_orders_per_page($args)
+{
+    $args['limit'] = 2; // Set this to how many orders you want per page.
+    return $args;
+}
+add_filter('woocommerce_my_account_my_orders_query', 'custom_limit_orders_per_page', 10, 1);
+
+
+
+add_filter('gettext', 'custom_replace_text', 20, 3);
+function custom_replace_text($translated_text, $text, $domain)
+{
+    if ('Date' === $text) {
+        $translated_text = 'Transaction Date';
+    }
+    return $translated_text;
+}
+
+
+
+//////FUNCTION TO ADD THE EVENT IMAGE TO THE TICKET/PRODUCT MAIN IMAGE  
+
+function set_all_products_featured_image_to_event_image()
+{
+    // Query all products.
+    $args = array(
+        'post_type' => 'product',
+        'posts_per_page' => -1, // Retrieve all products
+        'fields' => 'ids', // Retrieve only the IDs for performance
+    );
+
+    $product_ids = get_posts($args);
+
+    foreach ($product_ids as $product_id) {
+        // Retrieve the associated event ID for each product.
+        $event_id = get_post_meta($product_id, '_tribe_wooticket_for_event', true);
+
+        if (!empty($event_id)) {
+            // Get the event's featured image ID.
+            $event_image_id = get_post_thumbnail_id($event_id);
+
+            if (!empty($event_image_id)) {
+                // Set the event's image as the product's featured image.
+                set_post_thumbnail($product_id, $event_image_id);
+                error_log("Product ID {$product_id} featured image updated to event ID {$event_id}'s image.");
+            } else {
+                error_log("Event ID {$event_id} does not have a featured image.");
+            }
+        } else {
+            error_log("Product ID {$product_id} does not have an associated event.");
+        }
+    }
+}
+
+// Optionally, you can trigger this function with a specific action, hook, or manually.
+add_action('wp_loaded', 'set_all_products_featured_image_to_event_image');
+
+///////END
+
+
+
+
+
+
+
+//////FUNCTION TO CREATE A SHORTCODE TO UPDATE ORGINSER USER ACCOUNT SETTING 
+function custom_user_profile_shortcode()
+{
+    // Ensure the user is logged in
+    if (!is_user_logged_in()) {
+        return 'You need to be logged in to edit your profile.';
+    }
+
+    $current_user = wp_get_current_user();
+    $user_id = $current_user->ID;
+    $success_message = '';
+
+    // Handle form submission
+    if ('POST' == $_SERVER['REQUEST_METHOD'] && !empty($_POST['action']) && $_POST['action'] == 'update-user') {
+        // Verify the nonce for security
+        if (isset($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'update-user_' . $user_id)) {
+            // Update user information (ensure all input data is sanitized and validated)
+            if (!empty($_POST['first-name'])) {
+                update_user_meta($user_id, 'first_name', sanitize_text_field($_POST['first-name']));
+            }
+            if (!empty($_POST['last-name'])) {
+                update_user_meta($user_id, 'last_name', sanitize_text_field($_POST['last-name']));
+            }
+            if (!empty($_POST['phone'])) {
+                update_user_meta($user_id, 'phone', sanitize_text_field($_POST['phone']));
+            }
+            // Add additional fields update logic here
+
+            // Handle password change
+            if (!empty($_POST['pass1']) && !empty($_POST['pass2']) && $_POST['pass1'] === $_POST['pass2']) {
+                wp_set_password($_POST['pass1'], $user_id);
+            }
+
+            // Redirect to avoid form resubmission with a success message
+            wp_redirect(add_query_arg('profile-updated', 'true', get_permalink()));
+            // exit;
+        }
+    }
+
+    $current_user = wp_get_current_user();
+    $user_id = $current_user->ID;
+    $success_message = '';
+    // Check for the 'profile-updated' query parameter to display the success message
+    if (isset($_GET['profile-updated']) && $_GET['profile-updated'] == 'true') {
+        $success_message = '<div class="alert alert-success" role="alert">Your profile has been updated successfully.</div>';
+    }
+
+    // Form HTML using Bootstrap layout
+    $output = $success_message;
+    $output .= '
+    <div class="container setting_page_admin">
+        <h1 class="tribe-community-events-list-title ">Edit Profile</h1>
+        <form class="orgerinser_settings_form" method="post" id="adduser" action="' . get_permalink() . '">
+            ' . wp_nonce_field('update-user_' . $user_id, '_wpnonce', true, false) . '
+            <input name="action" type="hidden" id="action" value="update-user" />
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="first-name">First Name</label>
+                        <input type="text" class="form-control" name="first-name" id="first-name" value="' . esc_attr($current_user->first_name) . '">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="last-name">Last Name</label>
+                        <input type="text" class="form-control" name="last-name" id="last-name" value="' . esc_attr($current_user->last_name) . '">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="email">Email (cannot be changed)</label>
+                        <input type="email" class="form-control" name="email" id="email" value="' . esc_attr($current_user->user_email) . '" readonly>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="phone">Phone</label>
+                        <input type="text" class="form-control" name="phone" id="phone" value="' . esc_attr(get_user_meta($user_id, 'phone', true)) . '">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add other address fields here. Remember to sanitize and validate all inputs similarly. -->
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="pass1">New Password</label>
+                        <input type="password" class="form-control" name="pass1" id="pass1">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="pass2">Confirm New Password</label>
+                        <input type="password" class="form-control" name="pass2" id="pass2">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Update Profile</button>
+            </div>
+        </form>
+    </div>';
+
+    return $output;
+}
+add_shortcode('custom_user_profile', 'custom_user_profile_shortcode');
+
+
+
+
+
+
+
+
+
+
+

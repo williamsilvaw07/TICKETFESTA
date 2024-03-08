@@ -29,7 +29,7 @@ Add images
 <p>Add photos to show what your event will be about.
 </p>
 
-<div class="tribe-section tribe-section-image-uploader hover_section_content_show">
+<div id='trive-select-event-images' class="tribe-section tribe-section-image-uploader hover_section_content_show">
 	<div class="tribe-section-header">
 		<?php
 		tribe_community_events_field_label( 'event_image', $image_upload_label ); ?>
