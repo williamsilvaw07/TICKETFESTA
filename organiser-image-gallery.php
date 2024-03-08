@@ -471,7 +471,7 @@ dropZone.addEventListener('drop', function(e) {
                 aria-valuenow='{$account_mb_used}' 
                 aria-valuemin='0' 
                 aria-valuemax='{$total_mb}'>
-                Account used {$account_mb_used}/3 MB
+                Account storage used {$account_mb_used}/3 MB
             </div>
         </div>
       </div>";
