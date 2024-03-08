@@ -1985,12 +1985,19 @@ html .tickets-sold-column , html .tribe-list-column-title {
             }
             i.social-icon {
                 position: absolute;
-                font-size: 22px;
-                left: 24px;
-                border-radius: 10px;
-                background: #555;
-                color: #d3fa18;
-                padding: 12px;
+    font-size: 15px;
+    left: 24px;
+    border-radius: 4px;
+    background: #555;
+    color: #d3fa18;
+    /* padding: 9px; */
+    height: 30px;
+    width: 30px;
+    text-align: center;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
             }
             input#organizer_facebook,
             input#organizer_twitter,
@@ -2030,14 +2037,14 @@ html .tickets-sold-column , html .tribe-list-column-title {
 
             html .page-template-organizer-template-php .events-community-post-title input {
                 background: inherit !important;
-                border-width: 0 !important;
-                font-size: 27px !important;
-                font-weight: 700 !important;
-                color: white !important;
-                box-shadow: inherit !important;
-                padding-left: 0;
-                margin-bottom: 9px;
-                margin-top: 0;
+    border-width: 0 !important;
+    font-size: 17px !important;
+    font-weight: 400 !important;
+    color: white !important;
+    box-shadow: inherit !important;
+    padding-left: 0;
+    margin-bottom: 9px;
+    margin-top: 0;
 
             }
 
