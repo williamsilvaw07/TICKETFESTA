@@ -3392,7 +3392,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
                     position: absolute;
                     display: flex;
                     width: 100%;
-                    justify-content: space-between;
+                    justify-content: space-evenly;
                     align-items: center;
                     padding: 0 10px;
                     align-content: center;
