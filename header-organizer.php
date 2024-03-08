@@ -2767,6 +2767,9 @@ html .tickets-sold-column , html .tribe-list-column-title {
             .elementor-button-link_custom span {
                 color: black !important
             }
+            .account_storage{
+                margin-bottom:10px
+            }
 .category-gallery{
     box-sizing: border-box;
     display: flex!important;
@@ -2776,7 +2779,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
     justify-content: flex-start;
     align-content: center;
     gap:20px;
-    margin-top:20px
+    margin-top:30px
 }
             .category-item {
                 position: relative;
