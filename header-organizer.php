@@ -3425,7 +3425,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
 
                 .admin_dashboard-active a {
                     background: linear-gradient(180deg, rgba(211, 250, 22, 0.28) 0.01%, rgba(211, 250, 22, 0.00) 99.96%);
-                    width: 50px;
+                    width: 30px;
                     padding-top: 5px;
                 }
 
