@@ -275,9 +275,6 @@ $event_url = esc_attr($event_url);
             </div>
         </div>
 
-        <div id="eventCouponForm">
-
-        </div>
         <?php tribe_get_template_part('community/modules/spam-control'); ?>
         <button class="next-section-btn" data-target="submit-section">Next</button>
     </div>
