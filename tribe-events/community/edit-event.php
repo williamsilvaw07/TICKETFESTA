@@ -1228,5 +1228,7 @@ jQuery(document).ready(function($) {
     display: none !important;
 }
 
-
+#tribetickets .tribe-section-content {
+    width: 100%;
+}
 </style>
