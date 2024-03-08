@@ -2770,7 +2770,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
 
             .category-item {
                 position: relative;
-                display: inline-block;
+        
                 margin: 10px;
             }
 
@@ -2784,17 +2784,18 @@ html .tickets-sold-column , html .tribe-list-column-title {
 
             .overlay {
                 position: absolute;
-                bottom: 0;
-                background: rgba(0, 0, 0, 0.5);
-                /* Dark overlay */
-                color: #ffffff;
-                /* Text color */
-                width: 100%;
-                opacity: 1;
-                color: white;
-                text-align: center;
-                padding: 20px;
-                transition: .5s ease;
+    top: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    color: #ffffff;
+    width: 100%;
+    opacity: 1;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    transition: .5s ease;
+    display: block;
+    height: 41%;
+    transform: translateY(0);
             }
 
             .category-item:hover .overlay {
