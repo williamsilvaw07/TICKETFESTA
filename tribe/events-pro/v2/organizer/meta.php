@@ -515,6 +515,8 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 <?php 
 // Dynamically build the shortcode with the organizer's ID
 $shortcode = '[tribe_events organizer="' . $organizer_id . '"]';
+// Execute the shortcode and echo its output
+echo do_shortcode($shortcode);
 
 ?>
 <?php 
