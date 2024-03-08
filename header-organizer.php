@@ -3394,7 +3394,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
                     width: 100%;
                     justify-content: space-between;
                     align-items: center;
-                    padding: 0 24px;
+                    padding: 0 10px;
                     align-content: center;
                     flex-direction: row;
                     margin-bottom: 0 !important;
