@@ -1985,6 +1985,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
             }
             i.social-icon {
                 position: absolute;
+                font-family: 'FontAwesome';
     font-size: 15px;
     left: 24px;
     border-radius: 4px;
