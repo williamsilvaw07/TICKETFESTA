@@ -2767,7 +2767,15 @@ html .tickets-sold-column , html .tribe-list-column-title {
             .elementor-button-link_custom span {
                 color: black !important
             }
-
+.category-gallery{
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
+    align-content: center;
+}
             .category-item {
                 position: relative;
         
@@ -2784,7 +2792,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
 
             .overlay {
                 position: absolute;
-    top: 100%;
+    bottom: 0%;
     background: rgba(0, 0, 0, 0.5);
     color: #ffffff;
     width: 100%;
@@ -2794,8 +2802,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
     padding: 20px;
     transition: .5s ease;
     display: block;
-    height: 41%;
-    transform: translateY(0);
+    height: fit-content;
             }
 
             .category-item:hover .overlay {
