@@ -26,6 +26,9 @@ $organizer_id = get_the_ID(); // Get the organizer post ID
 
 
 ?>
+<div class="organizer_title">
+<h2>Edit Organiser</h2>
+</div>
 <a href="/dashboard/organisers-list/">
     <!--
 <div class="organizer_edit_back_btn_main">
