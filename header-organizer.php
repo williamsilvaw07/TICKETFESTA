@@ -2145,7 +2145,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
                 height: 34px;
             }
             .events-community-post-title.description {
-                height: 200px;
+          
             }
             .organizer_title_edit_btn,
             .edit_svg_click {
