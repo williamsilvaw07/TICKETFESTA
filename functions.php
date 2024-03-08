@@ -1405,54 +1405,89 @@ function display_edit_create_vanues()
     // Check if the venue exists and is of the correct post type
     if ($venue && $venue->post_type == 'tribe_venue') {
         ?>
-       <form method="post" action="" class="edit-vanue-form">
+        <form method="post" action="" class="edit-vanue-form">
+            <!-- Venue Title Field -->
+            <label for="venue_title">Venue Title:</label>
+            <input type="text" id="venue_title" name="venue_title" value="<?php echo esc_attr($venue->post_title); ?>" />
+            <br />
+            
+            <!-- Address Title Field -->
+            <label for="venue_address">Address:</label>
+            <input type="text" id="venue_address" name="venue_address" value="<?php echo esc_attr($address); ?>" /><br />
+            <br />
 
-<div class="form-group">
-    <label for="venue_title">Venue Title:</label>
-    <input type="text" class="form-control" id="venue_title" name="venue_title" value="<?php echo esc_attr($venue->post_title); ?>">
-</div>
+            <!-- Address Title Field -->
+            <label for="venue_city">City:</label>
+            <input type="text" id="venue_city" name="venue_city" value="<?php echo esc_attr($city); ?>" /><br />
+            <br />
 
-<div class="form-group">
-    <label for="venue_address">Address:</label>
-    <input type="text" class="form-control" id="venue_address" name="venue_address" value="<?php echo esc_attr($address); ?>">
-</div>
+            <label for="venue_country">Country:</label>
+            <select data-country="<?php echo $country; ?>" class="tribe-dropdown tribe-dropdown-created" id="venue_country" name="venue_country" 
+                >
+            
+    <option value="">Select a Country:</option>
+    <!-- United States -->
+    <option value="United States">United States</option>
+    <!-- United Kingdom -->
+    <option value="United Kingdom">United Kingdom</option>
+    <!-- EU Countries -->
+    <option value="Austria">Austria</option>
+    <option value="Belgium">Belgium</option>
+    <option value="Bulgaria">Bulgaria</option>
+    <option value="Croatia">Croatia</option>
+    <option value="Cyprus">Cyprus</option>
+    <option value="Czech Republic">Czech Republic</option>
+    <option value="Denmark">Denmark</option>
+    <option value="Estonia">Estonia</option>
+    <option value="Finland">Finland</option>
+    <option value="France">France</option>
+    <option value="Germany">Germany</option>
+    <option value="Greece">Greece</option>
+    <option value="Hungary">Hungary</option>
+    <option value="Ireland">Ireland</option>
+    <option value="Italy">Italy</option>
+    <option value="Latvia">Latvia</option>
+    <option value="Lithuania">Lithuania</option>
+    <option value="Luxembourg">Luxembourg</option>
+    <option value="Malta">Malta</option>
+    <option value="Netherlands">Netherlands</option>
+    <option value="Poland">Poland</option>
+    <option value="Portugal">Portugal</option>
+    <option value="Romania">Romania</option>
+    <option value="Slovakia">Slovakia</option>
+    <option value="Slovenia">Slovenia</option>
+    <option value="Spain">Spain</option>
+    <option value="Sweden">Sweden</option>
+</select>
 
-<div class="form-group">
-    <label for="venue_city">City:</label>
-    <input type="text" class="form-control" id="venue_city" name="venue_city" value="<?php echo esc_attr($city); ?>">
-</div>
+            <br/>
 
-<div class="form-group">
-    <label for="venue_country">Country:</label>
-    <select class="form-control" id="venue_country" name="venue_country">
-        <!-- Options go here -->
-    </select>
-</div>
+            <!-- State or Province  Field -->
+            <label for="venue_state">State or Province:</label>
+            <input type="text" id="venue_state" name="venue_state" value="<?php echo esc_attr($province); ?>" /><br />
+            <br />
 
-<div class="form-group">
-    <label for="venue_state">State or Province:</label>
-    <input type="text" class="form-control" id="venue_state" name="venue_state" value="<?php echo esc_attr($province); ?>">
-</div>
+            <!-- Postal Code  Field -->
+            <label for="venue_postcode">Postal Code:</label>
+            <input type="text" id="venue_postcode" name="venue_postcode" value="<?php echo esc_attr($zip); ?>" /><br />
+            <br />
 
-<div class="form-group">
-    <label for="venue_postcode">Postal Code:</label>
-    <input type="text" class="form-control" id="venue_postcode" name="venue_postcode" value="<?php echo esc_attr($zip); ?>">
-</div>
 
-<div class="form-check">
-    <input type="checkbox" class="form-check-input" id="vanue_map" name="vanue_map" <?php if($ShowMap == '1') echo 'checked'; ?>  value='1'>
-    <label class="form-check-label" for="vanue_map">Show Map</label>
-</div>
+            <!-- Show Map -->
+            <label for="vanue_map">Show Map:</label>
+            <input type="checkbox" id="vanue_map" name="vanue_map" <?php if($ShowMap == '1') echo 'checked'; ?>  value='1' />
+            <br/>
+            <!-- Map Link -->
+            <label for="map_link">Map Link:</label>
+            <input type="checkbox" id="map_link" name="map_link" <?php if($ShowMapLink == '1') echo 'checked'; ?> value='1' />
+            <br/>
 
-<div class="form-check">
-    <input type="checkbox" class="form-check-input" id="map_link" name="map_link" <?php if($ShowMapLink == '1') echo 'checked'; ?> value='1'>
-    <label class="form-check-label" for="map_link">Map Link</label>
-</div>
 
-<button type="submit" class="btn btn-primary" name="update_venue">Update Venue</button>
-<input type="hidden" name="venue_id" value="<?php echo $post_id; ?>">
-<?php wp_nonce_field('update_venue_action', 'update_venue_nonce'); ?>
-</form>
+            <!-- Submit Button -->
+            <input type="submit" name="update_venue" value="Update Venue" />
+            <input type="hidden" name="venue_id" value="<?php echo $post_id; ?>" />
+            <?php wp_nonce_field('update_venue_action', 'update_venue_nonce'); ?>
+        </form>
         <?php
     } else {
         echo 'Venue not found.';
