@@ -596,6 +596,10 @@ if (bannerInput) {
 #organizer_description_input{
     color:white
 }
+.edit_organizer_main input{
+font-size:15px;
+font-weight:300
+}
 </style>
 
 </div>
