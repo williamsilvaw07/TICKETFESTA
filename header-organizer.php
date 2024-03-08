@@ -650,9 +650,9 @@ if (!defined('ABSPATH')) {
                 margin-bottom: 0;
                 font-size: 13px;
                 text-align: center;
-                background: rgb(0 0 0 / 40%);
+                background: rgb(0 0 0 / 80%);
                 padding: 20px;
-                box-shadow: 0px 0px 42px 12px rgba(0, 0, 0, 0.25);
+    
                 backdrop-filter: blur(4px);
                 border-radius: 10px;
                 transform: translate(-50%, -50%);

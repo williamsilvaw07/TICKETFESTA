@@ -108,6 +108,10 @@ $banner_image_url = $banner_image_id ? wp_get_attachment_image_url($banner_image
 
 ?>
 
+<div class="edit_organizer_main">
+
+
+
 <div id="tribe-community-events" class="form organizer">
     <?php tribe_get_template_part( 'community/modules/header-links' ); ?>
 
@@ -446,7 +450,7 @@ document.addEventListener("DOMContentLoaded", function() {
         </div><!-- .tribe-events-community-footer -->
     </form>
 </div>
-
+</div>
 <script>
 // Function to validate and display the uploaded image
 function validateAndDisplayImage(files) {
