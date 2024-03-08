@@ -1245,4 +1245,14 @@ jQuery(document).ready(function($) {
     margin-bottom: 13px;
     padding: 0;
 }
+.quill-wrap{
+    background: white;
+  
+}
+.quill-wrap span{
+    color:black!important
+}
+#editor{
+    color:black!important
+}
 </style>
