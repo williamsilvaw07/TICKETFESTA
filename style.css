@@ -1803,7 +1803,13 @@ form.edit-vanue-form {
     justify-content: center;
 
 }
-
+.loading_svg_div svg{
+    transform: scale(2);
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%); /
+}
 .hidden_loading_svg {
 display: none !important;
 }
