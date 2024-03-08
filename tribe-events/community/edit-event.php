@@ -1260,4 +1260,7 @@ jQuery(document).ready(function($) {
     border: 0px!important
   
 }
+#toolbar{
+    background: #c6c6c6;
+}
 </style>
