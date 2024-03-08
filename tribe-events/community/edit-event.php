@@ -1279,6 +1279,9 @@ jQuery(document).ready(function($) {
     border: 0px!important
   
 }
+.ql-editor{
+    min-height:150px!important
+}
 #toolbar{
     background: #c6c6c6;
     border-radius: 5px 5px 0px 0px!important;
