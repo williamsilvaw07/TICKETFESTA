@@ -3672,25 +3672,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
 
 
 
-<script>
 
-
-///finvtion for the svg  loader
-jQuery(document).ready(function($) {
-    // Wait for 1 second after the document is ready
-    setTimeout(function() {
-        // Select the SVG div and add the 'hidden' class
-        $('.loading_svg_div').addClass('hidden_loading_svg');
-        console.log('SVG should now be hidden');
-
-        // After hiding the SVG, wait another 1 second to perform further actions
-        setTimeout(function() {
-            console.log('Performing another action 1 second after hiding the SVG');
-            // Any subsequent actions can be placed here
-        }, 1000);
-    }, 1200);
-});
-</script>
 
 <style>
  
@@ -3700,7 +3682,6 @@ jQuery(document).ready(function($) {
     height: 100vh;
     z-index: 10000000000000;
     position: fixed; 
-    transform: scale(2);
     align-items: center; /* Fixed typo from align-content to align-items for vertical alignment */
     justify-content: center;
 
