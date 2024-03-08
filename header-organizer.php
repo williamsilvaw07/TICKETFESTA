@@ -2087,6 +2087,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
             .events-community-post-title p,
             .event_decp_div p {
                 color: #9d9d9d !important;
+                font-size:13px!important
             }
 
             .event_decp_div h2,
