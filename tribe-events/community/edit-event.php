@@ -1129,7 +1129,9 @@ jQuery(document).ready(function($) {
 
     }
 
-
+ label{
+font-size:14px!important
+    }
     .char-count {
         margin-right: 10px;
         color: #9d9d9d !important;
