@@ -2905,9 +2905,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
                 /* Adjustments for tablets */
                 .overlay {
                     position: relative;
-                    /* Position overlay relative to its container */
-                    background: transparent;
-                    /* Optional: make the background transparent */
+                    background: #1A1A1A;
                 }
 
                 .overlay h2,
