@@ -465,7 +465,7 @@ dropZone.addEventListener('drop', function(e) {
 
         // HTML markup for displaying categories with titles and thumbnails
         echo "<div style='max-width: 500px; width: 100%;'> <!-- Container div for max-width and responsiveness -->
-        <p>Account Storage u</p>
+        <p>Account Storage</p>
         <div class='progress' style='height: 20px; margin-top: 20px;'>
             <div class='progress-bar' role='progressbar' 
                 style='width: {$usage_percentage_formatted}%; padding: 0 10px;' 
