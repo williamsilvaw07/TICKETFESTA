@@ -359,17 +359,16 @@ if (!empty($agendas) && is_array($agendas)) {
 
 
 
-<!-- Event ABOUT FULL DECP -->
 <?php
 $event_description = get_post_meta($event_id, 'event_description', true);
+$event_description = wp_kses_post($event_description);
+$event_description = str_replace('src="image','src="data:image',$event_description);
 ?>
 
-<!-- Display Event Description -->
+
 <div class="event-description">
-    <?php echo wp_kses_post($event_description); ?>
+<?php echo $event_description; ?>
 </div>
-
-
 
 
 
