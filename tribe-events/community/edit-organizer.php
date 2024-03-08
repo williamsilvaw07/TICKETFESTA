@@ -585,13 +585,15 @@ if (bannerInput) {
 
 <style>
 .edit_organizer_main{
-    background-color: rgb(26, 26, 26);
+        background-color: rgb(26, 26, 26);
     position: relative;
     padding: 17px;
     border-radius: 10px !important;
     width: 100% !important;
 }
-
+#organizer_description_input{
+    color:white
+}
 </style>
 
 </div>
