@@ -594,7 +594,9 @@ if (bannerInput) {
     width: 100% !important;
 }
 #organizer_description_input{
-    color:white
+    color:white;
+    width: 100%;
+    min-height: 120px;
 }
 .edit_organizer_main input{
 font-size:15px;
