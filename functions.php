@@ -1405,6 +1405,7 @@ function display_edit_create_vanues()
     // Check if the venue exists and is of the correct post type
     if ($venue && $venue->post_type == 'tribe_venue') {
         ?>
+        <h2>Edit Venue</h2>
        <form method="post" action="" class="edit-vanue-form">
 
 <div class="form-group">
