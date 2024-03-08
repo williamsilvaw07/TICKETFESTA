@@ -6,6 +6,8 @@ function organiser_image_gallery_shortcode() {
     $account_mb_used = get_user_meta( get_current_user_id(), 'total_upload', true );
     $account_mb_used = $account_mb_used ? $account_mb_used : 0;
     $usage_percentage = ($account_mb_used / $total_mb) * 100;
+    $usage_percentage_formatted = number_format($usage_percentage, 2); // Format to 2 decimal places if needed
+    
     ob_start(); ?>
 
     <!-- HTML structure for the image gallery -->
@@ -463,12 +465,12 @@ dropZone.addEventListener('drop', function(e) {
 
         // HTML markup for displaying categories with titles and thumbnails
 // Echo the usage information and the Bootstrap progress bar
-echo "<p class='used-memory'> Account used $account_mb_used/3 MB</p>
-<div class='progress' style='height: 20px;'>
-  <div class='progress-bar' role='progressbar' style='width: " . $usage_percentage . "%;' aria-valuenow='" . $account_mb_used . "' aria-valuemin='0' aria-valuemax='" . $total_mb . "'>
-    Account used " . $account_mb_used . "/3 MB
-  </div>
-</div>";
+
+echo "<div class='progress' style='height: 20px; margin-bottom: 10px;'>
+        <div class='progress-bar' role='progressbar' style='width: " . $usage_percentage_formatted . "%;' aria-valuenow='" . $account_mb_used . "' aria-valuemin='0' aria-valuemax='" . $total_mb . "'>
+            Account used " . $account_mb_used . "/3 MB (" . $usage_percentage_formatted . "%)
+        </div>
+      </div>";
         echo '<div class="category-gallery">';
     
         foreach ($categories as $category) {
