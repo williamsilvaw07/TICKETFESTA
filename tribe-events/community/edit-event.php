@@ -1257,6 +1257,18 @@ jQuery(document).ready(function($) {
     color:black!important;
     background-color: inherit!important;
 }
+.ql-editor h1{
+    font-size: 31px;
+    font-weight: bold;
+    line-height: 35px;
+}
+.ql-editor p{
+    font-weight: 300;
+    font-size: 17px;
+}
+.ql-editor h2{
+    font-size: 23px;
+}
 .ql-editor p , .ql-editor h1 , .ql-editor h2{
     color:black!important 
 }
