@@ -198,7 +198,6 @@ if ($banner_image_id) {
 <input type="file" id="fileInput" name="fileInput" accept="image/jpeg" style="display:none;" onchange="validateAndDisplayImage(this.files)">
 
         
-        </div>
 
 
         <!-- Organizer Title -->
@@ -588,3 +587,5 @@ if (bannerInput) {
 
 
 </style>
+
+</div>
