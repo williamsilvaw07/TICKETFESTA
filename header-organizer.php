@@ -2769,7 +2769,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
             }
 .category-gallery{
     box-sizing: border-box;
-    display: flex;
+    display: flex!important;
     flex-direction: row;
     flex-wrap: wrap;
     align-items: center;
