@@ -977,7 +977,8 @@ jQuery(document).ready(function($) {
 <style>
 
 .edit-linked-post-link{
-    display:none
+    display:none!important;
+    visibility: hidden;
 }
 
     .accordion-header {
