@@ -2786,7 +2786,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
                 display: block;
                 width: 100%;
                 height: auto;
-                max-width: 400px;
+                max-width: 350px;
 
             }
 
