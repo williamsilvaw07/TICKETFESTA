@@ -3700,18 +3700,12 @@ jQuery(document).ready(function($) {
     height: 100vh;
     z-index: 10000000000000;
     position: fixed; 
-
+    transform: scale(2);
     align-items: center; /* Fixed typo from align-content to align-items for vertical alignment */
     justify-content: center;
 
 }
-.loading_svg_div svg{
-    transform: scale(2);
-    position: absolute;
-    top: 40%;
-    left: 50%;
-    transform: translate(-50%, -50%); /
-}
+
 .hidden_loading_svg {
 display: none !important;
 }
