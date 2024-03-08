@@ -1433,17 +1433,17 @@ function display_edit_create_vanues()
         <!-- Additional countries as needed -->
     </select>
 </div>
-
+<!--
 <div class="form-group">
     <label for="venue_state">State or Province:</label>
     <input type="text" class="form-control" id="venue_state" name="venue_state" value="<?php echo esc_attr($province); ?>">
-</div>
+</div> -->
 
 <div class="form-group">
     <label for="venue_postcode">Postal Code:</label>
     <input type="text" class="form-control" id="venue_postcode" name="venue_postcode" value="<?php echo esc_attr($zip); ?>">
 </div>
-
+<!--
 <div class="form-check mb-2">
     <input type="checkbox" class="form-check-input" id="vanue_map" name="vanue_map" <?php if($ShowMap == '1') echo 'checked'; ?>  value='1'>
     <label class="form-check-label" for="vanue_map">Show Map</label>
@@ -1452,7 +1452,7 @@ function display_edit_create_vanues()
 <div class="form-check mb-2">
     <input type="checkbox" class="form-check-input" id="map_link" name="map_link" <?php if($ShowMapLink == '1') echo 'checked'; ?> value='1'>
     <label class="form-check-label" for="map_link">Map Link</label>
-</div>
+</div> -->
 
 <button type="submit" class="btn btn-primary" name="update_venue">Update Venue</button>
 <input type="hidden" name="venue_id" value="<?php echo $post_id; ?>">
