@@ -473,7 +473,7 @@ echo "<div class='progress' style='height: 20px; margin-top: 20px;'>
             aria-valuenow='{$account_mb_used}' 
             aria-valuemin='0' 
             aria-valuemax='{$total_mb}'>
-            Account used {$account_mb_used}/{$total_mb} MB ({$usage_percentage_formatted}%)
+            Account used {$account_mb_used}/ 3 MB ({$usage_percentage_formatted}%)
         </div>
       </div>";
         echo '<div class="category-gallery">';
