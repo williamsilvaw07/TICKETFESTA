@@ -163,7 +163,7 @@ if ($banner_image_id) {
         </div>
         <div class="organizer_image_upload_function_container">
     <div class="organizer_image_upload_function">
-        <label><?php esc_html_e( 'Current Organizer Image:', 'tribe-events-community' ); ?></label>
+        <label><?php esc_html_e( '', 'tribe-events-community' ); ?></label>
 
         <!-- Organizer image element -->
         <?php 
