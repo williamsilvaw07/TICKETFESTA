@@ -1228,4 +1228,9 @@ jQuery(document).ready(function($) {
 #tribetickets .tribe-section-content {
     width: 100%;
 }
+#tribetickets label{
+    font-weight: 500 !important;
+    font-size: 15px;
+
+}
 </style>
