@@ -223,7 +223,7 @@ if ($banner_image_id) {
         </div>
 
         <div class="events-community-post-title description ">
-            <label for="organizer_description_input" class="<?php echo ( $_POST && empty( $organizer_description ) ) ? 'error' : ''; ?>">
+            <label for="organizer_description_input" placeholder="Organiser Description" class="<?php echo ( $_POST && empty( $organizer_description ) ) ? 'error' : ''; ?>">
                 <?php printf( __( '%s Description:', 'tribe-events-community' ), $organizer_label_singular ); ?>
                 <small class="req"><?php esc_html_e( '(required)', 'tribe-events-community' ); ?></small>
             </label>
