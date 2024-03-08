@@ -1254,7 +1254,9 @@ jQuery(document).ready(function($) {
     color:black!important;
     background-color: inherit!important;
 }
-
+.ql-editor p , .ql-editor h1 , .ql-editor h2{
+    color:black!important 
+}
 #editor{
     color:black!important
 }
