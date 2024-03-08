@@ -4407,6 +4407,11 @@ function custom_user_profile_shortcode()
 }
 add_shortcode('custom_user_profile', 'custom_user_profile_shortcode');
 
+add_filter('kses_allowed_protocols', function ($protocols) {
+$protocols[] = 'data';
+
+return $protocols;
+});
 
 
 
