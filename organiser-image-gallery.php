@@ -464,13 +464,12 @@ dropZone.addEventListener('drop', function(e) {
         }
 
         // HTML markup for displaying categories with titles and thumbnails
-// Echo the usage information and the Bootstrap progress bar
-echo "<div class='progress' style='height: 20px; margin-top: 20px;'>
+        echo "<div class='progress' style='height: 20px; margin-top: 20px;'>
         <div class='progress-bar' role='progressbar' 
-            style='width: {$usage_percentage_formatted}%;' 
+            style='width: {$usage_percentage_formatted}%; padding: 0 10px;' 
             aria-valuenow='{$account_mb_used}' 
             aria-valuemin='0' 
-            aria-valuemax='3'>
+            aria-valuemax='{$total_mb}'>
             Account used {$account_mb_used}/3 MB
         </div>
       </div>";
