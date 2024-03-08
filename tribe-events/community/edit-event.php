@@ -216,7 +216,7 @@ $event_description = get_post_meta($event_id, 'event_description', true);
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     var quill = new Quill('#quill-editor', {
-        theme: 'snow',
+        theme: 'bubble',
         modules: {
             toolbar: [
                 ['bold', 'italic', 'underline'],
