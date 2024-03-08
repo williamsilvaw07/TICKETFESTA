@@ -976,7 +976,9 @@ jQuery(document).ready(function($) {
 
 <style>
 
-
+.edit-linked-post-link{
+    display:none
+}
 
     .accordion-header {
         cursor: pointer;
