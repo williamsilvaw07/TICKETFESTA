@@ -330,15 +330,16 @@ function category_image_gallery_shortcode($atts) {
 
         if (is_numeric($category_id)) {
             require_once('wp-load.php');
-            $result = wp_delete_term($category_id, 'tec_organizer_category');
 
             $category_images = get_term_meta($category_id, 'category_images', true);
             $category_images = explode(',', $category_images);
-            // wp_delete_attachment($media_id, true); 
             foreach($category_images as $category_image){
                 $media_id = attachment_url_to_postid($category_image);
                 wp_delete_attachment($media_id, true); 
             }
+
+            $result = wp_delete_term($category_id, 'tec_organizer_category');
+
             if (is_wp_error($result)) {
                 echo "Error: " . $result->get_error_message();
             } else { ?>
