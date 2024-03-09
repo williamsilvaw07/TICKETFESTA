@@ -128,15 +128,7 @@ function organiser_image_gallery_shortcode() {
             padding: 0;
         }
 
-.overlay h4{
-    font-size: 18px;
-    margin-bottom: 8px;
-}
-.overlay h5{
-    font-size: 16px;
-    margin-bottom: 0px;
-
-}     
+    
         
     </style>
 
