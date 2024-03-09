@@ -3930,6 +3930,7 @@ add_action('woocommerce_account_following_endpoint', 'ticketfeasta_display_follo
 
 function display_upcoming_events_for_user_with_view_order_button()
 {
+    return;
     $user_id = get_current_user_id();
     $displayed_event_ids = array();
     $customer_orders = wc_get_orders(
@@ -3941,15 +3942,15 @@ function display_upcoming_events_for_user_with_view_order_button()
     );
 
 
-    // function truncate_title($title, $maxLength = 30)
-    // {
-    //     // Break the title into lines with a maximum length, without breaking words
-    //     $wrapped = wordwrap($title, $maxLength, "\n", true);
-    //     // Split the string into lines
-    //     $lines = explode("\n", $wrapped);
-    //     // Use the first line, if there are multiple lines, append '...'
-    //     return count($lines) > 1 ? $lines[0] . '...' : $title;
-    // }
+    function truncate_title($title, $maxLength = 30)
+    {
+        // Break the title into lines with a maximum length, without breaking words
+        $wrapped = wordwrap($title, $maxLength, "\n", true);
+        // Split the string into lines
+        $lines = explode("\n", $wrapped);
+        // Use the first line, if there are multiple lines, append '...'
+        return count($lines) > 1 ? $lines[0] . '...' : $title;
+    }
 
     echo '<div class="event-tickets-header">';
     echo '<h2 class="container-fluid">Your Event Tickets</h2>';
