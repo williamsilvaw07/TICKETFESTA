@@ -329,6 +329,7 @@ function category_image_gallery_shortcode($atts) {
         $category_id = $_POST["delete_category_id"];
 
         if (is_numeric($category_id)) {
+            require_once('wp-load.php');
             $result = wp_delete_term($category_id, 'tec_organizer_category');
 
             $category_images = get_term_meta($category_id, 'category_images', true);
