@@ -339,7 +339,7 @@ function category_image_gallery_shortcode($atts) {
             }
 
             $result = wp_delete_term($category_id, 'tec_organizer_category');
-
+            recalculate_user_memory_used();
             if (is_wp_error($result)) {
                 echo "Error: " . $result->get_error_message();
             } else { ?>
@@ -811,7 +811,43 @@ function create_tec_organizer_category_with_images($category_name, $image_urls, 
         update_term_meta( $term_id, 'category_organiser', sanitize_text_field($organiser) );
     }
 }
-    
+
+// this function recalculate user memory used
+function recalculate_user_memory_used(){
+    $current_user_id = get_current_user_id();
+    $terms = get_categories(array(
+        'taxonomy' => 'tec_organizer_category',
+        'hide_empty' => false,
+        'meta_query' => array(
+            array(
+                'key' => 'category_owner_id',
+                'value' => $current_user_id                ,
+                'compare' => '='
+            )
+        )
+    ));
+
+    $category_images = '';
+    $total_size_used_kb = 0;
+    foreach($terms as $term ){
+        $term_id   = $term->term_id;
+        $images    = get_term_meta($term_id, 'category_images', true); // get category images
+        $category_images .= $images . ',';
+    }
+    $category_images = explode(',', $category_images);
+    foreach($category_images as $category_image){
+        if($category_image !== ''){
+            $headers = get_headers( $category_image, 1 );
+            if ( isset( $headers['Content-Length'] ) ) {
+                $filesize_bytes = (int) $headers['Content-Length'];
+                $filesize_mb = round( ( $filesize_bytes / 1024)  , 2 ); // Convert to KB
+                $total_size_used_kb += $filesize_mb;
+            }
+        }
+    }
+    $limit_check = round( ($total_size_used_kb / 1024) , 2);
+    update_user_meta( $current_user_id, 'total_upload', $limit_check );
+}
 function tec_check_account_upload_limit($organizer_id, $files){
     $sizes = $files['size'];
     $current_user_id = get_current_user_id();
