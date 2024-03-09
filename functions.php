@@ -3958,23 +3958,23 @@ function display_upcoming_events_for_user_with_view_order_button()
 
 
     echo '<div class="loadingAnimation">
-    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1366 768" xml:space="preserve">
-        <style type="text/css">
-            .st0{fill:none;stroke:#d3fa16;stroke-width:9;stroke-miterlimit:10;}
-            .st1{fill:none;stroke:#d3fa16;stroke-width:9;stroke-miterlimit:10;}
-        </style>
-        <g>
-            <path class="st0 grey" d="M772.5,347c-6.2-14-2.4-29.5,8.4-35.8c1.1-0.6,1.4-2.2,0.8-3.7l-8.5-19.1c-3.4-7.6-11.2-11.4-17.5-8.6
-                l-201,89.5c-6.3,2.8-8.7,11.2-5.3,18.8c0,0,6.4,14.3,8.5,19.1c0.6,1.4,2,2.2,3.3,1.8c12-3.8,26,3.7,32.3,17.7s2.4,29.5-8.4,35.8
-                c-1.1,0.6-1.4,2.2-0.8,3.7l8.5,19.1c3.4,7.6,11.2,11.4,17.5,8.6l201-89.5c6.3-2.8,8.7-11.2,5.3-18.8l-8.5-19.1
-                c-0.6-1.4-2-2.2-3.3-1.8C792.8,368.5,778.7,361,772.5,347z"></path>
-            <path class="st1 blue" d="M772.5,347c-6.2-14-2.4-29.5,8.4-35.8c1.1-0.6,1.4-2.2,0.8-3.7l-8.5-19.1c-3.4-7.6-11.2-11.4-17.5-8.6
-                l-201,89.5c-6.3,2.8-8.7,11.2-5.3,18.8c0,0,6.4,14.3,8.5,19.1c0.6,1.4,2,2.2,3.3,1.8c12-3.8,26,3.7,32.3,17.7s2.4,29.5-8.4,35.8
-                c-1.1,0.6-1.4,2.2-0.8,3.7l8.5,19.1c3.4,7.6,11.2,11.4,17.5,8.6l201-89.5c6.3-2.8,8.7-11.2,5.3-18.8l-8.5-19.1
-                c-0.6-1.4-2-2.2-3.3-1.8C792.8,368.5,778.7,361,772.5,347z"></path>
-        </g>
-    </svg>
-</div>';
+            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1366 768" xml:space="preserve">
+                <style type="text/css">
+                    .st0{fill:none;stroke:#d3fa16;stroke-width:9;stroke-miterlimit:10;}
+                    .st1{fill:none;stroke:#d3fa16;stroke-width:9;stroke-miterlimit:10;}
+                </style>
+                <g>
+                    <path class="st0 grey" d="M772.5,347c-6.2-14-2.4-29.5,8.4-35.8c1.1-0.6,1.4-2.2,0.8-3.7l-8.5-19.1c-3.4-7.6-11.2-11.4-17.5-8.6
+                        l-201,89.5c-6.3,2.8-8.7,11.2-5.3,18.8c0,0,6.4,14.3,8.5,19.1c0.6,1.4,2,2.2,3.3,1.8c12-3.8,26,3.7,32.3,17.7s2.4,29.5-8.4,35.8
+                        c-1.1,0.6-1.4,2.2-0.8,3.7l8.5,19.1c3.4,7.6,11.2,11.4,17.5,8.6l201-89.5c6.3-2.8,8.7-11.2,5.3-18.8l-8.5-19.1
+                        c-0.6-1.4-2-2.2-3.3-1.8C792.8,368.5,778.7,361,772.5,347z"></path>
+                    <path class="st1 blue" d="M772.5,347c-6.2-14-2.4-29.5,8.4-35.8c1.1-0.6,1.4-2.2,0.8-3.7l-8.5-19.1c-3.4-7.6-11.2-11.4-17.5-8.6
+                        l-201,89.5c-6.3,2.8-8.7,11.2-5.3,18.8c0,0,6.4,14.3,8.5,19.1c0.6,1.4,2,2.2,3.3,1.8c12-3.8,26,3.7,32.3,17.7s2.4,29.5-8.4,35.8
+                        c-1.1,0.6-1.4,2.2-0.8,3.7l8.5,19.1c3.4,7.6,11.2,11.4,17.5,8.6l201-89.5c6.3-2.8,8.7-11.2,5.3-18.8l-8.5-19.1
+                        c-0.6-1.4-2-2.2-3.3-1.8C792.8,368.5,778.7,361,772.5,347z"></path>
+                </g>
+            </svg>
+        </div>';
 
     echo '<div class="allTicketsContainer">'; // Open the main container for all tickets here
 
@@ -4001,8 +4001,8 @@ function display_upcoming_events_for_user_with_view_order_button()
                     $event_address = tribe_get_address($event_id);
                     // Encode the address for URL use
                     $map_link = "https://maps.google.com/?q=" . urlencode($event_address);
-
-                    ?>
+                    /*
+                ?>
 
 
                     <div class="ticket">
@@ -4015,17 +4015,17 @@ function display_upcoming_events_for_user_with_view_order_button()
                                 <?php echo truncate_title($event_title, 30); ?>
                             </div>
                             <?php // Check if the event address is not empty
-                                                if (!empty($event_address)) {
-                                                    // Encode the address for URL use
-                                                    $map_link = "https://maps.google.com/?q=" . urlencode($event_address);
+                                if (!empty($event_address)) {
+                                    // Encode the address for URL use
+                                    $map_link = "https://maps.google.com/?q=" . urlencode($event_address);
 
-                                                    // Display the address and the "Open on Map" button
-                                                    echo '<div class="eventaddress">' . $event_address . ' <a class="opne_on_map_link" href="' . $map_link . '" target="_blank">Map</a></div>';
-                                                } else {
-                                                    // If there is no address, you can choose to not display anything, or customize as needed
-                                                    echo '<div class="eventaddress"></div>'; // Optional: Customize based on your preference
-                                                }
-                                                ?>
+                                    // Display the address and the "Open on Map" button
+                                    echo '<div class="eventaddress">' . $event_address . ' <a class="opne_on_map_link" href="' . $map_link . '" target="_blank">Map</a></div>';
+                                } else {
+                                    // If there is no address, you can choose to not display anything, or customize as needed
+                                    echo '<div class="eventaddress"></div>'; // Optional: Customize based on your preference
+                                }
+                            ?>
                             <hr>
                             <div class="ticketDetail">
                                 <div><span class="ticket-detail-title">Event Date:</span>&ensp;
@@ -4064,7 +4064,7 @@ function display_upcoming_events_for_user_with_view_order_button()
                     </div>
 
                     <?php
-
+                    */
                     $displayed_event_ids[] = $event_id;
                 }
             }
@@ -4076,16 +4076,6 @@ function display_upcoming_events_for_user_with_view_order_button()
 echo '</div>'; // Close the main container for all tickets
 
 add_action('woocommerce_account_dashboard', 'display_upcoming_events_for_user_with_view_order_button');
-
-
-
-
-
-
-
-
-
-
 
 
 /////FUNCTION TO ADD SHORTCODE  FOR ALL ORDERS FROM USER 
