@@ -8,7 +8,7 @@ function organiser_image_gallery_shortcode() {
     $account_mb_used = $account_mb_used ? $account_mb_used : 0;
     $usage_percentage = ($account_mb_used / $total_mb) * 100;
     $usage_percentage_formatted = number_format($usage_percentage, 2); // Format to 2 decimal places if needed
-    
+    $default_organizer = get_default_organizer();
     ob_start(); ?>
 
     <!-- HTML structure for the image gallery -->
@@ -29,6 +29,9 @@ function organiser_image_gallery_shortcode() {
             <p class='max-upload'> Account Maximum Upload Limit 3MB </p>
             <p class='account-used'> Account used <?php echo $account_mb_used; ?>/3 MB</p>
             <p class='upload_limit' style='color:red!important; display: none; '> Account Maximum Upload Limit Reached </p>
+            <?php if($default_organizer) {?>
+                <p class='default-organizer'> Organizer : <?php echo $default_organizer; ?></p>
+            <?php } ?>
         </div> 
         <div class="main-selector-image-upload-div">
             <div class="Organizer-image-upload-div">
@@ -506,7 +509,11 @@ function category_image_gallery_shortcode($atts) {
     return ob_get_clean();
 }
 
-
+function get_default_organizer(){
+    $customer_id = get_current_user_id();
+    $organizer_id =  get_user_meta($customer_id, '_tribe_organizer_id', true);
+    return $organizer_id ? get_the_title($organizer_id) : false;
+}
 
 function register_as_media($url){
     // require_once("wp-load.php");
