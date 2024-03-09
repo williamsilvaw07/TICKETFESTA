@@ -110,11 +110,11 @@ $template_vars = array_merge( [ 'organizer' => $organizer, ], $conditionals )
     </svg>
 </div>
 
-<div class="main_content_loading_div">
+
 
 
 <div <?php tribe_classes( $classes ); ?>>
-
+<div class="main_content_loading_div">
 <div class="organizer_profile_main_div">
 
     <!-- Background Wrapper with Overlay -->
