@@ -3,6 +3,7 @@
 add_shortcode('organiser_image_gallery', 'organiser_image_gallery_shortcode');
 
 function organiser_image_gallery_shortcode() {
+    $total_mb = 3;
     $account_mb_used = get_user_meta( get_current_user_id(), 'total_upload', true );
     $account_mb_used = $account_mb_used ? $account_mb_used : 0;
     $usage_percentage = ($account_mb_used / $total_mb) * 100;
@@ -406,34 +407,22 @@ function category_image_gallery_shortcode($atts) {
                 });
             });
 
-
-
-
-
-
-
             var dropZone = document.getElementById('drop-zone');
 
-// Add event listeners for drag & drop functionality
-dropZone.addEventListener('dragover', function(e) {
-    e.preventDefault(); // This is necessary to allow a drop event
-    this.classList.add('dragover');
-});
+            // Add event listeners for drag & drop functionality
+            dropZone.addEventListener('dragover', function(e) {
+                e.preventDefault(); // This is necessary to allow a drop event
+                this.classList.add('dragover');
+            });
 
-dropZone.addEventListener('dragleave', function(e) {
-    this.classList.remove('dragover');
-});
+            dropZone.addEventListener('dragleave', function(e) {
+                this.classList.remove('dragover');
+            });
 
-dropZone.addEventListener('drop', function(e) {
-    this.classList.remove('dragover');
+            dropZone.addEventListener('drop', function(e) {
+                this.classList.remove('dragover');
 
-});
-
-
-
-
-
-
+            });
 
         </script>
         <?php
