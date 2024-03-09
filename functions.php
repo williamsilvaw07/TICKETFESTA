@@ -3818,7 +3818,6 @@ require_once get_stylesheet_directory() . '/option-page.php';
 
 ///FUNCTION TO SHOW THE UPCOMING EVENTS FROM THE ORGINSISER THE USER FOLLOWES 
 
-/*
 function ticketfeasta_display_following_organizers_events_dashboard()
 {
     $user_id = get_current_user_id();
@@ -3921,7 +3920,6 @@ function ticketfeasta_display_following_organizers_events_dashboard()
 }
 
 add_action('woocommerce_account_following_endpoint', 'ticketfeasta_display_following_organizers_events_dashboard');
-*/
 
 
 
