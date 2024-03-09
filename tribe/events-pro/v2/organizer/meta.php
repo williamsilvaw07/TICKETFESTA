@@ -1771,8 +1771,8 @@ text-align: left;
     text-align: center;
 }
 
-.tribe-events-header__breadcrumbs{
-    display: none;
+.tribe-events-header__breadcrumbs , .tribe-events-c-messages__message--notice{
+    display: none!important;
 }
 
 
