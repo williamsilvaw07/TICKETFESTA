@@ -1768,6 +1768,7 @@ text-align: left;
 }
 .organizer_title_name h1{
     padding-bottom: 8px;
+    text-align: center;
 }
 
 .tribe-events-header__breadcrumbs{
