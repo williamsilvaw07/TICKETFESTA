@@ -3977,7 +3977,7 @@ function display_upcoming_events_for_user_with_view_order_button()
         </div>';
 
     echo '<div class="allTicketsContainer">'; // Open the main container for all tickets here
-
+    return;
     if (!empty($customer_orders)) {
         foreach ($customer_orders as $customer_order) {
             $order_url = $customer_order->get_view_order_url();
@@ -4001,7 +4001,7 @@ function display_upcoming_events_for_user_with_view_order_button()
                     $event_address = tribe_get_address($event_id);
                     // Encode the address for URL use
                     $map_link = "https://maps.google.com/?q=" . urlencode($event_address);
-                    /*
+                    
                 ?>
 
 
@@ -4064,7 +4064,7 @@ function display_upcoming_events_for_user_with_view_order_button()
                     </div>
 
                     <?php
-                    */
+                    
                     $displayed_event_ids[] = $event_id;
                 }
             }
