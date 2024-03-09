@@ -128,8 +128,7 @@ function organiser_image_gallery_shortcode() {
             padding: 0;
         }
 
-
-        
+    
         
     </style>
 

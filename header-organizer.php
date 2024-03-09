@@ -2819,7 +2819,15 @@ html .tickets-sold-column , html .tribe-list-column-title {
                 margin: 0;
                 padding: 0;
             }
+            .overlay h4{
+    font-size: 18px;
+    margin-bottom: 8px;
+}
+.overlay h5{
+    font-size: 16px;
+    margin-bottom: 0px;
 
+} 
 
             .overlay h3 {
                 font-size: 15px;
