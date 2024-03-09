@@ -1178,7 +1178,9 @@ jQuery(document).ready(function($) {
 
 
 /*****END******/
-
+.tribe-events .tribe-events-header{
+    display:block!important
+}
 
 .organizer_profile_bk {
     position: relative;
