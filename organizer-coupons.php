@@ -27,156 +27,226 @@ $coupon_posts = get_posts(
     )
 );
 
-
-
-
-// //  foreach ($events as $event) {
-// echo "<pre>";
-// var_dump($events);
-// echo "</pre>";
-// //  }
-
-
-
-// foreach ($coupon_posts as $coupon) {
-//     $wooCoupon = new WC_Coupon($coupon->ID);
-//     $postMeta = get_post_meta($coupon->ID, 'product_ids', true);
-//     $product_ids_array = explode(',', $postMeta);
-//     echo "<pre>";
-//     $products = get_posts(array(
-//         'post_type'      => 'product',
-//         'post__in'       => $product_ids,
-//         'posts_per_page' => -1,
-//     ));
-//     var_dump($products);
-//     echo "</pre><br/><br/>";
-// }
-
-// die();
 // Include the header
 get_header('organizer');
 ?>
+<style>
+    .content-wrapper {
+        height: 100%;
+    }
+
+    .tribe-community-events-content .tribe-community-events-list-title,
+    .tribe-community-events-content .add-new {
+        display: inline-block;
+        vertical-align: middle;
+        margin-bottom: 0;
+    }
+
+    .tribe-community-events-content .add-new {
+        margin-left: 20px;
+    }
+
+    .tribe-button,
+    a.tribe-button,
+    button.tribe-button,
+    input.tribe-button {
+        border-radius: 3px;
+        line-height: 1;
+        margin: 10px;
+        padding: 9px 12px;
+    }
+
+    .tribe-community-events-list tbody tr,
+    .tribe-community-events-list thead tr {
+        grid-template-columns: 13% 16% 16% 15% 15% 10% 10% 2%;
+    }
+
+    .value {
+        font-size: 16px;
+        font-weight: 500;
+        color: #d3fa16 !important;
+    }
+
+    .event-status-form {
+        font-size: 13px !important;
+        padding: 2px 3px !important;
+    }
+
+    .tribe-community-events-list tr th,
+    .tribe-community-events-list tr td {
+        text-align: left;
+        padding-left: 0 !important;
+    }
+
+    .dropbtn {
+        background-color: transparent;
+        color: #d5d5d5 !important;
+        font-size: 52px;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        align-content: center;
+        justify-content: center;
+        height: 30px;
+    }
+
+    .content-wrapper {
+        background: #0d0e0e !important;
+        color: #fff;
+    }
+
+    .content {
+        max-width: 1300px;
+        margin: 0 auto;
+        background: #0d0e0e;
+    }
+
+    @media (max-width: 655px) {
+        .tribe-community-events-list thead {
+            display: block;
+        }
+    }
+</style>
+
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <!-- Main content -->
     <div class="content">
         <div class="container-fluid">
-            <div class="row">
+            <div class="row" id="tribe-community-events-shortcode">
                 <div class="col-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h5 class="card-title">
-                                <?php _e('Coupons', 'generatepress-child') ?>
-                            </h5>
-                            <div class="card-tools">
-                                <button type="button" class="btn btn-block btn-warning btn-sm" data-toggle="modal"
-                                    data-target="#modal-default">
+                    <div class="tribe-community-events-content">
+                        <div class="admin_dashboard_event_list_nav">
+                            <div class="main_custom_container_second">
+                                <h2 class="tribe-community-events-list-title">
+                                    <?php _e('Coupons', 'generatepress-child') ?>
+                                </h2>
+
+                                <button type="button" class="tribe-button tribe-button-primary add-new"
+                                    data-toggle="modal" data-target="#modal-default">
                                     <?php _e('Create Coupon', 'generatepress-child') ?>
                                 </button>
                             </div>
                         </div>
-                        <!-- /.card-header -->
-
-                        <div class="card-body">
-                            <table class="table table-bordered table-hover dataTable dtr-inline">
-                                <thead>
+                    </div>
+                    <div class="tribe-responsive-table-container">
+                        <table id="tribe-community-events-list"
+                            class="tribe-community-events-list display responsive stripe">
+                            <thead>
+                                <tr>
+                                    <th class="event-column">
+                                        Coupon Code
+                                    </th>
+                                    <th class="tickets-sold-column">
+                                        Ticket
+                                    </th>
+                                    <th class="gross-column">
+                                        Event Name
+                                    </th>
+                                    <th class="status-column">
+                                        Start Date
+                                    </th>
+                                    <th class="status-column">
+                                        End Date
+                                    </th>
+                                    <th class="status-column">
+                                        Value
+                                    </th>
+                                    <th class="status-column">
+                                        Type
+                                    </th>
+                                    <th class="status-column action">
+                                        Action
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($coupon_posts as $coupon): ?>
+                                    <?php $wooCoupon = new WC_Coupon($coupon->ID); ?>
+                                    <?php $data = []; ?>
                                     <tr>
-                                        <th>Coupon Code</th>
-                                        <th>Ticket</th>
-                                        <th>Event Name</th>
-                                        <th>Start Date</th>
-                                        <th>End Date</th>
-                                        <th>Value</th>
-                                        <th>Type</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php foreach ($coupon_posts as $coupon): ?>
-                                        <?php $wooCoupon = new WC_Coupon($coupon->ID); ?>
-                                        <?php $data = []; ?>
-                                        <tr>
-                                            <td>
+                                        <td class="tribe-dependent tribe-list-column tribe-list-column-status tribe-active">
+                                            <span class="value">
                                                 <?php
                                                 $data['code'] = $wooCoupon->get_code();
                                                 $data['coupon_id'] = $coupon->ID;
                                                 echo $wooCoupon->get_code();
                                                 ?>
-                                            </td>
-                                            <td>
-                                                <?php
+                                            </span>
+                                        </td>
+                                        <td class="event-status-form">
+                                            <?php
 
-                                                $postMeta = get_post_meta($coupon->ID, 'product_ids', true);
-                                                $product_ids_array = explode(',', $postMeta);
-                                                echo "<ul style='margin-left: 15px;'>";
-                                                foreach ($product_ids_array as $key => $product_id) {
-                                                    $product = wc_get_product($product_id);
-                                                    echo "<li>{$product->get_name()}</li>";
-                                                }
-                                                echo "</ul>";
-                                                $data['product_ids'] = $product_ids_array;
-                                                ?>
-                                            </td>
-                                            <td>
-                                                <?php
-                                                $data['event_id'] = get_post_meta($coupon->ID, 'event_id', true);
-                                                if (isset($eventArray[$data['event_id']]))
-                                                    echo $eventArray[$data['event_id']];
-                                                ?>
-                                            </td>
-                                            <td>
-                                                <?php
-                                                $start_date = $wooCoupon->get_date_created();
-                                                echo $start_date ? date('Y-m-d H:i', strtotime($start_date)) : '';
-                                                $data['start_date'] = $start_date ? date('Y-m-d H:i', strtotime($start_date)) : '';
-                                                ?>
-                                            </td>
-                                            <td>
-                                                <?php
-                                                $expire_date = $wooCoupon->get_date_expires();
-                                                echo $expire_date ? date('Y-m-d H:i', strtotime($expire_date)) : '';
-                                                $data['expire_date'] = $expire_date ? date('Y-m-d H:i', strtotime($expire_date)) : '';
-                                                ?>
-                                            </td>
-                                            <td>
-                                                <?php
-                                                $data['amount'] = $wooCoupon->get_amount();
-                                                echo $wooCoupon->get_amount();
-                                                ?>
-                                            </td>
-                                            <td>
-                                                <?php
-                                                $data['discount_type'] = $wooCoupon->get_discount_type();
+                                            $postMeta = get_post_meta($coupon->ID, 'product_ids', true);
+                                            $product_ids_array = explode(',', $postMeta);
+                                            echo "<ul style='margin: 0;'>";
+                                            foreach ($product_ids_array as $key => $product_id) {
+                                                $product = wc_get_product($product_id);
+                                                echo "<li>{$product->get_name()}</li>";
+                                            }
+                                            echo "</ul>";
+                                            $data['product_ids'] = $product_ids_array;
+                                            ?>
+                                        </td>
+                                        <td class="event-status-form">
+                                            <?php
+                                            $data['event_id'] = get_post_meta($coupon->ID, 'event_id', true);
+                                            if (isset($eventArray[$data['event_id']]))
+                                                echo $eventArray[$data['event_id']];
+                                            ?>
+                                        </td>
+                                        <td class="event-status-form">
+                                            <?php
+                                            $start_date = $wooCoupon->get_date_created();
+                                            echo $start_date ? date('Y-m-d H:i', strtotime($start_date)) : '';
+                                            $data['start_date'] = $start_date ? date('Y-m-d H:i', strtotime($start_date)) : '';
+                                            ?>
+                                        </td>
+                                        <td class="event-status-form">
+                                            <?php
+                                            $expire_date = $wooCoupon->get_date_expires();
+                                            echo $expire_date ? date('Y-m-d H:i', strtotime($expire_date)) : '';
+                                            $data['expire_date'] = $expire_date ? date('Y-m-d H:i', strtotime($expire_date)) : '';
+                                            ?>
+                                        </td>
+                                        <td class="event-status-form">
+                                            <?php
+                                            $data['amount'] = $wooCoupon->get_amount();
+                                            echo $wooCoupon->get_amount();
+                                            ?>
+                                        </td>
+                                        <td class="event-status-form">
+                                            <?php
+                                            $data['discount_type'] = $wooCoupon->get_discount_type();
 
-                                                echo ['fixed_cart'=>'Fixed', 'percent'=>'Percent'][$wooCoupon->get_discount_type()];
-                                                ?>
-                                            </td>
-                                            <td class="text-end">
-                                                <div class="btn-group">
-                                                    <button type="button" class="btn btn-info" data-toggle="dropdown"
-                                                        aria-expanded="false">Action</button>
-                                                    <button type="button"
-                                                        class="btn btn-info dropdown-toggle dropdown-hover dropdown-icon"
-                                                        data-toggle="dropdown" aria-expanded="false">
-                                                        <span class="sr-only">Toggle Dropdown</span>
-                                                    </button>
-                                                    <div class="dropdown-menu" role="menu" style="">
+                                            echo ['fixed_cart' => 'Fixed', 'percent' => 'Percent'][$wooCoupon->get_discount_type()];
+                                            ?>
+                                        </td>
+                                        <td class="text-end action">
+                                            <div class="btn-group dropleft">
+                                                <button type="button" class="dropbtn" data-toggle="dropdown"
+                                                    aria-expanded="false">⋮</button>
 
-                                                        <a class="dropdown-item" href="#"
-                                                            data-details='<?php echo json_encode($data) ?>'
-                                                            onclick="onClickEditHandeler(this)" data-toggle="modal" data-target="#modal-edit">Edit</a>
-                                                        <a class="dropdown-item" href="#"
-                                                            onclick="onClickDeleteHandeler(<?php echo $coupon->ID ?>)">Delete</a>
-                                                    </div>
+                                                <div class="dropdown-menu" role="menu" style="">
+
+                                                    <a class="dropdown-item" href="#"
+                                                        data-details='<?php echo json_encode($data) ?>'
+                                                        onclick="onClickEditHandeler(this)" data-toggle="modal"
+                                                        data-target="#modal-edit">Edit</a>
+                                                    <a class="dropdown-item" href="#"
+                                                        onclick="onClickDeleteHandeler(<?php echo $coupon->ID ?>)">Delete</a>
                                                 </div>
-                                            </td>
-                                        </tr>
-                                    <?php endforeach; ?>
-                                </tbody>
-                            </table>
-                        </div>
-                        <!-- ./card-body -->
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
                     </div>
+
                 </div>
             </div>
         </div><!-- /.container-fluid -->
@@ -282,7 +352,7 @@ get_header('organizer');
 <div class="modal fade" id="modal-edit" style="display: none;" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <form class="modal-content" id="editForm">
-            <input type="hidden" name="coupon_id" id="coupon_id"/>
+            <input type="hidden" name="coupon_id" id="coupon_id" />
             <div class="modal-header">
                 <h4 class="modal-title">Edit Coupon</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -292,7 +362,8 @@ get_header('organizer');
             <div class="modal-body">
                 <div class="form-group">
                     <label for="edit_coupon_code">Coupon Code</label>
-                    <input type="text" name="coupon_code" class="form-control" id="edit_coupon_code" placeholder="Enter coupon code">
+                    <input type="text" name="coupon_code" class="form-control" id="edit_coupon_code"
+                        placeholder="Enter coupon code">
                 </div>
                 <div class="row">
                     <div class="col-md-6">
@@ -318,8 +389,8 @@ get_header('organizer');
                             <div class="form-group">
                                 <div class="input-group date" id="edit_start_date" data-target-input="nearest">
                                     <input type="text" class="form-control datetimepicker-input"
-                                        data-target="#edit_start_date" name="start_date" id="edit_start_date_time" 
-                                        data-toggle="datetimepicker"/>
+                                        data-target="#edit_start_date" name="start_date" id="edit_start_date_time"
+                                        data-toggle="datetimepicker" />
                                     <div class="input-group-append" data-target="#edit_start_date"
                                         data-toggle="datetimepicker">
                                         <div class="input-group-text"><i class="fa fa-calendar"></i></div>
@@ -333,9 +404,9 @@ get_header('organizer');
                             <label>End Date & time:</label>
                             <div class="form-group">
                                 <div class="input-group date" id="edit_end_date" data-target-input="nearest">
-                                    <input type="text" class="form-control datetimepicker-input" data-target="#edit_end_date"
-                                        name="end_date" id="edit_end_date_time" 
-                                        data-toggle="datetimepicker"/>
+                                    <input type="text" class="form-control datetimepicker-input"
+                                        data-target="#edit_end_date" name="end_date" id="edit_end_date_time"
+                                        data-toggle="datetimepicker" />
                                     <div class="input-group-append" data-target="#edit_end_date"
                                         data-toggle="datetimepicker">
                                         <div class="input-group-text"><i class="fa fa-calendar"></i></div>
@@ -347,7 +418,8 @@ get_header('organizer');
                 </div>
                 <div class="form-group">
                     <label>Event</label>
-                    <select class="form-control select2" style="width: 100%;" name="event_id" id="edit_event_id" required>
+                    <select class="form-control select2" style="width: 100%;" name="event_id" id="edit_event_id"
+                        required>
                         <?php
                         foreach ($events as $event) {
                             if ($event->post_author == get_current_user_id()) {
