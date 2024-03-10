@@ -2087,6 +2087,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
             .events-community-post-title p,
             .event_decp_div p {
                 color: #9d9d9d !important;
+                font-size:13px!important
             }
 
             .event_decp_div h2,
@@ -2818,7 +2819,15 @@ html .tickets-sold-column , html .tribe-list-column-title {
                 margin: 0;
                 padding: 0;
             }
+            .overlay h4{
+    font-size: 18px;
+    margin-bottom: 8px;
+}
+.overlay h5{
+    font-size: 16px;
+    margin-bottom: 0px;
 
+} 
 
             .overlay h3 {
                 font-size: 15px;

@@ -91,9 +91,30 @@ $template_vars = array_merge( [ 'organizer' => $organizer, ], $conditionals )
 
 
 
+<div class="loading_svg_div">
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1366 768" xml:space="preserve">
+        <style type="text/css">
+            .st0{fill:none;stroke:#d3fa16;stroke-width:9;stroke-miterlimit:10;}
+            .st1{fill:none;stroke:#d3fa16;stroke-width:9;stroke-miterlimit:10;}
+        </style>
+        <g>
+            <path class="st0 grey" d="M772.5,347c-6.2-14-2.4-29.5,8.4-35.8c1.1-0.6,1.4-2.2,0.8-3.7l-8.5-19.1c-3.4-7.6-11.2-11.4-17.5-8.6
+                l-201,89.5c-6.3,2.8-8.7,11.2-5.3,18.8c0,0,6.4,14.3,8.5,19.1c0.6,1.4,2,2.2,3.3,1.8c12-3.8,26,3.7,32.3,17.7s2.4,29.5-8.4,35.8
+                c-1.1,0.6-1.4,2.2-0.8,3.7l8.5,19.1c3.4,7.6,11.2,11.4,17.5,8.6l201-89.5c6.3-2.8,8.7-11.2,5.3-18.8l-8.5-19.1
+                c-0.6-1.4-2-2.2-3.3-1.8C792.8,368.5,778.7,361,772.5,347z"></path>
+            <path class="st1 blue" d="M772.5,347c-6.2-14-2.4-29.5,8.4-35.8c1.1-0.6,1.4-2.2,0.8-3.7l-8.5-19.1c-3.4-7.6-11.2-11.4-17.5-8.6
+                l-201,89.5c-6.3,2.8-8.7,11.2-5.3,18.8c0,0,6.4,14.3,8.5,19.1c0.6,1.4,2,2.2,3.3,1.8c12-3.8,26,3.7,32.3,17.7s2.4,29.5-8.4,35.8
+                c-1.1,0.6-1.4,2.2-0.8,3.7l8.5,19.1c3.4,7.6,11.2,11.4,17.5,8.6l201-89.5c6.3-2.8,8.7-11.2,5.3-18.8l-8.5-19.1
+                c-0.6-1.4-2-2.2-3.3-1.8C792.8,368.5,778.7,361,772.5,347z"></path>
+        </g>
+    </svg>
+</div>
+
+
+
 
 <div <?php tribe_classes( $classes ); ?>>
-
+<div class="main_content_loading_div">
 <div class="organizer_profile_main_div">
 
     <!-- Background Wrapper with Overlay -->
@@ -678,10 +699,38 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 
 
 
-
+</div>
 
 
 <script>
+
+
+//FUNCTION TO SHOW LOADING EFFECT AND WHEN JS IS FULLY LOADED  HIDE AND SHOW CONTENT
+document.addEventListener("DOMContentLoaded", function() {
+        // Wait for 500 milliseconds after the document is fully loaded before showing main content
+        setTimeout(showMainContent, 1000);
+    });
+
+    function showMainContent() {
+        // Hide the loading animation
+        var loadingDiv = document.querySelector('.loading_svg_div');
+        if (loadingDiv) {
+            loadingDiv.style.display = 'none';
+        }
+
+        // Show the main content
+        var mainContentDiv = document.querySelector('.main_content_loading_div');
+        if (mainContentDiv) {
+            mainContentDiv.style.display = 'block'; // Or 'flex', 'grid' etc. depending on your layout
+        }
+    }
+
+    ////END
+
+
+
+
+
 
 
 
@@ -1070,6 +1119,68 @@ jQuery(document).ready(function($) {
 
 <style>
 
+
+/****LOADING  ANIMATION STYLES*****/
+.loading_svg_div {
+        display: block; /* Or whatever display mode you prefer */
+    }
+
+    .main_content_loading_div {
+        display: none;
+    }
+.grey {
+  stroke-dasharray: 788 790;
+  stroke-dashoffset: 789;
+  animation: draw_0 3200ms infinite, fade 3200ms infinite;
+}
+
+.blue {
+  stroke-dasharray: 788 790;
+  stroke-dashoffset: 789;
+  animation: draw_1 3200ms infinite, fade 3200ms infinite;
+}
+
+@keyframes fade {
+  0% {
+    stroke-opacity: 1;
+  }
+  80% {
+    stroke-opacity: 1;
+  }
+  100% {
+    stroke-opacity: 0;
+  }
+}
+
+@keyframes draw_0 {
+  9.375% {
+    stroke-dashoffset: 789
+  }
+  39.375% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes draw_1 {
+  35.625% {
+    stroke-dashoffset: 789
+  }
+  65.625% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+
+/*****END******/
+.tribe-events .tribe-events-header{
+    display:block!important
+}
 
 .organizer_profile_bk {
     position: relative;
@@ -1768,10 +1879,11 @@ text-align: left;
 }
 .organizer_title_name h1{
     padding-bottom: 8px;
+    text-align: center;
 }
 
-.tribe-events-header__breadcrumbs{
-    display: none;
+.tribe-events-header__breadcrumbs , .tribe-events-c-messages__message--notice{
+    display: none!important;
 }
 
 

@@ -207,7 +207,7 @@ $event_url = esc_attr($event_url);
 $event_description = get_post_meta($event_id, 'event_description', true);
 ?>
 
-<div id="quill-editor" style="height: 200px;"></div>
+
 <input type="hidden" name="event_description" id="event_description" value="<?php echo esc_attr($event_description); ?>">
 
 <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
@@ -216,7 +216,7 @@ $event_description = get_post_meta($event_id, 'event_description', true);
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     var quill = new Quill('#quill-editor', {
-        theme: 'snow',
+        theme: 'bubble',
         modules: {
             toolbar: [
                 ['bold', 'italic', 'underline'],
@@ -262,28 +262,28 @@ document.addEventListener('DOMContentLoaded', function () {
                     <div class="admin_event_extra_info_input">
 
                     <input type="checkbox" id="allage" name="allage" <?php checked(get_post_meta($event_id, 'allage', true), 'on'); ?> />
-                        <label for="allage">Is the event for All Ages?</label>
+                        <label for="allage">Event for All Ages?</label>
                         </div>
 
 
                         <div class="admin_event_extra_info_input">
                         <input type="checkbox" id="over14" name="over14" <?php checked(get_post_meta($event_id, 'over14', true), 'on'); ?> />
-                        <label for="over14">Is the event for over 14 years old?</label>
+                        <label for="over14">Event for over 14+ </label>
                     </div>
 
                     <div class="admin_event_extra_info_input">
                         <input type="checkbox" id="over15" name="over15" <?php checked(get_post_meta($event_id, 'over15', true), 'on'); ?> />
-                        <label for="over15">Is the event for over 15 years old?</label>
+                        <label for="over15">Event for over 15+</label>
                     </div>
 
                     <div class="admin_event_extra_info_input">
                         <input type="checkbox" id="over18" name="over18" <?php checked(get_post_meta($event_id, 'over18', true), 'on'); ?> />
-                        <label for="over18">Is the event for over 18 years old?</label>
+                        <label for="over18">Event for over 18+</label>
                     </div>
 
                     <div class="admin_event_extra_info_input">
                         <input type="checkbox" id="norefunds" name="norefunds" <?php checked(get_post_meta($event_id, 'norefunds', true), 'on'); ?> />
-                        <label for="norefunds">Accept refund requests?</label>
+                        <label for="norefunds">Accept refund ?</label>
                     </div>
                 </div>
             </div>
@@ -976,7 +976,10 @@ jQuery(document).ready(function($) {
 
 <style>
 
-
+.edit-linked-post-link{
+    display:none!important;
+    visibility: hidden;
+}
 
     .accordion-header {
         cursor: pointer;
@@ -1126,7 +1129,9 @@ jQuery(document).ready(function($) {
 
     }
 
-
+ label{
+font-size:14px!important
+    }
     .char-count {
         margin-right: 10px;
         color: #9d9d9d !important;
@@ -1225,5 +1230,79 @@ jQuery(document).ready(function($) {
     display: none !important;
 }
 
+#tribetickets .tribe-section-content {
+    width: 100%;
+}
+#tribetickets label{
+    font-weight: 500 !important;
+    font-size: 15px;
 
+}
+
+#tribetickets .input_block .input_block , 
+#tribetickets .input_block .ticket_form_right {
+    margin-left: ih;
+}
+#post_title{
+    font-size: 22px !important;
+    font-weight: 700 !important;
+    color: white !important;
+    margin-bottom: 13px;
+    padding: 0;
+}
+.quill-wrap{
+    background: white;
+    border-radius:5px!important
+  
+}
+.quill-wrap span{
+    color:black!important;
+    background-color: inherit!important;
+}
+.ql-editor h1{
+    font-size: 31px;
+    font-weight: bold;
+    line-height: 35px;
+}
+.ql-editor p{
+    font-weight: 300;
+    font-size: 17px;
+}
+.ql-editor h2{
+    font-size: 23px;
+}
+.ql-editor p , .ql-editor h1 , .ql-editor h2{
+    color:black!important 
+}
+#editor{
+    color:black!important
+}
+.ql-toolbar.ql-snow , .ql-container.ql-snow {
+    border: 0px!important
+  
+}
+.ql-editor{
+    min-height:150px!important;
+    padding: 35px 15px;
+}
+#toolbar{
+    background: #c6c6c6;
+    border-radius: 5px 5px 0px 0px!important;
+}
+.ql-font {
+    display:none!important
+}
+.ql-snow .ql-tooltip.ql-editing a.ql-action::after {
+    border-right: 0px;
+    content: 'Save';
+    padding-right: 0px;
+    color: black;
+}
+.req{
+    float: left;
+    font-size: 15px;
+}
+.tribe-section-content-label label{
+    font-size:14px!important
+}
 </style>
