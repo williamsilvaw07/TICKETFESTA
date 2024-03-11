@@ -4409,7 +4409,7 @@ return $protocols;
 
 
 
-function custom_enqueue_scripts() {
+function customd_enqueue_scripts() {
     // Load html5-qrcode.min.js from a CDN
     wp_enqueue_script('html5-qrcode', 'https://unpkg.com/html5-qrcode/minified/html5-qrcode.min.js', array('jquery'), null, true);
 
@@ -4419,7 +4419,7 @@ function custom_enqueue_scripts() {
     // Localize script for AJAX
     wp_localize_script('custom-qr-scanner', 'ajax_object', array('ajax_url' => admin_url('admin-ajax.php')));
 }
-add_action('wp_enqueue_scripts', 'custom_enqueue_scripts');
+add_action('wp_enqueue_scripts', 'customd_enqueue_scripts');
 
 
 
