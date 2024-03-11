@@ -1,4 +1,5 @@
 jQuery(document).ready(function($) { 
+    console.log( "ready!" );
     function onScanSuccess(decodedText, decodedResult) {
         // Here you can handle the decoded text, e.g., display it or send it to the server
         console.log(decodedText, decodedResult);
