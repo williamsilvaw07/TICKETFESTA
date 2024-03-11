@@ -4416,7 +4416,7 @@ return $protocols;
 function custom_enqueue_scripts() {
     wp_enqueue_script('html5-qrcode', 'URL_TO_HTML5_QRCODE_JS', array(), null, true);
     // Add your custom JavaScript file
-    wp_enqueue_script('custom-qr-scanner', get_stylesheet_directory_uri() . '/js/custom-qr-scanner.js', array('jquery', 'html5-qrcode'), null, true);
+    wp_enqueue_script('custom-qr-scanner', get_stylesheet_directory_uri() . '/custom-qr-scanner.js', array('jquery', 'html5-qrcode'), null, true);
 }
 add_action('wp_enqueue_scripts', 'custom_enqueue_scripts');
 
