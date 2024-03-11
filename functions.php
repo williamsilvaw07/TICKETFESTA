@@ -4413,9 +4413,6 @@ function customd_enqueue_scripts() {
     // Load html5-qrcode.min.js from a CDN
     wp_enqueue_script('html5-qrcode', 'https://unpkg.com/html5-qrcode/minified/html5-qrcode.min.js', array('jquery'), null, true);
 
-    // Custom script for handling the QR code scanning
-    wp_enqueue_script('custom-qr-scanner', get_template_directory_uri() . '/js/custom-qr-scanner.js', array('jquery', 'html5-qrcode'), null, true);
-
     // Localize script for AJAX
     wp_localize_script('custom-qr-scanner', 'ajax_object', array('ajax_url' => admin_url('admin-ajax.php')));
 }
