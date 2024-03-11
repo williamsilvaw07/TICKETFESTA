@@ -1,22 +1,23 @@
 jQuery(document).ready(function($) {
     function onScanSuccess(decodedText, decodedResult) {
-        // Send the decoded text to the server
+        // Here you can handle the decoded text, e.g., display it or send it to the server
+        console.log(decodedText, decodedResult);
+
+        // Sending scanned code to the server via AJAX
         $.ajax({
-            url: ajax_object.ajax_url,
             type: 'POST',
+            url: ajax_object.ajax_url,
             data: {
-                action: 'handle_qr_code_scan',
-                decodedText: decodedText
+                action: 'handle_qr_code_scan', // The AJAX handler action name
+                decodedText: decodedText // The scanned QR code text
             },
             success: function(response) {
-                alert(response.data.message); // Show success message
-            },
-            error: function() {
-                alert("There was an error processing the QR code.");
+                alert(response.data.message); // Success response from server
             }
         });
     }
 
-    var html5QrcodeScanner = new Html5QrcodeScanner("qr-reader", { fps: 10, qrbox: 250 });
+    // Initialize the QR code scanner
+    var html5QrcodeScanner = new Html5QrcodeScanner("qr-reader", { fps: 10, qrbox: 250 }, false);
     html5QrcodeScanner.render(onScanSuccess);
 });

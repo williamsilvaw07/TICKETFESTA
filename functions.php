@@ -4409,38 +4409,38 @@ return $protocols;
 
 
 
-
-
-
 function custom_enqueue_scripts() {
-    wp_enqueue_script('html5-qrcode', 'https://cdn.jsdelivr.net/npm/html5-qrcode.min.js', array(), null, true);
-    wp_enqueue_script('custom-qr-scanner', get_stylesheet_directory_uri() . '/custom-qr-scanner.js', array('jquery', 'html5-qrcode'), null, true);
-    wp_localize_script('custom-qr-scanner', 'ajax_object', array( 'ajax_url' => admin_url('admin-ajax.php') ));
+    // Load html5-qrcode.min.js from a CDN
+    wp_enqueue_script('html5-qrcode', 'https://unpkg.com/html5-qrcode/minified/html5-qrcode.min.js', array('jquery'), null, true);
+
+    // Custom script for handling the QR code scanning
+    wp_enqueue_script('custom-qr-scanner', get_template_directory_uri() . '/custom-qr-scanner.js', array('jquery', 'html5-qrcode'), null, true);
+
+    // Localize script for AJAX
+    wp_localize_script('custom-qr-scanner', 'ajax_object', array('ajax_url' => admin_url('admin-ajax.php')));
 }
 add_action('wp_enqueue_scripts', 'custom_enqueue_scripts');
 
+
+
+
 function custom_qr_scanner_shortcode() {
-    ob_start();
-    ?>
-    <div id="qr-reader" style="width: 500px; height: 500px;"></div>
+    ob_start(); ?>
+    <div id="qr-reader" style="width: 100%; height: auto;"></div>
     <div id="qr-reader-results"></div>
-    <?php
-    return ob_get_clean();
+    <?php return ob_get_clean();
 }
 add_shortcode('custom_qr_scanner', 'custom_qr_scanner_shortcode');
 
 
+
+
 function handle_qr_code_scan() {
-    $decodedText = sanitize_text_field($_POST['decodedText']);
-    // TODO: Add your validation logic here. You might need to parse the decodedText and then perform an API request to validate the ticket.
+    $decodedText = $_POST['decodedText'];
+    // Here you can add your logic to handle the scanned QR code, such as validating it against your database
 
-    // Placeholder response
-    wp_send_json_success(['message' => 'Ticket validated successfully. Replace this with actual validation logic.']);
+    // Example: Sending a success message back
+    wp_send_json_success(['message' => 'QR Code scanned successfully: ' . $decodedText]);
 }
-add_action('wp_ajax_handle_qr_code_scan', 'handle_qr_code_scan');
-add_action('wp_ajax_nopriv_handle_qr_code_scan', 'handle_qr_code_scan');
-
-
-
-
-
+add_action('wp_ajax_handle_qr_code_scan', 'handle_qr_code_scan'); // For logged-in users
+add_action('wp_ajax_nopriv_handle_qr_code_scan', 'handle_qr_code_scan'); // For guests
