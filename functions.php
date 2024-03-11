@@ -1,6 +1,5 @@
 <?php
-///dd
-add_filter('show_admin_bar', '__return_false');
+
 
 
 /////FUNCTION TO AUTO COMPLEATE THE ORDERS 
@@ -4399,6 +4398,62 @@ return $protocols;
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function custom_enqueue_scripts() {
+    wp_enqueue_script('html5-qrcode', 'URL_TO_HTML5_QRCODE_JS', array(), null, true);
+    // Add your custom JavaScript file
+    wp_enqueue_script('custom-qr-scanner', get_stylesheet_directory_uri() . '/js/custom-qr-scanner.js', array('jquery', 'html5-qrcode'), null, true);
+}
+add_action('wp_enqueue_scripts', 'custom_enqueue_scripts');
+
+
+function custom_qr_scanner_shortcode() {
+    ob_start();
+    ?>
+    <div id="qr-reader" style="width: 500px; height: 500px;"></div>
+    <div id="qr-reader-results"></div>
+    <script>
+        jQuery(document).ready(function($) {
+            function onScanSuccess(decodedText, decodedResult) {
+                // Handle on success condition with the decoded text or result.
+                console.log(`Code matched = ${decodedText}`, decodedResult);
+                // Example: Make an AJAX request to your server with the decoded text
+            }
+
+            var html5QrcodeScanner = new Html5QrcodeScanner(
+                "qr-reader", { fps: 10, qrbox: 250 }, false);
+            html5QrcodeScanner.render(onScanSuccess);
+        });
+    </script>
+    <?php
+    return ob_get_clean();
+}
+add_shortcode('custom_qr_scanner', 'custom_qr_scanner_shortcode');
+
+
+
+function handle_qr_code_scan() {
+    $decodedText = $_POST['decodedText'];
+    // Process the decoded text, e.g., validate the ticket against your database
+
+    wp_send_json_success(['message' => 'Ticket validated successfully']);
+}
+add_action('wp_ajax_handle_qr_code_scan', 'handle_qr_code_scan');
+add_action('wp_ajax_nopriv_handle_qr_code_scan', 'handle_qr_code_scan');
 
 
 
