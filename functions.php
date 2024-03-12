@@ -4478,6 +4478,7 @@ function test_event_tickets_api_connection() {
 
 
 
+error_log('fetch_and_display_all_tickets shortcode executed.');
 
 
 function fetch_and_display_all_tickets() {
