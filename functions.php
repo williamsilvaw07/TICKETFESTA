@@ -4408,19 +4408,18 @@ return $protocols;
 
 
 
-
 function customd_enqueue_scripts() {
     // Load html5-qrcode.min.js from a CDN
     wp_enqueue_script('html5-qrcode', 'https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js', array('jquery'), null, true);
-    // Custom script for handling the QR code scanning
-    wp_enqueue_script('custom-qr-scanner', get_template_directory_uri() . '/js/custom-qr-scanner.js', array('jquery', 'html5-qrcode'), null, true);
+
+    // Correct path for custom script for handling the QR code scanning
+    // Replace get_template_directory_uri() with get_stylesheet_directory_uri() if TICKETFESTA is a child theme.
+    wp_enqueue_script('custom-qr-scanner', get_stylesheet_directory_uri() . '/js/custom-qr-scanner.js', array('jquery', 'html5-qrcode'), null, true);
 
     // Localize script for AJAX
     wp_localize_script('custom-qr-scanner', 'ajax_object', array('ajax_url' => admin_url('admin-ajax.php')));
 }
 add_action('wp_enqueue_scripts', 'customd_enqueue_scripts');
-
-
 
 
 function custom_qr_scanner_shortcode() {
