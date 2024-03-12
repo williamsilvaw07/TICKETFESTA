@@ -2481,11 +2481,11 @@ function handle_create_new_organizer()
 
     if (is_wp_error($organizer_id)) {
         // Log and send error response
-        error_log('Error creating organizer: ' . $organizer_id->get_error_message());
+       // error_log('Error creating organizer: ' . $organizer_id->get_error_message());
         wp_send_json_error('Error creating new organizer: ' . $organizer_id->get_error_message());
     } else {
         // Log success and send success response
-        error_log('Organizer created: ' . $organizer_id);
+       // error_log('Organizer created: ' . $organizer_id);
         wp_send_json_success(array('organizer_id' => $organizer_id));
     }
 }
@@ -2887,11 +2887,11 @@ add_action('save_post_tribe_events', 'save_event_extra_options', 10, 3);
 ///////////////////END////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 function save_event_description($post_id) {
-    error_log('save_event_description function called');
+    //error_log('save_event_description function called');
     if (isset($_POST['event_description'])) {
         $event_description = wp_kses_post($_POST['event_description']);
         update_post_meta($post_id, 'event_description', $event_description);
-        error_log('Event description saved: ' . $event_description);
+      //  error_log('Event description saved: ' . $event_description);
     }
 }
 add_action('save_post', 'save_event_description');
@@ -2989,7 +2989,7 @@ add_action('daily_event_status_check', 'update_event_payment_status');
 // Hook when the payment status is updated to 'Paid'
 function update_payment_date_on_paid_status($new_status, $old_status, $post)
 {
-    error_log('update_payment_date_on_paid_status triggered'); // Add this line for debugging
+ //   error_log('update_payment_date_on_paid_status triggered'); // Add this line for debugging
 
     // Check if the status changed to 'Paid'
     if ($new_status === 'paid' && $old_status !== 'paid') {
@@ -4257,12 +4257,12 @@ function set_all_products_featured_image_to_event_image()
             if (!empty($event_image_id)) {
                 // Set the event's image as the product's featured image.
                 set_post_thumbnail($product_id, $event_image_id);
-                error_log("Product ID {$product_id} featured image updated to event ID {$event_id}'s image.");
+                //error_log("Product ID {$product_id} featured image updated to event ID {$event_id}'s image.");
             } else {
-                error_log("Event ID {$event_id} does not have a featured image.");
+              //  error_log("Event ID {$event_id} does not have a featured image.");
             }
         } else {
-            error_log("Product ID {$product_id} does not have an associated event.");
+           // error_log("Product ID {$product_id} does not have an associated event.");
         }
     }
 }
@@ -4477,12 +4477,39 @@ function test_event_tickets_api_connection() {
 
 
 
+function fetch_and_display_all_tickets() {
+    error_log('Starting to fetch tickets...'); // Log initial step
+    $api_url = 'https://ticketfesta.co.uk/wp-json/tribe/tickets/v1/tickets';
+    $api_key = '72231569';
 
-error_log('fetch_and_display_all_tickets shortcode executed.');
-error_log('Direct error logging test.');
+    $response = wp_remote_get($api_url, [
+        'timeout' => 30,
+        'headers' => [
+            'Authorization' => 'Bearer ' . $api_key,
+        ],
+    ]);
 
-function fetch_and_display_all_tickets_test() {
-    error_log('fetch_and_display_all_tickets_test shortcode called');
-    return 'Shortcode executed, check the error log.';
+    if (is_wp_error($response)) {
+        $error_message = $response->get_error_message();
+        error_log("Failed to fetch tickets: $error_message"); // Log error message
+        return "Failed to fetch tickets: " . esc_html($error_message);
+    }
+
+    $tickets = json_decode(wp_remote_retrieve_body($response), true);
+    if (empty($tickets)) {
+        error_log('No tickets found.'); // Log no tickets found
+        return "No tickets found.";
+    }
+
+    // Proceed to list tickets if API call was successful
+    $output = '<ul class="tickets-list">';
+    foreach ($tickets as $ticket) {
+        $output .= sprintf('<li>%s - %s</li>', esc_html($ticket['title']), esc_html($ticket['description']));
+    }
+    $output .= '</ul>';
+
+    error_log('Tickets fetched successfully.'); // Log successful fetch
+    return $output; // Return the compiled list of tickets for frontend display
 }
-add_shortcode('display_tickets_test', 'fetch_and_display_all_tickets_test');
+
+add_shortcode('display_tickets', 'fetch_and_display_all_tickets');
