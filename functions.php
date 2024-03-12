@@ -4474,3 +4474,43 @@ function test_event_tickets_api_connection() {
 
 // Register a shortcode in WordPress
 add_shortcode('test_api_connection', 'test_event_tickets_api_connection');
+function fetch_and_display_all_tickets() {
+    $api_url = 'https://ticketfesta.co.uk/wp-json/tribe/tickets/v1/tickets'; // Adjust to the actual API endpoint
+    $api_key = '72231569'; // Your actual API key
+
+    $response = wp_remote_get($api_url, [
+        'timeout' => 30,
+        'headers' => [
+            'Authorization' => 'Bearer ' . $api_key,
+        ],
+    ]);
+
+    // Check for WP error
+    if (is_wp_error($response)) {
+        return '<p>Failed to fetch tickets: ' . esc_html($response->get_error_message()) . '</p>';
+    }
+
+    // Decode the response body
+    $tickets = json_decode(wp_remote_retrieve_body($response), true);
+
+    // Check if tickets are empty or not set
+    if (empty($tickets)) {
+        return '<p>No tickets found.</p>';
+    }
+
+    // Initialize output string
+    $output = '<ul class="tickets-list">';
+
+    // Iterate through tickets and append to output
+    foreach ($tickets as $ticket) {
+        $output .= sprintf('<li>%s - %s</li>', esc_html($ticket['title']), esc_html($ticket['description']));
+    }
+
+    // Close the list
+    $output .= '</ul>';
+
+    // Return the compiled list
+    return $output;
+}
+
+add_shortcode('display_tickets', 'fetch_and_display_all_tickets');
