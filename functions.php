@@ -4473,13 +4473,9 @@ function test_event_tickets_api_connection() {
 }
 
 
-
-
 function fetch_and_display_all_tickets() {
-    error_log('Fetching tickets...'); // Debugging statement
-
     $api_url = 'https://ticketfesta.co.uk/wp-json/tribe/tickets/v1/tickets';
-    $api_key = '72231569';
+    $api_key = '72231569'; // Ensure this is securely handled in production
 
     $response = wp_remote_get($api_url, [
         'timeout' => 30,
@@ -4488,22 +4484,28 @@ function fetch_and_display_all_tickets() {
         ],
     ]);
 
+    // Start building the output
+    $output = '';
+
     if (is_wp_error($response)) {
-        error_log('Failed to fetch tickets: ' . $response->get_error_message()); // Log error message
-        return '<p>Failed to fetch tickets: ' . esc_html($response->get_error_message()) . '</p>';
-    }
+        $error_message = $response->get_error_message();
+        $output .= '<p>Failed to fetch tickets: ' . esc_html($error_message) . '</p>';
+    } else {
+        $tickets = json_decode(wp_remote_retrieve_body($response), true);
 
-    $tickets = json_decode(wp_remote_retrieve_body($response), true);
-    if (empty($tickets)) {
-        error_log('No tickets found.'); // Log no tickets found
-        return '<p>No tickets found.</p>';
+        if (empty($tickets)) {
+            $output .= '<p>No tickets found.</p>';
+        } else {
+            $output .= '<ul class="tickets-list">';
+            foreach ($tickets as $ticket) {
+                // Assuming 'title' and 'description' are correct keys; adjust as necessary
+                $output .= sprintf('<li>%s - %s</li>', esc_html($ticket['title']), esc_html($ticket['description']));
+            }
+            $output .= '</ul>';
+        }
     }
-
-    $output = '<ul class="tickets-list">';
-    foreach ($tickets as $ticket) {
-        $output .= sprintf('<li>%s - %s</li>', esc_html($ticket['title']), esc_html($ticket['description']));
-    }
-    $output .= '</ul>';
 
     return $output;
 }
+
+add_shortcode('display_tickets', 'fetch_and_display_all_tickets');
