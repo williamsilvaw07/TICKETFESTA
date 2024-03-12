@@ -4451,7 +4451,6 @@ add_action('wp_ajax_nopriv_handle_qr_code_scan', 'handle_qr_code_scan'); // For 
 
 
 
-
 function fetch_and_display_all_tickets() {
     error_log('Starting to fetch tickets...'); // Log initial step
     $api_url = 'https://ticketfesta.co.uk/wp-json/tribe/tickets/v1/tickets';
@@ -4467,29 +4466,27 @@ function fetch_and_display_all_tickets() {
     if (is_wp_error($response)) {
         $error_message = $response->get_error_message();
         error_log("Failed to fetch tickets: $error_message"); // Log error message
-        return "Failed to fetch tickets: " . esc_html($error_message);
+        echo "Failed to fetch tickets: " . esc_html($error_message);
+        return; // Stop further execution for debugging
     }
 
     $tickets = json_decode(wp_remote_retrieve_body($response), true);
-    if (!is_array($tickets)) {
-        error_log('Unexpected format for tickets data.'); // Log unexpected format
-        return "Error: Unexpected API response format.";
-    }
-
     if (empty($tickets)) {
         error_log('No tickets found.'); // Log no tickets found
-        return "No tickets found.";
+        echo "No tickets found.";
+        return; // Stop further execution for debugging
     }
 
+    // Proceed to list tickets if API call was successful
     $output = '<ul class="tickets-list">';
     foreach ($tickets as $ticket) {
-        $title = isset($ticket['title']) ? $ticket['title'] : 'No Title Available';
-        $description = isset($ticket['description']) && !empty($ticket['description']) ? $ticket['description'] : 'No description provided.';
-        $output .= sprintf('<li>%s - %s</li>', esc_html($title), esc_html($description));
+        // Assuming $ticket contains 'title' and 'description'. Adjust according to actual API response structure.
+        $output .= sprintf('<li>%s - %s</li>', esc_html($ticket['title']), esc_html($ticket['description']));
     }
     $output .= '</ul>';
 
     error_log('Tickets fetched successfully.'); // Log successful fetch
-    return $output; // Return the compiled list of tickets for frontend display
+    echo $output; // Directly output the tickets list for debugging
 }
+
 add_shortcode('display_tickets', 'fetch_and_display_all_tickets');
