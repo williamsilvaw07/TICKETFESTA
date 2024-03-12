@@ -4449,4 +4449,37 @@ add_action('wp_ajax_nopriv_handle_qr_code_scan', 'handle_qr_code_scan'); // For 
 
 
 
+function display_all_tickets() {
+    $api_url = 'https://ticketfesta.co.uk/wp-json/tribe/tickets/v1/tickets'; // Adjust this URL to the endpoint for fetching tickets
+    $api_key = '72231569'; // Use your actual API Key, ensure secure handling
 
+    $response = wp_remote_get($api_url, [
+        'timeout' => 30,
+        'headers' => [
+            'Authorization' => 'Bearer ' . $api_key,
+            // Add any additional headers as per the API documentation
+        ],
+    ]);
+
+    if (is_wp_error($response)) {
+        return "Failed to fetch tickets: " . $response->get_error_message();
+    } else {
+        $tickets = json_decode(wp_remote_retrieve_body($response), true);
+        if (empty($tickets)) {
+            return "No tickets found.";
+        }
+
+        // Prepare the tickets display
+        $output = '<ul class="tickets-list">';
+        foreach ($tickets as $ticket) {
+            $output .= sprintf('<li>%s - %s</li>', esc_html($ticket['title']), esc_html($ticket['description']));
+        }
+        $output .= '</ul>';
+
+        return $output;
+    }
+}
+
+
+
+add_shortcode('display_tickets', 'display_all_tickets');
