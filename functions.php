@@ -4450,44 +4450,48 @@ add_action('wp_ajax_nopriv_handle_qr_code_scan', 'handle_qr_code_scan'); // For 
 
 
 function fetch_and_display_all_tickets() {
-    error_log('Starting to fetch tickets...');
-    $api_url = 'https://ticketfesta.co.uk/wp-json/tribe/tickets/v1/tickets';
-    $api_key = '72231569';
+    error_log('Starting to fetch tickets...'); // Log initial step
+    $api_url = 'https://ticketfesta.co.uk/wp-json/tribe/tickets/v1/tickets'; // API endpoint
+    $api_key = '72231569'; // Your API Key
 
     $response = wp_remote_get($api_url, [
         'timeout' => 30,
         'headers' => [
-            'Authorization' => 'Bearer ' . $api_key,
+            'Authorization' => 'Bearer ' . $api_key, // Authorization header
         ],
     ]);
 
     if (is_wp_error($response)) {
         $error_message = $response->get_error_message();
-        error_log("Failed to fetch tickets: $error_message");
-        return "<div>Failed to fetch tickets: " . esc_html($error_message) . "</div>";
+        error_log("Failed to fetch tickets: $error_message"); // Log error message
+        return "Failed to fetch tickets: " . esc_html($error_message);
     }
 
-    $tickets = json_decode(wp_remote_retrieve_body($response), true);
-    if (!is_array($tickets) || empty($tickets)) {
-        error_log('No tickets found or unexpected format.');
-        return "<div>No tickets found or unexpected format.</div>";
+    $body = wp_remote_retrieve_body($response);
+    $tickets = json_decode($body, true); // Decode JSON response into an array
+
+    if (!is_array($tickets)) {
+        error_log('Unexpected API response format');
+        return "Error: Unexpected API response format.";
     }
 
+    if (empty($tickets)) {
+        error_log('No tickets found.'); // Log no tickets found
+        return "No tickets found.";
+    }
+
+    // Proceed to list tickets if API call was successful
     $output = '<ul class="tickets-list">';
     foreach ($tickets as $ticket) {
-        // Ensure each ticket is an array and has the expected data before trying to access it.
-        if (!is_array($ticket) || !isset($ticket['title'])) {
-            continue; // Skip if not the expected format.
+        if (!isset($ticket['title'], $ticket['description'])) {
+            continue; // Skip tickets missing required fields
         }
-        
-        $title = esc_html($ticket['title']);
-        $description = isset($ticket['description']) ? esc_html($ticket['description']) : 'No description available.';
-        $output .= "<li><strong>{$title}</strong> - {$description}</li>";
+        $output .= sprintf('<li>%s - %s</li>', esc_html($ticket['title']), esc_html($ticket['description']));
     }
     $output .= '</ul>';
 
-    error_log('Tickets fetched successfully.');
-    return $output;
+    error_log('Tickets fetched successfully.'); // Log successful fetch
+    return $output; // Return the compiled list of tickets for frontend display
 }
 
 add_shortcode('display_tickets', 'fetch_and_display_all_tickets');
