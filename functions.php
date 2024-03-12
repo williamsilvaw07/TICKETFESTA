@@ -4452,25 +4452,7 @@ add_action('wp_ajax_nopriv_handle_qr_code_scan', 'handle_qr_code_scan'); // For 
 
 
 function test_event_tickets_api_connection() {
-    $api_url = 'https://ticketfesta.co.uk/wp-json/tribe/tickets/v1/attendees'; // Adjust based on actual API documentation
-    $api_key = '72231569'; // Example API Key, ensure secure handling
-
-    $response = wp_remote_get($api_url, [
-        'timeout' => 30,
-        'headers' => [
-            'Authorization' => 'Bearer ' . $api_key,
-            // Add any additional headers as per the API documentation
-        ],
-    ]);
-
-    if (is_wp_error($response)) {
-        $error_message = $response->get_error_message();
-        return "API Connection Test Failed: $error_message";
-    } else {
-        $body = wp_remote_retrieve_body($response);
-        return 'API Connection Test Successful: <pre>' . esc_html(print_r(json_decode($body, true), true)) . '</pre>';
-    }
+    return "API Connection Test Initiated.";
 }
 
-// Register a shortcode in WordPress
 add_shortcode('test_api_connection', 'test_event_tickets_api_connection');
