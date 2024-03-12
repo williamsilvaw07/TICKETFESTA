@@ -1,6 +1,6 @@
 jQuery(document).ready(function($) { 
     function onScanSuccess(decodedText, decodedResult) {
-        console.log(decodedText, decodedResult);
+        console.log(`Scanned text: ${decodedText}`, decodedResult);
 
         // Sending scanned code to the server via AJAX
         $.ajax({
@@ -11,7 +11,16 @@ jQuery(document).ready(function($) {
                 decodedText: decodedText // The scanned QR code text
             },
             success: function(response) {
-                alert(response.data.message); // Success response from server
+                if(response.success) {
+                    // Handle a successful check-in
+                    alert(`Success: ${response.data.message}`);
+                } else {
+                    // Handle different error cases based on the message or error codes from the server
+                    alert(`Error: ${response.data.message}`);
+                }
+            },
+            error: function() {
+                alert('There was a problem with the request. Please try again.');
             }
         });
     }
