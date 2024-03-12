@@ -4451,9 +4451,8 @@ add_action('wp_ajax_nopriv_handle_qr_code_scan', 'handle_qr_code_scan'); // For 
 
 
 
-
 function test_event_tickets_api_connection() {
-    $api_url = 'https://ticketfesta.co.uk/wp-json/tribe/tickets/v1/attendees'; // Example URL, adjust based on actual API documentation
+    $api_url = 'https://ticketfesta.co.uk/wp-json/tribe/tickets/v1/attendees'; // Adjust based on actual API documentation
     $api_key = '72231569'; // Example API Key, ensure secure handling
 
     $response = wp_remote_get($api_url, [
@@ -4466,10 +4465,12 @@ function test_event_tickets_api_connection() {
 
     if (is_wp_error($response)) {
         $error_message = $response->get_error_message();
-        error_log("API Connection Test Failed: $error_message");
+        return "API Connection Test Failed: $error_message";
     } else {
         $body = wp_remote_retrieve_body($response);
-        error_log('API Connection Test Successful: ' . print_r($body, true));
+        return 'API Connection Test Successful: <pre>' . esc_html(print_r(json_decode($body, true), true)) . '</pre>';
     }
 }
-add_action('init', 'test_event_tickets_api_connection');
+
+// Register a shortcode in WordPress
+add_shortcode('test_api_connection', 'test_event_tickets_api_connection');
