@@ -4472,3 +4472,4 @@ function test_event_tickets_api_connection() {
         error_log('API Connection Test Successful: ' . print_r($body, true));
     }
 }
+add_action('init', 'test_event_tickets_api_connection');
