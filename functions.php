@@ -4402,20 +4402,12 @@ return $protocols;
 
 
 
-
-
 function custom_enqueue_scripts() {
-    // Load html5-qrcode.min.js from a CDN
-    wp_enqueue_script('html5-qrcode', 'https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js', array('jquery'), null, true);
-
-    // Load your custom script for handling QR code scanning
-    wp_enqueue_script('custom-qr-scanner', get_stylesheet_directory_uri() . '/js/custom-qr-scanner.js', array('jquery', 'html5-qrcode'), null, true);
-
-    // Localize script for AJAX
+    wp_enqueue_script('html5-qrcode', 'https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js', array('jquery'), true);
+    wp_enqueue_script('custom-qr-scanner', get_stylesheet_directory_uri() . '/js/custom-qr-scanner.js', array('jquery', 'html5-qrcode'), true);
     wp_localize_script('custom-qr-scanner', 'ajax_object', array('ajax_url' => admin_url('admin-ajax.php')));
 }
 add_action('wp_enqueue_scripts', 'custom_enqueue_scripts');
-
 
 
 function custom_qr_scanner_shortcode() {
@@ -4429,29 +4421,31 @@ function custom_qr_scanner_shortcode() {
 add_shortcode('custom_qr_scanner', 'custom_qr_scanner_shortcode');
 
 
-
 function handle_qr_code_scan() {
     $decodedText = $_POST['decodedText'];
-    parse_str(parse_url($decodedText, PHP_URL_QUERY), $qr_params);
-
-    $ticket_id = $qr_params['ticket_id'] ?? '';
-    $event_id = $qr_params['event_id'] ?? '';
-    $security_code = $qr_params['security_code'] ?? '';
-
-    // Placeholder function to validate the QR code. Implement this according to your requirements.
-    $is_valid = validate_qr_code($ticket_id, $event_id, $security_code);
-
-    if ($is_valid) {
-        // Placeholder function to mark the ticket as checked in. Implement according to your requirements.
-        $check_in_result = check_in_ticket($ticket_id, $event_id);
-        if ($check_in_result) {
-            wp_send_json_success(['message' => 'Ticket checked in successfully']);
-        } else {
-            wp_send_json_error(['message' => 'Failed to check in ticket']);
-        }
+    // Decode and validate the QR code here (placeholder logic)
+    // Assume the QR code contains ticket_id, event_id, and a security_code
+    $data = explode('&', $decodedText);
+    $params = [];
+    foreach ($data as $param) {
+        list($key, $value) = explode('=', $param, 2);
+        $params[urldecode($key)] = urldecode($value);
+    }
+    
+    // Validate QR code contents (placeholder logic)
+    $isValid = validate_qr_code_contents($params);
+    if ($isValid) {
+        // Mark ticket as checked in (placeholder logic)
+        wp_send_json_success(['message' => 'Ticket checked in successfully.']);
     } else {
-        wp_send_json_error(['message' => 'Invalid QR Code']);
+        wp_send_json_error(['message' => 'Ticket validation failed.']);
     }
 }
 add_action('wp_ajax_handle_qr_code_scan', 'handle_qr_code_scan');
 add_action('wp_ajax_nopriv_handle_qr_code_scan', 'handle_qr_code_scan');
+
+function validate_qr_code_contents($params) {
+    // Placeholder validation logic
+    // You should validate the ticket_id, event_id, and security_code against your database
+    return true; // Assume validation is successful for this example
+}
