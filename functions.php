@@ -4451,31 +4451,6 @@ add_action('wp_ajax_nopriv_handle_qr_code_scan', 'handle_qr_code_scan'); // For 
 
 
 
-function test_event_tickets_api_connection() {
-    $api_url = 'https://ticketfesta.co.uk/wp-json/tribe/tickets/v1/attendees'; // Adjust based on actual API documentation
-    $api_key = '72231569'; // Example API Key, ensure secure handling
-
-    $response = wp_remote_get($api_url, [
-        'timeout' => 30,
-        'headers' => [
-            'Authorization' => 'Bearer ' . $api_key,
-            // Add any additional headers as per the API documentation
-        ],
-    ]);
-
-    if (is_wp_error($response)) {
-        $error_message = $response->get_error_message();
-        return "API Connection Test Failed: $error_message";
-    } else {
-        $body = wp_remote_retrieve_body($response);
-        return 'API Connection Test Successful: <pre>' . esc_html(print_r(json_decode($body, true), true)) . '</pre>';
-    }
-}
-
-
-
-
-
 
 function fetch_and_display_all_tickets() {
     error_log('Starting to fetch tickets...'); // Log initial step
@@ -4495,7 +4470,14 @@ function fetch_and_display_all_tickets() {
         return "Failed to fetch tickets: " . esc_html($error_message);
     }
 
-    $tickets = json_decode(wp_remote_retrieve_body($response), true);
+    $body = wp_remote_retrieve_body($response);
+    $tickets = json_decode($body, true);
+
+    if (!is_array($tickets)) {
+        error_log('Unexpected format for tickets data: ' . $body); // Log unexpected format
+        return "Error: Unexpected API response format.";
+    }
+
     if (empty($tickets)) {
         error_log('No tickets found.'); // Log no tickets found
         return "No tickets found.";
@@ -4504,7 +4486,11 @@ function fetch_and_display_all_tickets() {
     // Proceed to list tickets if API call was successful
     $output = '<ul class="tickets-list">';
     foreach ($tickets as $ticket) {
-        $output .= sprintf('<li>%s - %s</li>', esc_html($ticket['title']), esc_html($ticket['description']));
+        if (isset($ticket['title']) && isset($ticket['description'])) {
+            $output .= sprintf('<li>%s - %s</li>', esc_html($ticket['title']), esc_html($ticket['description']));
+        } else {
+            error_log('Ticket data missing expected fields: ' . print_r($ticket, true)); // Log missing fields
+        }
     }
     $output .= '</ul>';
 
