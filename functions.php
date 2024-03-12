@@ -4481,40 +4481,8 @@ function test_event_tickets_api_connection() {
 error_log('fetch_and_display_all_tickets shortcode executed.');
 error_log('Direct error logging test.');
 
-
-function fetch_and_display_all_tickets() {
-    error_log('Starting to fetch tickets...'); // Log initial step
-    $api_url = 'https://ticketfesta.co.uk/wp-json/tribe/tickets/v1/tickets';
-    $api_key = '72231569';
-
-    $response = wp_remote_get($api_url, [
-        'timeout' => 30,
-        'headers' => [
-            'Authorization' => 'Bearer ' . $api_key,
-        ],
-    ]);
-
-    if (is_wp_error($response)) {
-        $error_message = $response->get_error_message();
-        error_log("Failed to fetch tickets: $error_message"); // Log error message
-        return "Failed to fetch tickets: " . esc_html($error_message);
-    }
-
-    $tickets = json_decode(wp_remote_retrieve_body($response), true);
-    if (empty($tickets)) {
-        error_log('No tickets found.'); // Log no tickets found
-        return "No tickets found.";
-    }
-
-    // Proceed to list tickets if API call was successful
-    $output = '<ul class="tickets-list">';
-    foreach ($tickets as $ticket) {
-        $output .= sprintf('<li>%s - %s</li>', esc_html($ticket['title']), esc_html($ticket['description']));
-    }
-    $output .= '</ul>';
-
-    error_log('Tickets fetched successfully.'); // Log successful fetch
-    return $output; // Return the compiled list of tickets for frontend display
+function fetch_and_display_all_tickets_test() {
+    error_log('fetch_and_display_all_tickets_test shortcode called');
+    return 'Shortcode executed, check the error log.';
 }
-
-add_shortcode('display_tickets', 'fetch_and_display_all_tickets');
+add_shortcode('display_tickets_test', 'fetch_and_display_all_tickets_test');
