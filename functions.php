@@ -4449,10 +4449,8 @@ add_action('wp_ajax_nopriv_handle_qr_code_scan', 'handle_qr_code_scan'); // For 
 
 
 
-
-
 function fetch_and_display_all_tickets() {
-    error_log('Starting to fetch tickets...'); // Log initial step for debugging
+    error_log('Starting to fetch tickets...');
     $api_url = 'https://ticketfesta.co.uk/wp-json/tribe/tickets/v1/tickets';
     $api_key = '72231569';
 
@@ -4465,25 +4463,30 @@ function fetch_and_display_all_tickets() {
 
     if (is_wp_error($response)) {
         $error_message = $response->get_error_message();
-        error_log("Failed to fetch tickets: $error_message"); // Log error message for debugging
+        error_log("Failed to fetch tickets: $error_message");
         return "<div>Failed to fetch tickets: " . esc_html($error_message) . "</div>";
     }
 
     $tickets = json_decode(wp_remote_retrieve_body($response), true);
-    if (empty($tickets)) {
-        error_log('No tickets found.'); // Log for debugging
-        return "<div>No tickets found.</div>";
+    if (!is_array($tickets) || empty($tickets)) {
+        error_log('No tickets found or unexpected format.');
+        return "<div>No tickets found or unexpected format.</div>";
     }
 
     $output = '<ul class="tickets-list">';
     foreach ($tickets as $ticket) {
+        // Ensure each ticket is an array and has the expected data before trying to access it.
+        if (!is_array($ticket) || !isset($ticket['title'])) {
+            continue; // Skip if not the expected format.
+        }
+        
         $title = esc_html($ticket['title']);
-        $description = esc_html($ticket['description'] ?? 'No description available.');
+        $description = isset($ticket['description']) ? esc_html($ticket['description']) : 'No description available.';
         $output .= "<li><strong>{$title}</strong> - {$description}</li>";
     }
     $output .= '</ul>';
 
-    error_log('Tickets fetched successfully.'); // Log success for debugging
+    error_log('Tickets fetched successfully.');
     return $output;
 }
 
