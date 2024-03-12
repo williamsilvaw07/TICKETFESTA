@@ -4457,3 +4457,13 @@ function handle_qr_code_scan() {
 }
 add_action('wp_ajax_handle_qr_code_scan', 'handle_qr_code_scan');
 add_action('wp_ajax_nopriv_handle_qr_code_scan', 'handle_qr_code_scan');
+
+
+function custom_qr_scanner_shortcode() {
+    ob_start(); ?>
+    <div id="qr-reader" style="width: 100%; height: auto;"></div>
+    <div id="qr-reader-results"></div>
+    <?php
+    return ob_get_clean();
+}
+add_shortcode('custom_qr_scanner', 'custom_qr_scanner_shortcode');
