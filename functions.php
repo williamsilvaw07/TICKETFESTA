@@ -4470,11 +4470,9 @@ function fetch_and_display_all_tickets() {
         return "Failed to fetch tickets: " . esc_html($error_message);
     }
 
-    $body = wp_remote_retrieve_body($response);
-    $tickets = json_decode($body, true);
-
+    $tickets = json_decode(wp_remote_retrieve_body($response), true);
     if (!is_array($tickets)) {
-        error_log('Unexpected format for tickets data: ' . $body); // Log unexpected format
+        error_log('Unexpected format for tickets data.'); // Log unexpected format
         return "Error: Unexpected API response format.";
     }
 
@@ -4483,19 +4481,15 @@ function fetch_and_display_all_tickets() {
         return "No tickets found.";
     }
 
-    // Proceed to list tickets if API call was successful
     $output = '<ul class="tickets-list">';
     foreach ($tickets as $ticket) {
-        if (isset($ticket['title']) && isset($ticket['description'])) {
-            $output .= sprintf('<li>%s - %s</li>', esc_html($ticket['title']), esc_html($ticket['description']));
-        } else {
-            error_log('Ticket data missing expected fields: ' . print_r($ticket, true)); // Log missing fields
-        }
+        $title = isset($ticket['title']) ? $ticket['title'] : 'No Title Available';
+        $description = isset($ticket['description']) && !empty($ticket['description']) ? $ticket['description'] : 'No description provided.';
+        $output .= sprintf('<li>%s - %s</li>', esc_html($title), esc_html($description));
     }
     $output .= '</ul>';
 
     error_log('Tickets fetched successfully.'); // Log successful fetch
     return $output; // Return the compiled list of tickets for frontend display
 }
-
 add_shortcode('display_tickets', 'fetch_and_display_all_tickets');
