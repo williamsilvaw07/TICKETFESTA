@@ -4448,14 +4448,18 @@ add_action('wp_ajax_nopriv_handle_qr_code_scan', 'handle_qr_code_scan'); // For 
 
 
 
+
+
+
 function test_event_tickets_api_connection() {
-    $api_url = 'https://ticketfesta.co.uk/wp-json/tribe/tickets/v1/attendees';
-    $api_key = '72231569';
+    $api_url = 'https://ticketfesta.co.uk/wp-json/tribe/tickets/v1/attendees'; // Adjust based on actual API documentation
+    $api_key = '72231569'; // Example API Key, ensure secure handling
 
     $response = wp_remote_get($api_url, [
         'timeout' => 30,
         'headers' => [
             'Authorization' => 'Bearer ' . $api_key,
+            // Add any additional headers as per the API documentation
         ],
     ]);
 
@@ -4468,40 +4472,5 @@ function test_event_tickets_api_connection() {
     }
 }
 
+// Register a shortcode in WordPress
 add_shortcode('test_api_connection', 'test_event_tickets_api_connection');
-
-function display_all_tickets() {
-    $api_url = 'https://ticketfesta.co.uk/wp-json/tribe/tickets/v1/tickets';
-    $api_key = '72231569';
-
-    $response = wp_remote_get($api_url, [
-        'timeout' => 30,
-        'headers' => [
-            'Authorization' => 'Bearer ' . $api_key,
-        ],
-    ]);
-
-    if (is_wp_error($response)) {
-        $error_message = $response->get_error_message();
-        // Log the error for debugging
-        error_log("Failed to fetch tickets: $error_message");
-        // Display the error on the frontend for debugging (Consider removing for production)
-        return "Failed to fetch tickets: $error_message";
-    } else {
-        $tickets = json_decode(wp_remote_retrieve_body($response), true);
-        if (empty($tickets)) {
-            return "No tickets found.";
-        }
-
-        // Prepare the tickets display
-        $output = '<ul class="tickets-list">';
-        foreach ($tickets as $ticket) {
-            $output .= sprintf('<li>%s - %s</li>', esc_html($ticket['title']), esc_html($ticket['description']));
-        }
-        $output .= '</ul>';
-
-        return $output;
-    }
-}
-
-add_shortcode('display_tickets', 'display_all_tickets');
