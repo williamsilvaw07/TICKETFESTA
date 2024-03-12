@@ -4405,10 +4405,7 @@ return $protocols;
 
 
 
-
-
-
-function customd_enqueue_scripts() {
+function custom_enqueue_scripts() {
     // Load html5-qrcode.min.js from a CDN
     wp_enqueue_script('html5-qrcode', 'https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js', array('jquery'), null, true);
 
@@ -4418,7 +4415,7 @@ function customd_enqueue_scripts() {
     // Localize script for AJAX
     wp_localize_script('custom-qr-scanner', 'ajax_object', array('ajax_url' => admin_url('admin-ajax.php')));
 }
-add_action('wp_enqueue_scripts', 'customd_enqueue_scripts');
+add_action('wp_enqueue_scripts', 'custom_enqueue_scripts');
 
 function custom_qr_scanner_shortcode() {
     ob_start(); ?>
@@ -4429,45 +4426,14 @@ function custom_qr_scanner_shortcode() {
 add_shortcode('custom_qr_scanner', 'custom_qr_scanner_shortcode');
 
 function handle_qr_code_scan() {
-    $decodedText = $_POST['decodedText']; // The QR code text decoded by the scanner
+    $decodedText = $_POST['decodedText'];
 
     // API endpoint - adjust this URL to where you want to send the decoded QR code
     $api_url = 'https://ticketfesta.co.uk/wp-json/your-api-endpoint'; 
     $api_key = '72231569'; // Your API Key, ensure this is kept secure
 
-    // Prepare the data to be sent to the API
-    $body = json_encode([
-        'qr_code' => $decodedText, // Adjust this based on how your API expects the QR code data
-    ]);
-
-    // Make a POST request to the API with the QR code data
-    $response = wp_remote_post($api_url, [
-        'timeout' => 30,
-        'headers' => [
-            'Authorization' => 'Bearer ' . $api_key, // Authorization header
-            'Content-Type' => 'application/json', // Indicate JSON request
-        ],
-        'body' => $body,
-    ]);
-
-    // Check for errors in the response
-    if (is_wp_error($response)) {
-        $error_message = $response->get_error_message();
-        error_log("Failed to send QR code to API: $error_message"); // Log error message
-        wp_send_json_error(['message' => "Failed to send QR code: " . esc_html($error_message)]);
-        return;
-    }
-
-    $api_response = json_decode(wp_remote_retrieve_body($response), true); // Decode JSON response
-
-    // You can adjust this part based on the expected API response
-    if (isset($api_response['success']) && $api_response['success']) {
-        wp_send_json_success(['message' => 'QR Code verified successfully: ' . $decodedText]);
-    } else {
-        wp_send_json_error(['message' => 'Failed to verify QR Code: ' . $decodedText]);
-    }
+    // Example: Sending a success message back
+    wp_send_json_success(['message' => 'QR Code scanned successfully: ' . $decodedText]);
 }
 add_action('wp_ajax_handle_qr_code_scan', 'handle_qr_code_scan'); // For logged-in users
 add_action('wp_ajax_nopriv_handle_qr_code_scan', 'handle_qr_code_scan'); // For guests
-
-
