@@ -1,7 +1,6 @@
 jQuery(document).ready(function($) {
     function onScanSuccess(decodedText, decodedResult) {
-        console.log(`Decoded text: ${decodedText}`, decodedResult);
-        // Send the decoded text to the server for validation
+        console.log(`Code matched = ${decodedText}`, decodedResult);
         $.ajax({
             type: 'POST',
             url: ajax_object.ajax_url,
@@ -10,15 +9,14 @@ jQuery(document).ready(function($) {
                 decodedText: decodedText
             },
             success: function(response) {
-                if (response.success) {
-                    alert(response.data.message);
-                } else {
-                    alert(response.data.message);
-                }
+                alert(response.data.message);
+            },
+            error: function() {
+                alert("There was a problem with the request. Please try again.");
             }
         });
     }
 
-    var html5QrcodeScanner = new Html5QrcodeScanner("qr-reader", { fps: 10, qrbox: 250 }, false);
+    var html5QrcodeScanner = new Html5QrcodeScanner("qr-reader", { fps: 10, qrbox: 250 });
     html5QrcodeScanner.render(onScanSuccess);
 });
