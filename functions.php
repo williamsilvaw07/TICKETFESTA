@@ -4442,3 +4442,33 @@ function handle_qr_code_scan() {
 }
 add_action('wp_ajax_handle_qr_code_scan', 'handle_qr_code_scan'); // For logged-in users
 add_action('wp_ajax_nopriv_handle_qr_code_scan', 'handle_qr_code_scan'); // For guests
+
+
+
+
+
+
+
+
+
+
+function test_event_tickets_api_connection() {
+    $api_url = 'https://ticketfesta.co.uk/wp-json/tribe/tickets/v1/attendees'; // Example URL, adjust based on actual API documentation
+    $api_key = '72231569'; // Example API Key, ensure secure handling
+
+    $response = wp_remote_get($api_url, [
+        'timeout' => 30,
+        'headers' => [
+            'Authorization' => 'Bearer ' . $api_key,
+            // Add any additional headers as per the API documentation
+        ],
+    ]);
+
+    if (is_wp_error($response)) {
+        $error_message = $response->get_error_message();
+        error_log("API Connection Test Failed: $error_message");
+    } else {
+        $body = wp_remote_retrieve_body($response);
+        error_log('API Connection Test Successful: ' . print_r($body, true));
+    }
+}
