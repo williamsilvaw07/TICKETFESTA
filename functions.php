@@ -4448,21 +4448,45 @@ add_action('wp_ajax_nopriv_handle_qr_code_scan', 'handle_qr_code_scan'); // For 
 
 
 
-
-function display_all_tickets() {
-    $api_url = 'https://ticketfesta.co.uk/wp-json/tribe/tickets/v1/tickets'; // Adjust this URL to the endpoint for fetching tickets
-    $api_key = '72231569'; // Use your actual API Key, ensure secure handling
+function test_event_tickets_api_connection() {
+    $api_url = 'https://ticketfesta.co.uk/wp-json/tribe/tickets/v1/attendees';
+    $api_key = '72231569';
 
     $response = wp_remote_get($api_url, [
         'timeout' => 30,
         'headers' => [
             'Authorization' => 'Bearer ' . $api_key,
-            // Add any additional headers as per the API documentation
         ],
     ]);
 
     if (is_wp_error($response)) {
-        return "Failed to fetch tickets: " . $response->get_error_message();
+        $error_message = $response->get_error_message();
+        return "API Connection Test Failed: $error_message";
+    } else {
+        $body = wp_remote_retrieve_body($response);
+        return 'API Connection Test Successful: <pre>' . esc_html(print_r(json_decode($body, true), true)) . '</pre>';
+    }
+}
+
+add_shortcode('test_api_connection', 'test_event_tickets_api_connection');
+
+function display_all_tickets() {
+    $api_url = 'https://ticketfesta.co.uk/wp-json/tribe/tickets/v1/tickets';
+    $api_key = '72231569';
+
+    $response = wp_remote_get($api_url, [
+        'timeout' => 30,
+        'headers' => [
+            'Authorization' => 'Bearer ' . $api_key,
+        ],
+    ]);
+
+    if (is_wp_error($response)) {
+        $error_message = $response->get_error_message();
+        // Log the error for debugging
+        error_log("Failed to fetch tickets: $error_message");
+        // Display the error on the frontend for debugging (Consider removing for production)
+        return "Failed to fetch tickets: $error_message";
     } else {
         $tickets = json_decode(wp_remote_retrieve_body($response), true);
         if (empty($tickets)) {
@@ -4479,7 +4503,5 @@ function display_all_tickets() {
         return $output;
     }
 }
-
-
 
 add_shortcode('display_tickets', 'display_all_tickets');
