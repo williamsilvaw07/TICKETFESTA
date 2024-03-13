@@ -4405,54 +4405,40 @@ return $protocols;
 
 
 
-function custom_enqueue_scripts() {
-    // Enqueue QR code scanner library
-    wp_enqueue_script('html5-qrcode', 'https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js', [], null, true);
-    
-    // Enqueue your custom JS for handling the QR scan
-    wp_enqueue_script('custom-qr-scanner', get_stylesheet_directory_uri() . '/js/custom-qr-scanner.js', ['jquery', 'html5-qrcode'], null, true);
-    
-    // Pass AJAX URL and other parameters to your script
-    wp_localize_script('custom-qr-scanner', 'ajax_object', ['ajax_url' => admin_url('admin-ajax.php'), 'api_key' => '72231569']);
-}
-add_action('wp_enqueue_scripts', 'custom_enqueue_scripts');
-function custom_qr_scanner_shortcode() {
-    ob_start();
-    ?>
-    <div id="qr-reader" style="width: 100%; height: auto;"></div>
-    <div id="qr-reader-results"></div>
-    <?php
-    return ob_get_clean();
-}
-add_shortcode('custom_qr_scanner', 'custom_qr_scanner_shortcode');
-function handle_qr_code_scan() {
-    $decodedText = $_POST['decodedText'];
-    $api_key = '72231569'; // Use your actual API key
-    $api_url = 'https://ticketfesta.co.uk/wp-json/your-api-endpoint'; // Adjust the API endpoint
-    
-    // Simulate an API call for demonstration. Replace this with actual API call logic
-    $response = wp_remote_post($api_url, [
-        'body' => json_encode([
-            'api_key' => $api_key,
-            'qr_data' => $decodedText
-        ]),
-        'headers' => [
-            'Content-Type' => 'application/json',
-        ],
-    ]);
-    
-    if (is_wp_error($response)) {
-        wp_send_json_error(['message' => 'Failed to connect to the API']);
+
+
+function fetch_ticket_data() {
+    $ticket_id = '5269';
+    $api_key = '72231569';
+    $url = 'https://ticketfesta.co.uk/wp-json/tribe/tickets/v1/tickets/' . $ticket_id;
+
+    // Prepare the request headers with API Key
+    $args = array(
+        'headers' => array(
+            'Authorization' => 'Bearer ' . $api_key
+        )
+    );
+
+    // Make the request
+    $response = wp_remote_get( $url, $args );
+
+    // Check for errors
+    if ( is_wp_error( $response ) ) {
+        $error_message = $response->get_error_message();
+        return "Something went wrong: $error_message";
     }
-    
-    $api_response = json_decode(wp_remote_retrieve_body($response), true);
-    
-    // Assuming your API returns a success status to indicate the attendee is checked in
-    if (isset($api_response['success']) && $api_response['success']) {
-        wp_send_json_success(['message' => 'Attendee successfully checked in']);
-    } else {
-        wp_send_json_error(['message' => 'Failed to check in attendee']);
-    }
+
+    // Process the response
+    $body = wp_remote_retrieve_body( $response );
+    $data = json_decode( $body );
+
+    // Handle the data as needed
+    // For example, you might want to return it, echo it, or assign it to a global variable
+    echo '<pre>';
+    print_r( $data );
+    echo '</pre>';
 }
-add_action('wp_ajax_handle_qr_code_scan', 'handle_qr_code_scan'); // For logged-in users
-add_action('wp_ajax_nopriv_handle_qr_code_scan', 'handle_qr_code_scan'); // For non-logged-in users
+
+// Add the action to wp_enqueue_scripts to execute this function as an example
+// This is purely for demonstration; adjust the hook based on your use case
+add_action( 'wp_enqueue_scripts', 'fetch_ticket_data' );
