@@ -4406,7 +4406,6 @@ return $protocols;
 
 
 
-
 function fetch_ticket_data() {
     $ticket_id = '5269';
     $api_key = '72231569';
@@ -4430,15 +4429,11 @@ function fetch_ticket_data() {
 
     // Process the response
     $body = wp_remote_retrieve_body( $response );
-    $data = json_decode( $body );
-
-    // Handle the data as needed
-    // For example, you might want to return it, echo it, or assign it to a global variable
-    echo '<pre>';
-    print_r( $data );
-    echo '</pre>';
+    
+    // Return the body for rendering in the shortcode
+    // Escape the output to prevent XSS attacks
+    return '<pre>' . esc_html( $body ) . '</pre>';
 }
 
-// Add the action to wp_enqueue_scripts to execute this function as an example
-// This is purely for demonstration; adjust the hook based on your use case
-add_action( 'wp_enqueue_scripts', 'fetch_ticket_data' );
+// Register the shortcode [display_ticket_data]
+add_shortcode('display_ticket_data', 'fetch_ticket_data');
