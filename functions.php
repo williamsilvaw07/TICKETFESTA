@@ -4418,7 +4418,8 @@ function custom_qr_scanner_shortcode() {
     echo '<div id="qr-reader" style="width: 100%; height: auto;"></div><div id="qr-reader-results"></div>';
     return ob_get_clean();
 }
-add_shortcode('custom_qr_scanner', 'custom_qr_scanner_shortcode');
+add_shortcode('custom_qr_scanner', 'custom_qr_scanner_shortcode'); 
 
 
 
+ 
