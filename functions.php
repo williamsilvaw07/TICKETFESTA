@@ -4405,65 +4405,54 @@ return $protocols;
 
 
 
-
-
-
-
-
-
-
-
 function custom_enqueue_scripts() {
-    wp_enqueue_script('html5-qrcode', 'https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js', array('jquery'), null, true);
-    wp_enqueue_script('custom-qr-scanner', get_stylesheet_directory_uri() . '/js/custom-qr-scanner.js', array('jquery', 'html5-qrcode'), null, true);
-    wp_localize_script('custom-qr-scanner', 'ajax_object', array('ajax_url' => admin_url('admin-ajax.php')));
+    // Enqueue QR code scanner library
+    wp_enqueue_script('html5-qrcode', 'https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js', [], null, true);
+    
+    // Enqueue your custom JS for handling the QR scan
+    wp_enqueue_script('custom-qr-scanner', get_stylesheet_directory_uri() . '/js/custom-qr-scanner.js', ['jquery', 'html5-qrcode'], null, true);
+    
+    // Pass AJAX URL and other parameters to your script
+    wp_localize_script('custom-qr-scanner', 'ajax_object', ['ajax_url' => admin_url('admin-ajax.php'), 'api_key' => '72231569']);
 }
 add_action('wp_enqueue_scripts', 'custom_enqueue_scripts');
-
-
-
-function handle_qr_code_scan() {
-    $decodedText = $_POST['decodedText'];
-    // Assuming the QR code contains a URL, parse it to get query parameters
-    $qrData = [];
-    parse_str(parse_url($decodedText, PHP_URL_QUERY), $qrData);
-
-    $api_url = 'https://yourdomain.com/wp-json/tribe/tickets/v1/attendees/check-in'; // Adjust with the actual API endpoint
-    $api_key = '72231569'; // Replace with your actual API key
-
-    $response = wp_remote_post($api_url, [
-        'method' => 'POST',
-        'headers' => [
-            'Content-Type' => 'application/json',
-            'Authorization' => 'Bearer ' . $api_key,
-        ],
-        'body' => json_encode([
-            'ticket_id' => $qrData['ticket_id'],
-            'security_code' => $qrData['security_code'],
-            // Add other fields as needed based on your API and QR code structure
-        ]),
-    ]);
-
-    if (is_wp_error($response)) {
-        wp_send_json_error(['message' => 'Error contacting API']);
-    } else {
-        $body = json_decode(wp_remote_retrieve_body($response), true);
-        if (isset($body['error'])) {
-            wp_send_json_error(['message' => $body['message']]);
-        } else {
-            wp_send_json_success(['message' => 'Attendee successfully checked in']);
-        }
-    }
-}
-add_action('wp_ajax_handle_qr_code_scan', 'handle_qr_code_scan');
-add_action('wp_ajax_nopriv_handle_qr_code_scan', 'handle_qr_code_scan');
-
-
 function custom_qr_scanner_shortcode() {
-    ob_start(); ?>
+    ob_start();
+    ?>
     <div id="qr-reader" style="width: 100%; height: auto;"></div>
     <div id="qr-reader-results"></div>
     <?php
     return ob_get_clean();
 }
 add_shortcode('custom_qr_scanner', 'custom_qr_scanner_shortcode');
+function handle_qr_code_scan() {
+    $decodedText = $_POST['decodedText'];
+    $api_key = '72231569'; // Use your actual API key
+    $api_url = 'https://ticketfesta.co.uk/wp-json/your-api-endpoint'; // Adjust the API endpoint
+    
+    // Simulate an API call for demonstration. Replace this with actual API call logic
+    $response = wp_remote_post($api_url, [
+        'body' => json_encode([
+            'api_key' => $api_key,
+            'qr_data' => $decodedText
+        ]),
+        'headers' => [
+            'Content-Type' => 'application/json',
+        ],
+    ]);
+    
+    if (is_wp_error($response)) {
+        wp_send_json_error(['message' => 'Failed to connect to the API']);
+    }
+    
+    $api_response = json_decode(wp_remote_retrieve_body($response), true);
+    
+    // Assuming your API returns a success status to indicate the attendee is checked in
+    if (isset($api_response['success']) && $api_response['success']) {
+        wp_send_json_success(['message' => 'Attendee successfully checked in']);
+    } else {
+        wp_send_json_error(['message' => 'Failed to check in attendee']);
+    }
+}
+add_action('wp_ajax_handle_qr_code_scan', 'handle_qr_code_scan'); // For logged-in users
+add_action('wp_ajax_nopriv_handle_qr_code_scan', 'handle_qr_code_scan'); // For non-logged-in users
