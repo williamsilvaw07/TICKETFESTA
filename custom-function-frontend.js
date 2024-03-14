@@ -187,7 +187,8 @@ jQuery(document).ready(function($) {
     
         // Iterate over each .tribe-tickets__tickets-item
         jQuery('.tribe-tickets__tickets-item').each(function() {
-            var ticketAmount = parseFloat(jQuery(this).find('.tribe-amount').text().trim()).toFixed(2);
+            var ticketAmount = jQuery(this).find('.tribe-amount').text().replace(',', ''); 
+            ticketAmount = parseFloat(ticketAmount.trim()).toFixed(2);
             ticketAmount = isNaN(ticketAmount) ? 0 : parseFloat(ticketAmount);
             var quantity = parseInt(jQuery(this).find('.tribe-tickets__tickets-item-quantity-number-input').val());
             var ticketSiteFee = get_tribe_ticket_fee(ticketAmount, quantity);
