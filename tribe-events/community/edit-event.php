@@ -1163,7 +1163,7 @@ font-size:14px!important
     }
 
     .event-section__form_link a {
-        background-color: #555;
+        background-color: #3c3c3c;
         /* Lighter grey for default step */
         color: white;
         padding: 10px 15px;
