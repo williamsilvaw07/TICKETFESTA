@@ -1755,13 +1755,13 @@ html .tickets-sold-column , html .tribe-list-column-title {
             }
 
             .tribe-community-events form {
-                background-color: rgb(26, 26, 26) !important;
-                color: white !important;
-                border-width: 0 !important;
-                border-radius: 10px;
-                margin: 0 auto;
-                padding: 17px;
-                margin-bottom: 80px !important;
+                background-color: #19191b !important;
+    color: white !important;
+    border-width: 0 !important;
+    border-radius: 10px;
+    margin: 0 auto;
+    padding: 17px;
+    margin-bottom: 80px !important;
             }
 
             .ui-widget-content {
@@ -2058,7 +2058,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
                 flex-direction: column;
                 justify-content: center;
                 align-items: flex-start;
-                border: 1px solid #7b7b7b;
+                background: #121212;
                 border-radius: 10px;
                 padding: 8px 18px !important;
                 margin: 14px auto !important;
