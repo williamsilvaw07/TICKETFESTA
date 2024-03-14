@@ -2388,7 +2388,8 @@ html .tickets-sold-column , html .tribe-list-column-title {
                 cursor: pointer;
                 position: absolute;
                 bottom: 8px;
-                left: 40%;
+                left: 50%; 
+    transform: translateX(-50%); 
             }
 
 
