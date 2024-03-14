@@ -778,7 +778,7 @@ if (!defined('ABSPATH')) {
                 max-width: 1300px;
                 margin: 0 auto;
                 background: #0d0e0e
-            }
+            }#121212
 
             /***end***/
             /* Sidebar Styles */
@@ -790,7 +790,7 @@ if (!defined('ABSPATH')) {
                 width: 100%;
                 max-width: 200px;
                 height: 100vh;
-                background-color: rgb(26, 26, 26 ,0.0);
+                background-color: #19191b;
                 position: fixed;
                 overflow: auto;
                 padding-left: 15px;
