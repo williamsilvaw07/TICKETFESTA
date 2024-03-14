@@ -2332,7 +2332,9 @@ html .tickets-sold-column , html .tribe-list-column-title {
             .tribe-tickets-editor-table .table-header {
                 background-color: #212121 !important;
             }
-
+            .tribe-tickets-editor-table tr td , .tribe-tickets-editor-table thead, .tribe-tickets-editor-table .table-header {
+    border-bottom: 1px solid #444;
+}
             .ticket_duplicate_text {
                 display: none;
             }
