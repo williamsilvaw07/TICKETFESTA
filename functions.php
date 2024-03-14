@@ -4404,22 +4404,15 @@ return $protocols;
 
 
 
+
+
+
 function custom_enqueue_scripts() {
+    // Enqueue QR Scanner library
     wp_enqueue_script('html5-qrcode', 'https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js', array('jquery'), null, true);
+    // Enqueue your custom scanner script
     wp_enqueue_script('custom-qr-scanner', get_stylesheet_directory_uri() . '/js/custom-qr-scanner.js', array('jquery', 'html5-qrcode'), null, true);
+    // Localize script for AJAX URL and include the API key
     wp_localize_script('custom-qr-scanner', 'ajax_object', array('ajax_url' => admin_url('admin-ajax.php'), 'api_key' => '72231569'));
 }
 add_action('wp_enqueue_scripts', 'custom_enqueue_scripts');
-
-
-
-function custom_qr_scanner_shortcode() {
-    ob_start();
-    echo '<div id="qr-reader" style="width: 100%; height: auto;"></div><div id="qr-reader-results"></div>';
-    return ob_get_clean();
-}
-add_shortcode('custom_qr_scanner', 'custom_qr_scanner_shortcode'); 
-
-
-
- 

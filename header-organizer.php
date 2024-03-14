@@ -790,7 +790,7 @@ if (!defined('ABSPATH')) {
                 width: 100%;
                 max-width: 200px;
                 height: 100vh;
-                background-color: rgb(26, 26, 26);
+                background-color: rgb(26, 26, 26 ,0.0);
                 position: fixed;
                 overflow: auto;
                 padding-left: 15px;

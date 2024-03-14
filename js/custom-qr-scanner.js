@@ -1,4 +1,4 @@
-jQuery(document).ready(function($) { 
+jQuery(document).ready(function($) {
     function onScanSuccess(decodedText, decodedResult) {
         // Sending scanned code to the server via AJAX
         $.ajax({
