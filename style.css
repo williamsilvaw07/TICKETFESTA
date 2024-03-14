@@ -638,7 +638,7 @@ a.tribe-button.tribe-button-primary.add-new , .organizers_add_new_btn{
 /**********************END***********************************/
 
 /****INPUTS MAIN GLOBE***/
-.page-template-organizer-template-php input[type="text"], .page-template-organizer-template-php input[type="email"], .page-template-organizer-template-php input[type="url"], .page-template-organizer-template-php input[type="password"], .page-template-organizer-template-php input[type="search"],.page-template-organizer-template-php  input[type="tel"], .page-template-organizer-template-php input[type="number"],.page-template-organizer-template-php textarea, .page-template-organizer-template-php select {
+.page-template-organizer-template-php input[type="text"], .select2-selection , .page-template-organizer-template-php input[type="email"], .page-template-organizer-template-php input[type="url"], .page-template-organizer-template-php input[type="password"], .page-template-organizer-template-php input[type="search"],.page-template-organizer-template-php  input[type="tel"], .page-template-organizer-template-php input[type="number"],.page-template-organizer-template-php textarea, .page-template-organizer-template-php select {
     color: white!important;
     background-color: #212121!important;
     border-color: #212121!important;
