@@ -2072,7 +2072,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
                 flex-direction: column;
                 justify-content: center;
                 align-items: flex-start;
-                border: 1px solid #7b7b7b;
+                background: #121212;
                 border-radius: 10px;
                 padding: 20px 18px;
                 margin: 20px 0;
