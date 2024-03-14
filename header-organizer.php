@@ -2330,7 +2330,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
 
             .tribe-tickets-editor-table tr,
             .tribe-tickets-editor-table .table-header {
-                background-color: #3F3F3F !important;
+                background-color: #212121 !important;
             }
 
             .ticket_duplicate_text {
