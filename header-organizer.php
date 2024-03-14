@@ -2664,7 +2664,6 @@ html .tickets-sold-column , html .tribe-list-column-title {
             }
 
             .payment_eta_title_span {}
-
             .payment-eta {
                 font-size: 12px;
                 font-weight: 300 !important;

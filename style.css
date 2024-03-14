@@ -640,8 +640,8 @@ a.tribe-button.tribe-button-primary.add-new , .organizers_add_new_btn{
 /****INPUTS MAIN GLOBE***/
 .page-template-organizer-template-php input[type="text"], .page-template-organizer-template-php input[type="email"], .page-template-organizer-template-php input[type="url"], .page-template-organizer-template-php input[type="password"], .page-template-organizer-template-php input[type="search"],.page-template-organizer-template-php  input[type="tel"], .page-template-organizer-template-php input[type="number"],.page-template-organizer-template-php textarea, .page-template-organizer-template-php select {
     color: white!important;
-    background-color: #3F3F3F!important;
-    border-color: #888888!important;
+    background-color: #19191b!important;
+    border-color: #19191b!important;
     border-radius: 4px;
 
 }
