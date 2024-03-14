@@ -4416,3 +4416,14 @@ function custom_enqueue_scripts() {
     wp_localize_script('custom-qr-scanner', 'ajax_object', array('ajax_url' => admin_url('admin-ajax.php'), 'api_key' => '72231569'));
 }
 add_action('wp_enqueue_scripts', 'custom_enqueue_scripts');
+
+
+function custom_qr_scanner_shortcode() {
+    ob_start();
+    ?>
+    <div id="qr-reader" style="width: 100%; height: auto;"></div>
+    <div id="qr-reader-results"></div>
+    <?php
+    return ob_get_clean();
+}
+add_shortcode('custom_qr_scanner', 'custom_qr_scanner_shortcode');
