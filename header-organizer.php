@@ -1120,13 +1120,14 @@ if (!defined('ABSPATH')) {
             }
 
             .tribe-community-events-list tbody tr {
-                background: inherit !important;
+                background: #121212 !important;
+    border-radius: 10px;
                 color: white !important;
             }
 
 
             .tribe-community-events-list tbody .odd {
-                background: inherit !important;
+                background: #121212 !important;
 
 
             }
@@ -1264,7 +1265,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
                 justify-content: start;
                 align-items: center;
                 align-content: center;
-                border-bottom: 1px solid #444;
+                border-bottom: 0px solid #444;
 
             }
 
