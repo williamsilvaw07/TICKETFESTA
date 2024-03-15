@@ -3240,6 +3240,12 @@ html .tickets-sold-column , html .tribe-list-column-title {
 margin:0!important;
     max-height: 26px;
 
+}.fake_aviter {
+    font-size: 11px;
+    width: 31px;
+    height: 31px;
+    line-height: 21px;
+  
 }
                 .main-header .brand-link{
                 display:block
