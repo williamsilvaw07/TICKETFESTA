@@ -373,8 +373,8 @@ if (!defined('ABSPATH')) {
 
 
         <style>
-            .img-circle {
-                border-radius: inherit;
+          .main-header  .img-circle {
+                border-radius: inherit!important;
             }
 .user-email-address{
     font-size:13px
