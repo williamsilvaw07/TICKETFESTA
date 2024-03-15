@@ -438,6 +438,7 @@ if (!defined('ABSPATH')) {
                 width: 45px;
                 height: auto;
                 padding: 12px;
+                border: 2px solid white;
             }
 
             .edit_main_image {
