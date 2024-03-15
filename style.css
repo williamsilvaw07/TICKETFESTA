@@ -85,12 +85,13 @@ font-family: "Plus Jakarta Sans", Sans-serif;
  
 .loading_svg_div{
     background-color: rgb(26, 26, 26);
-    width: 100vw;
+    width: 100%;
     height: 100vh;
     z-index: 10000000000000;
     position: fixed; 
     align-items: center; /* Fixed typo from align-content to align-items for vertical alignment */
     justify-content: center;
+    left: 0;
 
 }
 .loading_svg_div svg{
