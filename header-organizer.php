@@ -3222,7 +3222,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
     display:block!important
 }
 .main-header ul:first-child{
-    display:none
+    display:none!important
 }
                 .admin_dashboard-sidebar-item a {
                     display: flex;
