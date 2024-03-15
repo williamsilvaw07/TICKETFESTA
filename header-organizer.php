@@ -3714,7 +3714,10 @@ html .tickets-sold-column , html .tribe-list-column-title {
                     padding: 4px 4px;
                     padding-top: 0;
                 }
-
+                .user-panel .fa-angle-down:before {
+  
+     margin-right: 0; 
+}
                 .admin_dashboard-sidebar-item a {
 
                     padding: 0px;
