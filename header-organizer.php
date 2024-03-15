@@ -291,21 +291,7 @@ if (!defined('ABSPATH')) {
 
 
         <style>
-            .settings-navigation ul li{
-                list-style: none;
-                color: #aaa!important;
-
-            }
-            .settings-tab-link.active{
-                border-bottom: 2px solid #d3fa16;
-                text-decoration: inherit!important;
-            }
-            .settings-navigation ul{
-                margin: 0;
-    display: flex;
-    gap: 34px;
-
-            }
+                      
 
 
 
