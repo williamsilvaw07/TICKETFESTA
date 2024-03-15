@@ -528,12 +528,13 @@ if (!defined('ABSPATH')) {
 
             #user-organizers-list tbody tr td img {
                 max-width: 66px;
+                border-radius: 100px;
             }
 
             #user-organizers-list th,
             #user-organizers-list td {
                 text-align: left;
-                padding: 8px;
+                padding: 20px 18px;
             }
 
             #user-organizers-list tr:nth-child(even) {
