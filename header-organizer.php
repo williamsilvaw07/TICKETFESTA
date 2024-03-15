@@ -2964,18 +2964,17 @@ html .tickets-sold-column , html .tribe-list-column-title {
 
             #delete-category-form {
                 width: 100%;
-                max-width: 250px;
-            
+              
             }
 .category_main{
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
     align-items: center;
+    gap: 45px;
 }
             #delete-category-form input {
                 width: 100%;
-    max-width: 250px;
   
     padding: 7px 0px;
     border-radius: 4px;
