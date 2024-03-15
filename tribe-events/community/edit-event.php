@@ -946,32 +946,6 @@ jQuery(document).ready(function($) {
 
 
 
-$(document).ready(function() {
-    setTimeout(function() {
-        // Log to indicate the script has started after the delay
-        console.log('Modifying select2 options now');
-
-        // Assuming the target elements are part of the select2 dropdown options
-        // Attempt to change the text for the first and second options
-        
-        var firstOption = $("#event_tribe_venue .select2-results__options li").first();
-        if(firstOption.length) {
-            console.log('Changing first option text');
-            firstOption.text("Create a new Venue");
-        } else {
-            console.log('First option not found');
-        }
-        
-        var secondOption = $("#event_tribe_venue .select2-results__options li").eq(1);
-        if(secondOption.length) {
-            console.log('Changing second option text');
-            secondOption.text("Find Venue");
-        } else {
-            console.log('Second option not found');
-        }
-    }, 3000); // Delay of 3000 milliseconds (3 seconds)
-});
-
 
 
 
