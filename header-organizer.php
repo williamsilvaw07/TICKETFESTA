@@ -2969,6 +2969,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
     justify-content: flex-start;
     align-items: center;
     gap: 45px;
+    margin-bottom:40px
 }
             #delete-category-form input {
                 width: fit-content;
