@@ -382,6 +382,12 @@ function category_image_gallery_shortcode($atts) {
         echo "<div class='category'> $term->name </div>";
         echo "<div class='organizer'>Organizer: $cat_organiser->post_title</div>";
         echo "<br/>";
+                // Display delete button for the category
+                echo '<form id="delete-category-form" method="post">';
+                echo '<input type="hidden" name="delete_category_id" value="' . esc_attr($category_id) . '" />';
+                echo '<input type="submit" name="delete_category" class="delete-all-button" value="Delete Category" />';
+                echo '</form>';
+        
         if (!empty($category_images) ) {
             echo '<div class="category-images">';
             foreach($category_images  as $category_image){
@@ -396,11 +402,6 @@ function category_image_gallery_shortcode($atts) {
             echo '<p>No images found in this category</p>';
         }
 
-        // Display delete button for the category
-        echo '<form id="delete-category-form" method="post">';
-        echo '<input type="hidden" name="delete_category_id" value="' . esc_attr($category_id) . '" />';
-        echo '<input type="submit" name="delete_category" class="delete-all-button" value="Delete Category" />';
-        echo '</form>';
 
         // JavaScript functionality to handle category deletion and clear URL
         ?>
