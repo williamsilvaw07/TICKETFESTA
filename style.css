@@ -1682,6 +1682,11 @@ font-size: 14px!important;
     margin-top: 20px;
     flex-direction: column;
     gap: 20px;
+    background-color: #19191b;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 900px;
+    padding: 17px;
 }
 #drop-zone{
     position: relative;

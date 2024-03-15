@@ -94,20 +94,11 @@ function organiser_image_gallery_shortcode() {
             height: 1px!important;
             visibility: hidden;
         }
-        #image-gallery {
-            display: flex;
-            justify-content: space-around;
-            margin-top: 20px;
-        }
+        
         #image-preview, #image-upload {
             flex-basis: 45%;
         }
-        #drop-zone {
-            border: 2px dashed #ccc;
-            padding: 20px;
-            margin-bottom: 10px;
-            cursor: pointer;
-        }
+       
         #upload-count{
             font-size:13px!important
         }
