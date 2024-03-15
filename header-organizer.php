@@ -920,6 +920,8 @@ if (!defined('ABSPATH')) {
                 display: block;
                 font-size: 14px;
                 padding-left: 0 !important;
+                white-space: nowrap;
+
             }
 
             /* Active Link Styles */
