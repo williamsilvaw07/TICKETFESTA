@@ -96,23 +96,36 @@ if (!defined('ABSPATH')) {
 
 <ul class="show-notification profile-notification dropdown-menu" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
     
+    <li class="admin_dashboard-sidebar-item">
+        <a href="/organisers-setting/">
+            <i class="fas fa-exchange-alt"></i><span class="nav-text">Switch to Attendee</span>
+        </a>
+    </li>
 
-<li class="admin_dashboard-sidebar-item">
+    <li class="admin_dashboard-sidebar-item">
         <a href="/organisers-setting/">
             <i class="fas fa-cog"></i><span class="nav-text">Settings</span>
         </a>
     </li>
     
     <li class="admin_dashboard-sidebar-item">
-    <a href="/orginser-support">
-        <i class="fas fa-envelope"></i> <span class="nav-text">Support</span>
-    </a>
-</li>
-    
+        <a href="/orginser-support">
+            <i class="fas fa-envelope"></i> <span class="nav-text">Support</span>
+        </a>
+    </li>
+    <hr>
     <li class="admin_dashboard-sidebar-item">
         <a href="<?php echo esc_url(wp_logout_url(home_url())); ?>">
             <i class="fas fa-sign-out-alt"></i><span class="nav-text">Logout</span>
         </a>
+    </li>
+    
+    <!-- Displaying logged-in user's email address -->
+    <li class="admin_dashboard-sidebar-item user-email">
+        <?php if ( is_user_logged_in() ): ?>
+            <?php $current_user = wp_get_current_user(); ?>
+            <span class="user-email-address"><?php echo esc_html( $current_user->user_email ); ?></span>
+        <?php endif; ?>
     </li>
 </ul>
 
