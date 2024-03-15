@@ -1123,6 +1123,8 @@ if (!defined('ABSPATH')) {
                 background: #121212 !important;
     border-radius: 10px;
                 color: white !important;
+                padding: 20px 18px;
+                margin:20px 0
             }
 
 
