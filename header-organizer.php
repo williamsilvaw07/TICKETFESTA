@@ -1219,7 +1219,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
             }
 
             .tribe-list-column-title span {
-                padding: 0px 4px;
+              
                 font-size: 15px;
 
             }
