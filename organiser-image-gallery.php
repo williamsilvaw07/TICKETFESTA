@@ -30,7 +30,6 @@ function organiser_image_gallery_shortcode() {
             <?php
   // HTML markup for displaying categories with titles and thumbnails
   echo "<div style='max-width: 500px; width: 100%;'> <!-- Container div for max-width and responsiveness -->
-  <p class='account_storage'>Account Storage</p>
   <div class='progress' style='height: 20px; margin-top: 20px;'>
       <div class='progress-bar' role='progressbar' 
           style='width: {$usage_percentage_formatted}%; padding: 0 10px;' 
@@ -43,7 +42,7 @@ function organiser_image_gallery_shortcode() {
 </div>";
 
 ?>
-            <p class='account-used'> Account used <?php echo $account_mb_used; ?>/3 MB</p>
+            
             <p class='upload_limit' style='color:red!important; display: none; '> Account Maximum Upload Limit Reached </p>
             <?php if($default_organizer) {?>
                 <p class='default-organizer'> Organizer : <?php echo $default_organizer; ?></p>
@@ -475,7 +474,7 @@ function category_image_gallery_shortcode($atts) {
 
         // HTML markup for displaying categories with titles and thumbnails
         echo "<div style='max-width: 500px; width: 100%;'> <!-- Container div for max-width and responsiveness -->
-        <p class='account_storage'>Account Storage</p>
+       
         <div class='progress' style='height: 20px; margin-top: 20px;'>
             <div class='progress-bar' role='progressbar' 
                 style='width: {$usage_percentage_formatted}%; padding: 0 10px;' 
