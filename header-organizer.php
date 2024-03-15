@@ -3313,7 +3313,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
                 body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .main-footer,
                 body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .main-header {
                     transition: margin-left .3s ease-in-out;
-                    margin-left: 56px !important;
+                    margin-left: 57px !important;
                 }
                 .main-sidebar {
     max-width: 62px;
