@@ -380,7 +380,7 @@ function category_image_gallery_shortcode($atts) {
         // Display images
         echo "<div class='category_main'>";
         echo "<div class='category_main_title'>";
-        echo "<div class='category'> $term->name </div>";
+        echo "<div class='tribe-community-events-list-title category'> $term->name </div>";
         echo "<div class='organizer'>Organizer: $cat_organiser->post_title</div>";
         echo "</div>";
        
