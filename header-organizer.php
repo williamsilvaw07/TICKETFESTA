@@ -2962,10 +2962,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
 
             }
 
-            #delete-category-form {
-                width: 100%;
-              
-            }
+         
 .category_main{
     display: flex;
     flex-wrap: wrap;
