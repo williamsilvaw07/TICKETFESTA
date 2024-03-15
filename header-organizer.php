@@ -3218,7 +3218,9 @@ html .tickets-sold-column , html .tribe-list-column-title {
             /****MEIDA QURRYS***/
 
             @media screen and (max-width: 992px) {
-
+.profile-notification .nav-text{
+    display:block!important
+}
                 .admin_dashboard-sidebar-item a {
                     display: flex;
                     align-items: center;
