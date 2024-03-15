@@ -3802,6 +3802,10 @@ display:block!important
                     padding: 0;
                     color: #19191b;
                 }
+                .profile-notification .admin_dashboard-sidebar-item i {
+              
+                    color: #ffff;
+                }
 
                 .page-template-organizer-template-php .nav-link {
                     display: none;
