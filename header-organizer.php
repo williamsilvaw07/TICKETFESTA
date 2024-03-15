@@ -1462,7 +1462,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
 
 #user-organizers-list tbody tr{
     border-radius: 10px!important;
-    margin: 10px 0;
+    margin: 10px 0!important;
 }
             #user-organizers-list th,
             #user-organizers-list td {
