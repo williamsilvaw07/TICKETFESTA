@@ -3235,6 +3235,11 @@ html .tickets-sold-column , html .tribe-list-column-title {
                 .main-header .brand-link{
                 display:block
             }
+            .brand-link {
+                position: relative;
+                padding-bottom: 0px;
+    border: 0px!important;
+            }
 .profile-notification .nav-text{
     display:block!important
 }
