@@ -107,18 +107,11 @@ if (!defined('ABSPATH')) {
                         </li>
                         <li>
                             <a href="email-inbox.html">
-                                <i class="feather icon-mail"></i> My Messages
+                                <i class="feather icon-mail"></i> Support Messages
                             </a>
                         </li>
-                        <li>
-                            <a href="auth-lock-screen.html">
-                                <i class="feather icon-lock"></i> Lock Screen
-                            </a>
-                        </li>
-                        <li>
-                            <a href="auth-sign-in-social.html">
-                                <i class="feather icon-log-out"></i> Logout
-                            </a>
+                      
+                        <a href="<?php echo esc_url(wp_logout_url(home_url())); ?>"><span class="nav-text">Logout</span></a>
                         </li>
                     </ul>
                 </li>
