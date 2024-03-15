@@ -67,7 +67,7 @@ function organiser_image_gallery_shortcode() {
                     ?>
                 </select>
                 <p>Category Title:</p>
-                <input type="text" id="category-name" name="category" placeholder="London 20-02-24" style="margin-bottom: 10px;" required>
+                <input type="text" id="category-name" name="category" placeholder="Gallery Title" style="margin-bottom: 10px;" required>
                 
                 
                 <div id="image-upload-function-btn-div">
