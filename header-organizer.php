@@ -531,6 +531,13 @@ if (!defined('ABSPATH')) {
                 border-radius: 100px;
             }
 
+            #user-organizers-list td{
+                display: flex;
+    align-content: center;
+    justify-content: flex-start;
+    align-items: center;
+
+            }
             #user-organizers-list th,
             #user-organizers-list td {
                 text-align: left;
