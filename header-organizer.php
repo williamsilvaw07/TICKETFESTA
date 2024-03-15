@@ -373,12 +373,7 @@ if (!defined('ABSPATH')) {
 
 
         <style>
-            .main-header .brand-link{
-                display:none
-            }
-          .main-header  .img-circle {
-                border-radius: inherit!important;
-            }
+            
 .user-email-address{
     font-size:13px
 }
@@ -484,7 +479,11 @@ if (!defined('ABSPATH')) {
 
             }
 
-           
+            .brand-link {
+                position: fixed;
+                padding-bottom: 27px;
+    border: 0px!important;
+            }
 
 
             /***MAIN LAYOUT***/
@@ -3222,9 +3221,6 @@ html .tickets-sold-column , html .tribe-list-column-title {
             /****MEIDA QURRYS***/
 
             @media screen and (max-width: 992px) {
-                .main-header .brand-link{
-                display:block
-            }
 .profile-notification .nav-text{
     display:block!important
 }
@@ -3494,10 +3490,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
             }
 
 
-            @media (max-width: 767px) {
 
-
-            }
 
 
             @media (max-width: 707px) {
