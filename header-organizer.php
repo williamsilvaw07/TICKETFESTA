@@ -569,7 +569,7 @@ if (!defined('ABSPATH')) {
                 border-radius: 10px;
                 width: 100%;
                 max-width: 900px;
-                margin-bottom: 50px;
+                
             }
 
             .page-id-1777 .content {
