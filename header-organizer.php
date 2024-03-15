@@ -3237,8 +3237,8 @@ html .tickets-sold-column , html .tribe-list-column-title {
     padding-top: 26px;
 }
 .brand-link .brand-image {
-
-    max-height: 21px;
+margin:0!important;
+    max-height: 26px;
 
 }
                 .main-header .brand-link{
