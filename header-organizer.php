@@ -318,6 +318,7 @@ if (!defined('ABSPATH')) {
 }
             .settings-tab-link.active{
                 border-bottom: 2px solid #d3fa16;
+                color: white!important;
              
       color: white;
             }
@@ -328,10 +329,7 @@ if (!defined('ABSPATH')) {
 
 }
     
-    .settings-navigation li.active a {
-        color: white!important;
-        border-bottom: 2px solid #d3fa16; /* Active bottom border */
-    }
+
 
 
 
