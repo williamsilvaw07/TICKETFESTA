@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function() {
         var ticketAmount = jQuery(this).find('.tribe-amount').text().replace(',', ''); 
         ticketAmount = parseFloat(ticketAmount.trim()).toFixed(2);
         var ticketSiteFee =  get_tribe_ticket_fee(ticketAmount);
-        console.log('ticket price: ', ticketAmount)
+       // console.log('ticket price: ', ticketAmount)
         jQuery(this).append('<span class="site-fee-container">+ £<span class="ticket_site_fee">'+ticketSiteFee+'</span> Fee</span>');
     }); 
 
@@ -49,11 +49,18 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+
+
+
+
+
+
+
     var searchIcon = document.querySelector('.header_search_icon');
     //console.log('Search icon element:', searchIcon); // Check if the search icon is correctly identified
 
     if (!searchIcon) {
-        console.error('Search icon not found.');
+       // console.error('Search icon not found.');
         return;
     }
 
@@ -62,7 +69,7 @@ document.addEventListener('DOMContentLoaded', function() {
         var searchPopup = document.getElementById('searchPopup');
 
         if (!searchPopup) {
-            console.error('Search popup element not found.');
+          //  console.error('Search popup element not found.');
             return;
         }
 
