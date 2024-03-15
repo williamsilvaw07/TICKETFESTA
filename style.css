@@ -1682,6 +1682,9 @@ font-size: 14px!important;
     .account-used{
         font-size: 13px;
     }
+    .progress-bar{
+        overflow: visible!important;
+    }
 #image-gallery {
     display: flex;
     justify-content: space-around;
