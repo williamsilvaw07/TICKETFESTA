@@ -369,9 +369,13 @@ if (!defined('ABSPATH')) {
     text-decoration: none;
     list-style: none;
 }
-.dark-mode .dropdown-menu a {
+.dark-mode .dropdown-menu li {
     text-decoration: none;
     margin:10px 0
+}
+.dark-mode .dropdown-menu a {
+    text-decoration: none;
+
 }
 .user-panel .fa-angle-down:before {
     content: "\f107";
