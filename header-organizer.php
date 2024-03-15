@@ -3221,7 +3221,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
 .profile-notification .nav-text{
     display:block!important
 }
-.navbar-nav:first-child{
+.main-header ul:first-child{
     display:none
 }
                 .admin_dashboard-sidebar-item a {
