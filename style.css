@@ -1663,14 +1663,14 @@ font-size: 14px!important;
 
 
 .image-upload-div{
- 
+
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     position: relative;
-    padding: 33px;
     border-radius: 10px;
-    width: fit-content;
+    width: 100%;
+    margin-bottom: 44px;
 }
     #image-upload{
 
@@ -1693,7 +1693,7 @@ font-size: 14px!important;
     border: 2px dashed #dee2e6!important;
     text-align: center;
     border-radius: 17px;
-    max-width: 800px;
+width: 100%;
     padding: 82px!important;
 }
 .fa-image {
