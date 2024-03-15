@@ -2991,7 +2991,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
   
     padding: 7px 0px;
     border-radius: 4px;
-    color: black !important;
+    color: white !important;
     background: #ff4d4d !important;
 
             }
