@@ -1467,6 +1467,10 @@ html .tickets-sold-column , html .tribe-list-column-title {
 #user-organizers-list tbody tr td:first-child{
     border-radius: 10px 0px 0px 10px;
 }
+#user-organizers-list tbody tr td:last-child{
+    border-radius: 0px 10px 10px 0px;
+
+}
             #user-organizers-list th,
             #user-organizers-list td {
                 text-align: left;
