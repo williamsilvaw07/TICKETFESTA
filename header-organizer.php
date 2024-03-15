@@ -55,11 +55,8 @@ if (!defined('ABSPATH')) {
         <!-- Navbar -->
         <nav class="main-header navbar navbar-expand navbar-white navbar-light">
             <!-- Left navbar links -->
-            <ul class="navbar-nav ml-0 d-block d-md-none">
-                <li class="nav-item">
-                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-                </li>
-            </ul>
+        
+
 
             <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto">
@@ -371,6 +368,12 @@ if (!defined('ABSPATH')) {
 
 
         <style>
+            .main-header .brand-link{
+                display:none
+            }
+          .main-header  .img-circle {
+                border-radius: inherit!important;
+            }
 .user-email-address{
     font-size:13px
 }
@@ -3218,6 +3221,9 @@ html .tickets-sold-column , html .tribe-list-column-title {
             /****MEIDA QURRYS***/
 
             @media screen and (max-width: 992px) {
+                .main-header .brand-link{
+                display:block
+            }
 .profile-notification .nav-text{
     display:block!important
 }
@@ -3487,7 +3493,10 @@ html .tickets-sold-column , html .tribe-list-column-title {
             }
 
 
+            @media (max-width: 767px) {
 
+
+            }
 
 
             @media (max-width: 707px) {
@@ -3707,14 +3716,17 @@ html .tickets-sold-column , html .tribe-list-column-title {
                     width: 100%;
                     max-width: 100%;
                     height: 76px;
-                  background-color: #ffffff;
+                    background-color: #ffffff;
                     position: fixed;
                     top: 91.1%;
                     left: 0px;
                     padding: 4px 4px;
                     padding-top: 0;
                 }
-
+                .user-panel .fa-angle-down:before {
+  
+     margin-right: 0; 
+}
                 .admin_dashboard-sidebar-item a {
 
                     padding: 0px;
@@ -3722,7 +3734,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
                 }
 
                 .admin_dashboard-active a {
-                    background: linear-gradient(180deg, rgba(211, 250, 22, 0.28) 0.01%, rgba(211, 250, 22, 0.00) 99.96%);
+                    background: linear-gradient(180deg, rgba(211, 250, 22, 1) 0.01%, rgba(211, 250, 22, 0.00) 99.96%);
                     width: 37px;
                     padding-top: 5px;
                 }
