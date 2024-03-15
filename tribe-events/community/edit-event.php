@@ -975,6 +975,9 @@ jQuery(document).ready(function($) {
 
 
 <style>
+#event_tribe_venue .linked-post:first-child{
+    display:block!important;
+}
 
 .edit-linked-post-link{
     display:none!important;
