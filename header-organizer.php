@@ -3232,6 +3232,11 @@ html .tickets-sold-column , html .tribe-list-column-title {
             /****MEIDA QURRYS***/
 
             @media screen and (max-width: 992px) {
+
+                .container-fluid {
+    padding-top: 26px;
+}
+
                 .main-header .brand-link{
                 display:block
             }
