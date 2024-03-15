@@ -622,7 +622,7 @@ a.tribe-button.tribe-button-primary.add-new , .organizers_add_new_btn{
     padding: 9px 12px;
     font-size: 12px;
     height: fit-content;
-    margin-bottom: 0!important;
+    margin: 20px 0;
 }
 .tribe-upcoming{
     background-color: #3d3d3f!important;
