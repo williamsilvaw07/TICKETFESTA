@@ -3474,6 +3474,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
                 .tribe-community-events-list tbody .tribe-list-column-status {
                     grid-area: 1 / 1 / 2 / 2;
                     margin-top: 10px;
+                    margin-bottom: 16px;
                 }
 
                 .tribe-community-events-list tbody .tribe-list-column-title {
