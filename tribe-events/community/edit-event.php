@@ -208,34 +208,6 @@ $event_description = get_post_meta($event_id, 'event_description', true);
 ?>
 
 
-<input type="hidden" name="event_description" id="event_description" value="<?php echo esc_attr($event_description); ?>">
-
-<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
-<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
-
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    var quill = new Quill('#quill-editor', {
-        theme: 'bubble',
-        modules: {
-            toolbar: [
-                ['bold', 'italic', 'underline'],
-                [{'list': 'ordered'}, {'list': 'bullet'}],
-                ['link', 'image']
-            ]
-        }
-    });
-
-    // Load existing content into the editor
-    var eventDescriptionValue = document.getElementById('event_description').value;
-    quill.root.innerHTML = eventDescriptionValue;
-
-    // Save content back to the hidden input on form submit
-    var form = document.querySelector('form'); // Ensure this selector targets your actual form
-    form.onsubmit = function() {
-        document.getElementById('event_description').value = quill.root.innerHTML;
-    };
-});
 </script>
 
 
