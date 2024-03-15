@@ -293,6 +293,48 @@ if (!defined('ABSPATH')) {
         <style>
                       
 
+                      .settings-tab-content {
+        display: none;
+    }
+    
+    .settings-tab-content.active {
+        display: block;
+    }
+    
+    .settings-navigation ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+    }
+    
+    .settings-navigation ul li{
+                list-style: none;
+                color: #aaa!important;
+
+            }
+  .settings-tab-link a{
+ text-decoration: none!important;
+}
+            .settings-tab-link.active{
+                border-bottom: 2px solid #d3fa16;
+             
+      color: white;
+            }
+            .settings-navigation ul{
+                margin: 0;
+    display: flex;
+    gap: 34px;
+
+}
+    
+    .settings-navigation li.active a {
+        color: white; /* Active text color */
+        border-bottom: 2px solid #d3fa16; /* Active bottom border */
+    }
+
+
+
+    
 
 
 
