@@ -71,14 +71,22 @@ if (!defined('ABSPATH')) {
 
                     <div class="user-panel d-flex" data-toggle="dropdown" aria-expanded="true">
     <div class="fake_aviter">
-        <span></span>
+        <span>
+            <?php if ( is_user_logged_in() ) : ?>
+                <?php 
+                    $current_user = wp_get_current_user();
+                    $first_initial = !empty($current_user->first_name) ? $current_user->first_name[0] : '';
+                    $last_initial = !empty($current_user->last_name) ? $current_user->last_name[0] : '';
+                    echo esc_html( $first_initial . $last_initial );
+                ?>
+            <?php else : ?>
+                G
+            <?php endif; ?>
+        </span>
     </div>
     <div class="info d-flex">
         <?php if ( is_user_logged_in() ) : ?>
-            <?php 
-                $current_user = wp_get_current_user();
-                echo '<span role="button">' . esc_html( $current_user->first_name ) . '</span>';
-            ?>
+            <?php echo '<span role="button">' . esc_html( $current_user->first_name ) . '</span>'; ?>
         <?php else : ?>
             <span role="button">Guest</span>
         <?php endif; ?>
