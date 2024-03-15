@@ -1865,7 +1865,7 @@ form.edit-vanue-form {
     border-radius: 10px;
 }
 
-html body.edit-vanue-form input , form.edit-vanue-form select{
+.page-template-organizer-template .edit-vanue-form input , form.edit-vanue-form select{
     background: #121212!important;
 }
 
