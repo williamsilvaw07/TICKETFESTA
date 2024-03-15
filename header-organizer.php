@@ -1496,6 +1496,8 @@ html .tickets-sold-column , html .tribe-list-column-title {
                 padding-left: 6px;
                 font-weight: 300;
                 text-align: center;
+                white-space: nowrap;
+                text-align: left;
             }
 
             #user-organizers-list td {
