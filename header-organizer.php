@@ -1126,7 +1126,7 @@ if (!defined('ABSPATH')) {
                 padding: 20px 18px;
                 margin:20px 0
             }
-            .tribe-community-events-list.stripe tbody tr.odd, .tribe-community-events-list.display tbody tr.odd {
+            html .tribe-community-events-list.stripe tbody tr.odd, .tribe-community-events-list.display tbody tr.odd {
     border-bottom: 0px solid #444 !important;
 }
 
