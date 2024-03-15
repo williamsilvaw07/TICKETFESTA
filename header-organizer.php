@@ -113,7 +113,7 @@ if (!defined('ABSPATH')) {
             <i class="fas fa-envelope"></i> <span class="nav-text">Support</span>
         </a>
     </li>
-    <hr>
+  <span class="line_break"></span>
     <li class="admin_dashboard-sidebar-item">
         <a href="<?php echo esc_url(wp_logout_url(home_url())); ?>">
             <i class="fas fa-sign-out-alt"></i><span class="nav-text">Logout</span>
