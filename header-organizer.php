@@ -373,11 +373,11 @@ if (!defined('ABSPATH')) {
         <style>
 
 .line_break {
-    display: block; /* Makes the span behave like a block-level element */
-    width: 100%; /* Sets the width to 100% of its container */
-    height: 1px; /* The thickness of the line */
-    background-color: #000; /* The color of the line */
-    margin: 10px 0; /* Adds some space above and below the line */
+    display: block; 
+    width: 100%; 
+    height: 1px; 
+    background-color: #000; 
+    margin: 10px 0; 
 }
 .dark-mode .dropdown-menu {
     background-color: #19191b;
