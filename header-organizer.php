@@ -534,7 +534,7 @@ if (!defined('ABSPATH')) {
             #user-organizers-list th,
             #user-organizers-list td {
                 text-align: left;
-                padding: 20px 18px;
+                padding: 20px 18px!important;
             }
 
             #user-organizers-list tr:nth-child(even) {
