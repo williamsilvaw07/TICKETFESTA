@@ -178,7 +178,7 @@ if (!defined('ABSPATH')) {
 
 
 
-    
+
 
 
 
@@ -291,7 +291,22 @@ if (!defined('ABSPATH')) {
 
 
         <style>
-            
+            .settings-navigation ul li{
+                list-style: none;
+                color: #aaa;
+
+            }
+            .settings-navigation ul{
+                margin: 0;
+    display: flex;
+    gap: 34px;
+
+            }
+
+
+
+
+
             header {
     background-color: inherit!important;
 }

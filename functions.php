@@ -1130,7 +1130,7 @@ function display_user_created_organizers()
     $nonce = wp_create_nonce('create_new_organizer_nonce');
 
     echo '<div class="organizers-header">';
-    echo '<h2>Your Organizers</h2>'; // Title
+    echo '<h4>Your Organizers</h4>'; // Title
     echo '<a class="organizers_add_new_btn" href="javascript:void(0);" onclick="createNewOrganizer()">Create New Organizer</a>';
     echo '<input type="hidden" id="create_new_organizer_nonce" value="' . esc_attr($nonce) . '" />';
     echo '</div>';
