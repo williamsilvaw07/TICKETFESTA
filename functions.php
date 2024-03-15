@@ -1230,8 +1230,8 @@ function display_user_created_organizers()
         echo '<table id="user-organizers-list" style="width: 100%;">';
         echo '<thead>';
         echo '<tr>';
-        echo '<th>Organizer Logo</th>';
-        echo '<th>Organizer Name</th>';
+        echo '<th>Organiser Logo</th>';
+        echo '<th>Organiser Name</th>';
         echo '<th>Actions</th>';
         echo '</tr>';
         echo '</thead>';
