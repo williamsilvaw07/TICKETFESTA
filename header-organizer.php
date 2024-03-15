@@ -3707,7 +3707,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
                     width: 100%;
                     max-width: 100%;
                     height: 76px;
-                    background-color: #000000;
+                    background-color: #ffffff;
                     position: fixed;
                     top: 91.1%;
                     left: 0px;
@@ -3722,7 +3722,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
                 }
 
                 .admin_dashboard-active a {
-                    background: linear-gradient(180deg, rgba(211, 250, 22, 0.28) 0.01%, rgba(211, 250, 22, 0.00) 99.96%);
+                    background: linear-gradient(180deg, rgba(211, 250, 22, 1) 0.01%, rgba(211, 250, 22, 0.00) 99.96%);
                     width: 37px;
                     padding-top: 5px;
                 }
@@ -3747,6 +3747,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
                     text-align: center;
                     width: 100%;
                     padding: 0;
+                    color: #19191b;
                 }
 
                 .page-template-organizer-template-php .nav-link {
