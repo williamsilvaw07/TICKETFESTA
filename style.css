@@ -1865,7 +1865,9 @@ form.edit-vanue-form {
     border-radius: 10px;
 }
 
-
+form.edit-vanue-form input , form.edit-vanue-form select{
+    background: #121212;
+}
 
 
 
