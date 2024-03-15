@@ -319,6 +319,7 @@ if (!defined('ABSPATH')) {
             .settings-tab-link.active{
                 border-bottom: 2px solid #d3fa16;
                 color: white!important;
+                padding-bottom: 9px;
              
       color: white;
             }
