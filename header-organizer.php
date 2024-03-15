@@ -3363,6 +3363,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
     margin: 0 !important;
 }.category_main_title .organizer {
     font-size: 15px;
+    margin:10px 0
   
 }
                 .tribe-community-events-list tbody tr,
