@@ -95,18 +95,20 @@ if (!defined('ABSPATH')) {
 </div>
 
 <ul class="show-notification profile-notification dropdown-menu" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
-    <li class="admin_dashboard-sidebar-item">
+    
+
+<li class="admin_dashboard-sidebar-item">
         <a href="/organisers-setting/">
             <i class="fas fa-cog"></i><span class="nav-text">Settings</span>
         </a>
     </li>
     
-    <li>
+    <li class="admin_dashboard-sidebar-item">
         <a href="/orginser-support">
             <i class="feather icon-mail"></i> <span class="nav-text">Support</span>        </a>
     </li>
     
-    <li>
+    <li class="admin_dashboard-sidebar-item">
         <a href="<?php echo esc_url(wp_logout_url(home_url())); ?>">
             <i class="fas fa-sign-out-alt"></i><span class="nav-text">Logout</span>
         </a>
