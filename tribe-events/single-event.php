@@ -608,29 +608,6 @@ if (!empty($sponsor_logos_ids)) : ?>
 <script>
 
 
-//FUNCTION TO SHOW LOADING EFFECT AND WHEN JS IS FULLY LOADED  HIDE AND SHOW CONTENT
-document.addEventListener("DOMContentLoaded", function() {
-        // Wait for 500 milliseconds after the document is fully loaded before showing main content
-        setTimeout(showMainContent, 1000);
-    });
-
-    function showMainContent() {
-        // Hide the loading animation
-        var loadingDiv = document.querySelector('.loading_svg_div');
-        if (loadingDiv) {
-            loadingDiv.style.display = 'none';
-        }
-
-        // Show the main content
-        var mainContentDiv = document.querySelector('.main_content_loading_div');
-        if (mainContentDiv) {
-            mainContentDiv.style.display = 'block'; // Or 'flex', 'grid' etc. depending on your layout
-        }
-    }
-
-    ////END
-
-
 
 
 
