@@ -2976,6 +2976,10 @@ html .tickets-sold-column , html .tribe-list-column-title {
     font-size: 30px;
 
 }
+.elementor-element-c668104{
+    max-width: 1000px;
+    margin-bottom: 200px !important;
+}
 
 .category_main_title .organizer {
     font-weight: 300;
