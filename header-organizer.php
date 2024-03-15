@@ -94,27 +94,25 @@ if (!defined('ABSPATH')) {
     </div>
 </div>
 
-                    <ul class="show-notification profile-notification dropdown-menu" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
-                        <li>
-                            <a href="#!">
-                                <i class="feather icon-settings"></i> Settings
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="feather icon-user"></i> Profile
-                            </a>
-                        </li>
-                        <li>
-                            <a href="email-inbox.html">
-                                <i class="feather icon-mail"></i> Support Messages
-                            </a>
-                        </li>
-                      
-                        <a href="<?php echo esc_url(wp_logout_url(home_url())); ?>"><span class="nav-text">Logout</span></a>
-                        </li>
-                    </ul>
-                </li>
+<ul class="show-notification profile-notification dropdown-menu" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
+    <li class="admin_dashboard-sidebar-item">
+        <a href="/organisers-setting/">
+            <i class="fas fa-cog"></i><span class="nav-text">Settings</span>
+        </a>
+    </li>
+    
+    <li>
+        <a href="email-inbox.html">
+            <i class="feather icon-mail"></i> Support
+        </a>
+    </li>
+    
+    <li>
+        <a href="<?php echo esc_url(wp_logout_url(home_url())); ?>">
+            <i class="fas fa-sign-out-alt"></i><span class="nav-text">Logout</span>
+        </a>
+    </li>
+</ul>
 
             </ul>
         </nav>
