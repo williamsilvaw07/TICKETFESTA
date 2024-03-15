@@ -149,6 +149,8 @@ if (!defined('ABSPATH')) {
 
         <script>
 
+
+///function for the orginser seetinmg page 
    // jQuery for switching tabs
    $(document).ready(function () {
         $('.settings-tab-link').click(function (e) {

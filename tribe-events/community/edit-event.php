@@ -971,6 +971,31 @@ jQuery(document).ready(function($) {
 
 
 
+
+
+
+$(document).ready(function() {
+    // Assuming the select2 is already initialized on #event_tribe_venue or related element.
+    
+    // To change the placeholder text
+    $("#event_tribe_venue .select2-search__field").attr("placeholder", "Create a new Venue");
+
+    // Change the first option text
+    var firstOption = $("#event_tribe_venue .select2-results__options li").first();
+    if(firstOption.length) {
+        firstOption.text("Create a new Venue");
+    }
+    
+    // Change the second option text, ensure there is a second option
+    var secondOption = $("#event_tribe_venue .select2-results__options li").eq(1);
+    if(secondOption.length) {
+        secondOption.text("Find Venue");
+    }
+});
+
+
+
+
 </script>
 
 
@@ -979,6 +1004,15 @@ jQuery(document).ready(function($) {
     display:block!important;
 }
 
+#event_tribe_venue .select2-search{
+    padding: 10px;
+    background: white !important;
+    color: black !important;
+}
+#event_tribe_venue .select2-search .select2-search__field{
+    background: inherit !important;
+    color: black !important;
+}
 .edit-linked-post-link{
     display:none!important;
     visibility: hidden;
