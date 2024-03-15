@@ -66,8 +66,8 @@ function organiser_image_gallery_shortcode() {
                     }
                     ?>
                 </select>
-                <p>Category Title:</p>
-                <input type="text" id="category-name" name="category" placeholder="Gallery Title" style="margin-bottom: 10px;" required>
+                <p>Gallery Title:</p>
+                <input type="text" id="category-name" name="category" placeholder="E.g London Tiger Tiger 20/03/23" style="margin-bottom: 10px;" required>
                 
                 
                 <div id="image-upload-function-btn-div">
