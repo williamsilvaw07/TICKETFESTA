@@ -393,7 +393,7 @@ function category_image_gallery_shortcode($atts) {
           // Display delete button for the category
           echo '<form id="delete-category-form" method="post">';
           echo '<input type="hidden" name="delete_category_id" value="' . esc_attr($category_id) . '" />';
-          echo '<input type="submit" name="delete_category" class="delete-all-button" value="Delete Category" />';
+          echo '<input type="submit" name="delete_category" class="delete-all-button" value="Delete Gallery" />';
           echo '</form>';
           echo "</div>";
         if (!empty($category_images) ) {
