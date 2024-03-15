@@ -297,8 +297,8 @@ if (!defined('ABSPATH')) {
 
             }
             .settings-tab-link.active{
-                border-bottom: 2px solid red;
-                text-decoration: inherit;
+                border-bottom: 2px solid #d3fa16;
+                text-decoration: inherit!important;
             }
             .settings-navigation ul{
                 margin: 0;
