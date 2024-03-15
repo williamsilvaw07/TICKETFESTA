@@ -56,14 +56,13 @@ if (!defined('ABSPATH')) {
         <nav class="main-header navbar navbar-expand navbar-white navbar-light">
             <!-- Left navbar links -->
 
-            <ul>
+            
             <!-- Brand Logo -->
-            <a href="https://ticketfesta.co.uk/" class="brand-link">
-                <img src="https://ticketfesta.co.uk/wp-content/uploads/2024/02/Group-195-2.png" alt=""
-                    class="brand-image img-circle elevation-3">
-                <span class="brand-text font-weight-light"></span>
-            </a>
-</ul>
+            <ul class="navbar-nav ml-0 d-block d-md-none">
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+                </li>
+            </ul>
 
             <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto">
