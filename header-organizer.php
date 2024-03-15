@@ -97,7 +97,7 @@ if (!defined('ABSPATH')) {
 <ul class="show-notification profile-notification dropdown-menu" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
     
     <li class="admin_dashboard-sidebar-item">
-        <a href="/organisers-setting/">
+        <a href="https://ticketfesta.co.uk/">
             <i class="fas fa-exchange-alt"></i><span class="nav-text">Switch to Attendee</span>
         </a>
     </li>
@@ -478,7 +478,8 @@ if (!defined('ABSPATH')) {
 
             .brand-link {
                 position: fixed;
-                border-bottom: 1px solid #e4e4e4;
+                padding-bottom: 27px;
+    border: 0px!important;
             }
 
 
@@ -490,7 +491,7 @@ if (!defined('ABSPATH')) {
 
             .main-header {
                 border-bottom: 1px solid #444;
-                margin-bottom: 20px;
+                padding: 17px;
             }
 
             .postid-1367 .site-content {
