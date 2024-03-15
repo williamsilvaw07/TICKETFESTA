@@ -1258,7 +1258,8 @@ function display_user_created_organizers()
             if ($organizer_id != $default_organizer_id) {
                 echo '<a href="javascript:void(0);" onclick="deleteOrganizer(' . $organizer_id . ')" class="delete-link action-link">Delete</a>';
             }
-            echo '<a href="' . $profile_url . '" class="profile-link action-link">View Profile</a>';
+            echo '<a href="' . $profile_url . '" class="profile-link action-link" target="_blank">View Profile</a>';
+
             echo '</td>';
             echo '</tr>';
         }
