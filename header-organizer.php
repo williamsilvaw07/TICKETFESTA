@@ -3221,6 +3221,9 @@ html .tickets-sold-column , html .tribe-list-column-title {
 .profile-notification .nav-text{
     display:block!important
 }
+.navbar-nav{
+    display:none
+}
                 .admin_dashboard-sidebar-item a {
                     display: flex;
                     align-items: center;
