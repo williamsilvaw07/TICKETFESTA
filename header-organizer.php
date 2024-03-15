@@ -1460,14 +1460,17 @@ html .tickets-sold-column , html .tribe-list-column-title {
 
             }
 
-
+#user-organizers-list tbody tr{
+    border-radius: 10px;
+}
             #user-organizers-list th,
             #user-organizers-list td {
                 text-align: left;
-                padding: 8px;
-                border-top: inherit !important;
-                border-bottom: 1px solid #444;
-                background-color: #19191b;
+    padding: 7px;
+    border-top: inherit !important;
+    border-bottom: 0px solid #444;
+    background-color: #121212 ! Important;
+    margin: 10px 0;
             }
 
             #user-organizers-list thead th {
