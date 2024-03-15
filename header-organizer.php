@@ -3004,8 +3004,8 @@ html .tickets-sold-column , html .tribe-list-column-title {
     width: 100%;
 }
 
-.page-template-organizer-template .main-selector-image-upload-div input{
-    background: #121212;
+.page-template-organizer-template  .main-selector-image-upload-div input{
+    background: #121212!important;
 }
 
         /*****setting page***/ 
