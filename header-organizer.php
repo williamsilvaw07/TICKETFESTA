@@ -2974,7 +2974,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
     gap: 45px;
 }
             #delete-category-form input {
-                width: 100%;
+                width: fit-content;
   
     padding: 7px 0px;
     border-radius: 4px;
