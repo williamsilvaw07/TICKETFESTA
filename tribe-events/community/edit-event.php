@@ -953,19 +953,9 @@ jQuery(document).ready(function($) {
 
 
 <style>
-#event_tribe_venue .linked-post{
-    display:block!important;
-}
 
-#event_tribe_venue .select2-search{
-    padding: 10px;
-    background: white !important;
-    color: black !important;
-}
-#event_tribe_venue .select2-search .select2-search__field{
-    background: inherit !important;
-    color: black !important;
-}
+
+
 .edit-linked-post-link{
     display:none!important;
     visibility: hidden;
