@@ -26,7 +26,8 @@ function organiser_image_gallery_shortcode() {
                         <input type="file" id="file-input" name="files[]" multiple>
                 </div>
             </div>
-          <?php
+            <p class='max-upload'> Account Plan Maximum Upload Limit 3MB </p>
+            <?php
   // HTML markup for displaying categories with titles and thumbnails
   echo "<div style='max-width: 500px; width: 100%;'> <!-- Container div for max-width and responsiveness -->
   <p class='account_storage'>Account Storage</p>
