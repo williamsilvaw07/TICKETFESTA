@@ -102,7 +102,7 @@ if (!defined('ABSPATH')) {
     </li>
     
     <li>
-        <a href="email-inbox.html">
+        <a href="/orginser-support">
             <i class="feather icon-mail"></i> Support
         </a>
     </li>
