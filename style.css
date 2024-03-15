@@ -1869,6 +1869,20 @@ form.edit-vanue-form {
     background: #121212!important;
 }
 
+.edit-vanue-form button{
+    margin: 30px auto;
+    width: 100%;
+    max-width: 400px;
+    background: #d3fa16 !important;
+    color: #000000 !important;
+    text-transform: capitalize !important;
+    border-radius: 3px;
+    line-height: 1;
+    padding: 9px 12px;
+    font-weight: 500;
+    display: block;
+    font-size: 15px !important;
+}
 
 
 .fa, .far, .fas {
