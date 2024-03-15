@@ -836,6 +836,7 @@ if (!defined('ABSPATH')) {
                     border-bottom: 1px solid #444;
                     margin-bottom: 20px;
                     padding-bottom: 10px;
+                    border: 0px!important;
                 }
 
                 #user-organizers-list tbody tr td {
