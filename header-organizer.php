@@ -293,7 +293,7 @@ if (!defined('ABSPATH')) {
         <style>
             .settings-navigation ul li{
                 list-style: none;
-                color: #aaa;
+                color: #aaa!important;
 
             }
             .settings-tab-link.active{
