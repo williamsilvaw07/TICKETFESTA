@@ -371,15 +371,15 @@ if (!defined('ABSPATH')) {
             .fake_aviter{
                 display: flex;
     align-items: center;
-    font-size: 14px;
+    font-size: 13px;
     background: white;
+    border-radius: 100px;
+    width: 36px;
+    height: 36px;
+    justify-content: center;
 
             }
             .fake_aviter span{
-                display: flex;
-    align-items: center;
-    font-size: 14px;
-    background: white;
     color: black !important;
             }      
 
