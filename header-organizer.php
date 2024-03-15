@@ -2967,11 +2967,15 @@ html .tickets-sold-column , html .tribe-list-column-title {
                 max-width: 250px;
                 margin: 0 auto;
             }
-
+.category_main{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+}
             #delete-category-form input {
                 width: 100%;
     max-width: 250px;
-    margin: 0 auto;
     margin-bottom: 40px !important;
     padding: 7px 0px;
     border-radius: 4px;
