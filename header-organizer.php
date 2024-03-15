@@ -366,15 +366,12 @@ if (!defined('ABSPATH')) {
     background-color: #19191b;
     color: #fff;
     padding: 11px;
-    display: flex;
-    flex-direction: column;
-    align-content: flex-start;
-    gap: 10px;
     text-decoration: none;
     list-style: none;
 }
 .dark-mode .dropdown-menu a {
     text-decoration: none;
+    margin:10px 0
 }
 .user-panel .fa-angle-down:before {
     content: "\f107";
