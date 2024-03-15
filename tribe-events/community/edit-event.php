@@ -953,7 +953,7 @@ jQuery(document).ready(function($) {
 
 
 <style>
-#event_tribe_venue .linked-post:first-child{
+#event_tribe_venue .linked-post{
     display:block!important;
 }
 
