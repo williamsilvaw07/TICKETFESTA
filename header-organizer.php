@@ -367,7 +367,21 @@ if (!defined('ABSPATH')) {
 
 
         <style>
-                      
+
+            .fake_aviter{
+                display: flex;
+    align-items: center;
+    font-size: 14px;
+    background: white;
+
+            }
+            .fake_aviter span{
+                display: flex;
+    align-items: center;
+    font-size: 14px;
+    background: white;
+    color: black !important;
+            }      
 
                       .settings-tab-content {
         display: none;
