@@ -1369,6 +1369,11 @@ text-transform: capitalize!important;
 
 
 }
+
+
+.tribe-tickets__tickets-item.outofstock{
+    opacity: 1!important;
+}
 .tribe-events-notices{
     font-size: 26px;
     list-style: none;
