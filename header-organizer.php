@@ -2965,7 +2965,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
             #delete-category-form {
                 width: 100%;
                 max-width: 250px;
-                margin: 0 auto;
+            
             }
 .category_main{
     display: flex;
