@@ -379,9 +379,11 @@ function category_image_gallery_shortcode($atts) {
         // echo "</pre>";
         // Display images
         echo "<div class='category_main'>";
+        echo "<div class='category_main_title'>";
         echo "<div class='category'> $term->name </div>";
         echo "<div class='organizer'>Organizer: $cat_organiser->post_title</div>";
-        echo "<br/>";
+        echo "</div>";
+       
           // Display delete button for the category
           echo '<form id="delete-category-form" method="post">';
           echo '<input type="hidden" name="delete_category_id" value="' . esc_attr($category_id) . '" />';
