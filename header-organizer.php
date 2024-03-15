@@ -149,7 +149,36 @@ if (!defined('ABSPATH')) {
 
         <script>
 
+   // jQuery for switching tabs
+   $(document).ready(function () {
+        $('.settings-tab-link').click(function (e) {
+            e.preventDefault(); // Prevent default anchor behavior
 
+            var target = $($(this).data('target'));
+
+            // Hide all tab content
+            $('.settings-tab-content').removeClass('active').hide();
+
+            // Show the selected tab content
+            target.addClass('active').show();
+
+            // Update the active state of the tab link
+            $('.settings-tab-link').removeClass('active');
+            $(this).addClass('active');
+        });
+        
+        // Trigger click on the first tab to display it by default
+        $('.settings-tab-link').first().click();
+    });
+
+
+
+
+
+
+
+
+    
 
 
 
