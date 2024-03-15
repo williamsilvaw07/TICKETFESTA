@@ -3354,7 +3354,17 @@ html .tickets-sold-column , html .tribe-list-column-title {
 
 
             @media (max-width: 707px) {
+                .category_main {
+ gap: 10px;
+ flex-direction: column;
+}
+#delete-category-form input {
 
+    margin: 0 !important;
+}.category_main_title .organizer {
+    font-size: 15px;
+  
+}
                 .tribe-community-events-list tbody tr,
                 .tribe-community-events-list thead tr {
                     grid-template-columns: 42% 14% 16% 16% 9%;
