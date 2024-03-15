@@ -373,6 +373,9 @@ if (!defined('ABSPATH')) {
 
 
         <style>
+            .img-circle {
+                border-radius: inherit;
+            }
 .user-email-address{
     font-size:13px
 }
