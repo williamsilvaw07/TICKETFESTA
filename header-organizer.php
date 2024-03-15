@@ -3246,6 +3246,13 @@ margin:0!important;
     height: 31px;
     line-height: 21px;
   
+}.dark-mode .dropdown-menu {
+    padding: 10px;
+ 
+}.dark-mode .dropdown-menu  a {
+
+    padding: 3px;
+
 }
                 .main-header .brand-link{
                 display:block
