@@ -371,20 +371,23 @@ if (!defined('ABSPATH')) {
 
 
         <style>
-
+.user-email-address{
+    font-size:13px
+}
 .line_break {
     display: block; 
     width: 100%; 
     height: 1px; 
-    background-color: #000; 
+    background-color: #575757;
     margin: 10px 0; 
 }
 .dark-mode .dropdown-menu {
     background-color: #19191b;
     color: #fff;
-    padding: 11px;
+    padding: 19px;
     text-decoration: none;
     list-style: none;
+    width: fit-content;
 }
 .dark-mode .dropdown-menu li {
     text-decoration: none;
