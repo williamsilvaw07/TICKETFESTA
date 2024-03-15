@@ -150,32 +150,6 @@ if (!defined('ABSPATH')) {
         <script>
 
 
-    // JavaScript for switching tabs
-    document.addEventListener('DOMContentLoaded', function () {
-        const tabs = document.querySelectorAll('.tab-link');
-
-        tabs.forEach(tab => {
-            tab.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.dataset.tabTarget);
-                const allContents = document.querySelectorAll('.tab-content');
-                const allTabs = document.querySelectorAll('.tab-link');
-
-                allContents.forEach(c => {
-                    c.classList.remove('active');
-                });
-
-                allTabs.forEach(t => {
-                    t.classList.remove('active');
-                });
-
-                tab.classList.add('active');
-                target.classList.add('active');
-            });
-        });
-    });
-
-
 
 
 
