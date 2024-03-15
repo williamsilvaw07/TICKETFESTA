@@ -980,7 +980,7 @@ if (!defined('ABSPATH')) {
             body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .main-footer,
             body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .main-header {
                 transition: margin-left .3s ease-in-out;
-                margin-left: 206px !important
+                margin-left: 186px !important
             }
 
             .page-template-organizer-template {
