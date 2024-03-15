@@ -2967,9 +2967,20 @@ html .tickets-sold-column , html .tribe-list-column-title {
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
-    align-items: center;
+    align-items: flex-start;
     gap: 45px;
     margin-bottom:40px
+}
+.category_main_title .category {
+    font-weight: 800;
+    font-size: 30px;
+
+}
+
+.category_main_title .organizer {
+    font-weight: 300;
+    font-size: 17px;
+    color: #aaa;
 }
             #delete-category-form input {
                 width: fit-content;
