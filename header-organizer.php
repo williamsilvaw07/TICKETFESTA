@@ -2970,12 +2970,13 @@ html .tickets-sold-column , html .tribe-list-column-title {
 
             #delete-category-form input {
                 width: 100%;
-                max-width: 250px;
-                margin: 0 auto;
-                margin-top: 40px !important;
-                padding: 7px 0px;
-                border-radius: 4px;
-                color: black !important;
+    max-width: 250px;
+    margin: 0 auto;
+    margin-bottom: 40px !important;
+    padding: 7px 0px;
+    border-radius: 4px;
+    color: black !important;
+    background: #ff4d4d !important;
 
             }
 
