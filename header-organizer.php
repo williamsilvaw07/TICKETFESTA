@@ -3175,7 +3175,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
                 }
 
                 .sales-card.today_sale_admin_dashboard {
-                    background-color: rgb(26, 26, 26);
+                    background-color: #19191b;
                     background-size: cover;
                     background-position: center;
                     background-repeat: no-repeat;
