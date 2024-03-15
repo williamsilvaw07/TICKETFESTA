@@ -403,7 +403,7 @@ if (!defined('ABSPATH')) {
             }
 
             #user-organizers-list tbody tr:nth-child(odd) {
-                background-color: rgb(26, 26, 26) !important;
+                background-color: #19191b !important;
             }
 
             .organizers-header {
@@ -418,7 +418,7 @@ if (!defined('ABSPATH')) {
             }
 
             #user-organizers-list tbody tr:nth-child(even) {
-                background-color: rgb(26, 26, 26) !important;
+                background-color: #19191b !important;
             }
 
             #user-organizers-list .edit-link {
@@ -458,7 +458,7 @@ if (!defined('ABSPATH')) {
             }
 
             #user-organizers-list tr:nth-child(even) {
-                background-color: rgb(26, 26, 26);
+                background-color: #19191b;
             }
 
             element.style {
@@ -476,7 +476,7 @@ if (!defined('ABSPATH')) {
                 border-width: 0;
                 margin: 0;
                 width: 100%;
-                background-color: rgb(26, 26, 26);
+                background-color: #19191b;
                 position: relative;
                 padding: 17px;
                 border-radius: 10px;
@@ -771,7 +771,7 @@ if (!defined('ABSPATH')) {
 
             .page-template-organizer-template {
 
-                background: rgb(26, 26, 26) !important
+                background: #19191b !important
             }
 
             .page-template-organizer-template .content {
@@ -1388,7 +1388,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
                 padding: 8px;
                 border-top: inherit !important;
                 border-bottom: 1px solid #444;
-                background-color: rgb(26, 26, 26);
+                background-color: #19191b;
             }
 
             #user-organizers-list thead th {
@@ -1615,7 +1615,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
             }
 
             .admin_dashboard_main_recent_activity {
-                background-color: rgb(26, 26, 26);
+                background-color: #19191b;
                 position: relative;
                 padding: 17px;
                 border-radius: 10px;
@@ -1623,7 +1623,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
             }
 
             .tribe-community-events-list {
-                background-color: rgb(26, 26, 26);
+                background-color: #19191b;
                 position: relative;
                 padding: 17px;
                 border-radius: 10px !important;
@@ -1765,7 +1765,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
             }
 
             .ui-widget-content {
-                background-color: rgb(26, 26, 26) !important;
+                background-color: #19191b !important;
                 color: white !important;
             }
 
@@ -2876,7 +2876,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
             }
 
 .elementor-element-c668104 {
-    background-color: rgb(26, 26, 26);
+    background-color: #19191b;
     position: relative;
     padding: 17px;
     border-radius: 10px;
@@ -2894,7 +2894,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
             margin:0 auto
         }
 .orgerinser_settings_form{
-    background-color: rgb(26, 26, 26);
+    background-color: #19191b;
     position: relative;
     padding: 17px;
     border-radius: 10px !important;
@@ -3260,7 +3260,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
                     padding: 20px;
 
                     border-radius: 8px;
-                    background-color: rgb(26, 26, 26);
+                    background-color: #19191b;
                 }
 
                 .event-start-date {
