@@ -329,7 +329,7 @@ if (!defined('ABSPATH')) {
 }
     
     .settings-navigation li.active a {
-        color: white; /* Active text color */
+        color: white!important;
         border-bottom: 2px solid #d3fa16; /* Active bottom border */
     }
 
