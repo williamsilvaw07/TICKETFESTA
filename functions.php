@@ -1131,7 +1131,7 @@ function display_user_created_organizers()
 
     echo '<div class="organizers-header">';
     //echo '<h4>Your Organizers</h4>'; // Title
-    echo '<a class="organizers_add_new_btn" href="javascript:void(0);" onclick="createNewOrganizer()">Create New Organizer</a>';
+    echo '<a class="organizers_add_new_btn" href="javascript:void(0);" onclick="createNewOrganizer()">Create New Organiser</a>';
     echo '<input type="hidden" id="create_new_organizer_nonce" value="' . esc_attr($nonce) . '" />';
     echo '</div>';
 
