@@ -86,10 +86,7 @@ if (!defined('ABSPATH')) {
                         </li>
 
 
-                        <li class="admin_dashboard-sidebar-item">
-                            <a href="/dashboard/organisers-list/"><i class="fas fa-users"></i><span
-                                    class="nav-text">Organizers</span></a>
-                        </li>
+                    
 
                         
                         <li class="admin_dashboard-sidebar-item">
@@ -107,6 +104,15 @@ if (!defined('ABSPATH')) {
                             <a href="/organiser-gallery/"><i class="fas fa-image"></i><span
                                     class="nav-text">Gallery</span></a>
                         </li>
+
+                        <li class="admin_dashboard-sidebar-item">
+                            <a href="/dashboard/organisation-settings/"><i class="fas fa-cog"></i><span
+                                    class="nav-text">Organisation Settings
+
+</span></a>
+                        </li>
+
+
                         <li class="admin_dashboard-sidebar-item admin_dashboard-coming-soon">
                             <a href="/organizer-eventsdd"><i
                                     class="fas fa-bullhorn"></i><span class="nav-text">Affiliate Marketing</span></a>

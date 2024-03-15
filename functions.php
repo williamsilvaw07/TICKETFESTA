@@ -1301,7 +1301,7 @@ function display_user_created_vanues()
     $nonce = wp_create_nonce('create_new_organizer_nonce');
 
     echo '<div class="organizers-header">';
-    echo '<h2>Your Vanues</h2>'; // Title
+    echo '<h2>Your Venues</h2>'; // Title
     echo '</div>';
     // JavaScript for createNewOrganizer
     ?>
