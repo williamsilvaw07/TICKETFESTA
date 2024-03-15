@@ -312,8 +312,9 @@ if (!defined('ABSPATH')) {
                 color: #aaa!important;
 
             }
-  .settings-tab-link a{
+  .settings-tab-link{
  text-decoration: none!important;
+ color: #aaa!important;
 }
             .settings-tab-link.active{
                 border-bottom: 2px solid #d3fa16;
@@ -334,7 +335,7 @@ if (!defined('ABSPATH')) {
 
 
 
-    
+
 
 
 
