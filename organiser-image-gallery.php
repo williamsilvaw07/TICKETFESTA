@@ -378,7 +378,7 @@ function category_image_gallery_shortcode($atts) {
         // var_dump('cat_organiser: ', $cat_organiser->post_author);
         // echo "</pre>";
         // Display images
-
+        echo "<div class='category_main'>  </div>";
         echo "<div class='category'> $term->name </div>";
         echo "<div class='organizer'>Organizer: $cat_organiser->post_title</div>";
         echo "<br/>";
@@ -387,7 +387,7 @@ function category_image_gallery_shortcode($atts) {
           echo '<input type="hidden" name="delete_category_id" value="' . esc_attr($category_id) . '" />';
           echo '<input type="submit" name="delete_category" class="delete-all-button" value="Delete Category" />';
           echo '</form>';
-  
+          echo "</div>";
         if (!empty($category_images) ) {
             echo '<div class="category-images">';
             foreach($category_images  as $category_image){
