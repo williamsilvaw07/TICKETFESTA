@@ -70,14 +70,21 @@ if (!defined('ABSPATH')) {
                     </a> -->
 
                     <div class="user-panel d-flex" data-toggle="dropdown" aria-expanded="true">
-                        <div class="image">
-                            <img src="https://demo.dashboardpack.com/admindek-html/files/assets/images/avatar-4.jpg" class="img-round" alt="User Image">
-                        </div>
-                        <div class="info d-flex">
-                            <span role="button">Alexander</span>
-                            <i class="fas fa-angle-down mt-1 ml-2"></i>
-                        </div>
-                    </div>
+    <div class="fake_aviter">
+        <span></span>
+    </div>
+    <div class="info d-flex">
+        <?php if ( is_user_logged_in() ) : ?>
+            <?php 
+                $current_user = wp_get_current_user();
+                echo '<span role="button">' . esc_html( $current_user->first_name ) . '</span>';
+            ?>
+        <?php else : ?>
+            <span role="button">Guest</span>
+        <?php endif; ?>
+        <i class="fas fa-angle-down mt-1 ml-2"></i>
+    </div>
+</div>
 
                     <ul class="show-notification profile-notification dropdown-menu" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
                         <li>
