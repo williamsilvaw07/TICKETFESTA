@@ -1130,8 +1130,8 @@ function display_user_created_organizers()
     $nonce = wp_create_nonce('create_new_organizer_nonce');
 
     echo '<div class="organizers-header">';
-    echo '<h2>Your Organizers</h2>'; // Title
-    echo '<a class="organizers_add_new_btn" href="javascript:void(0);" onclick="createNewOrganizer()">Create New Organizer</a>';
+    echo '<h2>Your Organisers</h2>'; // Title
+    echo '<a class="organizers_add_new_btn" href="javascript:void(0);" onclick="createNewOrganizer()">Create New Organiser</a>';
     echo '<input type="hidden" id="create_new_organizer_nonce" value="' . esc_attr($nonce) . '" />';
     echo '</div>';
 
@@ -1230,8 +1230,8 @@ function display_user_created_organizers()
         echo '<table id="user-organizers-list" style="width: 100%;">';
         echo '<thead>';
         echo '<tr>';
-        echo '<th>Organizer Logo</th>';
-        echo '<th>Organizer Name</th>';
+        echo '<th>Organiser Logo</th>';
+        echo '<th>Organiser Name</th>';
         echo '<th>Actions</th>';
         echo '</tr>';
         echo '</thead>';
