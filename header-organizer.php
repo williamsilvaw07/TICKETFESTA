@@ -296,6 +296,10 @@ if (!defined('ABSPATH')) {
                 color: #aaa;
 
             }
+            .settings-tab-link.active{
+                border-bottom: 2px solid red;
+                text-decoration: inherit;
+            }
             .settings-navigation ul{
                 margin: 0;
     display: flex;
