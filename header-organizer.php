@@ -3254,6 +3254,9 @@ margin:0!important;
     padding: 3px;
 
 }
+.dark-mode .dropdown-menu  a i{
+display:block!important
+}
                 .main-header .brand-link{
                 display:block
             }
