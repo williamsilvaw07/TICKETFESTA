@@ -1693,6 +1693,7 @@ font-size: 14px!important;
     width: 100%;
     max-width: 900px;
     padding: 17px;
+    margin-bottom: 120px;
 }
 #drop-zone{
     position: relative;
