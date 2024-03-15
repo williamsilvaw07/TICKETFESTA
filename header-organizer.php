@@ -104,9 +104,10 @@ if (!defined('ABSPATH')) {
     </li>
     
     <li class="admin_dashboard-sidebar-item">
-        <a href="/orginser-support">
-            <i class="feather icon-mail"></i> <span class="nav-text">Support</span>        </a>
-    </li>
+    <a href="/orginser-support">
+        <i class="fas fa-envelope"></i> <span class="nav-text">Support</span>
+    </a>
+</li>
     
     <li class="admin_dashboard-sidebar-item">
         <a href="<?php echo esc_url(wp_logout_url(home_url())); ?>">
