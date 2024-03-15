@@ -16,8 +16,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // single product price
     jQuery('.tribe-tickets__tickets-sale-price').each(function() {
         // Append a div element with the text "Sites Fees" to each item
-        
-        var ticketAmount = parseFloat(jQuery('.tribe-amount').text().trim()).toFixed(2);
+        var ticketAmount = jQuery(this).find('.tribe-amount').text().replace(',', ''); 
+        ticketAmount = parseFloat(ticketAmount.trim()).toFixed(2);
         var ticketSiteFee =  get_tribe_ticket_fee(ticketAmount);
         console.log('ticket price: ', ticketAmount)
         jQuery(this).append('<span class="site-fee-container">+ £<span class="ticket_site_fee">'+ticketSiteFee+'</span> Fee</span>');
@@ -187,7 +187,8 @@ jQuery(document).ready(function($) {
     
         // Iterate over each .tribe-tickets__tickets-item
         jQuery('.tribe-tickets__tickets-item').each(function() {
-            var ticketAmount = parseFloat(jQuery(this).find('.tribe-amount').text().trim()).toFixed(2);
+            var ticketAmount = jQuery(this).find('.tribe-amount').text().replace(',', ''); 
+            ticketAmount = parseFloat(ticketAmount.trim()).toFixed(2);
             ticketAmount = isNaN(ticketAmount) ? 0 : parseFloat(ticketAmount);
             var quantity = parseInt(jQuery(this).find('.tribe-tickets__tickets-item-quantity-number-input').val());
             var ticketSiteFee = get_tribe_ticket_fee(ticketAmount, quantity);
