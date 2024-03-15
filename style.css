@@ -1679,6 +1679,9 @@ font-size: 14px!important;
     .page-template-organizer-template  #image-upload-form input{
         background-color: inherit!important;
     }
+    .account-used{
+        font-size: 13px;
+    }
 #image-gallery {
     display: flex;
     justify-content: space-around;
