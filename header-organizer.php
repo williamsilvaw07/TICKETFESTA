@@ -367,7 +367,11 @@ if (!defined('ABSPATH')) {
 
 
         <style>
-
+.user-panel .fa-angle-down:before {
+    content: "\f107";
+    color: white;
+    margin-right: 24px;
+}
             .fake_aviter{
                 display: flex;
     align-items: center;
