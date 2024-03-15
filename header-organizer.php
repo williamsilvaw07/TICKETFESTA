@@ -118,15 +118,13 @@ if (!defined('ABSPATH')) {
         <a href="<?php echo esc_url(wp_logout_url(home_url())); ?>">
             <i class="fas fa-sign-out-alt"></i><span class="nav-text">Logout</span>
         </a>
-    </li>
-    
-    <!-- Displaying logged-in user's email address -->
-    <li class="admin_dashboard-sidebar-item user-email">
         <?php if ( is_user_logged_in() ): ?>
             <?php $current_user = wp_get_current_user(); ?>
             <span class="user-email-address"><?php echo esc_html( $current_user->user_email ); ?></span>
         <?php endif; ?>
     </li>
+    
+
 </ul>
 
             </ul>
@@ -374,7 +372,13 @@ if (!defined('ABSPATH')) {
 
         <style>
 
-
+.line_break {
+    display: block; /* Makes the span behave like a block-level element */
+    width: 100%; /* Sets the width to 100% of its container */
+    height: 1px; /* The thickness of the line */
+    background-color: #000; /* The color of the line */
+    margin: 10px 0; /* Adds some space above and below the line */
+}
 .dark-mode .dropdown-menu {
     background-color: #19191b;
     color: #fff;
