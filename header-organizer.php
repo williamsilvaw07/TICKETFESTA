@@ -484,11 +484,7 @@ if (!defined('ABSPATH')) {
 
             }
 
-            .brand-link {
-                position: fixed;
-                padding-bottom: 27px;
-    border: 0px!important;
-            }
+           
 
 
             /***MAIN LAYOUT***/
