@@ -87,13 +87,13 @@ if (!defined('ABSPATH')) {
 
 
                     
-
+<!--
                         
                         <li class="admin_dashboard-sidebar-item">
                             <a href="/dashboard/vanues-list/"><i class="fa fa-map-marker"></i><span
                                     class="nav-text">Vanues</span></a>
                         </li>
-
+ -->
                         <li class="admin_dashboard-sidebar-item">
                             <a href="/organizer-finance/">
                                 <i class="fas fa-university"></i><span class="nav-text">Finance</span>
