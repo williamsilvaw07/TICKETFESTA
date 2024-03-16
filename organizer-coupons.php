@@ -32,50 +32,44 @@ get_header('organizer');
 ?>
 <style>
 
-@media screen and (max-width: 600px) {
-    .table-responsive table, .table-responsive thead, .table-responsive tbody, .table-responsive th, .table-responsive td, .table-responsive tr { 
-        display: block; 
-    }
 
-    .table-responsive thead tr { 
-        position: absolute;
-        top: -9999px;
-        left: -9999px;
-    }
 
-    .table-responsive tr { 
-        border: 1px solid #ccc; 
-        margin-bottom: 10px;
-    }
-
-    .table-responsive td {
-        border: none;
-        border-bottom: 1px solid #eee;
-        position: relative;
-        padding-left: 50%;
-        text-align: left;
-        white-space: normal;
-        text-overflow: clip;
-        display: block;
-        text-align: right;
-    }
-
-    .table-responsive td:before {
-        content: attr(data-title);
-        position: absolute;
-        left: 10px;
-        top: 0;
-        font-weight: bold;
-        width: 45%;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        overflow: hidden;
-    }
+.table-responsive::before,
+.table-responsive::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    width: 20px;
+    height: 100%;
+    z-index: 2;
 }
 
+.table-responsive::before {
+    left: 0;
+    background: linear-gradient(to right, rgba(0,0,0,0.2), rgba(0,0,0,0));
+}
 
+.table-responsive::after {
+    right: 0;
+    background: linear-gradient(to left, rgba(0,0,0,0.2), rgba(0,0,0,0));
+}
 
+.table-responsive {
+    overflow-x: auto; /* Enables horizontal scrolling */
+    position: relative; /* For the ::before and ::after to position properly */
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS devices */
+}
 
+.table-responsive table {
+    min-width: 1400px; /* Adjust based on your content */
+    border-collapse: collapse;
+}
+
+.table-responsive th,
+.table-responsive td {
+    text-align: left;
+    padding: 8px;
+}
 
 
 
