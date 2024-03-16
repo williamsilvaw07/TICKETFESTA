@@ -83,7 +83,10 @@ font-family: "Plus Jakarta Sans", Sans-serif;
 .sb-list , .sb-active , .sb-chat.sb-active > .sb-body{
     background: #19191B;
 }
-
+.sb-list > div.sb-label-date span, .sb-label-date-top span {
+    font-weight: 400;
+ 
+}
 
 /***enf***/
 
