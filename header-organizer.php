@@ -3571,6 +3571,8 @@ display:block!important
                     font-size: 16px !important;
                     margin-right: 29px;
                     line-height: 19px;
+                    position: relative;
+    top: 3px;
                 }
 
                 .sales-card {
@@ -3678,7 +3680,7 @@ display:block!important
                     font-size: 13px;
                     font-weight: 300;
                     position: relative;
-    top: 2px;
+          top: 2px;
                 }
 
                 .tribe-community-events-list tbody .tribe-list-column-title,
