@@ -81,13 +81,13 @@ font-family: "Plus Jakarta Sans", Sans-serif;
 /*****live chat css***/
 
 .sb-list , .sb-active , .sb-chat.sb-active > .sb-body{
-    background: #19191B;
+    background: #212121
 }
 .sb-list > div.sb-label-date span, .sb-label-date-top span  , .sb-input > span{
     color: #566069 !important;
  
 }
-.sb-header span , .sb-chat .sb-close-chat , .sb-chat .sb-scroll-area .sb-header{
+.sb-header span , .sb-chat .sb-close-chat , .sb-chat .sb-scroll-area .sb-header , .sb-text{
     color: #566069 !important;
 }
 /***enf***/
