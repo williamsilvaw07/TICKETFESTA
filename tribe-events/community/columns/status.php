@@ -25,11 +25,25 @@ echo '<div class="event-title-image">';
 if ($canEdit) {
    
     echo $event_image;
-   
+    $title = get_the_title($event);
+$limited_title = mb_substr($title, 0, 40);
+
+if (mb_strlen($title) > 40) {
+    $limited_title .= '...';
+}
+
+echo '<span class="title">' . $limited_title . '</span>';
     echo '</a>';
 } else {
     echo $event_image;
-    echo '<span class="title">' . get_the_title($event) . '</span>';
+    $title = get_the_title($event);
+    $limited_title = mb_substr($title, 0, 40);
+    
+    if (mb_strlen($title) > 40) {
+        $limited_title .= '...';
+    }
+    
+    echo '<span class="title">' . $limited_title . '</span>';
 }
 echo '</div>'; // End event-title-image div
 
