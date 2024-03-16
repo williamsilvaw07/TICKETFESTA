@@ -147,12 +147,17 @@ label:not(.form-check-label):not(.custom-file-label) {
     border:0px;
     box-shadow: none;
 }
-
+.datetimepicker-input{
+    font-size:16px!important
+}
 .dark-mode .btn-primary:hover{
     background:black!important;
     color:white!important
 }
-
+.dark-mode .swal2-popup {
+    background-color: #19191b;
+    color: #e9ecef;
+}
 
 
     @media (max-width: 655px) {
