@@ -187,131 +187,109 @@ get_header('organizer');
                         </div>
                     </div>
                     <div class="tribe-responsive-table-container">
+
+
+
                     <div class="table-responsive">
-                        <table id="tribe-community-events-list"
-                            class="tribe-community-events-list display responsive stripe">
-                            <thead>
-                                <tr>
-                                    <th class="event-column">
-                                        Coupon Code
-                                    </th>
-                                    <th class="tickets-sold-column">
-                                        Ticket
-                                    </th>
-                                    <th class="gross-column">
-                                        Event Name
-                                    </th>
-                                    <th class="status-column">
-                                        Start Date
-                                    </th>
-                                    <th class="status-column">
-                                        End Date
-                                    </th>
-                                    <th class="status-column">
-                                        Value
-                                    </th>
-                                    <th class="status-column">
-                                        Type
-                                    </th>
-                                    <th class="status-column action">
-                                        Action
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php foreach ($coupon_posts as $coupon): ?>
-                                    <?php $wooCoupon = new WC_Coupon($coupon->ID); ?>
-                                    <?php $data = []; ?>
-                                    <tr>
-                                        <td class="tribe-dependent tribe-list-column tribe-list-column-status tribe-active">
-                                            <span class="value">
-                                                <?php
-                                                $data['code'] = $wooCoupon->get_code();
-                                                $data['coupon_id'] = $coupon->ID;
-                                                echo $wooCoupon->get_code();
-                                                ?>
-                                            </span>
-                                        </td>
-                                        <td class="event-status-form">
-                                            <?php
-
-                                            $postMeta = get_post_meta($coupon->ID, 'product_ids', true);
-                                            $product_ids_array = explode(',', $postMeta);
-                                            echo "<ul style='margin: 0;'>";
-                                            foreach ($product_ids_array as $key => $product_id) {
-                                                $product = wc_get_product($product_id);
-                                                echo "<li>{$product->get_name()}</li>";
-                                            }
-                                            echo "</ul>";
-                                            $data['product_ids'] = $product_ids_array;
-                                            ?>
-                                        </td>
-                                        <td class="event-status-form">
-    <?php
-    $data['event_id'] = get_post_meta($coupon->ID, 'event_id', true);
-    if (isset($eventArray[$data['event_id']])) {
-        $eventTitle = $eventArray[$data['event_id']];
-        $eventTitleShort = mb_substr($eventTitle, 0, 50);
-        
-        // Append '...' to the shortened title if it was longer than 50 characters
-        if (mb_strlen($eventTitle) > 50) {
-            $eventTitleShort .= '...';
-        }
-        
-        echo $eventTitleShort;
-    }
-    ?>
-</td>
-<td class="event-status-form">
-    <?php
-    $start_date = $wooCoupon->get_date_created();
-    echo $start_date ? date('d-m-Y H:i', strtotime($start_date)) : '';
-    $data['start_date'] = $start_date ? date('d-m-Y H:i', strtotime($start_date)) : '';
-    ?>
-</td>
-<td class="event-status-form">
-    <?php
-    $expire_date = $wooCoupon->get_date_expires();
-    echo $expire_date ? date('d-m-Y H:i', strtotime($expire_date)) : '';
-    $data['expire_date'] = $expire_date ? date('d-m-Y H:i', strtotime($expire_date)) : '';
-    ?>
-</td>
-
-
-                                        <td class="event-status-form">
-                                            <?php
-                                            $data['amount'] = $wooCoupon->get_amount();
-                                            echo $wooCoupon->get_amount();
-                                            ?>
-                                        </td>
-                                        <td class="event-status-form">
-                                            <?php
-                                            $data['discount_type'] = $wooCoupon->get_discount_type();
-
-                                            echo ['fixed_cart' => 'Fixed', 'percent' => 'Percent'][$wooCoupon->get_discount_type()];
-                                            ?>
-                                        </td>
-                                        <td class="text-end action">
-                                            <div class="btn-group dropleft">
-                                                <button type="button" class="dropbtn" data-toggle="dropdown"
-                                                    aria-expanded="false">⋮</button>
-
-                                                <div class="dropdown-menu" role="menu" style="">
-
-                                                    <a class="dropdown-item" href="#"
-                                                        data-details='<?php echo json_encode($data) ?>'
-                                                        onclick="onClickEditHandeler(this)" data-toggle="modal"
-                                                        data-target="#modal-edit">Edit</a>
-                                                    <a class="dropdown-item" href="#"
-                                                        onclick="onClickDeleteHandeler(<?php echo $coupon->ID ?>)">Delete</a>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                <?php endforeach; ?>
-                            </tbody>
-                        </table>
+    <table id="tribe-community-events-list" class="tribe-community-events-list display responsive stripe">
+        <thead>
+            <tr>
+                <th class="event-column">Coupon Code</th>
+                <th class="tickets-sold-column">Ticket</th>
+                <th class="gross-column">Event Name</th>
+                <th class="status-column">Start Date</th>
+                <th class="status-column">End Date</th>
+                <th class="status-column">Value</th>
+                <th class="status-column">Type</th>
+                <th class="status-column action">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($coupon_posts as $coupon): ?>
+                <?php $wooCoupon = new WC_Coupon($coupon->ID); ?>
+                <?php $data = []; ?>
+                <tr>
+                    <td data-title="Coupon Code" class="tribe-dependent tribe-list-column tribe-list-column-status tribe-active">
+                        <?php
+                        $data['code'] = $wooCoupon->get_code();
+                        $data['coupon_id'] = $coupon->ID;
+                        echo $wooCoupon->get_code();
+                        ?>
+                    </td>
+                    <td data-title="Ticket" class="event-status-form">
+                        <?php
+                        $postMeta = get_post_meta($coupon->ID, 'product_ids', true);
+                        $product_ids_array = explode(',', $postMeta);
+                        echo "<ul style='margin: 0;'>";
+                        foreach ($product_ids_array as $product_id) {
+                            $product = wc_get_product($product_id);
+                            echo "<li>{$product->get_name()}</li>";
+                        }
+                        echo "</ul>";
+                        $data['product_ids'] = $product_ids_array;
+                        ?>
+                    </td>
+                    <td data-title="Event Name" class="event-status-form">
+                        <?php
+                        $data['event_id'] = get_post_meta($coupon->ID, 'event_id', true);
+                        if (isset($eventArray[$data['event_id']])) {
+                            $eventTitle = $eventArray[$data['event_id']];
+                            $eventTitleShort = mb_substr($eventTitle, 0, 50);
+                            
+                            if (mb_strlen($eventTitle) > 50) {
+                                $eventTitleShort .= '...';
+                            }
+                            
+                            echo $eventTitleShort;
+                        }
+                        ?>
+                    </td>
+                    <td data-title="Start Date" class="event-status-form">
+                        <?php
+                        $start_date = $wooCoupon->get_date_created();
+                        echo $start_date ? date('d-m-Y H:i', strtotime($start_date)) : '';
+                        $data['start_date'] = $start_date ? date('d-m-Y H:i', strtotime($start_date)) : '';
+                        ?>
+                    </td>
+                    <td data-title="End Date" class="event-status-form">
+                        <?php
+                        $expire_date = $wooCoupon->get_date_expires();
+                        echo $expire_date ? date('d-m-Y H:i', strtotime($expire_date)) : '';
+                        $data['expire_date'] = $expire_date ? date('d-m-Y H:i', strtotime($expire_date)) : '';
+                        ?>
+                    </td>
+                    <td data-title="Value" class="event-status-form">
+                        <?php
+                        $data['amount'] = $wooCoupon->get_amount();
+                        echo $wooCoupon->get_amount();
+                        ?>
+                    </td>
+                    <td data-title="Type" class="event-status-form">
+                        <?php
+                        $data['discount_type'] = $wooCoupon->get_discount_type();
+                        echo ['fixed_cart' => 'Fixed', 'percent' => 'Percent'][$wooCoupon->get_discount_type()];
+                        ?>
+                    </td>
+                    <td data-title="Action" class="text-end action">
+                        <div class="btn-group dropleft">
+                            <button type="button" class="dropbtn" data-toggle="dropdown" aria-expanded="false">⋮</button>
+                            <div class="dropdown-menu" role="menu" style="">
+                                <a class="dropdown-item" href="#" data-details='<?php echo json_encode($data); ?>' onclick="onClickEditHandeler(this)" data-toggle="modal" data-target="#modal-edit">Edit</a>
+                                <a class="dropdown-item" href="#" onclick="onClickDeleteHandeler(<?php echo $coupon->ID; ?>)">Delete</a>
+                            </div>
                         </div>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+
                     </div>
 
                 </div>
