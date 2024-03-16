@@ -4444,16 +4444,19 @@ function custom_qr_scanner_shortcode() {
     <div id="video-container">
         <video id="video" playsinline autoplay></video>
         <div id="result"></div>
+        <button onclick="switchCamera()">Switch Camera</button>
     </div>
 
     <script>
+    let facingMode = 'environment'; // Default to back camera
+
     document.addEventListener("DOMContentLoaded", function(event) {
         const video = document.getElementById('video');
         const resultContainer = document.getElementById('result');
 
         // Check if getUserMedia is supported
         if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-            navigator.mediaDevices.getUserMedia({ video: true })
+            navigator.mediaDevices.getUserMedia({ video: { facingMode: facingMode } })
             .then(function(stream) {
                 video.srcObject = stream;
                 video.play();
@@ -4481,6 +4484,22 @@ function custom_qr_scanner_shortcode() {
             }, 200);
         }
     });
+
+    function switchCamera() {
+        if (facingMode === 'environment') {
+            facingMode = 'user';
+        } else {
+            facingMode = 'environment';
+        }
+        const video = document.getElementById('video');
+        navigator.mediaDevices.getUserMedia({ video: { facingMode: facingMode } })
+        .then(function(stream) {
+            video.srcObject = stream;
+        })
+        .catch(function(error) {
+            console.error('Error switching camera:', error);
+        });
+    }
 </script>
 
     <?php
