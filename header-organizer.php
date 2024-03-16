@@ -3738,7 +3738,7 @@ display:block!important
                     margin-bottom:100px
                 }
                 a.tribe-button.tribe-button-primary.add-new {
-    margin-top: 0;
+    margin: 0;
 }
                 .user-panel .info {
     padding: 5px 5px 0px 10px;
