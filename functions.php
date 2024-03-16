@@ -4507,7 +4507,10 @@ function validate_event_pass() {
     wp_die();
 }
 
-add_action( 'wp',  'get_posts_by_event_pass');
+add_action( 'wp',  function(){
+    var_dump(get_post_meta( '1585', 'event_pass', true));
+    die();
+});
 function get_posts_by_event_pass($event_pass) {
     $args = array(
         'post_type' => 'tribe_events',
