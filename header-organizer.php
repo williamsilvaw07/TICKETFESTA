@@ -1492,6 +1492,9 @@ html .tickets-sold-column , html .tribe-list-column-title {
             .start-date-year {
                 display: none;
             }
+            .start-date-time{
+                line-height: 16px;
+            }
             .start-date-time span{
                 font-size: 13px;
     text-transform: lowercase;
