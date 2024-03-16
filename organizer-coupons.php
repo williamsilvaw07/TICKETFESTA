@@ -142,11 +142,21 @@ get_header('organizer');
         background: #0d0e0e;
     }
 
+
+    .dark-mode .modal-content{
+        background-color: #19191b!important;
+    }
     @media (max-width: 655px) {
         .tribe-community-events-list thead {
             display: block;
         }
     }
+
+
+
+
+
+
 </style>
 
 <!-- Content Wrapper. Contains page content -->
