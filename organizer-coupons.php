@@ -191,7 +191,22 @@ get_header('organizer');
                                             $data['product_ids'] = $product_ids_array;
                                             ?>
                                         </td>
-                                     
+                                        <td class="event-status-form">
+    <?php
+    $data['event_id'] = get_post_meta($coupon->ID, 'event_id', true);
+    if (isset($eventArray[$data['event_id']])) {
+        $eventTitle = $eventArray[$data['event_id']];
+        $eventTitleShort = mb_substr($eventTitle, 0, 50);
+        
+        // Append '...' to the shortened title if it was longer than 50 characters
+        if (mb_strlen($eventTitle) > 50) {
+            $eventTitleShort .= '...';
+        }
+        
+        echo $eventTitleShort;
+    }
+    ?>
+</td>
                                         <td class="event-status-form">
                                             <?php
                                             $start_date = $wooCoupon->get_date_created();
