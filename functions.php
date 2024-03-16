@@ -1,5 +1,6 @@
 <?php
 
+add_filter('show_admin_bar', '__return_false');
 
 
 /////FUNCTION TO AUTO COMPLEATE THE ORDERS 
