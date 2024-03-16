@@ -102,7 +102,13 @@ font-family: "Plus Jakarta Sans", Sans-serif;
 
 @media (max-width: 600px) {
     .sb-chat-btn {
-        bottom: 53px!important;
+        bottom: 7px!important;
+        right: 3px!important;
+        width: 48px!important;
+        height: 48px!important;
+    }
+    .single-tribe_events .sb-chat-btn {
+        bottom: 95px !important;
         right: 3px!important;
         width: 48px!important;
         height: 48px!important;
