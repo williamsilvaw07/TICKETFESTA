@@ -3944,7 +3944,7 @@ display:block!important
                 .elementor-element-1eb84e4{
                     padding-top:0!important
                 }
-                #image-gallery{
+                .elementor-element-4ca953c{
                     margin-bottom:100px
                 }
                 .page-template-organizer-template #image-upload-form input {
