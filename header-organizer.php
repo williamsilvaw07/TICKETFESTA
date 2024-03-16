@@ -3730,6 +3730,9 @@ display:block!important
                 .elementor-element-ba1dafd{
                     margin-bottom: 0 !important;
                 }
+                .dashboard_main_page_title_div{
+                    margin-bottom: 10px !important;
+                }
                 .lower_admin_dashboard-sidebar {
                     display: none;
                 }
