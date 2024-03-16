@@ -136,6 +136,22 @@ get_header('organizer');
     border: 0px;
     font-size: 13px;
 }
+
+label:not(.form-check-label):not(.custom-file-label) {
+    font-weight: 300 !important;
+    font-size: 15px;
+}
+.dark-mode .btn-primary {
+    color: #000;
+    background-color: #d3fa16;
+    border:0px;
+    box-shadow: none;
+}
+
+
+
+
+
     @media (max-width: 655px) {
         .tribe-community-events-list thead {
             display: block;
