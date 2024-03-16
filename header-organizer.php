@@ -3677,8 +3677,7 @@ display:block!important
                     padding-left: 5px;
                     font-size: 13px;
                     font-weight: 300;
-                    position: relative;
-    top: 1px;
+                    
 
                 }
 
@@ -3691,7 +3690,7 @@ display:block!important
 
                 .tribe-community-events-list tbody .tribe-list-column-organizer {
                     grid-area: 3 / 1 / 4 / 2;
-
+    line-height: 24px;
 }
                 }
 
