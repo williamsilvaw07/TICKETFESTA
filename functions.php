@@ -313,6 +313,17 @@ function iam00_return_ticket_associate_with_event()
 }
 add_action('wp_ajax_get_event_ticket_action', 'iam00_return_ticket_associate_with_event'); // For logged-in users
 
+
+/*
+function dd($object)
+{
+    echo "<pre>";
+    var_dump($object);
+    echo "</pre>";
+    exit();
+}
+*/
+
 function iam00_get_coupon_associate_with_event($eventId)
 {
     // Set up query arguments
