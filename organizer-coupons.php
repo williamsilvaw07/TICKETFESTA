@@ -146,6 +146,12 @@ get_header('organizer');
     .dark-mode .modal-content{
         background-color: #19191b!important;
     }
+    .dark-mode .custom-control-label::before, .dark-mode .custom-file-label, .dark-mode .custom-file-label::after, .dark-mode .custom-select, .dark-mode .form-control:not(.form-control-navbar):not(.form-control-sidebar), .dark-mode .input-group-text {
+    background-color: #121212;
+    color: #fff;
+    border: 0px;
+    font-size: 13px;
+}
     @media (max-width: 655px) {
         .tribe-community-events-list thead {
             display: block;
