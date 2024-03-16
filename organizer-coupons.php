@@ -36,8 +36,6 @@ get_header('organizer');
 
 .table-responsive {
     overflow-x: auto; /* Enables horizontal scrolling */
-    margin-top: 20px;
-    border: 1px solid #ddd;
 }
 
 .table-responsive table {
@@ -51,9 +49,6 @@ get_header('organizer');
     padding: 8px;
 }
 
-.table-responsive tr:nth-child(even) {
-    background-color: #f2f2f2;
-}
 
 
 
