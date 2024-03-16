@@ -191,13 +191,7 @@ get_header('organizer');
                                             $data['product_ids'] = $product_ids_array;
                                             ?>
                                         </td>
-                                        <td class="event-status-form">
-                                            <?php
-                                            $data['event_id'] = get_post_meta($coupon->ID, 'event_id', true);
-                                            if (isset($eventArray[$data['event_id']]))
-                                                echo $eventArray[$data['event_id']];
-                                            ?>
-                                        </td>
+                                     
                                         <td class="event-status-form">
                                             <?php
                                             $start_date = $wooCoupon->get_date_created();
