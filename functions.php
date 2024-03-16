@@ -4442,6 +4442,13 @@ function custom_qr_scanner_shortcode() {
     <div id="qr-reader-results"></div>
 
    
+
+    <div id="video-container">
+        <video id="video" playsinline></video>
+        <div id="result"></div>
+        <button id="scan-button" >Scan QR Code</button>
+    </div>
+
     <script>
     document.addEventListener("DOMContentLoaded", function(event) {
         const video = document.getElementById('video');
@@ -4459,7 +4466,7 @@ function custom_qr_scanner_shortcode() {
             });
         }
 
-        function startScanning() {
+        jQuery("#scan-button").on('click', function(){
             const canvas = document.createElement('canvas');
             const context = canvas.getContext('2d');
             canvas.width = video.videoWidth;
@@ -4474,14 +4481,9 @@ function custom_qr_scanner_shortcode() {
                     clearInterval(scanInterval);
                 }
             }, 200);
-        }
+        });
     });
     </script>
-    <div id="video-container">
-        <video id="video" playsinline></video>
-        <div id="result"></div>
-        <button id="scan-button" onclick="startScanning()">Scan QR Code</button>
-    </div>
     <?php
     return ob_get_clean();
 }
