@@ -56,8 +56,12 @@ get_header('organizer');
     text-align: left;
     padding: 8px;
 }
-
-
+.col-12{
+    margin-bottom:100px
+}
+.tribe-community-events-list{
+    margin-bottom:0!important
+}
 
     .admin_dashboard_event_list_nav{
         margin-bottom:20px
