@@ -3727,6 +3727,10 @@ display:block!important
 
 
             @media (max-width: 550px) {
+                .brand-link {
+    padding: 0;
+  
+}
                 .elementor-element-ba1dafd{
                     margin-bottom: 0 !important;
                 }
