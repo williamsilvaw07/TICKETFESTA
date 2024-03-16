@@ -3872,7 +3872,7 @@ display:block!important
 
                 }
 
-                .admin_dashboard_event_list_nav_lower .tribe-search-form input[name="event-search"] {
+                .admin_dashboard_event_list_nav_lower .tribe-search-form input[name="event-search"] ,  .admin_dashboard_event_list_nav_lower .tribe-search-form input{
                     border-radius: 4px !important;
 
                 }
