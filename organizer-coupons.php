@@ -31,6 +31,9 @@ $coupon_posts = get_posts(
 get_header('organizer');
 ?>
 <style>
+    .admin_dashboard_event_list_nav{
+        margin-bottom:20px
+    }
     .main_custom_container_second .tribe-button-primary{
         background: #d3fa16 !important;
     color: #000000 !important;
