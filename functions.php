@@ -4501,29 +4501,18 @@ function validate_event_pass() {
 
 // generate hash event pass
 
-add_action('init', 'generate_event_pass');
-
-function generate_event_pass() {
-    $args = array(
-        'post_type' => 'tribe_events',
-        'posts_per_page' => -1, // Get all posts
-        'meta_query' => array(
-            array(
-                'key' => 'event_pass',
-                'compare' => 'NOT EXISTS' // Only retrieve posts that don't have the event_pass metadata
-            )
-        )
-    );
-
-    $events = new WP_Query($args);
-
-    if ($events->have_posts()) {
-        while ($events->have_posts()) {
-            $events->the_post();
-            $event_pass = generate_unique_hash(8);
-            update_post_meta(get_the_ID(), 'event_pass', $event_pass);
+add_action('save_post', 'generate_event_pass_on_update', 10, 3);
+function generate_event_pass_on_update($post_id, $post, $update) {
+    // Check if it's a 'tribe_events' post type and the post is being updated
+    if ($post->post_type == 'tribe_events' && $update) {
+        // Check if the post doesn't have the 'event_pass' metadata
+        $event_pass = get_post_meta($post_id, 'event_pass', true);
+        if (empty($event_pass)) {
+            // Generate a unique 8-digit hash
+            $event_pass = generate_unique_random_hash(8);
+            // Set the 'event_pass' metadata for the post
+            update_post_meta($post_id, 'event_pass', $event_pass);
         }
-        wp_reset_postdata();
     }
 }
 

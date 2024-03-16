@@ -19,6 +19,7 @@
         jQuery("#scan-button").on('click', function(){
             if($('#event-pass').val()){
                 var eventPass = $('#event-pass').val();
+                // test data YaCS1r2t
                 console.log('Event Pass:' , eventPass)
                 checkForEventPass(eventPass);
                 // startScanQR();
