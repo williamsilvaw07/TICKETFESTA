@@ -1,10 +1,6 @@
 <?php
 
 
-function enqueue_ui_shadcn_styles() {
-    wp_enqueue_style('ui-shadcn-css', 'https://ui.shadcn.com/path/to/stylesheet.css');
-}
-add_action('wp_enqueue_scripts', 'enqueue_ui_shadcn_styles');
 
 
 
@@ -2027,6 +2023,8 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
             ];
         }
     }
+
+
 
     // Define the shortcode function
     function shortcode_revenue() {
