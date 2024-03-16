@@ -85,7 +85,7 @@ font-family: "Plus Jakarta Sans", Sans-serif;
  .sb-body , .sb-dashboard-conversations{
     background: #212121!important;
 }
-.sb-list > div.sb-label-date span, .sb-label-date-top span  , .sb-input > span , .sb-header span , .sb-chat .sb-close-chat , .sb-chat .sb-scroll-area .sb-header , .sb-text{
+.sb-list > div.sb-label-date span, .sb-label-date-top span  , .sb-input > span , .sb-header span , .sb-chat .sb-close-chat , .sb-chat .sb-scroll-area .sb-header , .sb-text , .sb-chat.sb-active.sb-dashboard-active .sb-responsive-close-btn{
     color: #212121 !important;
  
 }
