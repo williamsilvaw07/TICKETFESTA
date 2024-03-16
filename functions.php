@@ -4509,7 +4509,7 @@ function get_posts_by_event_pass($event_pass) {
                 'value' => 'YaCS1r2t',
             )
         ),
-        'fields' => 'ID' // Retrieve only post IDs
+        'fields' => 'id' // Retrieve only post IDs
     );
 
     $query = new WP_Query($args);
