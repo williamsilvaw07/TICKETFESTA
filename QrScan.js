@@ -21,18 +21,20 @@
             const context = canvas.getContext('2d');
             canvas.width = video.videoWidth;
             canvas.height = video.videoHeight;
-
-            const scanInterval = setInterval(function() {
-                context.drawImage(video, 0, 0, canvas.width, canvas.height);
-                const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
-                const code = jsQR(imageData.data, imageData.width, imageData.height);
-                if (code) {
-                    resultContainer.textContent = 'QR Code detected: ' + code.data;
-                    clearInterval(scanInterval);
-                }else{
-                    console.log('QR Code not found :', code)
-                }
-            }, 200);
+            if($('#event-pass').val()){
+                console.log('Event Pass:' . $('#event-pass').val())
+                const scanInterval = setInterval(function() {
+                    context.drawImage(video, 0, 0, canvas.width, canvas.height);
+                    const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+                    const code = jsQR(imageData.data, imageData.width, imageData.height);
+                    if (code) {
+                        resultContainer.textContent = 'QR Code detected: ' + code.data;
+                        clearInterval(scanInterval);
+                    }else{
+                        console.log('QR Code not found :', code)
+                    }
+                }, 200);
+            }
         });
     });
 })(jQuery);
