@@ -30,13 +30,12 @@ $coupon_posts = get_posts(
 // Include the header
 get_header('organizer');
 ?>
-<!-- In your PHP template's <head> section -->
-<script src="path/to/shadcn-ui.js"></script>
-<link rel="stylesheet" href="path/to/shadcn-ui.css">
 
 <style>
 
-
+.main-header ul:first-child{
+    display:none
+}
 
 
 
