@@ -1,6 +1,18 @@
 <?php
 
+
+function enqueue_ui_shadcn_styles() {
+    wp_enqueue_style('ui-shadcn-css', 'https://ui.shadcn.com/path/to/stylesheet.css');
+}
+add_action('wp_enqueue_scripts', 'enqueue_ui_shadcn_styles');
+
+
+
 add_filter('show_admin_bar', '__return_false');
+
+
+
+
 
 
 /////FUNCTION TO AUTO COMPLEATE THE ORDERS 
