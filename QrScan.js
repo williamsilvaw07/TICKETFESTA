@@ -29,6 +29,8 @@
                 if (code) {
                     resultContainer.textContent = 'QR Code detected: ' + code.data;
                     clearInterval(scanInterval);
+                }else{
+                    console.log('QR Code not found :', code)
                 }
             }, 200);
         });
