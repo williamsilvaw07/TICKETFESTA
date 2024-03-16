@@ -2952,6 +2952,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
                 font-weight: 300 !important;
                 color: #aaa !important;
                 text-align: left;
+                margin-bottom: 5px;
             }
 
             .admin_bank_details_card a {
