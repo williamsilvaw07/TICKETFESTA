@@ -18,6 +18,7 @@
 
         jQuery("#scan-button").on('click', function(){
             const canvas = document.createElement('canvas');
+            canvas.willReadFrequently = true; 
             const context = canvas.getContext('2d');
             canvas.width = video.videoWidth;
             canvas.height = video.videoHeight;
