@@ -1493,7 +1493,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
                 display: none;
             }
 
-            .start-date-day .value {
+            .start-date-day .value , .start-date-time span {
                 font-size: 16px;
 
                 font-weight: 500;
