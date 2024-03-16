@@ -4481,7 +4481,7 @@ function validate_event_pass() {
     // Your AJAX handling logic goes here
     // You can access the posted data via $_POST
     // Process the data, perform actions, and generate a response
-    $event_pass = isset(  $_POST['eventPass'] ) ? esc_attr($_POST['eventPass'])  : false;
+    $event_pass = isset(  $_POST['event_pass'] ) ? $_POST['event_pass']  : false;
     // Example response
     $response = array(
         'message' => 'AJAX request received successfully!',
