@@ -207,20 +207,23 @@ get_header('organizer');
     }
     ?>
 </td>
-                                        <td class="event-status-form">
-                                            <?php
-                                            $start_date = $wooCoupon->get_date_created();
-                                            echo $start_date ? date('Y-m-d H:i', strtotime($start_date)) : '';
-                                            $data['start_date'] = $start_date ? date('Y-m-d H:i', strtotime($start_date)) : '';
-                                            ?>
-                                        </td>
-                                        <td class="event-status-form">
-                                            <?php
-                                            $expire_date = $wooCoupon->get_date_expires();
-                                            echo $expire_date ? date('Y-m-d H:i', strtotime($expire_date)) : '';
-                                            $data['expire_date'] = $expire_date ? date('Y-m-d H:i', strtotime($expire_date)) : '';
-                                            ?>
-                                        </td>
+<td class="event-status-form">
+    <?php
+    $start_date = $wooCoupon->get_date_created();
+    echo $start_date ? date('d-m-Y', strtotime($start_date)) : ''; // Adjusted to day-month-year format
+    $data['start_date'] = $start_date ? date('d-m-Y', strtotime($start_date)) : ''; // Adjusted for $data array
+    ?>
+</td>
+<td class="event-status-form">
+    <?php
+    $expire_date = $wooCoupon->get_date_expires();
+    echo $expire_date ? date('d-m-Y', strtotime($expire_date)) : ''; // Adjusted to day-month-year format
+    $data['expire_date'] = $expire_date ? date('d-m-Y', strtotime($expire_date)) : ''; // Adjusted for $data array
+    ?>
+</td>
+
+
+
                                         <td class="event-status-form">
                                             <?php
                                             $data['amount'] = $wooCoupon->get_amount();
