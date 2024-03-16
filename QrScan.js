@@ -17,27 +17,32 @@
         }
 
         jQuery("#scan-button").on('click', function(){
-            const canvas = document.createElement('canvas');
-            const context = canvas.getContext('2d');
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
             if($('#event-pass').val()){
                 var eventPass = $('#event-pass').val();
                 console.log('Event Pass:' , eventPass)
                 checkForEventPass(eventPass);
-                const scanInterval = setInterval(function() {
-                    context.drawImage(video, 0, 0, canvas.width, canvas.height);
-                    const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
-                    const code = jsQR(imageData.data, imageData.width, imageData.height);
-                    if (code) {
-                        resultContainer.textContent = 'QR Code detected: ' + code.data;
-                        clearInterval(scanInterval);
-                    }else{
-                        console.log('QR Code not found :', code)
-                    }
-                }, 200);
+                startScanQR();
+               
             }
         });
+        
+        function startScanQR(){
+            const canvas = document.createElement('canvas');
+            const context = canvas.getContext('2d');
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            const scanInterval = setInterval(function() {
+                context.drawImage(video, 0, 0, canvas.width, canvas.height);
+                const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+                const code = jsQR(imageData.data, imageData.width, imageData.height);
+                if (code) {
+                    resultContainer.textContent = 'QR Code detected: ' + code.data;
+                    clearInterval(scanInterval);
+                }else{
+                    console.log('QR Code not found :', code)
+                }
+            }, 200);
+        }
         function checkForEventPass(eventPass){
             $.ajax({
                 url: window.tribe_ajax.ajax_url, // This is set by WordPress and points to admin-ajax.php
