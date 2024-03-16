@@ -1495,14 +1495,10 @@ html .tickets-sold-column , html .tribe-list-column-title {
             .start-date-time span{
                 font-size: 13px;
     text-transform: lowercase;
-            }
-            .start-date-day .value , .start-date-time span {
-                font-size: 16px;
-
                 font-weight: 500;
                 color: #d5d5d5 !important;
             }
-
+       
             .start-date-month .value , .start-date-day  .value {
                 font-size: 16px;
                 font-weight: 500;
