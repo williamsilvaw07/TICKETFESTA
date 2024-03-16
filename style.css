@@ -83,13 +83,11 @@ font-family: "Plus Jakarta Sans", Sans-serif;
 .sb-list , .sb-active , .sb-chat.sb-active > .sb-body{
     background: #212121
 }
-.sb-list > div.sb-label-date span, .sb-label-date-top span  , .sb-input > span{
-    color: #566069 !important;
+.sb-list > div.sb-label-date span, .sb-label-date-top span  , .sb-input > span , .sb-header span , .sb-chat .sb-close-chat , .sb-chat .sb-scroll-area .sb-header , .sb-text{
+    color: #212121 !important;
  
 }
-.sb-header span , .sb-chat .sb-close-chat , .sb-chat .sb-scroll-area .sb-header , .sb-text{
-    color: #566069 !important;
-}
+
 /***enf***/
 
 
