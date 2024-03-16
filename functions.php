@@ -4438,14 +4438,25 @@ function custom_qr_scanner_shortcode() {
         margin-top: 20px;
         font-weight: bold;
     }
+
+    div#video-container {
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    /* justify-content: center; */
+        align-items: center;
+    }
+    input#event-pass {
+        margin-bottom: 30px;
+    }
     </style>
-    <div id="qr-reader" style="width: 100%; height: auto;"></div>
+    <!-- <div id="qr-reader" style="width: 100%; height: auto;"></div>
     <div id="qr-reader-results"></div>
 
-   
+    -->
 
     <div id="video-container">
-        <input type="text" id="event-pass" name="event-pass">
+        <input type="text" id="event-pass" name="event-pass" placeholder="enter event pass">
         <video id="video" playsinline></video>
         <div id="result"></div>
         <button id="scan-button" >Scan QR Code</button>
