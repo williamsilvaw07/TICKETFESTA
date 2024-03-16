@@ -1501,7 +1501,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
        
             .start-date-month .value , .start-date-day  .value {
                 font-size: 16px;
-                font-weight: 500;
+                font-weight: 700;
                 color: #d3fa16 !important;
 
             }
