@@ -26,9 +26,9 @@ if ($canEdit) {
    
     echo $event_image;
     $title = get_the_title($event);
-$limited_title = mb_substr($title, 0, 40);
+$limited_title = mb_substr($title, 0, 50);
 
-if (mb_strlen($title) > 40) {
+if (mb_strlen($title) > 50) {
     $limited_title .= '...';
 }
 
@@ -37,9 +37,9 @@ echo '<span class="title">' . $limited_title . '</span>';
 } else {
     echo $event_image;
     $title = get_the_title($event);
-    $limited_title = mb_substr($title, 0, 40);
+    $limited_title = mb_substr($title, 0, 50);
     
-    if (mb_strlen($title) > 40) {
+    if (mb_strlen($title) > 50) {
         $limited_title .= '...';
     }
     
