@@ -3730,6 +3730,9 @@ display:block!important
                 .elementor-element-ba1dafd{
                     margin-bottom: 0 !important;
                 }
+                .admin_dashboard_main_recent_activity{
+                    margin-bottom:60px
+                }
                 .user-panel .info {
     padding: 5px 5px 0px 10px;
 }
