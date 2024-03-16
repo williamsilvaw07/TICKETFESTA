@@ -87,7 +87,7 @@ font-family: "Plus Jakarta Sans", Sans-serif;
     color: #566069 !important;
  
 }
-.sb-header span , .sb-chat .sb-close-chat{
+.sb-header span , .sb-chat .sb-close-chat , .sb-chat .sb-scroll-area .sb-header{
     color: #566069 !important;
 }
 /***enf***/
