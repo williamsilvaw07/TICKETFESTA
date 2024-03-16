@@ -4489,7 +4489,7 @@ function validate_event_pass() {
         'message'           => 'AJAX request received successfully!',
         'event_pass'        =>  $event_pass,
         'target_event_pass' =>  $target_event_pass,
-        '$event_id'         =>  $event_id,
+        'event_id'         =>  $event_id[0],
     );
 
     // Send the response back to the client
