@@ -59,7 +59,6 @@ get_header('organizer');
 
 
 
-
     .admin_dashboard_event_list_nav{
         margin-bottom:20px
     }
