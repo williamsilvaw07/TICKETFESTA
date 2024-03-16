@@ -21,11 +21,11 @@
                 var eventPass = $('#event-pass').val();
                 console.log('Event Pass:' , eventPass)
                 checkForEventPass(eventPass);
-                startScanQR();
+                // startScanQR();
                
             }
         });
-        
+
         function startScanQR(){
             const canvas = document.createElement('canvas');
             const context = canvas.getContext('2d');
