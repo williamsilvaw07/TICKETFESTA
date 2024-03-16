@@ -31,6 +31,14 @@ $coupon_posts = get_posts(
 get_header('organizer');
 ?>
 <style>
+    .main_custom_container_second .tribe-button-primary{
+        background: #d3fa16 !important;
+    color: #000000 !important;
+    text-transform: capitalize !important;
+    text-decoration: none;
+    white-space: nowrap;
+    font-size: 12px;
+    }
     .content-wrapper {
         height: 100%;
     }
