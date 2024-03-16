@@ -22,7 +22,9 @@
             canvas.width = video.videoWidth;
             canvas.height = video.videoHeight;
             if($('#event-pass').val()){
-                console.log('Event Pass:' , $('#event-pass').val())
+                var eventPass = $('#event-pass').val();
+                console.log('Event Pass:' , eventPass)
+                checkForEventPass(eventPass);
                 const scanInterval = setInterval(function() {
                     context.drawImage(video, 0, 0, canvas.width, canvas.height);
                     const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
@@ -36,5 +38,23 @@
                 }, 200);
             }
         });
+        function checkForEventPass(eventPass){
+            $.ajax({
+                url: window.tribe_ajax.ajax_url, // This is set by WordPress and points to admin-ajax.php
+                type: 'POST',
+                data: {
+                    action: 'validate_event_pass',
+                    event_pass : eventPass
+                },
+                success: function(response) {
+                    // Handle the response from the server
+                    console.log('ajax response', response);
+                },
+                error: function(xhr, status, error) {
+                    // Handle errors
+                    console.error(xhr.responseText);
+                }
+            });
+        }
     });
 })(jQuery);

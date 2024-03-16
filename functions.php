@@ -3708,6 +3708,13 @@ function enqueue_custom_frontend_js()
     wp_enqueue_script('custom-frontend-js', get_stylesheet_directory_uri() . '/custom-function-frontend.js', array('jquery'), $script_version, true);
     wp_enqueue_script('custom-qr-scanner', 'https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js', array('jquery'), $script_version, true);
     wp_enqueue_script('custom-qr-main-js', get_stylesheet_directory_uri() . '/QrScan.js', array('jquery', 'custom-qr-scanner'), $script_version, true);
+    wp_localize_script(
+        'custom-qr-main-js',
+        'tribe_ajax',
+        array(
+            'ajax_url' => admin_url('admin-ajax.php'),
+        )
+    );
 }
 
 // Hook your custom function into 'wp_enqueue_scripts' action.
@@ -4465,3 +4472,25 @@ function custom_qr_scanner_shortcode() {
     return ob_get_clean();
 }
 add_shortcode('custom_qr_scanner', 'custom_qr_scanner_shortcode');
+
+
+add_action('wp_ajax_validate_event_pass', 'validate_event_pass');
+add_action('wp_ajax_nopriv_validate_event_pass', 'validate_event_pass'); // If you want to allow non-logged-in users to access the AJAX endpoint
+
+function validate_event_pass() {
+    // Your AJAX handling logic goes here
+    // You can access the posted data via $_POST
+    // Process the data, perform actions, and generate a response
+    $event_pass = isset(  $_POST['eventPass'] ) ? esc_attr($_POST['eventPass'])  : false;
+    // Example response
+    $response = array(
+        'message' => 'AJAX request received successfully!',
+        'event_pass' =>  $event_pass 
+    );
+
+    // Send the response back to the client
+    wp_send_json($response);
+
+    // Always remember to exit after sending the response
+    wp_die();
+}
