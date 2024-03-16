@@ -4483,11 +4483,13 @@ function validate_event_pass() {
     // Process the data, perform actions, and generate a response
     $event_pass = isset(  $_POST['event_pass'] ) ? esc_attr( $_POST['event_pass']) : false;
     $target_event_pass = get_post_meta( '3789', 'event_pass', true );
-    // Example response
+    $event_id = get_posts_by_event_pass($event_pass);
+    $message = '';
     $response = array(
         'message'           => 'AJAX request received successfully!',
         'event_pass'        =>  $event_pass,
         'target_event_pass' =>  $target_event_pass,
+        '$event_id'         =>  $event_id,
     );
 
     // Send the response back to the client
@@ -4497,7 +4499,22 @@ function validate_event_pass() {
     wp_die();
 }
 
+function get_posts_by_event_pass($event_pass) {
+    $args = array(
+        'post_type' => 'tribe_events',
+        'meta_query' => array(
+            array(
+                'key' => 'event_pass',
+                'value' => $event_pass,
+            )
+        ),
+        'fields' => 'ids' // Retrieve only post IDs
+    );
 
+    $query = new WP_Query($args);
+
+    return $query->posts;
+}
 
 // generate hash event pass
 
