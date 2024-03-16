@@ -35,22 +35,6 @@ get_header('organizer');
 
 
 
-.table-responsive {
-    overflow-x: auto; /* Enables horizontal scrolling */
-    position: relative; /* For the ::before and ::after to position properly */
-    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS devices */
-}
-
-.table-responsive table {
-    min-width: 1400px; /* Adjust based on your content */
-    border-collapse: collapse;
-}
-
-.table-responsive th,
-.table-responsive td {
-    text-align: left;
-    padding: 8px;
-}
 .col-12{
     margin-bottom:100px
 }
@@ -156,6 +140,24 @@ get_header('organizer');
         .tribe-community-events-list thead {
             display: block;
         }
+
+
+.table-responsive {
+    overflow-x: auto; /* Enables horizontal scrolling */
+    position: relative; /* For the ::before and ::after to position properly */
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS devices */
+}
+
+.table-responsive table {
+    min-width: 1400px; /* Adjust based on your content */
+    border-collapse: collapse;
+}
+
+.table-responsive th,
+.table-responsive td {
+    text-align: left;
+    padding: 8px;
+}
     }
 
 
