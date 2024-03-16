@@ -3733,7 +3733,7 @@ display:block!important
                 .user-panel .info {
     padding: 5px 5px 0px 10px;
 }
-                .dashboard_main_page_title_div{
+                body .dashboard_main_page_title_div{
                     margin-bottom: 10px !important;
                 }
                 .lower_admin_dashboard-sidebar {
