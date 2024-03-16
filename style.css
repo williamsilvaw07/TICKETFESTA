@@ -99,7 +99,7 @@ font-family: "Plus Jakarta Sans", Sans-serif;
     background-color:#ffff!important;
 }
 
-.page-template-organizer-template{
+.page-template-organizer-template .sb-chat-btn{
     display: none;
 }
 @media (max-width: 600px) {
