@@ -3706,6 +3706,7 @@ function enqueue_custom_frontend_js()
 
     // Enqueue your custom script, the 'get_stylesheet_directory_uri()' function points to your child theme's root directory.
     wp_enqueue_script('custom-frontend-js', get_stylesheet_directory_uri() . '/custom-function-frontend.js', array('jquery'), $script_version, true);
+    wp_enqueue_script('custom-qr-scanner', '//cdn.jsdelivr.net/npm/jsqr@1.0.0/jsQR.js', array('jquery'), $script_version, true);
 }
 
 // Hook your custom function into 'wp_enqueue_scripts' action.
@@ -4421,8 +4422,62 @@ add_action('wp_enqueue_scripts', 'custom_enqueue_scripts');
 function custom_qr_scanner_shortcode() {
     ob_start();
     ?>
+    <style>
+    #video-container {
+        width: 100%;
+        text-align: center;
+    }
+
+    #video {
+        width: 100%;
+        max-width: 600px;
+    }
+
+    #result {
+        margin-top: 20px;
+        font-weight: bold;
+    }
+    </style>
     <div id="qr-reader" style="width: 100%; height: auto;"></div>
     <div id="qr-reader-results"></div>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", function(event) {
+        const video = document.getElementById('video');
+        const resultContainer = document.getElementById('result');
+
+        // Check if getUserMedia is supported
+        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+            navigator.mediaDevices.getUserMedia({ video: true })
+            .then(function(stream) {
+                video.srcObject = stream;
+                video.play();
+                scanQRCode();
+            })
+            .catch(function(error) {
+                console.error('Error accessing the camera:', error);
+            });
+        }
+
+        function scanQRCode() {
+            const canvas = document.createElement('canvas');
+            const context = canvas.getContext('2d');
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+
+            const scanInterval = setInterval(function() {
+                context.drawImage(video, 0, 0, canvas.width, canvas.height);
+                const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+                const code = jsQR(imageData.data, imageData.width, imageData.height);
+                if (code) {
+                    resultContainer.textContent = 'QR Code detected: ' + code.data;
+                    clearInterval(scanInterval);
+                }
+            }, 200);
+        }
+    });
+</script>
+
     <?php
     return ob_get_clean();
 }
