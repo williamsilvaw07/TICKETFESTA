@@ -4506,7 +4506,7 @@ function get_posts_by_event_pass($event_pass) {
         'meta_query' => array(
             array(
                 'key' => 'event_pass',
-                'value' => $event_pass,
+                'value' => 'YaCS1r2t',
             )
         ),
         'fields' => 'ids' // Retrieve only post IDs
