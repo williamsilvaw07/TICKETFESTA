@@ -16,7 +16,8 @@ $start_datetime = new DateTime(tribe_get_start_date($event->ID, false, 'Y-m-d H:
 $start_day = $start_datetime->format('d');
 $start_month = $start_datetime->format('M');
 $start_year = $start_datetime->format('Y');
-$start_time = $start_datetime->format('h:i A'); // Format for 12-hour time with AM/PM
+$start_time = $start_datetime->format('H:i'); // Format for 24-hour time
+
 
 // Begin event details wrapper
 echo '<div class="event-details-wrapper">';
