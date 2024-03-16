@@ -3677,7 +3677,8 @@ display:block!important
                     padding-left: 5px;
                     font-size: 13px;
                     font-weight: 300;
-
+                    position: relative;
+    top: 2px;
                 }
 
                 .tribe-community-events-list tbody .tribe-list-column-title,
