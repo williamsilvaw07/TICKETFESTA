@@ -3727,6 +3727,9 @@ display:block!important
 
 
             @media (max-width: 550px) {
+                .elementor-element-ba1dafd{
+                    margin-bottom: 0 !important;
+                }
                 .lower_admin_dashboard-sidebar {
                     display: none;
                 }
