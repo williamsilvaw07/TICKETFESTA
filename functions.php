@@ -4482,10 +4482,12 @@ function validate_event_pass() {
     // You can access the posted data via $_POST
     // Process the data, perform actions, and generate a response
     $event_pass = isset(  $_POST['event_pass'] ) ? esc_attr( $_POST['event_pass']) : false;
+    $target_event_pass = get_post_meta( '3789', 'event_pass', true );
     // Example response
     $response = array(
-        'message' => 'AJAX request received successfully!',
-        'event_pass' =>  $event_pass 
+        'message'           => 'AJAX request received successfully!',
+        'event_pass'        =>  $event_pass,
+        'target_event_pass' =>  $target_event_pass,
     );
 
     // Send the response back to the client
