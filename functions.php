@@ -4456,6 +4456,9 @@ function custom_qr_scanner_shortcode() {
     input#event-pass {
         margin-bottom: 30px;
     }
+    input#event-pass.error {
+        border: 2px solid #ea4335 !important;
+    }
     </style>
     <!-- <div id="qr-reader" style="width: 100%; height: auto;"></div>
     <div id="qr-reader-results"></div>

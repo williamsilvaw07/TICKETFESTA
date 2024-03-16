@@ -21,15 +21,31 @@
                 var eventPass = $('#event-pass').val();
                 // test data YaCS1r2t
                 console.log('Event Pass:' , eventPass)
-                checkForEventPass(eventPass);
-                // startScanQR();
-               
+                checkForEventPass(eventPass);               
             }
         });
+        function processQRCode(eventID, code){
+            const params = new URLSearchParams(code);
+            // Retrieve all variables
+            const event_qr_code = params.get('event_qr_code');
+            const ticket_id = params.get('ticket_id');
+            const qr_event_id = params.get('event_id');
+            const security_code = params.get('security_code');
+            const path = params.get('path');
 
-        function startScanQR(){
+            if(eventID == event_qr_code){
+            
+            }else{
+                $('#event_not_found').html('QR Code did not Match with Event Pass.');
+                $('#event-pass').addClass('error');
+                $('#event_not_found').show();
+            }
+        
+        }
+        function startScanQR(eventID){
             const canvas = document.createElement('canvas');
             const context = canvas.getContext('2d');
+            $('#event-pass').removeClass('error');
             $('#event_not_found').hide();
             canvas.width = video.videoWidth;
             canvas.height = video.videoHeight;
@@ -38,6 +54,7 @@
                 const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
                 const code = jsQR(imageData.data, imageData.width, imageData.height);
                 if (code) {
+                    processQRCode();
                     resultContainer.textContent = 'QR Code detected: ' + code.data;
                     clearInterval(scanInterval);
                 }else{
@@ -57,7 +74,7 @@
                     // Handle the response from the server
                     console.log('ajax response', response);
                     if(response.match){
-                        startScanQR();
+                        startScanQR(response.event_id);
                     }else{
                         noEventFound();
                     }
@@ -70,6 +87,7 @@
         }
 
         function noEventFound(){
+            $('#event-pass').addClass('error');
             $('#event_not_found').show();
         }
     });
