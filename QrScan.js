@@ -21,7 +21,7 @@
             const context = canvas.getContext('2d');
             canvas.width = video.videoWidth;
             canvas.height = video.videoHeight;
-            if($('#event-pass').val()){
+            if(jQuery('#event-pass').val()){ 
                 console.log('Event Pass:' . $('#event-pass').val())
                 const scanInterval = setInterval(function() {
                     context.drawImage(video, 0, 0, canvas.width, canvas.height);
