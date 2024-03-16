@@ -34,15 +34,7 @@ get_header('organizer');
 
 
 
-.table-responsive::before,
-.table-responsive::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    width: 20px;
-    height: 100%;
-    z-index: 2;
-}
+
 
 .table-responsive::before {
     left: 0;
