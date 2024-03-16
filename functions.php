@@ -4441,11 +4441,7 @@ function custom_qr_scanner_shortcode() {
     <div id="qr-reader" style="width: 100%; height: auto;"></div>
     <div id="qr-reader-results"></div>
 
-    <div id="video-container">
-        <video id="video" playsinline></video>
-        <div id="result"></div>
-        <button id="scan-button" onclick="startScanning()">Scan QR Code</button>
-    </div>
+   
     <script>
     document.addEventListener("DOMContentLoaded", function(event) {
         const video = document.getElementById('video');
@@ -4480,8 +4476,12 @@ function custom_qr_scanner_shortcode() {
             }, 200);
         }
     });
-</script>
-
+    </script>
+    <div id="video-container">
+        <video id="video" playsinline></video>
+        <div id="result"></div>
+        <button id="scan-button" onclick="startScanning()">Scan QR Code</button>
+    </div>
     <?php
     return ob_get_clean();
 }
