@@ -90,6 +90,9 @@ font-family: "Plus Jakarta Sans", Sans-serif;
 .sb-chat .sb-dashboard > div > .sb-title , .sb-user-conversations  .sb-message {
     color: #ffff!important;
 }
+.sb-user-conversations:hover{
+    background-color: #000;
+}
 /***enf***/
 
 
