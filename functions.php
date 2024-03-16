@@ -4445,6 +4445,7 @@ function custom_qr_scanner_shortcode() {
    
 
     <div id="video-container">
+        <input type="text" id="event-pass" name="event-pass">
         <video id="video" playsinline></video>
         <div id="result"></div>
         <button id="scan-button" >Scan QR Code</button>
