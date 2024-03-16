@@ -77,6 +77,19 @@ font-family: "Plus Jakarta Sans", Sans-serif;
 }
 
 /*****END***/
+
+/*****live chat css***/
+
+.sb-list , .sb-active{
+    background: #19191B;
+}
+
+
+/***enf***/
+
+
+
+
 /**COUPON TEMPLATE*/
 .page-template-organizer-coupons .d-block {
     display: none !important;
