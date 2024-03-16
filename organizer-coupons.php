@@ -31,6 +31,33 @@ $coupon_posts = get_posts(
 get_header('organizer');
 ?>
 <style>
+
+
+
+.table-responsive {
+    overflow-x: auto; /* Enables horizontal scrolling */
+    margin-top: 20px;
+    border: 1px solid #ddd;
+}
+
+.table-responsive table {
+    min-width: 800px; /* Adjust based on your content */
+    border-collapse: collapse;
+}
+
+.table-responsive th,
+.table-responsive td {
+    text-align: left;
+    padding: 8px;
+}
+
+.table-responsive tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+
+
+
     .admin_dashboard_event_list_nav{
         margin-bottom:20px
     }
@@ -144,6 +171,7 @@ get_header('organizer');
                         </div>
                     </div>
                     <div class="tribe-responsive-table-container">
+                    <div class="table-responsive">
                         <table id="tribe-community-events-list"
                             class="tribe-community-events-list display responsive stripe">
                             <thead>
@@ -267,6 +295,7 @@ get_header('organizer');
                                 <?php endforeach; ?>
                             </tbody>
                         </table>
+                        </div>
                     </div>
 
                 </div>
