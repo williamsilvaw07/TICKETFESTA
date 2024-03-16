@@ -3706,6 +3706,15 @@ function enqueue_custom_frontend_js()
 
     // Enqueue your custom script, the 'get_stylesheet_directory_uri()' function points to your child theme's root directory.
     wp_enqueue_script('custom-frontend-js', get_stylesheet_directory_uri() . '/custom-function-frontend.js', array('jquery'), $script_version, true);
+    wp_enqueue_script('custom-qr-scanner', 'https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js', array('jquery'), $script_version, true);
+    wp_enqueue_script('custom-qr-main-js', get_stylesheet_directory_uri() . '/QrScan.js', array('jquery', 'custom-qr-scanner'), $script_version, true);
+    wp_localize_script(
+        'custom-qr-main-js',
+        'tribe_ajax',
+        array(
+            'ajax_url' => admin_url('admin-ajax.php'),
+        )
+    );
 }
 
 // Hook your custom function into 'wp_enqueue_scripts' action.
@@ -4421,9 +4430,131 @@ add_action('wp_enqueue_scripts', 'custom_enqueue_scripts');
 function custom_qr_scanner_shortcode() {
     ob_start();
     ?>
-    <div id="qr-reader" style="width: 100%; height: auto;"></div>
+    <style>
+    #video-container {
+        width: 100%;
+        text-align: center;
+    }
+
+    #video {
+        width: 100%;
+        max-width: 600px;
+    }
+
+    #result {
+        margin-top: 20px;
+        font-weight: bold;
+    }
+
+    div#video-container {
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    /* justify-content: center; */
+        align-items: center;
+    }
+    input#event-pass {
+        margin-bottom: 30px;
+    }
+    input#event-pass.error {
+        border: 2px solid #ea4335 !important;
+    }
+    </style>
+    <!-- <div id="qr-reader" style="width: 100%; height: auto;"></div>
     <div id="qr-reader-results"></div>
+
+    -->
+
+    <div id="video-container">
+        <input type="text" id="event-pass" name="event-pass" placeholder="enter event pass">
+        <video id="video" playsinline></video>
+        <div id="result"></div>
+        <span id="event_not_found" style='display:none'>No event found that for the event pass.</span>
+        <button id="scan-button" >Scan QR Code</button>
+    </div>
     <?php
     return ob_get_clean();
 }
 add_shortcode('custom_qr_scanner', 'custom_qr_scanner_shortcode');
+
+
+add_action('wp_ajax_validate_event_pass', 'validate_event_pass');
+add_action('wp_ajax_nopriv_validate_event_pass', 'validate_event_pass'); // If you want to allow non-logged-in users to access the AJAX endpoint
+
+function validate_event_pass() {
+    // Your AJAX handling logic goes here
+    // You can access the posted data via $_POST
+    // Process the data, perform actions, and generate a response
+    $event_pass = isset(  $_POST['event_pass'] ) ? esc_attr( $_POST['event_pass']) : false;
+    $events = get_posts_by_event_pass($event_pass);
+    $match  =  false;
+    $event_id =  null;
+    foreach($events as $event){
+        if(isset($event->ID)){
+            $match    =  true;
+            $event_id = $event->ID;
+        }
+    }
+    $response = array(
+        'match'    =>  $match,
+        'event_id' =>  $event_id,
+    );
+
+    // Send the response back to the client
+    wp_send_json($response);
+
+    // Always remember to exit after sending the response
+    wp_die();
+}
+
+// add_action( 'wp',  function(){
+//     var_dump(get_post_meta( '1585', 'event_pass', true));
+//     die();
+// });
+function get_posts_by_event_pass($event_pass) {
+    $args = array(
+        'post_type' => 'tribe_events',
+        'meta_query' => array(
+            array(
+                'key' => 'event_pass',
+                'value' => $event_pass,
+            )
+        ),
+    );
+
+    $query = new WP_Query($args);
+    return $query->posts;
+}
+
+// generate hash event pass
+
+add_action('save_post', 'generate_event_pass_on_update', 10, 3);
+function generate_event_pass_on_update($post_id, $post, $update) {
+    // Check if it's a 'tribe_events' post type and the post is being updated
+    if ($post->post_type == 'tribe_events' && $update) {
+        // Check if the post doesn't have the 'event_pass' metadata
+        $event_pass = get_post_meta($post_id, 'event_pass', true);
+        if (empty($event_pass)) {
+            // Generate a unique 8-digit hash
+            $event_pass = generate_unique_random_hash(8);
+            // Set the 'event_pass' metadata for the post
+            update_post_meta($post_id, 'event_pass', $event_pass);
+        }
+    }
+}
+
+function generate_unique_hash($length) {
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $characters_length = strlen($characters);
+    $unique_hash = '';
+
+    // Shuffle the characters to ensure uniqueness
+    $shuffled_characters = str_shuffle($characters);
+
+    // Generate the hash
+    for ($i = 0; $i < $length; $i++) {
+        $unique_hash .= $shuffled_characters[rand(0, $characters_length - 1)];
+    }
+
+    return $unique_hash;
+}
