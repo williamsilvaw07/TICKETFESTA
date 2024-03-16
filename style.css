@@ -100,7 +100,7 @@ font-family: "Plus Jakarta Sans", Sans-serif;
 }
 
 
-@media (max-width: 767px) {
+@media (max-width: 600px) {
     .sb-chat-btn {
         bottom: 53px;
         right: 3px;
