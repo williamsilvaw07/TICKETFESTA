@@ -3689,7 +3689,8 @@ display:block!important
 
                 .tribe-community-events-list tbody .tribe-list-column-organizer {
                     grid-area: 3 / 1 / 4 / 2;
-
+    line-height: 24px;
+}
                 }
 
                 .tribe-community-events-list tbody .tribe-list-column-venue {
