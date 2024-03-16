@@ -80,7 +80,7 @@ font-family: "Plus Jakarta Sans", Sans-serif;
 
 /*****live chat css***/
 
-.sb-list , .sb-active , .sb-body{
+.sb-list , .sb-active , .sb-chat.sb-active > .sb-body{
     background: #19191B;
 }
 
