@@ -95,7 +95,7 @@ font-family: "Plus Jakarta Sans", Sans-serif;
 .sb-user-conversations:hover{
     background-color: #000;
 }
-.sb-rich-message .sb-input , #email span{
+.sb-rich-message .sb-input , .sb-chat  #email span ,.sb-chat   #email{
     background-color:#ffff!important;
 }
 /***enf***/
