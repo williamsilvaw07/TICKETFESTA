@@ -33,7 +33,7 @@ get_header('organizer');
 
 <style>
 
-.main-header ul:first-child{
+html .main-header ul:first-child{
     display:none!important
 }
 
