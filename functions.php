@@ -4499,20 +4499,22 @@ function validate_event_pass() {
     wp_die();
 }
 
+add_action( 'wp',  'get_posts_by_event_pass');
 function get_posts_by_event_pass($event_pass) {
     $args = array(
         'post_type' => 'tribe_events',
         'meta_query' => array(
             array(
                 'key' => 'event_pass',
-                'value' => 'YaCS1r2t',
+                'value' => $event_pass,
             )
         ),
         'fields' => 'ids' // Retrieve only post IDs
     );
 
     $query = new WP_Query($args);
-
+var_dump($query->posts);
+die();
     return $query->posts;
 }
 
