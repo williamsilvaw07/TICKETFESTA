@@ -3944,6 +3944,29 @@ display:block!important
                 .elementor-element-1eb84e4{
                     padding-top:0!important
                 }
+                #image-gallery{
+                    margin-bottom:100px
+                }
+                .page-template-organizer-template #image-upload-form input {
+ 
+    width: 100%!important;
+
+}
+#drop-zone {
+
+    width: 100%;
+    padding: 33px !important;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+#image-upload-form .fa-stack-1x, .fa-stack-2x {
+  position: relative;
+
+}
             }
 
 
