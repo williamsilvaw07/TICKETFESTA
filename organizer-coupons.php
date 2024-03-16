@@ -34,7 +34,7 @@ get_header('organizer');
 <style>
 
 .main-header ul:first-child{
-    display:none
+    display:none!important
 }
 
 
