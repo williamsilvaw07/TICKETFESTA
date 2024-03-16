@@ -4489,7 +4489,7 @@ function validate_event_pass() {
         'message'           => 'AJAX request received successfully!',
         'event_pass'        =>  $event_pass,
         'target_event_pass' =>  $target_event_pass,
-        'event_id'         =>  $event_id[0],
+        'event_id'         =>  $event_id[0]->ID,
     );
 
     // Send the response back to the client
@@ -4506,15 +4506,12 @@ function get_posts_by_event_pass($event_pass) {
         'meta_query' => array(
             array(
                 'key' => 'event_pass',
-                'value' => 'YaCS1r2t',
+                'value' => $event_pass,
             )
         ),
-        'fields' => 'id' // Retrieve only post IDs
     );
 
     $query = new WP_Query($args);
-var_dump($query->posts);
-die();
     return $query->posts;
 }
 
