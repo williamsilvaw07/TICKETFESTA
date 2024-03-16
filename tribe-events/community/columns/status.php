@@ -25,7 +25,7 @@ echo '<div class="event-title-image">';
 if ($canEdit) {
    
     echo $event_image;
-    echo '<span class="title">' . get_the_title($event) . '</span>';
+   
     echo '</a>';
 } else {
     echo $event_image;
