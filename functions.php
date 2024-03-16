@@ -4494,3 +4494,49 @@ function validate_event_pass() {
     // Always remember to exit after sending the response
     wp_die();
 }
+
+
+
+// generate hash event pass
+
+add_action('init', 'generate_event_pass');
+
+function generate_event_pass() {
+    $args = array(
+        'post_type' => 'tribe_events',
+        'posts_per_page' => -1, // Get all posts
+        'meta_query' => array(
+            array(
+                'key' => 'event_pass',
+                'compare' => 'NOT EXISTS' // Only retrieve posts that don't have the event_pass metadata
+            )
+        )
+    );
+
+    $events = new WP_Query($args);
+
+    if ($events->have_posts()) {
+        while ($events->have_posts()) {
+            $events->the_post();
+            $event_pass = generate_unique_hash(8);
+            update_post_meta(get_the_ID(), 'event_pass', $event_pass);
+        }
+        wp_reset_postdata();
+    }
+}
+
+function generate_unique_hash($length) {
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $characters_length = strlen($characters);
+    $unique_hash = '';
+
+    // Shuffle the characters to ensure uniqueness
+    $shuffled_characters = str_shuffle($characters);
+
+    // Generate the hash
+    for ($i = 0; $i < $length; $i++) {
+        $unique_hash .= $shuffled_characters[rand(0, $characters_length - 1)];
+    }
+
+    return $unique_hash;
+}
