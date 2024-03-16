@@ -33,7 +33,7 @@ get_header('organizer');
 
 <style>
 
-html .main-header ul:first-child{
+.page-template-organizer-coupons .main-header ul:first-child{
     display:none!important
 }
 
