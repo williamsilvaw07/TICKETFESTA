@@ -34,25 +34,7 @@ get_header('organizer');
 
 
 
-.table-responsive::before,
-.table-responsive::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    width: 20px;
-    height: 100%;
-    z-index: 2;
-}
 
-.table-responsive::before {
-    left: 0;
-    background: linear-gradient(to right, rgba(0,0,0,0.2), rgba(0,0,0,0));
-}
-
-.table-responsive::after {
-    right: 0;
-    background: linear-gradient(to left, rgba(0,0,0,0.2), rgba(0,0,0,0));
-}
 
 .table-responsive {
     overflow-x: auto; /* Enables horizontal scrolling */
