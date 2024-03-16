@@ -34,12 +34,34 @@ get_header('organizer');
 
 
 
+.table-responsive::before,
+.table-responsive::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    width: 20px;
+    height: 100%;
+    z-index: 2;
+}
+
+.table-responsive::before {
+    left: 0;
+    background: linear-gradient(to right, rgba(0,0,0,0.2), rgba(0,0,0,0));
+}
+
+.table-responsive::after {
+    right: 0;
+    background: linear-gradient(to left, rgba(0,0,0,0.2), rgba(0,0,0,0));
+}
+
 .table-responsive {
     overflow-x: auto; /* Enables horizontal scrolling */
+    position: relative; /* For the ::before and ::after to position properly */
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS devices */
 }
 
 .table-responsive table {
-    min-width: 800px; /* Adjust based on your content */
+    min-width: 1400px; /* Adjust based on your content */
     border-collapse: collapse;
 }
 
@@ -48,7 +70,6 @@ get_header('organizer');
     text-align: left;
     padding: 8px;
 }
-
 
 
 
