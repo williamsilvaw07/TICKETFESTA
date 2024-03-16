@@ -87,7 +87,7 @@ font-family: "Plus Jakarta Sans", Sans-serif;
     color: #212121 !important;
  
 }
-.sb-chat .sb-dashboard > div > .sb-title , .sb-user-conversations .sb-user-conversations > li > div .sb-message {
+.sb-chat .sb-dashboard > div > .sb-title , .sb-user-conversations  .sb-message {
     color: #ffff!important;
 }
 /***enf***/
