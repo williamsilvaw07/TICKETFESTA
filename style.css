@@ -79,7 +79,9 @@ font-family: "Plus Jakarta Sans", Sans-serif;
 /*****END***/
 
 /*****live chat css***/
-
+.sb-brand{
+    display: none!important;
+}
  .sb-body , .sb-dashboard-conversations{
     background: #212121!important;
 }
