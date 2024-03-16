@@ -3181,6 +3181,15 @@ html .tickets-sold-column , html .tribe-list-column-title {
 }
         /******end */
 
+
+        /****admin settings page */
+
+        .page-template-organizer-template-php .orgerinser_settings_form input{
+            background: #121212 !important;
+        }
+
+        /****end */
+
             /********sales and atendde rports page **** */
 
             #tribe-tickets-plus-woocommerce-orders-report {}
@@ -3231,6 +3240,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
             }
 
             /****END*****/
+
 
             /****MEIDA QURRYS***/
 
