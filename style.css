@@ -79,7 +79,7 @@ font-family: "Plus Jakarta Sans", Sans-serif;
 /*****END***/
 /**COUPON TEMPLATE*/
 .page-template-organizer-coupons .d-block {
-    display: block !important;
+    display: none !important;
 }
 
 
