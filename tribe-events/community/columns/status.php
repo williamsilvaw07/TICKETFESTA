@@ -1,6 +1,6 @@
 <?php
 // Security check to prevent direct access
-defined( 'WPINC' ) or die;
+defined('WPINC') or die;
 
 // Retrieve event details and permissions
 $community = tribe('community.main');
@@ -11,11 +11,12 @@ $canDelete = $community->user_can_delete_their_submissions($event->ID);
 // Fetch the event image
 $event_image = get_the_post_thumbnail($event->ID, 'thumbnail');
 
-// Extract and format event start date
-$start_datetime = new DateTime(tribe_get_start_date($event->ID, false, 'Y-m-d'));
+// Extract and format event start date and time
+$start_datetime = new DateTime(tribe_get_start_date($event->ID, false, 'Y-m-d H:i:s'));
 $start_day = $start_datetime->format('d');
 $start_month = $start_datetime->format('M');
 $start_year = $start_datetime->format('Y');
+$start_time = $start_datetime->format('h:i A'); // Format for 12-hour time with AM/PM
 
 // Begin event details wrapper
 echo '<div class="event-details-wrapper">';
@@ -56,16 +57,11 @@ echo '</div>'; // Close event-title-image div
 <?php
 echo '</div>'; // Close event-details-wrapper div
 
-// Display event start date
-// Extract event start time components
-$start_time = $start_datetime->format('h:i A'); // Format for 12-hour time with AM/PM
-
 // Display event start date and time
 echo '<div class="event-start-date">';
 echo '<div class="start-date-day"><span class="label">Day: </span><span class="value">' . $start_day . '</span></div>';
 echo '<div class="start-date-month"><span class="label">Month: </span><span class="value">' . $start_month . '</span></div>';
 echo '<div class="start-date-year"><span class="label">Year: </span><span class="value">' . $start_year . '</span></div>';
-echo '<div class="start-date-time"><span class="label">Time: </span><span class="value">' . $start_time . '</span></div>'; // Added line for start time
+echo '<div class="start-date-time"><span class="label">Time: </span><span class="value">' . $start_time . '</span></div>';
 echo '</div>'; // Close event-start-date div
-
 ?>
