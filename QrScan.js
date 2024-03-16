@@ -30,6 +30,7 @@
         function startScanQR(){
             const canvas = document.createElement('canvas');
             const context = canvas.getContext('2d');
+            $('#event_not_found').hide();
             canvas.width = video.videoWidth;
             canvas.height = video.videoHeight;
             const scanInterval = setInterval(function() {
@@ -55,12 +56,21 @@
                 success: function(response) {
                     // Handle the response from the server
                     console.log('ajax response', response);
+                    if(response.match){
+                        startScanQR();
+                    }else{
+                        noEventFound();
+                    }
                 },
                 error: function(xhr, status, error) {
                     // Handle errors
                     console.error(xhr.responseText);
                 }
             });
+        }
+
+        function noEventFound(){
+            $('#event_not_found').show();
         }
     });
 })(jQuery);
