@@ -148,7 +148,10 @@ label:not(.form-check-label):not(.custom-file-label) {
     box-shadow: none;
 }
 
-
+.dark-mode .btn-primary:hover{
+    background:black!important;
+    color:white!important
+}
 
 
 
