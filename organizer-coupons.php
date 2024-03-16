@@ -36,16 +36,6 @@ get_header('organizer');
 
 
 
-.table-responsive::before {
-    left: 0;
-    background: linear-gradient(to right, rgba(0,0,0,0.2), rgba(0,0,0,0));
-}
-
-.table-responsive::after {
-    right: 0;
-    background: linear-gradient(to left, rgba(0,0,0,0.2), rgba(0,0,0,0));
-}
-
 .table-responsive {
     overflow-x: auto; /* Enables horizontal scrolling */
     position: relative; /* For the ::before and ::after to position properly */
