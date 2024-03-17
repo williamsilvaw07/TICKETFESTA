@@ -399,10 +399,10 @@ jQuery(document).ready(function($) {
     display:none;
 }
 .tribe-events-pro-photo__event-title:hover , .tribe-events-pro-photo__event-title a:hover{
-    text-decoration-color: white;
+    text-decoration-color: white!important;
 }
 .tribe-events-pro-photo__event-title-link:hover {
-    text-decoration: none!important;
+    text-decoration-color: white!important;
 }
 /*******END */
 .tribe-events-pro-photo__event-featured-image-link img{
