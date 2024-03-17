@@ -4,6 +4,9 @@
 // Check if function exists to prevent errors
 if ( ! function_exists( 'generatepress_child_custom_header_layout' ) ) {
     function generatepress_child_custom_header_layout() {
+        // Open the main wrapper div
+        echo '<div class="custom-header-wrap">';
+
         // Display the first navigation menu
         if ( has_nav_menu( 'primary' ) ) {
             wp_nav_menu( array( 
@@ -24,6 +27,9 @@ if ( ! function_exists( 'generatepress_child_custom_header_layout' ) ) {
                 'container_class' => 'custom-nav-after-logo' 
             ) );
         }
+
+        // Close the main wrapper div
+        echo '</div>';
     }
 }
 
@@ -35,7 +41,6 @@ function generatepress_child_remove_default_navigation() {
 
 // Add our custom header layout to the 'generate_header' action hook
 add_action( 'generate_header', 'generatepress_child_custom_header_layout', 5 );
-
 
 
 
