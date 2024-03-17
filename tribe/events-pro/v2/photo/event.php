@@ -395,7 +395,7 @@ jQuery(document).ready(function($) {
  
     display:none;
 }
-.tribe-events-pro-photo__event-title:hover{
+.tribe-events-pro-photo__event-title:hover , .tribe-events-pro-photo__event-title a:hover{
     text-decoration: none;
 }
 
