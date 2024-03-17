@@ -370,13 +370,6 @@ jQuery(document).ready(function($) {
 <style>
 
 /*****SOLD OUT EVENTS */
-.home .tribe-events-c-small-cta__sold-out {
-    display: flex !important;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 15px;
-    align-items: stretch;
-}
 
 /****Tags */
 .tribe-events .tribe-events-c-small-cta__stock {
