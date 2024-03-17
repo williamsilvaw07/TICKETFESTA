@@ -1,19 +1,15 @@
 <?php
 
 // header layout
-add_action('generate_before_header_content', 'custom_nav_before_logo');
-function custom_nav_before_logo() {
-    if (is_front_page()) {
-        wp_nav_menu(array('theme_location' => 'primary', 'container_class' => 'custom-nav-before-logo'));
+function custom_secondary_navigation() {
+    if (has_nav_menu('secondary_nav')) {
+        wp_nav_menu(array(
+            'theme_location' => 'secondary_nav',
+            'container_class' => 'secondary-navigation',
+        ));
     }
 }
-
-add_action('generate_after_header_content', 'custom_nav_after_logo');
-function custom_nav_after_logo() {
-    if (is_front_page()) {
-        wp_nav_menu(array('theme_location' => 'secondary', 'container_class' => 'custom-nav-after-logo'));
-    }
-}
+add_action('generate_after_header_content', 'custom_secondary_navigation');
 
 
 
