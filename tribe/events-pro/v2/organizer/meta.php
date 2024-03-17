@@ -1580,7 +1580,9 @@ width: fit-content!important;
     max-width: 17px!important;
 }
 
-
+.organizer_about_main_inner_text{
+    max-width: 1000px;
+}
 .organizer_events_content, .organizer_Gallery_content , .organizer_about_content{
     display: none;
 }
