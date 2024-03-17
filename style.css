@@ -155,7 +155,7 @@ font-family: "Plus Jakarta Sans", Sans-serif;
         border-top: 1px solid #dee5ec;
         border: 2px solid black;
     }.sb-chat .sb-responsive-close-btn {
-        right: 17%;
+        right: 17%!important;
         color: black !important;
     }
     .sb-chat .sb-responsive-close-btn:before {
