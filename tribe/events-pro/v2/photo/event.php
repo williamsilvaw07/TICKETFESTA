@@ -369,6 +369,8 @@ jQuery(document).ready(function($) {
 
 <style>
 
+/*****SOLD OUT EVENTS */
+
 /****Tags */
 .tribe-events .tribe-events-c-small-cta__stock {
     color: #ffffff!important;
