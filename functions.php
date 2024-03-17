@@ -5,7 +5,8 @@
 function my_custom_theme_menu_locations() {
     register_nav_menus(
         array(
-            'new_menu_location' => __( 'New Menu Location', 'theme-text-domain' ),
+            'main_right_menu_location' => __( 'Main Right Menu Location', 'theme-text-domain' ),
+            'main_left_menu_location' => __( 'Main Left Menu Location', 'theme-text-domain' ),
             // You can add more menu locations here
         )
     );
