@@ -4525,6 +4525,9 @@ function validate_event_pass() {
       
     $ticket_var = new Tribe__Tickets_Plus__Commerce__EDD__Main();
     $ticket_var->checkin(4450);
+
+   get_post_meta( '4450', '_tribe_eddticket_checkedin', true );
+
     // Send the response back to the client
     wp_send_json($response);
 
