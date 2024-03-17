@@ -288,7 +288,10 @@ html .mega-sub-menu{
     width: fit-content!important;
     background-color: #1A1A1A!important;
 }
-
+.mega-sub-menu li{
+    font-weight: 300!important;
+    font-size: 15px!important;
+}
 
 
 
