@@ -127,12 +127,13 @@ font-family: "Plus Jakarta Sans", Sans-serif;
         max-height: 50vh !important;
         width: 70%;
         margin: 0 auto;
-        top: 24%!important
+        top: 27% !important;
     }
     .sb-chat .sb-body .sb-scroll-area .sb-header {
         position: fixed;
         left: 0;
         right: 0;
+        top: 7%!important;
         width: 80%!important;
         margin: 0 auto!important;
     }
@@ -161,11 +162,11 @@ font-family: "Plus Jakarta Sans", Sans-serif;
         color: #000;
     }
     .sb-chat .sb-dashboard {
-        margin-top: 67px!important;
+        margin-top: 1px !important;
      
     }
     .sb-chat .sb-header-main + .sb-list {
-        margin-top: 37px!important;
+        margin-top: 1px !important;
     }
 }
 
