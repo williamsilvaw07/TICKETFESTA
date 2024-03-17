@@ -363,6 +363,23 @@ jQuery(document).ready(function($) {
         }); 
     });
 });
+
+
+
+
+
+jQuery(document).ready(function($) {
+    // Assuming "Jerry" refers to a specific action or condition to apply the effect
+    // For demonstration, this applies the effect directly on document ready
+    $('.tribe-events-pro-photo__event-title-link').hover(
+        function() { // Mouse over
+            $(this).addClass('no-underline');
+        },
+        function() { // Mouse out
+            $(this).removeClass('no-underline');
+        }
+    );
+});
 </script>
 
 </article>
