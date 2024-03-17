@@ -123,7 +123,7 @@ font-family: "Plus Jakarta Sans", Sans-serif;
     .sb-chat .sb-header-main{
         padding:0!important
     }
-    .sb-chat.sb-active .sb-body {
+   html  .sb-chat.sb-active .sb-body {
         max-height: 60vh !important;
         width: 70%;
         margin: 0 auto;
