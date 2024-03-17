@@ -20,7 +20,6 @@
             if($('#event-pass').val()){
                 var eventPass = $('#event-pass').val();
                 // test data YaCS1r2t
-                // test data YaCS1r2t
                 // test data2 c7KOLbP0
                 console.log('Event Pass:' , eventPass)
                 checkForEventPass(eventPass);               
