@@ -28,6 +28,7 @@
         function processQRCode(eventID, code){
             const params = new URLSearchParams(code);
             // Retrieve all variables
+            // example: https://ticketfesta.co.uk/?event_qr_code=1&ticket_id=3811&event_id=3789&security_code=bb2b8ecf41&path=wp-json%2Ftribe%2Ftickets%2Fv1%2Fqr
             const event_qr_code = params.get('event_qr_code');
             const ticket_id = params.get('ticket_id');
             const qr_event_id = params.get('event_id');
