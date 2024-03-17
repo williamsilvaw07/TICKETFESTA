@@ -1,5 +1,17 @@
 <?php
 
+
+
+function my_custom_menu_locations() {
+    register_nav_menus(
+        array(
+            'my_custom_menu' => __( 'My Custom Menu', 'text-domain' ),
+            // You can register multiple menus here
+        )
+    );
+}
+add_action( 'init', 'my_custom_menu_locations' );
+
 // header layout
 // Check if function exists to prevent errors
 if ( ! function_exists( 'generatepress_child_custom_header_layout' ) ) {
