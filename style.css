@@ -262,7 +262,7 @@ stroke-dashoffset: 0;
 
 /*****END*******/
 /***HEADER***/
-.site-header .is-logo-image {
+.custom-logo-link {
     width: 150px;
 
 
@@ -270,7 +270,14 @@ stroke-dashoffset: 0;
 .site-header{
     display: none;
 }
-
+.custom-header-wrap{
+    display: flex;
+    z-index: 99;
+    position: relative;
+    width: 100%;
+    flex-direction: row;
+    padding: 20px 3%;
+}
 
 
 
