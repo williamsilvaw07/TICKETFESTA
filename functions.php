@@ -4515,13 +4515,13 @@ function validate_event_pass() {
         'match'    =>  $match,
         'event_id' =>  $event_id,
     );
-    if ( class_exists( 'Tribe__Tickets_Plus__Commerce__EDD__Main' ) ) {
-        // The class exists
-        echo 'Class Tribe__Tickets_Plus__Commerce__EDD__Main found.';
-      } else {
-        // The class does not exist
-        echo 'Class Tribe__Tickets_Plus__Commerce__EDD__Main not found.';
-      }
+    // if ( class_exists( 'Tribe__Tickets_Plus__Commerce__EDD__Main' ) ) {
+    //     // The class exists
+    //     echo 'Class Tribe__Tickets_Plus__Commerce__EDD__Main found.';
+    //   } else {
+    //     // The class does not exist
+    //     echo 'Class Tribe__Tickets_Plus__Commerce__EDD__Main not found.';
+    //   }
       
     // $ticket_var = new Tribe__Tickets_Plus__Commerce__EDD__Main();
     // $ticket_var->checkin(4450);
