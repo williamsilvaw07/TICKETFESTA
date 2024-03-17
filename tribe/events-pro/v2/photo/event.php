@@ -381,7 +381,7 @@ jQuery(document).ready(function($) {
 }
 /****Tags */
 .tribe-events .tribe-events-c-small-cta__stock {
-    color: #ffffff!important;
+    color: #000!important;
     position: absolute;
     top: 6px;
     z-index: 9;
@@ -392,8 +392,8 @@ jQuery(document).ready(function($) {
     background: #d3fa16;
     padding: 6px 12px;
     border-radius: 3px;
-    border: 1px solid red!important;
-    display:none;
+ 
+ 
 }
 
 
