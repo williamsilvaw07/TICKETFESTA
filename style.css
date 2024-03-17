@@ -271,31 +271,29 @@ stroke-dashoffset: 0;
     display: none;
 }
 .custom-header-wrap {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    justify-content: center;
     align-items: center;
-    position: relative; /* Make the header wrapper a relative container */
-}
-
-.custom-header-wrap .site-logo {
-    position: absolute; /* Absolutely position the logo */
-    left: 50%; /* Center the logo from the left */
-    transform: translateX(-50%); /* Offset the logo's width */
-    z-index: 10; /* Ensure the logo sits above the menus */
+    position: relative; /* Ensure positioning context is set */
 }
 
 .custom-nav-before-logo, .custom-nav-after-logo {
-    z-index: 5; /* Ensure menus are below the logo but can still be interacted with */
+    display: flex; /* Optional, if you need flexbox behavior inside the menus */
+}
+
+.site-logo {
+    grid-column: 2 / 3; /* Place the logo in the center column */
+    justify-self: center; /* Center the logo within its grid cell */
 }
 
 .custom-nav-before-logo {
-    margin-right: auto; /* Push everything to the right */
+    grid-column: 1 / 2; /* Place the left menu in the first column */
 }
 
 .custom-nav-after-logo {
-    margin-left: auto; /* Push everything to the left */
+    grid-column: 3 / 4; /* Place the right menu in the third column */
 }
-
 
 .mega-menu-wrap {
     background: #ffffff00!important;
