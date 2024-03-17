@@ -277,9 +277,16 @@ stroke-dashoffset: 0;
     position: relative; 
     z-index: 9999;
 }
-html body .mega-menu-wrap{
+html body .mega-menu-wrap:first-child{
     display: flex!important;
     align-items: center!important;
+    flex: 1 1 0%!important;
+
+}
+html body .mega-menu-wrap:last-child{
+    display: flex!important;
+    align-items: center!important;
+    justify-content: flex-end!important;
     flex: 1 1 0%!important;
 
 }
