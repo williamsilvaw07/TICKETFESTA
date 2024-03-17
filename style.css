@@ -285,7 +285,7 @@ stroke-dashoffset: 0;
 
 
 .mega-sub-menu{
-    width: fit-content;
+    width: fit-content!important;
 }
 
 
