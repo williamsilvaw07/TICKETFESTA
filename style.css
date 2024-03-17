@@ -162,11 +162,11 @@ font-family: "Plus Jakarta Sans", Sans-serif;
         color: #000;
     }
     .sb-chat .sb-dashboard {
-        margin-top: 1px !important;
+        margin-top: 10px !important;
      
     }
     .sb-chat .sb-header-main + .sb-list {
-        margin-top: 1px !important;
+        margin-top: 10px !important;
     }
 }
 
