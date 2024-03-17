@@ -2,28 +2,28 @@
 
 
 
+
+// header layout
 function my_custom_theme_menu_locations() {
     register_nav_menus(
         array(
             'main_right_menu_location' => __( 'Main Right Menu Location', 'theme-text-domain' ),
             'main_left_menu_location' => __( 'Main Left Menu Location', 'theme-text-domain' ),
-            // You can add more menu locations here
+            // Additional menus can be registered here
         )
     );
 }
 add_action( 'init', 'my_custom_theme_menu_locations' );
 
 // header layout
-// Check if function exists to prevent errors
 if ( ! function_exists( 'generatepress_child_custom_header_layout' ) ) {
     function generatepress_child_custom_header_layout() {
-        // Open the main wrapper div
-        echo '<div class="custom-header-wrap">';
+        echo '<div class="custom-header-wrap" style="display: flex; justify-content: space-between; align-items: center;">'; // Open the main wrapper div with inline CSS for flexbox layout
 
-        // Display the first navigation menu
-        if ( has_nav_menu( 'primary' ) ) {
+        // Display the left navigation menu
+        if ( has_nav_menu( 'main_left_menu_location' ) ) {
             wp_nav_menu( array( 
-                'theme_location' => 'primary', 
+                'theme_location' => 'main_left_menu_location', 
                 'container_class' => 'custom-nav-before-logo' 
             ) );
         }
@@ -33,16 +33,15 @@ if ( ! function_exists( 'generatepress_child_custom_header_layout' ) ) {
             the_custom_logo();
         }
 
-        // Display the second navigation menu
-        if ( has_nav_menu( 'secondary' ) ) {
+        // Display the right navigation menu
+        if ( has_nav_menu( 'main_right_menu_location' ) ) {
             wp_nav_menu( array( 
-                'theme_location' => 'secondary', 
+                'theme_location' => 'main_right_menu_location', 
                 'container_class' => 'custom-nav-after-logo' 
             ) );
         }
 
-        // Close the main wrapper div
-        echo '</div>';
+        echo '</div>'; // Close the main wrapper div
     }
 }
 
@@ -54,7 +53,6 @@ function generatepress_child_remove_default_navigation() {
 
 // Add our custom header layout to the 'generate_header' action hook
 add_action( 'generate_header', 'generatepress_child_custom_header_layout', 5 );
-
 
 
 
