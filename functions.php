@@ -2,15 +2,15 @@
 
 
 
-function my_custom_menu_locations() {
+function my_custom_theme_menu_locations() {
     register_nav_menus(
         array(
-            'my_custom_menu' => __( 'My Custom Menu', 'text-domain' ),
-            // You can register multiple menus here
+            'new_menu_location' => __( 'New Menu Location', 'theme-text-domain' ),
+            // You can add more menu locations here
         )
     );
 }
-add_action( 'init', 'my_custom_menu_locations' );
+add_action( 'init', 'my_custom_theme_menu_locations' );
 
 // header layout
 // Check if function exists to prevent errors
