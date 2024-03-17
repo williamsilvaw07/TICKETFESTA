@@ -161,7 +161,7 @@ font-family: "Plus Jakarta Sans", Sans-serif;
         color: #000;
     }
     .sb-chat .sb-dashboard {
-        margin-top: 67px;
+        margin-top: 67px!important;
      
     }
 }
