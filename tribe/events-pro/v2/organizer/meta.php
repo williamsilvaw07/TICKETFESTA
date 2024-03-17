@@ -1430,7 +1430,11 @@ width: fit-content!important;
     text-decoration-color: white!important;
 
 }
+.event-card .event-title a{ 
 
+    text-decoration-color: white!important;
+
+}
 .event-card .event-details{
  
     padding: 9px 20px 24px;
