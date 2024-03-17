@@ -4523,11 +4523,11 @@ function validate_event_pass() {
         echo 'Class Tribe__Tickets_Plus__Commerce__EDD__Main not found.';
       }
       
-    $ticket_var = new Tribe__Tickets_Plus__Commerce__EDD__Main();
-    $ticket_var->checkin(4450);
+    // $ticket_var = new Tribe__Tickets_Plus__Commerce__EDD__Main();
+    // $ticket_var->checkin(4450);
 
-    $is_checkin = get_post_meta( '4450', '_tribe_eddticket_checkedin', true );
-    var_dump($is_checkin);
+    // $is_checkin = get_post_meta( '4450', '_tribe_eddticket_checkedin', true );
+    // var_dump($is_checkin);
     // Send the response back to the client
     wp_send_json($response);
 
