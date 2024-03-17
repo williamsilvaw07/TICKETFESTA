@@ -1426,7 +1426,8 @@ width: fit-content!important;
 .event-card .event-title{
     color: rgb(255, 255, 255)!important;
     text-decoration: none;
-    font-size:16px
+    font-size:16px;
+    text-decoration-color: white!important;
 
 }
 
