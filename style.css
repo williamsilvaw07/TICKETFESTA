@@ -133,15 +133,16 @@ font-family: "Plus Jakarta Sans", Sans-serif;
         position: fixed;
         left: 0;
         right: 0;
-        top: 7%!important;
+        top: 16% !important;
         width: 80%!important;
         margin: 0 auto!important;
     }
     .sb-chat .sb-scroll-area .sb-header .sb-text {
         font-size: 14px;
-        padding: 29px;
+        padding: 12px 15px;
         line-height: 24px;
         padding-top: 0;
+        height: auto;
     }
     .sb-chat .sb-body .sb-scroll-area .sb-header {
         position: fixed;
