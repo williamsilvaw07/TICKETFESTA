@@ -270,14 +270,32 @@ stroke-dashoffset: 0;
 .site-header{
     display: none;
 }
-.custom-header-wrap{
+.custom-header-wrap {
     display: flex;
-    z-index: 99;
-    position: relative;
-    width: 100%;
-    flex-direction: row;
-    padding: 20px 3%;
+    justify-content: space-between;
+    align-items: center;
+    position: relative; /* Make the header wrapper a relative container */
 }
+
+.custom-header-wrap .site-logo {
+    position: absolute; /* Absolutely position the logo */
+    left: 50%; /* Center the logo from the left */
+    transform: translateX(-50%); /* Offset the logo's width */
+    z-index: 10; /* Ensure the logo sits above the menus */
+}
+
+.custom-nav-before-logo, .custom-nav-after-logo {
+    z-index: 5; /* Ensure menus are below the logo but can still be interacted with */
+}
+
+.custom-nav-before-logo {
+    margin-right: auto; /* Push everything to the right */
+}
+
+.custom-nav-after-logo {
+    margin-left: auto; /* Push everything to the left */
+}
+
 
 .mega-menu-wrap {
     background: #ffffff00!important;
