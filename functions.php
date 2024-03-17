@@ -1,10 +1,20 @@
 <?php
 
+// header layout
+add_action('generate_before_header_content', 'custom_nav_before_logo');
+function custom_nav_before_logo() {
+    if (is_front_page()) {
+        wp_nav_menu(array('theme_location' => 'primary', 'container_class' => 'custom-nav-before-logo'));
+    }
+}
 
+add_action('generate_after_header_content', 'custom_nav_after_logo');
+function custom_nav_after_logo() {
+    if (is_front_page()) {
+        wp_nav_menu(array('theme_location' => 'secondary', 'container_class' => 'custom-nav-after-logo'));
+    }
+}
 
-
-
-add_filter('show_admin_bar', '__return_false');
 
 
 
