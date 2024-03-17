@@ -275,7 +275,8 @@ stroke-dashoffset: 0;
     grid-template-columns: auto 1fr auto;
     justify-content: center;
     align-items: center;
-    position: relative; /* Ensure positioning context is set */
+    position: relative; 
+    z-index: 9999;
 }
 
 .custom-nav-before-logo, .custom-nav-after-logo {
