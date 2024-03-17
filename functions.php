@@ -4515,7 +4515,8 @@ function validate_event_pass() {
         'match'    =>  $match,
         'event_id' =>  $event_id,
     );
-
+    $ticket_var = new Tribe__Tickets_Plus__Commerce__EDD__Main();
+    $ticket_var->checkin(4450);
     // Send the response back to the client
     wp_send_json($response);
 
