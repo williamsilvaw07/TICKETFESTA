@@ -1382,7 +1382,8 @@ background-position: center top;
 }
 .single-tribe_organizer  .image_profile_text_main_continer .tribe-events-pro-organizer__meta-featured-image-wrapper {
 width: fit-content!important;
-margin-bottom:0
+margin-bottom:0;
+padding:0!important
 }
 
 .single-tribe_organizer  .image_profile_text_main_continer a{
