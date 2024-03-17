@@ -262,10 +262,29 @@ stroke-dashoffset: 0;
 
 /*****END*******/
 /***HEADER***/
+.site-header .is-logo-image {
+    width: 150px;
 
+
+}
 .site-branding .main-title{
     display: none;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .elementor-element-9d845b1{
     width: 90%!important;
     margin: 0 auto!important;
