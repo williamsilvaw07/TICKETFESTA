@@ -271,23 +271,7 @@ stroke-dashoffset: 0;
     display: none;
 }
 
-.custom-nav-before-logo, .custom-nav-after-logo {
-    display: inline-block;
-    vertical-align: middle;
-}
 
-.site-logo {
-    display: inline-block;
-    vertical-align: middle;
-}
-
-/* You may need to adjust the CSS further for responsive behavior */
-@media (max-width: 768px) {
-    .custom-nav-before-logo, .custom-nav-after-logo, .site-logo {
-        display: block;
-        text-align: center;
-    }
-}
 
 
 
