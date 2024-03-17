@@ -1,16 +1,40 @@
 <?php
 
 // header layout
-function custom_secondary_navigation() {
-    if (has_nav_menu('secondary_nav')) {
-        wp_nav_menu(array(
-            'theme_location' => 'secondary_nav',
-            'container_class' => 'secondary-navigation',
-        ));
+// Check if function exists to prevent errors
+if ( ! function_exists( 'generatepress_child_custom_header_layout' ) ) {
+    function generatepress_child_custom_header_layout() {
+        // Display the first navigation menu
+        if ( has_nav_menu( 'primary' ) ) {
+            wp_nav_menu( array( 
+                'theme_location' => 'primary', 
+                'container_class' => 'custom-nav-before-logo' 
+            ) );
+        }
+
+        // Display the site logo
+        if ( function_exists( 'the_custom_logo' ) ) {
+            the_custom_logo();
+        }
+
+        // Display the second navigation menu
+        if ( has_nav_menu( 'secondary' ) ) {
+            wp_nav_menu( array( 
+                'theme_location' => 'secondary', 
+                'container_class' => 'custom-nav-after-logo' 
+            ) );
+        }
     }
 }
-add_action('generate_after_header_content', 'custom_secondary_navigation');
 
+// Remove the default navigation placement
+add_action( 'after_setup_theme', 'generatepress_child_remove_default_navigation' );
+function generatepress_child_remove_default_navigation() {
+    remove_action( 'generate_header', 'generate_add_navigation_float_right', 5 );
+}
+
+// Add our custom header layout to the 'generate_header' action hook
+add_action( 'generate_header', 'generatepress_child_custom_header_layout', 5 );
 
 
 
