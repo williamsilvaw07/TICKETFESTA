@@ -393,7 +393,7 @@ jQuery(document).ready(function($) {
     padding: 6px 12px;
     border-radius: 3px;
  
- 
+    display:none;
 }
 
 
