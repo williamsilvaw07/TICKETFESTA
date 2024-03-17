@@ -278,9 +278,9 @@ stroke-dashoffset: 0;
     z-index: 9999;
 }
 .mega-menu-wrap{
-    display: flex;
-    align-items: center;
-    flex: 1 1 0%;
+    display: flex!important;
+    align-items: center!important;
+    flex: 1 1 0%!important;
 
 }
 .custom-nav-before-logo, .custom-nav-after-logo {
