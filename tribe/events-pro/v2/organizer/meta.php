@@ -1386,6 +1386,9 @@ margin-bottom:0;
 padding:0!important
 }
 
+.tribe-events-pro .tribe-events-pro-organizer__meta-featured-image-wrapper.tribe-events-pro-organizer__meta-featured-image-wrapper--has-details {
+margin-bottom: 0!important;
+}
 .single-tribe_organizer  .image_profile_text_main_continer a{
     max-width: 200px;
 }
