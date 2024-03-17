@@ -267,7 +267,7 @@ stroke-dashoffset: 0;
 
 
 }
-.site-branding .main-title , .shopping-cart{
+.site-branding .main-title , .shopping-cart , .cart-contents{
     display: none;
 }
 
