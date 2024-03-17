@@ -301,12 +301,17 @@ color:black!important
 }
 
 #mega-menu-wrap-main_right_menu_location #mega-menu-main_right_menu_location > li.mega-menu-item.mega-toggle-on > a.mega-menu-link {
-    background: rgb(34, 34, 34);
-    color: #ffffff;
-    font-weight: normal;
-    text-decoration: none;
-    border-color: #fff;
+    background: rgb(34, 34, 34)!important;
 }
+
+
+
+
+
+
+
+
+
 
 .elementor-element-9d845b1{
     width: 90%!important;
