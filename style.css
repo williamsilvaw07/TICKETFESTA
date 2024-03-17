@@ -300,8 +300,12 @@ html #mega-menu-wrap-main_right_menu_location #mega-menu-main_right_menu_locatio
 color:black!important
 }
 
-html .mega-menu .mega-toggle-on{
-    background-color: red!important;
+#mega-menu-wrap-main_right_menu_location #mega-menu-main_right_menu_location > li.mega-menu-item.mega-toggle-on > a.mega-menu-link {
+    background: rgb(34, 34, 34);
+    color: #ffffff;
+    font-weight: normal;
+    text-decoration: none;
+    border-color: #fff;
 }
 
 .elementor-element-9d845b1{
