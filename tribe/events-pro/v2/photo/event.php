@@ -370,7 +370,15 @@ jQuery(document).ready(function($) {
 <style>
 
 /*****SOLD OUT EVENTS */
-
+.home .tribe-events-c-small-cta__sold-out{
+    color: white !important;
+    background: red;
+    font-size: 14px;
+    font-weight: 400;
+    padding: 5px 10px;
+    margin-right: 20px;
+    border-radius: 2px;
+}
 /****Tags */
 .tribe-events .tribe-events-c-small-cta__stock {
     color: #ffffff!important;
@@ -381,7 +389,7 @@ jQuery(document).ready(function($) {
     letter-spacing: 0.2px;
     font-size: 12px;
     font-weight: 400;
-    background: #00000099;
+    background: #d3fa16;
     padding: 6px 12px;
     border-radius: 3px;
     border: 1px solid red!important;
