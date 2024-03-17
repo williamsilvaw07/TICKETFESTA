@@ -4515,19 +4515,19 @@ function validate_event_pass() {
         'match'    =>  $match,
         'event_id' =>  $event_id,
     );
-    if ( class_exists( 'Tribe__Tickets_Plus__Commerce__EDD__Main' ) ) {
-        // The class exists
-        echo 'Class Tribe__Tickets_Plus__Commerce__EDD__Main found.';
-      } else {
-        // The class does not exist
-        echo 'Class Tribe__Tickets_Plus__Commerce__EDD__Main not found.';
-      }
+    // if ( class_exists( 'Tribe__Tickets_Plus__Commerce__EDD__Main' ) ) {
+    //     // The class exists
+    //     echo 'Class Tribe__Tickets_Plus__Commerce__EDD__Main found.';
+    //   } else {
+    //     // The class does not exist
+    //     echo 'Class Tribe__Tickets_Plus__Commerce__EDD__Main not found.';
+    //   }
       
-    $ticket_var = new Tribe__Tickets_Plus__Commerce__EDD__Main();
-    $ticket_var->checkin(4450);
+    // $ticket_var = new Tribe__Tickets_Plus__Commerce__EDD__Main();
+    // $ticket_var->checkin(4450);
 
-    $is_checkin = get_post_meta( '4450', '_tribe_eddticket_checkedin', true );
-    var_dump($is_checkin);
+    // $is_checkin = get_post_meta( '4450', '_tribe_eddticket_checkedin', true );
+    // var_dump($is_checkin);
     // Send the response back to the client
     wp_send_json($response);
 
@@ -4535,10 +4535,10 @@ function validate_event_pass() {
     wp_die();
 }
 
-add_action( 'wp',  function(){
-    var_dump(get_post_meta( '3789', 'event_pass', true));
-    die();
-});
+// add_action( 'wp',  function(){
+//     var_dump(get_post_meta( '3789', 'event_pass', true));
+//     die();
+// });
 function get_posts_by_event_pass($event_pass) {
     $args = array(
         'post_type' => 'tribe_events',
