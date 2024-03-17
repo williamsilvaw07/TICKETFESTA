@@ -271,14 +271,18 @@ stroke-dashoffset: 0;
     display: none;
 }
 .custom-header-wrap {
-    display: grid;
-    grid-template-columns: auto 1fr auto;
-    justify-content: center;
+    position: relative;
+    display: flex;
     align-items: center;
     position: relative; 
     z-index: 9999;
 }
+.mega-menu-wrap{
+    display: flex;
+    align-items: center;
+    flex: 1 1 0%;
 
+}
 .custom-nav-before-logo, .custom-nav-after-logo {
     display: flex; /* Optional, if you need flexbox behavior inside the menus */
 }
