@@ -124,7 +124,7 @@ font-family: "Plus Jakarta Sans", Sans-serif;
         padding:0!important
     }
     .sb-chat.sb-active .sb-body {
-        max-height: 82% !important;
+        max-height: 60vh !important;
         width: 70%;
         margin: 0 auto;
         top: 16%;
@@ -163,6 +163,9 @@ font-family: "Plus Jakarta Sans", Sans-serif;
     .sb-chat .sb-dashboard {
         margin-top: 67px!important;
      
+    }
+    .sb-chat .sb-header-main + .sb-list {
+        margin-top: 37px!important;
     }
 }
 
