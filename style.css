@@ -303,7 +303,9 @@ color:black!important
 #mega-menu-wrap-main_right_menu_location #mega-menu-main_right_menu_location > li.mega-menu-item.mega-toggle-on > a.mega-menu-link {
     background: rgb(34, 34, 34)!important;
 }
-
+#mega-menu-wrap-main_right_menu_location #mega-menu-main_right_menu_location > li.mega-menu-item > a.mega-menu-link:hover {
+    background: rgb(34, 34, 34)!important;
+}
 
 
 
