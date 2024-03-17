@@ -120,6 +120,35 @@ font-family: "Plus Jakarta Sans", Sans-serif;
         height: 48px!important;
     
     }
+    .sb-chat .sb-header-main{
+        padding:0!important
+    }
+    .sb-chat.sb-active .sb-body {
+        max-height: 82% !important;
+        width: 70%;
+        margin: 0 auto;
+        top: 16%;
+    }
+    .sb-chat .sb-body .sb-scroll-area .sb-header {
+        position: fixed;
+        left: 0;
+        right: 0;
+        width: 80%!important;
+        margin: 0 auto!important;
+    }
+    .sb-chat .sb-scroll-area .sb-header .sb-text {
+        font-size: 14px;
+        padding: 29px;
+        line-height: 24px;
+        padding-top: 0;
+    }
+    .sb-chat .sb-body .sb-scroll-area .sb-header {
+        position: fixed;
+        left: 0;
+        right: 0;
+        width: 70%;
+        margin: 0 auto;
+    }
 }
 
 
