@@ -149,6 +149,11 @@ font-family: "Plus Jakarta Sans", Sans-serif;
         width: 70%!important;
         margin: 0 auto;
     }
+    .sb-chat .sb-editor .sb-textarea {
+        padding: 15px 120px 15px 15px;
+        border-top: 1px solid #dee5ec;
+        border: 2px solid black;
+    }
 }
 
 
