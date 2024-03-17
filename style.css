@@ -275,7 +275,9 @@ stroke-dashoffset: 0;
     display: flex;
     align-items: center;
     position: relative; 
-    z-index: 9999;
+    z-index: 99;
+    align-items: center;
+    padding: 15px 3%;
 }
 html body .mega-menu-wrap:first-child{
     display: flex!important;
