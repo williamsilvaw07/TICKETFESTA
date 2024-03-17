@@ -1493,6 +1493,9 @@ background-position: center top;
 }
 */
 
+.single_event_sections:last-child{
+    border-bottom: 0!important;
+}
 
 .tribe-tickets__tickets-item-content-title{
     text-transform: capitalize!important;

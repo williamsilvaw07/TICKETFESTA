@@ -133,15 +133,16 @@ font-family: "Plus Jakarta Sans", Sans-serif;
         position: fixed;
         left: 0;
         right: 0;
-        top: 7%!important;
+        top: 14% !important;
         width: 80%!important;
         margin: 0 auto!important;
     }
     .sb-chat .sb-scroll-area .sb-header .sb-text {
         font-size: 14px;
-        padding: 29px;
+        padding: 12px 15px;
         line-height: 24px;
         padding-top: 0;
+        height: auto;
     }
     .sb-chat .sb-body .sb-scroll-area .sb-header {
         position: fixed;
@@ -156,18 +157,18 @@ font-family: "Plus Jakarta Sans", Sans-serif;
         border: 2px solid black;
     }.sb-chat .sb-responsive-close-btn {
         right: 16%!important;
-        top:7%!important;
+        top:14%!important;
         color: black !important;
     }
     .sb-chat .sb-responsive-close-btn:before {
         color: #000!important;
     }
     .sb-chat .sb-dashboard {
-        margin-top: 10px !important;
+        margin-top: 35px !important;
      
     }
     .sb-chat .sb-header-main + .sb-list {
-        margin-top: 10px !important;
+        margin-top: 35px !important;
     }
 }
 
