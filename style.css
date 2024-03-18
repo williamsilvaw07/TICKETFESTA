@@ -2213,7 +2213,7 @@ form.edit-vanue-form {
     color:black!important
 }
 
-.heading_green {
+.heading_green , .heading_green h5{
     color: #d3fa16!important;
 }
 
