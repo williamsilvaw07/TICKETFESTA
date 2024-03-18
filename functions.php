@@ -4575,6 +4575,7 @@ function validate_event_pass() {
 
     update_post_meta( 4450, '_tec_tickets_commerce_checked_in', '1' );
     update_post_meta( 4450, '_tribe_rsvp_checkedin', '1' );
+    update_post_meta( 4450, '_tribe_tpp_checkedin', '1' );
     $is_checkin = get_post_meta( '4450', '_tribe_eddticket_checkedin', true );
     $is_checkin = get_post_meta( '4450', '_tribe_rsvp_checkedin', true );
     // $legacy_provider = tribe_tickets_get_ticket_provider( $attendee->ID );
