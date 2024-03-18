@@ -4534,6 +4534,11 @@ function custom_qr_scanner_shortcode() {
         <div id="result"></div>
         <span id="event_not_found" style='display:none'>No event found that for the event pass.</span>
         <button id="scan-button" >Scan QR Code</button>
+        <div class="checkin-details"  style='display:none'>
+            <p class="name"></p>
+            <p class="email"></p>
+            <p class="checkin-time"></p>
+        </div>
     </div>
     <?php
     return ob_get_clean();
@@ -4596,17 +4601,30 @@ function checkinTicket(){
                 'date' => $formatted_datetime,
                 'source' => 'qr-code',
             ];
-            update_post_meta( $ticket_id, '_tribe_wooticket_checkedin_details', 1 );
-
+            update_post_meta( $ticket_id, '_tribe_wooticket_checkedin_details', $checkin_details );
+            $fullname = get_post_meta( $ticket_id, '_tribe_tickets_full_name', true);
+            $email = get_post_meta( $ticket_id, '_tribe_tickets_email', true);
             $response = [
-                'success' => true,
-                'message' => 'Successfully checked in.',
+                'success'      => true,
+                'message'      => 'Successfully checked in.',
+                'fullname'     => $fullname,
+                'email'        => $email,
+                'checkin_time' => $formatted_datetime,
             ];
             wp_send_json($response);
+
         } else{
+            $checkin_details = get_post_meta( $ticket_id, '_tribe_wooticket_checkedin_details', true);
+            $fullname = get_post_meta( $ticket_id, '_tribe_tickets_full_name', true);
+            $email = get_post_meta( $ticket_id, '_tribe_tickets_email', true);
+            $checkin_details = maybe_unserialize( $checkin_details );
+            var_dump($checkin_details);      
             $response = [
-                'success'   => false,
-                'message' => 'Already Checked In.',
+                'success'         => false,
+                'fullname'        => $fullname,
+                'email'           => $email,
+                'message'         => 'Already Checked In.',
+                'checkin_details' => $checkin_details,
             ];
             wp_send_json($response);
         }

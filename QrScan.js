@@ -19,6 +19,8 @@
         jQuery("#scan-button").on('click', function(){
             if($('#event-pass').val()){
                 var eventPass = $('#event-pass').val();
+                $('.entry-content').css("background-color", "#000");
+                $('.checkin-details').hide();
                 // test data YaCS1r2t
                 // test data2 c7KOLbP0
                 console.log('Event Pass:' , eventPass)
@@ -98,9 +100,28 @@
                     ticket_id : ticketId
                 },
                 success: function(response) {
+                    if(response.success){
+                        $('.entry-content').css("background-color", "green");
+                        if(response.fullname){
+                            $('.checkin-details .name').text(response.fullname);
+                            $('.checkin-details .email').text(response.email);
+                            $('.checkin-details .checkin-time').text(response.checkin_time);
+                            $('.checkin-details').show();
+                        }
+                    }else{
+                        $('.entry-content').css("background-color", "red");
+                        if(response.fullname){
+                            $('.checkin-details .name').text(response.fullname);
+                            $('.checkin-details .email').text(response.email);
+                            $('.checkin-details .checkin-time').text(response.checkin_time);
+                            $('.checkin-details').show();
+                        }else{
+                            $('#scan-button').text(response.message);
+                            $('#scan-button').show();
+                        }
+                    }
                     // Handle the response from the server
                     console.log('ajax response', response);
-                   
                 },
                 error: function(xhr, status, error) {
                     // Handle errors
