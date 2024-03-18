@@ -4713,17 +4713,17 @@ function generate_unique_random_hash($length) {
 
 
 
-function my_enqueue_qrcode_script() {
+
+
+
+function my_enqueue_sqrcode_script() {
     // Enqueue the html5-qrcode script
     wp_enqueue_script('html5-qrcode', 'https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js', array(), '2.3.8', true);
-
-    // Enqueue your custom JS file (adjust the path as necessary)
+    
+    // Assume your custom JS is still necessary for initializing the scanner
     wp_enqueue_script('my-custom-qrcode-script', get_template_directory_uri() . '/js/my-customs-qrcode.js', array('html5-qrcode'), null, true);
 }
-add_action('wp_enqueue_scripts', 'my_enqueue_qrcode_script');
-
-
-
+add_action('wp_enqueue_scripts', 'my_enqueue_sqrcode_script');
 
 function display_qr_scanner_shortcode() {
     // Make sure the scripts are enqueued when the shortcode is used
