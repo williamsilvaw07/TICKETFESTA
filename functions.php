@@ -4591,10 +4591,13 @@ function validate_event_pass() {
     wp_die();
 }
 
-// add_action( 'wp',  function(){
-//     var_dump(get_post_meta( '3789', 'event_pass', true));
-//     die();
-// });
+add_action( 'wp',  function(){
+
+    echo '<pre>';
+    var_dump(get_post_meta( '4450' ));
+    echo '</pre>';
+    die();
+});
 function get_posts_by_event_pass($event_pass) {
     $args = array(
         'post_type' => 'tribe_events',
