@@ -19,7 +19,7 @@ add_action( 'init', 'my_custom_theme_menu_locations' );
 // header layout
 if ( ! function_exists( 'generatepress_child_custom_header_layout' ) ) {
     function generatepress_child_custom_header_layout() {
-        echo '<div class="custom-header-wrap">'; // Open the main wrapper div
+        echo '<div class="custom-header-wrap">'; // Open the main wrapper div with inline CSS for flexbox layout
 
         // Display the left navigation menu
         if ( has_nav_menu( 'main_left_menu_location' ) ) {
@@ -34,19 +34,11 @@ if ( ! function_exists( 'generatepress_child_custom_header_layout' ) ) {
             the_custom_logo();
         }
 
-        // Display the first right navigation menu
-        if ( has_nav_menu( 'main_right_menu_1' ) ) {
+        // Display the right navigation menu
+        if ( has_nav_menu( 'main_right_menu_location' ) ) {
             wp_nav_menu( array( 
-                'theme_location' => 'main_right_menu_1', 
-                'container_class' => 'custom-nav-after-logo custom-nav-right-1' 
-            ) );
-        }
-
-        // Display the second right navigation menu
-        if ( has_nav_menu( 'main_right_menu_2' ) ) {
-            wp_nav_menu( array( 
-                'theme_location' => 'main_right_menu_2', 
-                'container_class' => 'custom-nav-after-logo custom-nav-right-2' 
+                'theme_location' => 'main_right_menu_location', 
+                'container_class' => 'custom-nav-after-logo' 
             ) );
         }
 
