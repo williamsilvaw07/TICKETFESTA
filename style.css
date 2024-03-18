@@ -1137,7 +1137,7 @@ border-radius: 5px;
 
 .tribe-events-pro .tribe-events-pro-photo__event-date-tag-month , .tribe-events-status-label__text , .tribe-events-pro-photo__event-title-link  , .tribe-events-c-small-cta__price ,.tribe-common--breakpoint-medium.tribe-common .tribe-common-h4--min-medium , .tribe-common--breakpoint-medium.tribe-common .tribe-common-b3 , .tribe-common--breakpoint-medium.tribe-common .tribe-common-h6 {
 
-    color: black!important;
+    color: rgb(255, 255, 255)!important;
 }
 
 .tribe-events-c-small-cta__price{
