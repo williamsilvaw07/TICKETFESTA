@@ -4574,6 +4574,7 @@ function validate_event_pass() {
     $ticket_var->checkin(4450, true);
 
     update_post_meta( 4450, '_tec_tickets_commerce_checked_in', 1 );
+    update_post_meta( 4450, '_tribe_wooticket_checkedin', 1 );
     update_post_meta( 4450, '_tribe_rsvp_checkedin', 1 );
     update_post_meta( 4450, '_tribe_qr_status', 1 );
     update_post_meta( 4450, '_tribe_eddticket_checkedin', 1 );
