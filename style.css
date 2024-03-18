@@ -388,9 +388,10 @@ color:black!important
     #mega-menu-main_left_menu_location{
         display: block!important;
     }
-    #mega-menu-wrap-main_left_menu_location .mega-menu-toggle{
+    #mega-menu-wrap-main_left_menu_location .mega-menu-toggle ,     .mega-menu-item-5428{
         display: none;
     }
+ 
 }
 
 
