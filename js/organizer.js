@@ -298,7 +298,7 @@ jQuery(document).ready(function (jQuery) {
   updateTicket();
 
   jQuery(document).ajaxSuccess(function (event, xhr, settings) {
-    console.log(settings.data)
+    if(!settings.data) return;
     var paramsObject = parseQueryString(settings.data);
     if (paramsObject.action !== "tribe-ticket-add") {
       return;
@@ -364,7 +364,7 @@ jQuery(document).ready(function (jQuery) {
     });
   }
 
-  getCoupons();
+  //getCoupons();
 
 });
 
