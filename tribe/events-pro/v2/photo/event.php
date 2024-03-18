@@ -442,7 +442,7 @@ jQuery(document).ready(function($) {
     text-transform: capitalize!important;
     font-weight: 500!important;
     margin-top: 0!important;
-    color: black!important;
+    color: white!important;
 }
 .event-day{
     display: flex;
