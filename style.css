@@ -360,7 +360,9 @@ color:black!important
 
 }
 
-
+#mega-menu-wrap-main_right_menu_location .mega-menu-toggle .mega-toggle-block-1 .mega-toggle-animated-box{
+    width: 31px;
+}
 @media (max-width: 1090px) {
 
     .custom-header-wrap {
