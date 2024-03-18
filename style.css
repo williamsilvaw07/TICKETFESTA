@@ -374,7 +374,7 @@ color:black!important
     html body .mega-menu-wrap:first-child{
         display: flex!important;
         align-items: center!important;
-        justify-content: flex-start!important;
+        justify-content: flex-end!important;
         flex: 1 1 0%!important;
     
     }
