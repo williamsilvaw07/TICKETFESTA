@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-    console.error('JS LAODEDDEDE');
+    console.log('JS LAODEDDEDE');
     let scanner = new Instascan.Scanner({ video: document.getElementById('qr-scanner') });
     scanner.addListener('scan', function(content) {
         alert(content);
