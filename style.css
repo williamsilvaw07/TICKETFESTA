@@ -355,6 +355,50 @@ color:black!important
 
 
 
+@media (max-width: 1090px) {
+
+    .custom-header-wrap {
+        position: relative;
+        display: flex;
+        align-items: center;
+        position: relative; 
+        z-index: 99;
+        align-items: center;
+        padding: 15px 3%;
+        background: #19191b !important;
+    
+    }
+    
+    
+    html body .mega-menu-wrap:first-child{
+        display: flex!important;
+        align-items: center!important;
+        justify-content: flex-end!important;
+        flex: 1 1 0%!important;
+    
+    }
+    html body .mega-menu-wrap:last-child{
+        display: flex!important;
+        align-items: center!important;
+    
+        flex: 1 1 0%!important;
+    
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
