@@ -36,6 +36,7 @@
             const path = params.get('path');
 
             if(eventID == event_qr_code){
+                checkinTicket(ticket_id);
             
             }else{
                 $('#event_not_found').html('QR Code did not Match with Event Pass.');
@@ -80,6 +81,27 @@
                     }else{
                         noEventFound();
                     }
+                },
+                error: function(xhr, status, error) {
+                    // Handle errors
+                    console.error(xhr.responseText);
+                }
+            });
+        }
+
+        function checkinTicket(ticketId){
+            // 4450
+            $.ajax({
+                url: window.tribe_ajax.ajax_url, // This is set by WordPress and points to admin-ajax.php
+                type: 'POST',
+                data: {
+                    action: 'custom_check_in_ticket',
+                    ticket_id : ticketId
+                },
+                success: function(response) {
+                    // Handle the response from the server
+                    console.log('ajax response', response);
+                   
                 },
                 error: function(xhr, status, error) {
                     // Handle errors

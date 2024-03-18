@@ -4542,7 +4542,7 @@ add_shortcode('custom_qr_scanner', 'custom_qr_scanner_shortcode');
 
 
 add_action('wp_ajax_validate_event_pass', 'validate_event_pass');
-add_action('wp_ajax_nopriv_validate_event_pass', 'validate_event_pass'); // If you want to allow non-logged-in users to access the AJAX endpoint
+add_action('wp_ajax_nopriv_validate_event_pass', 'validate_event_pass'); 
 
 function validate_event_pass() {
     // Your AJAX handling logic goes here
@@ -4562,28 +4562,8 @@ function validate_event_pass() {
         'match'    =>  $match,
         'event_id' =>  $event_id,
     );
-    if ( class_exists( 'Tribe__Tickets_Plus__Commerce__EDD__Main' ) ) {
-        // The class exists
-        // echo 'Class Tribe__Tickets_Plus__Commerce__EDD__Main found.';
-      } else {
-        // The class does not exist
-        // echo 'Class Tribe__Tickets_Plus__Commerce__EDD__Main not found.';
-      }
-      
-    $ticket_var = new Tribe__Tickets_Plus__Commerce__EDD__Main();
-    $ticket_var->checkin(4450, true);
 
-    update_post_meta( 4450, '_tec_tickets_commerce_checked_in', 1 );
     update_post_meta( 4450, '_tribe_wooticket_checkedin', 1 );
-    update_post_meta( 4450, '_tribe_rsvp_checkedin', 1 );
-    update_post_meta( 4450, '_tribe_qr_status', 1 );
-    update_post_meta( 4450, '_tribe_eddticket_checkedin', 1 );
-    update_post_meta( 4450, '_tribe_tpp_checkedin', 1 );
-    $is_checkin = get_post_meta( '4450', '_tribe_eddticket_checkedin', true );
-    $is_checkin = get_post_meta( '4450', '_tribe_rsvp_checkedin', true );
-    // $legacy_provider = tribe_tickets_get_ticket_provider( $attendee->ID );
-	// $attendee_data   = (array) $legacy_provider->get_attendee( $attendee );
-    // var_dump($is_checkin);
     // Send the response back to the client
     wp_send_json($response);
 
@@ -4591,6 +4571,27 @@ function validate_event_pass() {
     wp_die();
 }
 
+
+add_action('wp_ajax_validate_event_pass', 'checkinTicket');
+add_action('wp_ajax_nopriv_validate_event_pass', 'checkinTicket'); 
+
+function checkinTicket(){
+    $ticket_id = isset(  $_POST['ticket_id'] ) ? esc_attr( $_POST['ticket_id']) : false;
+    if ($ticket_id){
+        update_post_meta(  $ticket_id, '_tribe_wooticket_checkedin', 1 );
+        $response = [
+            'success'   => true,
+        ];
+        wp_send_json($response);
+    } else {
+        $response = [
+            'success'   => false,
+        ];
+        wp_send_json($response);
+    }
+
+
+}
 add_action( 'wp',  function(){
 
     // echo '<pre>';
