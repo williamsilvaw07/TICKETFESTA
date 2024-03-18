@@ -2220,7 +2220,9 @@ form.edit-vanue-form {
 .entry-title{
     display: none!important;
 }
-
+body .section_page_scroll_div span{
+    color: #000!important;
+}
 
 
 
