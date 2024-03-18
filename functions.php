@@ -4572,8 +4572,8 @@ function validate_event_pass() {
     wp_die();
 }
 
-add_action('wp_ajax_validate_event_pass', 'checkinTicket');
-add_action('wp_ajax_nopriv_validate_event_pass', 'checkinTicket'); 
+add_action('wp_ajax_custom_check_in_ticket', 'checkinTicket');
+add_action('wp_ajax_nopriv_custom_check_in_ticket', 'checkinTicket'); 
 
 function checkinTicket(){
     $ticket_id = isset(  $_POST['ticket_id'] ) ? esc_attr( $_POST['ticket_id']) : false;
