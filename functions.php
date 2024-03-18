@@ -3754,7 +3754,7 @@ function custom_search_popup()
             <!-- Close button with an "X" icon -->
             <button id="closePopup" class="close-popup">&#10005;</button>
             <!-- &#10005; is the HTML entity for a heavy multiplication X used as a close icon -->
-            <?php echo do_shortcode('[events-calendar-search placeholder="Search Events" show-events="5" disable-past-events="true" layout="medium" content-type="advance"]'); ?>
+            <?php echo do_shortcode('[events-calendar-search placeholder="Search Events" show-events="5" disable-past-events="false" layout="medium" content-type="advance"]'); ?>
         </div>
     </div>
     <?php
