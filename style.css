@@ -407,6 +407,10 @@ color:black!important
 .custom-logo-link {
     width: 120px;
 }
+.mega-menu_btn_border {
+    border: 0px solid white !important;
+
+}
 }
 
 
