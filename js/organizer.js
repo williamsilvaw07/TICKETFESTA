@@ -298,8 +298,8 @@ jQuery(document).ready(function (jQuery) {
   updateTicket();
 
   jQuery(document).ajaxSuccess(function (event, xhr, settings) {
-    var paramsObject = parseQueryString(settings.data);
     console.log(settings.data)
+    var paramsObject = parseQueryString(settings.data);
     if (paramsObject.action !== "tribe-ticket-add") {
       return;
     }
