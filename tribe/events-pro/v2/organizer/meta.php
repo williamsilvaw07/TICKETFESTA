@@ -1423,7 +1423,7 @@ margin-bottom: 0!important;
     flex: 0 1 calc(33.33% - 10px);
     margin: 5px;
     max-width: calc(33.33% - 10px);
-    background-color: #262626;
+    background: rgba(255, 255, 255, 0);
     border-radius: 10px;
     color: rgb(255, 255, 255);
     max-width: 300px;
