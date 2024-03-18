@@ -328,7 +328,9 @@ html .mega-sub-menu{
     background-color: #1A1A1A!important;
 }
 
-
+#mega-menu-wrap-main_left_menu_location #mega-menu-main_left_menu_location > li.mega-menu-item > a.mega-menu-link {
+    font-family: "Plus Jakarta Sans", Sans-serif !important;
+}
 
 #mega-menu-wrap-main_right_menu_location #mega-menu-main_right_menu_location > li.mega-menu-megamenu > ul.mega-sub-menu > li.mega-menu-item, #mega-menu-wrap-main_right_menu_location #mega-menu-main_right_menu_location > li.mega-menu-megamenu > ul.mega-sub-menu li.mega-menu-column > ul.mega-sub-menu > li.mega-menu-item {
     padding: 8px 15px 11px 15px!important;
