@@ -1084,7 +1084,7 @@ width:90%!important;
     color: #0c0d0e!important;
 }
 .tribe-events-c-events-bar--border {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.9)!important;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0)!important;
 }
 .home .entry-content:not(:first-child) , .home .site-main{
     margin-top: 0em!important;
