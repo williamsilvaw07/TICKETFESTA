@@ -1445,8 +1445,8 @@ margin-bottom: 0!important;
     padding: 9px 20px 24px;
     padding: 9px 13px;
     height: fit-content;
-    background: white;
-    color: black!important;
+    background: #ffffff00;
+    color: white!important;
 
 
 }
