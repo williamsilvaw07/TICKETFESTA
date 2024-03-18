@@ -397,6 +397,10 @@ color:black!important
         background: #19191b !important;
         text-align: right;
     }
+
+.custom-logo-link {
+    width: 120px;
+}
 }
 
 
