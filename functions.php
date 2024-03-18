@@ -4571,10 +4571,14 @@ function validate_event_pass() {
       }
       
     $ticket_var = new Tribe__Tickets_Plus__Commerce__EDD__Main();
-    $ticket_var->checkin(4450);
+    $ticket_var->checkin(4450, true);
 
-    update_post_meta( '4450', '_tec_tickets_commerce_checked_in', true );
+    update_post_meta( 4450, '_tec_tickets_commerce_checked_in', '1' );
+    update_post_meta( 4450, '_tribe_rsvp_checkedin', '1' );
     $is_checkin = get_post_meta( '4450', '_tribe_eddticket_checkedin', true );
+    $is_checkin = get_post_meta( '4450', '_tribe_rsvp_checkedin', true );
+    // $legacy_provider = tribe_tickets_get_ticket_provider( $attendee->ID );
+	// $attendee_data   = (array) $legacy_provider->get_attendee( $attendee );
     // var_dump($is_checkin);
     // Send the response back to the client
     wp_send_json($response);
