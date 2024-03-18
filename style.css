@@ -2234,4 +2234,7 @@ color: black!important;
 .div_freatue_section h3 span , .div_freatue_section p{
     color: #19191B!important
 }
+.div_freatue_section p{
+    margin-top: -15px;
+}
 /***********END********/
