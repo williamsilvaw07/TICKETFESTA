@@ -2228,5 +2228,7 @@ body .section_page_scroll_div span{
     margin-top: 0!important;
 }
 
-
+.on_this_section_text p{
+color: black;
+}
 /***********END********/
