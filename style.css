@@ -395,7 +395,7 @@ color:black!important
     }
     html #mega-menu-wrap-main_left_menu_location #mega-menu-main_left_menu_location > li.mega-menu-item > a.mega-menu-link{
         background: #19191b !important;
-        text-align: right;
+        text-align: rih;
     }
 }
 
@@ -405,7 +405,27 @@ color:black!important
 
 
 
+.search-content {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10000;
+    background: #1A1A1A;
+    padding: 20px;
+    border-radius: 5px;
+}
 
+.close-popup {
+    display: block;
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    font-size: 24px; /* Adjust the size as needed */
+    position: absolute;
+    right: 3px;
+    top: 0px;
+}
 
 
 
