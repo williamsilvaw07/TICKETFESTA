@@ -3768,10 +3768,10 @@ function enqueue_custom_frontend_js()
     // Enqueue your custom script, the 'get_stylesheet_directory_uri()' function points to your child theme's root directory.
     wp_enqueue_script('custom-frontend-js', get_stylesheet_directory_uri() . '/custom-function-frontend.js', array('jquery'), $script_version, true);
     if ( is_page( 'scan-code' ) ) {
-        wp_enqueue_script('custom-qr-scanner', 'https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js', array('jquery'), $script_version, true);
-        wp_enqueue_script('custom-qr-main-js', get_stylesheet_directory_uri() . '/QrScan.js', array('jquery', 'custom-qr-scanner'), $script_version, true);
+        wp_enqueue_script('custom-qr-scanner-10', 'https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js', array('jquery'), $script_version, true);
+        wp_enqueue_script('custom-qr-main-js-10', get_stylesheet_directory_uri() . '/QrScan.js', array('jquery', 'custom-qr-scanner-10'), $script_version, true);
         wp_localize_script(
-            'custom-qr-main-js',
+            'custom-qr-main-js-10',
             'tribe_ajax',
             array(
                 'ajax_url' => admin_url('admin-ajax.php'),
@@ -4536,6 +4536,11 @@ function custom_qr_scanner_shortcode() {
         <div id="result"></div>
         <span id="event_not_found" style='display:none'>No event found that for the event pass.</span>
         <button id="scan-button" >Scan QR Code</button>
+        <div class="checkin-details"  style='display:none'>
+            <div class="name"></div>
+            <div class="email"></div>
+            <div class="checkin-time"></div>
+        </div>
     </div>
     <?php
     return ob_get_clean();
@@ -4598,17 +4603,29 @@ function checkinTicket(){
                 'date' => $formatted_datetime,
                 'source' => 'qr-code',
             ];
-            update_post_meta( $ticket_id, '_tribe_wooticket_checkedin_details', 1 );
-
+            update_post_meta( $ticket_id, '_tribe_wooticket_checkedin_details', $checkin_details );
+            $fullname = get_post_meta( $ticket_id, '_tribe_tickets_full_name', true);
+            $email = get_post_meta( $ticket_id, '_tribe_tickets_email', true);
             $response = [
-                'success' => true,
-                'message' => 'Successfully checked in.',
+                'success'      => true,
+                'message'      => 'Successfully checked in.',
+                'fullname'     => $fullname,
+                'email'        => $email,
+                'checkin_time' => $formatted_datetime,
             ];
             wp_send_json($response);
+
         } else{
+            $checkin_details = get_post_meta( $ticket_id, '_tribe_wooticket_checkedin_details', true);
+            $fullname = get_post_meta( $ticket_id, '_tribe_tickets_full_name', true);
+            $email = get_post_meta( $ticket_id, '_tribe_tickets_email', true);
+            $checkin_details = maybe_unserialize( $checkin_details );
             $response = [
-                'success'   => false,
-                'message' => 'Already Checked In.',
+                'success'         => false,
+                'fullname'        => $fullname,
+                'email'           => $email,
+                'message'         => 'Already Checked In.',
+                'checkin_time'    => $checkin_details['date'],
             ];
             wp_send_json($response);
         }

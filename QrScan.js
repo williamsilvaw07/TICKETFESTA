@@ -19,6 +19,8 @@
         jQuery("#scan-button").on('click', function(){
             if($('#event-pass').val()){
                 var eventPass = $('#event-pass').val();
+                $('.entry-content').css("background-color", "#000");
+                $('.checkin-details').hide();
                 // test data YaCS1r2t
                 // test data2 c7KOLbP0
                 console.log('Event Pass:' , eventPass)
@@ -57,7 +59,7 @@
                 const code = jsQR(imageData.data, imageData.width, imageData.height);
                 if (code) {
                     processQRCode(eventID, code.data);
-                    resultContainer.textContent = 'QR Code detected: ' + code.data;
+                    // resultContainer.textContent = 'QR Code detected: ' + code.data;
                     clearInterval(scanInterval);
                 }else{
                     console.log('QR Code not found :', code)
@@ -98,9 +100,26 @@
                     ticket_id : ticketId
                 },
                 success: function(response) {
+                    if(response.success){
+                        $('.entry-content').css("background-color", "green");
+                        if(response.fullname){
+                            $('.checkin-details .name').text(response.fullname);
+                            $('.checkin-details .email').text(response.email);
+                            $('.checkin-details .checkin-time').text(response.checkin_time);
+                            $('.checkin-details').show();
+                        }
+                    }else{
+                        $('.entry-content').css("background-color", "red");
+                        $('#event_not_found').text(response.message);
+                        $('#event_not_found').show();
+                        if(response.fullname){
+                            $('.checkin-details .name').text(response.fullname);
+                            $('.checkin-details .email').text(response.email);
+                            $('.checkin-details .checkin-time').text(response.checkin_time);
+                            $('.checkin-details').show();
+                        }
+                    }
                     // Handle the response from the server
-                    console.log('ajax response', response);
-                   
                 },
                 error: function(xhr, status, error) {
                     // Handle errors
