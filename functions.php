@@ -4593,10 +4593,10 @@ function validate_event_pass() {
 
 add_action( 'wp',  function(){
 
-    // echo '<pre>';
-    // var_dump(get_post_meta( '4450' ));
-    // echo '</pre>';
-    // die();
+    echo '<pre>';
+    var_dump(get_post_meta( '4450' ));
+    echo '</pre>';
+    die();
 });
 function get_posts_by_event_pass($event_pass) {
     $args = array(
