@@ -4714,22 +4714,20 @@ function generate_unique_random_hash($length) {
 
 
 
-
-
-function my_enqueue_sqrcode_script() {
-    // Enqueue the html5-qrcode script
-    wp_enqueue_script('html5-qrcode', 'https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js', array(), '2.3.8', true);
+function my_enqueue_instascan_script() {
+    // Enqueue the Instascan script - replace the URL with the latest version or a version you host
+    wp_enqueue_script('instascan', 'https://cdnjs.cloudflare.com/ajax/libs/instascan/0.0.0/instascan.min.js', array(), '0.0.0', true);
     
-    // Assume your custom JS is still necessary for initializing the scanner
-    wp_enqueue_script('my-custom-qrcode-script', get_template_directory_uri() . '/js/my-customs-qrcode.js', array('html5-qrcode'), null, true);
+    // Enqueue your custom JS file for initializing the scanner
+    wp_enqueue_script('my-custom-instascan-script', get_template_directory_uri() . '/js/my-custom-instascan.js', array('instascan'), null, true);
 }
-add_action('wp_enqueue_scripts', 'my_enqueue_sqrcode_script');
+add_action('wp_enqueue_scripts', 'my_enqueue_instascan_script');
 
-function display_qr_scanner_shortcode() {
-    // Make sure the scripts are enqueued when the shortcode is used
-    my_enqueue_qrcode_script();
 
-    // Return the HTML placeholder for the QR scanner
-    return '<div id="qr-reader" style="width:500px; height:500px;"></div>';
+function display_instascan_scanner_shortcode() {
+    my_enqueue_instascan_script(); // Make sure to enqueue scripts when shortcode is used
+    
+    // Return the HTML needed for the scanner
+    return '<video id="qr-scanner" style="width: 100%;"></video>';
 }
-add_shortcode('display_qr_scanner', 'display_qr_scanner_shortcode');
+add_shortcode('display_instascan_scanner', 'display_instascan_scanner_shortcode');
