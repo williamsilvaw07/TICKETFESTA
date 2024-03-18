@@ -4711,20 +4711,40 @@ function generate_unique_random_hash($length) {
 
 
 
-function my_enqueue_instascan_script() {
-    // Enqueue the Instascan library
-    wp_enqueue_script('instascan', 'https://cdnjs.cloudflare.com/ajax/libs/instascan/0.0.0/instascan.min.js', array(), '0.0.0', true);
-
-    // Enqueue your custom JS file, ensuring it loads after Instascan
-    wp_enqueue_script('my-custom-instascan-script', get_stylesheet_directory_uri() . '/js/my-custom-instascan.js', array('instascan'), null, true);
+function my_enqueue_qrcode_script() {
+    // Enqueue html5-qrcode script with jQuery dependency
+    wp_enqueue_script('html5-qrcode', 'https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js', array('jquery'), null, true);
 }
-add_action('wp_enqueue_scripts', 'my_enqueue_instascan_script');
+add_action('wp_enqueue_scripts', 'my_enqueue_qrcode_script');
 
-function display_instascan_scanner_shortcode() {
-    // This ensures the scripts are enqueued when the shortcode is used
-    my_enqueue_instascan_script();
+function display_html5_qrcode_scanner_shortcode() {
+    my_enqueue_qrcode_script(); // Make sure to enqueue scripts when shortcode is used
     
-    // Return the HTML for the scanner
-    return '<video id="qr-scanner" style="width: 100%;"></video>';
+    // Inline JavaScript to initialize the QR code scanner
+    $inline_script = <<<EOD
+<script>
+jQuery(document).ready(function($) {
+    function onScanSuccess(decodedText, decodedResult) {
+        // Handle the scanned text as needed.
+        console.log(`Code scanned = ${decodedText}`, decodedResult);
+    }
+    
+    var config = { fps: 10, qrbox: 250 };
+    var html5QrCode = new Html5Qrcode("qr-reader");
+    Html5Qrcode.getCameras().then(cameras => {
+        if (cameras.length > 0) {
+            html5QrCode.start({ facingMode: "environment" }, config, onScanSuccess);
+        } else {
+            console.error("No cameras found.");
+        }
+    }).catch(err => {
+        console.error("Unable to start QR scanner", err);
+    });
+});
+</script>
+EOD;
+
+    // Return the HTML for the scanner along with the inline JavaScript
+    return '<div id="qr-reader" style="width:500px; height:500px;"></div>' . $inline_script;
 }
-add_shortcode('display_instascan_scanner', 'display_instascan_scanner_shortcode');
+add_shortcode('display_html5_qrcode_scanner', 'display_html5_qrcode_scanner_shortcode');
