@@ -2224,7 +2224,7 @@ body .section_page_scroll_div span{
     color: #000!important;
 }
 
-.entry-content{
+.entry-content , .site-main{
     margin-top: 0!important;
 }
 
