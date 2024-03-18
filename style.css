@@ -2216,7 +2216,9 @@ form.edit-vanue-form {
 html body .heading_green {
     color: #d3fa16!important;
 }
-
+html body .div_freatue_section .heading_green {
+    color: #d3fa16!important;
+}
 .entry-title{
     display: none!important;
 }
