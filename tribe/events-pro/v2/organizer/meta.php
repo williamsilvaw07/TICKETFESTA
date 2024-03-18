@@ -1825,7 +1825,9 @@ text-align: left;
     border: none;
     cursor: pointer;
 }
-
+.tribe-common a {
+    text-decoration: none;
+}
 .lightbox-download {
     position: absolute;
     bottom: 137px;
