@@ -1039,7 +1039,7 @@ width:90%!important;
     overflow: hidden; /* Prevent the pseudo-element from going outside the container */
 }
 .tribe-events-view {
-    background-color: #1A1A1A!important
+    background-color: #121212 !important;
 }
 .home .tribe-events-header {
     margin-top: -64px!important
