@@ -4578,34 +4578,42 @@ add_action('wp_ajax_nopriv_custom_check_in_ticket', 'checkinTicket');
 function checkinTicket(){
     $ticket_id = isset(  $_POST['ticket_id'] ) ? esc_attr( $_POST['ticket_id']) : false;
     if ($ticket_id){
-        $ticket_var = new Tribe__Tickets_Plus__Commerce__EDD__Main();
-        $ticket_var->checkin($ticket_id, true);
-        update_post_meta( $ticket_id, '_tec_tickets_commerce_checked_in', 1 );
-        update_post_meta( $ticket_id, '_tribe_wooticket_checkedin', 1 );
-        update_post_meta( $ticket_id, '_tribe_rsvp_checkedin', 1 );
-        update_post_meta( $ticket_id, '_tribe_qr_status', 1 );
-        update_post_meta( $ticket_id, '_tribe_eddticket_checkedin', 1 );
-        update_post_meta( $ticket_id, '_tribe_tpp_checkedin', 1 );
-        $response = [
-            'success'   => true,
-        ];
-        wp_send_json($response);
+        $is_checked = get_post_meta( $ticket_id, '_tribe_wooticket_checkedin', true);
+        
+        if($is_checked != '1'){
+            $ticket_var = new Tribe__Tickets_Plus__Commerce__EDD__Main();
+            $ticket_var->checkin($ticket_id, true);
+            update_post_meta( $ticket_id, '_tec_tickets_commerce_checked_in', 1 );
+            update_post_meta( $ticket_id, '_tribe_wooticket_checkedin', 1 );
+            update_post_meta( $ticket_id, '_tribe_rsvp_checkedin', 1 );
+            update_post_meta( $ticket_id, '_tribe_qr_status', 1 );
+            update_post_meta( $ticket_id, '_tribe_eddticket_checkedin', 1 );
+            update_post_meta( $ticket_id, '_tribe_tpp_checkedin', 1 );
+
+            $response = [
+                'success' => true,
+                'message' => 'Successfully checked in.',
+            ];
+            wp_send_json($response);
+        } else{
+            $response = [
+                'success'   => false,
+                'message' => 'Already Checked In.',
+            ];
+            wp_send_json($response);
+        }
+
+
     } else {
         $response = [
             'success'   => false,
+            'message' => 'No ticket id found.',
         ];
         wp_send_json($response);
     }
 
 
 }
-add_action( 'wp',  function(){
-
-    // echo '<pre>';
-    // var_dump(get_post_meta( '4450' ));
-    // echo '</pre>';
-    // die();
-});
 function get_posts_by_event_pass($event_pass) {
     $args = array(
         'post_type' => 'tribe_events',
