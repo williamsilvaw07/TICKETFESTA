@@ -4690,3 +4690,46 @@ function generate_unique_hash($length) {
 
     return $unique_hash;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function my_enqueue_qrcode_script() {
+    // Enqueue the html5-qrcode script
+    wp_enqueue_script('html5-qrcode', 'https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js', array(), '2.3.8', true);
+
+    // Enqueue your custom JS file (adjust the path as necessary)
+    wp_enqueue_script('my-custom-qrcode-script', get_template_directory_uri() . '/js/my-customs-qrcode.js', array('html5-qrcode'), null, true);
+}
+add_action('wp_enqueue_scripts', 'my_enqueue_qrcode_script');
+
+
+
+
+function display_qr_scanner_shortcode() {
+    // Make sure the scripts are enqueued when the shortcode is used
+    my_enqueue_qrcode_script();
+
+    // Return the HTML placeholder for the QR scanner
+    return '<div id="qr-reader" style="width:500px; height:500px;"></div>';
+}
+add_shortcode('display_qr_scanner', 'display_qr_scanner_shortcode');
