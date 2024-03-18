@@ -362,6 +362,7 @@ color:black!important
         display: flex;
         align-items: center;
         position: relative; 
+        flex-direction: row-reverse;
         z-index: 99;
         align-items: center;
         padding: 15px 3%;
