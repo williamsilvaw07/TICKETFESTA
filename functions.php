@@ -3768,6 +3768,8 @@ function enqueue_custom_frontend_js()
     // Enqueue your custom script, the 'get_stylesheet_directory_uri()' function points to your child theme's root directory.
     wp_enqueue_script('custom-frontend-js', get_stylesheet_directory_uri() . '/custom-function-frontend.js', array('jquery'), $script_version, true);
     if ( is_page( 'scan-code' ) ) {
+
+    wp_enqueue_script('html5-qrcode', 'https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js', array('jquery'), null, true);
         wp_enqueue_script('custom-qr-scanner-10', 'https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js', array('jquery'), $script_version, true);
         wp_enqueue_script('custom-qr-main-js-10', get_stylesheet_directory_uri() . '/QrScan.js', array('jquery', 'custom-qr-scanner-10'), $script_version, true);
         wp_localize_script(
@@ -3778,6 +3780,8 @@ function enqueue_custom_frontend_js()
             )
         );
     }
+
+    
 }
 
 // Hook your custom function into 'wp_enqueue_scripts' action.
