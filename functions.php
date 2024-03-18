@@ -9,6 +9,7 @@ function my_custom_theme_menu_locations() {
         array(
             'main_right_menu_location' => __( 'Main Right Menu Location', 'theme-text-domain' ),
             'main_left_menu_location' => __( 'Main Left Menu Location', 'theme-text-domain' ),
+            'mobile_search_menu_location' => __( 'Mobile Search Menu Location', 'theme-text-domain' ),
             // Additional menus can be registered here
         )
     );
@@ -37,6 +38,7 @@ if ( ! function_exists( 'generatepress_child_custom_header_layout' ) ) {
         if ( has_nav_menu( 'main_right_menu_location' ) ) {
             wp_nav_menu( array( 
                 'theme_location' => 'main_right_menu_location', 
+                'theme_location' => 'mobile_search_menu_location',
                 'container_class' => 'custom-nav-after-logo' 
             ) );
         }
