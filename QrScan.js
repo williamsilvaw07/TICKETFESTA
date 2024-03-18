@@ -59,7 +59,7 @@
                 const code = jsQR(imageData.data, imageData.width, imageData.height);
                 if (code) {
                     processQRCode(eventID, code.data);
-                    resultContainer.textContent = 'QR Code detected: ' + code.data;
+                    // resultContainer.textContent = 'QR Code detected: ' + code.data;
                     clearInterval(scanInterval);
                 }else{
                     console.log('QR Code not found :', code)
