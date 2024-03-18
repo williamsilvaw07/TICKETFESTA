@@ -405,11 +405,12 @@ jQuery(document).ready(function($) {
     text-decoration-color: white!important;
 }
 /*******END */
-.tribe-events-pro-photo__event-featured-image-link img{
+html .tribe-events-pro-photo__event-featured-image-link img{
     height: 200px;
     max-height: 220px;
     margin: auto;
     object-fit: contain;
+    border-radius:0!important
 }
 
 .event-featured-image-placeholder img{
