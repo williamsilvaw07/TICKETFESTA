@@ -57,19 +57,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
     var searchIcon = document.querySelector('.header_search_icon');
-    //console.log('Search icon element:', searchIcon); // Check if the search icon is correctly identified
+    console.log('Search icon element:', searchIcon); // Check if the search icon is correctly identified
 
     if (!searchIcon) {
-       // console.error('Search icon not found.');
+       console.error('Search icon not found.');
         return;
     }
 
     function openSearchPopup() {
-        //console.log('Attempting to open search popup...');
+      console.log('Attempting to open search popup...');
         var searchPopup = document.getElementById('searchPopup');
 
         if (!searchPopup) {
-          //  console.error('Search popup element not found.');
+           console.error('Search popup element not found.');
             return;
         }
 

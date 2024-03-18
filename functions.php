@@ -34,17 +34,24 @@ if ( ! function_exists( 'generatepress_child_custom_header_layout' ) ) {
             the_custom_logo();
         }
 
-        // Display the right navigation menu
+        // Display the right navigation menu and immediately after, the custom HTML section
         if ( has_nav_menu( 'main_right_menu_location' ) ) {
             wp_nav_menu( array( 
                 'theme_location' => 'main_right_menu_location', 
                 'container_class' => 'custom-nav-after-logo' 
             ) );
+
+            // Insert custom HTML section here
+            echo '<div class="custom-html-right-section">';
+            // Your custom HTML content goes here
+            echo '<p>Your custom HTML content</p>';
+            echo '</div>'; // Close the custom HTML section
         }
 
         echo '</div>'; // Close the main wrapper div
     }
 }
+
 
 // Remove the default navigation placement
 add_action( 'after_setup_theme', 'generatepress_child_remove_default_navigation' );
