@@ -19,7 +19,7 @@ add_action( 'init', 'my_custom_theme_menu_locations' );
 // header layout
 if ( ! function_exists( 'generatepress_child_custom_header_layout' ) ) {
     function generatepress_child_custom_header_layout() {
-        echo '<div class="custom-header-wrap" style="display: flex; justify-content: space-between; align-items: center;">'; // Open the main wrapper div with inline CSS for flexbox layout
+        echo '<div class="custom-header-wrap">'; // Open the main wrapper div with inline CSS for flexbox layout
 
         // Display the left navigation menu
         if ( has_nav_menu( 'main_left_menu_location' ) ) {
