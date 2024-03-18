@@ -274,6 +274,18 @@ stroke-dashoffset: 0;
     position: relative;
     display: flex;
     align-items: center;
+    position: relative; 
+    z-index: 99;
+    align-items: center;
+    padding: 15px 3%;
+    background: #19191b !important;
+
+}
+
+.home .custom-header-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
     position: relative;
     z-index: 99;
     align-items: center;
