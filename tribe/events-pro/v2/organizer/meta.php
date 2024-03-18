@@ -1432,12 +1432,12 @@ margin-bottom: 0!important;
     color: rgb(255, 255, 255)!important;
     text-decoration: none;
     font-size:16px;
-    text-decoration-color: white!important;
+    text-decoration-color:  rgba(255, 255, 255, 0)!important;
 
 }
 .event-card .event-title a{ 
 
-    text-decoration-color: white!important;
+    text-decoration-color: rgba(255, 255, 255, 0)!important;
 
 }
 .event-card .event-details{
@@ -1445,7 +1445,8 @@ margin-bottom: 0!important;
     padding: 9px 20px 24px;
     padding: 9px 13px;
     height: fit-content;
-    background: #ffffff00;
+    background: rgba(255, 255, 255, 0);
+
     color: white!important;
 
 
