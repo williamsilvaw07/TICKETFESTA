@@ -388,7 +388,7 @@ color:black!important
     #mega-menu-main_left_menu_location{
         display: block!important;
     }
-    #mega-toggle-block-0{
+    #mega-menu-wrap-main_left_menu_location .mega-menu-toggle{
         display: none;
     }
 }
