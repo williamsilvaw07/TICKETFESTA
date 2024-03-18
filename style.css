@@ -388,6 +388,9 @@ color:black!important
     #mega-menu-main_left_menu_location{
         display: block!important;
     }
+    #mega-toggle-block-0{
+        display: none;
+    }
 }
 
 
