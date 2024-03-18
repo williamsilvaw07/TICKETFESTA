@@ -4715,11 +4715,11 @@ function generate_unique_random_hash($length) {
 
 
 function my_enqueue_instascan_script() {
-    // Enqueue the Instascan script - replace the URL with the latest version or a version you host
+    // Assuming you're using a library like Instascan (or any alternative you choose)
     wp_enqueue_script('instascan', 'https://cdnjs.cloudflare.com/ajax/libs/instascan/0.0.0/instascan.min.js', array(), '0.0.0', true);
-    
-    // Enqueue your custom JS file for initializing the scanner
-    wp_enqueue_script('my-custom-instascan-script', get_template_directory_uri() . '/js/my-custom-instascan.js', array('instascan'), null, true);
+
+    // Correctly point to your custom JS file in the child theme's directory
+    wp_enqueue_script('my-custom-instascan-script', get_stylesheet_directory_uri() . '/js/my-custom-instascan.js', array('instascan'), null, true);
 }
 add_action('wp_enqueue_scripts', 'my_enqueue_instascan_script');
 
