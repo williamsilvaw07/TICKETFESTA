@@ -282,20 +282,7 @@ stroke-dashoffset: 0;
 
 }
 
-.home .custom-header-wrap {
-    position: relative;
-    display: flex;
-    align-items: center;
-    position: relative;
-    z-index: 99;
-    align-items: center;
-    padding: 15px 3%;
-    background: #19191b !important;
 
-    border-radius: 5px;
-    margin-top: 18px !important;
-    margin: 0 auto;
-}
 html body .mega-menu-wrap:first-child{
     display: flex!important;
     align-items: center!important;
