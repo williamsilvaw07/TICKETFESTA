@@ -4618,13 +4618,12 @@ function checkinTicket(){
             $fullname = get_post_meta( $ticket_id, '_tribe_tickets_full_name', true);
             $email = get_post_meta( $ticket_id, '_tribe_tickets_email', true);
             $checkin_details = maybe_unserialize( $checkin_details );
-            var_dump($checkin_details);      
             $response = [
                 'success'         => false,
                 'fullname'        => $fullname,
                 'email'           => $email,
                 'message'         => 'Already Checked In.',
-                'checkin_details' => $checkin_details,
+                'checkin_time'    => $checkin_details['date'],
             ];
             wp_send_json($response);
         }
