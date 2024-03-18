@@ -19,7 +19,7 @@ add_action( 'init', 'my_custom_theme_menu_locations' );
 // header layout
 if ( ! function_exists( 'generatepress_child_custom_header_layout' ) ) {
     function generatepress_child_custom_header_layout() {
-        echo '<div class="custom-header-wrap">'; // Open the main wrapper div with inline CSS for flexbox layout
+        echo '<div class="custom-header-wrap" style="display: flex; justify-content: space-between; align-items: center;">'; // Open the main wrapper div with inline CSS for flexbox layout
 
         // Display the left navigation menu
         if ( has_nav_menu( 'main_left_menu_location' ) ) {
@@ -34,17 +34,24 @@ if ( ! function_exists( 'generatepress_child_custom_header_layout' ) ) {
             the_custom_logo();
         }
 
-        // Display the right navigation menu
+        // Display the right navigation menu and immediately after, the custom HTML section
         if ( has_nav_menu( 'main_right_menu_location' ) ) {
             wp_nav_menu( array( 
                 'theme_location' => 'main_right_menu_location', 
                 'container_class' => 'custom-nav-after-logo' 
             ) );
+
+            // Insert custom HTML section here
+            echo '<div class="custom-html-right-section">';
+            // Your custom HTML content goes here
+            echo '<p>Your custom HTML content</p>';
+            echo '</div>'; // Close the custom HTML section
         }
 
         echo '</div>'; // Close the main wrapper div
     }
 }
+
 
 // Remove the default navigation placement
 add_action( 'after_setup_theme', 'generatepress_child_remove_default_navigation' );
