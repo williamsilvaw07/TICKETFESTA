@@ -2231,7 +2231,7 @@ body .section_page_scroll_div span{
 .on_this_section_text p{
 color: black!important;
 }
-.div_freatue_section h3 span , .div_freatue_section p , .div_freatue_section svg{
+.div_freatue_section h3 span , body .div_freatue_section p , body .div_freatue_section svg , body .div_freatue_section h3 {
     color: #313638!important;
     fill: #313638!important
 }
