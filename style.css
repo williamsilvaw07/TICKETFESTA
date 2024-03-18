@@ -354,7 +354,11 @@ color:black!important
 
 }
 
+#mega-menu-wrap-main_right_menu_location .mega-menu-toggle .mega-toggle-block-1 .mega-toggle-animated-inner, #mega-menu-wrap-main_right_menu_location .mega-menu-toggle .mega-toggle-block-1 .mega-toggle-animated-inner::before, #mega-menu-wrap-main_right_menu_location .mega-menu-toggle .mega-toggle-block-1 .mega-toggle-animated-inner::after {
+    width: 31px;
+    height: 3px;
 
+}
 
 
 @media (max-width: 1090px) {
