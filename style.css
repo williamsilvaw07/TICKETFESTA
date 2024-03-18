@@ -1097,7 +1097,7 @@ border-radius: 5px;
 .tribe-events-pro-photo__event{
     border: 2px solid black;
     border-radius: 7px!important;
-    background: white!important;
+    background: rgba(255, 255, 255, 0)!important;
     color: black!important;
     padding: 0!important;
     position: relative!important;
@@ -1125,7 +1125,7 @@ border-radius: 5px;
 
 .tribe-events-pro .tribe-events-pro-photo__event-details-wrapper {
     display: flex;
-    color: black;
+    color: rgb(255, 255, 255);
     padding: 12px 17px;
 }
 
@@ -1195,7 +1195,7 @@ html .event-venue-city-organizer{
     text-transform: capitalize!important;
     font-weight: 500!important;
     margin-top:0!important;
-    color: #777777!important;
+    color: #c8c8c8!important;
 }
 
 .tribe-events-pro-photo__event-title {
