@@ -4663,7 +4663,7 @@ function get_posts_by_event_pass($event_pass) {
 add_action('save_post', 'generate_event_pass_on_update', 10, 3);
 function generate_event_pass_on_update($post_id, $post, $update) {
     // Check if it's a 'tribe_events' post type and the post is being updated
-    if ($post->post_type == 'tribe_events' && $update) {
+    if ($post->post_type == 'tribe_events') {
         // Check if the post doesn't have the 'event_pass' metadata
         $event_pass = get_post_meta($post_id, 'event_pass', true);
         if (empty($event_pass)) {
@@ -4675,7 +4675,7 @@ function generate_event_pass_on_update($post_id, $post, $update) {
     }
 }
 
-function generate_unique_hash($length) {
+function generate_unique_random_hash($length) {
     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     $characters_length = strlen($characters);
     $unique_hash = '';
