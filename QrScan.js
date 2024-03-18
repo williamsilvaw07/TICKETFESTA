@@ -35,9 +35,8 @@
             const security_code = params.get('security_code');
             const path = params.get('path');
 
-            if(eventID == event_qr_code){
+            if(eventID == qr_event_id){
                 checkinTicket(ticket_id);
-            
             }else{
                 $('#event_not_found').html('QR Code did not Match with Event Pass.');
                 $('#event-pass').addClass('error');
@@ -57,7 +56,7 @@
                 const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
                 const code = jsQR(imageData.data, imageData.width, imageData.height);
                 if (code) {
-                    processQRCode();
+                    processQRCode(eventID, code.data);
                     resultContainer.textContent = 'QR Code detected: ' + code.data;
                     clearInterval(scanInterval);
                 }else{
