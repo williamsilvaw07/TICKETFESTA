@@ -4535,9 +4535,9 @@ function custom_qr_scanner_shortcode() {
         <span id="event_not_found" style='display:none'>No event found that for the event pass.</span>
         <button id="scan-button" >Scan QR Code</button>
         <div class="checkin-details"  style='display:none'>
-            <p class="name"></p>
-            <p class="email"></p>
-            <p class="checkin-time"></p>
+            <div class="name"></div>
+            <div class="email"></div>
+            <div class="checkin-time"></div>
         </div>
     </div>
     <?php

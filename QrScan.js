@@ -110,8 +110,8 @@
                         }
                     }else{
                         $('.entry-content').css("background-color", "red");
-                        $('#scan-button').text(response.message);
-                        $('#scan-button').show();
+                        $('#event_not_found').text(response.message);
+                        $('#event_not_found').show();
                         if(response.fullname){
                             $('.checkin-details .name').text(response.fullname);
                             $('.checkin-details .email').text(response.email);
