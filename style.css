@@ -2224,6 +2224,9 @@ body .section_page_scroll_div span{
     color: #000!important;
 }
 
+.entry-content{
+    margin-top: 0!important;
+}
 
 
 /***********END********/
