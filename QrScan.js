@@ -110,18 +110,16 @@
                         }
                     }else{
                         $('.entry-content').css("background-color", "red");
+                        $('#scan-button').text(response.message);
+                        $('#scan-button').show();
                         if(response.fullname){
                             $('.checkin-details .name').text(response.fullname);
                             $('.checkin-details .email').text(response.email);
                             $('.checkin-details .checkin-time').text(response.checkin_time);
                             $('.checkin-details').show();
-                        }else{
-                            $('#scan-button').text(response.message);
-                            $('#scan-button').show();
                         }
                     }
                     // Handle the response from the server
-                    console.log('ajax response', response);
                 },
                 error: function(xhr, status, error) {
                     // Handle errors
