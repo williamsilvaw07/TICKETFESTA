@@ -114,7 +114,7 @@ document.addEventListener('DOMContentLoaded', function() {
     var dynamicDiv = document.querySelector('.dynamic_div');
 
     if (!dynamicDiv) {
-        console.error('Dynamic div container not found.');
+        //console.error('Dynamic div container not found.');
         return;
     }
 
@@ -183,7 +183,7 @@ jQuery(document).ready(function($) {
                 jQuery('#organizer-row-' + vanueID).remove(); // Remove the row from the table
             },
             fail: function(response){
-                console.log('AJAX error:', response);
+                //console.log('AJAX error:', response);
                 alert('Failed to delete: ' );
             }
         });
