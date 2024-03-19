@@ -4832,9 +4832,9 @@ add_action('wp_enqueue_scripts', 'my_enqueue_qrcode_script');
 function display_html5_qrcode_scanner_shortcode() {
     my_enqueue_qrcode_script(); // Ensures the QR code script is enqueued
 
-    // Scanner HTML setup with an overlay for the camera guide
-    $scanner_html = '<div id="qr-reader" style="width:300px; height:300px; position: relative; margin-bottom:200px;">
-                         <div id="qr-overlay" style="position: absolute; top: 25%; left: 25%; width: 50%; height: 50%; border: 5px solid yellow; box-sizing: border-box;"></div>
+    // Scanner HTML setup with an overlay for the camera guide and specified max dimensions for the container
+    $scanner_html = '<div id="qr-reader" style="max-width:400px; max-height:400px; width:100%; height:auto; position: relative; margin:auto; display: flex; justify-content: center; align-items: center;">
+                         <div id="qr-overlay" style="position: absolute; width: 150px; height: 150px; border: 5px solid yellow; box-sizing: border-box;"></div>
                      </div>';
 
     // Inline JavaScript for initializing the QR code scanner with a square viewfinder
@@ -4846,7 +4846,7 @@ function display_html5_qrcode_scanner_shortcode() {
                 fps: 10,
                 qrbox: 150, // Set qrbox size to keep the scanning area square
                 rememberLastUsedCamera: true,
-                aspectRatio: 1.7777778,
+                aspectRatio: 1,
                 showTorchButtonIfSupported: true // This enables the torch toggle button if supported
             }, false);
         
