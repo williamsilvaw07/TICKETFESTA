@@ -4849,14 +4849,13 @@ function display_html5_qrcode_scanner_shortcode() {
         function onScanSuccess(decodedText, decodedResult) {
             console.log('Code scanned = ' + decodedText, decodedResult);
         }
-
+    
         var config = {
             fps: 10,
             qrbox: 250,
-            rememberLastUsedCamera: true,
-            supportedScanTypes: [Html5QrcodeScanTypes.SCAN_TYPE_CAMERA]
+            rememberLastUsedCamera: true
         };
-
+    
         var html5QrcodeScanner = new Html5QrcodeScanner('qr-reader', config, false);
         html5QrcodeScanner.render(onScanSuccess, function(err) {
             console.error('QR code scanner initialization failed', err);
@@ -4871,12 +4870,15 @@ function display_html5_qrcode_scanner_shortcode() {
                             console.error('Error toggling flash:', err);
                         });
                     });
+                } else {
+                    $('#toggle-flash-btn').hide();
                 }
             }).catch(function(err) {
                 console.error('Error checking flash support:', err);
             });
         });
     });";
+    
     
     // Properly add inline script related to 'html5-qrcode'
     wp_add_inline_script('html5-qrcode', $inline_script);
