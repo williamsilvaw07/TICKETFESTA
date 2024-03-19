@@ -4834,7 +4834,12 @@ jQuery(document).ready(function($) {
         console.log(`Code scanned = ${decodedText}`, decodedResult);
     }
     
-    var config = { fps: 10, qrbox: 250 };
+    var config = {
+        fps: 10,
+        qrbox: 250,
+        torch: true, // This enables the flash toggle option
+        supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA] // Limits to camera scan only, hiding the select image function
+    };
     var html5QrCode = new Html5Qrcode("qr-reader");
     Html5Qrcode.getCameras().then(cameras => {
         if (cameras.length > 0) {
