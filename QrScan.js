@@ -3,17 +3,17 @@
     document.addEventListener("DOMContentLoaded", function(event) {
         const video = document.getElementById('video');
 
-        // // Check if getUserMedia is supported
-        // if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-        //     navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
-        //     .then(function(stream) {
-        //         video.srcObject = stream;
-        //         video.play();
-        //     })
-        //     .catch(function(error) {
-        //         console.error('Error accessing the camera:', error);
-        //     });
-        // }
+        // Check if getUserMedia is supported
+        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+            navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
+            .then(function(stream) {
+                video.srcObject = stream;
+                video.play();
+            })
+            .catch(function(error) {
+                console.error('Error accessing the camera:', error);
+            });
+        }
         $('.tabs-nav li.tab a').click(function(e) {
             e.preventDefault(); // Prevent default link behavior
     
@@ -58,47 +58,25 @@
             }
         
         }
-        // function startScanQR(eventID){
-        //     const canvas = document.createElement('canvas');
-        //     const context = canvas.getContext('2d');
-        //     $('#event-pass').removeClass('error');
-        //     $('#event_not_found').hide();
-        //     canvas.width = video.videoWidth;
-        //     canvas.height = video.videoHeight;
-        //     const scanInterval = setInterval(function() {
-        //         context.drawImage(video, 0, 0, canvas.width, canvas.height);
-        //         const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
-        //         const code = jsQR(imageData.data, imageData.width, imageData.height);
-        //         if (code) {
-        //             processQRCode(eventID, code.data);
-        //             // resultContainer.textContent = 'QR Code detected: ' + code.data;
-        //             clearInterval(scanInterval);
-        //         }else{
-        //             console.log('QR Code not found :', code)
-        //         }
-        //     }, 200);
-        // }
-
-        function startScanQR(eventID) {
-            // Remove error classes and hide not found message
+        function startScanQR(eventID){
+            const canvas = document.createElement('canvas');
+            const context = canvas.getContext('2d');
             $('#event-pass').removeClass('error');
             $('#event_not_found').hide();
-          
-            const html5QrcodeScanner = new Html5QrcodeScanner("reader",  { fps: 10, qrbox: 250} );
-            // console.log('html5QrcodeScanner: ', Html5QrcodeScanner);
-
-            // Success callback - called when a QR code is scanned
-            const onScanSuccess = (qrCodeText) => {
-                console.log('success: ', qrCodeText);
-              processQRCode(eventID, qrCodeText);
-              html5QrcodeScanner.stop(); // Stop scanner after successful scan
-              html5QrcodeScanner.clear();
-            };
-          
-            // Render the scanner UI and start scanning
-            html5QrcodeScanner.render(onScanSuccess, (err) => {
-            //   console.error("Error:", err);
-            });
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            const scanInterval = setInterval(function() {
+                context.drawImage(video, 0, 0, canvas.width, canvas.height);
+                const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+                const code = jsQR(imageData.data, imageData.width, imageData.height);
+                if (code) {
+                    processQRCode(eventID, code.data);
+                    // resultContainer.textContent = 'QR Code detected: ' + code.data;
+                    clearInterval(scanInterval);
+                }else{
+                    console.log('QR Code not found :', code)
+                }
+            }, 200);
         }
 
         function checkForEventPass(eventPass){
