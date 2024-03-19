@@ -4811,32 +4811,54 @@ function generate_unique_random_hash($length) {
 
 
 
-function display_html5_qrcode_scanner_shortcode() {
+
+
+
+
+
+function my_enqueue_qrcode_script() {
+    // Enqueue html5-qrcode script with jQuery dependency
     wp_enqueue_script('html5-qrcode', 'https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.7/html5-qrcode.min.js', array('jquery'), null, true);
+}
+add_action('wp_enqueue_scripts', 'my_enqueue_qrcode_script');
+function my_enqueue_qrcode_script() {
+    // Enqueue html5-qrcode script with jQuery dependency
+    wp_enqueue_script('html5-qrcode', 'https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.7/html5-qrcode.min.js', array('jquery'), null, true);
+}
+add_action('wp_enqueue_scripts', 'my_enqueue_qrcode_script');
 
-    $scanner_html = '<div id="qr-reader"></div>';
-
-    $inline_script = <<<SCRIPT
+function display_html5_qrcode_scanner_shortcode() {
+    my_enqueue_qrcode_script(); // Make sure to enqueue scripts when shortcode is used
+    
+    // Inline JavaScript to initialize the QR code scanner with camera access request
+    $inline_script = <<<EOD
 <script>
 jQuery(document).ready(function($) {
-    const html5QrCode = new Html5Qrcode("qr-reader");
-    const config = { fps: 10, qrbox: { width: 250, height: 250 } };
-    Html5Qrcode.getCameras().then(function(cameras) {
-        if (cameras.length > 0) {
-            const cameraId = cameras[0].id;
-            html5QrCode.start(
-              cameraId, 
-              config,
-              (decodedText, decodedResult) => {
-                  console.log(\`Decoded text: \${decodedText}\`, decodedResult);
-              }
-            ).catch(err => console.error(err));
-        }
-    }).catch(err => console.error("Error getting cameras:", err));
+    function onScanSuccess(decodedText, decodedResult) {
+        // Handle the scanned text as needed.
+        console.log(`Code scanned = ${decodedText}`, decodedResult);
+    }
+    
+    var config = { fps: 10, qrbox: 250 };
+    var html5QrCode = new Html5Qrcode("qr-reader");
+    navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } }) // Request camera access
+    .then(function(stream) {
+        Html5Qrcode.getCameras().then(cameras => {
+            if (cameras.length > 0) {
+                html5QrCode.start(cameras[0].id, config, onScanSuccess); // Start QR code scanning
+            } else {
+                console.error("No cameras found.");
+            }
+        });
+    })
+    .catch(function(err) {
+        console.error("Unable to access camera", err);
+    });
 });
 </script>
-SCRIPT;
+EOD;
 
-    return $scanner_html . $inline_script;
+    // Return the HTML for the scanner along with the inline JavaScript
+    return '<div id="qr-reader" style="width:300px; height:300px;"></div>' . $inline_script;
 }
 add_shortcode('display_html5_qrcode_scanner', 'display_html5_qrcode_scanner_shortcode');
