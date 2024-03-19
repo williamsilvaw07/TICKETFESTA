@@ -4608,7 +4608,7 @@ function custom_qr_scanner_shortcode() {
             $event_data = get_post_meta( $event_id );
             $start_date = get_post_meta( $event_id, '_EventStartDate', true );
             $issued_ticked = get_post_meta( $event_id, '_tribe_progressive_ticket_current_number', true );
-            $name = the_title( $event_id ) ;
+            $name = get_the_title( $event_id ) ;
             // echo "<pre>";
             // var_dump($event_data);
             // echo "</pre>";
