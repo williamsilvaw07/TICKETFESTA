@@ -4610,16 +4610,19 @@ function custom_qr_scanner_shortcode() {
     -->
 
     <?php 
+
         $event_id   = isset($_GET['event_id']) ? esc_attr( $_GET['event_id'] ) : false;
         if($event_id){
-            $event_data = get_post_meta( $event_id );
-            $start_date = get_post_meta( $event_id, '_EventStartDate', true );
-            $issued_ticked = get_post_meta( $event_id, '_tribe_progressive_ticket_current_number', true );
-            $name = get_the_title( $event_id ) ;
-            $thumbnail_url = get_the_post_thumbnail_url($event_id, 'medium');
-            // echo "<pre>";
-            // var_dump($event_data);
-            // echo "</pre>";
+            $start_date         = get_post_meta( $event_id, '_EventStartDate', true );
+            $issued_ticked      = get_post_meta( $event_id, '_tribe_progressive_ticket_current_number', true );
+            $name               = get_the_title( $event_id ) ;
+            $thumbnail_url      = get_the_post_thumbnail_url($event_id, 'medium');
+            $orders             = tribe_get_orders_by_event_id($event_id);
+            $get_percent_ticket = trive_get_site_fees_total_order_ids($orders);
+            $event_data         = get_post_meta( $orders[0] );
+            echo "<pre>";
+            var_dump($event_data);
+            echo "</pre>";
 
 
     ?>
@@ -4866,3 +4869,45 @@ EOD;
     return '<div id="qr-reader" style="width:300px; height:3 00px;"></div>' . $inline_script;
 }
 add_shortcode('display_html5_qrcode_scanner', 'display_html5_qrcode_scanner_shortcode');
+
+
+
+// Get all orders by event ID
+function tribe_get_orders_by_event_id( $event_id) {
+    global $wpdb;
+    $meta_key='_community_tickets_order_fees';
+
+    // Prefix for WordPress database tables
+    $prefix = $wpdb->prefix;
+
+
+    $query = $wpdb->prepare("
+    SELECT p.ID
+    FROM {$prefix}posts p
+    INNER JOIN {$prefix}postmeta pm ON p.ID = pm.post_id
+    WHERE pm.meta_key = %s 
+    AND pm.meta_value LIKE %s
+    AND p.post_type = 'shop_order'
+    AND p.post_status = %s", $meta_key, '%' . $event_id . '%', 'wc-completed');
+
+    // Execute the query
+    $order_ids = $wpdb->get_col($query);
+    // Return the order IDs
+    return $order_ids;
+
+}
+
+
+function trive_get_site_fees_total_order_ids($order_ids = []){
+    $total_fee = 0;
+    foreach($order_ids as $order_id){
+        $order = wc_get_order($order_id);
+        $fees = $order->get_fees();
+        if (!empty($fees)) {
+            foreach ($fees as $fee) {
+                $total_fee += (float)$fee->get_total();
+            }
+        }
+    } 
+    return  $total_fee;  
+}
