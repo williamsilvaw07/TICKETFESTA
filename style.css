@@ -2231,9 +2231,12 @@ body .section_page_scroll_div span{
 .on_this_section_text p{
 color: black!important;
 }
-.div_freatue_section h3 span , body .div_freatue_section p , body .div_freatue_section svg , body .div_freatue_section h3 , .div_freatue_section h4 {
+.div_freatue_section h3 span , body .div_freatue_section p  , body .div_freatue_section h3 , .div_freatue_section h4 {
     color: #313638!important;
     fill: #313638!important
+}
+body .div_freatue_section svg{
+    fill: #d3fa16!important
 }
 .elementor-toggle-item {
     background-color: #121212;
