@@ -2310,7 +2310,7 @@ body .div_freatue_section svg{
 }
 
 .price_section_green .elementor-button:hover .elementor-button-text {
-    color: black;
+    color: black!important 
 }
 
 .price_section ul{
