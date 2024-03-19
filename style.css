@@ -2316,7 +2316,7 @@ body .div_freatue_section svg{
     color: rgb(255, 255, 255)!important 
 }
 .price_section_green .elementor-button:hover{
-    border:1px solid #19191b
+    border:1px solid #19191b!important 
 }
 .price_section ul{
     display: flex;
