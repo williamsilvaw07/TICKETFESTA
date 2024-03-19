@@ -4507,9 +4507,9 @@ function custom_qr_scanner_shortcode() {
         width: 100%;
         max-width: 600px;
     }
-    span#html5-qrcode-anchor-scan-type-change {
+    /* span#html5-qrcode-anchor-scan-type-change {
         display: none !important;
-    }
+    } */
 
 
     #result {
