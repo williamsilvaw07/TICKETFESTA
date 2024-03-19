@@ -3769,8 +3769,8 @@ function enqueue_custom_frontend_js()
     wp_enqueue_script('custom-frontend-js', get_stylesheet_directory_uri() . '/custom-function-frontend.js', array('jquery'), $script_version, true);
     if ( is_page( 'scan-code' ) ) {
     echo 'start enquing script';
-    wp_enqueue_script('html5-qrcode', 'https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js', array('jquery'), null, true);
-        wp_enqueue_script('custom-qr-main-js-10', get_stylesheet_directory_uri() . '/QrScan.js', array('jquery', 'custom-qr-scanner-10'), $script_version, true);
+        wp_enqueue_script('html5-qrcode', 'https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js', array('jquery'), null, true);
+        wp_enqueue_script('custom-qr-main-js-10', get_stylesheet_directory_uri() . '/QrScan.js', array('jquery', 'custom-qr-scanner'), $script_version, true);
         wp_localize_script(
             'custom-qr-main-js-10',
             'tribe_ajax',
