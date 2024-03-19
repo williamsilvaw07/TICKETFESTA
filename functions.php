@@ -4819,9 +4819,6 @@ function generate_unique_random_hash($length) {
 
 
 
-
-
-
 function my_enqueue_qrcode_script() {
     // Enqueue html5-qrcode script with jQuery dependency
     wp_enqueue_script('html5-qrcode', 'https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.7/html5-qrcode.min.js', array('jquery'), null, true);
@@ -4833,43 +4830,30 @@ function display_html5_qrcode_scanner_shortcode() {
 
     // Scanner HTML setup
     $scanner_html = '<div id="qr-reader" style="width:300px; height:300px;"></div>';
-    // Keep the toggle flash button always visible
-    $scanner_html .= '<button id="toggle-flash-btn" style="margin-top:10px;">Toggle Flash</button>';
 
-    // Inline JavaScript for initializing the QR code scanner and managing flash
+    // Inline JavaScript for initializing the QR code scanner with torch toggle button
     $inline_script = "
+    <script>
     jQuery(document).ready(function($) {
+        let html5QrcodeScanner = new Html5QrcodeScanner(
+            'qr-reader', {
+                fps: 10,
+                qrbox: 250,
+                rememberLastUsedCamera: true,
+                aspectRatio: 1.7777778,
+                showTorchButtonIfSupported: true // This enables the torch toggle button if supported
+            }, false);
+        
         function onScanSuccess(decodedText, decodedResult) {
-            console.log('Code scanned = ' + decodedText, decodedResult);
+            // Handle the scanned code as needed
+            console.log(`Code scanned = ${decodedText}`, decodedResult);
         }
+        
+        html5QrcodeScanner.render(onScanSuccess);
+    });
+    </script>";
 
-        var config = {
-            fps: 10,
-            qrbox: 250,
-            rememberLastUsedCamera: true
-        };
-
-        var html5QrcodeScanner = new Html5QrcodeScanner('qr-reader', config, false);
-        html5QrcodeScanner.render(onScanSuccess).then(function() {
-            console.log('Scanner initialized');
-            $('#toggle-flash-btn').on('click', function() {
-                html5QrcodeScanner.getHtml5Qrcode().toggleFlash().then(function(isFlashOn) {
-                    console.log('Flash toggled, now:', isFlashOn ? 'On' : 'Off');
-                }).catch(function(err) {
-                    console.error('Error toggling flash:', err);
-                    // Provide feedback if flash toggle is not supported
-                    alert('Flash control not supported or failed.');
-                });
-            });
-        }, function(err) {
-            console.error('QR code scanner initialization failed', err);
-        });
-    });";
-
-    // Properly add inline script related to 'html5-qrcode'
-    wp_add_inline_script('html5-qrcode', $inline_script);
-
-    // Return the scanner HTML without the inline script
-    return $scanner_html;
+    // Return the scanner HTML and the inline script
+    return $scanner_html . $inline_script;
 }
 add_shortcode('display_html5_qrcode_scanner', 'display_html5_qrcode_scanner_shortcode');
