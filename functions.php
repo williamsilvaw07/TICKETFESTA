@@ -4816,18 +4816,15 @@ function generate_unique_random_hash($length) {
 
 
 
-function my_enqueue_qrcode_script() {
-    // Enqueue html5-qrcode script with jQuery dependency
-    wp_enqueue_script('html5-qrcode', 'https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.7/html5-qrcode.min.js', array('jquery'), null, true);
-}
-add_action('wp_enqueue_scripts', 'my_enqueue_qrcode_script');
 function display_html5_qrcode_scanner_shortcode() {
     my_enqueue_qrcode_script(); // Ensures the QR code script is enqueued
 
-    // Wrap the QR code scanner div inside another div for additional styling or layout control
-    $scanner_html = '<div class="qr-nner-wrapper" style="padding: 50px; display: flex; justify-content: center; align-items: center"> <!-- Additional div wrapper with custom styles -->
-                        <div id="qr-reader" style="max-width:400px; max-height:400px; width:100%; aspect-ratio: 1 /3; position: relative; margin: 20px auto; overflow: hidden;"></div>
-                     </div>'; // QR scanner HTML setup for responsive design
+    // Adjusted Scanner HTML setup for responsive design with a scanner guide overlay
+    $scanner_html = '<div class="qr-scanner-wrapper" style="padding: 50px; display: flex; justify-content: center; align-items: center"> <!-- Additional div wrapper with custom styles -->
+                        <div id="qr-reader" style="max-width:400px; max-height:400px; width:100%; aspect-ratio: 1; position: relative; margin: 20px auto; overflow: hidden;">
+                            <div id="qr-scanner-guide" style="position: absolute; top: 25%; left: 25%; width: 50%; height: 50%; border: 4px dashed #FFD700; box-sizing: border-box;"></div>
+                        </div>
+                     </div>'; // QR scanner HTML setup for responsive design with a scanning guide
 
     // Inline JavaScript for initializing the QR code scanner
     $inline_script = "
