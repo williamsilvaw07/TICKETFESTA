@@ -2328,7 +2328,7 @@ body .price_section_dark svg{
 /***********END********/
 
 
-.page-id-5613  .site-content {
-    display: flex;
-    padding-bottom: 300px;
+/* Hide file input elements in the html5-qrcode scanner */
+.html5qr-qrcode-fileinput, .html5qr-qrcode-header {
+    display: none !important;
 }

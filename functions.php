@@ -4824,6 +4824,13 @@ function my_enqueue_qrcode_script() {
     wp_enqueue_script('html5-qrcode', 'https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.7/html5-qrcode.min.js', array('jquery'), null, true);
 }
 add_action('wp_enqueue_scripts', 'my_enqueue_qrcode_script');
+function my_enqueue_qrcode_script() {
+    // Enqueue html5-qrcode script with jQuery dependency
+    wp_enqueue_script('html5-qrcode', 'https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.7/html5-qrcode.min.js', array('jquery'), null, true);
+    // Enqueue custom CSS to hide file input elements
+    wp_enqueue_style('custom-qr-style', get_stylesheet_directory_uri() . '/css/custom-qr.css');
+}
+add_action('wp_enqueue_scripts', 'my_enqueue_qrcode_script');
 
 function display_html5_qrcode_scanner_shortcode() {
     my_enqueue_qrcode_script(); // Ensures the QR code script is enqueued
@@ -4831,7 +4838,7 @@ function display_html5_qrcode_scanner_shortcode() {
     // Scanner HTML setup
     $scanner_html = '<div id="qr-reader" style="width:300px; height:300px; margin-bottom:200px;"></div>';
 
-    // Inline JavaScript for initializing the QR code scanner with torch toggle button and prefer back camera
+    // Inline JavaScript for initializing the QR code scanner with preferences
     $inline_script = "
     <script>
     jQuery(document).ready(function($) {
