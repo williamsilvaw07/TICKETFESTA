@@ -4829,46 +4829,25 @@ function display_html5_qrcode_scanner_shortcode() {
     $scanner_html = '<div id="qr-reader" style="max-width:400px; max-height:400px; width:100%; aspect-ratio: 1 / 1; position: relative; margin: 20px auto; overflow: hidden;"></div>';
 
     // Inline JavaScript for initializing the QR code scanner
+    // Inline JavaScript for initializing the QR code scanner with a square viewfinder
     $inline_script = "
     <script>
     jQuery(document).ready(function($) {
-        // Function to calculate a responsive qrbox size based on the container's width
-        function calculateQrboxSize() {
-            const readerWidth = jQuery('#qr-reader').width();
-            // Ensure the qrbox is not larger than the container
-            let qrboxSize = Math.min(300, readerWidth - 10);
-            return qrboxSize;
-        }
-        
         let html5QrcodeScanner = new Html5QrcodeScanner(
             'qr-reader', {
                 fps: 10,
-                qrbox: calculateQrboxSize(),
+                qrbox: 150, // Set qrbox size to keep the scanning area square
                 rememberLastUsedCamera: true,
-                aspectRatio: 1,
-                showTorchButtonIfSupported: true // Option to enable the torch button if supported
+                aspectRatio: 1.7777778,
+                showTorchButtonIfSupported: true // This enables the torch toggle button if supported
             }, false);
-
+        
         function onScanSuccess(decodedText, decodedResult) {
-            // Callback for successfully scanned QR codes
+            // Handle the scanned code as needed
             console.log(`Code scanned = ${decodedText}`, decodedResult);
         }
-
+        
         html5QrcodeScanner.render(onScanSuccess);
-
-        // Dynamically adjust the qrbox size on window resize for a fully responsive design
-        jQuery(window).resize(function() {
-            html5QrcodeScanner.clear();
-            html5QrcodeScanner = new Html5QrcodeScanner(
-                'qr-reader', {
-                    fps: 10,
-                    qrbox: calculateQrboxSize(),
-                    rememberLastUsedCamera: true,
-                    aspectRatio: 1,
-                    showTorchButtonIfSupported: true
-                }, false);
-            html5QrcodeScanner.render(onScanSuccess);
-        });
     });
     </script>";
 
