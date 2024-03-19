@@ -4517,7 +4517,7 @@ function custom_qr_scanner_shortcode() {
         font-weight: bold;
     }
 
-    div#tab1 {
+    div#tab1.active {
         width: 100%;
         display: inline-flex;
         /* padding-left: 0px; */
