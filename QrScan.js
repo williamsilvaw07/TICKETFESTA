@@ -72,7 +72,7 @@
             $('#event-pass').removeClass('error');
             $('#event_not_found').hide();
           
-            const html5QrcodeScanner = new Html5QrcodeScanner("reader", { fps: 12 });
+            const html5QrcodeScanner = new Html5QrcodeScanner("video", { fps: 12 });
           
             // Success callback - called when a QR code is scanned
             const onScanSuccess = (qrCodeText) => {
