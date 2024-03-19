@@ -4836,7 +4836,9 @@ function display_html5_qrcode_scanner_shortcode() {
     // Inline JavaScript to initialize the QR code scanner
     $inline_script = <<<EOD
     <script>
+
     jQuery(document).ready(function($) {
+        console.log("JS LOADED")
         function onScanSuccess(decodedText, decodedResult) {
             // Handle the scanned code as needed
             console.log(`Code scanned = ${decodedText}`, decodedResult);
