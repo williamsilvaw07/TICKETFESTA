@@ -2,7 +2,6 @@
     
     document.addEventListener("DOMContentLoaded", function(event) {
         const video = document.getElementById('video');
-        const resultContainer = document.getElementById('result');
 
         // Check if getUserMedia is supported
         if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
