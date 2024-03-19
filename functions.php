@@ -4834,7 +4834,7 @@ function display_html5_qrcode_scanner_shortcode() {
     my_enqueue_qrcode_script(); // Make sure to enqueue scripts when shortcode is used
     
     // Inline JavaScript to initialize the QR code scanner
-    $inline_script = <<<EOD
+  
     $inline_script = <<<EOD
     <script>
     jQuery(document).ready(function($) {
