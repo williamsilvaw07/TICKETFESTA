@@ -4809,9 +4809,6 @@ function generate_unique_random_hash($length) {
 
 
 
-
-
-
 function my_enqueue_qrcode_script() {
     // Enqueue html5-qrcode script with jQuery dependency
     wp_enqueue_script('html5-qrcode', 'https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.7/html5-qrcode.min.js', array('jquery'), null, true);
@@ -4821,7 +4818,7 @@ add_action('wp_enqueue_scripts', 'my_enqueue_qrcode_script');
 function display_html5_qrcode_scanner_shortcode() {
     my_enqueue_qrcode_script(); // Make sure to enqueue scripts when shortcode is used
     
-    // Inline JavaScript to initialize the QR code scanner with camera access request
+    // Inline JavaScript to initialize the QR code scanner with camera access
     $inline_script = <<<EOD
 <script>
 jQuery(document).ready(function($) {
@@ -4832,8 +4829,12 @@ jQuery(document).ready(function($) {
     
     var config = { fps: 10, qrbox: 250 };
     var html5QrCode = new Html5Qrcode("qr-reader");
-    navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } }) // Request camera access
-    .then(function(stream) {
+    
+    // Check if camera access is already granted (by checking a cookie)
+    var cameraAccessGranted = document.cookie.indexOf('cameraAccess=granted') !== -1;
+    
+    // If camera access is granted, start the QR code scanner immediately
+    if (cameraAccessGranted) {
         Html5Qrcode.getCameras().then(cameras => {
             if (cameras.length > 0) {
                 html5QrCode.start(cameras[0].id, config, onScanSuccess); // Start QR code scanning
@@ -4841,10 +4842,24 @@ jQuery(document).ready(function($) {
                 console.error("No cameras found.");
             }
         });
-    })
-    .catch(function(err) {
-        console.error("Unable to access camera", err);
-    });
+    } else {
+        // If camera access is not granted, request camera access
+        navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
+        .then(function(stream) {
+            // Set a cookie to remember that camera access has been granted
+            document.cookie = 'cameraAccess=granted; path=/';
+            Html5Qrcode.getCameras().then(cameras => {
+                if (cameras.length > 0) {
+                    html5QrCode.start(cameras[0].id, config, onScanSuccess); // Start QR code scanning
+                } else {
+                    console.error("No cameras found.");
+                }
+            });
+        })
+        .catch(function(err) {
+            console.error("Unable to access camera", err);
+        });
+    }
 });
 </script>
 EOD;
