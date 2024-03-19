@@ -4622,8 +4622,10 @@ function custom_qr_scanner_shortcode() {
             $orders             = tribe_get_orders_by_event_id($event_id);
             $get_percent_ticket = trive_get_site_fees_total_order_ids($orders);
             $event_data         = get_post_meta( $orders[0] );
+            $tribe_woo = TribeWooTickets::get_instance();
+            $ticket_ids = $tribe_woo->get_tickets_ids( $event_id );
             echo "<pre>";
-            var_dump($event_data);
+            var_dump($ticket_ids);
             echo "</pre>";
 
 
