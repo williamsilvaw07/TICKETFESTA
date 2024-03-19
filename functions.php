@@ -4831,7 +4831,7 @@ function display_html5_qrcode_scanner_shortcode() {
     // Scanner HTML setup
     $scanner_html = '<div id="qr-reader" style="width:300px; height:300px; margin-bottom:200px;"></div>';
 
-    // Inline JavaScript for initializing the QR code scanner with torch toggle button
+    // Inline JavaScript for initializing the QR code scanner with torch toggle button and prefer back camera
     $inline_script = "
     <script>
     jQuery(document).ready(function($) {
@@ -4841,7 +4841,8 @@ function display_html5_qrcode_scanner_shortcode() {
                 qrbox: 250,
                 rememberLastUsedCamera: true,
                 aspectRatio: 1.7777778,
-                showTorchButtonIfSupported: true // This enables the torch toggle button if supported
+                showTorchButtonIfSupported: true, // This enables the torch toggle button if supported
+                cameraId: { exact: 'environment' } // Prefer the back camera
             }, false);
         
         function onScanSuccess(decodedText, decodedResult) {
