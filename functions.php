@@ -4829,7 +4829,7 @@ function display_html5_qrcode_scanner_shortcode() {
     my_enqueue_qrcode_script(); // Ensures the QR code script is enqueued
 
     // Scanner HTML setup
-    $scanner_html = '<div id="qr-reader" style="width:300px; height:300px;"></div>';
+    $scanner_html = '<div id="qr-reader" style="width:300px; height:300px; margin-bottom:200px;"></div>';
 
     // Inline JavaScript for initializing the QR code scanner with torch toggle button
     $inline_script = "
