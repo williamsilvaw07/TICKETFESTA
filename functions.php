@@ -4828,21 +4828,21 @@ function my_enqueue_qrcode_script() {
 add_action('wp_enqueue_scripts', 'my_enqueue_qrcode_script');
 
 
-
 function display_html5_qrcode_scanner_shortcode() {
     my_enqueue_qrcode_script(); // Ensures the QR code script is enqueued
 
-    // Adjusted Scanner HTML setup for responsive design
-    $scanner_html = '<div id="qr-reader" style="max-width:400px; max-height:400px; width:100%; aspect-ratio: 1 / 1; position: relative; margin: auto;"></div>';
+    // Adjusted Scanner HTML setup for responsive design, including a border for visual guidance
+    $scanner_html = '<div id="qr-reader" style="max-width:400px; max-height:400px; width:100%; aspect-ratio: 1 / 1; position: relative; margin: 20px auto; border: 5px solid #FFD700; box-shadow: 0 0 10px #000; overflow: hidden;"></div>';
 
-    // Inline JavaScript for initializing the QR code scanner with responsive qrbox size
+    // Inline JavaScript for initializing the QR code scanner with a responsive qrbox size
     $inline_script = "
     <script>
     jQuery(document).ready(function($) {
         // Calculate a responsive qrbox size based on the width of the container
         function calculateQrboxSize() {
-            const readerWidth = $('#qr-reader').width();
-            let qrboxSize = Math.min(300, readerWidth - 10); // Ensure qrbox is not larger than 300px and fits within the container
+            const readerWidth = jQuery('#qr-reader').width();
+            // Ensure qrbox is not larger than 300px and fits within the container
+            let qrboxSize = Math.min(300, readerWidth - 10); 
             return qrboxSize;
         }
         
@@ -4856,13 +4856,14 @@ function display_html5_qrcode_scanner_shortcode() {
             }, false);
 
         function onScanSuccess(decodedText, decodedResult) {
+            // Handle the scanned code as needed
             console.log(`Code scanned = ${decodedText}`, decodedResult);
         }
-        
+
         html5QrcodeScanner.render(onScanSuccess);
 
-        // Optional: Adjust qrbox size on window resize for a fully responsive design
-        $(window).resize(function() {
+        // Adjust qrbox size on window resize for a fully responsive design
+        jQuery(window).resize(function() {
             html5QrcodeScanner.clear();
             html5QrcodeScanner = new Html5QrcodeScanner(
                 'qr-reader', {
