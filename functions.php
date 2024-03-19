@@ -4829,7 +4829,7 @@ function generate_unique_random_hash($length) {
 
 function my_enqueue_qrcode_script() {
     // Enqueue html5-qrcode script with jQuery dependency
-    wp_enqueue_script('html5-qrcode', 'https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.7/html5-qrcode.min.js', array('jquery'), null, true);
+    wp_enqueue_script('html5-qrcode', 'https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js', array('jquery'), null, true);
 }
 add_action('wp_enqueue_scripts', 'my_enqueue_qrcode_script');
 
@@ -4838,76 +4838,28 @@ function display_html5_qrcode_scanner_shortcode() {
     
     // Inline JavaScript to initialize the QR code scanner
     $inline_script = <<<EOD
-<script>
-jQuery(document).ready(function($) {
-    function onScanSuccess(decodedText, decodedResult) {
-        // Handle the scanned text as needed.
-        console.log(`Code scanned = ${decodedText}`, decodedResult);
-    }
+    <script>
+    jQuery(document).ready(function($) {
+        function onScanSuccess(decodedText, decodedResult) {
+            // Handle the scanned code as needed
+            console.log(`Code scanned = ${decodedText}`, decodedResult);
+        }
     
-    var config = {
-        fps: 10,
-        qrbox: 250,
-        torch: true, // This enables the flash toggle option
-        supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA] // Limits to camera scan only, hiding the select image function
-    };
-    var html5QrCode = new Html5Qrcode("qr-reader");
-    Html5Qrcode.getCameras().then(cameras => {
-        if (cameras.length > 0) {
-            html5QrCode.start({ facingMode: "environment" }, config, onScanSuccess);
-        } else {
-            console.error("No cameras found.");
-        }
-    }).catch(err => {
-        console.error("Unable to start QR scanner", err);
+        var config = {
+            fps: 10,
+            qrbox: {width: 250, height: 250},
+            rememberLastUsedCamera: true,
+            supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA],
+            showTorchButtonIfSupported: true // Enable torch button if supported
+        };
+    
+        let html5QrcodeScanner = new Html5QrcodeScanner("qr-reader", config, false);
+        html5QrcodeScanner.render(onScanSuccess);
     });
-});
-</script>
-EOD;
-
-    // Return the HTML for the scanner along with the inline JavaScript
-    return '<div id="qr-reader" style="width:300px; height:3 00px;"></div>' . $inline_script;
-}
-add_shortcode('display_html5_qrcode_scanner', 'display_html5_qrcode_scanner_shortcode');
-
-
-
-// Get all orders by event ID
-function tribe_get_orders_by_event_id( $event_id) {
-    global $wpdb;
-    $meta_key='_community_tickets_order_fees';
-
-    // Prefix for WordPress database tables
-    $prefix = $wpdb->prefix;
-
-
-    $query = $wpdb->prepare("
-    SELECT p.ID
-    FROM {$prefix}posts p
-    INNER JOIN {$prefix}postmeta pm ON p.ID = pm.post_id
-    WHERE pm.meta_key = %s 
-    AND pm.meta_value LIKE %s
-    AND p.post_type = 'shop_order'
-    AND p.post_status = %s", $meta_key, '%' . $event_id . '%', 'wc-completed');
-
-    // Execute the query
-    $order_ids = $wpdb->get_col($query);
-    // Return the order IDs
-    return $order_ids;
-
-}
-
-
-function trive_get_site_fees_total_order_ids($order_ids = []){
-    $total_fee = 0;
-    foreach($order_ids as $order_id){
-        $order = wc_get_order($order_id);
-        $fees = $order->get_fees();
-        if (!empty($fees)) {
-            foreach ($fees as $fee) {
-                $total_fee += (float)$fee->get_total();
-            }
-        }
-    } 
-    return  $total_fee;  
-}
+    </script>
+    EOD;
+    
+        // Return the scanner HTML and the inline script
+        return '<div id="qr-reader" style="width:300px; height:300px;"></div>' . $inline_script;
+    }
+    add_shortcode('display_html5_qrcode_scanner', 'display_html5_qrcode_scanner_shortcode');
