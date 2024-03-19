@@ -4517,6 +4517,13 @@ function custom_qr_scanner_shortcode() {
         font-weight: bold;
     }
 
+    div#tab1 {
+        width: 100%;
+        display: inline-flex;
+        /* padding-left: 0px; */
+        justify-content: center;
+        align-items: center;
+    }
     div#video-container {
     display: flex;
     flex-direction: column;
@@ -4609,7 +4616,7 @@ function custom_qr_scanner_shortcode() {
             $start_date = get_post_meta( $event_id, '_EventStartDate', true );
             $issued_ticked = get_post_meta( $event_id, '_tribe_progressive_ticket_current_number', true );
             $name = get_the_title( $event_id ) ;
-            $thumbnail_url = get_the_post_thumbnail_url($event_id, 'thumbnail');
+            $thumbnail_url = get_the_post_thumbnail_url($event_id, 'medium');
             // echo "<pre>";
             // var_dump($event_data);
             // echo "</pre>";
