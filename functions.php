@@ -4580,7 +4580,9 @@ function custom_qr_scanner_shortcode() {
     .tab-content.active {
         display: block;
     }
-
+    li.tab.active a {
+        color: #000 !important;
+    }
     /* Media query for responsive behavior (tablet and mobile) */
     @media (max-width: 768px) {
         .tabs-container {
@@ -4599,6 +4601,17 @@ function custom_qr_scanner_shortcode() {
     <div id="qr-reader-results"></div>
 
     -->
+
+    <?php 
+        $event_id   = isset($_GET['event_id']) ? esc_attr( $_GET['event_id'] ) : false;
+        $event_data = get_post_meta( $event_id );
+
+        echo "<pre>";
+        var_dump($event_data);
+        echo "</pre>";
+
+
+    ?>
     <div class="tabs-container">
         <ul class="tabs-nav">
             <li class="tab tab1 active"><a href="#tab1"> Event Details</a></li>
@@ -4607,7 +4620,14 @@ function custom_qr_scanner_shortcode() {
     </div>
     <div class="tab-content-container">
         <div class="tab-content active" id="tab1">
-            <p>This is the content for Tab 1. You can add any HTML elements here.</p>
+            <div class="event-container">
+                <img src="" alt="" class="event-image">
+                <div class="name">Name: </div>
+                <div class="date">Date: </div>
+                <div class="location">Location: </div>
+                <div class="tickets">Tickets: </div>
+                <div class="tickets-percent">Ticket Percent: </div>
+            </div>
         </div>
         <div class="tab-content" id="tab2">
             <div id="video-container">
