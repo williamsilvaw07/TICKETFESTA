@@ -4826,6 +4826,9 @@ function my_enqueue_qrcode_script() {
     wp_enqueue_style('custom-qr-style', get_stylesheet_directory_uri() . '/css/custom-qr.css');
 }
 add_action('wp_enqueue_scripts', 'my_enqueue_qrcode_script');
+
+
+
 function display_html5_qrcode_scanner_shortcode() {
     my_enqueue_qrcode_script(); // Ensures the QR code script is enqueued
 
@@ -4836,28 +4839,65 @@ function display_html5_qrcode_scanner_shortcode() {
     $inline_script = "
     <script>
     jQuery(document).ready(function($) {
-        let html5QrcodeScanner = new Html5QrcodeScanner(
-            'qr-reader', {
-                fps: 10,
-                qrbox: 300, // Set qrbox size to match desired viewfinder size
-                rememberLastUsedCamera: true,
-                aspectRatio: 1.7777778,
-                showTorchButtonIfSupported: true // This enables the torch toggle button if supported
-            }, false);
-        
-        function onScanSuccess(decodedText, decodedResult) {
-            // Handle the scanned code as needed
-            console.log(`Code scanned = ${decodedText}`, decodedResult);
+        // Function to check if a cookie exists
+        function getCookie(name) {
+            let cookieArr = document.cookie.split(';');
+            for(let i = 0; i < cookieArr.length; i++) {
+                let cookiePair = cookieArr[i].split('=');
+                if(name == cookiePair[0].trim()) {
+                    return decodeURIComponent(cookiePair[1]);
+                }
+            }
+            return null;
         }
-        
-        html5QrcodeScanner.render(onScanSuccess);
+
+        // Function to set a cookie
+        function setCookie(name, value, days) {
+            let expires = '';
+            if (days) {
+                let date = new Date();
+                date.setTime(date.getTime() + (days*24*60*60*1000));
+                expires = '; expires=' + date.toUTCString();
+            }
+            document.cookie = name + '=' + (value || '')  + expires + '; path=/';
+        }
+
+        let cameraConsent = getCookie('cameraConsent');
+
+        if (cameraConsent !== 'granted') {
+            // Explicitly ask for camera access here if not already granted
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then(function(stream) {
+                    // User has granted access, save this in a cookie
+                    setCookie('cameraConsent', 'granted', 365);
+                    initializeScanner();
+                }).catch(function(error) {
+                    console.log('Access denied', error);
+                });
+        } else {
+            // Initialize the scanner directly if consent is already granted
+            initializeScanner();
+        }
+
+        function initializeScanner() {
+            let html5QrcodeScanner = new Html5QrcodeScanner(
+                'qr-reader', {
+                    fps: 10,
+                    qrbox: 300,
+                    rememberLastUsedCamera: true,
+                    aspectRatio: 1.7777778,
+                    showTorchButtonIfSupported: true
+                }, false);
+            
+            function onScanSuccess(decodedText, decodedResult) {
+                console.log(`Code scanned = ${decodedText}`, decodedResult);
+            }
+            
+            html5QrcodeScanner.render(onScanSuccess);
+        }
     });
     </script>";
 
-    // Optional CSS for adjusting the video feed size
- 
-
-    // Return the scanner HTML, optional CSS, and the inline script
-    return $scanner_html . $custom_css . $inline_script;
+    return $scanner_html . $inline_script;
 }
 add_shortcode('display_html5_qrcode_scanner', 'display_html5_qrcode_scanner_shortcode');
