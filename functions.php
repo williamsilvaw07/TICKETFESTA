@@ -4604,16 +4604,15 @@ function custom_qr_scanner_shortcode() {
             <li class="tab tab1 active"><a href="#tab1"> Event Details</a></li>
             <li class="tab tab2"><a href="#tab2">Scan QR Code</a></li>
         </ul>
-        <div class="tab-content-container">
-            <div class="tab-content active" id="tab1">
-                <p>This is the content for Tab 1. You can add any HTML elements here.</p>
-            </div>
-            <div class="tab-content" id="tab2">
-                <p>This is the content for Tab 2. You can add any HTML elements here as well.</p>
-            </div>
+    </div>
+    <div class="tab-content-container">
+        <div class="tab-content active" id="tab1">
+            <p>This is the content for Tab 1. You can add any HTML elements here.</p>
+        </div>
+        <div class="tab-content" id="tab2">
+            <p>This is the content for Tab 2. You can add any HTML elements here as well.</p>
         </div>
     </div>
-
     <div id="video-container">
         <input type="text" id="event-pass" name="event-pass" placeholder="enter event pass">
         <video id="video" playsinline style="width: 500px"></video>
