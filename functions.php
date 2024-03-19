@@ -4807,8 +4807,6 @@ function generate_unique_random_hash($length) {
 
 
 
-
-
 function my_enqueue_qrcode_script() {
     // Enqueue html5-qrcode script with jQuery dependency
     wp_enqueue_script('html5-qrcode', 'https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.7/html5-qrcode.min.js', array('jquery'), null, true);
@@ -4830,8 +4828,8 @@ jQuery(document).ready(function($) {
     var config = { fps: 10, qrbox: 250 };
     var html5QrCode = new Html5Qrcode("qr-reader");
     
-    // Check if camera access is already granted (by checking a cookie)
-    var cameraAccessGranted = document.cookie.indexOf('cameraAccess=granted') !== -1;
+    // Check if camera access is already granted (by checking local storage)
+    var cameraAccessGranted = localStorage.getItem('cameraAccess') === 'granted';
     
     // If camera access is granted, start the QR code scanner immediately
     if (cameraAccessGranted) {
@@ -4846,8 +4844,8 @@ jQuery(document).ready(function($) {
         // If camera access is not granted, request camera access
         navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
         .then(function(stream) {
-            // Set a cookie to remember that camera access has been granted
-            document.cookie = 'cameraAccess=granted; path=/';
+            // Set local storage to remember that camera access has been granted
+            localStorage.setItem('cameraAccess', 'granted');
             Html5Qrcode.getCameras().then(cameras => {
                 if (cameras.length > 0) {
                     html5QrCode.start(cameras[0].id, config, onScanSuccess); // Start QR code scanning
