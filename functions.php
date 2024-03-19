@@ -4825,7 +4825,7 @@ function display_html5_qrcode_scanner_shortcode() {
     my_enqueue_qrcode_script(); // Ensures the QR code script is enqueued
 
     // Wrap the QR code scanner div inside another div for additional styling or layout control
-    $scanner_html = '<div class="qr-nner-wrapper" style="padding: 100px; display: flex; justify-content: center; align-items: center; background-color: #f8f9fa;"> <!-- Additional div wrapper with custom styles -->
+    $scanner_html = '<div class="qr-nner-wrapper" style="padding: 50px; display: flex; justify-content: center; align-items: center"> <!-- Additional div wrapper with custom styles -->
                         <div id="qr-reader" style="max-width:400px; max-height:400px; width:100%; aspect-ratio: 1 /3; position: relative; margin: 20px auto; overflow: hidden;"></div>
                      </div>'; // QR scanner HTML setup for responsive design
 
