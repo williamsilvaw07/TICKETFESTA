@@ -2285,13 +2285,14 @@ body .div_freatue_section svg{
 .price_section_green h2{
     color: #313638 !important
 }
-.price_section_green h6{
+.price_section h6{
 
     color: #71717a !important;
     font-size: 14px!important;
     font-weight: 300!important;
     margin-top: -16px !important;
 }
+
 .price_section_green li span{
     color: #313638 !important 
 }
