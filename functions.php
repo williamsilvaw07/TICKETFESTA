@@ -4832,20 +4832,21 @@ add_action('wp_enqueue_scripts', 'my_enqueue_qrcode_script');
 function display_html5_qrcode_scanner_shortcode() {
     my_enqueue_qrcode_script(); // Ensures the QR code script is enqueued
 
-    // Scanner HTML setup
-    $scanner_html = '<div id="qr-reader" style="max-width:300px; max-height:300px; margin-bottom:200px;"></div>';
+    // Scanner HTML setup with an overlay for the camera guide
+    $scanner_html = '<div id="qr-reader" style="width:300px; height:300px; position: relative; margin-bottom:200px;">
+                         <div id="qr-overlay" style="position: absolute; top: 25%; left: 25%; width: 50%; height: 50%; border: 5px solid yellow; box-sizing: border-box;"></div>
+                     </div>';
 
-    // Inline JavaScript for initializing the QR code scanner with torch toggle button
-    // and ensuring the camera selection is remembered
+    // Inline JavaScript for initializing the QR code scanner with a square viewfinder
     $inline_script = "
     <script>
     jQuery(document).ready(function($) {
         let html5QrcodeScanner = new Html5QrcodeScanner(
             'qr-reader', {
                 fps: 10,
-                qrbox: 300, // Ensures the scanning area is square and does not exceed 300x300px
+                qrbox: 150, // Set qrbox size to keep the scanning area square
                 rememberLastUsedCamera: true,
-                aspectRatio: 1, // Maintain square aspect ratio
+                aspectRatio: 1.7777778,
                 showTorchButtonIfSupported: true // This enables the torch toggle button if supported
             }, false);
         
@@ -4858,24 +4859,6 @@ function display_html5_qrcode_scanner_shortcode() {
     });
     </script>";
 
-    // Optional CSS to ensure the video feed is square and does not exceed 300px in width or height
-    $custom_css = "<style>
-        #qr-reader video {
-            max-width: 300px !important;
-            max-height: 300px !important;
-            width: auto !important; /* Adjusts width to maintain aspect ratio */
-            height: auto !important; /* Adjusts height to maintain aspect ratio */
-        }
-        #qr-reader {
-            max-width: 300px !important;
-            max-height: 300px !important;
-            width: 300px !important; /* Set a specific size to keep it square */
-            height: 300px !important; /* Set a specific size to keep it square */
-            margin: auto;
-        }
-    </style>";
-
-    // Return the scanner HTML, optional CSS, and the inline script
-    return $scanner_html . $custom_css . $inline_script;
+    return $scanner_html . $inline_script;
 }
 add_shortcode('display_html5_qrcode_scanner', 'display_html5_qrcode_scanner_shortcode');
