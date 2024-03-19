@@ -4814,8 +4814,6 @@ function generate_unique_random_hash($length) {
 
 
 
-
-
 function my_enqueue_qrcode_script() {
     // Enqueue html5-qrcode script with jQuery dependency
     wp_enqueue_script('html5-qrcode', 'https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.7/html5-qrcode.min.js', array('jquery'), null, true);
@@ -4825,20 +4823,27 @@ add_action('wp_enqueue_scripts', 'my_enqueue_qrcode_script');
 function display_html5_qrcode_scanner_shortcode() {
     my_enqueue_qrcode_script(); // Make sure to enqueue scripts when shortcode is used
     
-    // Inline JavaScript to initialize the QR code scanner
+    // Inline JavaScript to initialize the QR code scanner with automatic camera request
     $inline_script = <<<EOD
 <script>
 jQuery(document).ready(function($) {
     function onScanSuccess(decodedText, decodedResult) {
         // Handle the scanned text as needed.
-        console.log(`Code scanned = ${decodedText}`, decodedResult);
+        console.log(\`Code scanned = \${decodedText}\`, decodedResult);
     }
     
-    var config = { fps: 10, qrbox: 250 };
+    var config = { fps: 10, qrbox: {width: 250, height: 250} };
     var html5QrCode = new Html5Qrcode("qr-reader");
     Html5Qrcode.getCameras().then(cameras => {
         if (cameras.length > 0) {
-            html5QrCode.start({ facingMode: "environment" }, config, onScanSuccess);
+            var cameraId = cameras[0].id; // Default to the first camera found.
+            // Prefer the back camera if available.
+            cameras.forEach((camera) => {
+                if (camera.facingMode === "environment") {
+                    cameraId = camera.id;
+                }
+            });
+            html5QrCode.start(cameraId, config, onScanSuccess);
         } else {
             console.error("No cameras found.");
         }
