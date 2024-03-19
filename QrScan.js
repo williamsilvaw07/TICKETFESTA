@@ -88,7 +88,7 @@
                     event_pass : eventPass
                 },
                 success: function(response) {
-                    $('#scan-button').hide();
+                    // $('#scan-button').hide();
 
                     // Handle the response from the server
                     console.log('ajax response', response);
