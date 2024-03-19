@@ -2303,6 +2303,9 @@ body .div_freatue_section svg{
 .price_section_dark li span{
     color: #ffffff !important 
 }
+.price_section_dark a{
+    color: black;
+}
 .price_section ul{
     display: flex;
     flex-direction: column;
