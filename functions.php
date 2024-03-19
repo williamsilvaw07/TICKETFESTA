@@ -4811,51 +4811,32 @@ function generate_unique_random_hash($length) {
 
 
 
-
-
-
-
-
-function my_enqueue_qrcode_script() {
-    // Enqueue html5-qrcode script with jQuery dependency
-    wp_enqueue_script('html5-qrcode', 'https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.7/html5-qrcode.min.js', array('jquery'), null, true);
-}
-add_action('wp_enqueue_scripts', 'my_enqueue_qrcode_script');
 function display_html5_qrcode_scanner_shortcode() {
-    // Ensure the QR code script is enqueued
-    my_enqueue_qrcode_script();
+    wp_enqueue_script('html5-qrcode', 'https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.7/html5-qrcode.min.js', array('jquery'), null, true);
 
-    // Scanner HTML setup
-    $scanner_html = '<div id="qr-reader" style="width:300px; height:300px;"></div>';
+    $scanner_html = '<div id="qr-reader"></div>';
 
-    // Inline JavaScript to initialize the QR code scanner
-    $inline_script = <<<EOD
+    $inline_script = <<<SCRIPT
 <script>
 jQuery(document).ready(function($) {
-    const onScanSuccess = (decodedText, decodedResult) => {
-        console.log(\`Code scanned = \${decodedText}\`, decodedResult);
-    };
-
-    const config = { fps: 10, qrbox: { width: 250, height: 250 } };
     const html5QrCode = new Html5Qrcode("qr-reader");
-
-    Html5Qrcode.getCameras().then((cameras) => {
+    const config = { fps: 10, qrbox: { width: 250, height: 250 } };
+    Html5Qrcode.getCameras().then(function(cameras) {
         if (cameras.length > 0) {
-            const cameraId = cameras.find(camera => camera.facingMode === "environment")?.id || cameras[0].id;
-            html5QrCode.start(cameraId, config, onScanSuccess).catch((err) => {
-                console.error("Error starting the scanner:", err);
-            });
-        } else {
-            console.error("No cameras found.");
+            const cameraId = cameras[0].id;
+            html5QrCode.start(
+              cameraId, 
+              config,
+              (decodedText, decodedResult) => {
+                  console.log(\`Decoded text: \${decodedText}\`, decodedResult);
+              }
+            ).catch(err => console.error(err));
         }
-    }).catch((err) => {
-        console.error("Error getting cameras:", err);
-    });
+    }).catch(err => console.error("Error getting cameras:", err));
 });
 </script>
-EOD;
+SCRIPT;
 
-    // Return the scanner HTML and inline JavaScript
     return $scanner_html . $inline_script;
 }
 add_shortcode('display_html5_qrcode_scanner', 'display_html5_qrcode_scanner_shortcode');
