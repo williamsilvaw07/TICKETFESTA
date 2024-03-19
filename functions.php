@@ -4619,12 +4619,12 @@ function custom_qr_scanner_shortcode() {
             $issued_ticked      = get_post_meta( $event_id, '_tribe_progressive_ticket_current_number', true );
             $name               = get_the_title( $event_id ) ;
             $thumbnail_url      = get_the_post_thumbnail_url($event_id, 'medium');
-            $orders             = tribe_get_orders_by_event_id($event_id);
+            // $orders             = tribe_get_orders_by_event_id($event_id);
             // $get_percent_ticket = trive_get_site_fees_total_order_ids($orders);
-            $event_data         = get_post_meta( $orders[0] );
-            echo "<pre>";
-            var_dump($event_data);
-            echo "</pre>";
+            // $event_data         = get_post_meta( $orders[0] );
+            // echo "<pre>";
+            // var_dump($event_data);
+            // echo "</pre>";
 
 
     ?>
