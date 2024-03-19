@@ -4829,56 +4829,60 @@ function my_enqueue_qrcode_script() {
     wp_enqueue_script('html5-qrcode', 'https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js', array('jquery'), null, true);
 }
 add_action('wp_enqueue_scripts', 'my_enqueue_qrcode_script');
+
 function display_html5_qrcode_scanner_shortcode() {
     my_enqueue_qrcode_script(); // Make sure to enqueue scripts when shortcode is used
 
     // Scanner HTML
+    $scanner_html = '<div id="qr-reader" style="width:300px; height:300px;"></div>';
+    $scanner_html .= '<button id="toggle-flash-btn" style="margin-top:10px; display:none;">Toggle Flash</button>';
 
-    $scanner_html = '<div id="qr-reader" style="margin-top:100px;width:300px; height:300px;"></div>';
-
-    $scanner_html .= '<button id="toggle-flash-btn" style="margin:50px 0;">Toggle Flash</button>';
     // Inline JavaScript to initialize the QR code scanner
-    $inline_script = <<<EOD
-    <script>
+    $inline_script = <<<JS
     jQuery(document).ready(function($) {
-        console.log("JS LOADED");
         function onScanSuccess(decodedText, decodedResult) {
-            // Handle the scanned code as needed
             console.log('Code scanned = ' + decodedText, decodedResult);
         }
-        
+
         var flashEnabled = false; // Keep track of flash state
-        
+
         // Toggle the flash (torch) mode
         function toggleFlash() {
-            if (html5QrcodeScanner.getState() === Html5QrcodeScannerState.ACTIVE) {
-                // Toggle flash state
-                flashEnabled = !flashEnabled;
-                html5QrcodeScanner.getHtml5Qrcode().toggleFlash(flashEnabled)
+            html5QrcodeScanner.getHtml5Qrcode().toggleFlash(flashEnabled)
                 .then(function() {
+                    flashEnabled = !flashEnabled;
                     console.log('Flash ' + (flashEnabled ? 'on' : 'off'));
                 }).catch(function(err) {
                     console.error('Error toggling flash: ' + err);
                 });
-            }
         }
 
         var config = {
             fps: 10,
-            qrbox: {width: 250, height: 250},
+            qrbox: 250,
             rememberLastUsedCamera: true,
-            supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA],
-            showTorchButtonIfSupported: true // Enable torch button if supported
+            supportedScanTypes: [Html5QrcodeScanTypes.SCAN_TYPE_CAMERA]
         };
-    
-        var html5QrcodeScanner = new Html5QrcodeScanner("qr-reader", config, false);
-        html5QrcodeScanner.render(onScanSuccess);
 
-        // Bind the toggleFlash function to a button click event
-        $('#toggle-flash-btn').click(toggleFlash);
+        var html5QrcodeScanner = new Html5QrcodeScanner("qr-reader", config, false);
+        html5QrcodeScanner.render(onScanSuccess, function(err) {
+            console.error('QR code scanner initialization failed', err);
+        }).then(function() {
+            // Show the flash button only if the scanner is successfully initialized
+            $('#toggle-flash-btn').show();
+            html5QrcodeScanner.getHtml5Qrcode().hasFlash().then(function(hasFlash) {
+                if (hasFlash) {
+                    $('#toggle-flash-btn').click(toggleFlash);
+                } else {
+                    $('#toggle-flash-btn').hide();
+                }
+            }).catch(function(err) {
+                console.error('Error checking flash support: ' + err);
+                $('#toggle-flash-btn').hide();
+            });
+        });
     });
-    </script>
-EOD;
+JS;
 
     // Ensure inline scripts are executed by adding them to the footer
     wp_add_inline_script('html5-qrcode', str_replace(array('<script>', '</script>'), '', $inline_script));
