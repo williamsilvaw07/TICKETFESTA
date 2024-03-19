@@ -4855,13 +4855,7 @@ function display_html5_qrcode_scanner_shortcode() {
     </script>";
 
     // Optional CSS for adjusting the video feed size
-    $custom_css = "<style>
-        #qr-reader video {
-            max-width: 100% !important;
-            max-height: 300px !important;
-        }
-  
-    </style>";
+ 
 
     // Return the scanner HTML, optional CSS, and the inline script
     return $scanner_html . $custom_css . $inline_script;
