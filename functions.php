@@ -4850,6 +4850,6 @@ jQuery(document).ready(function($) {
 EOD;
 
     // Return the HTML for the scanner along with the inline JavaScript
-    return '<div id="qr-reader" style="width:500px; height:500px;"></div>' . $inline_script;
+    return '<div id="qr-reader" style="width:300px; height:1000px;"></div>' . $inline_script;
 }
 add_shortcode('display_html5_qrcode_scanner', 'display_html5_qrcode_scanner_shortcode');
