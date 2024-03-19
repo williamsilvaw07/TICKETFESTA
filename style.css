@@ -2235,7 +2235,7 @@ color: black!important;
     color: #313638!important;
     fill: #313638!important
 }
-.elementor-toggle-item h4{
+.elementor-toggle-item {
     background-color: #121212;
     color: #ffffff;
     cursor: pointer;
