@@ -4833,7 +4833,8 @@ function display_html5_qrcode_scanner_shortcode() {
 
     // Scanner HTML setup
     $scanner_html = '<div id="qr-reader" style="width:300px; height:300px;"></div>';
-    $scanner_html .= '<button id="toggle-flash-btn" style="margin-top:10px; display:block;">Toggle Flash</button>';
+    // Keep the toggle flash button always visible
+    $scanner_html .= '<button id="toggle-flash-btn" style="margin-top:10px;">Toggle Flash</button>';
 
     // Inline JavaScript for initializing the QR code scanner and managing flash
     $inline_script = "
@@ -4851,24 +4852,14 @@ function display_html5_qrcode_scanner_shortcode() {
         var html5QrcodeScanner = new Html5QrcodeScanner('qr-reader', config, false);
         html5QrcodeScanner.render(onScanSuccess).then(function() {
             console.log('Scanner initialized');
-            // Directly check for flash support after initialization
-            html5QrcodeScanner.getHtml5Qrcode().hasFlash().then(function(hasFlash) {
-                console.log('Flash support check:', hasFlash);
-                if (hasFlash) {
-                    $('#toggle-flash-btn').show().on('click', function() {
-                        // Assuming toggleFlash returns a promise that resolves with the flash state
-                        html5QrcodeScanner.getHtml5Qrcode().toggleFlash().then(function(isFlashOn) {
-                            console.log('Flash toggled, now:', isFlashOn ? 'On' : 'Off');
-                        }).catch(function(err) {
-                            console.error('Error toggling flash:', err);
-                        });
-                    });
-                } else {
-                    $('#toggle-flash-btn').hide();
-                }
-            }).catch(function(err) {
-                console.error('Error checking flash support:', err);
-                $('#toggle-flash-btn').hide();
+            $('#toggle-flash-btn').on('click', function() {
+                html5QrcodeScanner.getHtml5Qrcode().toggleFlash().then(function(isFlashOn) {
+                    console.log('Flash toggled, now:', isFlashOn ? 'On' : 'Off');
+                }).catch(function(err) {
+                    console.error('Error toggling flash:', err);
+                    // Provide feedback if flash toggle is not supported
+                    alert('Flash control not supported or failed.');
+                });
             });
         }, function(err) {
             console.error('QR code scanner initialization failed', err);
