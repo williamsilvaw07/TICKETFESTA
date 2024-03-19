@@ -1,7 +1,7 @@
 (function($) {
     
     document.addEventListener("DOMContentLoaded", function(event) {
-        // const video = document.getElementById('video');
+        const video = document.getElementById('video');
 
         // // Check if getUserMedia is supported
         // if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
