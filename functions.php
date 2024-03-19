@@ -4821,37 +4821,63 @@ function my_enqueue_qrcode_script() {
     wp_enqueue_script('html5-qrcode', 'https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.7/html5-qrcode.min.js', array('jquery'), null, true);
 }
 add_action('wp_enqueue_scripts', 'my_enqueue_qrcode_script');
+
+
+
+
+
 function display_html5_qrcode_scanner_shortcode() {
     my_enqueue_qrcode_script(); // Ensures the QR code script is enqueued
 
-    // Scanner HTML setup for responsive design with a visible scanner guide
-    $scanner_html = '<div class="qr-scanner-wrapper" style="padding: 50px; display: flex; justify-content: center; align-items: center"> <!-- Additional div wrapper -->
-                        <div id="qr-reader" style="max-width:400px; max-height:400px; width:100%; aspect-ratio: 1 / 3; position: relative; margin: 20px auto; overflow: hidden;">
-                            <!-- Scanner guide for visual assistance -->
-                            <div id="qr-scanner-guide" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 60%; height: 60%; border: 4px solid #FFD700; box-sizing: border-box;"></div>
-                        </div>
-                     </div>'; 
+    // Scanner HTML setup
+    $scanner_html = '<div class="qr-scanner-wrapper" style="padding: 50px; display: flex; justify-content: center; align-items: center">
+                        <div id="qr-reader" style="max-width:400px; max-height:400px; width:100%; aspect-ratio: 1; position: relative; margin: 20px auto; overflow: hidden;"></div>
+                     </div>';
 
-    // Inline JavaScript for initializing the QR code scanner without dynamic resize logic
+    // Inline JavaScript for checking camera permission cookie and initializing the QR code scanner
     $inline_script = "
     <script>
     jQuery(document).ready(function($) {
-        
-        let html5QrcodeScanner = new Html5QrcodeScanner(
-            'qr-reader', {
-                fps: 10,
-                qrbox: 250, // Set a fixed size for qrbox
-                rememberLastUsedCamera: true,
-                aspectRatio: 1,
-                showTorchButtonIfSupported: true // Enable torch button if supported
-            }, false);
-
-        function onScanSuccess(decodedText, decodedResult) {
-            // Handle successfully scanned QR codes
-            console.log(`Code scanned = ${decodedText}`, decodedResult);
+        // Function to get a cookie by name
+        function getCookie(name) {
+            var nameEQ = name + '=';
+            var ca = document.cookie.split(';');
+            for(var i=0;i < ca.length;i++) {
+                var c = ca[i];
+                while (c.charAt(0)==' ') c = c.substring(1,c.length);
+                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+            }
+            return null;
         }
 
-        html5QrcodeScanner.render(onScanSuccess);
+        // Check if the 'cameraPermissionGranted' cookie is set
+        if(getCookie('cameraPermissionGranted') !== 'true') {
+            // No cookie found, initialize scanner to prompt for permission
+            initializeScanner();
+            
+            // Set the cookie after permission is granted
+            document.cookie = 'cameraPermissionGranted=true; path=/; max-age=' + (10 * 365 * 24 * 60 * 60); // Expires in 10 years
+        } else {
+            // Cookie found, initialize scanner without prompting (browser will still enforce security)
+            initializeScanner();
+        }
+
+        function initializeScanner() {
+            let html5QrcodeScanner = new Html5QrcodeScanner(
+                'qr-reader', {
+                    fps: 10,
+                    qrbox: 250,
+                    rememberLastUsedCamera: true,
+                    aspectRatio: 1,
+                    showTorchButtonIfSupported: true
+                }, false);
+
+            function onScanSuccess(decodedText, decodedResult) {
+                console.log(`Code scanned = ${decodedText}`, decodedResult);
+            }
+
+            html5QrcodeScanner.render(onScanSuccess);
+        }
     });
     </script>";
 
