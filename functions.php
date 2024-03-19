@@ -4819,7 +4819,7 @@ function generate_unique_random_hash($length) {
 
 function my_enqueue_qrcode_script() {
     // Enqueue html5-qrcode script with jQuery dependency
-    wp_enqueue_script('html5-qrcode', 'https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js', array('jquery'), null, true);
+    wp_enqueue_script('html5-qrcode', 'https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.7/html5-qrcode.min.js', array('jquery'), null, true);
 }
 add_action('wp_enqueue_scripts', 'my_enqueue_qrcode_script');
 
@@ -4835,7 +4835,12 @@ jQuery(document).ready(function($) {
         console.log(`Code scanned = ${decodedText}`, decodedResult);
     }
     
-    var config = { fps: 10, qrbox: 250 };
+    var config = {
+        fps: 10,
+        qrbox: 250,
+        torch: true, // This enables the flash toggle option
+        supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA] // Limits to camera scan only, hiding the select image function
+    };
     var html5QrCode = new Html5Qrcode("qr-reader");
     Html5Qrcode.getCameras().then(cameras => {
         if (cameras.length > 0) {
@@ -4851,6 +4856,6 @@ jQuery(document).ready(function($) {
 EOD;
 
     // Return the HTML for the scanner along with the inline JavaScript
-    return '<div id="qr-reader" style="width:500px; height:500px;"></div>' . $inline_script;
+    return '<div id="qr-reader" style="width:300px; height:3 00px;"></div>' . $inline_script;
 }
 add_shortcode('display_html5_qrcode_scanner', 'display_html5_qrcode_scanner_shortcode');
