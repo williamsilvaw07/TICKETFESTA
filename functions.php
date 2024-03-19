@@ -4610,6 +4610,7 @@ function custom_qr_scanner_shortcode() {
     -->
 
     <?php 
+    die('sds');
 
         $event_id   = isset($_GET['event_id']) ? esc_attr( $_GET['event_id'] ) : false;
         if($event_id){
