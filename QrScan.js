@@ -1,6 +1,7 @@
 (function($) {
     
     document.addEventListener("DOMContentLoaded", function(event) {
+        console.log('from qr scanner');
         const video = document.getElementById('video');
         const resultContainer = document.getElementById('result');
 
