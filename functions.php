@@ -4833,8 +4833,9 @@ function display_html5_qrcode_scanner_shortcode() {
     my_enqueue_qrcode_script(); // Make sure to enqueue scripts when shortcode is used
 
     // Scanner HTML
-    $scanner_html = '<div id="qr-reader" style="width:300px; height:300px;"></div>';
     $scanner_html .= '<button id="toggle-flash-btn" style="margin-top:10px;">Toggle Flash</button>';
+    $scanner_html = '<div id="qr-reader" style="width:300px; height:300px;"></div>';
+
 
     // Inline JavaScript to initialize the QR code scanner
     $inline_script = <<<EOD
