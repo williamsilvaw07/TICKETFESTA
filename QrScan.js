@@ -1,7 +1,6 @@
 (function($) {
     
     document.addEventListener("DOMContentLoaded", function(event) {
-        console.log('from qr scanner');
         const video = document.getElementById('video');
         const resultContainer = document.getElementById('result');
 
@@ -47,26 +46,46 @@
             }
         
         }
-        function startScanQR(eventID){
-            const canvas = document.createElement('canvas');
-            const context = canvas.getContext('2d');
+        // function startScanQR(eventID){
+        //     const canvas = document.createElement('canvas');
+        //     const context = canvas.getContext('2d');
+        //     $('#event-pass').removeClass('error');
+        //     $('#event_not_found').hide();
+        //     canvas.width = video.videoWidth;
+        //     canvas.height = video.videoHeight;
+        //     const scanInterval = setInterval(function() {
+        //         context.drawImage(video, 0, 0, canvas.width, canvas.height);
+        //         const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+        //         const code = jsQR(imageData.data, imageData.width, imageData.height);
+        //         if (code) {
+        //             processQRCode(eventID, code.data);
+        //             // resultContainer.textContent = 'QR Code detected: ' + code.data;
+        //             clearInterval(scanInterval);
+        //         }else{
+        //             console.log('QR Code not found :', code)
+        //         }
+        //     }, 200);
+        // }
+
+        function startScanQR(eventID) {
+            // Remove error classes and hide not found message
             $('#event-pass').removeClass('error');
             $('#event_not_found').hide();
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
-            const scanInterval = setInterval(function() {
-                context.drawImage(video, 0, 0, canvas.width, canvas.height);
-                const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
-                const code = jsQR(imageData.data, imageData.width, imageData.height);
-                if (code) {
-                    processQRCode(eventID, code.data);
-                    // resultContainer.textContent = 'QR Code detected: ' + code.data;
-                    clearInterval(scanInterval);
-                }else{
-                    console.log('QR Code not found :', code)
-                }
-            }, 200);
+          
+            const html5QrcodeScanner = new Html5QrcodeScanner("reader", { fps: 12 });
+          
+            // Success callback - called when a QR code is scanned
+            const onScanSuccess = (qrCodeText) => {
+              processQRCode(eventID, qrCodeText);
+              html5QrcodeScanner.stop(); // Stop scanner after successful scan
+            };
+          
+            // Render the scanner UI and start scanning
+            html5QrcodeScanner.render(onScanSuccess, (err) => {
+              console.error("Error:", err);
+            });
         }
+
         function checkForEventPass(eventPass){
             $.ajax({
                 url: window.tribe_ajax.ajax_url, // This is set by WordPress and points to admin-ajax.php
