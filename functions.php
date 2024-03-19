@@ -4818,23 +4818,19 @@ function generate_unique_random_hash($length) {
 
 
 
-
 function my_enqueue_qrcode_script() {
     // Enqueue html5-qrcode script with jQuery dependency
     wp_enqueue_script('html5-qrcode', 'https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.7/html5-qrcode.min.js', array('jquery'), null, true);
-    // Enqueue custom CSS to hide file input elements
-    wp_enqueue_style('custom-qr-style', get_stylesheet_directory_uri() . '/css/custom-qr.css');
 }
 add_action('wp_enqueue_scripts', 'my_enqueue_qrcode_script');
-
 
 function display_html5_qrcode_scanner_shortcode() {
     my_enqueue_qrcode_script(); // Ensures the QR code script is enqueued
 
-    // Adjusted Scanner HTML setup for responsive design, including a border for visual guidance
-    $scanner_html = '<div id="qr-reader" style="max-width:400px; max-height:400px; width:100%; aspect-ratio: 1 / 1; position: relative; margin: 20px auto; border: 5px solid #FFD700; box-shadow: 0 0 10px #000; overflow: hidden;"></div>';
+    // Scanner HTML setup with inline styles for responsive design and a border
+    $scanner_html = '<div id="qr-reader" style="max-width:400px; max-height:400px; width:100%; aspect-ratio: 1 / 1; position: relative; margin: 20px auto; border: 5px solid #FFD700; box-shadow: 0 0 10px rgba(0,0,0,0.5); overflow: hidden;"></div>';
 
-    // Inline JavaScript for initializing the QR code scanner with a responsive qrbox size
+    // Inline JavaScript for initializing the QR code scanner with responsive qrbox size
     $inline_script = "
     <script>
     jQuery(document).ready(function($) {
