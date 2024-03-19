@@ -4836,68 +4836,46 @@ function display_html5_qrcode_scanner_shortcode() {
     $scanner_html = '<div id="qr-reader" style="max-width:300px; max-height:300px; margin-bottom:200px;"></div>';
 
     // Inline JavaScript for initializing the QR code scanner with torch toggle button
+    // and ensuring the camera selection is remembered
     $inline_script = "
     <script>
     jQuery(document).ready(function($) {
-        // Function to check if a cookie exists
-        function getCookie(name) {
-            let cookieArr = document.cookie.split(';');
-            for(let i = 0; i < cookieArr.length; i++) {
-                let cookiePair = cookieArr[i].split('=');
-                if(name == cookiePair[0].trim()) {
-                    return decodeURIComponent(cookiePair[1]);
-                }
-            }
-            return null;
+        let html5QrcodeScanner = new Html5QrcodeScanner(
+            'qr-reader', {
+                fps: 10,
+                qrbox: 300, // Ensures the scanning area is square and does not exceed 300x300px
+                rememberLastUsedCamera: true,
+                aspectRatio: 1, // Maintain square aspect ratio
+                showTorchButtonIfSupported: true // This enables the torch toggle button if supported
+            }, false);
+        
+        function onScanSuccess(decodedText, decodedResult) {
+            // Handle the scanned code as needed
+            console.log(`Code scanned = ${decodedText}`, decodedResult);
         }
-
-        // Function to set a cookie
-        function setCookie(name, value, days) {
-            let expires = '';
-            if (days) {
-                let date = new Date();
-                date.setTime(date.getTime() + (days*24*60*60*1000));
-                expires = '; expires=' + date.toUTCString();
-            }
-            document.cookie = name + '=' + (value || '')  + expires + '; path=/';
-        }
-
-        let cameraConsent = getCookie('cameraConsent');
-
-        if (cameraConsent !== 'granted') {
-            // Explicitly ask for camera access here if not already granted
-            navigator.mediaDevices.getUserMedia({ video: true })
-                .then(function(stream) {
-                    // User has granted access, save this in a cookie
-                    setCookie('cameraConsent', 'granted', 365);
-                    initializeScanner();
-                }).catch(function(error) {
-                    console.log('Access denied', error);
-                });
-        } else {
-            // Initialize the scanner directly if consent is already granted
-            initializeScanner();
-        }
-
-        function initializeScanner() {
-            let html5QrcodeScanner = new Html5QrcodeScanner(
-                'qr-reader', {
-                    fps: 10,
-                    qrbox: 300,
-                    rememberLastUsedCamera: true,
-                    aspectRatio: 1.7777778,
-                    showTorchButtonIfSupported: true
-                }, false);
-            
-            function onScanSuccess(decodedText, decodedResult) {
-                console.log(`Code scanned = ${decodedText}`, decodedResult);
-            }
-            
-            html5QrcodeScanner.render(onScanSuccess);
-        }
+        
+        html5QrcodeScanner.render(onScanSuccess);
     });
     </script>";
 
-    return $scanner_html . $inline_script;
+    // Optional CSS to ensure the video feed is square and does not exceed 300px in width or height
+    $custom_css = "<style>
+        #qr-reader video {
+            max-width: 300px !important;
+            max-height: 300px !important;
+            width: auto !important; /* Adjusts width to maintain aspect ratio */
+            height: auto !important; /* Adjusts height to maintain aspect ratio */
+        }
+        #qr-reader {
+            max-width: 300px !important;
+            max-height: 300px !important;
+            width: 300px !important; /* Set a specific size to keep it square */
+            height: 300px !important; /* Set a specific size to keep it square */
+            margin: auto;
+        }
+    </style>";
+
+    // Return the scanner HTML, optional CSS, and the inline script
+    return $scanner_html . $custom_css . $inline_script;
 }
 add_shortcode('display_html5_qrcode_scanner', 'display_html5_qrcode_scanner_shortcode');
