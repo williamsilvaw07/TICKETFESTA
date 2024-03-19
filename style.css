@@ -2251,35 +2251,35 @@ color: black!important;
     border-radius: 4px;
 }
 
-.elementor-toggle-item:nth-child(1) .accordion {
+.elementor-toggle-item:nth-child(1) {
     border-color: #ffcc00; 
 }
 
-.elementor-toggle-item:nth-child(2) .accordion {
+.elementor-toggle-item:nth-child(2) {
     border-color: #ff00ff; 
 }
 
-.elementor-toggle-item:nth-child(3) .accordion {
+.elementor-toggle-item:nth-child(3) {
     border-color: #00ccff;
 }
 
-.elementor-toggle-item:nth-child(4) .accordion {
+.elementor-toggle-item:nth-child(4) {
     border-color: #33cc33; 
 }
 
-.elementor-toggle-item:nth-child(5) .accordion {
+.elementor-toggle-item:nth-child(5) {
     border-color: #cc00ff;
 }
 
-.elementor-toggle-item:nth-child(6) .accordion {
+.elementor-toggle-item:nth-child(6) {
     border-color: #ff3333; 
 }
 
-.elementor-toggle-item:nth-child(7) .accordion {
+.elementor-toggle-item:nth-child(7) {
     border-color: #3399ff; 
 }
 
-.elementor-toggle-item:nth-child(8) .accordion {
+.elementor-toggle-item:nth-child(8) {
     border-color: #ff6600; 
 }
 /***********END********/
