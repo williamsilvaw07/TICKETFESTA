@@ -14,20 +14,19 @@
         //         console.error('Error accessing the camera:', error);
         //     });
         // }
-        $('.tabs-nav li.tab').click(function(e) {
+        $('.tabs-nav li.tab a').click(function(e) {
             e.preventDefault(); // Prevent default link behavior
     
-            var target = $(this).find('a').attr('href');
+            var target = $(this).attr('href');
     
             // Remove active class from all tabs and content
             $('.tabs-nav li.tab').removeClass('active');
             $('.tab-content').removeClass('active');
     
             // Add active class to clicked tab and its corresponding content
-            $(this).addClass('active');
-            $(target).find('a').addClass('active');
+            $(this).parent().addClass('active');
+            $(target).addClass('active');
         });
-
 
         jQuery("#scan-button").on('click', function(){
             if($('#event-pass').val()){
