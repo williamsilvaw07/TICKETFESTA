@@ -34,10 +34,10 @@
   }
 
   .footer_main_div{
-    font-family: "Plus Jakarta Sans", Sans-serif!important;
+    font-family: 'Poppins', sans-serif!important;
   }
   .tribe-events-c-events-bar__filter-button-text , html button{
-    font-family: "Plus Jakarta Sans", Sans-serif!important;
+    font-family: 'Poppins', sans-serif!important;
   }
   .entry-content .alignwide, body:not(.no-sidebar) .entry-content .alignfull{
     margin-left:inherit!important;
@@ -895,7 +895,7 @@ a.tribe-button.tribe-button-primary.add-new , .organizers_add_new_btn{
 .tribe-upcoming{
     background-color: #3d3d3f!important;
     text-transform: capitalize!important;
-    font-family: "Plus Jakarta Sans", Sans-serif!important;
+    font-family: 'Poppins', sans-serif!important;
     letter-spacing: 1px!important;
     font-weight: 200!important;
 }
@@ -921,7 +921,7 @@ a.tribe-button.tribe-button-primary.add-new , .organizers_add_new_btn{
 }
 
 #tinymce p{
-    font-family: "Plus Jakarta Sans", Sans-serif!important;  
+    font-family: 'Poppins', sans-serif!important;  
 
 }
 
