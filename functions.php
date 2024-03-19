@@ -4834,7 +4834,7 @@ function display_html5_qrcode_scanner_shortcode() {
 
     // Scanner HTML setup with an overlay for the camera guide and specified max dimensions for the container
     $scanner_html = '<div id="qr-reader" style="max-width:400px; max-height:400px; width:100%; height:auto; position: relative; margin:auto; display: flex; justify-content: center; align-items: center;">
-                         <div id="qr-overlay" style="position: absolute; width: 150px; height: 150px; border: 5px solid yellow; box-sizing: border-box;"></div>
+                         <div id="qr-overlay" style="position: absolute; width: 350px; height:350px; border: 5px solid yellow; box-sizing: border-box;"></div>
                      </div>';
 
     // Inline JavaScript for initializing the QR code scanner with a square viewfinder
@@ -4844,7 +4844,7 @@ function display_html5_qrcode_scanner_shortcode() {
         let html5QrcodeScanner = new Html5QrcodeScanner(
             'qr-reader', {
                 fps: 10,
-                qrbox: 450, // Set qrbox size to keep the scanning area square
+                qrbox: 150, // Set qrbox size to keep the scanning area square
                 rememberLastUsedCamera: true,
                 aspectRatio: 1,
                 showTorchButtonIfSupported: true // This enables the torch toggle button if supported
