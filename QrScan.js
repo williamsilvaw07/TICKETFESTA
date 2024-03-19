@@ -1,19 +1,32 @@
 (function($) {
     
     document.addEventListener("DOMContentLoaded", function(event) {
-        const video = document.getElementById('video');
+        // const video = document.getElementById('video');
 
-        // Check if getUserMedia is supported
-        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-            navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
-            .then(function(stream) {
-                video.srcObject = stream;
-                video.play();
-            })
-            .catch(function(error) {
-                console.error('Error accessing the camera:', error);
-            });
-        }
+        // // Check if getUserMedia is supported
+        // if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        //     navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
+        //     .then(function(stream) {
+        //         video.srcObject = stream;
+        //         video.play();
+        //     })
+        //     .catch(function(error) {
+        //         console.error('Error accessing the camera:', error);
+        //     });
+        // }
+        $('.tabs-nav li.tab a').click(function(e) {
+            e.preventDefault(); // Prevent default link behavior
+    
+            var target = $(this).attr('href');
+    
+            // Remove active class from all tabs and content
+            $('.tabs-nav li.tab').removeClass('active');
+            $('.tab-content').removeClass('active');
+    
+            // Add active class to clicked tab and its corresponding content
+            $(this).parent().addClass('active');
+            $(target).addClass('active');
+        });
 
         jQuery("#scan-button").on('click', function(){
             if($('#event-pass').val()){

@@ -4526,11 +4526,89 @@ function custom_qr_scanner_shortcode() {
     input#event-pass.error {
         border: 2px solid #ea4335 !important;
     }
+
+        /* Style the tabs container */
+    .tabs-container {
+        display: flex;
+        flex-direction: column; /* Stack tabs vertically on mobile */
+        margin: 0 auto;
+        width: 80%; /* Adjust width as needed */
+    }
+
+    /* Style the tabs navigation list */
+    .tabs-nav {
+        display: flex;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        border-bottom: 1px solid #ddd; /* Optional border */
+    }
+
+    /* Style the individual tabs */
+    .tabs-nav li.tab {
+        padding: 10px 20px;
+        cursor: pointer;
+    }
+
+    /* Style the active tab */
+    .tabs-nav li.tab.active {
+        background-color: #eee;
+    }
+
+    /* Style the tabs navigation links */
+    .tabs-nav li.tab a {
+        text-decoration: none;
+        color: #333;
+    }
+
+    /* Style the tab content container */
+    .tab-content-container {
+        flex: 1; /* Allow content to fill remaining space */
+    }
+
+    /* Style the individual tab content sections */
+    .tab-content {
+        padding: 20px;
+        display: none; /* Hide all content initially */
+    }
+
+    /* Style the active tab content */
+    .tab-content.active {
+        display: block;
+    }
+
+    /* Media query for responsive behavior (tablet and mobile) */
+    @media (max-width: 768px) {
+        .tabs-container {
+            flex-direction: column; /* Stack tabs vertically on mobile */
+        }
+    }
+
+    /* Media query for desktop (optional, for more control) */
+    @media (min-width: 768px) {
+        .tabs-container {
+            flex-direction: row;  /* Tabs side-by-side on desktop */
+        }
+    }
     </style>
     <!-- <div id="qr-reader" style="width: 100%; height: auto;"></div>
     <div id="qr-reader-results"></div>
 
     -->
+    <div class="tabs-container">
+        <ul class="tabs-nav">
+            <li class="tab active"><a href="#tab1">Tab 1</a></li>
+            <li class="tab"><a href="#tab2">Tab 2</a></li>
+        </ul>
+        <div class="tab-content-container">
+            <div class="tab-content active" id="tab1">
+                <p>This is the content for Tab 1. You can add any HTML elements here.</p>
+            </div>
+            <div class="tab-content" id="tab2">
+                <p>This is the content for Tab 2. You can add any HTML elements here as well.</p>
+            </div>
+        </div>
+    </div>
 
     <div id="video-container">
         <input type="text" id="event-pass" name="event-pass" placeholder="enter event pass">
