@@ -4838,7 +4838,7 @@ function display_html5_qrcode_scanner_shortcode() {
     <script>
     jQuery(document).ready(function($) {
         function onScanSuccess(decodedText, decodedResult) {
-            // Handle the scanned text as needed
+            // Handle the scanned code as needed
             console.log(`Code scanned = ${decodedText}`, decodedResult);
         }
     
@@ -4847,18 +4847,16 @@ function display_html5_qrcode_scanner_shortcode() {
             qrbox: {width: 250, height: 250},
             rememberLastUsedCamera: true,
             supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA],
-            showTorchButtonIfSupported: true // Show torch button if supported
+            showTorchButtonIfSupported: true // Enable torch button if supported
         };
     
-        // Create a new Html5QrcodeScanner
-        let html5QrcodeScanner = new Html5QrcodeScanner(
-            "qr-reader", config, /* verbose= */ false);
+        let html5QrcodeScanner = new Html5QrcodeScanner("qr-reader", config, false);
         html5QrcodeScanner.render(onScanSuccess);
     });
     </script>
     EOD;
     
-        // Return the HTML for the scanner along with the inline JavaScript
+        // Return the scanner HTML and the inline script
         return '<div id="qr-reader" style="width:300px; height:300px;"></div>' . $inline_script;
     }
     add_shortcode('display_html5_qrcode_scanner', 'display_html5_qrcode_scanner_shortcode');
