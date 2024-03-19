@@ -4610,21 +4610,21 @@ function custom_qr_scanner_shortcode() {
             <p>This is the content for Tab 1. You can add any HTML elements here.</p>
         </div>
         <div class="tab-content" id="tab2">
-            <p>This is the content for Tab 2. You can add any HTML elements here as well.</p>
+            <div id="video-container">
+                <input type="text" id="event-pass" name="event-pass" placeholder="enter event pass">
+                <video id="video" playsinline style="width: 500px"></video>
+                <div id="result"></div>
+                <span id="event_not_found" style='display:none'>No event found that for the event pass.</span>
+                <button id="scan-button" >Scan QR Code</button>
+                <div class="checkin-details"  style='display:none'>
+                    <div class="name"></div>
+                    <div class="email"></div>
+                    <div class="checkin-time"></div>
+                </div>
+            </div>
         </div>
     </div>
-    <div id="video-container">
-        <input type="text" id="event-pass" name="event-pass" placeholder="enter event pass">
-        <video id="video" playsinline style="width: 500px"></video>
-        <div id="result"></div>
-        <span id="event_not_found" style='display:none'>No event found that for the event pass.</span>
-        <button id="scan-button" >Scan QR Code</button>
-        <div class="checkin-details"  style='display:none'>
-            <div class="name"></div>
-            <div class="email"></div>
-            <div class="checkin-time"></div>
-        </div>
-    </div>
+    
     <?php
     return ob_get_clean();
 }
