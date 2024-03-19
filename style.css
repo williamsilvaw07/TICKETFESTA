@@ -2235,5 +2235,19 @@ color: black!important;
     color: #313638!important;
     fill: #313638!important
 }
-
+.elementor-toggle-item h4{
+    background-color: #121212;
+    color: #ffffff;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    text-align: left;
+    border: none;
+    outline: none;
+    transition: 0.4s;
+    position: relative;
+    font-size: 18px !important;
+    font-weight: 500;
+    border-radius: 4px;
+}
 /***********END********/
