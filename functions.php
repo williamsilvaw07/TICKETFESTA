@@ -4832,30 +4832,48 @@ add_action('wp_enqueue_scripts', 'my_enqueue_qrcode_script');
 function display_html5_qrcode_scanner_shortcode() {
     my_enqueue_qrcode_script(); // Ensures the QR code script is enqueued
 
-    // Scanner HTML setup with an overlay for the camera guide and specified max dimensions for the container
-    $scanner_html = '<div id="qr-reader" style="max-width:400px; max-height:400px; width:100%; height:auto; position: relative; margin:auto; display: flex; justify-content: center; align-items: center;">
-                         <div id="qr-overlay" style="position: absolute; width: 350px; height:350px; border: 5px solid yellow; box-sizing: border-box;"></div>
-                     </div>';
+    // Adjusted Scanner HTML setup for responsive design
+    $scanner_html = '<div id="qr-reader" style="max-width:400px; max-height:400px; width:100%; aspect-ratio: 1 / 1; position: relative; margin: auto;"></div>';
 
-    // Inline JavaScript for initializing the QR code scanner with a square viewfinder
+    // Inline JavaScript for initializing the QR code scanner with responsive qrbox size
     $inline_script = "
     <script>
     jQuery(document).ready(function($) {
+        // Calculate a responsive qrbox size based on the width of the container
+        function calculateQrboxSize() {
+            const readerWidth = $('#qr-reader').width();
+            let qrboxSize = Math.min(300, readerWidth - 10); // Ensure qrbox is not larger than 300px and fits within the container
+            return qrboxSize;
+        }
+        
         let html5QrcodeScanner = new Html5QrcodeScanner(
             'qr-reader', {
                 fps: 10,
-                qrbox: 150, // Set qrbox size to keep the scanning area square
+                qrbox: calculateQrboxSize(),
                 rememberLastUsedCamera: true,
                 aspectRatio: 1,
-                showTorchButtonIfSupported: true // This enables the torch toggle button if supported
+                showTorchButtonIfSupported: true // Enables the torch toggle button if supported
             }, false);
-        
+
         function onScanSuccess(decodedText, decodedResult) {
-            // Handle the scanned code as needed
             console.log(`Code scanned = ${decodedText}`, decodedResult);
         }
         
         html5QrcodeScanner.render(onScanSuccess);
+
+        // Optional: Adjust qrbox size on window resize for a fully responsive design
+        $(window).resize(function() {
+            html5QrcodeScanner.clear();
+            html5QrcodeScanner = new Html5QrcodeScanner(
+                'qr-reader', {
+                    fps: 10,
+                    qrbox: calculateQrboxSize(),
+                    rememberLastUsedCamera: true,
+                    aspectRatio: 1,
+                    showTorchButtonIfSupported: true
+                }, false);
+            html5QrcodeScanner.render(onScanSuccess);
+        });
     });
     </script>";
 
