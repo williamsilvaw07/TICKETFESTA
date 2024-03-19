@@ -4827,34 +4827,30 @@ function display_html5_qrcode_scanner_shortcode() {
     
     // Inline JavaScript to initialize the QR code scanner
     $inline_script = <<<EOD
-<script>
-jQuery(document).ready(function($) {
-    function onScanSuccess(decodedText, decodedResult) {
-        // Handle the scanned text as needed.
-        console.log(`Code scanned = ${decodedText}`, decodedResult);
-    }
-    
-    var config = {
-        fps: 10,
-        qrbox: 250,
-        torch: true, // This enables the flash toggle option
-        supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA] // Limits to camera scan only, hiding the select image function
-    };
-    var html5QrCode = new Html5Qrcode("qr-reader");
-    Html5Qrcode.getCameras().then(cameras => {
-        if (cameras.length > 0) {
-            html5QrCode.start({ facingMode: "environment" }, config, onScanSuccess);
-        } else {
-            console.error("No cameras found.");
+    <script>
+    jQuery(document).ready(function($) {
+        function onScanSuccess(decodedText, decodedResult) {
+            // Handle the scanned text as needed
+            console.log(`Code scanned = ${decodedText}`, decodedResult);
         }
-    }).catch(err => {
-        console.error("Unable to start QR scanner", err);
+    
+        var config = {
+            fps: 10,
+            qrbox: {width: 250, height: 250},
+            rememberLastUsedCamera: true,
+            supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA],
+            showTorchButtonIfSupported: true // Show torch button if supported
+        };
+    
+        // Create a new Html5QrcodeScanner
+        let html5QrcodeScanner = new Html5QrcodeScanner(
+            "qr-reader", config, /* verbose= */ false);
+        html5QrcodeScanner.render(onScanSuccess);
     });
-});
-</script>
-EOD;
-
-    // Return the HTML for the scanner along with the inline JavaScript
-    return '<div id="qr-reader" style="width:300px; height:3 00px;"></div>' . $inline_script;
-}
-add_shortcode('display_html5_qrcode_scanner', 'display_html5_qrcode_scanner_shortcode');
+    </script>
+    EOD;
+    
+        // Return the HTML for the scanner along with the inline JavaScript
+        return '<div id="qr-reader" style="width:300px; height:300px;"></div>' . $inline_script;
+    }
+    add_shortcode('display_html5_qrcode_scanner', 'display_html5_qrcode_scanner_shortcode');
