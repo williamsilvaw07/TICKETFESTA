@@ -73,9 +73,11 @@
             $('#event_not_found').hide();
           
             const html5QrcodeScanner = new Html5QrcodeScanner("video", { fps: 12 });
-          
+            console.log('html5QrcodeScanner: ', Html5QrcodeScanner);
+
             // Success callback - called when a QR code is scanned
             const onScanSuccess = (qrCodeText) => {
+                console.log('success: ', qrCodeText);
               processQRCode(eventID, qrCodeText);
               html5QrcodeScanner.stop(); // Stop scanner after successful scan
             };
