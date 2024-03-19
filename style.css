@@ -2304,7 +2304,8 @@ body .div_freatue_section svg{
     color: #ffffff !important 
 }
 .price_section_dark a{
-    color: black;
+    color: black!important 
+
 }
 .price_section ul{
     display: flex;
