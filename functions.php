@@ -4834,7 +4834,7 @@ function display_html5_qrcode_scanner_shortcode() {
 
     // Scanner HTML
     $scanner_html .= '<button id="toggle-flash-btn" style="margin:50px 0;">Toggle Flash</button>';
-    $scanner_html = '<div id="qr-reader" style="width:300px; height:300px;"></div>';
+    $scanner_html = '<div id="qr-reader" style="margin-top:100px;width:300px; height:300px;"></div>';
 
 
     // Inline JavaScript to initialize the QR code scanner
