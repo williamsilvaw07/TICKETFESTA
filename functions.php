@@ -4835,13 +4835,30 @@ function display_html5_qrcode_scanner_shortcode() {
     
     // Inline JavaScript to initialize the QR code scanner
     $inline_script = <<<EOD
+    $inline_script = <<<EOD
     <script>
     jQuery(document).ready(function($) {
         function onScanSuccess(decodedText, decodedResult) {
             // Handle the scanned code as needed
             console.log(`Code scanned = ${decodedText}`, decodedResult);
         }
-    
+        
+        var flashEnabled = false; // Keep track of flash state
+        
+        // Toggle the flash (torch) mode
+        function toggleFlash() {
+            if (html5QrcodeScanner.getState() === Html5QrcodeScannerState.ACTIVE) {
+                // Toggle flash state
+                flashEnabled = !flashEnabled;
+                html5QrcodeScanner.getHtml5Qrcode().toggleFlash(flashEnabled)
+                .then(function() {
+                    console.log(`Flash ${flashEnabled ? 'on' : 'off'}`);
+                }).catch(function(err) {
+                    console.error(`Error toggling flash: ${err}`);
+                });
+            }
+        }
+
         var config = {
             fps: 10,
             qrbox: {width: 250, height: 250},
@@ -4852,11 +4869,14 @@ function display_html5_qrcode_scanner_shortcode() {
     
         let html5QrcodeScanner = new Html5QrcodeScanner("qr-reader", config, false);
         html5QrcodeScanner.render(onScanSuccess);
+
+        // Bind the toggleFlash function to a button click event
+        $('#toggle-flash-btn').on('click', toggleFlash);
     });
     </script>
     EOD;
     
-        // Return the scanner HTML and the inline script
-        return '<div id="qr-reader" style="width:300px; height:300px;"></div>' . $inline_script;
-    }
-    add_shortcode('display_html5_qrcode_scanner', 'display_html5_qrcode_scanner_shortcode');
+    // Return the scanner HTML, a button to toggle the flash, and the inline script
+    return '<div id="qr-reader" style="width:300px; height:300px;"></div><button id="toggle-flash-btn" style="margin-top:10px;">Toggle Flash</button>' . $inline_script;
+}
+add_shortcode('display_html5_qrcode_scanner', 'display_html5_qrcode_scanner_shortcode');
