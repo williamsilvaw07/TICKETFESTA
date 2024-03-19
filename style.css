@@ -2254,6 +2254,11 @@ color: black!important;
 }
 .elementor-toggle-item p{
     padding-top: 15px!important;
+    margin-bottom:0!important
+}
+.elementor-toggle-item .elementor-active{
+    border: 0px!important;
+    padding: 0!important;
 }
 .elementor-toggle-item h4{
     padding-bottom: 0!important;
