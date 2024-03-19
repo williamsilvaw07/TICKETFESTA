@@ -4612,7 +4612,8 @@ function custom_qr_scanner_shortcode() {
     <?php 
     // die('sds');
 
-        $event_id   = isset($_GET['event_id']) ? esc_attr( $_GET['event_id'] ) : false;
+        $event_id = isset($_GET['event_id']) ? esc_attr( $_GET['event_id'] ) : false;
+        var_dump(esc_attr( $_GET['event_id'] ));
         if($event_id){
             $start_date         = get_post_meta( $event_id, '_EventStartDate', true );
             $issued_ticked      = get_post_meta( $event_id, '_tribe_progressive_ticket_current_number', true );
