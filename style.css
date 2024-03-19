@@ -2251,36 +2251,11 @@ color: black!important;
     border-radius: 4px;
     border-left: 2px solid;
 }
-
-.elementor-toggle-item:nth-child(1) {
-    border-color: #ffcc00; 
+.elementor-toggle-item:nth-child(odd) {
+    border-color: white; 
 }
 
-.elementor-toggle-item:nth-child(2) {
-    border-color: #ff00ff; 
-}
-
-.elementor-toggle-item:nth-child(3) {
-    border-color: #00ccff;
-}
-
-.elementor-toggle-item:nth-child(4) {
-    border-color: #33cc33; 
-}
-
-.elementor-toggle-item:nth-child(5) {
-    border-color: #cc00ff;
-}
-
-.elementor-toggle-item:nth-child(6) {
-    border-color: #ff3333; 
-}
-
-.elementor-toggle-item:nth-child(7) {
-    border-color: #3399ff; 
-}
-
-.elementor-toggle-item:nth-child(8) {
-    border-color: #ff6600; 
+.elementor-toggle-item:nth-child(even) {
+    border-color: #D3FA16; 
 }
 /***********END********/
