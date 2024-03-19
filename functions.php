@@ -4609,6 +4609,7 @@ function custom_qr_scanner_shortcode() {
             $start_date = get_post_meta( $event_id, '_EventStartDate', true );
             $issued_ticked = get_post_meta( $event_id, '_tribe_progressive_ticket_current_number', true );
             $name = get_the_title( $event_id ) ;
+            $thumbnail_url = get_the_post_thumbnail_url($post_id, 'thumbnail');
             // echo "<pre>";
             // var_dump($event_data);
             // echo "</pre>";
@@ -4624,7 +4625,7 @@ function custom_qr_scanner_shortcode() {
             <div class="tab-content-container">
                 <div class="tab-content active" id="tab1">
                     <div class="event-container">
-                        <img src="" alt="" class="event-image">
+                        <img src="<?php echo esc_url( $thumbnail_url );?>" alt="" class="event-image">
                         <div class="name">Name: <?php echo $name?> </div>
                         <div class="date">Date: <?php echo $start_date; ?></div>
                         <!-- <div class="location">Location: </div> -->
