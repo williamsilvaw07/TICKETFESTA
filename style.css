@@ -2277,4 +2277,8 @@ body .div_freatue_section svg{
 .elementor-toggle-item:nth-child(even) {
     border-color: #D3FA16; 
 }
+
+.price_section_green{
+    color: #313638 !important
+}
 /***********END********/
