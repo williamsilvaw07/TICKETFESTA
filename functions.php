@@ -4604,48 +4604,52 @@ function custom_qr_scanner_shortcode() {
 
     <?php 
         $event_id   = isset($_GET['event_id']) ? esc_attr( $_GET['event_id'] ) : false;
-        $event_data = get_post_meta( $event_id );
-
-        echo "<pre>";
-        var_dump($event_data);
-        echo "</pre>";
+        if($event_id){
+            $event_data = get_post_meta( $event_id );
+            $start_date = get_post_meta( $event_id, '_EventStartDate', true );
+            $issued_ticked = get_post_meta( $event_id, '_tribe_progressive_ticket_current_number', true );
+            $name = the_title( $event_id ) ;
+            // echo "<pre>";
+            // var_dump($event_data);
+            // echo "</pre>";
 
 
     ?>
-    <div class="tabs-container">
-        <ul class="tabs-nav">
-            <li class="tab tab1 active"><a href="#tab1"> Event Details</a></li>
-            <li class="tab tab2"><a href="#tab2">Scan QR Code</a></li>
-        </ul>
-    </div>
-    <div class="tab-content-container">
-        <div class="tab-content active" id="tab1">
-            <div class="event-container">
-                <img src="" alt="" class="event-image">
-                <div class="name">Name: </div>
-                <div class="date">Date: </div>
-                <div class="location">Location: </div>
-                <div class="tickets">Tickets: </div>
-                <div class="tickets-percent">Ticket Percent: </div>
+            <div class="tabs-container">
+                <ul class="tabs-nav">
+                    <li class="tab tab1 active"><a href="#tab1"> Event Details</a></li>
+                    <li class="tab tab2"><a href="#tab2">Scan QR Code</a></li>
+                </ul>
             </div>
-        </div>
-        <div class="tab-content" id="tab2">
-            <div id="video-container">
-                <input type="text" id="event-pass" name="event-pass" placeholder="enter event pass">
-                <video id="video" playsinline style="width: 500px"></video>
-                <div id="result"></div>
-                <span id="event_not_found" style='display:none'>No event found that for the event pass.</span>
-                <button id="scan-button" >Scan QR Code</button>
-                <div class="checkin-details"  style='display:none'>
-                    <div class="name"></div>
-                    <div class="email"></div>
-                    <div class="checkin-time"></div>
+            <div class="tab-content-container">
+                <div class="tab-content active" id="tab1">
+                    <div class="event-container">
+                        <img src="" alt="" class="event-image">
+                        <div class="name">Name: <?php echo $name?> </div>
+                        <div class="date">Date: <?php echo $start_date; ?></div>
+                        <!-- <div class="location">Location: </div> -->
+                        <div class="tickets">Issued Tickets: <?php echo $issued_ticked;?> </div>
+                        <div class="tickets-percent">Ticket Percent: </div>
+                    </div>
+                </div>
+                <div class="tab-content" id="tab2">
+                    <div id="video-container">
+                        <input type="text" id="event-pass" name="event-pass" placeholder="enter event pass">
+                        <video id="video" playsinline style="width: 500px"></video>
+                        <div id="result"></div>
+                        <span id="event_not_found" style='display:none'>No event found that for the event pass.</span>
+                        <button id="scan-button" >Scan QR Code</button>
+                        <div class="checkin-details"  style='display:none'>
+                            <div class="name"></div>
+                            <div class="email"></div>
+                            <div class="checkin-time"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
     
     <?php
+    }
     return ob_get_clean();
 }
 add_shortcode('custom_qr_scanner', 'custom_qr_scanner_shortcode');
