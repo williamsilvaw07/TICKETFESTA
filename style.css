@@ -69,7 +69,7 @@ font-family: 'Roboto', sans-serif;
   }
 body h1 ,body h2,body h3,body h4,body h5,body h6,html p,html a,body span,dd,dt, .main-navigation .main-nav ul li a{
 color:white!important;
-font-family: "Plus Jakarta Sans", Sans-serif;
+font-family: 'Roboto', sans-serif;
 }
 #tribe-events-pg-template {
     max-width: 1800px;
