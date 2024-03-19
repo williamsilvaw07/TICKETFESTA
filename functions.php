@@ -4828,8 +4828,8 @@ jQuery(document).ready(function($) {
     var config = { fps: 10, qrbox: 250 };
     var html5QrCode = new Html5Qrcode("qr-reader");
     
-    // Check if camera access is already granted (by checking cookies)
-    var cameraAccessGranted = Cookies.get('cameraAccess') === 'granted';
+    // Check if camera access is already granted (by checking localStorage)
+    var cameraAccessGranted = localStorage.getItem('cameraAccess') === 'granted';
     
     // If camera access is granted, start the QR code scanner immediately
     if (cameraAccessGranted) {
@@ -4844,8 +4844,8 @@ jQuery(document).ready(function($) {
         // If camera access is not granted, request camera access
         navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
         .then(function(stream) {
-            // Set a cookie to remember that camera access has been granted
-            Cookies.set('cameraAccess', 'granted', { expires: 365 }); // Cookie will expire in a year
+            // Set localStorage to remember that camera access has been granted
+            localStorage.setItem('cameraAccess', 'granted');
             Html5Qrcode.getCameras().then(cameras => {
                 if (cameras.length > 0) {
                     html5QrCode.start(cameras[0].id, config, onScanSuccess); // Start QR code scanning
