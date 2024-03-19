@@ -97,6 +97,8 @@
                     event_pass : eventPass
                 },
                 success: function(response) {
+                    $('#scan-button').hide();
+
                     // Handle the response from the server
                     console.log('ajax response', response);
                     if(response.match){
