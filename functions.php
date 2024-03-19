@@ -4820,3 +4820,43 @@ function generate_unique_random_hash($length) {
 
 
 
+
+
+
+
+function my_enqueue_qrcode_script() {
+    // Enqueue html5-qrcode script with jQuery dependency
+    wp_enqueue_script('html5-qrcode', 'https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js', array('jquery'), null, true);
+}
+add_action('wp_enqueue_scripts', 'my_enqueue_qrcode_script');
+
+function display_html5_qrcode_scanner_shortcode() {
+    my_enqueue_qrcode_script(); // Make sure to enqueue scripts when shortcode is used
+    
+    // Inline JavaScript to initialize the QR code scanner
+    $inline_script = <<<EOD
+    <script>
+    jQuery(document).ready(function($) {
+        function onScanSuccess(decodedText, decodedResult) {
+            // Handle the scanned code as needed
+            console.log(`Code scanned = ${decodedText}`, decodedResult);
+        }
+    
+        var config = {
+            fps: 10,
+            qrbox: {width: 250, height: 250},
+            rememberLastUsedCamera: true,
+            supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA],
+            showTorchButtonIfSupported: true // Enable torch button if supported
+        };
+    
+        let html5QrcodeScanner = new Html5QrcodeScanner("qr-reader", config, false);
+        html5QrcodeScanner.render(onScanSuccess);
+    });
+    </script>
+    EOD;
+    
+        // Return the scanner HTML and the inline script
+        return '<div id="qr-reader" style="width:300px; height:300px;"></div>' . $inline_script;
+    }
+    add_shortcode('display_html5_qrcode_scanner', 'display_html5_qrcode_scanner_shortcode');
