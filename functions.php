@@ -4826,7 +4826,7 @@ function display_html5_qrcode_scanner_shortcode() {
 
     // Scanner HTML setup for responsive design with a visible scanner guide
     $scanner_html = '<div class="qr-scanner-wrapper" style="padding: 50px; display: flex; justify-content: center; align-items: center"> <!-- Additional div wrapper -->
-                        <div id="qr-reader" style="max-width:400px; max-height:400px; width:100%; aspect-ratio: 1 / 1; position: relative; margin: 20px auto; overflow: hidden;">
+                        <div id="qr-reader" style="max-width:400px; max-height:400px; width:100%; aspect-ratio: 1 / 3; position: relative; margin: 20px auto; overflow: hidden;">
                             <!-- Scanner guide for visual assistance -->
                             <div id="qr-scanner-guide" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 60%; height: 60%; border: 4px solid #FFD700; box-sizing: border-box;"></div>
                         </div>
