@@ -4816,8 +4816,6 @@ function generate_unique_random_hash($length) {
 
 
 
-
-
 function my_enqueue_qrcode_script() {
     // Enqueue html5-qrcode script with jQuery dependency
     wp_enqueue_script('html5-qrcode', 'https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.7/html5-qrcode.min.js', array('jquery'), null, true);
@@ -4827,18 +4825,18 @@ add_action('wp_enqueue_scripts', 'my_enqueue_qrcode_script');
 function display_html5_qrcode_scanner_shortcode() {
     my_enqueue_qrcode_script(); // Ensures the QR code script is enqueued
 
-    // Scanner HTML setup with inline styles for responsive design and a border
-    $scanner_html = '<div id="qr-reader" style="max-width:400px; max-height:400px; width:100%; aspect-ratio: 1 / 1; position: relative; margin: 20px auto; border: 5px solid #FFD700; box-shadow: 0 0 10px rgba(0,0,0,0.5); overflow: hidden;"></div>';
+    // Scanner HTML setup for responsive design without overlay buttons
+    $scanner_html = '<div id="qr-reader" style="max-width:400px; max-height:400px; width:100%; aspect-ratio: 1 / 1; position: relative; margin: 20px auto; overflow: hidden;"></div>';
 
-    // Inline JavaScript for initializing the QR code scanner with responsive qrbox size
+    // Inline JavaScript for initializing the QR code scanner
     $inline_script = "
     <script>
     jQuery(document).ready(function($) {
-        // Calculate a responsive qrbox size based on the width of the container
+        // Function to calculate a responsive qrbox size based on the container's width
         function calculateQrboxSize() {
             const readerWidth = jQuery('#qr-reader').width();
-            // Ensure qrbox is not larger than 300px and fits within the container
-            let qrboxSize = Math.min(300, readerWidth - 10); 
+            // Ensure the qrbox is not larger than the container
+            let qrboxSize = Math.min(300, readerWidth - 10);
             return qrboxSize;
         }
         
@@ -4848,17 +4846,17 @@ function display_html5_qrcode_scanner_shortcode() {
                 qrbox: calculateQrboxSize(),
                 rememberLastUsedCamera: true,
                 aspectRatio: 1,
-                showTorchButtonIfSupported: true // Enables the torch toggle button if supported
+                showTorchButtonIfSupported: true // Option to enable the torch button if supported
             }, false);
 
         function onScanSuccess(decodedText, decodedResult) {
-            // Handle the scanned code as needed
+            // Callback for successfully scanned QR codes
             console.log(`Code scanned = ${decodedText}`, decodedResult);
         }
 
         html5QrcodeScanner.render(onScanSuccess);
 
-        // Adjust qrbox size on window resize for a fully responsive design
+        // Dynamically adjust the qrbox size on window resize for a fully responsive design
         jQuery(window).resize(function() {
             html5QrcodeScanner.clear();
             html5QrcodeScanner = new Html5QrcodeScanner(
