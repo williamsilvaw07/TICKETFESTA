@@ -4856,10 +4856,7 @@ function display_html5_qrcode_scanner_shortcode() {
 
     // Optional CSS for adjusting the video feed size
     $custom_css = "<style>
-        #qr-reader video {
-            max-width: 100% !important;
-            max-height: 300px !important;
-        }
+     
         #qr-reader {
             max-width: 300px !important;
             margin: auto;
