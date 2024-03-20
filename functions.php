@@ -4818,7 +4818,7 @@ function display_html5_qrcode_scanner_shortcode() {
     my_enqueue_qrcode_script(); // Ensures the QR code script is enqueued
 
     // Scanner HTML setup with responsive design adjustments
-    $scanner_html = '<div class="qrcode_scanner_wrapper_div"><div id="qr-reader" style="aspect-ratio: 1 / 1;"></div></div>';
+    $scanner_html = '<div class="qrcode_sanner_wrapper_div"><div id="qr-reader" style="aspect-ratio: 1 / 1;"></div></div>';
 
     // Inline JavaScript for initializing the QR code scanner with a square viewfinder
     $inline_script = "
@@ -4837,21 +4837,39 @@ function display_html5_qrcode_scanner_shortcode() {
             // Handle the scanned code as needed
             console.log(`Code scanned = ${decodedText}`, decodedResult);
         }
-
-        function hideCameraSelectionText() {
-            // Hide the text indicating which camera is selected
-            $('.camera-selection-text').hide();
-        }
         
         html5QrcodeScanner.render(onScanSuccess);
-        // Call the function to hide the camera selection text after the camera has been selected
-        html5QrcodeScanner.html5Qrcode._internalApi.onCameraSelected = hideCameraSelectionText;
     });
     </script>";
 
     return $scanner_html . $inline_script;
 }
 add_shortcode('display_html5_qrcode_scanner', 'display_html5_qrcode_scanner_shortcode');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -4925,9 +4943,6 @@ function display_user_events_with_tickets_shortcode() {
     return ob_get_clean();
 }
 
-
-
-
 // AJAX callback to get tickets for selected event
 add_action('wp_ajax_get_tickets_for_event', 'get_tickets_for_event_callback');
 add_action('wp_ajax_nopriv_get_tickets_for_event', 'get_tickets_for_event_callback'); // Remove if not needed
@@ -4968,9 +4983,6 @@ function get_tickets_for_event_callback() {
     wp_die();
 }
 
-
-
-
 // Function to get tickets for the event
 function get_tickets_for_event($event_id) {
     // Define an array to store filtered tickets
@@ -4997,7 +5009,6 @@ function get_tickets_for_event($event_id) {
     // Return the filtered tickets
     return $filtered_tickets;
 }
-
 
 // AJAX callback to process complimentary ticket
 add_action('wp_ajax_process_complimentary_ticket', 'process_complimentary_ticket_callback');
@@ -5035,38 +5046,6 @@ function create_complimentary_order($ticket_id, $recipient_email) {
     return false;
 }
 
-// Function to send email notifications for the order (Custom function, implement as per your setup)
-function send_order_email_notifications($order_id, $recipient_email) {
-    // Implement logic to send email notifications for the order
-    // This could be done using WooCommerce email functions or custom email sending logic
-    // For example, if using WooCommerce:
-    $order = wc_get_order($order_id);
-    if ($order) {
-        $mailer = WC()->mailer();
-        $email = $mailer->emails['WC_Email_Customer_Completed_Order']; // Adjust based on the email type you want to send
-        $email->trigger($order_id, $order); // Send email
-    }
-}
-
-// Function to get the event ID from a ticket ID
-function get_event_id_from_ticket_id($ticket_id) {
-    // Check if the required class exists
-    if (class_exists('Tribe__Events__Tickets__Woo__Main')) {
-        // Get an instance of the main ticket class
-        $tribe_woo = Tribe__Events__Tickets__Woo__Main::get_instance();
-        // Create a product object for the ticket
-        $ticket_product = new WC_Product($ticket_id);
-        // Get the event associated with the ticket
-        $event = $tribe_woo->get_event_for_ticket($ticket_product);
-        // Check if the event is valid
-        if ($event) {
-            // Return the event ID
-            return $event->ID;
-        }
-    }
-    // Return false if ticket ID is invalid or event not found
-    return false;
-}
 
 // Shortcode to display the complimentary ticket form
 add_shortcode('complimentary_ticket_form', 'display_complimentary_ticket_form');
