@@ -4912,8 +4912,6 @@ add_shortcode('display_html5_qrcode_scanner', 'display_html5_qrcode_scanner_shor
 
 
 
-
-
 // Enqueue custom scripts
 function enqueue_custom_scripts() {
     wp_enqueue_script('jquery');
@@ -5061,6 +5059,26 @@ function send_order_email_notifications($order_id, $recipient_email) {
         $email = $mailer->emails['WC_Email_Customer_Completed_Order']; // Adjust based on the email type you want to send
         $email->trigger($order_id, $order); // Send email
     }
+}
+
+// Function to get the event ID from a ticket ID
+function get_event_id_from_ticket_id($ticket_id) {
+    // Check if the required class exists
+    if (class_exists('Tribe__Events__Tickets__Woo__Main')) {
+        // Get an instance of the main ticket class
+        $tribe_woo = Tribe__Events__Tickets__Woo__Main::get_instance();
+        // Create a product object for the ticket
+        $ticket_product = new WC_Product($ticket_id);
+        // Get the event associated with the ticket
+        $event = $tribe_woo->get_event_for_ticket($ticket_product);
+        // Check if the event is valid
+        if ($event) {
+            // Return the event ID
+            return $event->ID;
+        }
+    }
+    // Return false if ticket ID is invalid or event not found
+    return false;
 }
 
 // Shortcode to display the complimentary ticket form
