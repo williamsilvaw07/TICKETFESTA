@@ -4801,9 +4801,6 @@ function generate_unique_random_hash($length) {
 
 
 
-
-
-
 function my_enqueue_qrcode_script() {
     // Enqueue html5-qrcode script with jQuery dependency
     wp_enqueue_script('html5-qrcode', 'https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.7/html5-qrcode.min.js', array('jquery'), null, true);
@@ -4815,10 +4812,7 @@ function display_html5_qrcode_scanner_shortcode() {
     my_enqueue_qrcode_script(); // Ensures the QR code script is enqueued
 
     // Scanner HTML setup with responsive design adjustments
-    $scanner_html = '<div id="qr-reader" style="aspect-ratio: 1 / 1;">
-                     
-                     </div>
-                  ';
+    $scanner_html = '<div id="qr-reader" style="aspect-ratio: 1 / 1;"></div>';
 
     // Inline JavaScript for initializing the QR code scanner with a square viewfinder
     $inline_script = "
@@ -4830,7 +4824,7 @@ function display_html5_qrcode_scanner_shortcode() {
                 qrbox: 250, // Set qrbox size to keep the scanning area square
                 rememberLastUsedCamera: true,
                 aspectRatio: 1,
-                showTorchButtonIfSupported: true // This enables the torch toggle button if supported
+                fileInput: false // Hide the option to scan an image file
             }, false);
         
         function onScanSuccess(decodedText, decodedResult) {
@@ -4845,7 +4839,6 @@ function display_html5_qrcode_scanner_shortcode() {
     return $scanner_html . $inline_script;
 }
 add_shortcode('display_html5_qrcode_scanner', 'display_html5_qrcode_scanner_shortcode');
-
 
 
 
