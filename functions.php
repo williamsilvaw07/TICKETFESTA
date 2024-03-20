@@ -4633,7 +4633,7 @@ function custom_qr_scanner_shortcode() {
                 </div>
                 <div class="tab-content" id="tab2">
                     <div id="video-container">
-                        <input type="text" id="event-pass" name="event-pass" placeholder="enter event pass">
+                        <!-- <input type="text" id="event-pass" name="event-pass" placeholder="enter event pass"> -->
                         <!-- <video id="video" playsinline style="width: 500px"></video> -->
                         <div id="qr-reader" class="qr-reader"></div>
                         <span id="event_not_found" style='display:none'>No event found that for the event pass.</span>
