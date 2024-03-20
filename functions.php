@@ -4896,8 +4896,6 @@ add_shortcode('display_html5_qrcode_scanner', 'display_html5_qrcode_scanner_shor
 
 
 
-
-
 function user_events_with_tickets_shortcode() {
     if (!is_user_logged_in()) {
         return 'You must be logged in to view your events.';
@@ -4905,47 +4903,44 @@ function user_events_with_tickets_shortcode() {
 
     $current_user = wp_get_current_user();
     $args = array(
-        'post_type' => 'tribe_events', // Ensure this matches your actual event post type.
+        'post_type' => 'tribe_events', // Adjust this to your event post type
         'author' => $current_user->ID,
-        'posts_per_page' => -1, // You might want to limit this.
+        'posts_per_page' => -1,
     );
 
     $events_query = new WP_Query($args);
     $output = '<ul class="user-events-with-tickets">';
 
-    if ($events_query->have_posts()) {
-        while ($events_query->have_posts()) {
-            $events_query->the_post();
-            $event_id = get_the_ID();
-            $event_title = get_the_title();
-            $event_date = get_the_date();
+    // Ensure the TribeWooTickets class is available
+    if (class_exists('TribeWooTickets')) {
+        $woo_tickets = TribeWooTickets::get_instance();
 
-            // Assuming ticket IDs are stored somehow connected to the event
-            // This part needs to be adjusted based on your actual ticketing setup
-            $ticket_info = ''; // Placeholder for ticket information
+        if ($events_query->have_posts()) {
+            while ($events_query->have_posts()) {
+                $events_query->the_post();
+                $event_id = get_the_ID();
+                $event_title = get_the_title();
+                $event_date = get_the_date();
 
-            // Example: Fetching tickets as WooCommerce products linked by post meta
-            $ticket_ids = get_post_meta($event_id, 'event_ticket_ids', true); // Adjust 'event_ticket_ids' as needed
+                $ticket_ids = $woo_tickets->get_tickets_ids($event_id);
+                $ticket_info = '';
 
-            if (!empty($ticket_ids)) {
-                $ticket_ids_array = explode(',', $ticket_ids); // Assuming IDs are stored as a comma-separated list
-                foreach ($ticket_ids_array as $ticket_id) {
+                foreach ($ticket_ids as $ticket_id) {
                     $ticket_post = get_post($ticket_id);
                     if ($ticket_post) {
-                        // Construct ticket information string, e.g., title with link to the ticket
+                        // Example: Fetching ticket title. Adjust as needed to include price or other data
                         $ticket_info .= sprintf('<a href="%s">%s</a>, ', get_permalink($ticket_id), $ticket_post->post_title);
                     }
                 }
-                $ticket_info = rtrim($ticket_info, ', '); // Trim trailing comma
-            } else {
-                $ticket_info = 'No tickets found';
-            }
 
-            // Output each event with its associated tickets
-            $output .= "<li>{$event_title} - {$event_date} - Tickets: {$ticket_info}</li>";
+                $ticket_info = rtrim($ticket_info, ', ');
+                $output .= "<li>{$event_title} - {$event_date} - Tickets: {$ticket_info}</li>";
+            }
+        } else {
+            $output .= '<li>No events found.</li>';
         }
     } else {
-        $output = '<li>No events found.</li>';
+        $output = "The required class 'TribeWooTickets' is not available.";
     }
 
     wp_reset_postdata();
@@ -4953,5 +4948,4 @@ function user_events_with_tickets_shortcode() {
     return $output;
 }
 
-// Register the shortcode with WordPress
 add_shortcode('user_events_with_tickets', 'user_events_with_tickets_shortcode');
