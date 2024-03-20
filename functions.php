@@ -4803,64 +4803,45 @@ function generate_unique_random_hash($length) {
 
 
 
-
 function my_enqueue_qrcode_script() {
-    // Enqueue html5-qrcode script with jQuery dependency
+    // Enqueue the html5-qrcode script with jQuery dependency
     wp_enqueue_script('html5-qrcode', 'https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.7/html5-qrcode.min.js', array('jquery'), null, true);
 }
 add_action('wp_enqueue_scripts', 'my_enqueue_qrcode_script');
+
 function display_html5_qrcode_scanner_shortcode() {
-    my_enqueue_qrcode_script(); // Ensures the QR code script is enqueued
+    my_enqueue_qrcode_script(); // Make sure the QR code script is enqueued
 
-    // Wrap the QR code scanner div inside another div for additional styling or layout control
-    $scanner_html = '<div class="qr-scanner-wrapper" style="padding: 10px; display: flex; justify-content: center; align-items: center;"> <!-- Additional div wrapper with custom styles -->
-                        <div id="qr-reader" style="max-width:400px; max-height:400px; width:100%; aspect-ratio: 1 / 1; position: relative; margin: 20px auto; overflow: hidden;"></div>
-                     </div>'; // QR scanner HTML setup for responsive design
+    // Setup for the scanner HTML, making it responsive and adding the toggle flash button with padding
+    $scanner_html = '<div id="qr-reader" style="max-width:400px; max-height:400px; width:100%; height:auto; position: relative; margin: auto; display: flex; justify-content: center; align-items: center; padding-bottom: 20px;">
+                         <div id="qr-overlay" style="position: absolute; width: 150px; height: 150px; border: 5px solid yellow; box-sizing: border-box;"></div>
+                     </div>
+                     <button id="toggle-flash-btn" style="display: block; margin: 20px auto 0; padding: 10px 20px;">Toggle Flash</button>';
 
-    // Inline JavaScript for initializing the QR code scanner
+    // Inline JavaScript for initializing the QR code scanner with configurations for a good mobile experience
     $inline_script = "
     <script>
     jQuery(document).ready(function($) {
-        // Function to calculate a responsive qrbox size based on the container's width
-        function calculateQrboxSize() {
-            const readerWidth = jQuery('#qr-reader').width();
-            // Ensure the qrbox is not larger than the container
-            let qrboxSize = Math.min(300, readerWidth - 10);
-            return qrboxSize;
-        }
-        
         let html5QrcodeScanner = new Html5QrcodeScanner(
             'qr-reader', {
                 fps: 10,
-                qrbox: calculateQrboxSize(),
+                qrbox: 150, // Maintain a square scanning area
                 rememberLastUsedCamera: true,
                 aspectRatio: 1,
-                showTorchButtonIfSupported: true // Option to enable the torch button if supported
+                showTorchButtonIfSupported: true // Enables the torch toggle button if supported
             }, false);
-
+        
         function onScanSuccess(decodedText, decodedResult) {
-            // Callback for successfully scanned QR codes
+            // Handle the scanned code as needed
             console.log(`Code scanned = ${decodedText}`, decodedResult);
         }
-
+        
+        // Render the QR code scanner
         html5QrcodeScanner.render(onScanSuccess);
-
-        // Dynamically adjust the qrbox size on window resize for a fully responsive design
-        jQuery(window).resize(function() {
-            html5QrcodeScanner.clear();
-            html5QrcodeScanner = new Html5QrcodeScanner(
-                'qr-reader', {
-                    fps: 10,
-                    qrbox: calculateQrboxSize(),
-                    rememberLastUsedCamera: true,
-                    aspectRatio: 1,
-                    showTorchButtonIfSupported: true
-                }, false);
-            html5QrcodeScanner.render(onScanSuccess);
-        });
     });
     </script>";
 
+    // Return the assembled HTML and inline script for the QR code scanner
     return $scanner_html . $inline_script;
 }
 add_shortcode('display_html5_qrcode_scanner', 'display_html5_qrcode_scanner_shortcode');
