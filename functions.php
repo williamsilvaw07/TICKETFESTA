@@ -4806,62 +4806,58 @@ function generate_unique_random_hash($length) {
 function display_html5_qrcode_scanner_shortcode() {
     my_enqueue_qrcode_script(); // Ensures the QR code script is enqueued
 
-    // Scanner HTML setup
-    $scanner_html = '<div class="qr-scanner-wrapper" style="padding: 50px; display: flex; justify-content: center; align-items: center">
-                        <div id="qr-reader" style="max-width:400px; max-height:400px; width:100%; aspect-ratio: 1; position: relative; margin: 20px auto; overflow: hidden;"></div>
-                     </div>';
+    // Wrap the QR code scanner div inside another div for additional styling or layout control
+    $scanner_html = '<div class="qr-scanner-wrapper" style="padding: 10px; display: flex; justify-content: center; align-items: center; background-color: #f8f9fa;"> <!-- Additional div wrapper with custom styles -->
+                        <div id="qr-reader" style="max-width:400px; max-height:400px; width:100%; aspect-ratio: 1 / 1; position: relative; margin: 20px auto; overflow: hidden;"></div>
+                     </div>'; // QR scanner HTML setup for responsive design
 
-    // Inline JavaScript for checking camera permission cookie and initializing the QR code scanner
+    // Inline JavaScript for initializing the QR code scanner
     $inline_script = "
     <script>
     jQuery(document).ready(function($) {
-        // Function to get a cookie by name
-        function getCookie(name) {
-            var nameEQ = name + '=';
-            var ca = document.cookie.split(';');
-            for(var i=0;i < ca.length;i++) {
-                var c = ca[i];
-                while (c.charAt(0)==' ') c = c.substring(1,c.length);
-                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
-            }
-            return null;
+        // Function to calculate a responsive qrbox size based on the container's width
+        function calculateQrboxSize() {
+            const readerWidth = jQuery('#qr-reader').width();
+            // Ensure the qrbox is not larger than the container
+            let qrboxSize = Math.min(300, readerWidth - 10);
+            return qrboxSize;
+        }
+        
+        let html5QrcodeScanner = new Html5QrcodeScanner(
+            'qr-reader', {
+                fps: 10,
+                qrbox: calculateQrboxSize(),
+                rememberLastUsedCamera: true,
+                aspectRatio: 1,
+                showTorchButtonIfSupported: true // Option to enable the torch button if supported
+            }, false);
+
+        function onScanSuccess(decodedText, decodedResult) {
+            // Callback for successfully scanned QR codes
+            console.log(`Code scanned = ${decodedText}`, decodedResult);
         }
 
-        // Check if the 'cameraPermissionGranted' cookie is set
-        if(getCookie('cameraPermissionGranted') !== 'true') {
-            // No cookie found, initialize scanner to prompt for permission
-            initializeScanner();
-            
-            // Set the cookie after permission is granted
-            document.cookie = 'cameraPermissionGranted=true; path=/; max-age=' + (10 * 365 * 24 * 60 * 60); // Expires in 10 years
-        } else {
-            // Cookie found, initialize scanner without prompting (browser will still enforce security)
-            initializeScanner();
-        }
+        html5QrcodeScanner.render(onScanSuccess);
 
-        function initializeScanner() {
-            let html5QrcodeScanner = new Html5QrcodeScanner(
+        // Dynamically adjust the qrbox size on window resize for a fully responsive design
+        jQuery(window).resize(function() {
+            html5QrcodeScanner.clear();
+            html5QrcodeScanner = new Html5QrcodeScanner(
                 'qr-reader', {
                     fps: 10,
-                    qrbox: 250,
+                    qrbox: calculateQrboxSize(),
                     rememberLastUsedCamera: true,
                     aspectRatio: 1,
                     showTorchButtonIfSupported: true
                 }, false);
-
-            function onScanSuccess(decodedText, decodedResult) {
-                console.log(`Code scanned = ${decodedText}`, decodedResult);
-            }
-
             html5QrcodeScanner.render(onScanSuccess);
-        }
+        });
     });
     </script>";
 
     return $scanner_html . $inline_script;
 }
 add_shortcode('display_html5_qrcode_scanner', 'display_html5_qrcode_scanner_shortcode');
-
 
 
 
