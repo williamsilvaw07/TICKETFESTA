@@ -129,7 +129,7 @@
                     console.log('ajax response', response);
                     if(response.match){
                         // startScanQR(response.event_id);
-                        passcodeMatch();
+                        passcodeMatch(response);
                     }else{
                         // noEventFound();
                     }
@@ -184,9 +184,13 @@
             $('#event_not_found').show();
         }
 
-        function passcodeMatch(){
+        function passcodeMatch(response){
             $('.tabs-container').show();
             $('.tab-content-container').show();
+            $('.event-container .event-image').attr('src', response.event_data.thumbnail_url);
+            $('.event-container .name span').text(response.event_data.name);
+            $('.event-container .date span').text(response.event_data.start_date);
+            $('.event-container .tickets span').text(response.event_data.issued_ticked);
 
         }
 

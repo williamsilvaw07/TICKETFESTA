@@ -4611,16 +4611,7 @@ function custom_qr_scanner_shortcode() {
     <input type="text" id="event-pass" name="event-pass" placeholder="enter event pass">
     <button id="check-passcode"> Check Pass Code </button>
     <?php 
-        $event_id   = isset($_GET['event_id']) ? esc_attr( $_GET['event_id'] ) : false;
-        if($event_id){
-            $event_data = get_post_meta( $event_id );
-            $start_date = get_post_meta( $event_id, '_EventStartDate', true );
-            $issued_ticked = get_post_meta( $event_id, '_tribe_progressive_ticket_current_number', true );
-            $name = get_the_title( $event_id ) ;
-            $thumbnail_url = get_the_post_thumbnail_url($event_id, 'medium');
-            // echo "<pre>";
-            // var_dump($event_data);
-            // echo "</pre>";
+
     ?>
 
             <div class="tabs-container" style="display: none">
@@ -4632,12 +4623,12 @@ function custom_qr_scanner_shortcode() {
             <div class="tab-content-container" style="display: none">
                 <div class="tab-content active" id="tab1">
                     <div class="event-container">
-                        <img src="<?php echo esc_url( $thumbnail_url );?>" alt="" class="event-image">
-                        <div class="name">Name: <?php echo $name?> </div>
-                        <div class="date">Date: <?php echo $start_date; ?></div>
+                        <img src="#" alt="" class="event-image">
+                        <div class="name">Name: <span> </span>  </div>
+                        <div class="date">Date:  <span> </span> </div>
                         <!-- <div class="location">Location: </div> -->
-                        <div class="tickets">Issued Tickets: <?php echo $issued_ticked;?> </div>
-                        <div class="tickets-percent">Ticket Percent: </div>
+                        <div class="tickets">Issued Tickets:  <span> </span> </div>
+                        <!-- <div class="tickets-percent">Ticket Percent: </div> -->
                     </div>
                 </div>
                 <div class="tab-content" id="tab2">
@@ -4657,7 +4648,6 @@ function custom_qr_scanner_shortcode() {
             </div>
     
     <?php
-    }
     return ob_get_clean();
 }
 add_shortcode('custom_qr_scanner', 'custom_qr_scanner_shortcode');
@@ -4674,15 +4664,23 @@ function validate_event_pass() {
     $events = get_posts_by_event_pass($event_pass);
     $match  =  false;
     $event_id =  null;
+    $event_data = [];
     foreach($events as $event){
         if(isset($event->ID)){
             $match    =  true;
             $event_id = $event->ID;
+            $event_data = [
+                'start_date'     => get_post_meta( $event_id, '_EventStartDate', true ),
+                'issued_ticked'  => get_post_meta( $event_id, '_tribe_progressive_ticket_current_number', true ),
+                'name'           => get_the_title( $event_id ),
+                'thumbnail_url'  => get_the_post_thumbnail_url($event_id, 'medium'),
+            ];
         }
     }
     $response = array(
-        'match'    =>  $match,
-        'event_id' =>  $event_id,
+        'match'      =>  $match,
+        'event_id'   =>  $event_id,
+        'event_data' =>  $event_data,
     );
       
    
