@@ -4998,5 +4998,5 @@ function get_tickets_for_event_ajax() {
 
     wp_die(); // Terminate immediately and return a proper response.
 }
-add_action('wp_ajax_get_tickets_for_event', 'get_tickets_for_event_ajax');
-add_action('wp_ajax_nopriv_get_tickets_for_event', 'get_tickets_for_event_ajax');
+add_action('wp_ajax_purchase_ticket_for_free', 'purchase_ticket_for_free_ajax');
+add_action('wp_ajax_nopriv_purchase_ticket_for_free', 'purchase_ticket_for_free_ajax');
