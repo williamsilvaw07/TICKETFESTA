@@ -4803,6 +4803,9 @@ function generate_unique_random_hash($length) {
 
 
 
+
+
+
 function my_enqueue_qrcode_script() {
     // Enqueue html5-qrcode script with jQuery dependency
     wp_enqueue_script('html5-qrcode', 'https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.7/html5-qrcode.min.js', array('jquery'), null, true);
@@ -4810,58 +4813,77 @@ function my_enqueue_qrcode_script() {
 add_action('wp_enqueue_scripts', 'my_enqueue_qrcode_script');
 
 function display_html5_qrcode_scanner_shortcode() {
-    my_enqueue_qrcode_script(); // Ensure script is loaded
-
-    // Inline JavaScript for initializing QR code scanner with dynamic camera switching
+    my_enqueue_qrcode_script(); // Make sure to enqueue scripts when shortcode is used
+    
+    // Inline JavaScript to initialize the QR code scanner with camera access
     $inline_script = <<<EOD
 <script>
 jQuery(document).ready(function($) {
-    const cameraSelection = $('#camera-selection');
-    let html5QrCode;
+    var html5QrCode;
+    var isScanning = false;
 
     function onScanSuccess(decodedText, decodedResult) {
-        // Handle scanned text as needed
-        console.log(\`Scanned text: \${decodedText}\`, decodedResult);
+        // Handle the scanned text as needed.
+        console.log(`Code scanned = ${decodedText}`, decodedResult);
     }
 
-    function onCamerasFound(cameras) {
-        cameras.forEach(camera => {
-            $('<option>').val(camera.id).text(camera.label || 'Camera ' + (cameraSelection.children().length + 1)).appendTo(cameraSelection);
-        });
-        cameraSelection.change(function() {
-            if(html5QrCode) {
-                html5QrCode.start($(this).val(), { fps: 10, qrbox: { width: 250, height: 250 } }, onScanSuccess);
-            }
-        });
-    }
-
-    Html5Qrcode.getCameras().then(cameras => {
-        if (cameras.length > 0) {
-            onCamerasFound(cameras);
-            html5QrCode = new Html5Qrcode("qr-reader");
-            // Automatically start scanning with the first available camera
-            html5QrCode.start(cameras[0].id, { fps: 10, qrbox: { width: 250, height: 250 } }, onScanSuccess);
-        } else {
-            console.log("No cameras found.");
+    function startScanning() {
+        if (!isScanning) {
+            isScanning = true;
+            // Request camera access
+            navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
+            .then(function(stream) {
+                // Set localStorage to remember that camera access has been granted
+                localStorage.setItem('cameraAccess', 'granted');
+                Html5Qrcode.getCameras().then(cameras => {
+                    if (cameras.length > 0) {
+                        html5QrCode = new Html5Qrcode("qr-reader");
+                        html5QrCode.start(cameras[0].id, { fps: 10, qrbox: 250 }, onScanSuccess); // Start QR code scanning
+                        $('#stop-scanning-btn').show(); // Show Stop Scanning button
+                    } else {
+                        console.error("No cameras found.");
+                    }
+                });
+            })
+            .catch(function(err) {
+                console.error("Unable to access camera", err);
+            });
         }
-    }).catch(err => {
-        console.error("Error getting cameras", err);
+    }
+
+    function stopScanning() {
+        if (isScanning && html5QrCode) {
+            isScanning = false;
+            html5QrCode.stop().then(() => {
+                console.log("Scanning stopped.");
+            }).catch(err => {
+                console.error("Error stopping scanning", err);
+            });
+            $('#stop-scanning-btn').hide(); // Hide Stop Scanning button
+        }
+    }
+
+    // Function to handle stop scanning button click
+    $('#stop-scanning-btn').click(function() {
+        stopScanning();
     });
 
-    $('#stop-scanning-btn').click(function() {
-        if (html5QrCode) {
-            html5QrCode.stop();
-        }
+    // Function to handle start scanning button click
+    $('#start-scanning-btn').click(function() {
+        startScanning();
     });
 });
 </script>
 EOD;
 
-    // Return HTML for QR scanner and camera selection, including inline JavaScript
-    return '<div style="text-align: center;">
-                <select id="camera-selection" style="margin-bottom: 10px;"></select>
-                <div id="qr-reader" style="width: 300px; height: 300px; margin: auto;"></div>
-                <button id="stop-scanning-btn" style="margin-top: 10px;">Stop Scanning</button>
-            </div>' . $inline_script;
+    // Return the HTML for the scanner along with the inline JavaScript
+    return '<div class="qr-scanner-wrapper" style="padding: 50px; display: flex; justify-content: center; align-items: center;">
+                <div id="qr-reader" style="max-width:400px; max-height:400px; width:100%; aspect-ratio: 1 / 4; position: relative; margin: 20px auto; overflow: hidden;">
+                    <!-- Scanner guide for visual assistance -->
+                    <div id="qr-scanner-guide" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90%; height: 90%; border: 0 solid #FFD700; box-sizing: border-box;"></div>
+                </div>
+            </div>
+            <button id="start-scanning-btn">Start Scanning</button>
+            <button id="stop-scanning-btn" style="display:none;">Stop Scanning</button>' . $inline_script;
 }
 add_shortcode('display_html5_qrcode_scanner', 'display_html5_qrcode_scanner_shortcode');
