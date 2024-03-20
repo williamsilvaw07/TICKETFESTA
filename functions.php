@@ -4982,10 +4982,8 @@ add_shortcode('complimentary_ticket_form', 'custom_complimentary_ticket_form_sho
 // PHP AJAX handlers for loading events and tickets
 function load_events_for_user_callback() {
     $user_id = get_current_user_id();
-    // Query to get events created by the current user
-    // This is an example; adjust according to your setup
     $events = get_posts([
-        'post_type' => 'your_event_post_type', // Adjust to your event post type
+        'post_type' => 'tribe_events', // Adjusted for The Events Calendar
         'author' => $user_id,
         'posts_per_page' => -1,
     ]);
@@ -4996,7 +4994,6 @@ function load_events_for_user_callback() {
     wp_die();
 }
 add_action('wp_ajax_load_events_for_user', 'load_events_for_user_callback');
-
 function load_tickets_for_event_callback() {
     $event_id = isset($_POST['event_id']) ? intval($_POST['event_id']) : 0;
     // Your logic to get tickets/products for the event
