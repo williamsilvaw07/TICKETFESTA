@@ -4609,8 +4609,6 @@ function custom_qr_scanner_shortcode() {
 
     -->
 
-    <input type="text" id="event-pass" name="event-pass" placeholder="enter event pass">
-    <button id="check-passcode"> Check Pass Code </button>
     <?php 
         $event_id   = isset($_GET['event_id']) ? esc_attr( $_GET['event_id'] ) : false;
         if($event_id){
@@ -4882,8 +4880,8 @@ add_shortcode('display_html5_qrcode_scanner', 'display_html5_qrcode_scanner_shor
 
 
 
-// Function to fetch current user's events and associated tickets
-function fetch_user_events_with_tickets() {
+// Function to fetch current user's events and associated tickets with frontend debugging
+function fetch_user_events_with_tickets_debug() {
     // Check if user is logged in
     if (is_user_logged_in()) {
         // Get current user ID
@@ -4898,6 +4896,12 @@ function fetch_user_events_with_tickets() {
         // Initialize output variable
         $output = '';
 
+        // Debugging: Output user ID
+        $output .= '<p>User ID: ' . $user_id . '</p>';
+
+        // Debugging: Output number of events found
+        $output .= '<p>Number of Events Found: ' . count($user_events) . '</p>';
+
         // Loop through user's events
         foreach ($user_events as $event) {
             // Get event ID
@@ -4906,6 +4910,9 @@ function fetch_user_events_with_tickets() {
             // Get tickets attached to the event
             $woo_tickets = TribeWooTickets::get_instance();
             $ticket_ids = $woo_tickets->get_tickets_ids($event_id);
+
+            // Debugging: Output event ID and number of tickets
+            $output .= '<p>Event ID: ' . $event_id . ' - Number of Tickets: ' . count($ticket_ids) . '</p>';
 
             // Start building output for the event
             $output .= '<div class="event">';
@@ -4930,4 +4937,4 @@ function fetch_user_events_with_tickets() {
     }
 }
 // Register shortcode
-add_shortcode('user_events_with_tickets', 'fetch_user_events_with_tickets');
+add_shortcode('user_events_with_tickets_debug', 'fetch_user_events_with_tickets_debug');
