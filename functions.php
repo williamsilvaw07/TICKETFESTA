@@ -4891,65 +4891,64 @@ add_shortcode('display_html5_qrcode_scanner', 'display_html5_qrcode_scanner_shor
 
 
 
-
-
-// Shortcode to display a form with a dropdown of the user's events
-function user_events_selection_form_shortcode() {
-    // Check if the user is logged in
+function user_events_with_tickets_shortcode() {
     if (!is_user_logged_in()) {
         return 'You must be logged in to view your events.';
     }
 
     $current_user = wp_get_current_user();
+    $output = '<form method="POST">';
+    $output .= '<select name="selected_event_id">';
+    $output .= '<option value="">Select Your Event</option>';
+
     $args = array(
-        'post_type' => 'tribe_events', // Adjust to your event post type
+        'post_type' => 'tribe_events',
         'author' => $current_user->ID,
         'posts_per_page' => -1,
     );
-
     $events_query = new WP_Query($args);
-
-    // Start the form
-    $output = '<form action="' . esc_url(admin_url('admin-post.php')) . '" method="post">';
-    $output .= '<select name="event_id">';
-    $output .= '<option value="">Select an Event</option>';
 
     if ($events_query->have_posts()) {
         while ($events_query->have_posts()) {
             $events_query->the_post();
-            $event_id = get_the_ID();
-            $event_title = get_the_title();
-            $output .= "<option value='{$event_id}'>{$event_title}</option>";
+            $selected = (isset($_POST['selected_event_id']) && $_POST['selected_event_id'] == get_the_ID()) ? 'selected' : '';
+            $output .= "<option value='" . get_the_ID() . "' $selected>" . get_the_title() . "</option>";
         }
-    } else {
-        $output .= '<option value="">No events found.</option>';
     }
 
     wp_reset_postdata();
 
     $output .= '</select>';
-    $output .= '<input type="hidden" name="action" value="show_event_tickets">';
-    $output .= '<input type="submit" value="View Tickets">';
+    $output .= '<input type="submit" name="view_tickets" value="View Tickets">';
     $output .= '</form>';
+
+    // Handle ticket display if an event has been selected
+    if (isset($_POST['view_tickets']) && !empty($_POST['selected_event_id'])) {
+        $event_id = $_POST['selected_event_id'];
+        $event = get_post($event_id);
+        $ticket_info = '';
+
+        // Fetching tickets using the method you provided
+        $ticket_ids = get_post_meta($event_id, 'event_ticket_ids', true);
+        if (!empty($ticket_ids)) {
+            $ticket_ids_array = explode(',', $ticket_ids);
+            foreach ($ticket_ids_array as $ticket_id) {
+                $ticket_post = get_post($ticket_id);
+                if ($ticket_post) {
+                    $ticket_info .= sprintf('<a href="%s">%s</a>, ', get_permalink($ticket_id), $ticket_post->post_title);
+                }
+            }
+            $ticket_info = rtrim($ticket_info, ', ');
+        } else {
+            $ticket_info = 'No tickets found for this event.';
+        }
+
+        // Append the ticket information to the output
+        $output .= "<h3>Tickets for " . esc_html($event->post_title) . "</h3>";
+        $output .= "<p>" . $ticket_info . "</p>";
+    }
 
     return $output;
 }
-add_shortcode('select_event', 'user_events_selection_form_shortcode');
 
-// Handle the form submission
-function handle_show_event_tickets() {
-    // Ensure there's an event_id and the user is logged in
-    if (!isset($_POST['event_id']) || !is_user_logged_in()) {
-        wp_redirect(home_url());
-        exit;
-    }
-
-    $event_id = intval($_POST['event_id']);
-    // Redirect to a custom page where tickets can be viewed/purchased
-    // Replace '/tickets-page' with the slug of your page that handles ticket viewing/purchasing
-    wp_redirect(home_url('/tickets-page?event_id=' . $event_id));
-    exit;
-}
-add_action('admin_post_show_event_tickets', 'handle_show_event_tickets');
-// Optional: if you want to allow non-logged-in users, though it might not make sense for this scenario
-// add_action('admin_post_nopriv_show_event_tickets', 'handle_show_event_tickets');
+add_shortcode('user_events_with_tickets', 'user_events_with_tickets_shortcode');
