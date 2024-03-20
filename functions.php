@@ -4810,44 +4810,41 @@ function my_enqueue_qrcode_script() {
 }
 add_action('wp_enqueue_scripts', 'my_enqueue_qrcode_script');
 
-function display_html5_qrcode_scanner_shortcode() {
-    my_enqueue_qrcode_script(); // Make sure to enqueue scripts when shortcode is used
-    
-    // Inline JavaScript to initialize the QR code scanner with camera access request
-    $inline_script = <<<EOD
-<script>
-jQuery(document).ready(function($) {
-    function onScanSuccess(decodedText, decodedResult) {
-        // Handle the scanned text as needed.
-        console.log(`Code scanned = ${decodedText}`, decodedResult);
-    }
-    
-    var config = { fps: 10, qrbox: 250 };
-    var html5QrCode = new Html5Qrcode("qr-reader");
-    navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } }) // Request camera access
-    .then(function(stream) {
-        Html5Qrcode.getCameras().then(cameras => {
-            if (cameras.length > 0) {
-                html5QrCode.start(cameras[0].id, config, onScanSuccess); // Start QR code scanning
-            } else {
-                console.error("No cameras found.");
-            }
-        });
-    })
-    .catch(function(err) {
-        console.error("Unable to access camera", err);
-    });
-});
-</script>
-EOD;
 
-    // Return the HTML for the scanner along with the inline JavaScript
-    return '  <div id="qr-reader" style="max-width:400px; max-height:400px; width:100%; aspect-ratio: 1 / 4; position: relative; margin: 20px auto;"> </div>' . $inline_script;
+function display_html5_qrcode_scanner_shortcode() {
+    my_enqueue_qrcode_script(); // Ensures the QR code script is enqueued
+
+    // Scanner HTML setup with responsive design adjustments
+    $scanner_html = '<div id="qr-reader" style="max-width:400px; max-height:400px; width:100%; height:auto; position: relative; margin:auto; display: flex; justify-content: center; align-items: center; padding-bottom: 20px;">
+                         <div id="qr-overlay" style="position: absolute; width: 150px; height: 150px; border: 5px solid yellow; box-sizing: border-box;"></div>
+                     </div>
+                     <button id="toggle-flash-btn" style="display:block; margin: 20px auto 0; padding: 10px 20px;">Toggle Flash</button>';
+
+    // Inline JavaScript for initializing the QR code scanner with a square viewfinder
+    $inline_script = "
+    <script>
+    jQuery(document).ready(function($) {
+        let html5QrcodeScanner = new Html5QrcodeScanner(
+            'qr-reader', {
+                fps: 10,
+                qrbox: 150, // Set qrbox size to keep the scanning area square
+                rememberLastUsedCamera: true,
+                aspectRatio: 1,
+                showTorchButtonIfSupported: true // This enables the torch toggle button if supported
+            }, false);
+        
+        function onScanSuccess(decodedText, decodedResult) {
+            // Handle the scanned code as needed
+            console.log(`Code scanned = ${decodedText}`, decodedResult);
+        }
+        
+        html5QrcodeScanner.render(onScanSuccess);
+    });
+    </script>";
+
+    return $scanner_html . $inline_script;
 }
 add_shortcode('display_html5_qrcode_scanner', 'display_html5_qrcode_scanner_shortcode');
-
-
-
 
 
 
