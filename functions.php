@@ -4973,7 +4973,6 @@ function display_user_events_with_tickets_shortcode() {
 
 
 
-
 // AJAX callback to get tickets for selected event
 add_action('wp_ajax_get_tickets_for_event', 'get_tickets_for_event_callback');
 add_action('wp_ajax_nopriv_get_tickets_for_event', 'get_tickets_for_event_callback'); // Remove if not needed
@@ -4988,16 +4987,19 @@ function get_tickets_for_event_callback() {
             // Get ticket object
             $product = wc_get_product($ticket->get_id());
             
-            // Get ticket information
-            $ticket_id = $product->get_id(); // Product ID
-            $ticket_name = $product->get_name(); // Ticket Name
-            $ticket_price = $product->get_price(); // Ticket Price
-            $ticket_stock = $product->get_stock_quantity(); // Ticket Stock
-            
-            echo "<div class='ticket-item'>
-                    <p>Ticket ID: {$ticket_id} - Name: {$ticket_name} - Price: {$ticket_price} - Stock: {$ticket_stock}</p>
-                    <button class='complimentary-ticket' data-ticket-id='{$ticket_id}'>Claim Complimentary</button>
-                </div>";
+            // Check if the ticket is published or in draft status
+            if ($product && in_array($product->get_status(), ['publish', 'draft'])) {
+                // Get ticket information
+                $ticket_id = $product->get_id(); // Product ID
+                $ticket_name = $product->get_name(); // Ticket Name
+                $ticket_price = $product->get_price(); // Ticket Price
+                $ticket_stock = $product->get_stock_quantity(); // Ticket Stock
+                
+                echo "<div class='ticket-item'>
+                        <p>Ticket ID: {$ticket_id} - Name: {$ticket_name} - Price: {$ticket_price} - Stock: {$ticket_stock}</p>
+                        <button class='complimentary-ticket' data-ticket-id='{$ticket_id}'>Claim Complimentary</button>
+                    </div>";
+            }
         }
     } else {
         echo "<p>No tickets available for this event.</p>";
@@ -5005,27 +5007,6 @@ function get_tickets_for_event_callback() {
     
     wp_die();
 }
-
-// Function to get tickets for the event (Custom function, implement as per your setup)
-function get_tickets_for_event($event_id) {
-    // Implement logic to fetch tickets associated with the event
-    // This could be custom post types, WooCommerce products, etc.
-    // For example, if using WooCommerce:
-    $tickets = wc_get_products([
-        'post_type' => 'product',
-        'meta_query' => [
-            [
-                'key' => '_event_id',
-                'value' => $event_id,
-                'compare' => '='
-            ]
-        ],
-        'status' => 'publish', // Fetch only published products
-    ]);
-    return $tickets;
-}
-
-
 
 
 
