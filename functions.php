@@ -4920,8 +4920,7 @@ add_shortcode('display_html5_qrcode_scanner', 'display_html5_qrcode_scanner_shor
 
 
 
-
-
+// Enqueue custom scripts
 function enqueue_custom_scripts() {
     wp_enqueue_script('jquery');
     wp_add_inline_script('jquery', "
@@ -4964,6 +4963,7 @@ function enqueue_custom_scripts() {
 }
 add_action('wp_enqueue_scripts', 'enqueue_custom_scripts');
 
+// Shortcode to display user events
 add_shortcode('display_user_events', 'display_user_events_with_tickets_shortcode');
 function display_user_events_with_tickets_shortcode() {
     $user_id = get_current_user_id();
@@ -4982,20 +4982,89 @@ function display_user_events_with_tickets_shortcode() {
     return ob_get_clean();
 }
 
+// AJAX callback to get tickets for selected event
 add_action('wp_ajax_get_tickets_for_event', 'get_tickets_for_event_callback');
 add_action('wp_ajax_nopriv_get_tickets_for_event', 'get_tickets_for_event_callback'); // Remove if not needed
 function get_tickets_for_event_callback() {
     $event_id = isset($_POST['event_id']) ? intval($_POST['event_id']) : 0;
-    // Fetch tickets for the event. This is pseudo-code; adjust as necessary.
-    echo "<p>Implement ticket fetching logic here. Event ID: $event_id</p>";
+    // Fetch tickets for the event. Adjust this logic as necessary.
+    $tickets = get_tickets_for_event($event_id);
+    if ($tickets) {
+        foreach ($tickets as $ticket) {
+            echo "<div class='ticket-item'>
+                    <p>{$ticket->post_title} - Price: {$ticket->price}</p>
+                    <button class='complimentary-ticket' data-ticket-id='{$ticket->ID}'>Claim Complimentary</button>
+                </div>";
+        }
+    } else {
+        echo "<p>No tickets available for this event.</p>";
+    }
     wp_die();
 }
 
+// Function to get tickets for the event (Custom function, implement as per your setup)
+function get_tickets_for_event($event_id) {
+    // Implement logic to fetch tickets associated with the event
+    // This could be custom post types, WooCommerce products, etc.
+    // For example, if using WooCommerce:
+    $tickets = wc_get_products([
+        'post_type' => 'product',
+        'meta_query' => [
+            [
+                'key' => '_event_id',
+                'value' => $event_id,
+                'compare' => '='
+            ]
+        ]
+    ]);
+    return $tickets;
+}
+
+// AJAX callback to process complimentary ticket
 add_action('wp_ajax_process_complimentary_ticket', 'process_complimentary_ticket_callback');
 function process_complimentary_ticket_callback() {
     $ticket_id = isset($_POST['ticket_id']) ? intval($_POST['ticket_id']) : 0;
     $recipient_email = isset($_POST['recipient_email']) ? sanitize_email($_POST['recipient_email']) : '';
-    // Process the complimentary ticket. This is pseudo-code; adjust as necessary.
-    echo "Complimentary ticket processed for $recipient_email. Ticket ID: $ticket_id";
+
+    // Process the complimentary ticket
+    $order_id = create_complimentary_order($ticket_id, $recipient_email);
+
+    if ($order_id) {
+        // Send email notifications
+        send_order_email_notifications($order_id, $recipient_email);
+        echo "Complimentary ticket processed successfully. Order ID: $order_id";
+    } else {
+        echo "Error processing complimentary ticket.";
+    }
     wp_die();
+}
+
+// Function to create complimentary order (Custom function, implement as per your setup)
+function create_complimentary_order($ticket_id, $recipient_email) {
+    // Implement logic to create an order for the complimentary ticket
+    // This could be done using WooCommerce functions or custom order creation logic
+    // For example, if using WooCommerce:
+    $product = wc_get_product($ticket_id);
+    if ($product) {
+        $order = wc_create_order();
+        $order->add_product($product, 1); // Add product to the order
+        $order->set_customer_note("Complimentary ticket for $recipient_email"); // Add note
+        $order->set_billing_email($recipient_email); // Set billing email
+        $order->calculate_totals(); // Calculate totals
+        return $order->get_id(); // Return order ID
+    }
+    return false;
+}
+
+// Function to send email notifications for the order (Custom function, implement as per your setup)
+function send_order_email_notifications($order_id, $recipient_email) {
+    // Implement logic to send email notifications for the order
+    // This could be done using WooCommerce email functions or custom email sending logic
+    // For example, if using WooCommerce:
+    $order = wc_get_order($order_id);
+    if ($order) {
+        $mailer = WC()->mailer();
+        $email = $mailer->emails['WC_Email_Customer_Completed_Order']; // Adjust based on the email type you want to send
+        $email->trigger($order_id, $order); // Send email
+    }
 }
