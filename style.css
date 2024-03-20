@@ -2332,3 +2332,8 @@ body .price_section_dark svg{
 .html5qr-qrcode-fileinput, .html5qr-qrcode-header {
     display: none !important;
 }
+
+html #qr-reader__dashboard_section #html5-qrcode-anchor-scan-type-change{
+    display: none!important;
+
+}
