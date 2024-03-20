@@ -4888,9 +4888,9 @@ EOD;
 
     // Return the HTML for the scanner along with the inline JavaScript
     return '<div class="qr-scanner-wrapper" style="padding: 50px; display: flex; justify-content: center; align-items: center;">
-                <div id="qr-reader" style="max-width:400px; max-height:400px; width:100%; aspect-ratio: 1 / 4; position: relative; margin: 20px auto; overflow: hidden;">
+                <div id="qr-reader" style="max-width:400px; max-height:400px; width:100%; aspect-ratio: 1 / 46; position: relative; margin: 20px auto; overflow: hidden;">
                     <!-- Scanner guide for visual assistance -->
-                    <div id="qr-scanner-guide" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90%; height: 90%; border: 40px solid #FFD700; box-sizing: border-box;"></div>
+                    <div id="qr-scanner-guide" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90%; height: 90%; border: 0 solid #FFD700; box-sizing: border-box;"></div>
                 </div>
             </div>
             <button id="start-scanning-btn">Start Scanning</button>
