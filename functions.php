@@ -4975,18 +4975,30 @@ add_action('wp_ajax_get_tickets_for_event', 'get_tickets_for_event_callback');
 add_action('wp_ajax_nopriv_get_tickets_for_event', 'get_tickets_for_event_callback'); // Remove if not needed
 function get_tickets_for_event_callback() {
     $event_id = isset($_POST['event_id']) ? intval($_POST['event_id']) : 0;
+    
     // Fetch tickets for the event. Adjust this logic as necessary.
     $tickets = get_tickets_for_event($event_id);
+    
     if ($tickets) {
         foreach ($tickets as $ticket) {
+            // Get ticket name
+            $ticket_name = get_the_title($ticket->ID);
+            
+            // Get ticket price
+            $ticket_price = wc_get_product($ticket->ID)->get_price();
+            
+            // Get ticket stock
+            $ticket_stock = wc_get_product_stock_status($ticket->ID);
+            
             echo "<div class='ticket-item'>
-                    <p>{$ticket->post_title} - Price: {$ticket->price}</p>
+                    <p>{$ticket_name} - Price: {$ticket_price} - Stock: {$ticket_stock}</p>
                     <button class='complimentary-ticket' data-ticket-id='{$ticket->ID}'>Claim Complimentary</button>
                 </div>";
         }
     } else {
         echo "<p>No tickets available for this event.</p>";
     }
+    
     wp_die();
 }
 
