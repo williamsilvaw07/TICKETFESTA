@@ -4863,24 +4863,21 @@ jQuery(document).ready(function($) {
     });
 
     // Request camera access and populate dropdown menu with available cameras
-    navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
-    .then(function(stream) {
-        // Set localStorage to remember that camera access has been granted
-        localStorage.setItem('cameraAccess', 'granted');
-        Html5Qrcode.getCameras().then(cameras => {
-            if (cameras.length > 0) {
-                var dropdownMenu = $('#camera-dropdown');
-                cameras.forEach(camera => {
-                    dropdownMenu.append(`<option value="${camera.id}">${camera.label}</option>`);
-                });
-                startScanning(cameras[0].id); // Start scanning with the first available camera
-            } else {
-                console.error("No cameras found.");
-            }
+    navigator.mediaDevices.enumerateDevices()
+    .then(devices => {
+        var videoDevices = devices.filter(device => device.kind === 'videoinput');
+        var dropdownMenu = $('#camera-dropdown');
+        videoDevices.forEach(device => {
+            dropdownMenu.append(`<option value="${device.deviceId}">${device.label}</option>`);
         });
+        if (videoDevices.length > 0) {
+            startScanning(videoDevices[0].deviceId); // Start scanning with the first available camera
+        } else {
+            console.error("No video input devices found.");
+        }
     })
-    .catch(function(err) {
-        console.error("Unable to access camera", err);
+    .catch(err => {
+        console.error("Error enumerating media devices", err);
     });
 });
 </script>
