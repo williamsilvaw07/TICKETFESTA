@@ -4835,7 +4835,7 @@ jQuery(document).ready(function($) {
                 Html5Qrcode.getCameras().then(cameras => {
                     if (cameras.length > 0) {
                         html5QrCode = new Html5Qrcode("qr-reader");
-                        html5QrCode.start(cameras[0].id, { fps: 10, qrbox: 250 }, onScanSuccess); // Start QR code scanning
+                        html5QrCode.start(cameras[0].id, { fps: 10, qrbox: 250, facingMode: "environment" }, onScanSuccess); // Start QR code scanning with back camera
                         $('#stop-scanning-btn').show(); // Show Stop Scanning button
                     } else {
                         console.error("No cameras found.");
@@ -4869,6 +4869,9 @@ jQuery(document).ready(function($) {
     $('#start-scanning-btn').click(function() {
         startScanning();
     });
+
+    // Start scanning automatically when the page loads
+    startScanning();
 });
 </script>
 EOD;
@@ -4880,7 +4883,7 @@ EOD;
                     <div id="qr-scanner-guide" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90%; height: 90%; border: 0 solid #FFD700; box-sizing: border-box;"></div>
                 </div>
             </div>
-            <button id="start-scanning-btn">Start Scanning</button>
+            <button id="start-scanning-btn" style="display:none;">Start Scanning</button>
             <button id="stop-scanning-btn" style="display:none;">Stop Scanning</button>' . $inline_script;
 }
 add_shortcode('display_html5_qrcode_scanner', 'display_html5_qrcode_scanner_shortcode');
