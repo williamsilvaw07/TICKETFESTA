@@ -4806,9 +4806,6 @@ function generate_unique_random_hash($length) {
 
 
 
-
-
-
 function my_enqueue_qrcode_script() {
     // Enqueue html5-qrcode script with jQuery dependency
     wp_enqueue_script('html5-qrcode', 'https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.7/html5-qrcode.min.js', array('jquery'), null, true);
@@ -4885,7 +4882,7 @@ jQuery(document).ready(function($) {
 EOD;
 
     // Return the HTML for the scanner along with the inline JavaScript
-    return '<div id="qr-reader" style="max-width:400px; max-height:400px; width:100%; aspect-ratio: 1 / 4; position: relative; margin: 20px auto; overflow: hidden;"></div>
+    return '<div id="qr-reader" style="max-width:400px; max-height:400px; width:100%; aspect-ratio: 1/4; position: relative; margin: 20px auto; overflow: hidden;"></div>
     <button id="stop-scanning-btn">Stop Scanning</button>' . $inline_script;
 }
 add_shortcode('display_html5_qrcode_scanner', 'display_html5_qrcode_scanner_shortcode');
