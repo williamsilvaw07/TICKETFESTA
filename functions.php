@@ -4894,8 +4894,6 @@ add_shortcode('display_html5_qrcode_scanner', 'display_html5_qrcode_scanner_shor
 
 
 
-
-
 function user_events_with_tickets_shortcode() {
     if (!is_user_logged_in()) {
         return 'You must be logged in to view your events.';
@@ -4911,36 +4909,22 @@ function user_events_with_tickets_shortcode() {
     $events_query = new WP_Query($args);
     $output = '<ul class="user-events-with-tickets">';
 
-    // Ensure the TribeWooTickets class is available
-    if (class_exists('TribeWooTickets')) {
-        $woo_tickets = TribeWooTickets::get_instance();
+    if ($events_query->have_posts()) {
+        while ($events_query->have_posts()) {
+            $events_query->the_post();
+            $event_id = get_the_ID();
+            $event_title = get_the_title();
+            $event_date = get_the_date();
 
-        if ($events_query->have_posts()) {
-            while ($events_query->have_posts()) {
-                $events_query->the_post();
-                $event_id = get_the_ID();
-                $event_title = get_the_title();
-                $event_date = get_the_date();
+            // Example: Get ticket information here
+            // This needs customization based on your actual relationship between events and tickets
+            $ticket_info = 'Tickets information unavailable due to missing linkage or method to fetch tickets.';
 
-                $ticket_ids = $woo_tickets->get_tickets_ids($event_id);
-                $ticket_info = '';
-
-                foreach ($ticket_ids as $ticket_id) {
-                    $ticket_post = get_post($ticket_id);
-                    if ($ticket_post) {
-                        // Example: Fetching ticket title. Adjust as needed to include price or other data
-                        $ticket_info .= sprintf('<a href="%s">%s</a>, ', get_permalink($ticket_id), $ticket_post->post_title);
-                    }
-                }
-
-                $ticket_info = rtrim($ticket_info, ', ');
-                $output .= "<li>{$event_title} - {$event_date} - Tickets: {$ticket_info}</li>";
-            }
-        } else {
-            $output .= '<li>No events found.</li>';
+            // Output example
+            $output .= "<li>{$event_title} - {$event_date} - {$ticket_info}</li>";
         }
     } else {
-        $output = "The required class 'TribeWooTickets' is not available.";
+        $output .= '<li>No events found.</li>';
     }
 
     wp_reset_postdata();
