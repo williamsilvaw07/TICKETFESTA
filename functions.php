@@ -4899,40 +4899,58 @@ add_shortcode('display_html5_qrcode_scanner', 'display_html5_qrcode_scanner_shor
 
 
 
-
-
-
-function user_events_shortcode() {
-    // Ensure user is logged in
+/**
+ * Retrieves events for the current logged-in user, possibly including ticket information.
+ */
+function get_user_events_with_tickets() {
+    // Check if the user is logged in
     if (!is_user_logged_in()) {
-        return 'Please log in to view your events.';
+        return 'You must be logged in to view your events.';
     }
 
-    // Fetch user's events
-    $events = tribe_get_users_events(wp_get_current_user()->ID);
+    // Get the current user
+    $current_user = wp_get_current_user();
 
-    // Check if there are events
-    if (empty($events)) {
-        return 'No events found.';
+    // Query for the current user's events
+    $args = array(
+        'post_type' => 'tribe_events', // Ensure this matches your actual event post type
+        'author' => $current_user->ID,
+        'posts_per_page' => -1, // Adjust as needed
+        // Include additional query parameters as needed
+    );
+
+    $events_query = new WP_Query($args);
+    $output = '<ul class="user-events-with-tickets">';
+
+    if ($events_query->have_posts()) {
+        while ($events_query->have_posts()) {
+            $events_query->the_post();
+            // Here, include any ticket information. This example only includes event titles and dates.
+            $output .= sprintf(
+                '<li>%s - %s</li>',
+                get_the_title(),
+                get_the_date()
+            );
+            // Extend this with ticket information if available
+        }
+    } else {
+        $output .= '<li>No events found.</li>';
     }
 
-    // Build output
-    $output = '<ul>';
-    foreach ($events as $event) {
-        $output .= sprintf('<li><a href="%s">%s</a></li>', get_permalink($event->ID), get_the_title($event->ID));
-    }
+    // Reset post data to avoid conflicts
+    wp_reset_postdata();
+
     $output .= '</ul>';
-
     return $output;
 }
-add_shortcode('user_events', 'user_events_shortcode');
 
+/**
+ * Shortcode to display events for the current user, including ticket information if applicable.
+ */
+function user_events_with_tickets_shortcode($atts) {
+    // This shortcode does not process attributes but could be extended to do so
+    return get_user_events_with_tickets();
+}
 
-
-
-
-
-
-
-
-
+// Register the shortcode with WordPress
+add_shortcode('user_events_with_tickets', 'user_events_with_tickets_shortcode');
