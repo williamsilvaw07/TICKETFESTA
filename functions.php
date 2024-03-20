@@ -4946,6 +4946,7 @@ function display_user_events_with_tickets_shortcode() {
 // AJAX callback to get tickets for selected event
 add_action('wp_ajax_get_tickets_for_event', 'get_tickets_for_event_callback');
 add_action('wp_ajax_nopriv_get_tickets_for_event', 'get_tickets_for_event_callback'); // Remove if not needed
+
 function get_tickets_for_event_callback() {
     $event_id = isset($_POST['event_id']) ? intval($_POST['event_id']) : 0;
     
@@ -5010,6 +5011,15 @@ function get_tickets_for_event($event_id) {
     return $filtered_tickets;
 }
 
+
+
+
+
+
+
+
+
+
 // AJAX callback to process complimentary ticket
 add_action('wp_ajax_process_complimentary_ticket', 'process_complimentary_ticket_callback');
 function process_complimentary_ticket_callback() {
@@ -5028,6 +5038,11 @@ function process_complimentary_ticket_callback() {
     }
     wp_die();
 }
+
+
+
+
+
 
 // Function to create complimentary order (Custom function, implement as per your setup)
 function create_complimentary_order($ticket_id, $recipient_email) {
