@@ -2354,6 +2354,10 @@ html #qr-reader__dashboard_section #html5-qrcode-anchor-scan-type-change{
     display: none!important;
 
 }
+#qr-reader__header_message{
+    color: white!important;
+    padding-top: 15px!important;
+}
 #html5-qrcode-button-camera-start{
     background: #d3fa16 !important;
     color: #000000 !important;
