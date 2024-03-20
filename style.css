@@ -2364,8 +2364,9 @@ html #qr-reader #html5-qrcode-button-camera-permission{
 }
 html #html5-qrcode-button-camera-stop{
     width: fit-content;
-    padding: 7px 15px;
-    border-radius: 4px;
+    font-size: 13px;
+    padding: 4px 10px;
+    border-radius: 2px;
     color: white !important;
     background: #ff4d4d !important;
 }
