@@ -3768,9 +3768,9 @@ function enqueue_custom_frontend_js()
     // Enqueue your custom script, the 'get_stylesheet_directory_uri()' function points to your child theme's root directory.
     wp_enqueue_script('custom-frontend-js', get_stylesheet_directory_uri() . '/custom-function-frontend.js', array('jquery'), $script_version, true);
     if ( is_page( 'scan-code' ) ) {
-        // wp_enqueue_script('html5-qrcode', 'https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js', array('jquery'), null, true);
-        wp_enqueue_script('custom-qr-scanner-custom', 'https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js', array('jquery'), $script_version, true);
-        wp_enqueue_script('custom-qr-main-js', get_stylesheet_directory_uri() . '/QrScan.js', array('jquery', 'custom-qr-scanner-custom'), $script_version, true);
+        wp_enqueue_script('html5-qrcode', '//cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.7/html5-qrcode.min.js', array('jquery'), null, true);
+        // wp_enqueue_script('custom-qr-scanner-custom', 'https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js', array('jquery'), $script_version, true);
+        wp_enqueue_script('custom-qr-main-js', get_stylesheet_directory_uri() . '/QrScan.js', array('jquery', 'html5-qrcode'), $script_version, true);
         wp_localize_script(
             'custom-qr-main-js',
             'tribe_ajax',
@@ -4609,11 +4609,10 @@ function custom_qr_scanner_shortcode() {
             $start_date = get_post_meta( $event_id, '_EventStartDate', true );
             $issued_ticked = get_post_meta( $event_id, '_tribe_progressive_ticket_current_number', true );
             $name = get_the_title( $event_id ) ;
+            $thumbnail_url = get_the_post_thumbnail_url($event_id, 'medium');
             // echo "<pre>";
             // var_dump($event_data);
             // echo "</pre>";
-
-
     ?>
             <div class="tabs-container">
                 <ul class="tabs-nav">
@@ -4624,7 +4623,7 @@ function custom_qr_scanner_shortcode() {
             <div class="tab-content-container">
                 <div class="tab-content active" id="tab1">
                     <div class="event-container">
-                        <img src="" alt="" class="event-image">
+                    -   <img src="<?php echo esc_url( $thumbnail_url );?>" alt="" class="event-image">
                         <div class="name">Name: <?php echo $name?> </div>
                         <div class="date">Date: <?php echo $start_date; ?></div>
                         <!-- <div class="location">Location: </div> -->
@@ -4635,8 +4634,8 @@ function custom_qr_scanner_shortcode() {
                 <div class="tab-content" id="tab2">
                     <div id="video-container">
                         <input type="text" id="event-pass" name="event-pass" placeholder="enter event pass">
-                        <video id="video" playsinline style="width: 500px"></video>
-                        <div id="result"></div>
+                        <!-- <video id="video" playsinline style="width: 500px"></video> -->
+                        <div id="qr-reader" class="qr-reader"></div>
                         <span id="event_not_found" style='display:none'>No event found that for the event pass.</span>
                         <button id="scan-button" >Scan QR Code</button>
                         <div class="checkin-details"  style='display:none'>
