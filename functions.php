@@ -4880,6 +4880,26 @@ add_shortcode('display_html5_qrcode_scanner', 'display_html5_qrcode_scanner_shor
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // Function to fetch current user's events and associated tickets with frontend debugging
 function fetch_user_events_with_tickets_debug() {
     // Check if user is logged in
@@ -4938,3 +4958,24 @@ function fetch_user_events_with_tickets_debug() {
 }
 // Register shortcode
 add_shortcode('user_events_with_tickets_debug', 'fetch_user_events_with_tickets_debug');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
