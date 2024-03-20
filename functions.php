@@ -4899,40 +4899,54 @@ add_shortcode('display_html5_qrcode_scanner', 'display_html5_qrcode_scanner_shor
 
 
 
-
-
-
-function user_events_shortcode() {
-    // Ensure user is logged in
+/**
+ * Retrieves events for the current logged-in user, including ticket information.
+ */
+function get_user_events_with_tickets() {
     if (!is_user_logged_in()) {
-        return 'Please log in to view your events.';
+        return 'You must be logged in to view your events.';
     }
 
-    // Fetch user's events
-    $events = tribe_get_users_events(wp_get_current_user()->ID);
+    $current_user = wp_get_current_user();
+    $args = array(
+        'post_type' => 'tribe_events', // Make sure this matches your event post type
+        'author' => $current_user->ID,
+        'posts_per_page' => -1, // Adjust as needed
+    );
 
-    // Check if there are events
-    if (empty($events)) {
-        return 'No events found.';
+    $events_query = new WP_Query($args);
+    $output = '<ul class="user-events-with-tickets">';
+
+    if ($events_query->have_posts()) {
+        while ($events_query->have_posts()) {
+            $events_query->the_post();
+            $event_id = get_the_ID();
+            $event_title = get_the_title();
+            $event_date = get_the_date();
+
+            // Assuming ticket IDs are stored in a post meta field called 'event_ticket_ids'
+            $ticket_ids = get_post_meta($event_id, 'event_ticket_ids', true);
+            if (!empty($ticket_ids)) {
+                // Ticket IDs are assumed to be stored as a comma-separated string
+                $ticket_ids_array = explode(',', $ticket_ids);
+                $tickets_output = [];
+                foreach ($ticket_ids_array as $ticket_id) {
+                    // Fetch ticket (product) title. Adjust if your ticket info is stored differently.
+                    $ticket_title = get_the_title($ticket_id);
+                    $ticket_permalink = get_permalink($ticket_id);
+                    $tickets_output[] = "<a href='{$ticket_permalink}'>{$ticket_title}</a>";
+                }
+                $tickets_list = implode(', ', $tickets_output);
+                $output .= "<li>{$event_title} - {$event_date} - Tickets: {$tickets_list}</li>";
+            } else {
+                $output .= "<li>{$event_title} - {$event_date} - No tickets found.</li>";
+            }
+        }
+    } else {
+        $output .= '<li>No events found.</li>';
     }
 
-    // Build output
-    $output = '<ul>';
-    foreach ($events as $event) {
-        $output .= sprintf('<li><a href="%s">%s</a></li>', get_permalink($event->ID), get_the_title($event->ID));
-    }
+    wp_reset_postdata();
     $output .= '</ul>';
-
     return $output;
 }
-add_shortcode('user_events', 'user_events_shortcode');
-
-
-
-
-
-
-
-
-
-
