@@ -4904,45 +4904,30 @@ add_shortcode('display_html5_qrcode_scanner', 'display_html5_qrcode_scanner_shor
 
 
 
-
-function user_created_events_with_tickets_shortcode() {
-    // Make sure the user is logged in
-    if ( ! is_user_logged_in() ) {
-        return 'You must be logged in to see your events.';
+function user_events_shortcode() {
+    // Ensure user is logged in
+    if (!is_user_logged_in()) {
+        return 'Please log in to view your events.';
     }
 
-    $current_user = wp_get_current_user();
+    // Fetch user's events
+    $events = tribe_get_users_events(wp_get_current_user()->ID);
 
-    // Query parameters
-    $args = array(
-        'post_type'      => 'your_event_post_type', // Change 'your_event_post_type' to your actual event post type
-        'author'         => $current_user->ID,
-        // Add any other parameters you need, for example to check for tickets
-    );
-
-    $user_events_query = new WP_Query($args);
-
-    if ( $user_events_query->have_posts() ) {
-        $output = '<ul>';
-        while ( $user_events_query->have_posts() ) {
-            $user_events_query->the_post();
-            $output .= '<li><a href="' . get_permalink() . '">' . get_the_title() . '</a></li>';
-            // Add any other event details you want to display
-        }
-        $output .= '</ul>';
-    } else {
-        $output = 'No events found.';
+    // Check if there are events
+    if (empty($events)) {
+        return 'No events found.';
     }
 
-    // Reset Post Data
-    wp_reset_postdata();
+    // Build output
+    $output = '<ul>';
+    foreach ($events as $event) {
+        $output .= sprintf('<li><a href="%s">%s</a></li>', get_permalink($event->ID), get_the_title($event->ID));
+    }
+    $output .= '</ul>';
 
     return $output;
 }
-add_shortcode('user_events_with_tickets', 'user_created_events_with_tickets_shortcode');
-
-
-
+add_shortcode('user_events', 'user_events_shortcode');
 
 
 
