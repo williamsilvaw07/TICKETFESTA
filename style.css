@@ -2355,6 +2355,13 @@ html #qr-reader__dashboard_section #html5-qrcode-anchor-scan-type-change{
     white-space: nowrap;
 }
 
+#qr-reader__header_message{
+    width: fit-content;
+    padding: 7px 15px;
+    border-radius: 4px;
+    color: rgb(0, 0, 0) !important;
+    background: #ffc107 !important;
+}
 html #html5-qrcode-button-camera-stop{
     width: fit-content;
     padding: 7px 15px;
