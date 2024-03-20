@@ -4950,40 +4950,39 @@ add_shortcode('user_events_with_tickets', 'user_events_with_tickets_shortcode');
 
 
 
-
 function get_tickets_for_event_ajax() {
     if (isset($_POST['event_id']) && !empty($_POST['event_id'])) {
         $event_id = intval($_POST['event_id']);
-        
+
+        $ticket_info = '';
         if (class_exists('Tribe__Tickets_Plus__Commerce__WooCommerce__Main')) {
             $woo_tickets = Tribe__Tickets_Plus__Commerce__WooCommerce__Main::get_instance();
             $ticket_ids = $woo_tickets->get_tickets_ids($event_id);
-            $ticket_info = '';
 
             foreach ($ticket_ids as $ticket_id) {
                 $product = wc_get_product($ticket_id);
                 if ($product) {
-                    // Fetching price and stock
                     $price_html = $product->get_price_html();
                     $stock_quantity = $product->get_stock_quantity();
-                    $stock_quantity = is_null($stock_quantity) ? 'Unlimited' : $stock_quantity;
-
-                    $ticket_info .= sprintf('<div>%s - Price: %s - Stock: %s</div>', 
-                        $product->get_title(), 
-                        $price_html, 
-                        $stock_quantity);
+                    $ticket_info .= sprintf('<div>%s - Price: %s - Stock: %s</div>',
+                                            $product->get_title(), $price_html, $stock_quantity ?: 'Out of stock');
                 }
             }
-
-            if (empty($ticket_info)) {
-                $ticket_info = 'No tickets found for this event.';
-            }
-
-            echo $ticket_info;
         }
+
+        if (empty($ticket_info)) {
+            $ticket_info = 'No tickets found for this event.';
+        }
+
+        echo $ticket_info;
     }
-    
-    wp_die(); // Required to terminate immediately and return a proper response
+
+    wp_die();
 }
-add_action('wp_ajax_get_tickets_for_event', 'get_tickets_for_event_ajax');
-add_action('wp_ajax_nopriv_get_tickets_for_event', 'get_tickets_for_event_ajax');
+
+// Part of the AJAX response, inside the foreach loop:
+    $ticket_info .= '<form class="purchase_ticket_form" data-ticket-id="' . esc_attr($ticket_id) . '">
+    <input type="hidden" name="ticket_id" value="' . esc_attr($ticket_id) . '" />
+    <input type="email" name="recipient_email" placeholder="Recipient email (optional)" />
+    <button type="submit">Get Ticket for Free</button>
+</form>';
