@@ -4922,83 +4922,80 @@ add_shortcode('display_html5_qrcode_scanner', 'display_html5_qrcode_scanner_shor
 
 
 
-
-
-function custom_complimentary_ticket_form_shortcode() {
-    // Enqueue jQuery, which is required for AJAX
+function enqueue_custom_scripts() {
     wp_enqueue_script('jquery');
-
-    // Start output buffering to return the complete form and script
-    ob_start();
-    ?>
-    <div id="complimentaryTicketForm">
-        <select id="eventDropdown" name="event_id">
-            <option value="">Select an Event</option>
-            <!-- Event options will be populated by AJAX -->
-        </select>
-        <div id="ticketsContainer">
-            <!-- Ticket details will be loaded here based on the selected event -->
-        </div>
-    </div>
-
-    <script type="text/javascript">
-    jQuery(document).ready(function($) {
-        // Fetch and populate events dropdown
-        $.ajax({
-            url: '<?php echo admin_url('admin-ajax.php'); ?>',
-            type: 'POST',
-            data: {
-                action: 'load_events_for_user',
-            },
-            success: function(response) {
-                $('#eventDropdown').append(response);
-            }
-        });
-
-        // Fetch and display tickets for the selected event
-        $('#eventDropdown').change(function() {
-            var eventId = $(this).val();
-            if(eventId) {
+    wp_add_inline_script('jquery', "
+        jQuery(document).ready(function($) {
+            $('#userEventsDropdown').change(function() {
+                var eventId = $(this).val();
                 $.ajax({
-                    url: '<?php echo admin_url('admin-ajax.php'); ?>',
+                    url: ajaxurl,
                     type: 'POST',
                     data: {
-                        action: 'load_tickets_for_event',
-                        event_id: eventId,
+                        'action': 'get_tickets_for_event',
+                        'event_id': eventId,
                     },
                     success: function(response) {
                         $('#ticketsContainer').html(response);
                     }
                 });
-            }
-        });
-    });
-    </script>
-    <?php
-    return ob_get_clean();
-}
-add_shortcode('complimentary_ticket_form', 'custom_complimentary_ticket_form_shortcode');
+            });
 
-// PHP AJAX handlers for loading events and tickets
-function load_events_for_user_callback() {
+            $(document).on('click', '.complimentary-ticket', function() {
+                var ticketId = $(this).data('ticket-id');
+                var recipientEmail = prompt('Enter the recipient email:');
+                if(recipientEmail) {
+                    $.ajax({
+                        url: ajaxurl,
+                        type: 'POST',
+                        data: {
+                            'action': 'process_complimentary_ticket',
+                            'ticket_id': ticketId,
+                            'recipient_email': recipientEmail,
+                        },
+                        success: function(response) {
+                            alert(response);
+                        }
+                    });
+                }
+            });
+        });
+    ");
+}
+add_action('wp_enqueue_scripts', 'enqueue_custom_scripts');
+
+add_shortcode('display_user_events', 'display_user_events_with_tickets_shortcode');
+function display_user_events_with_tickets_shortcode() {
     $user_id = get_current_user_id();
     $events = get_posts([
-        'post_type' => 'tribe_events', // Adjusted for The Events Calendar
+        'post_type' => 'tribe_events',
         'author' => $user_id,
         'posts_per_page' => -1,
     ]);
 
+    ob_start();
+    echo "<select id='userEventsDropdown'><option value=''>Select Your Event</option>";
     foreach ($events as $event) {
-        echo sprintf('<option value="%s">%s</option>', esc_attr($event->ID), esc_html($event->post_title));
+        echo "<option value='{$event->ID}'>{$event->post_title}</option>";
     }
-    wp_die();
+    echo "</select><div id='ticketsContainer'></div>";
+    return ob_get_clean();
 }
-add_action('wp_ajax_load_events_for_user', 'load_events_for_user_callback');
-function load_tickets_for_event_callback() {
+
+add_action('wp_ajax_get_tickets_for_event', 'get_tickets_for_event_callback');
+add_action('wp_ajax_nopriv_get_tickets_for_event', 'get_tickets_for_event_callback'); // Remove if not needed
+function get_tickets_for_event_callback() {
     $event_id = isset($_POST['event_id']) ? intval($_POST['event_id']) : 0;
-    // Your logic to get tickets/products for the event
-    // This is highly dependent on your setup
-    echo 'Replace this with your ticket loading logic. Event ID: ' . $event_id;
+    // Fetch tickets for the event. This is pseudo-code; adjust as necessary.
+    echo "<p>Implement ticket fetching logic here. Event ID: $event_id</p>";
     wp_die();
 }
-add_action('wp_ajax_load_tickets_for_event', 'load_tickets_for_event_callback');
+
+add_action('wp_ajax_process_complimentary_ticket', 'process_complimentary_ticket_callback');
+function process_complimentary_ticket_callback() {
+    $ticket_id = isset($_POST['ticket_id']) ? intval($_POST['ticket_id']) : 0;
+    $recipient_email = isset($_POST['recipient_email']) ? sanitize_email($_POST['recipient_email']) : '';
+    // Process the complimentary ticket. This is pseudo-code; adjust as necessary.
+    echo "Complimentary ticket processed for $recipient_email. Ticket ID: $ticket_id";
+    wp_die();
+}
