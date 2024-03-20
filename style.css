@@ -2332,7 +2332,7 @@ body .price_section_dark svg{
 .html5qr-qrcode-fileinput, .html5qr-qrcode-header {
     display: none !important;
 }
-#qr-reader{
+.qrcode_scanner_wrapper_div{
     max-width: 400px;
     padding: 10%;
 }

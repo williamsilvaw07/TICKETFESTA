@@ -4818,7 +4818,7 @@ function display_html5_qrcode_scanner_shortcode() {
     my_enqueue_qrcode_script(); // Ensures the QR code script is enqueued
 
     // Scanner HTML setup with responsive design adjustments
-    $scanner_html = '<div id="qr-reader" style="aspect-ratio: 1 / 1;"></div>';
+    $scanner_html = '<div class="qrcode_scanner_wrapper_div"><div id="qr-reader" style="aspect-ratio: 1 / 1;"></div></div>';
 
     // Inline JavaScript for initializing the QR code scanner with a square viewfinder
     $inline_script = "
