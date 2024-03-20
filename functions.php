@@ -4893,16 +4893,16 @@ add_shortcode('display_html5_qrcode_scanner', 'display_html5_qrcode_scanner_shor
 
 
 
-
 function user_events_with_tickets_shortcode() {
     if (!is_user_logged_in()) {
-        return 'You must be logged in to view your events.';
+        return 'You must be logged in to view your events and ticket sales.';
     }
 
     $current_user = wp_get_current_user();
+    $user_id = $current_user->ID;
     $args = array(
-        'post_type' => 'tribe_events', // Adjust this to your event post type
-        'author' => $current_user->ID,
+        'post_type' => 'tribe_events', // Make sure this matches your event post type.
+        'author' => $user_id,
         'posts_per_page' => -1,
     );
 
@@ -4914,14 +4914,16 @@ function user_events_with_tickets_shortcode() {
             $events_query->the_post();
             $event_id = get_the_ID();
             $event_title = get_the_title();
-            $event_date = get_the_date();
+            
+            // Use the provided function to get ticket info for this event.
+            $ticket_info = get_ticket_info($user_id);
 
-            // Example: Get ticket information here
-            // This needs customization based on your actual relationship between events and tickets
-            $ticket_info = 'Tickets information unavailable due to missing linkage or method to fetch tickets.';
+            // Adding some ticket-related data directly into the output.
+            // You might need to adjust this based on the actual data structure returned by get_ticket_info().
+            $total_sales_lifetime = $ticket_info['total_sales_lifetime'] ?? 0;
+            $total_tickets_sold_lifetime = $ticket_info['total_tickets_sold_lifetime'] ?? 0;
 
-            // Output example
-            $output .= "<li>{$event_title} - {$event_date} - {$ticket_info}</li>";
+            $output .= "<li>{$event_title} - Lifetime Sales: {$total_sales_lifetime}, Tickets Sold: {$total_tickets_sold_lifetime}</li>";
         }
     } else {
         $output .= '<li>No events found.</li>';
