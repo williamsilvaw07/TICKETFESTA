@@ -4946,13 +4946,19 @@ function user_events_with_tickets_shortcode() {
 }
 add_shortcode('user_events_with_tickets', 'user_events_with_tickets_shortcode');
 
-// AJAX action to fetch and display ticket info for the selected event
+
+
+
+
+
 function get_tickets_for_event_ajax() {
     if (isset($_POST['event_id']) && !empty($_POST['event_id'])) {
         $event_id = intval($_POST['event_id']);
         
-        // Fetching ticket info using the provided method
+        // Initialize the ticket info string
         $ticket_info = '';
+
+        // Check if the TribeWooTickets class is available
         if (class_exists('Tribe__Tickets_Plus__Commerce__WooCommerce__Main')) {
             $woo_tickets = Tribe__Tickets_Plus__Commerce__WooCommerce__Main::get_instance();
             $ticket_ids = $woo_tickets->get_tickets_ids($event_id);
@@ -4960,7 +4966,18 @@ function get_tickets_for_event_ajax() {
             foreach ($ticket_ids as $ticket_id) {
                 $ticket_post = get_post($ticket_id);
                 if ($ticket_post) {
-                    $ticket_info .= sprintf('<div><a href="%s">%s</a></div>', get_permalink($ticket_id), $ticket_post->post_title);
+                    // Fetch ticket price and stock
+                    $ticket_price = get_post_meta($ticket_id, '_price', true); // WooCommerce standard price field
+                    $ticket_stock = get_post_meta($ticket_id, '_stock', true); // WooCommerce standard stock field
+
+                    // Format the ticket information
+                    $ticket_info .= sprintf(
+                        '<div><a href="%s">%s</a> - Price: %s - Stock: %s</div>',
+                        get_permalink($ticket_id),
+                        esc_html($ticket_post->post_title),
+                        esc_html($ticket_price ? wc_price($ticket_price) : 'N/A'), // Use WooCommerce's wc_price function for formatting
+                        esc_html($ticket_stock !== '' ? $ticket_stock : 'N/A')
+                    );
                 }
             }
         }
