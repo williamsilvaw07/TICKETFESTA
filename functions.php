@@ -5002,7 +5002,9 @@ function get_tickets_for_event_callback() {
                 $ticket_name = $product->get_name(); // Ticket Name
                 $ticket_price = $product->get_price(); // Ticket Price
                 $ticket_stock = $product->get_stock_quantity(); // Ticket Stock
-                $ticket_status = $product->get_status(); // Ticket Status
+                
+                // Get product status
+                $ticket_status = get_post_status($ticket_id); // Ticket Status
                 
                 // Display ticket information
                 echo "<div class='ticket-item'>
