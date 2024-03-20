@@ -4972,7 +4972,6 @@ function display_user_events_with_tickets_shortcode() {
 
 
 
-
 // AJAX callback to get tickets for selected event
 add_action('wp_ajax_get_tickets_for_event', 'get_tickets_for_event_callback');
 add_action('wp_ajax_nopriv_get_tickets_for_event', 'get_tickets_for_event_callback'); // Remove if not needed
@@ -4983,6 +4982,15 @@ function get_tickets_for_event_callback() {
     $tickets = get_tickets_for_event($event_id);
     
     if ($tickets) {
+        // Get event information
+        $event = get_post($event_id);
+        $event_title = $event ? $event->post_title : '';
+        
+        // Display event ID and title
+        echo "<h3>Event ID: {$event_id}</h3>";
+        echo "<h4>Event Title: {$event_title}</h4>";
+        
+        // Loop through tickets
         foreach ($tickets as $ticket) {
             // Get ticket object
             $product = wc_get_product($ticket->get_id());
@@ -4996,7 +5004,7 @@ function get_tickets_for_event_callback() {
                 $ticket_stock = $product->get_stock_quantity(); // Ticket Stock
                 
                 echo "<div class='ticket-item'>
-                        <p>Ticket ID: {$ticket_id} - Name: {$ticket_name} - Price: {$ticket_price} - Stock: {$ticket_stock}</p>
+                        <p>Event ID: {$event_id} - Event Title: {$event_title} - Ticket ID: {$ticket_id} - Name: {$ticket_name} - Price: {$ticket_price} - Stock: {$ticket_stock}</p>
                         <button class='complimentary-ticket' data-ticket-id='{$ticket_id}'>Claim Complimentary</button>
                     </div>";
             }
