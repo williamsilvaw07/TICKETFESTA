@@ -4828,16 +4828,23 @@ jQuery(document).ready(function($) {
     function startScanning() {
         if (!isScanning) {
             isScanning = true;
-            Html5Qrcode.getCameras().then(cameras => {
-                if (cameras.length > 0) {
-                    html5QrCode = new Html5Qrcode("qr-reader");
-                    html5QrCode.start(cameras[0].id, { fps: 10, qrbox: 250 }, onScanSuccess); // Start QR code scanning
-                    $('#stop-scanning-btn').show(); // Show Stop Scanning button
-                } else {
-                    console.error("No cameras found.");
-                }
-            }).catch(err => {
-                console.error("Unable to start QR scanner", err);
+            // Request camera access
+            navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
+            .then(function(stream) {
+                // Set localStorage to remember that camera access has been granted
+                localStorage.setItem('cameraAccess', 'granted');
+                Html5Qrcode.getCameras().then(cameras => {
+                    if (cameras.length > 0) {
+                        html5QrCode = new Html5Qrcode("qr-reader");
+                        html5QrCode.start(cameras[0].id, { fps: 10, qrbox: 250 }, onScanSuccess); // Start QR code scanning
+                        $('#stop-scanning-btn').show(); // Show Stop Scanning button
+                    } else {
+                        console.error("No cameras found.");
+                    }
+                });
+            })
+            .catch(function(err) {
+                console.error("Unable to access camera", err);
             });
         }
     }
@@ -4852,25 +4859,6 @@ jQuery(document).ready(function($) {
             });
             $('#stop-scanning-btn').hide(); // Hide Stop Scanning button
         }
-    }
-
-    // Check if camera access is already granted (by checking localStorage)
-    var cameraAccessGranted = localStorage.getItem('cameraAccess') === 'granted';
-    
-    // If camera access is granted, start the QR code scanner immediately
-    if (cameraAccessGranted) {
-        startScanning();
-    } else {
-        // If camera access is not granted, request camera access
-        navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
-        .then(function(stream) {
-            // Set localStorage to remember that camera access has been granted
-            localStorage.setItem('cameraAccess', 'granted');
-            startScanning();
-        })
-        .catch(function(err) {
-            console.error("Unable to access camera", err);
-        });
     }
 
     // Function to handle stop scanning button click
@@ -4888,7 +4876,7 @@ EOD;
 
     // Return the HTML for the scanner along with the inline JavaScript
     return '<div class="qr-scanner-wrapper" style="padding: 50px; display: flex; justify-content: center; align-items: center;">
-                <div id="qr-reader" style="max-width:400px; max-height:400px; width:100%; aspect-ratio: 1 / 46; position: relative; margin: 20px auto; overflow: hidden;">
+                <div id="qr-reader" style="max-width:400px; max-height:400px; width:100%; aspect-ratio: 1 / 4; position: relative; margin: 20px auto; overflow: hidden;">
                     <!-- Scanner guide for visual assistance -->
                     <div id="qr-scanner-guide" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90%; height: 90%; border: 0 solid #FFD700; box-sizing: border-box;"></div>
                 </div>
