@@ -4996,15 +4996,17 @@ function get_tickets_for_event_callback() {
             $product = wc_get_product($ticket->get_id());
             
             // Check if the ticket is published or in draft status
-            if ($product && in_array($product->get_status(), ['publish', 'draft'])) {
+            if ($product) {
                 // Get ticket information
                 $ticket_id = $product->get_id(); // Product ID
                 $ticket_name = $product->get_name(); // Ticket Name
                 $ticket_price = $product->get_price(); // Ticket Price
                 $ticket_stock = $product->get_stock_quantity(); // Ticket Stock
+                $ticket_status = $product->get_status(); // Ticket Status
                 
+                // Display ticket information
                 echo "<div class='ticket-item'>
-                        <p>Event ID: {$event_id} - Event Title: {$event_title} - Ticket ID: {$ticket_id} - Name: {$ticket_name} - Price: {$ticket_price} - Stock: {$ticket_stock}</p>
+                        <p>Event ID: {$event_id} - Event Title: {$event_title} - Ticket ID: {$ticket_id} - Name: {$ticket_name} - Price: {$ticket_price} - Stock: {$ticket_stock} - Status: {$ticket_status}</p>
                         <button class='complimentary-ticket' data-ticket-id='{$ticket_id}'>Claim Complimentary</button>
                     </div>";
             }
