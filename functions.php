@@ -4981,18 +4981,21 @@ function get_tickets_for_event_callback() {
     
     if ($tickets) {
         foreach ($tickets as $ticket) {
+            // Get ticket object
+            $product = wc_get_product($ticket->get_id());
+            
             // Get ticket name
-            $ticket_name = get_the_title($ticket->ID);
+            $ticket_name = $product->get_name();
             
             // Get ticket price
-            $ticket_price = wc_get_product($ticket->ID)->get_price();
+            $ticket_price = $product->get_price();
             
             // Get ticket stock
-            $ticket_stock = wc_get_product_stock_status($ticket->ID);
+            $ticket_stock = $product->get_stock_quantity();
             
             echo "<div class='ticket-item'>
                     <p>{$ticket_name} - Price: {$ticket_price} - Stock: {$ticket_stock}</p>
-                    <button class='complimentary-ticket' data-ticket-id='{$ticket->ID}'>Claim Complimentary</button>
+                    <button class='complimentary-ticket' data-ticket-id='{$ticket->get_id()}'>Claim Complimentary</button>
                 </div>";
         }
     } else {
