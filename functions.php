@@ -4879,11 +4879,21 @@ add_shortcode('display_html5_qrcode_scanner', 'display_html5_qrcode_scanner_shor
 
 
 
+
+
+
+
+
 // Shortcode to display all events for the current user with their tickets
 add_shortcode('complimentary_ticket_form', 'display_user_events_with_tickets_shortcode');
 function display_user_events_with_tickets_shortcode() {
     // Get current user ID
     $user_id = get_current_user_id();
+
+    // Check if user ID is valid
+    if (!$user_id) {
+        return 'User not logged in.';
+    }
 
     // Get all events created by the current user
     $events = get_posts(array(
@@ -4910,8 +4920,8 @@ function display_user_events_with_tickets_shortcode() {
 
             // Check if any tickets are found
             if (!empty($tickets)) {
-                // Add event title to output
-                $output .= '<h3>' . $event_title . '</h3>';
+                // Add event title and user ID to output
+                $output .= '<h3>' . $event_title . ' (User ID: ' . $user_id . ')</h3>';
 
                 // Initialize ticket list
                 $output .= '<ul>';
