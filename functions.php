@@ -4880,77 +4880,52 @@ add_shortcode('display_html5_qrcode_scanner', 'display_html5_qrcode_scanner_shor
 
 
 
+// Function to fetch current user's events and associated tickets
+function fetch_user_events_with_tickets() {
+    // Check if user is logged in
+    if (is_user_logged_in()) {
+        // Get current user ID
+        $user_id = get_current_user_id();
+        
+        // Get user's events
+        $user_events = tribe_get_events( array(
+            'author' => $user_id, // Filter events by user ID
+            'posts_per_page' => -1, // Get all events
+        ) );
 
-
-
-// Shortcode to display all events for the current user with their tickets
-add_shortcode('complimentary_ticket_form', 'display_user_events_with_tickets_shortcode');
-function display_user_events_with_tickets_shortcode() {
-    // Get current user ID
-    $user_id = get_current_user_id();
-
-    // Check if user ID is valid
-    if (!$user_id) {
-        return 'User not logged in.';
-    }
-
-    // Get all events created by the current user
-    $events = get_posts(array(
-        'post_type' => 'tribe_events',
-        'author' => $user_id,
-        'posts_per_page' => -1,
-    ));
-
-    // Debug output
-    error_log('User ID: ' . $user_id);
-    error_log('Events: ' . print_r($events, true));
-
-    // Check if any events are found
-    if ($events) {
         // Initialize output variable
         $output = '';
 
-        // Loop through each event
-        foreach ($events as $event) {
+        // Loop through user's events
+        foreach ($user_events as $event) {
             // Get event ID
             $event_id = $event->ID;
 
-            // Get event title
-            $event_title = $event->post_title;
+            // Get tickets attached to the event
+            $woo_tickets = TribeWooTickets::get_instance();
+            $ticket_ids = $woo_tickets->get_tickets_ids($event_id);
 
-            // Get tickets for the event
-            $tickets = get_tickets_for_event($event_id);
+            // Start building output for the event
+            $output .= '<div class="event">';
+            $output .= '<h2>' . get_the_title($event_id) . '</h2>'; // Event title
 
-            // Debug output
-            error_log('Event ID: ' . $event_id);
-            error_log('Tickets: ' . print_r($tickets, true));
+            // Loop through tickets
+            foreach ($ticket_ids as $ticket_id) {
+                // Get ticket title and other ticket data as needed
+                $ticket_title = get_the_title($ticket_id);
+                // You can add more ticket data retrieval here if needed
 
-            // Check if any tickets are found
-            if (!empty($tickets)) {
-                // Add event title to output
-                $output .= '<h3>' . $event_title . ' (User ID: ' . $user_id . ')</h3>';
-
-                // Initialize ticket list
-                $output .= '<ul>';
-
-                // Loop through tickets
-                foreach ($tickets as $ticket) {
-                    // Get ticket title
-                    $ticket_title = $ticket->post_title;
-
-                    // Add ticket title to ticket list
-                    $output .= '<li>' . $ticket_title . '</li>';
-                }
-
-                // Close ticket list
-                $output .= '</ul>';
+                // Add ticket information to output
+                $output .= '<p>Ticket: ' . $ticket_title . '</p>';
             }
+
+            $output .= '</div>'; // End of event
         }
 
-        // Return the output
         return $output;
     } else {
-        // No events found for the current user
-        return 'No events found for the current user.';
+        return '<p>You must be logged in to view your events.</p>';
     }
 }
+// Register shortcode
+add_shortcode('user_events_with_tickets', 'fetch_user_events_with_tickets');
