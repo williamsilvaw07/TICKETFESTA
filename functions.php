@@ -4946,8 +4946,6 @@ add_shortcode('user_events_with_tickets', 'user_events_with_tickets_shortcode');
 
 
 
-
-
 function get_tickets_for_event_ajax() {
     if (!isset($_POST['event_id']) || empty($_POST['event_id'])) {
         wp_send_json_error('Event ID is required.');
@@ -4991,4 +4989,4 @@ function get_tickets_for_event_ajax() {
     wp_die();
 }
 add_action('wp_ajax_get_tickets_for_event', 'get_tickets_for_event_ajax');
-add_action('wp_ajax_nopriv_get_tickets_fo
+add_action('wp_ajax_nopriv_get_tickets_for_event', 'get_tickets_for_event_ajax');
