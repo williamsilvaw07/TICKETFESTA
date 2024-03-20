@@ -4888,7 +4888,7 @@ add_shortcode('display_html5_qrcode_scanner', 'display_html5_qrcode_scanner_shor
 
 
 
-
+// Shortcode to display a dropdown of the user's events and a container for ticket info
 function user_events_with_tickets_shortcode() {
     if (!is_user_logged_in()) {
         return 'You must be logged in to view your events.';
@@ -4920,12 +4920,11 @@ function user_events_with_tickets_shortcode() {
     $output .= '</select>';
     $output .= '<div id="ticket_info"></div>'; // Container for the ticket info
 
-    // Inline JavaScript for handling the change event on the dropdown
+    // Inline JavaScript for AJAX request
     $output .= "<script>
     document.getElementById('user_events').addEventListener('change', function() {
         var eventId = this.value;
         if (eventId) {
-            // Make an AJAX request to get ticket info
             jQuery.ajax({
                 url: '" . admin_url('admin-ajax.php') . "',
                 type: 'POST',
@@ -4947,22 +4946,19 @@ function user_events_with_tickets_shortcode() {
 }
 add_shortcode('user_events_with_tickets', 'user_events_with_tickets_shortcode');
 
-
-
+// AJAX action to fetch and display ticket info for the selected event
 function get_tickets_for_event_ajax() {
-    // Check for the event ID
     if (isset($_POST['event_id']) && !empty($_POST['event_id'])) {
         $event_id = intval($_POST['event_id']);
         
-        // Placeholder for your actual logic to fetch ticket info
-        // This could be a call to a function like get_tickets_for_event($event_id) that you need to define
-        // For demonstration, returning a simple message
+        // Fetching ticket info based on the event_id
+        // Replace this logic with actual ticket retrieval based on your system
         $tickets_html = '<div>Replace this with actual ticket info for event ID: ' . $event_id . '</div>';
 
         echo $tickets_html;
     }
     
-    wp_die(); // this is required to terminate immediately and return a proper response
+    wp_die(); // Required to terminate immediately and return a proper response
 }
 add_action('wp_ajax_get_tickets_for_event', 'get_tickets_for_event_ajax');
 add_action('wp_ajax_nopriv_get_tickets_for_event', 'get_tickets_for_event_ajax');
