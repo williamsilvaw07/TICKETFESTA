@@ -4834,6 +4834,7 @@ jQuery(document).ready(function($) {
                 if (cameras.length > 0) {
                     html5QrCode = new Html5Qrcode("qr-reader");
                     html5QrCode.start(cameras[0].id, { fps: 10, qrbox: 250 }, onScanSuccess); // Start QR code scanning
+                    $('#stop-scanning-btn').show(); // Show Stop Scanning button
                 } else {
                     console.error("No cameras found.");
                 }
@@ -4851,6 +4852,7 @@ jQuery(document).ready(function($) {
             }).catch(err => {
                 console.error("Error stopping scanning", err);
             });
+            $('#stop-scanning-btn').hide(); // Hide Stop Scanning button
         }
     }
 
@@ -4889,6 +4891,6 @@ EOD;
     // Return the HTML for the scanner along with the inline JavaScript
     return '<div id="qr-reader" style="max-width:400px; max-height:400px; width:100%; aspect-ratio: 1/4; position: relative; margin: 20px auto; overflow: hidden;"></div>
     <button id="start-scanning-btn">Start Scanning</button>
-    <button id="stop-scanning-btn">Stop Scanning</button>' . $inline_script;
+    <button id="stop-scanning-btn" style="display:none;">Stop Scanning</button>' . $inline_script;
 }
 add_shortcode('display_html5_qrcode_scanner', 'display_html5_qrcode_scanner_shortcode');
