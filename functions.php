@@ -4995,20 +4995,18 @@ function get_tickets_for_event_callback() {
             // Get ticket object
             $product = wc_get_product($ticket->get_id());
             
-            // Check if the ticket has an associated event
-            $event_id_associated_with_ticket = get_post_meta($ticket->get_id(), '_event_id', true);
-            if ($event_id_associated_with_ticket == $event_id) {
-                // Check if the ticket is published or in draft status
-                if ($product) {
-                    // Get product status
-                    $ticket_status = get_post_status($ticket->get_id()); // Ticket Status
-                    
-                    // Display ticket information
-                    echo "<div class='ticket-item'>
-                            <p>Event ID: {$event_id} - Event Title: {$event_title} - Ticket ID: {$ticket->get_id()} - Name: {$product->get_name()} - Price: {$product->get_price()} - Stock: {$product->get_stock_quantity()} - Status: {$ticket_status}</p>
-                            <button class='complimentary-ticket' data-ticket-id='{$ticket->get_id()}'>Claim Complimentary</button>
-                        </div>";
-                }
+            // Check if the ticket is published or in draft status
+            if ($product && in_array($product->get_status(), ['publish', 'draft'])) {
+                // Get ticket information
+                $ticket_id = $product->get_id(); // Product ID
+                $ticket_name = $product->get_name(); // Ticket Name
+                $ticket_price = $product->get_price(); // Ticket Price
+                $ticket_stock = $product->get_stock_quantity(); // Ticket Stock
+                
+                echo "<div class='ticket-item'>
+                        <p>Event ID: {$event_id} - Event Title: {$event_title} - Ticket ID: {$ticket_id} - Name: {$ticket_name} - Price: {$ticket_price} - Stock: {$ticket_stock}</p>
+                        <button class='complimentary-ticket' data-ticket-id='{$ticket_id}'>Claim Complimentary</button>
+                    </div>";
             }
         }
     } else {
@@ -5017,6 +5015,7 @@ function get_tickets_for_event_callback() {
     
     wp_die();
 }
+
 
 
 
