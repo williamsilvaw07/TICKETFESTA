@@ -4893,41 +4893,63 @@ add_shortcode('display_html5_qrcode_scanner', 'display_html5_qrcode_scanner_shor
 
 
 
-
-function user_events_with_tickets_shortcode() {
+// Shortcode to display a form with a dropdown of the user's events
+function user_events_selection_form_shortcode() {
+    // Check if the user is logged in
     if (!is_user_logged_in()) {
         return 'You must be logged in to view your events.';
     }
 
     $current_user = wp_get_current_user();
     $args = array(
-        'post_type' => 'tribe_events', // Adjust this to your event post type
+        'post_type' => 'tribe_events', // Adjust to your event post type
         'author' => $current_user->ID,
         'posts_per_page' => -1,
     );
 
     $events_query = new WP_Query($args);
-    $output = '<ul class="user-events-with-tickets">';
+
+    // Start the form
+    $output = '<form action="' . esc_url(admin_url('admin-post.php')) . '" method="post">';
+    $output .= '<select name="event_id">';
+    $output .= '<option value="">Select an Event</option>';
 
     if ($events_query->have_posts()) {
         while ($events_query->have_posts()) {
             $events_query->the_post();
             $event_id = get_the_ID();
             $event_title = get_the_title();
-            $event_date = get_the_date();
-
-            // Link to a detailed event view where you can implement ticket selection and free "purchase"
-            $detail_view_url = "/event-details?event_id={$event_id}"; // You need to implement this endpoint
-
-            $output .= "<li><a href='{$detail_view_url}'>{$event_title} - {$event_date}</a></li>";
+            $output .= "<option value='{$event_id}'>{$event_title}</option>";
         }
     } else {
-        $output .= 'No events found.';
+        $output .= '<option value="">No events found.</option>';
     }
 
     wp_reset_postdata();
-    $output .= '</ul>';
+
+    $output .= '</select>';
+    $output .= '<input type="hidden" name="action" value="show_event_tickets">';
+    $output .= '<input type="submit" value="View Tickets">';
+    $output .= '</form>';
+
     return $output;
 }
+add_shortcode('select_event', 'user_events_selection_form_shortcode');
 
-add_shortcode('user_events_with_tickets', 'user_events_with_tickets_shortcode');
+// Handle the form submission
+function handle_show_event_tickets() {
+    // Ensure there's an event_id and the user is logged in
+    if (!isset($_POST['event_id']) || !is_user_logged_in()) {
+        wp_redirect(home_url());
+        exit;
+    }
+
+    $event_id = intval($_POST['event_id']);
+    // Redirect to a custom page where tickets can be viewed/purchased
+    // Replace '/tickets-page' with the slug of your page that handles ticket viewing/purchasing
+    wp_redirect(home_url('/tickets-page?event_id=' . $event_id));
+    exit;
+}
+add_action('admin_post_show_event_tickets', 'handle_show_event_tickets');
+// Optional: if you want to allow non-logged-in users, though it might not make sense for this scenario
+// add_action('admin_post_nopriv_show_event_tickets', 'handle_show_event_tickets');
