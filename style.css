@@ -2349,7 +2349,7 @@ body .price_section_dark svg{
     max-width: 300px;
 width: 100%;
 margin: 0 auto;
-padding: 0 50px!important;
+padding-top: 50px!important;
 }
 html #qr-reader__dashboard_section #html5-qrcode-anchor-scan-type-change{
     display: none!important;
