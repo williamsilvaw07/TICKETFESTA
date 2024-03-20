@@ -2337,7 +2337,7 @@ body .price_section_dark svg{
 }
 
 .qrcode_scanner_wrapper_div{
-    max-width: 400px;
+    max-width: 300px;
 width: 100%;
 }
 html #qr-reader__dashboard_section #html5-qrcode-anchor-scan-type-change{
