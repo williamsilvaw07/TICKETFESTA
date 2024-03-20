@@ -4887,8 +4887,6 @@ add_shortcode('display_html5_qrcode_scanner', 'display_html5_qrcode_scanner_shor
 
 
 
-
-// Shortcode to display a dropdown of the user's events and a container for ticket info
 function user_events_with_tickets_shortcode() {
     if (!is_user_logged_in()) {
         return 'You must be logged in to view your events.';
@@ -4896,69 +4894,49 @@ function user_events_with_tickets_shortcode() {
 
     $current_user = wp_get_current_user();
     $args = array(
-        'post_type' => 'tribe_events',
+        'post_type' => 'tribe_events', // Adjust this to your event post type
         'author' => $current_user->ID,
         'posts_per_page' => -1,
     );
 
     $events_query = new WP_Query($args);
+    $output = '<ul class="user-events-with-tickets">';
 
-    $output = '<select id="user_events">';
-    $output .= '<option value="">Select Your Event</option>';
+    // Ensure the TribeWooTickets class is available
+    if (class_exists('Tribe__Tickets_Plus__Commerce__WooCommerce__Main')) {
+        $woo_tickets = Tribe__Tickets_Plus__Commerce__WooCommerce__Main::get_instance();
 
-    if ($events_query->have_posts()) {
-        while ($events_query->have_posts()) {
-            $events_query->the_post();
-            $output .= "<option value='" . get_the_ID() . "'>" . get_the_title() . "</option>";
+        if ($events_query->have_posts()) {
+            while ($events_query->have_posts()) {
+                $events_query->the_post();
+                $event_id = get_the_ID();
+                $event_title = get_the_title();
+                $event_date = get_the_date();
+
+                $ticket_ids = $woo_tickets->get_tickets_ids($event_id);
+                $ticket_info = '';
+
+                foreach ($ticket_ids as $ticket_id) {
+                    $ticket_post = get_post($ticket_id);
+                    if ($ticket_post) {
+                        // Example: Fetching ticket title. Adjust as needed to include price or other data
+                        $ticket_info .= sprintf('<a href="%s">%s</a>, ', get_permalink($ticket_id), $ticket_post->post_title);
+                    }
+                }
+
+                $ticket_info = rtrim($ticket_info, ', ');
+                $output .= "<li>{$event_title} - {$event_date} - Tickets: {$ticket_info}</li>";
+            }
+        } else {
+            $output .= '<li>No events found.</li>';
         }
     } else {
-        $output .= '<option value="">No events found.</option>';
+        $output = "The required class 'TribeWooTickets' is not available.";
     }
 
     wp_reset_postdata();
-
-    $output .= '</select>';
-    $output .= '<div id="ticket_info"></div>'; // Container for the ticket info
-
-    // Inline JavaScript for AJAX request
-    $output .= "<script>
-    document.getElementById('user_events').addEventListener('change', function() {
-        var eventId = this.value;
-        if (eventId) {
-            jQuery.ajax({
-                url: '" . admin_url('admin-ajax.php') . "',
-                type: 'POST',
-                data: {
-                    'action': 'get_tickets_for_event',
-                    'event_id': eventId
-                },
-                success: function(response) {
-                    document.getElementById('ticket_info').innerHTML = response;
-                }
-            });
-        } else {
-            document.getElementById('ticket_info').innerHTML = '';
-        }
-    });
-    </script>";
-
+    $output .= '</ul>';
     return $output;
 }
+
 add_shortcode('user_events_with_tickets', 'user_events_with_tickets_shortcode');
-
-// AJAX action to fetch and display ticket info for the selected event
-function get_tickets_for_event_ajax() {
-    if (isset($_POST['event_id']) && !empty($_POST['event_id'])) {
-        $event_id = intval($_POST['event_id']);
-        
-        // Fetching ticket info based on the event_id
-        // Replace this logic with actual ticket retrieval based on your system
-        $tickets_html = '<div>Replace this with actual ticket info for event ID: ' . $event_id . '</div>';
-
-        echo $tickets_html;
-    }
-    
-    wp_die(); // Required to terminate immediately and return a proper response
-}
-add_action('wp_ajax_get_tickets_for_event', 'get_tickets_for_event_ajax');
-add_action('wp_ajax_nopriv_get_tickets_for_event', 'get_tickets_for_event_ajax');
