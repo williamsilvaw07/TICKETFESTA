@@ -4827,7 +4827,7 @@ function display_html5_qrcode_scanner_shortcode() {
         let html5QrcodeScanner = new Html5QrcodeScanner(
             'qr-reader', {
                 fps: 10,
-                qrbox: 150, // Set qrbox size to keep the scanning area square
+                qrbox: 350, // Set qrbox size to keep the scanning area square
                 rememberLastUsedCamera: true,
                 aspectRatio: 1,
                 showTorchButtonIfSupported: true // This enables the torch toggle button if supported
