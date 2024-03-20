@@ -4608,7 +4608,8 @@ function custom_qr_scanner_shortcode() {
     <div id="qr-reader-results"></div>
 
     -->
-
+    <input type="text" id="event-pass" name="event-pass" placeholder="enter event pass">
+    <button id="check-passcode"> Check Pass Code </button>
     <?php 
         $event_id   = isset($_GET['event_id']) ? esc_attr( $_GET['event_id'] ) : false;
         if($event_id){
@@ -4621,13 +4622,14 @@ function custom_qr_scanner_shortcode() {
             // var_dump($event_data);
             // echo "</pre>";
     ?>
-            <div class="tabs-container">
+
+            <div class="tabs-container" style="display: none">
                 <ul class="tabs-nav">
                     <li class="tab tab1 active"><a href="#tab1"> Event Details</a></li>
                     <li class="tab tab2"><a href="#tab2">Scan QR Code</a></li>
                 </ul>
             </div>
-            <div class="tab-content-container">
+            <div class="tab-content-container" style="display: none">
                 <div class="tab-content active" id="tab1">
                     <div class="event-container">
                         <img src="<?php echo esc_url( $thumbnail_url );?>" alt="" class="event-image">
