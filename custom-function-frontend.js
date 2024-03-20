@@ -366,3 +366,38 @@ function autoSelectCountry(){
     }
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+jQuery(document).on('submit', '.purchase_ticket_form', function(e) {
+    e.preventDefault();
+    var formData = jQuery(this).serialize();
+    jQuery.ajax({
+        url: ajaxurl,
+        type: 'POST',
+        data: formData,
+        success: function(response) {
+            if (response.success) {
+                alert('Ticket has been ordered successfully.');
+            } else {
+                // If the server responded with wp_send_json_error
+                alert(response.data);
+            }
+        },
+        error: function(xhr, status, error) {
+            // If the AJAX request itself failed
+            alert('Failed to order the ticket. Please try again.');
+        }
+    });
+});
