@@ -4894,58 +4894,42 @@ add_shortcode('display_html5_qrcode_scanner', 'display_html5_qrcode_scanner_shor
 
 
 
-
-
-function user_events_with_tickets_shortcode() {
+function shortcode_revenue() {
     if (!is_user_logged_in()) {
-        return 'You must be logged in to view your events.';
+        return 'You must be logged in to view this information.';
     }
 
-    $current_user = wp_get_current_user();
-    $args = array(
-        'post_type' => 'tribe_events', // Adjust this to your event post type
-        'author' => $current_user->ID,
-        'posts_per_page' => -1,
-    );
-
-    $events_query = new WP_Query($args);
-    $output = '<ul class="user-events-with-tickets">';
-
-    // Ensure the TribeWooTickets class is available
-    if (class_exists('TribeWooTickets')) {
-        $woo_tickets = TribeWooTickets::get_instance();
-
-        if ($events_query->have_posts()) {
-            while ($events_query->have_posts()) {
-                $events_query->the_post();
-                $event_id = get_the_ID();
-                $event_title = get_the_title();
-                $event_date = get_the_date();
-
-                $ticket_ids = $woo_tickets->get_tickets_ids($event_id);
-                $ticket_info = '';
-
-                foreach ($ticket_ids as $ticket_id) {
-                    $ticket_post = get_post($ticket_id);
-                    if ($ticket_post) {
-                        // Example: Fetching ticket title. Adjust as needed to include price or other data
-                        $ticket_info .= sprintf('<a href="%s">%s</a>, ', get_permalink($ticket_id), $ticket_post->post_title);
-                    }
-                }
-
-                $ticket_info = rtrim($ticket_info, ', ');
-                $output .= "<li>{$event_title} - {$event_date} - Tickets: {$ticket_info}</li>";
-            }
-        } else {
-            $output .= '<li>No events found.</li>';
-        }
-    } else {
-        $output = "The required class 'TribeWooTickets' is not available.";
+    if (!class_exists('WooCommerce')) {
+        return 'WooCommerce must be active for this shortcode to work.';
     }
 
-    wp_reset_postdata();
-    $output .= '</ul>';
-    return $output;
-}
+    $user_id = get_current_user_id();
 
-add_shortcode('user_events_with_tickets', 'user_events_with_tickets_shortcode');
+    // Assuming get_ticket_info function exists and returns the necessary data
+    $ticket_info = get_ticket_info($user_id); // This needs to be defined as per your ticket info retrieval logic
+    $total_sales_lifetime = $ticket_info['total_sales_lifetime'];
+    $currency_symbol = get_woocommerce_currency_symbol();
+    $currency_code = get_woocommerce_currency();
+
+    $output = "<div class='sales-card today_sale_admin_dashboard'>
+        <div class='sales-card-content'>
+            <div class='sales-today'>
+                <h5 class='admin_dashboard_sales-label card_admin_dashboard'>Lifetime Revenue</h5>
+                <div class='admin_dashboard_sales-amount'>" . esc_html($currency_symbol) . esc_html(number_format($total_sales_lifetime, 2)) . " <span class='admin_dashboard_sales-amount_span'>" . esc_html($currency_code) . "</span></div>
+            </div>
+        </div>
+    </div>";
+
+    // Fetch orders
+    $customer_orders = wc_get_orders(array(
+        'customer' => $user_id,
+        'limit' => -1, // Retrieve all customer orders
+    ));
+
+    if (!empty($customer_orders)) {
+        $output .= '<div class="user-orders-debug"><h2>Your Orders</h2><ul>';
+        foreach ($customer_orders as $order) {
+            $order_id = $order->get_id();
+            $order_total = $order->get_total();
+            $order_status = $order->get_status();
+            $output .= "<li>Order
