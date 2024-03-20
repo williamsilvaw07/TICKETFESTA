@@ -40,6 +40,12 @@
             }
         });
 
+        jQuery("#check-passcode").on('click', function(){
+            var eventPass = $('#event-pass').val();
+            checkForEventPass(eventPass);
+        });
+
+
         function processQRCode(eventID, code){
             const params = new URLSearchParams(code);
             // Retrieve all variables
@@ -122,9 +128,10 @@
                     // Handle the response from the server
                     console.log('ajax response', response);
                     if(response.match){
-                        startScanQR(response.event_id);
+                        // startScanQR(response.event_id);
+                        passcodeMatch();
                     }else{
-                        noEventFound();
+                        // noEventFound();
                     }
                 },
                 error: function(xhr, status, error) {
@@ -176,5 +183,12 @@
             $('#event-pass').addClass('error');
             $('#event_not_found').show();
         }
+
+        function passcodeMatch(){
+            $('.tabs-container').show();
+            $('.tab-content-container').show();
+
+        }
+
     });
 })(jQuery);
