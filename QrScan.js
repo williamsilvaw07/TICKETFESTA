@@ -1,19 +1,19 @@
 (function($) {
     
     document.addEventListener("DOMContentLoaded", function(event) {
-        const video = document.getElementById('video');
+        // const video = document.getElementById('video');
 
         // Check if getUserMedia is supported
-        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-            navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
-            .then(function(stream) {
-                video.srcObject = stream;
-                video.play();
-            })
-            .catch(function(error) {
-                console.error('Error accessing the camera:', error);
-            });
-        }
+        // if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        //     navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
+        //     .then(function(stream) {
+        //         video.srcObject = stream;
+        //         video.play();
+        //     })
+        //     .catch(function(error) {
+        //         console.error('Error accessing the camera:', error);
+        //     });
+        // }
         $('.tabs-nav li.tab a').click(function(e) {
             e.preventDefault(); // Prevent default link behavior
     
@@ -39,6 +39,7 @@
                 checkForEventPass(eventPass);               
             }
         });
+
         function processQRCode(eventID, code){
             const params = new URLSearchParams(code);
             // Retrieve all variables
@@ -58,25 +59,53 @@
             }
         
         }
+        // function startScanQR(eventID){
+        //     const canvas = document.createElement('canvas');
+        //     const context = canvas.getContext('2d');
+        //     $('#event-pass').removeClass('error');
+        //     $('#event_not_found').hide();
+        //     canvas.width = video.videoWidth;
+        //     canvas.height = video.videoHeight;
+        //     const scanInterval = setInterval(function() {
+        //         context.drawImage(video, 0, 0, canvas.width, canvas.height);
+        //         const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+        //         const code = jsQR(imageData.data, imageData.width, imageData.height);
+        //         if (code) {
+        //             processQRCode(eventID, code.data);
+        //             // resultContainer.textContent = 'QR Code detected: ' + code.data;
+        //             clearInterval(scanInterval);
+        //         }else{
+        //             console.log('QR Code not found :', code)
+        //         }
+        //     }, 200);
+        // }
+
         function startScanQR(eventID){
-            const canvas = document.createElement('canvas');
-            const context = canvas.getContext('2d');
             $('#event-pass').removeClass('error');
             $('#event_not_found').hide();
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
-            const scanInterval = setInterval(function() {
-                context.drawImage(video, 0, 0, canvas.width, canvas.height);
-                const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
-                const code = jsQR(imageData.data, imageData.width, imageData.height);
-                if (code) {
-                    processQRCode(eventID, code.data);
-                    // resultContainer.textContent = 'QR Code detected: ' + code.data;
-                    clearInterval(scanInterval);
-                }else{
-                    console.log('QR Code not found :', code)
-                }
-            }, 200);
+            let html5QrcodeScanner = new Html5QrcodeScanner(
+                'qr-reader', {
+                    fps: 10,
+                    qrbox: 250, // Set qrbox size to keep the scanning area square
+                    rememberLastUsedCamera: true,
+                    aspectRatio: 1,
+                    disableFlip: true // Disable the option to flip camera
+                }, false);
+            function onScanSuccess(decodedText, decodedResult) {
+                // Handle the scanned code as needed
+                console.log(`Code scanned = ${decodedText}`, decodedResult);
+                processQRCode(eventID, decodedText);
+            }
+    
+            function hideCameraSelectionText() {
+                // Hide the text indicating which camera is selected
+                $('.camera-selection-text').hide();
+            }
+            
+            html5QrcodeScanner.render(onScanSuccess);
+            // Call the function to hide the camera selection text after the camera has been selected
+            html5QrcodeScanner.html5Qrcode._internalApi.onCameraSelected = hideCameraSelectionText;
+                
         }
 
         function checkForEventPass(eventPass){
