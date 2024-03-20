@@ -4987,16 +4987,24 @@ function get_tickets_for_event_callback() {
             // Get ticket object
             $product = wc_get_product($ticket->get_id());
             
-            // Get ticket information
-            $ticket_id = $product->get_id(); // Product ID
-            $ticket_name = $product->get_name(); // Ticket Name
-            $ticket_price = $product->get_price(); // Ticket Price
-            $ticket_stock = $product->get_stock_quantity(); // Ticket Stock
-            
-            echo "<div class='ticket-item'>
-                    <p>Ticket ID: {$ticket_id} - Name: {$ticket_name} - Price: {$ticket_price} - Stock: {$ticket_stock}</p>
-                    <button class='complimentary-ticket' data-ticket-id='{$ticket_id}'>Claim Complimentary</button>
-                </div>";
+            // Check if the ticket is published or in draft status
+            if ($product && in_array($product->get_status(), ['publish', 'draft'])) {
+                // Get ticket information
+                $ticket_id = $product->get_id(); // Product ID
+                $ticket_name = $product->get_name(); // Ticket Name
+                $ticket_price = $product->get_price(); // Ticket Price
+                $ticket_stock = $product->get_stock_quantity(); // Ticket Stock
+                
+                // Check if the ticket is associated with the event
+                $event_associated_with_ticket = get_post_meta($ticket_id, '_event_id', true);
+                if ($event_associated_with_ticket == $event_id) {
+                    // Display ticket information
+                    echo "<div class='ticket-item'>
+                            <p>Event ID: {$event_id} - Event Title: {$event->post_title} - Ticket ID: {$ticket_id} - Name: {$ticket_name} - Price: {$ticket_price} - Stock: {$ticket_stock} - Status: {$product->get_status()}</p>
+                            <button class='complimentary-ticket' data-ticket-id='{$ticket_id}'>Claim Complimentary</button>
+                        </div>";
+                }
+            }
         }
     } else {
         echo "<p>No tickets available for this event.</p>";
