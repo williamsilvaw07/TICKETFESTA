@@ -4874,8 +4874,6 @@ add_shortcode('display_html5_qrcode_scanner', 'display_html5_qrcode_scanner_shor
 
 
 
-
-
 function user_events_with_tickets_shortcode() {
     if (!is_user_logged_in()) {
         return 'You must be logged in to view your events.';
@@ -4905,12 +4903,11 @@ function user_events_with_tickets_shortcode() {
     wp_reset_postdata();
 
     $output .= '</select>';
-    $output .= '<div id="ticket_info"></div>'; // Container for ticket info
+    $output .= '<div id="ticket_info"></div>'; // Container for the ticket info
 
-    // Inline JavaScript for AJAX request
     $output .= "<script>
     jQuery(document).ready(function($) {
-        $('#user_events').change(function() {
+        $('#user_events').on('change', function() {
             var eventId = $(this).val();
             if (eventId) {
                 $.ajax({
@@ -4928,20 +4925,28 @@ function user_events_with_tickets_shortcode() {
                 $('#ticket_info').html('');
             }
         });
+
+        $(document).on('submit', '.purchase_ticket_form', function(e) {
+            e.preventDefault();
+            var formData = $(this).serialize();
+            $.ajax({
+                url: '" . admin_url('admin-ajax.php') . "',
+                type: 'POST',
+                data: formData,
+                success: function(response) {
+                    alert('Ticket has been ordered successfully.');
+                }
+            });
+        });
     });
     </script>";
 
     return $output;
 }
 add_shortcode('user_events_with_tickets', 'user_events_with_tickets_shortcode');
-
-
-
-
 function get_tickets_for_event_ajax() {
     if (isset($_POST['event_id']) && !empty($_POST['event_id'])) {
         $event_id = intval($_POST['event_id']);
-
         $ticket_info = '';
         if (class_exists('Tribe__Tickets_Plus__Commerce__WooCommerce__Main')) {
             $woo_tickets = Tribe__Tickets_Plus__Commerce__WooCommerce__Main::get_instance();
@@ -4952,10 +4957,13 @@ function get_tickets_for_event_ajax() {
                 if ($product) {
                     $price_html = $product->get_price_html();
                     $stock_quantity = $product->get_stock_quantity();
-                    $ticket_info .= sprintf('<div>%s - Price: %s - Stock: %s</div>',
-                        $product->get_title(), $price_html, $stock_quantity ?: 'Out of stock');
-                    // Including form for free ticket
-                    $ticket_info .= '<form class="purchase_ticket_form" data-ticket-id="' . esc_attr($ticket_id) . '">
+                    $ticket_info .= sprintf(
+                        '<div>%s - Price: %s - Stock: %s</div>',
+                        $product->get_title(),
+                        $price_html,
+                        $stock_quantity ?: 'Out of stock'
+                    );
+                    $ticket_info .= '<form class="purchase_ticket_form" action="" method="post">
                         <input type="hidden" name="action" value="purchase_ticket_for_free" />
                         <input type="hidden" name="ticket_id" value="' . esc_attr($ticket_id) . '" />
                         <input type="email" name="recipient_email" placeholder="Recipient email (optional)" />
