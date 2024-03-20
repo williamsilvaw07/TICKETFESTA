@@ -4883,75 +4883,76 @@ add_shortcode('display_html5_qrcode_scanner', 'display_html5_qrcode_scanner_shor
 
 
 
-// Shortcode to display user events and tickets
-add_shortcode('complimentary_ticket_form', 'display_complimentary_ticket_form');
-function display_complimentary_ticket_form() {
+
+
+// Shortcode to display all events for the current user with their tickets
+add_shortcode('complimentary_ticket_form', 'display_user_events_with_tickets_shortcode');
+function display_user_events_with_tickets_shortcode() {
     // Get current user ID
-    $current_user_id = get_current_user_id();
-    
-    // Query user's events
-    $events_query = new WP_Query(array(
+    $user_id = get_current_user_id();
+
+    // Check if user ID is valid
+    if (!$user_id) {
+        return 'User not logged in.';
+    }
+
+    // Get all events created by the current user
+    $events = get_posts(array(
         'post_type' => 'tribe_events',
-        'author' => $current_user_id,
+        'author' => $user_id,
         'posts_per_page' => -1,
     ));
 
-    // Check if there are events
-    if ($events_query->have_posts()) {
-        $output = '<div>';
-        $output .= '<h2>Your Events</h2>';
-        $output .= '<ul>';
+    // Debug output
+    error_log('User ID: ' . $user_id);
+    error_log('Events: ' . print_r($events, true));
 
-        // Loop through user's events
-        while ($events_query->have_posts()) {
-            $events_query->the_post();
-            $event_id = get_the_ID();
-            $event_title = get_the_title();
+    // Check if any events are found
+    if ($events) {
+        // Initialize output variable
+        $output = '';
 
-            // Display event title
-            $output .= "<li>$event_title</li>";
+        // Loop through each event
+        foreach ($events as $event) {
+            // Get event ID
+            $event_id = $event->ID;
 
-            // Query tickets for the current event
-            $tickets_query = new WP_Query(array(
-                'post_type' => 'event_ticket',
-                'meta_query' => array(
-                    array(
-                        'key' => '_event_id',
-                        'value' => $event_id,
-                        'compare' => '=',
-                    ),
-                ),
-            ));
+            // Get event title
+            $event_title = $event->post_title;
 
-            // Check if there are tickets
-            if ($tickets_query->have_posts()) {
+            // Get tickets for the event
+            $tickets = get_tickets_for_event($event_id);
+
+            // Debug output
+            error_log('Event ID: ' . $event_id);
+            error_log('Tickets: ' . print_r($tickets, true));
+
+            // Check if any tickets are found
+            if (!empty($tickets)) {
+                // Add event title to output
+                $output .= '<h3>' . $event_title . ' (User ID: ' . $user_id . ')</h3>';
+
+                // Initialize ticket list
                 $output .= '<ul>';
 
                 // Loop through tickets
-                while ($tickets_query->have_posts()) {
-                    $tickets_query->the_post();
-                    $ticket_title = get_the_title();
-                    
-                    // Display ticket title
-                    $output .= "<li>$ticket_title - <button class='complimentary-ticket' data-ticket-id='$event_id'>Claim Complimentary</button></li>";
+                foreach ($tickets as $ticket) {
+                    // Get ticket title
+                    $ticket_title = $ticket->post_title;
+
+                    // Add ticket title to ticket list
+                    $output .= '<li>' . $ticket_title . '</li>';
                 }
 
+                // Close ticket list
                 $output .= '</ul>';
-            } else {
-                // Display message if no tickets found
-                $output .= '<li>No tickets available for this event.</li>';
             }
         }
 
-        $output .= '</ul>';
-        $output .= '</div>';
-
-        // Reset post data
-        wp_reset_postdata();
-
+        // Return the output
         return $output;
     } else {
-        // Display message if no events found
-        return 'You have no events.';
+        // No events found for the current user
+        return 'No events found for the current user.';
     }
 }
