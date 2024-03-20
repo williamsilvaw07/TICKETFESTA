@@ -4972,44 +4972,31 @@ function display_user_events_with_tickets_shortcode() {
 
 
 
+
 // AJAX callback to get tickets for selected event
 add_action('wp_ajax_get_tickets_for_event', 'get_tickets_for_event_callback');
 add_action('wp_ajax_nopriv_get_tickets_for_event', 'get_tickets_for_event_callback'); // Remove if not needed
 function get_tickets_for_event_callback() {
     $event_id = isset($_POST['event_id']) ? intval($_POST['event_id']) : 0;
     
-    // Fetch tickets for the event. Adjust this logic as necessary.
+    // Fetch tickets for the event using the updated function
     $tickets = get_tickets_for_event($event_id);
     
     if ($tickets) {
-        // Get event information
-        $event = get_post($event_id);
-        $event_title = $event ? $event->post_title : '';
-        
-        // Display event ID and title
-        echo "<h3>Event ID: {$event_id}</h3>";
-        echo "<h4>Event Title: {$event_title}</h4>";
-        
-        // Loop through tickets
         foreach ($tickets as $ticket) {
             // Get ticket object
             $product = wc_get_product($ticket->get_id());
             
-            // Check if the ticket has an associated event
-            $event_id_associated_with_ticket = get_post_meta($ticket->get_id(), '_event_id', true);
-            if ($event_id_associated_with_ticket == $event_id) {
-                // Check if the ticket is published or in draft status
-                if ($product) {
-                    // Get product status
-                    $ticket_status = get_post_status($ticket->get_id()); // Ticket Status
-                    
-                    // Display ticket information
-                    echo "<div class='ticket-item'>
-                            <p>Event ID: {$event_id} - Event Title: {$event_title} - Ticket ID: {$ticket->get_id()} - Name: {$product->get_name()} - Price: {$product->get_price()} - Stock: {$product->get_stock_quantity()} - Status: {$ticket_status}</p>
-                            <button class='complimentary-ticket' data-ticket-id='{$ticket->get_id()}'>Claim Complimentary</button>
-                        </div>";
-                }
-            }
+            // Get ticket information
+            $ticket_id = $product->get_id(); // Product ID
+            $ticket_name = $product->get_name(); // Ticket Name
+            $ticket_price = $product->get_price(); // Ticket Price
+            $ticket_stock = $product->get_stock_quantity(); // Ticket Stock
+            
+            echo "<div class='ticket-item'>
+                    <p>Ticket ID: {$ticket_id} - Name: {$ticket_name} - Price: {$ticket_price} - Stock: {$ticket_stock}</p>
+                    <button class='complimentary-ticket' data-ticket-id='{$ticket_id}'>Claim Complimentary</button>
+                </div>";
         }
     } else {
         echo "<p>No tickets available for this event.</p>";
@@ -5021,23 +5008,33 @@ function get_tickets_for_event_callback() {
 
 
 
-// Function to get tickets for the event (Custom function, implement as per your setup)
+// Function to get tickets for the event
 function get_tickets_for_event($event_id) {
-    // Implement logic to fetch tickets associated with the event
-    // This could be custom post types, WooCommerce products, etc.
-    // For example, if using WooCommerce:
+    // Define an array to store filtered tickets
+    $filtered_tickets = [];
+    
+    // Fetch all products (tickets)
     $tickets = wc_get_products([
-        'post_type' => 'product',
-        'meta_query' => [
-            [
-                'key' => '_event_id',
-                'value' => $event_id,
-                'compare' => '='
-            ]
-        ]
+        'status' => ['publish', 'draft'], // Filter by published or draft status
+        'type' => 'ticket', // Filter by ticket product type
     ]);
-    return $tickets;
+    
+    // Loop through tickets to filter by event ID
+    foreach ($tickets as $ticket) {
+        // Get the event ID associated with the ticket
+        $ticket_event_id = get_post_meta($ticket->get_id(), '_event_id', true);
+        
+        // Check if the ticket is associated with the specified event
+        if ($ticket_event_id == $event_id) {
+            // Add the ticket to the filtered tickets array
+            $filtered_tickets[] = $ticket;
+        }
+    }
+    
+    // Return the filtered tickets
+    return $filtered_tickets;
 }
+
 
 // AJAX callback to process complimentary ticket
 add_action('wp_ajax_process_complimentary_ticket', 'process_complimentary_ticket_callback');
