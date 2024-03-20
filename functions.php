@@ -4583,6 +4583,13 @@ function custom_qr_scanner_shortcode() {
     li.tab.active a {
         color: #000 !important;
     }
+    .tab-content.active .event-container {
+        width: 100%;
+        display: inline-flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
     /* Media query for responsive behavior (tablet and mobile) */
     @media (max-width: 768px) {
         .tabs-container {
@@ -4623,7 +4630,7 @@ function custom_qr_scanner_shortcode() {
             <div class="tab-content-container">
                 <div class="tab-content active" id="tab1">
                     <div class="event-container">
-                    -   <img src="<?php echo esc_url( $thumbnail_url );?>" alt="" class="event-image">
+                        <img src="<?php echo esc_url( $thumbnail_url );?>" alt="" class="event-image">
                         <div class="name">Name: <?php echo $name?> </div>
                         <div class="date">Date: <?php echo $start_date; ?></div>
                         <!-- <div class="location">Location: </div> -->
