@@ -4877,12 +4877,18 @@ jQuery(document).ready(function($) {
     $('#stop-scanning-btn').click(function() {
         stopScanning();
     });
+
+    // Function to handle start scanning button click
+    $('#start-scanning-btn').click(function() {
+        startScanning();
+    });
 });
 </script>
 EOD;
 
     // Return the HTML for the scanner along with the inline JavaScript
-    return '<div id="qr-reader" style="max-width:400px; max-height:400px; width:100%; aspect-ratio: 1/3; position: relative; margin: 20px auto; overflow: hidden;"></div>
+    return '<div id="qr-reader" style="max-width:400px; max-height:400px; width:100%; aspect-ratio: 1/4; position: relative; margin: 20px auto; overflow: hidden;"></div>
+    <button id="start-scanning-btn">Start Scanning</button>
     <button id="stop-scanning-btn">Stop Scanning</button>' . $inline_script;
 }
 add_shortcode('display_html5_qrcode_scanner', 'display_html5_qrcode_scanner_shortcode');
