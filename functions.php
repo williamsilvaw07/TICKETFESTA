@@ -4895,14 +4895,13 @@ add_shortcode('display_html5_qrcode_scanner', 'display_html5_qrcode_scanner_shor
 
 function user_events_with_tickets_shortcode() {
     if (!is_user_logged_in()) {
-        return 'You must be logged in to view your events and ticket sales.';
+        return 'You must be logged in to view your events.';
     }
 
     $current_user = wp_get_current_user();
-    $user_id = $current_user->ID;
     $args = array(
-        'post_type' => 'tribe_events', // Make sure this matches your event post type.
-        'author' => $user_id,
+        'post_type' => 'tribe_events', // Ensure this matches your actual event post type.
+        'author' => $current_user->ID,
         'posts_per_page' => -1,
     );
 
@@ -4914,16 +4913,21 @@ function user_events_with_tickets_shortcode() {
             $events_query->the_post();
             $event_id = get_the_ID();
             $event_title = get_the_title();
-            
-            // Use the provided function to get ticket info for this event.
-            $ticket_info = get_ticket_info($user_id);
+            $event_date = get_the_date();
 
-            // Adding some ticket-related data directly into the output.
-            // You might need to adjust this based on the actual data structure returned by get_ticket_info().
-            $total_sales_lifetime = $ticket_info['total_sales_lifetime'] ?? 0;
-            $total_tickets_sold_lifetime = $ticket_info['total_tickets_sold_lifetime'] ?? 0;
+            // Assuming a function exists to fetch ticket data for an event.
+            // You'll need to implement this function based on your data structure.
+            $tickets_data = get_tickets_for_event($event_id);
 
-            $output .= "<li>{$event_title} - Lifetime Sales: {$total_sales_lifetime}, Tickets Sold: {$total_tickets_sold_lifetime}</li>";
+            if (!empty($tickets_data)) {
+                $output .= "<li>{$event_title} - {$event_date} - Tickets: ";
+                foreach ($tickets_data as $ticket) {
+                    $output .= "{$ticket['name']} (Sold: {$ticket['sold']}, Available: {$ticket['available']}); ";
+                }
+                $output .= "</li>";
+            } else {
+                $output .= "<li>{$event_title} - {$event_date} - No tickets found.</li>";
+            }
         }
     } else {
         $output .= '<li>No events found.</li>';
