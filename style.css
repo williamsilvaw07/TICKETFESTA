@@ -2344,3 +2344,18 @@ html #qr-reader__dashboard_section #html5-qrcode-anchor-scan-type-change{
     display: none!important;
 
 }
+#html5-qrcode-button-camera-start{
+    background: #d3fa16 !important;
+    color: #000000 !important;
+    text-transform: capitalize !important;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+#html5-qrcode-button-camera-stop{
+    width: fit-content;
+    padding: 7px 0px;
+    border-radius: 4px;
+    color: white !important;
+    background: #ff4d4d !important;
+}
