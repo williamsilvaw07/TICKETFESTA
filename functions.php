@@ -4879,7 +4879,6 @@ add_shortcode('display_html5_qrcode_scanner', 'display_html5_qrcode_scanner_shor
 
 
 
-
 // Shortcode to display all events for the current user with their tickets
 add_shortcode('complimentary_ticket_form', 'display_user_events_with_tickets_shortcode');
 function display_user_events_with_tickets_shortcode() {
@@ -4906,21 +4905,21 @@ function display_user_events_with_tickets_shortcode() {
             // Get event title
             $event_title = $event->post_title;
 
-            // Get ticket IDs for the event
-            $ticket_ids = get_post_meta($event_id, '_tribe_wootickets_ticket_ids', true);
+            // Get tickets for the event
+            $tickets = get_tickets_for_event($event_id);
 
             // Check if any tickets are found
-            if (!empty($ticket_ids)) {
+            if (!empty($tickets)) {
                 // Add event title to output
                 $output .= '<h3>' . $event_title . '</h3>';
 
                 // Initialize ticket list
                 $output .= '<ul>';
 
-                // Loop through ticket IDs
-                foreach ($ticket_ids as $ticket_id) {
+                // Loop through tickets
+                foreach ($tickets as $ticket) {
                     // Get ticket title
-                    $ticket_title = get_the_title($ticket_id);
+                    $ticket_title = $ticket->post_title;
 
                     // Add ticket title to ticket list
                     $output .= '<li>' . $ticket_title . '</li>';
@@ -4937,4 +4936,19 @@ function display_user_events_with_tickets_shortcode() {
         // No events found for the current user
         return 'No events found for the current user.';
     }
+}
+
+// Function to get tickets for the event
+function get_tickets_for_event($event_id) {
+    $tickets = get_posts(array(
+        'post_type' => 'tribe_wooticket', // Assuming the post type for tickets is 'tribe_wooticket'
+        'meta_query' => array(
+            array(
+                'key' => '_tribe_wootickets_event_id',
+                'value' => $event_id,
+                'compare' => '=',
+            ),
+        ),
+    ));
+    return $tickets;
 }
