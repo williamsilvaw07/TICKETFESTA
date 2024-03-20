@@ -99,6 +99,7 @@
                 }, false);
             function onScanSuccess(decodedText, decodedResult) {
                 // Handle the scanned code as needed
+                html5QrcodeScanner.clear();
                 console.log(`Code scanned = ${decodedText}`, decodedResult);
                 processQRCode(eventID, decodedText);
             }
