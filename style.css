@@ -2370,7 +2370,9 @@ html #html5-qrcode-button-camera-stop{
     color: white !important;
     background: #ff4d4d !important;
 }
-
+#qr-reader{
+    border: 0px!important;
+}
 html #qr-reader__dashboard_section_csr span:first-child{
     display: none!important;
     visibility: hidden!important
