@@ -4821,50 +4821,32 @@ function display_html5_qrcode_scanner_shortcode() {
     $scanner_html = '<div class="qrcode_scanner_wrapper_div"><div id="qr-reader" style="aspect-ratio: 1 / 1;"></div></div>';
 
     // Inline JavaScript for initializing the QR code scanner with a square viewfinder
-    $inline_script = <<<EOD
+    $inline_script = "
     <script>
     jQuery(document).ready(function($) {
-        let html5QrcodeScanner;
-        let isScanning = false;
-
+        let html5QrcodeScanner = new Html5QrcodeScanner(
+            'qr-reader', {
+                fps: 10,
+                qrbox: 250, // Set qrbox size to keep the scanning area square
+                rememberLastUsedCamera: true,
+                aspectRatio: 1,
+                disableFlip: true // Disable the option to flip camera
+            }, false);
+        
         function onScanSuccess(decodedText, decodedResult) {
             // Handle the scanned code as needed
             console.log(`Code scanned = ${decodedText}`, decodedResult);
         }
-
-        function startScanning() {
-            if (!isScanning) {
-                isScanning = true;
-                Html5Qrcode.getCameras().then(cameras => {
-                    if (cameras.length > 0) {
-                        html5QrcodeScanner = new Html5QrcodeScanner(
-                            'qr-reader', {
-                                fps: 10,
-                                qrbox: 250, // Set qrbox size to keep the scanning area square
-                                aspectRatio: 1,
-                                disableFlip: true // Disable the option to flip camera
-                            }, false);
-                        html5QrcodeScanner.render(onScanSuccess);
-                    } else {
-                        console.error("No cameras found.");
-                    }
-                }).catch(err => {
-                    console.error("Unable to start QR scanner", err);
-                });
-            }
-        }
-
-        // Function to handle start scanning button click
-        $('#start-scanning-btn').click(function() {
-            startScanning();
-        });
+        
+        html5QrcodeScanner.render(onScanSuccess);
     });
-    </script>
-EOD;
+    </script>";
 
     return $scanner_html . $inline_script;
 }
 add_shortcode('display_html5_qrcode_scanner', 'display_html5_qrcode_scanner_shortcode');
+
+
 
 
 
