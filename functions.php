@@ -4955,38 +4955,32 @@ function get_tickets_for_event_ajax() {
     if (isset($_POST['event_id']) && !empty($_POST['event_id'])) {
         $event_id = intval($_POST['event_id']);
         
-        // Initialize the ticket info string
-        $ticket_info = '';
-
-        // Check if the TribeWooTickets class is available
         if (class_exists('Tribe__Tickets_Plus__Commerce__WooCommerce__Main')) {
             $woo_tickets = Tribe__Tickets_Plus__Commerce__WooCommerce__Main::get_instance();
             $ticket_ids = $woo_tickets->get_tickets_ids($event_id);
+            $ticket_info = '';
 
             foreach ($ticket_ids as $ticket_id) {
-                $ticket_post = get_post($ticket_id);
-                if ($ticket_post) {
-                    // Fetch ticket price and stock
-                    $ticket_price = get_post_meta($ticket_id, '_price', true); // WooCommerce standard price field
-                    $ticket_stock = get_post_meta($ticket_id, '_stock', true); // WooCommerce standard stock field
+                $product = wc_get_product($ticket_id);
+                if ($product) {
+                    // Fetching price and stock
+                    $price_html = $product->get_price_html();
+                    $stock_quantity = $product->get_stock_quantity();
+                    $stock_quantity = is_null($stock_quantity) ? 'Unlimited' : $stock_quantity;
 
-                    // Format the ticket information
-                    $ticket_info .= sprintf(
-                        '<div><a href="%s">%s</a> - Price: %s - Stock: %s</div>',
-                        get_permalink($ticket_id),
-                        esc_html($ticket_post->post_title),
-                        esc_html($ticket_price ? wc_price($ticket_price) : 'N/A'), // Use WooCommerce's wc_price function for formatting
-                        esc_html($ticket_stock !== '' ? $ticket_stock : 'N/A')
-                    );
+                    $ticket_info .= sprintf('<div>%s - Price: %s - Stock: %s</div>', 
+                        $product->get_title(), 
+                        $price_html, 
+                        $stock_quantity);
                 }
             }
-        }
 
-        if (empty($ticket_info)) {
-            $ticket_info = 'No tickets found for this event.';
-        }
+            if (empty($ticket_info)) {
+                $ticket_info = 'No tickets found for this event.';
+            }
 
-        echo $ticket_info;
+            echo $ticket_info;
+        }
     }
     
     wp_die(); // Required to terminate immediately and return a proper response
