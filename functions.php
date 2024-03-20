@@ -4953,8 +4953,8 @@ function user_events_with_tickets_shortcode() {
     return $output;
 }
 add_shortcode('user_events_with_tickets', 'user_events_with_tickets_shortcode');
-
 function get_tickets_for_event_ajax() {
+    // Check for the required 'event_id' POST variable.
     if (!isset($_POST['event_id']) || empty($_POST['event_id'])) {
         wp_send_json_error('Event ID is required.');
         wp_die();
@@ -4962,6 +4962,7 @@ function get_tickets_for_event_ajax() {
 
     $event_id = intval($_POST['event_id']);
     $ticket_info = '';
+
     if (class_exists('Tribe__Tickets_Plus__Commerce__WooCommerce__Main')) {
         $woo_tickets = Tribe__Tickets_Plus__Commerce__WooCommerce__Main::get_instance();
         $ticket_ids = $woo_tickets->get_tickets_ids($event_id);
@@ -4971,11 +4972,19 @@ function get_tickets_for_event_ajax() {
             if ($product) {
                 $price_html = $product->get_price_html();
                 $stock_quantity = $product->get_stock_quantity();
+                $nonce_field = wp_nonce_field('free_ticket_nonce_' . $ticket_id, '_wpnonce', true, false);
                 $ticket_info .= sprintf(
-                    '<div>%s - Price: %s - Stock: %s</div>',
-                    esc_html($product->get_title()), 
-                    $price_html, 
-                    $stock_quantity ?: 'Out of stock'
+                    '<div>%s - Price: %s - Stock: %s %s</div>',
+                    esc_html($product->get_title()),
+                    $price_html,
+                    $stock_quantity ?: 'Out of stock',
+                    '<form class="purchase_ticket_form" method="post">
+                        <input type="hidden" name="action" value="purchase_ticket_for_free" />
+                        <input type="hidden" name="ticket_id" value="' . esc_attr($ticket_id) . '" />
+                        '.$nonce_field.'
+                        <input type="email" name="recipient_email" placeholder="Recipient email (optional)" />
+                        <button type="submit">Get Ticket for Free</button>
+                    </form>'
                 );
             }
         }
@@ -4987,7 +4996,7 @@ function get_tickets_for_event_ajax() {
         wp_send_json_success($ticket_info);
     }
 
-    wp_die(); // Terminate immediately and return a proper response
+    wp_die(); // Terminate immediately and return a proper response.
 }
 add_action('wp_ajax_get_tickets_for_event', 'get_tickets_for_event_ajax');
 add_action('wp_ajax_nopriv_get_tickets_for_event', 'get_tickets_for_event_ajax');
