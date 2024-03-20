@@ -4837,16 +4837,21 @@ function display_html5_qrcode_scanner_shortcode() {
             // Handle the scanned code as needed
             console.log(`Code scanned = ${decodedText}`, decodedResult);
         }
+
+        function hideCameraSelectionText() {
+            // Hide the text indicating which camera is selected
+            $('.camera-selection-text').hide();
+        }
         
         html5QrcodeScanner.render(onScanSuccess);
+        // Call the function to hide the camera selection text after the camera has been selected
+        html5QrcodeScanner.html5Qrcode._internalApi.onCameraSelected = hideCameraSelectionText;
     });
     </script>";
 
     return $scanner_html . $inline_script;
 }
 add_shortcode('display_html5_qrcode_scanner', 'display_html5_qrcode_scanner_shortcode');
-
-
 
 
 
