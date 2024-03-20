@@ -4874,8 +4874,6 @@ add_shortcode('display_html5_qrcode_scanner', 'display_html5_qrcode_scanner_shor
 
 
 
-
-
 // Shortcode to display user events and tickets
 add_shortcode('complimentary_ticket_form', 'display_complimentary_ticket_form');
 function display_complimentary_ticket_form() {
@@ -4947,26 +4945,4 @@ function display_complimentary_ticket_form() {
         // Display message if no events found
         return 'You have no events.';
     }
-}f using WooCommerce:
-    $product = wc_get_product($ticket_id);
-    if ($product) {
-        $order = wc_create_order();
-        $order->add_product($product, 1); // Add product to the order
-        $order->set_customer_note("Complimentary ticket for $recipient_email"); // Add note
-        $order->set_billing_email($recipient_email); // Set billing email
-        $order->calculate_totals(); // Calculate totals
-        return $order->get_id(); // Return order ID
-    }
-    return false;
-}
-
-
-// Shortcode to display the complimentary ticket form
-add_shortcode('complimentary_ticket_form', 'display_complimentary_ticket_form');
-function display_complimentary_ticket_form() {
-    ob_start();
-    echo "<div>";
-    echo do_shortcode('[display_user_events]');
-    echo "</div>";
-    return ob_get_clean();
 }
