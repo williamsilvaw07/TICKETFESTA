@@ -4802,8 +4802,6 @@ function generate_unique_random_hash($length) {
 
 
 
-
-
 function my_enqueue_qrcode_script() {
     // Enqueue html5-qrcode script with jQuery dependency
     wp_enqueue_script('html5-qrcode', 'https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.7/html5-qrcode.min.js', array('jquery'), null, true);
@@ -4825,19 +4823,17 @@ jQuery(document).ready(function($) {
         console.log(`Code scanned = ${decodedText}`, decodedResult);
     }
 
-    function startScanning() {
+    function startScanning(cameraId) {
         if (!isScanning) {
             isScanning = true;
             Html5Qrcode.getCameras().then(cameras => {
                 if (cameras.length > 0) {
                     html5QrCode = new Html5Qrcode("qr-reader");
-                    html5QrCode.start(cameras[0].id, { fps: 10, qrbox: 250 }, onScanSuccess); // Start QR code scanning
+                    html5QrCode.start(cameraId, { fps: 10, qrbox: 250 }, onScanSuccess); // Start QR code scanning
                     $('#stop-scanning-btn').show(); // Show Stop Scanning button
                 } else {
                     console.error("No cameras found.");
                 }
-            }).catch(err => {
-                console.error("Unable to start QR scanner", err);
             });
         }
     }
@@ -4854,25 +4850,6 @@ jQuery(document).ready(function($) {
         }
     }
 
-    // Check if camera access is already granted (by checking localStorage)
-    var cameraAccessGranted = localStorage.getItem('cameraAccess') === 'granted';
-    
-    // If camera access is granted, start the QR code scanner immediately
-    if (cameraAccessGranted) {
-        startScanning();
-    } else {
-        // If camera access is not granted, request camera access
-        navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
-        .then(function(stream) {
-            // Set localStorage to remember that camera access has been granted
-            localStorage.setItem('cameraAccess', 'granted');
-            startScanning();
-        })
-        .catch(function(err) {
-            console.error("Unable to access camera", err);
-        });
-    }
-
     // Function to handle stop scanning button click
     $('#stop-scanning-btn').click(function() {
         stopScanning();
@@ -4880,7 +4857,26 @@ jQuery(document).ready(function($) {
 
     // Function to handle start scanning button click
     $('#start-scanning-btn').click(function() {
-        startScanning();
+        var selectedCamera = $('#camera-dropdown').val();
+        startScanning(selectedCamera);
+    });
+
+    // Request camera access and populate dropdown menu with available cameras
+    navigator.mediaDevices.enumerateDevices()
+    .then(devices => {
+        var videoDevices = devices.filter(device => device.kind === 'videoinput');
+        var dropdownMenu = $('#camera-dropdown');
+        videoDevices.forEach(device => {
+            dropdownMenu.append(`<option value="${device.deviceId}">${device.label}</option>`);
+        });
+        if (videoDevices.length > 0) {
+            startScanning(videoDevices[0].deviceId); // Start scanning with the first available camera
+        } else {
+            console.error("No video input devices found.");
+        }
+    })
+    .catch(err => {
+        console.error("Error enumerating media devices", err);
     });
 });
 </script>
@@ -4892,6 +4888,9 @@ EOD;
                     <!-- Scanner guide for visual assistance -->
                     <div id="qr-scanner-guide" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90%; height: 90%; border: 0 solid #FFD700; box-sizing: border-box;"></div>
                 </div>
+            </div>
+            <div style="margin-bottom: 10px;">
+                <select id="camera-dropdown"></select>
             </div>
             <button id="start-scanning-btn">Start Scanning</button>
             <button id="stop-scanning-btn" style="display:none;">Stop Scanning</button>' . $inline_script;
