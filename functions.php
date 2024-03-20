@@ -4880,51 +4880,61 @@ add_shortcode('display_html5_qrcode_scanner', 'display_html5_qrcode_scanner_shor
 
 
 
+// Shortcode to display all events for the current user with their tickets
+add_shortcode('complimentary_ticket_form', 'display_user_events_with_tickets_shortcode');
+function display_user_events_with_tickets_shortcode() {
+    // Get current user ID
+    $user_id = get_current_user_id();
 
-// Shortcode to display tickets for a specific event
-add_shortcode('event_tickets', 'display_event_tickets');
-function display_event_tickets($atts) {
-    // Extract shortcode attributes
-    $atts = shortcode_atts(array(
-        'event_id' => 0,
-    ), $atts);
+    // Get all events created by the current user
+    $events = get_posts(array(
+        'post_type' => 'tribe_events',
+        'author' => $user_id,
+        'posts_per_page' => -1,
+    ));
 
-    // Get the event ID from shortcode attribute
-    $event_id = intval($atts['event_id']);
+    // Check if any events are found
+    if ($events) {
+        // Initialize output variable
+        $output = '';
 
-    // Check if event ID is provided
-    if ($event_id > 0) {
-        // Get instance of TribeWooTickets class
-        $woo_tickets = TribeWooTickets::get_instance();
+        // Loop through each event
+        foreach ($events as $event) {
+            // Get event ID
+            $event_id = $event->ID;
 
-        // Get ticket IDs for the provided event ID
-        $ticket_ids = $woo_tickets->get_tickets_ids($event_id);
+            // Get event title
+            $event_title = $event->post_title;
 
-        // Check if any tickets are found
-        if ($ticket_ids) {
-            // Initialize output variable
-            $output = '<ul>';
+            // Get ticket IDs for the event
+            $ticket_ids = get_post_meta($event_id, '_tribe_wootickets_ticket_ids', true);
 
-            // Loop through ticket IDs
-            foreach ($ticket_ids as $ticket_id) {
-                // Get ticket title
-                $ticket_title = get_the_title($ticket_id);
+            // Check if any tickets are found
+            if (!empty($ticket_ids)) {
+                // Add event title to output
+                $output .= '<h3>' . $event_title . '</h3>';
 
-                // Add ticket title to output
-                $output .= '<li>' . $ticket_title . '</li>';
+                // Initialize ticket list
+                $output .= '<ul>';
+
+                // Loop through ticket IDs
+                foreach ($ticket_ids as $ticket_id) {
+                    // Get ticket title
+                    $ticket_title = get_the_title($ticket_id);
+
+                    // Add ticket title to ticket list
+                    $output .= '<li>' . $ticket_title . '</li>';
+                }
+
+                // Close ticket list
+                $output .= '</ul>';
             }
-
-            // Close the list
-            $output .= '</ul>';
-
-            // Return the output
-            return $output;
-        } else {
-            // No tickets found for the event
-            return 'No tickets available for this event.';
         }
+
+        // Return the output
+        return $output;
     } else {
-        // Event ID not provided
-        return 'Please provide an event ID.';
+        // No events found for the current user
+        return 'No events found for the current user.';
     }
 }
