@@ -4874,6 +4874,12 @@ add_shortcode('display_html5_qrcode_scanner', 'display_html5_qrcode_scanner_shor
 
 
 
+
+
+
+
+
+
 function user_events_with_tickets_shortcode() {
     if (!is_user_logged_in()) {
         return 'You must be logged in to view your events.';
@@ -4891,12 +4897,11 @@ function user_events_with_tickets_shortcode() {
     $output = '<select id="user_events">';
     $output .= '<option value="">Select Your Event</option>';
 
-    if ($events_query->have_posts()) {
-        while ($events_query->have_posts()) {
-            $events_query->the_post();
-            $output .= "<option value='" . get_the_ID() . "'>" . get_the_title() . "</option>";
-        }
-    } else {
+    foreach ($events_query->posts as $post) {
+        $output .= sprintf('<option value="%d">%s</option>', $post->ID, esc_html(get_the_title($post->ID)));
+    }
+
+    if (empty($events_query->posts)) {
         $output .= '<option value="">No events found.</option>';
     }
 
@@ -4914,8 +4919,8 @@ function user_events_with_tickets_shortcode() {
                     url: '" . admin_url('admin-ajax.php') . "',
                     type: 'POST',
                     data: {
-                        action: 'get_tickets_for_event',
-                        event_id: eventId
+                        'action': 'get_tickets_for_event',
+                        'event_id': eventId
                     },
                     success: function(response) {
                         $('#ticket_info').html(response);
@@ -4930,11 +4935,14 @@ function user_events_with_tickets_shortcode() {
             e.preventDefault();
             var formData = $(this).serialize();
             $.ajax({
-                url: '" . admin_url('admin-ajax.php') . "',
+                url: ajaxurl, // Ensure ajaxurl is defined globally in the frontend
                 type: 'POST',
                 data: formData,
                 success: function(response) {
                     alert('Ticket has been ordered successfully.');
+                },
+                error: function(response) {
+                    alert('Failed to order the ticket. Please try again.');
                 }
             });
         });
@@ -4944,43 +4952,45 @@ function user_events_with_tickets_shortcode() {
     return $output;
 }
 add_shortcode('user_events_with_tickets', 'user_events_with_tickets_shortcode');
-function get_tickets_for_event_ajax() {
-    if (isset($_POST['event_id']) && !empty($_POST['event_id'])) {
-        $event_id = intval($_POST['event_id']);
-        $ticket_info = '';
-        if (class_exists('Tribe__Tickets_Plus__Commerce__WooCommerce__Main')) {
-            $woo_tickets = Tribe__Tickets_Plus__Commerce__WooCommerce__Main::get_instance();
-            $ticket_ids = $woo_tickets->get_tickets_ids($event_id);
 
-            foreach ($ticket_ids as $ticket_id) {
-                $product = wc_get_product($ticket_id);
-                if ($product) {
-                    $price_html = $product->get_price_html();
-                    $stock_quantity = $product->get_stock_quantity();
-                    $ticket_info .= sprintf(
-                        '<div>%s - Price: %s - Stock: %s</div>',
-                        $product->get_title(),
-                        $price_html,
-                        $stock_quantity ?: 'Out of stock'
-                    );
-                    $ticket_info .= '<form class="purchase_ticket_form" action="" method="post">
-                        <input type="hidden" name="action" value="purchase_ticket_for_free" />
-                        <input type="hidden" name="ticket_id" value="' . esc_attr($ticket_id) . '" />
-                        <input type="email" name="recipient_email" placeholder="Recipient email (optional)" />
-                        <button type="submit">Get Ticket for Free</button>
-                    </form>';
-                }
+
+
+
+function get_tickets_for_event_ajax() {
+    if (!isset($_POST['event_id']) || empty($_POST['event_id'])) {
+        wp_send_json_error('Event ID is required.');
+    }
+
+    $event_id = intval($_POST['event_id']);
+    if (class_exists('Tribe__Tickets_Plus__Commerce__WooCommerce__Main')) {
+        $woo_tickets = Tribe__Tickets_Plus__Commerce__WooCommerce__Main::get_instance();
+        $ticket_ids = $woo_tickets->get_tickets_ids($event_id);
+        $ticket_info = '';
+
+        foreach ($ticket_ids as $ticket_id) {
+            $product = wc_get_product($ticket_id);
+            if ($product) {
+                $price_html = $product->get_price_html();
+                $stock_quantity = $product->get_stock_quantity() ?: 'Out of stock';
+                $ticket_info .= sprintf('<div>%s - Price: %s - Stock: %s</div>',
+                    esc_html($product->get_title()), $price_html, esc_html($stock_quantity));
+
+                // Include a nonce for security
+                $nonce = wp_create_nonce('purchase_ticket_for_free_nonce');
+                $ticket_info .= sprintf('<form class="purchase_ticket_form" method="post">
+                    <input type="hidden" name="action" value="purchase_ticket_for_free" />
+                    <input type="hidden" name="ticket_id" value="%d" />
+                    <input type="hidden" name="purchase_ticket_for_free_nonce" value="%s" />
+                    <input type="email" name="recipient_email" placeholder="Recipient email (optional)" />
+                    <button type="submit">Get Ticket for Free</button>
+                </form>', esc_attr($ticket_id), esc_attr($nonce));
             }
         }
 
-        if (empty($ticket_info)) {
-            $ticket_info = 'No tickets found for this event.';
-        }
-
-        echo $ticket_info;
+        wp_send_json_success($ticket_info);
+    } else {
+        wp_send_json_error('Required class Tribe__Tickets_Plus__Commerce__WooCommerce__Main is not available.');
     }
-
-    wp_die(); // Terminate immediately and return a proper response
 }
 add_action('wp_ajax_get_tickets_for_event', 'get_tickets_for_event_ajax');
 add_action('wp_ajax_nopriv_get_tickets_for_event', 'get_tickets_for_event_ajax');
