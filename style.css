@@ -2379,4 +2379,5 @@ html #qr-reader__dashboard_section_csr span:first-child{
     display: flex!important;
     flex-direction: column-reverse;
     gap: 50px;
+    padding: 10px 10px;
 }
