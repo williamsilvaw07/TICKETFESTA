@@ -4889,66 +4889,80 @@ add_shortcode('display_html5_qrcode_scanner', 'display_html5_qrcode_scanner_shor
 
 
 
-
-
 function user_events_with_tickets_shortcode() {
     if (!is_user_logged_in()) {
         return 'You must be logged in to view your events.';
     }
 
     $current_user = wp_get_current_user();
-    $output = '<form method="POST">';
-    $output .= '<select name="selected_event_id">';
-    $output .= '<option value="">Select Your Event</option>';
-
     $args = array(
         'post_type' => 'tribe_events',
         'author' => $current_user->ID,
         'posts_per_page' => -1,
     );
+
     $events_query = new WP_Query($args);
+
+    $output = '<select id="user_events">';
+    $output .= '<option value="">Select Your Event</option>';
 
     if ($events_query->have_posts()) {
         while ($events_query->have_posts()) {
             $events_query->the_post();
-            $selected = (isset($_POST['selected_event_id']) && $_POST['selected_event_id'] == get_the_ID()) ? 'selected' : '';
-            $output .= "<option value='" . get_the_ID() . "' $selected>" . get_the_title() . "</option>";
+            $output .= "<option value='" . get_the_ID() . "'>" . get_the_title() . "</option>";
         }
+    } else {
+        $output .= '<option value="">No events found.</option>';
     }
 
     wp_reset_postdata();
 
     $output .= '</select>';
-    $output .= '<input type="submit" name="view_tickets" value="View Tickets">';
-    $output .= '</form>';
+    $output .= '<div id="ticket_info"></div>'; // Container for the ticket info
 
-    // Handle ticket display if an event has been selected
-    if (isset($_POST['view_tickets']) && !empty($_POST['selected_event_id'])) {
-        $event_id = $_POST['selected_event_id'];
-        $event = get_post($event_id);
-        $ticket_info = '';
-
-        // Fetching tickets using the method you provided
-        $ticket_ids = get_post_meta($event_id, 'event_ticket_ids', true);
-        if (!empty($ticket_ids)) {
-            $ticket_ids_array = explode(',', $ticket_ids);
-            foreach ($ticket_ids_array as $ticket_id) {
-                $ticket_post = get_post($ticket_id);
-                if ($ticket_post) {
-                    $ticket_info .= sprintf('<a href="%s">%s</a>, ', get_permalink($ticket_id), $ticket_post->post_title);
+    // Inline JavaScript for handling the change event on the dropdown
+    $output .= "<script>
+    document.getElementById('user_events').addEventListener('change', function() {
+        var eventId = this.value;
+        if (eventId) {
+            // Make an AJAX request to get ticket info
+            jQuery.ajax({
+                url: '" . admin_url('admin-ajax.php') . "',
+                type: 'POST',
+                data: {
+                    'action': 'get_tickets_for_event',
+                    'event_id': eventId
+                },
+                success: function(response) {
+                    document.getElementById('ticket_info').innerHTML = response;
                 }
-            }
-            $ticket_info = rtrim($ticket_info, ', ');
+            });
         } else {
-            $ticket_info = 'No tickets found for this event.';
+            document.getElementById('ticket_info').innerHTML = '';
         }
-
-        // Append the ticket information to the output
-        $output .= "<h3>Tickets for " . esc_html($event->post_title) . "</h3>";
-        $output .= "<p>" . $ticket_info . "</p>";
-    }
+    });
+    </script>";
 
     return $output;
 }
-
 add_shortcode('user_events_with_tickets', 'user_events_with_tickets_shortcode');
+
+
+
+function get_tickets_for_event_ajax() {
+    // Check for the event ID
+    if (isset($_POST['event_id']) && !empty($_POST['event_id'])) {
+        $event_id = intval($_POST['event_id']);
+        
+        // Placeholder for your actual logic to fetch ticket info
+        // This could be a call to a function like get_tickets_for_event($event_id) that you need to define
+        // For demonstration, returning a simple message
+        $tickets_html = '<div>Replace this with actual ticket info for event ID: ' . $event_id . '</div>';
+
+        echo $tickets_html;
+    }
+    
+    wp_die(); // this is required to terminate immediately and return a proper response
+}
+add_action('wp_ajax_get_tickets_for_event', 'get_tickets_for_event_ajax');
+add_action('wp_ajax_nopriv_get_tickets_for_event', 'get_tickets_for_event_ajax');
