@@ -4877,178 +4877,78 @@ add_shortcode('display_html5_qrcode_scanner', 'display_html5_qrcode_scanner_shor
 
 
 
-
-
-
-// Enqueue custom scripts
-function enqueue_custom_scripts() {
-    wp_enqueue_script('jquery');
-    wp_add_inline_script('jquery', "
-        var ajaxurl = '" . admin_url('admin-ajax.php') . "'; // Define ajaxurl
-        jQuery(document).ready(function($) {
-            $('#userEventsDropdown').change(function() {
-                var eventId = $(this).val();
-                $.ajax({
-                    url: ajaxurl,
-                    type: 'POST',
-                    data: {
-                        'action': 'get_tickets_for_event',
-                        'event_id': eventId,
-                    },
-                    success: function(response) {
-                        $('#ticketsContainer').html(response);
-                    }
-                });
-            });
-
-            $(document).on('click', '.complimentary-ticket', function() {
-                var ticketId = $(this).data('ticket-id');
-                var recipientEmail = prompt('Enter the recipient email:');
-                if(recipientEmail) {
-                    $.ajax({
-                        url: ajaxurl,
-                        type: 'POST',
-                        data: {
-                            'action': 'process_complimentary_ticket',
-                            'ticket_id': ticketId,
-                            'recipient_email': recipientEmail,
-                        },
-                        success: function(response) {
-                            alert(response);
-                        }
-                    });
-                }
-            });
-        });
-    ");
-}
-add_action('wp_enqueue_scripts', 'enqueue_custom_scripts');
-
-// Shortcode to display user events
-add_shortcode('display_user_events', 'display_user_events_with_tickets_shortcode');
-function display_user_events_with_tickets_shortcode() {
-    $user_id = get_current_user_id();
-    $events = get_posts([
+// Shortcode to display user events and tickets
+add_shortcode('complimentary_ticket_form', 'display_complimentary_ticket_form');
+function display_complimentary_ticket_form() {
+    // Get current user ID
+    $current_user_id = get_current_user_id();
+    
+    // Query user's events
+    $events_query = new WP_Query(array(
         'post_type' => 'tribe_events',
-        'author' => $user_id,
+        'author' => $current_user_id,
         'posts_per_page' => -1,
-    ]);
+    ));
 
-    ob_start();
-    echo "<select id='userEventsDropdown'><option value=''>Select Your Event</option>";
-    foreach ($events as $event) {
-        echo "<option value='{$event->ID}'>{$event->post_title}</option>";
-    }
-    echo "</select><div id='ticketsContainer'></div>";
-    return ob_get_clean();
-}
+    // Check if there are events
+    if ($events_query->have_posts()) {
+        $output = '<div>';
+        $output .= '<h2>Your Events</h2>';
+        $output .= '<ul>';
 
-// AJAX callback to get tickets for selected event
-add_action('wp_ajax_get_tickets_for_event', 'get_tickets_for_event_callback');
-add_action('wp_ajax_nopriv_get_tickets_for_event', 'get_tickets_for_event_callback'); // Remove if not needed
+        // Loop through user's events
+        while ($events_query->have_posts()) {
+            $events_query->the_post();
+            $event_id = get_the_ID();
+            $event_title = get_the_title();
 
-function get_tickets_for_event_callback() {
-    $event_id = isset($_POST['event_id']) ? intval($_POST['event_id']) : 0;
-    
-    // Fetch tickets for the event using the updated function
-    $tickets = get_tickets_for_event($event_id);
-    
-    if ($tickets) {
-        foreach ($tickets as $ticket) {
-            // Get ticket object
-            $product = wc_get_product($ticket->get_id());
-            
-            // Check if the ticket is published or in draft status
-            if ($product && in_array($product->get_status(), ['publish', 'draft'])) {
-                // Get ticket information
-                $ticket_id = $product->get_id(); // Product ID
-                $ticket_name = $product->get_name(); // Ticket Name
-                $ticket_price = $product->get_price(); // Ticket Price
-                $ticket_stock = $product->get_stock_quantity(); // Ticket Stock
-                
-                // Check if the ticket is associated with the event
-                $event_associated_with_ticket = get_post_meta($ticket_id, '_event_id', true);
-                if ($event_associated_with_ticket == $event_id) {
-                    // Display ticket information
-                    echo "<div class='ticket-item'>
-                            <p>Event ID: {$event_id} - Event Title: {$event->post_title} - Ticket ID: {$ticket_id} - Name: {$ticket_name} - Price: {$ticket_price} - Stock: {$ticket_stock} - Status: {$product->get_status()}</p>
-                            <button class='complimentary-ticket' data-ticket-id='{$ticket_id}'>Claim Complimentary</button>
-                        </div>";
+            // Display event title
+            $output .= "<li>$event_title</li>";
+
+            // Query tickets for the current event
+            $tickets_query = new WP_Query(array(
+                'post_type' => 'event_ticket',
+                'meta_query' => array(
+                    array(
+                        'key' => '_event_id',
+                        'value' => $event_id,
+                        'compare' => '=',
+                    ),
+                ),
+            ));
+
+            // Check if there are tickets
+            if ($tickets_query->have_posts()) {
+                $output .= '<ul>';
+
+                // Loop through tickets
+                while ($tickets_query->have_posts()) {
+                    $tickets_query->the_post();
+                    $ticket_title = get_the_title();
+                    
+                    // Display ticket title
+                    $output .= "<li>$ticket_title - <button class='complimentary-ticket' data-ticket-id='$event_id'>Claim Complimentary</button></li>";
                 }
+
+                $output .= '</ul>';
+            } else {
+                // Display message if no tickets found
+                $output .= '<li>No tickets available for this event.</li>';
             }
         }
+
+        $output .= '</ul>';
+        $output .= '</div>';
+
+        // Reset post data
+        wp_reset_postdata();
+
+        return $output;
     } else {
-        echo "<p>No tickets available for this event.</p>";
+        // Display message if no events found
+        return 'You have no events.';
     }
-    
-    wp_die();
-}
-
-// Function to get tickets for the event
-function get_tickets_for_event($event_id) {
-    // Define an array to store filtered tickets
-    $filtered_tickets = [];
-
-    // Fetch all products (tickets) associated with the event
-    $tickets = wc_get_products([
-        'status' => ['publish', 'draft'], // Filter by published or draft status
-        'type' => 'ticket', // Filter by ticket product type
-        'meta_query' => [
-            [
-                'key' => '_event_id',
-                'value' => $event_id,
-                'compare' => '=',
-            ],
-        ],
-    ]);
-
-    // Loop through the tickets and add them to the filtered_tickets array
-    foreach ($tickets as $ticket) {
-        $filtered_tickets[] = $ticket;
-    }
-
-    // Return the filtered tickets
-    return $filtered_tickets;
-}
-
-
-
-
-
-
-
-
-
-
-// AJAX callback to process complimentary ticket
-add_action('wp_ajax_process_complimentary_ticket', 'process_complimentary_ticket_callback');
-function process_complimentary_ticket_callback() {
-    $ticket_id = isset($_POST['ticket_id']) ? intval($_POST['ticket_id']) : 0;
-    $recipient_email = isset($_POST['recipient_email']) ? sanitize_email($_POST['recipient_email']) : '';
-
-    // Process the complimentary ticket
-    $order_id = create_complimentary_order($ticket_id, $recipient_email);
-
-    if ($order_id) {
-        // Send email notifications
-        send_order_email_notifications($order_id, $recipient_email);
-        echo "Complimentary ticket processed successfully. Order ID: $order_id";
-    } else {
-        echo "Error processing complimentary ticket.";
-    }
-    wp_die();
-}
-
-
-
-
-
-
-// Function to create complimentary order (Custom function, implement as per your setup)
-function create_complimentary_order($ticket_id, $recipient_email) {
-    // Implement logic to create an order for the complimentary ticket
-    // This could be done using WooCommerce functions or custom order creation logic
-    // For example, if using WooCommerce:
+}f using WooCommerce:
     $product = wc_get_product($ticket_id);
     if ($product) {
         $order = wc_create_order();
