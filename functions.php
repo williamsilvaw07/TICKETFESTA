@@ -4886,9 +4886,6 @@ add_shortcode('display_html5_qrcode_scanner', 'display_html5_qrcode_scanner_shor
 
 
 
-
-
-// Shortcode to display a dropdown of the user's events and a container for ticket info
 function user_events_with_tickets_shortcode() {
     if (!is_user_logged_in()) {
         return 'You must be logged in to view your events.';
@@ -4902,7 +4899,6 @@ function user_events_with_tickets_shortcode() {
     );
 
     $events_query = new WP_Query($args);
-
     $output = '<select id="user_events">';
     $output .= '<option value="">Select Your Event</option>';
 
@@ -4914,11 +4910,9 @@ function user_events_with_tickets_shortcode() {
     } else {
         $output .= '<option value="">No events found.</option>';
     }
-
     wp_reset_postdata();
-
     $output .= '</select>';
-    $output .= '<div id="ticket_info"></div>'; // Container for the ticket info
+    $output .= '<div id="ticket_info"></div>'; // Container for ticket info
 
     // Inline JavaScript for AJAX request
     $output .= "<script>
@@ -4945,11 +4939,6 @@ function user_events_with_tickets_shortcode() {
     return $output;
 }
 add_shortcode('user_events_with_tickets', 'user_events_with_tickets_shortcode');
-
-
-
-
-
 function get_tickets_for_event_ajax() {
     if (isset($_POST['event_id']) && !empty($_POST['event_id'])) {
         $event_id = intval($_POST['event_id']);
@@ -4966,6 +4955,13 @@ function get_tickets_for_event_ajax() {
                     $stock_quantity = $product->get_stock_quantity();
                     $ticket_info .= sprintf('<div>%s - Price: %s - Stock: %s</div>',
                                             $product->get_title(), $price_html, $stock_quantity ?: 'Out of stock');
+                    // Including form for free ticket
+                    $ticket_info .= '<form class="purchase_ticket_form" data-ticket-id="' . esc_attr($ticket_id) . '">
+                        <input type="hidden" name="action" value="purchase_ticket_for_free" />
+                        <input type="hidden" name="ticket_id" value="' . esc_attr($ticket_id) . '" />
+                        <input type="email" name="recipient_email" placeholder="Recipient email (optional)" />
+                        <button type="submit">Get Ticket for Free</button>
+                    </form>';
                 }
             }
         }
@@ -4979,10 +4975,5 @@ function get_tickets_for_event_ajax() {
 
     wp_die();
 }
-
-// Part of the AJAX response, inside the foreach loop:
-    $ticket_info .= '<form class="purchase_ticket_form" data-ticket-id="' . esc_attr($ticket_id) . '">
-    <input type="hidden" name="ticket_id" value="' . esc_attr($ticket_id) . '" />
-    <input type="email" name="recipient_email" placeholder="Recipient email (optional)" />
-    <button type="submit">Get Ticket for Free</button>
-</form>';
+add_action('wp_ajax_get_tickets_for_event', 'get_tickets_for_event_ajax');
+add_action('wp_ajax_nopriv_get_tickets_for_event', 'get_tickets_for_event_ajax');
