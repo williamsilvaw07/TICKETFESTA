@@ -4907,15 +4907,11 @@ add_shortcode('display_html5_qrcode_scanner', 'display_html5_qrcode_scanner_shor
 
 
 
-
-
-
-
-
 // Enqueue custom scripts
 function enqueue_custom_scripts() {
     wp_enqueue_script('jquery');
     wp_add_inline_script('jquery', "
+        var ajaxurl = '" . admin_url('admin-ajax.php') . "'; // Define ajaxurl
         jQuery(document).ready(function($) {
             $('#userEventsDropdown').change(function() {
                 var eventId = $(this).val();
