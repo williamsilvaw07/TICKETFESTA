@@ -2328,6 +2328,15 @@ body .price_section_dark svg{
 /***********END********/
 
 
+
+
+
+
+
+
+
+/****Scanner web app styles****/
+
 /* Hide file input elements in the html5-qrcode scanner */
 .html5qr-qrcode-fileinput, .html5qr-qrcode-header {
     display: none !important;
@@ -2339,6 +2348,7 @@ body .price_section_dark svg{
 .qrcode_scanner_wrapper_div{
     max-width: 300px;
 width: 100%;
+margin: 0 auto;
 }
 html #qr-reader__dashboard_section #html5-qrcode-anchor-scan-type-change{
     display: none!important;
@@ -2388,3 +2398,4 @@ html #qr-reader__dashboard_section_csr{
 #qr-reader__dashboard{
     max-height: 88px;
 }
+/***********END********/
