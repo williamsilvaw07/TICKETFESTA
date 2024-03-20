@@ -4874,75 +4874,50 @@ add_shortcode('display_html5_qrcode_scanner', 'display_html5_qrcode_scanner_shor
 
 
 
-// Shortcode to display user events and tickets
-add_shortcode('complimentary_ticket_form', 'display_complimentary_ticket_form');
-function display_complimentary_ticket_form() {
-    // Get current user ID
-    $current_user_id = get_current_user_id();
-    
-    // Query user's events
-    $events_query = new WP_Query(array(
-        'post_type' => 'tribe_events',
-        'author' => $current_user_id,
-        'posts_per_page' => -1,
-    ));
+// Shortcode to display tickets for a specific event
+add_shortcode('event_tickets', 'display_event_tickets');
+function display_event_tickets($atts) {
+    // Extract shortcode attributes
+    $atts = shortcode_atts(array(
+        'event_id' => 0,
+    ), $atts);
 
-    // Check if there are events
-    if ($events_query->have_posts()) {
-        $output = '<div>';
-        $output .= '<h2>Your Events</h2>';
-        $output .= '<ul>';
+    // Get the event ID from shortcode attribute
+    $event_id = intval($atts['event_id']);
 
-        // Loop through user's events
-        while ($events_query->have_posts()) {
-            $events_query->the_post();
-            $event_id = get_the_ID();
-            $event_title = get_the_title();
+    // Check if event ID is provided
+    if ($event_id > 0) {
+        // Get instance of TribeWooTickets class
+        $woo_tickets = TribeWooTickets::get_instance();
 
-            // Display event title
-            $output .= "<li>$event_title</li>";
+        // Get ticket IDs for the provided event ID
+        $ticket_ids = $woo_tickets->get_tickets_ids($event_id);
 
-            // Query tickets for the current event
-            $tickets_query = new WP_Query(array(
-                'post_type' => 'event_ticket',
-                'meta_query' => array(
-                    array(
-                        'key' => '_event_id',
-                        'value' => $event_id,
-                        'compare' => '=',
-                    ),
-                ),
-            ));
+        // Check if any tickets are found
+        if ($ticket_ids) {
+            // Initialize output variable
+            $output = '<ul>';
 
-            // Check if there are tickets
-            if ($tickets_query->have_posts()) {
-                $output .= '<ul>';
+            // Loop through ticket IDs
+            foreach ($ticket_ids as $ticket_id) {
+                // Get ticket title
+                $ticket_title = get_the_title($ticket_id);
 
-                // Loop through tickets
-                while ($tickets_query->have_posts()) {
-                    $tickets_query->the_post();
-                    $ticket_title = get_the_title();
-                    
-                    // Display ticket title
-                    $output .= "<li>$ticket_title - <button class='complimentary-ticket' data-ticket-id='$event_id'>Claim Complimentary</button></li>";
-                }
-
-                $output .= '</ul>';
-            } else {
-                // Display message if no tickets found
-                $output .= '<li>No tickets available for this event.</li>';
+                // Add ticket title to output
+                $output .= '<li>' . $ticket_title . '</li>';
             }
+
+            // Close the list
+            $output .= '</ul>';
+
+            // Return the output
+            return $output;
+        } else {
+            // No tickets found for the event
+            return 'No tickets available for this event.';
         }
-
-        $output .= '</ul>';
-        $output .= '</div>';
-
-        // Reset post data
-        wp_reset_postdata();
-
-        return $output;
     } else {
-        // Display message if no events found
-        return 'You have no events.';
+        // Event ID not provided
+        return 'Please provide an event ID.';
     }
 }
