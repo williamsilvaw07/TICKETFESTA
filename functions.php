@@ -4914,12 +4914,6 @@ add_shortcode('display_html5_qrcode_scanner', 'display_html5_qrcode_scanner_shor
 
 
 
-
-
-
-
-
-
 // Enqueue custom scripts
 function enqueue_custom_scripts() {
     wp_enqueue_script('jquery');
@@ -5067,4 +5061,14 @@ function send_order_email_notifications($order_id, $recipient_email) {
         $email = $mailer->emails['WC_Email_Customer_Completed_Order']; // Adjust based on the email type you want to send
         $email->trigger($order_id, $order); // Send email
     }
+}
+
+// Shortcode to display the complimentary ticket form
+add_shortcode('complimentary_ticket_form', 'display_complimentary_ticket_form');
+function display_complimentary_ticket_form() {
+    ob_start();
+    echo "<div>";
+    echo do_shortcode('[display_user_events]');
+    echo "</div>";
+    return ob_get_clean();
 }
