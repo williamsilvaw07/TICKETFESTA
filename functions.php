@@ -4612,9 +4612,6 @@ function custom_qr_scanner_shortcode() {
             // echo "<pre>";
             // var_dump($event_data);
             // echo "</pre>";
-
-            die('aaa');
-
     ?>
             <div class="tabs-container">
                 <ul class="tabs-nav">
