@@ -4902,7 +4902,13 @@ add_shortcode('display_html5_qrcode_scanner', 'display_html5_qrcode_scanner_shor
 
 
 
-// Function to fetch current user's events and associated tickets with frontend debugging
+
+
+
+
+
+
+// Function to fetch current user's events and associated tickets with frontend debugging and title
 function fetch_user_events_with_tickets_debug() {
     // Check if user is logged in
     if (is_user_logged_in()) {
@@ -4917,6 +4923,9 @@ function fetch_user_events_with_tickets_debug() {
 
         // Initialize output variable
         $output = '';
+
+        // Add title indicating shortcode is working
+        $output .= '<h2>Events and Tickets for Current User:</h2>';
 
         // Debugging: Output user ID
         $output .= '<p>User ID: ' . $user_id . '</p>';
@@ -4938,7 +4947,7 @@ function fetch_user_events_with_tickets_debug() {
 
             // Start building output for the event
             $output .= '<div class="event">';
-            $output .= '<h2>' . get_the_title($event_id) . '</h2>'; // Event title
+            $output .= '<h3>' . get_the_title($event_id) . '</h3>'; // Event title
 
             // Loop through tickets
             foreach ($ticket_ids as $ticket_id) {
@@ -4959,10 +4968,7 @@ function fetch_user_events_with_tickets_debug() {
     }
 }
 // Register shortcode
-add_shortcode('user_events_with_tickets_debug', 'fetch_user_events_with_tickets_debug');
-
-
-
+add_shortcode('user_events_with_tickets', 'fetch_user_events_with_tickets_debug');
 
 
 
