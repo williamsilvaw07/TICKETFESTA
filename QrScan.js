@@ -132,7 +132,7 @@
                         // startScanQR(response.event_id);
                         passcodeMatch(response);
                     }else{
-                        // noEventFound();
+                        noEventFound();
                     }
                 },
                 error: function(xhr, status, error) {
@@ -181,8 +181,11 @@
         }
 
         function noEventFound(){
-            $('#event-pass').addClass('error');
+            $('event-pass').addClass('error');
             $('#event_not_found').show();
+
+            $('.tabs-container').hide();
+            $('.tab-content-container').hide();
         }
 
         function passcodeMatch(response){
