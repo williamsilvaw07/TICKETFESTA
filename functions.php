@@ -4608,7 +4608,8 @@ function custom_qr_scanner_shortcode() {
     <div id="qr-reader-results"></div>
 
     -->
-
+    <input type="text" id="event-pass" name="event-pass" placeholder="enter event pass">
+    <button id="check-passcode"> Check Pass Code </button>
     <?php 
         $event_id   = isset($_GET['event_id']) ? esc_attr( $_GET['event_id'] ) : false;
         if($event_id){
