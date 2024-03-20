@@ -4809,61 +4809,48 @@ function my_enqueue_qrcode_script() {
     wp_enqueue_script('html5-qrcode', 'https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.7/html5-qrcode.min.js', array('jquery'), null, true);
 }
 add_action('wp_enqueue_scripts', 'my_enqueue_qrcode_script');
+
 function display_html5_qrcode_scanner_shortcode() {
-    my_enqueue_qrcode_script(); // Ensures the QR code script is enqueued
-
-    // Wrap the QR code scanner div inside another div for additional styling or layout control
-    $scanner_html = '<div class="qr-scanner-wrapper" style="padding: 10px; display: flex; justify-content: center; align-items: center;"> <!-- Additional div wrapper with custom styles -->
-                        <div id="qr-reader" style="max-width:400px; max-height:400px; width:100%; aspect-ratio: 1 / 1; position: relative; margin: 20px auto; overflow: hidden;"></div>
-                     </div>'; // QR scanner HTML setup for responsive design
-
-    // Inline JavaScript for initializing the QR code scanner
-    $inline_script = "
-    <script>
-    jQuery(document).ready(function($) {
-        // Function to calculate a responsive qrbox size based on the container's width
-        function calculateQrboxSize() {
-            const readerWidth = jQuery('#qr-reader').width();
-            // Ensure the qrbox is not larger than the container
-            let qrboxSize = Math.min(300, readerWidth - 10);
-            return qrboxSize;
-        }
-        
-        let html5QrcodeScanner = new Html5QrcodeScanner(
-            'qr-reader', {
-                fps: 10,
-                qrbox: calculateQrboxSize(),
-                rememberLastUsedCamera: true,
-                aspectRatio: 1,
-                showTorchButtonIfSupported: true // Option to enable the torch button if supported
-            }, false);
-
-        function onScanSuccess(decodedText, decodedResult) {
-            // Callback for successfully scanned QR codes
-            console.log(`Code scanned = ${decodedText}`, decodedResult);
-        }
-
-        html5QrcodeScanner.render(onScanSuccess);
-
-        // Dynamically adjust the qrbox size on window resize for a fully responsive design
-        jQuery(window).resize(function() {
-            html5QrcodeScanner.clear();
-            html5QrcodeScanner = new Html5QrcodeScanner(
-                'qr-reader', {
-                    fps: 10,
-                    qrbox: calculateQrboxSize(),
-                    rememberLastUsedCamera: true,
-                    aspectRatio: 1,
-                    showTorchButtonIfSupported: true
-                }, false);
-            html5QrcodeScanner.render(onScanSuccess);
+    my_enqueue_qrcode_script(); // Make sure to enqueue scripts when shortcode is used
+    
+    // Inline JavaScript to initialize the QR code scanner with camera access request
+    $inline_script = <<<EOD
+<script>
+jQuery(document).ready(function($) {
+    function onScanSuccess(decodedText, decodedResult) {
+        // Handle the scanned text as needed.
+        console.log(`Code scanned = ${decodedText}`, decodedResult);
+    }
+    
+    var config = { fps: 10, qrbox: 250 };
+    var html5QrCode = new Html5Qrcode("qr-reader");
+    navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } }) // Request camera access
+    .then(function(stream) {
+        Html5Qrcode.getCameras().then(cameras => {
+            if (cameras.length > 0) {
+                html5QrCode.start(cameras[0].id, config, onScanSuccess); // Start QR code scanning
+            } else {
+                console.error("No cameras found.");
+            }
         });
+    })
+    .catch(function(err) {
+        console.error("Unable to access camera", err);
     });
-    </script>";
+});
+</script>
+EOD;
 
-    return $scanner_html . $inline_script;
+    // Return the HTML for the scanner along with the inline JavaScript
+    return '  <div id="qr-reader" style="max-width:400px; max-height:400px; width:100%; aspect-ratio: 1 / 4; position: relative; margin: 20px auto;"> </div>' . $inline_script;
 }
 add_shortcode('display_html5_qrcode_scanner', 'display_html5_qrcode_scanner_shortcode');
+
+
+
+
+
+
 
 
 
