@@ -4603,7 +4603,6 @@ function custom_qr_scanner_shortcode() {
     -->
 
     <?php 
-    die('aaa');
         $event_id   = isset($_GET['event_id']) ? esc_attr( $_GET['event_id'] ) : false;
         if($event_id){
             $event_data = get_post_meta( $event_id );
@@ -4614,6 +4613,7 @@ function custom_qr_scanner_shortcode() {
             // var_dump($event_data);
             // echo "</pre>";
 
+            die('aaa');
 
     ?>
             <div class="tabs-container">
