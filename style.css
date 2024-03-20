@@ -2349,7 +2349,7 @@ html #qr-reader__dashboard_section #html5-qrcode-anchor-scan-type-change{
     color: #000000 !important;
     text-transform: capitalize !important;
     width: fit-content;
-    padding: 7px 0px;
+    padding: 7px 15px;
     border-radius: 4px;
     text-decoration: none;
     white-space: nowrap;
@@ -2357,7 +2357,7 @@ html #qr-reader__dashboard_section #html5-qrcode-anchor-scan-type-change{
 
 html #html5-qrcode-button-camera-stop{
     width: fit-content;
-    padding: 7px 0px;
+    padding: 7px 15px;
     border-radius: 4px;
     color: white !important;
     background: #ff4d4d !important;
