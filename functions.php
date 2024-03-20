@@ -4926,48 +4926,32 @@ add_shortcode('display_html5_qrcode_scanner', 'display_html5_qrcode_scanner_shor
 
 
 
-
-function custom_complimentary_ticket_form() {
-    if ( ! is_user_logged_in() ) {
-        return '<p>You must be logged in to submit a complimentary ticket.</p>';
+function custom_complimentary_ticket_form_shortcode() {
+    // Security check
+    if (!is_user_logged_in()) {
+        return '<p>You must be logged in to access this feature.</p>';
     }
 
-    $user_id = get_current_user_id();
-    $events = get_posts([
-        'post_type' => 'tribe_events', // Adjust for your event CPT
-        'author' => $user_id,
-        'posts_per_page' => -1, // Get all events by the user
-    ]);
-
-    // Start form HTML
-    $form_html = '<form action="" method="post">';
-
-    if ($events) {
-        $form_html .= '<label for="event_select">Select Event:</label>';
-        $form_html .= '<select name="event_id" id="event_select" required>';
-        foreach ($events as $event) {
-            $form_html .= sprintf('<option value="%s">%s</option>', esc_attr($event->ID), esc_html($event->post_title));
-        }
-        $form_html .= '</select><br><br>';
+    ob_start();
+    // Assuming you're inside the form submission check and you have validated and sanitized your inputs
+    if (isset($_POST['submit_complimentary_ticket'])) {
+        $event_id = sanitize_text_field($_POST['event_id']); // Make sure to validate and sanitize
+        $ticket_id = sanitize_text_field($_POST['ticket_id']); // Validate and sanitize
+        $recipient_name = sanitize_text_field($_POST['recipient_name']); // Validate and sanitize
+        $recipient_email = sanitize_email($_POST['recipient_email']); // Validate and sanitize
+        
+        // Logic to create a $0 order and send the ticket goes here
+        // Placeholder for success message
+        echo "<p>Thank you! A complimentary ticket has been sent to {$recipient_name}.</p>";
     } else {
-        return '<p>No events found. You must create an event before submitting complimentary tickets.</p>';
+        // Form display logic goes here
+        // Placeholder for form display
+        echo '<form method="post">';
+        // Add fields for event selection, ticket selection, recipient name, and email
+        echo '<input type="submit" name="submit_complimentary_ticket" value="Submit">';
+        echo '</form>';
     }
 
-    // Additional fields here if needed
-
-    $form_html .= '<input type="submit" name="submit_complimentary_ticket" value="Submit">';
-    $form_html .= '</form>';
-
-    // Form submission handling
-    if (isset($_POST['submit_complimentary_ticket'], $_POST['event_id'])) {
-        $event_id = sanitize_text_field($_POST['event_id']);
-        // Further processing to make a ticket free
-        // This could involve fetching associated tickets and setting a chosen ticket to be free
-        // This is a placeholder for where you would implement your logic
-
-        $form_html .= '<p>Thank you! Your request for complimentary tickets has been processed.</p>';
-    }
-
-    return $form_html;
+    return ob_get_clean();
 }
-add_shortcode('complimentary_ticket_form', 'custom_complimentary_ticket_form');
+add_shortcode('complimentary_ticket_form', 'custom_complimentary_ticket_form_shortcode');
