@@ -4898,7 +4898,7 @@ function user_events_with_tickets_shortcode() {
     $output .= '<option value="">Select Your Event</option>';
 
     foreach ($events_query->posts as $post) {
-        $output .= sprintf('<option value="%d">%s</option>', $post->ID, esc_html(get_the_title($post->ID)));
+        $output .= sprintf('<option value="%d">%s</option>', esc_attr($post->ID), esc_html(get_the_title($post->ID)));
     }
 
     if (empty($events_query->posts)) {
@@ -4908,22 +4908,23 @@ function user_events_with_tickets_shortcode() {
     wp_reset_postdata();
 
     $output .= '</select>';
-    $output .= '<div id="ticket_info"></div>'; // Container for the ticket info
+    $output .= '<div id="ticket_info"></div>'; // Container for ticket info
 
     $output .= "<script>
     jQuery(document).ready(function($) {
+        var ajaxurl = '" . admin_url('admin-ajax.php') . "';
         $('#user_events').on('change', function() {
             var eventId = $(this).val();
             if (eventId) {
                 $.ajax({
-                    url: '" . admin_url('admin-ajax.php') . "',
+                    url: ajaxurl,
                     type: 'POST',
                     data: {
                         'action': 'get_tickets_for_event',
                         'event_id': eventId
                     },
                     success: function(response) {
-                        $('#ticket_info').html(response);
+                        $('#ticket_info').html(response.data);
                     }
                 });
             } else {
@@ -4935,7 +4936,7 @@ function user_events_with_tickets_shortcode() {
             e.preventDefault();
             var formData = $(this).serialize();
             $.ajax({
-                url: ajaxurl, // Ensure ajaxurl is defined globally in the frontend
+                url: ajaxurl,
                 type: 'POST',
                 data: formData,
                 success: function(response) {
@@ -4953,44 +4954,40 @@ function user_events_with_tickets_shortcode() {
 }
 add_shortcode('user_events_with_tickets', 'user_events_with_tickets_shortcode');
 
-
-
-
 function get_tickets_for_event_ajax() {
     if (!isset($_POST['event_id']) || empty($_POST['event_id'])) {
         wp_send_json_error('Event ID is required.');
+        wp_die();
     }
 
     $event_id = intval($_POST['event_id']);
+    $ticket_info = '';
     if (class_exists('Tribe__Tickets_Plus__Commerce__WooCommerce__Main')) {
         $woo_tickets = Tribe__Tickets_Plus__Commerce__WooCommerce__Main::get_instance();
         $ticket_ids = $woo_tickets->get_tickets_ids($event_id);
-        $ticket_info = '';
 
         foreach ($ticket_ids as $ticket_id) {
             $product = wc_get_product($ticket_id);
             if ($product) {
                 $price_html = $product->get_price_html();
-                $stock_quantity = $product->get_stock_quantity() ?: 'Out of stock';
-                $ticket_info .= sprintf('<div>%s - Price: %s - Stock: %s</div>',
-                    esc_html($product->get_title()), $price_html, esc_html($stock_quantity));
-
-                // Include a nonce for security
-                $nonce = wp_create_nonce('purchase_ticket_for_free_nonce');
-                $ticket_info .= sprintf('<form class="purchase_ticket_form" method="post">
-                    <input type="hidden" name="action" value="purchase_ticket_for_free" />
-                    <input type="hidden" name="ticket_id" value="%d" />
-                    <input type="hidden" name="purchase_ticket_for_free_nonce" value="%s" />
-                    <input type="email" name="recipient_email" placeholder="Recipient email (optional)" />
-                    <button type="submit">Get Ticket for Free</button>
-                </form>', esc_attr($ticket_id), esc_attr($nonce));
+                $stock_quantity = $product->get_stock_quantity();
+                $ticket_info .= sprintf(
+                    '<div>%s - Price: %s - Stock: %s</div>',
+                    esc_html($product->get_title()), 
+                    $price_html, 
+                    $stock_quantity ?: 'Out of stock'
+                );
             }
         }
-
-        wp_send_json_success($ticket_info);
-    } else {
-        wp_send_json_error('Required class Tribe__Tickets_Plus__Commerce__WooCommerce__Main is not available.');
     }
+
+    if (empty($ticket_info)) {
+        wp_send_json_error('No tickets found for this event.');
+    } else {
+        wp_send_json_success($ticket_info);
+    }
+
+    wp_die(); // Terminate immediately and return a proper response
 }
 add_action('wp_ajax_get_tickets_for_event', 'get_tickets_for_event_ajax');
 add_action('wp_ajax_nopriv_get_tickets_for_event', 'get_tickets_for_event_ajax');
