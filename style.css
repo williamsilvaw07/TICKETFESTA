@@ -2381,3 +2381,7 @@ html #qr-reader__dashboard_section_csr{
     gap: 50px;
     padding: 10px 10px;
 }
+
+#qr-reader__dashboard{
+    max-height: 88px;
+}
