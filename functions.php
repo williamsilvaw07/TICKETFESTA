@@ -4803,6 +4803,12 @@ function generate_unique_random_hash($length) {
 
 
 
+
+function my_enqueue_qrcode_script() {
+    // Enqueue html5-qrcode script with jQuery dependency
+    wp_enqueue_script('html5-qrcode', 'https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.7/html5-qrcode.min.js', array('jquery'), null, true);
+}
+add_action('wp_enqueue_scripts', 'my_enqueue_qrcode_script');
 function display_html5_qrcode_scanner_shortcode() {
     my_enqueue_qrcode_script(); // Ensures the QR code script is enqueued
 
@@ -4858,12 +4864,6 @@ function display_html5_qrcode_scanner_shortcode() {
     return $scanner_html . $inline_script;
 }
 add_shortcode('display_html5_qrcode_scanner', 'display_html5_qrcode_scanner_shortcode');
-
-
-
-
-
-
 
 
 
