@@ -5012,25 +5012,25 @@ function get_tickets_for_event_callback() {
 function get_tickets_for_event($event_id) {
     // Define an array to store filtered tickets
     $filtered_tickets = [];
-    
-    // Fetch all products (tickets)
+
+    // Fetch all products (tickets) associated with the event
     $tickets = wc_get_products([
         'status' => ['publish', 'draft'], // Filter by published or draft status
         'type' => 'ticket', // Filter by ticket product type
+        'meta_query' => [
+            [
+                'key' => '_event_id',
+                'value' => $event_id,
+                'compare' => '=',
+            ],
+        ],
     ]);
-    
-    // Loop through tickets to filter by event ID
+
+    // Loop through the tickets and add them to the filtered_tickets array
     foreach ($tickets as $ticket) {
-        // Get the event ID associated with the ticket
-        $ticket_event_id = get_post_meta($ticket->get_id(), '_event_id', true);
-        
-        // Check if the ticket is associated with the specified event
-        if ($ticket_event_id == $event_id) {
-            // Add the ticket to the filtered tickets array
-            $filtered_tickets[] = $ticket;
-        }
+        $filtered_tickets[] = $ticket;
     }
-    
+
     // Return the filtered tickets
     return $filtered_tickets;
 }
