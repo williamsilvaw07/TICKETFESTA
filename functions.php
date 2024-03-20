@@ -4900,26 +4900,50 @@ function user_events_with_tickets_shortcode() {
     }
 
     $current_user = wp_get_current_user();
-    $current_date = date('Y-m-d H:i:s'); // Current date and time
-
     $args = array(
-        'post_type' => 'tribe_events',
+        'post_type' => 'tribe_events', // Adjust this to your event post type
         'author' => $current_user->ID,
         'posts_per_page' => -1,
-        'meta_query' => array(
-            array(
-                'key' => '_EventStartDate', // This key might vary depending on the event plugin used
-                'value' => $current_date,
-                'compare' => '>=', // Only show events that start on or after the current date
-                'type' => 'DATETIME'
-            ),
-        ),
-        'orderby' => 'meta_value',
-        'order' => 'ASC', // Show nearest events first
     );
 
     $events_query = new WP_Query($args);
     $output = '<ul class="user-events-with-tickets">';
 
-    // Remaining part of the function remains unchanged...
+    // Ensure the TribeWooTickets class is available
+    if (class_exists('Tribe__Tickets_Plus__Commerce__WooCommerce__Main')) {
+        $woo_tickets = Tribe__Tickets_Plus__Commerce__WooCommerce__Main::get_instance();
+
+        if ($events_query->have_posts()) {
+            while ($events_query->have_posts()) {
+                $events_query->the_post();
+                $event_id = get_the_ID();
+                $event_title = get_the_title();
+                $event_date = get_the_date();
+
+                $ticket_ids = $woo_tickets->get_tickets_ids($event_id);
+                $ticket_info = '';
+
+                foreach ($ticket_ids as $ticket_id) {
+                    $ticket_post = get_post($ticket_id);
+                    if ($ticket_post) {
+                        // Example: Fetching ticket title. Adjust as needed to include price or other data
+                        $ticket_info .= sprintf('<a href="%s">%s</a>, ', get_permalink($ticket_id), $ticket_post->post_title);
+                    }
+                }
+
+                $ticket_info = rtrim($ticket_info, ', ');
+                $output .= "<li>{$event_title} - {$event_date} - Tickets: {$ticket_info}</li>";
+            }
+        } else {
+            $output .= '<li>No events found.</li>';
+        }
+    } else {
+        $output = "The required class 'TribeWooTickets' is not available.";
+    }
+
+    wp_reset_postdata();
+    $output .= '</ul>';
+    return $output;
 }
+
+add_shortcode('user_events_with_tickets', 'user_events_with_tickets_shortcode');
