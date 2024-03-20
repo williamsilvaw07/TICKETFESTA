@@ -4814,7 +4814,7 @@ function display_html5_qrcode_scanner_shortcode() {
 
     // Setup for the scanner HTML, making it responsive and adding the toggle flash button with padding
     $scanner_html = '<div class="qr-scanner-wrapper" style="padding: 10px; display: flex; justify-content: center; align-items: center;"> <!-- Additional div wrapper with custom styles -->
-                        <div id="qr-reader" style="max-width:400px; max-height:400px; width:100%; aspect-ratio: 1 / 7; position: relative; margin: 20px auto; overflow: hidden;"></div>
+                        <div id="qr-reader" style="max-width:400px; max-height:400px; width:100%; aspect-ratio: 1 / 9 position: relative; margin: 20px auto; overflow: hidden;"></div>
                      </div>'; // QR scanner HTML setup for responsive design
 
     // Inline JavaScript for initializing the QR code scanner with configurations for a good mobile experience
