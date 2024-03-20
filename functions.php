@@ -4815,10 +4815,10 @@ function display_html5_qrcode_scanner_shortcode() {
     my_enqueue_qrcode_script(); // Ensures the QR code script is enqueued
 
     // Scanner HTML setup with responsive design adjustments
-    $scanner_html = '<div id="qr-reader" style="max-width: 400px;aspect-ratio: 1 / 1;width: 100%;height: auto;position: relative;margin: auto;display: flex; margin-bottom:300px;justify-content: center;align-items: center;padding: 0px;border: 1px solid silver;flex-direction: column;">
-                         <div id="qr-overlay" style="position: absolute; width: 150px; height: 150px; border: 5px solid yellow; box-sizing: border-box;"></div>
+    $scanner_html = '<div id="qr-reader" style="aspect-ratio: 1 / 1;">
+                     
                      </div>
-                     <button id="toggle-flash-btn" style="display:block; margin: 20px auto 0; padding: 10px 20px;">Toggle Flash</button>';
+                  ';
 
     // Inline JavaScript for initializing the QR code scanner with a square viewfinder
     $inline_script = "
