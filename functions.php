@@ -4924,34 +4924,84 @@ add_shortcode('display_html5_qrcode_scanner', 'display_html5_qrcode_scanner_shor
 
 
 
-
-
 function custom_complimentary_ticket_form_shortcode() {
-    // Security check
-    if (!is_user_logged_in()) {
-        return '<p>You must be logged in to access this feature.</p>';
-    }
+    // Enqueue jQuery, which is required for AJAX
+    wp_enqueue_script('jquery');
 
+    // Start output buffering to return the complete form and script
     ob_start();
-    // Assuming you're inside the form submission check and you have validated and sanitized your inputs
-    if (isset($_POST['submit_complimentary_ticket'])) {
-        $event_id = sanitize_text_field($_POST['event_id']); // Make sure to validate and sanitize
-        $ticket_id = sanitize_text_field($_POST['ticket_id']); // Validate and sanitize
-        $recipient_name = sanitize_text_field($_POST['recipient_name']); // Validate and sanitize
-        $recipient_email = sanitize_email($_POST['recipient_email']); // Validate and sanitize
-        
-        // Logic to create a $0 order and send the ticket goes here
-        // Placeholder for success message
-        echo "<p>Thank you! A complimentary ticket has been sent to {$recipient_name}.</p>";
-    } else {
-        // Form display logic goes here
-        // Placeholder for form display
-        echo '<form method="post">';
-        // Add fields for event selection, ticket selection, recipient name, and email
-        echo '<input type="submit" name="submit_complimentary_ticket" value="Submit">';
-        echo '</form>';
-    }
+    ?>
+    <div id="complimentaryTicketForm">
+        <select id="eventDropdown" name="event_id">
+            <option value="">Select an Event</option>
+            <!-- Event options will be populated by AJAX -->
+        </select>
+        <div id="ticketsContainer">
+            <!-- Ticket details will be loaded here based on the selected event -->
+        </div>
+    </div>
 
+    <script type="text/javascript">
+    jQuery(document).ready(function($) {
+        // Fetch and populate events dropdown
+        $.ajax({
+            url: '<?php echo admin_url('admin-ajax.php'); ?>',
+            type: 'POST',
+            data: {
+                action: 'load_events_for_user',
+            },
+            success: function(response) {
+                $('#eventDropdown').append(response);
+            }
+        });
+
+        // Fetch and display tickets for the selected event
+        $('#eventDropdown').change(function() {
+            var eventId = $(this).val();
+            if(eventId) {
+                $.ajax({
+                    url: '<?php echo admin_url('admin-ajax.php'); ?>',
+                    type: 'POST',
+                    data: {
+                        action: 'load_tickets_for_event',
+                        event_id: eventId,
+                    },
+                    success: function(response) {
+                        $('#ticketsContainer').html(response);
+                    }
+                });
+            }
+        });
+    });
+    </script>
+    <?php
     return ob_get_clean();
 }
 add_shortcode('complimentary_ticket_form', 'custom_complimentary_ticket_form_shortcode');
+
+// PHP AJAX handlers for loading events and tickets
+function load_events_for_user_callback() {
+    $user_id = get_current_user_id();
+    // Query to get events created by the current user
+    // This is an example; adjust according to your setup
+    $events = get_posts([
+        'post_type' => 'your_event_post_type', // Adjust to your event post type
+        'author' => $user_id,
+        'posts_per_page' => -1,
+    ]);
+
+    foreach ($events as $event) {
+        echo sprintf('<option value="%s">%s</option>', esc_attr($event->ID), esc_html($event->post_title));
+    }
+    wp_die();
+}
+add_action('wp_ajax_load_events_for_user', 'load_events_for_user_callback');
+
+function load_tickets_for_event_callback() {
+    $event_id = isset($_POST['event_id']) ? intval($_POST['event_id']) : 0;
+    // Your logic to get tickets/products for the event
+    // This is highly dependent on your setup
+    echo 'Replace this with your ticket loading logic. Event ID: ' . $event_id;
+    wp_die();
+}
+add_action('wp_ajax_load_tickets_for_event', 'load_tickets_for_event_callback');
