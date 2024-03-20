@@ -4909,36 +4909,20 @@ function user_events_with_tickets_shortcode() {
     $events_query = new WP_Query($args);
     $output = '<ul class="user-events-with-tickets">';
 
-    // Ensure the TribeWooTickets class is available
-    if (class_exists('Tribe__Tickets_Plus__Commerce__WooCommerce__Main')) {
-        $woo_tickets = Tribe__Tickets_Plus__Commerce__WooCommerce__Main::get_instance();
+    if ($events_query->have_posts()) {
+        while ($events_query->have_posts()) {
+            $events_query->the_post();
+            $event_id = get_the_ID();
+            $event_title = get_the_title();
+            $event_date = get_the_date();
 
-        if ($events_query->have_posts()) {
-            while ($events_query->have_posts()) {
-                $events_query->the_post();
-                $event_id = get_the_ID();
-                $event_title = get_the_title();
-                $event_date = get_the_date();
+            // Link to a detailed event view where you can implement ticket selection and free "purchase"
+            $detail_view_url = "/event-details?event_id={$event_id}"; // You need to implement this endpoint
 
-                $ticket_ids = $woo_tickets->get_tickets_ids($event_id);
-                $ticket_info = '';
-
-                foreach ($ticket_ids as $ticket_id) {
-                    $ticket_post = get_post($ticket_id);
-                    if ($ticket_post) {
-                        // Example: Fetching ticket title. Adjust as needed to include price or other data
-                        $ticket_info .= sprintf('<a href="%s">%s</a>, ', get_permalink($ticket_id), $ticket_post->post_title);
-                    }
-                }
-
-                $ticket_info = rtrim($ticket_info, ', ');
-                $output .= "<li>{$event_title} - {$event_date} - Tickets: {$ticket_info}</li>";
-            }
-        } else {
-            $output .= '<li>No events found.</li>';
+            $output .= "<li><a href='{$detail_view_url}'>{$event_title} - {$event_date}</a></li>";
         }
     } else {
-        $output = "The required class 'TribeWooTickets' is not available.";
+        $output .= 'No events found.';
     }
 
     wp_reset_postdata();
