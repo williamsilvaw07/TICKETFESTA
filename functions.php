@@ -4871,14 +4871,6 @@ add_shortcode('display_html5_qrcode_scanner', 'display_html5_qrcode_scanner_shor
 
 
 
-
-
-
-
-
-
-
-
 function user_events_with_tickets_shortcode() {
     if (!is_user_logged_in()) {
         return 'You must be logged in to view your events.';
@@ -4907,20 +4899,19 @@ function user_events_with_tickets_shortcode() {
     wp_reset_postdata();
 
     $output .= '</select>';
-    $output .= '<div id="ticket_info"></div>'; // Container for ticket info
+    $output .= '<div id="ticket_info"></div>'; // Container for the ticket info
 
     $output .= "<script>
     jQuery(document).ready(function($) {
-        var ajaxurl = '" . admin_url('admin-ajax.php') . "';
         $('#user_events').on('change', function() {
             var eventId = $(this).val();
             if (eventId) {
                 $.ajax({
-                    url: ajaxurl,
+                    url: '" . admin_url('admin-ajax.php') . "',
                     type: 'POST',
                     data: {
-                        'action': 'get_tickets_for_event',
-                        'event_id': eventId
+                        action: 'get_tickets_for_event',
+                        event_id: eventId
                     },
                     success: function(response) {
                         $('#ticket_info').html(response.data);
@@ -4935,13 +4926,13 @@ function user_events_with_tickets_shortcode() {
             e.preventDefault();
             var formData = $(this).serialize();
             $.ajax({
-                url: ajaxurl,
+                url: '" . admin_url('admin-ajax.php') . "',
                 type: 'POST',
                 data: formData,
                 success: function(response) {
                     alert('Ticket has been ordered successfully.');
                 },
-                error: function(response) {
+                error: function() {
                     alert('Failed to order the ticket. Please try again.');
                 }
             });
@@ -4952,6 +4943,8 @@ function user_events_with_tickets_shortcode() {
     return $output;
 }
 add_shortcode('user_events_with_tickets', 'user_events_with_tickets_shortcode');
+
+
 
 
 
@@ -4973,13 +4966,18 @@ function get_tickets_for_event_ajax() {
             if ($product) {
                 $price_html = $product->get_price_html();
                 $stock_quantity = $product->get_stock_quantity();
+                $nonce_field = wp_nonce_field('free_ticket_nonce_' . $ticket_id, '_wpnonce', true, false);
                 $ticket_info .= sprintf(
-                    '<div>%s - Price: %s - Stock: %s</div>',
-                    esc_html($product->get_title()),
-                    $price_html,
-                    $stock_quantity ?: 'Out of stock'
+                    '<div>%s - Price: %s - Stock: %s</div>
+                    <form class="purchase_ticket_form" method="post">
+                        <input type="hidden" name="action" value="purchase_ticket_for_free" />
+                        <input type="hidden" name="ticket_id" value="%d" />
+                        %s
+                        <input type="email" name="recipient_email" placeholder="Recipient email (optional)" />
+                        <button type="submit">Get Ticket for Free</button>
+                    </form>',
+                    esc_html($product->get_title()), $price_html, $stock_quantity ?: 'Out of stock', $ticket_id, $nonce_field
                 );
-                // The nonce field and form should be appended here if necessary
             }
         }
     }
@@ -4990,7 +4988,7 @@ function get_tickets_for_event_ajax() {
         wp_send_json_success($ticket_info);
     }
 
-    wp_die(); // Terminate immediately and return a proper response
+    wp_die();
 }
 add_action('wp_ajax_get_tickets_for_event', 'get_tickets_for_event_ajax');
-add_action('wp_ajax_nopriv_get_tickets_for_event', 'get_tickets_for_event_ajax');
+add_action('wp_ajax_nopriv_get_tickets_fo
