@@ -28,17 +28,17 @@
             $(target).addClass('active');
         });
 
-        jQuery("#scan-button").on('click', function(){
-            if($('#event-pass').val()){
-                var eventPass = $('#event-pass').val();
-                $('.entry-content').css("background-color", "#000");
-                $('.checkin-details').hide();
-                // test data YaCS1r2t
-                // test data2 c7KOLbP0
-                console.log('Event Pass:' , eventPass)
-                checkForEventPass(eventPass);               
-            }
-        });
+        // jQuery("#scan-button").on('click', function(){
+        //     if($('#event-pass').val()){
+        //         var eventPass = $('#event-pass').val();
+        //         $('.entry-content').css("background-color", "#000");
+        //         $('.checkin-details').hide();
+        //         // test data YaCS1r2t
+        //         // test data2 c7KOLbP0
+        //         console.log('Event Pass:' , eventPass)
+        //         checkForEventPass(eventPass);               
+        //     }
+        // });
 
         jQuery("#check-passcode").on('click', function(){
             var eventPass = $('#event-pass').val();
@@ -191,7 +191,7 @@
             $('.event-container .name span').text(response.event_data.name);
             $('.event-container .date span').text(response.event_data.start_date);
             $('.event-container .tickets span').text(response.event_data.issued_ticked);
-
+            startScanQR(response.event_id);
         }
 
     });
