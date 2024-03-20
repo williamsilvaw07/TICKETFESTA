@@ -4803,48 +4803,65 @@ function generate_unique_random_hash($length) {
 
 
 
-
-function my_enqueue_qrcode_script() {
-    // Enqueue html5-qrcode script with jQuery dependency
-    wp_enqueue_script('html5-qrcode', 'https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.7/html5-qrcode.min.js', array('jquery'), null, true);
-}
-add_action('wp_enqueue_scripts', 'my_enqueue_qrcode_script');
-
 function display_html5_qrcode_scanner_shortcode() {
-    my_enqueue_qrcode_script(); // Make sure to enqueue scripts when shortcode is used
-    
-    // Inline JavaScript to initialize the QR code scanner with camera access request
-    $inline_script = <<<EOD
-<script>
-jQuery(document).ready(function($) {
-    function onScanSuccess(decodedText, decodedResult) {
-        // Handle the scanned text as needed.
-        console.log(`Code scanned = ${decodedText}`, decodedResult);
-    }
-    
-    var config = { fps: 10, qrbox: 250 };
-    var html5QrCode = new Html5Qrcode("qr-reader");
-    navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } }) // Request camera access
-    .then(function(stream) {
-        Html5Qrcode.getCameras().then(cameras => {
-            if (cameras.length > 0) {
-                html5QrCode.start(cameras[0].id, config, onScanSuccess); // Start QR code scanning
-            } else {
-                console.error("No cameras found.");
-            }
-        });
-    })
-    .catch(function(err) {
-        console.error("Unable to access camera", err);
-    });
-});
-</script>
-EOD;
+    my_enqueue_qrcode_script(); // Ensures the QR code script is enqueued
 
-    // Return the HTML for the scanner along with the inline JavaScript
-    return '  <div id="qr-reader" style="max-width:400px; max-height:400px; width:100%; aspect-ratio: 1 / 4; position: relative; margin: 20px auto;"> </div>' . $inline_script;
+    // Scanner HTML setup
+    $scanner_html = '<div class="qr-scanner-wrapper" style="padding: 50px; display: flex; justify-content: center; align-items: center">
+                        <div id="qr-reader" style="max-width:400px; max-height:400px; width:100%; aspect-ratio: 1; position: relative; margin: 20px auto; overflow: hidden;"></div>
+                     </div>';
+
+    // Inline JavaScript for checking camera permission cookie and initializing the QR code scanner
+    $inline_script = "
+    <script>
+    jQuery(document).ready(function($) {
+        // Function to get a cookie by name
+        function getCookie(name) {
+            var nameEQ = name + '=';
+            var ca = document.cookie.split(';');
+            for(var i=0;i < ca.length;i++) {
+                var c = ca[i];
+                while (c.charAt(0)==' ') c = c.substring(1,c.length);
+                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+            }
+            return null;
+        }
+
+        // Check if the 'cameraPermissionGranted' cookie is set
+        if(getCookie('cameraPermissionGranted') !== 'true') {
+            // No cookie found, initialize scanner to prompt for permission
+            initializeScanner();
+            
+            // Set the cookie after permission is granted
+            document.cookie = 'cameraPermissionGranted=true; path=/; max-age=' + (10 * 365 * 24 * 60 * 60); // Expires in 10 years
+        } else {
+            // Cookie found, initialize scanner without prompting (browser will still enforce security)
+            initializeScanner();
+        }
+
+        function initializeScanner() {
+            let html5QrcodeScanner = new Html5QrcodeScanner(
+                'qr-reader', {
+                    fps: 10,
+                    qrbox: 250,
+                    rememberLastUsedCamera: true,
+                    aspectRatio: 1,
+                    showTorchButtonIfSupported: true
+                }, false);
+
+            function onScanSuccess(decodedText, decodedResult) {
+                console.log(`Code scanned = ${decodedText}`, decodedResult);
+            }
+
+            html5QrcodeScanner.render(onScanSuccess);
+        }
+    });
+    </script>";
+
+    return $scanner_html . $inline_script;
 }
 add_shortcode('display_html5_qrcode_scanner', 'display_html5_qrcode_scanner_shortcode');
+
 
 
 
