@@ -4883,7 +4883,6 @@ add_shortcode('display_html5_qrcode_scanner', 'display_html5_qrcode_scanner_shor
 
 
 
-
 // Shortcode to display all events for the current user with their tickets
 add_shortcode('complimentary_ticket_form', 'display_user_events_with_tickets_shortcode');
 function display_user_events_with_tickets_shortcode() {
@@ -4902,6 +4901,10 @@ function display_user_events_with_tickets_shortcode() {
         'posts_per_page' => -1,
     ));
 
+    // Debug output
+    error_log('User ID: ' . $user_id);
+    error_log('Events: ' . print_r($events, true));
+
     // Check if any events are found
     if ($events) {
         // Initialize output variable
@@ -4918,9 +4921,13 @@ function display_user_events_with_tickets_shortcode() {
             // Get tickets for the event
             $tickets = get_tickets_for_event($event_id);
 
+            // Debug output
+            error_log('Event ID: ' . $event_id);
+            error_log('Tickets: ' . print_r($tickets, true));
+
             // Check if any tickets are found
             if (!empty($tickets)) {
-                // Add event title and user ID to output
+                // Add event title to output
                 $output .= '<h3>' . $event_title . ' (User ID: ' . $user_id . ')</h3>';
 
                 // Initialize ticket list
@@ -4946,19 +4953,4 @@ function display_user_events_with_tickets_shortcode() {
         // No events found for the current user
         return 'No events found for the current user.';
     }
-}
-
-// Function to get tickets for the event
-function get_tickets_for_event($event_id) {
-    $tickets = get_posts(array(
-        'post_type' => 'tribe_wooticket', // Assuming the post type for tickets is 'tribe_wooticket'
-        'meta_query' => array(
-            array(
-                'key' => '_tribe_wootickets_event_id',
-                'value' => $event_id,
-                'compare' => '=',
-            ),
-        ),
-    ));
-    return $tickets;
 }
