@@ -3,7 +3,7 @@
 Template Name: Organizer Scanner
 */
 
-get_header('organizer'); // Include the header
+get_header('scanner/header-organizer-scanner.php'); // Include the header
 ?>
 
 <!-- Content Wrapper. Contains page content -->
