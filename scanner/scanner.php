@@ -292,7 +292,7 @@ input#event-pass {
 
 
     button {
-    background-color: #007bff; 
+    background-color: red; 
     color: white;
     font-size: 16px;
     padding: 10px 20px; 
