@@ -192,6 +192,7 @@
         }
 
         function noEventFound(){
+            console.log("passcodeMatch function called"); // Debugging line
             $('event-pass').addClass('error');
             $('#event_not_found').show();
 
