@@ -59,9 +59,9 @@
             if(eventID == qr_event_id){
                 checkinTicket(ticket_id);
             }else{
-                $('#event_not_found').html('QR Code did not Match with Event Pass.');
+                $('#qr_error').html('QR Code did not Match with Event Pass.');
                 $('#event-pass').addClass('error');
-                $('#event_not_found').show();
+                $('#qr_error').show();
             }
         
         }
@@ -99,7 +99,7 @@
                 }, false);
             function onScanSuccess(decodedText, decodedResult) {
                 // Handle the scanned code as needed
-                html5QrcodeScanner.clear();
+                $('#html5-qrcode-button-camera-stop').trigger('click');
                 console.log(`Code scanned = ${decodedText}`, decodedResult);
                 processQRCode(eventID, decodedText);
             }
@@ -153,7 +153,7 @@
                 },
                 success: function(response) {
                     if(response.success){
-                        $('.entry-content').css("background-color", "green");
+                        $('#video-container').css("background-color", "green");
                         if(response.fullname){
                             $('.checkin-details .name').text(response.fullname);
                             $('.checkin-details .email').text(response.email);
@@ -161,9 +161,9 @@
                             $('.checkin-details').show();
                         }
                     }else{
-                        $('.entry-content').css("background-color", "red");
-                        $('#event_not_found').text(response.message);
-                        $('#event_not_found').show();
+                        $('#video-container').css("background-color", "red");
+                        $('#qr_error').text(response.message);
+                        $('#qr_error').show();
                         if(response.fullname){
                             $('.checkin-details .name').text(response.fullname);
                             $('.checkin-details .email').text(response.email);
