@@ -226,7 +226,7 @@ input#event-pass {
         /* Style the tabs container */
     .tabs-container {
         display: flex;
-        flex-direction: column; /* Stack tabs vertically on mobile */
+        flex-direction: column !important;
         margin: 0 auto;
         width: 80%; /* Adjust width as needed */
     }
