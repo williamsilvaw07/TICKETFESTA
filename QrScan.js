@@ -213,6 +213,10 @@
             $('event-pass').addClass('error');
             $('#event_not_found').show();
 
+            $('.scanner_login_div').show(); 
+            $('.change_event_btn').css("display", "none"); 
+            
+            
             $('.tabs-container').hide();
             $('.tab-content-container').hide();
         }
