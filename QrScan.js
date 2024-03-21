@@ -22,11 +22,18 @@
             // Remove active class from all tabs and content
             $('.tabs-nav li.tab').removeClass('active');
             $('.tab-content').removeClass('active');
-    
             // Add active class to clicked tab and its corresponding content
             $(this).parent().addClass('active');
             $(target).addClass('active');
+
+            if($(this).parent().hasClass('tab-conent-2')){
+                $('#html5-qrcode-button-camera-start').trigger('click');
+            }else{
+                $('#html5-qrcode-button-camera-stop').trigger('click');
+            }
         });
+
+
 
         // jQuery("#scan-button").on('click', function(){
         //     if($('#event-pass').val()){
@@ -99,7 +106,7 @@
                 }, false);
             function onScanSuccess(decodedText, decodedResult) {
                 // Handle the scanned code as needed
-                $('#html5-qrcode-button-camera-stop').trigger('click');
+                // $('#html5-qrcode-button-camera-stop').trigger('click');
                 console.log(`Code scanned = ${decodedText}`, decodedResult);
                 processQRCode(eventID, decodedText);
             }
@@ -154,7 +161,7 @@
                 success: function(response) {
                     if(response.success){
                         $('#qr_error').hide();
-                        $('.tab2').css("background-color", "green");
+                        $('.tab-conent-2').css("background-color", "green");
                         if(response.fullname){
                             $('.checkin-details .name').text(response.fullname);
                             $('.checkin-details .email').text(response.email);
@@ -163,7 +170,7 @@
                             $('.checkin-details').show();
                         }
                     }else{
-                        $('.tab2').css("background-color", "red");
+                        $('.tab-conent-2').css("background-color", "red");
                         $('#qr_error').text(response.message);
                         $('#qr_error').show();
                         if(response.fullname){

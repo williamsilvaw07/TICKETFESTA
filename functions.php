@@ -4622,7 +4622,7 @@ function custom_qr_scanner_shortcode() {
                 </ul>
             </div>
             <div class="tab-content-container" style="display: none">
-                <div class="tab-content active" id="tab1">
+                <div class="tab-content tab-conent-1 active" id="tab1">
                     <div class="event-container">
                         <img src="#" alt="" class="event-image">
                         <div class="name">Name: <span> </span>  </div>
@@ -4632,7 +4632,7 @@ function custom_qr_scanner_shortcode() {
                         <!-- <div class="tickets-percent">Ticket Percent: </div> -->
                     </div>
                 </div>
-                <div class="tab-content tab2" id="tab2">
+                <div class="tab-content tab-conent-2" id="tab2">
                     <span id="qr_error" style='display:none'>No event found that for the event pass.</span>
                     <div class="checkin-details"  style='display:none'>
                         <div class="name"></div>
