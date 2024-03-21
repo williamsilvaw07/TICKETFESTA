@@ -49,6 +49,7 @@ if (file_exists($custom_footer_path)) {
 
 
 <style>
+    
 
 body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .content-wrapper, body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .main-footer, body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .main-header {
 
@@ -56,5 +57,19 @@ body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .content-w
 }
 .main-header {
     background-color: #19191b!important;
+}
+.fake_aviter {
+    display: flex;
+    align-items: center;
+    font-size: 13px;
+    background: white;
+    border-radius: 100px;
+    width: 36px;
+    height: 36px;
+    justify-content: center;
+}
+
+.content-wrapper{
+    background: #0d0e0e !important;
 }
 </style>
