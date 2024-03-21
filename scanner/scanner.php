@@ -57,6 +57,7 @@ body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .content-w
 }
 .main-header {
     background-color: #19191b!important;
+    border-bottom: 1px solid #444!important;
 }
 .fake_aviter {
     display: flex;
