@@ -209,7 +209,8 @@
         }
 
         function noEventFound(){
-           
+
+            $('#event_not_found').css("display", "block"); 
             $('event-pass').addClass('error');
             $('#event_not_found').show();
 
