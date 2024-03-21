@@ -4610,9 +4610,13 @@ function custom_qr_scanner_shortcode() {
     <div id="qr-reader-results"></div>
 
     -->
+
+    <div class="scanner_login_div"> 
     <input type="text" id="event-pass" name="event-pass" placeholder="enter event pass">
-    <button id="check-passcode"> Check Pass Code </button>
+    <button id="check-passcode"> Login </button>
     <span id="event_not_found" style='display:none'>No event found that for the event pass.</span>
+</div>
+
     <?php 
 
     ?>
