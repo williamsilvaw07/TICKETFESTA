@@ -132,7 +132,7 @@
                     event_pass : eventPass
                 },
                 success: function(response) {
-                    console.log("passcodeMatch function called"); // Debugging line
+                    $('.scanner_login_div').hide(); // Adjust selector based on Step 1
 
                     // Handle the response from the server
                     console.log('ajax response', response);
@@ -209,9 +209,8 @@
             $('.event-container .date span').text(response.event_data.start_date);
             $('.event-container .tickets span').text(response.event_data.issued_ticked);
             startScanQR(response.event_id);
-              // Hide .scanner_login_div when the passcode matches
-              document.querySelector('.scanner_login_div').style.display = 'none'; // Adjust the selector accordingly
-              console.log("passcodeMatch function called"); // Debugging line
+         
+             
         }
 
     });
