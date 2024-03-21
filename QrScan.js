@@ -208,7 +208,7 @@
             $('.event-container .tickets span').text(response.event_data.issued_ticked);
             startScanQR(response.event_id);
               // Hide .scanner_login_div when the passcode matches
-    $('.scanner_login_div').hide(); // Use this if .scanner_login_div is a class
+              $('.scanner_login_div').hide(); // Make sure this selector matches your element's class or ID
         }
 
     });
