@@ -4512,7 +4512,7 @@ function custom_qr_scanner_shortcode() {
 <p>You can locate the event passcode on the organizer's dashboard under the events section.</p>
     <input type="text" id="event-pass" name="event-pass" placeholder="Event Pass">
     <button id="check-passcode"> Login </button>
-    <span id="event_not_found" style='display:none'>No event found that for the event pass.</span>
+    <span id="event_not_found" style='display:none'>Event not found. Please verify the Passcode</span>
 </div>
 
     <?php 
