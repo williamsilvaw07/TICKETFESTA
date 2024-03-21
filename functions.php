@@ -4590,6 +4590,10 @@ function custom_qr_scanner_shortcode() {
         justify-content: center;
         align-items: center;
     }
+    .checkin-details {
+        background: green;
+        padding: 20px;
+    }
     /* Media query for responsive behavior (tablet and mobile) */
     @media (max-width: 768px) {
         .tabs-container {
@@ -4633,8 +4637,8 @@ function custom_qr_scanner_shortcode() {
                     </div>
                 </div>
                 <div class="tab-content tab-conent-2" id="tab2">
-                    <span id="qr_error" style='display:none'>No event found that for the event pass.</span>
                     <div class="checkin-details"  style='display:none'>
+                        <span id="qr_error" style='display:none'>No event found that for the event pass.</span>
                         <div class="name"></div>
                         <div class="email"></div>
                         <div class="checkin-time"></div>

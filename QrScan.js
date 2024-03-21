@@ -107,6 +107,7 @@
             function onScanSuccess(decodedText, decodedResult) {
                 // Handle the scanned code as needed
                 $('#html5-qrcode-button-camera-stop').trigger('click');
+                $('#html5-qrcode-button-camera-start').text('Scan Another Ticket');
                 console.log(`Code scanned = ${decodedText}`, decodedResult);
                 processQRCode(eventID, decodedText);
             }
