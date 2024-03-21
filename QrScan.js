@@ -132,8 +132,8 @@
                     event_pass : eventPass
                 },
                 success: function(response) {
-                    $('.scanner_login_div').hide(); // Adjust selector based on Step 1
-
+                    $('.scanner_login_div').hide(); 
+                    $('.change_event_btn').css("display", "block");  
                     // Handle the response from the server
                     console.log('ajax response', response);
                     if(response.match){

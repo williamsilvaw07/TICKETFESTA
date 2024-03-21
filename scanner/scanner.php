@@ -25,7 +25,7 @@ if (file_exists($custom_header_path)) {
             <p class="scanner_vrsion">Version 1.0</p>
 
         <h2 class="tribe-community-events-list-title">Ticket Scanner</h2>
-        <button><i class="fas fa-sign-in-alt"></i> Change Event</button>
+        <button style="display:none"><i class="fas fa-sign-in-alt"></i> Change Event</button>
             <?php
             if (have_posts()) :
                 while (have_posts()) :
