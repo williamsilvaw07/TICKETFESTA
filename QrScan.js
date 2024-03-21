@@ -208,7 +208,7 @@
             $('.event-container .tickets span').text(response.event_data.issued_ticked);
             startScanQR(response.event_id);
               // Hide .scanner_login_div when the passcode matches
-              jQuery('.scanner_login_div').hide(); 
+              document.querySelector('.scanner_login_div').style.display = 'none'; // Adjust the selector accordingly
         }
 
     });
