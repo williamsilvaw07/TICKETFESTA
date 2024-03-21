@@ -100,7 +100,9 @@ body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .content-w
     padding-left: 0 !important;
     white-space: nowrap;
 }
-
+.admin_dashboard-sidebar-item i {
+    padding-right: 10px;
+}
 
 
 
