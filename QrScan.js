@@ -211,3 +211,43 @@
 
     });
 })(jQuery);
+
+
+
+
+
+
+
+
+
+// Function to check the visibility of .tabs-container and update scanner_login_div accordingly
+function updateScannerLoginVisibility() {
+    const tabsContainer = document.querySelector('.tabs-container');
+    const scannerLoginDiv = document.getElementById('scanner_login_div');
+    
+    if (tabsContainer && scannerLoginDiv) {
+      // Check if .tabs-container is not displayed (e.g., display: none)
+      const isTabsContainerHidden = window.getComputedStyle(tabsContainer).display === 'none';
+      
+      // Set display property of scanner_login_div based on tabsContainer visibility
+      scannerLoginDiv.style.display = isTabsContainerHidden ? 'none' : 'block'; // or '' for default display
+    }
+  }
+  
+  // Create an observer instance linked to a callback function
+  const observer = new MutationObserver((mutationsList, observer) => {
+    // Check visibility on every mutation in the DOM
+    updateScannerLoginVisibility();
+  });
+  
+  // Options for the observer (which mutations to observe)
+  const config = { attributes: true, childList: true, subtree: true };
+  
+  // Select the target node to observe
+  const targetNode = document.body; // You might want to select a more specific part of the DOM tree if possible for performance reasons
+  
+  // Start observing the target node for configured mutations
+  observer.observe(targetNode, config);
+  
+  // Initial check in case the tabs are already in the correct state when the script runs
+  updateScannerLoginVisibility();
