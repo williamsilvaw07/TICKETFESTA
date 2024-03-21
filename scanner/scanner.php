@@ -73,4 +73,8 @@ body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .content-w
 .content-wrapper{
     background: #0d0e0e !important;
 }
+
+.fake_aviter span {
+    color: black !important;
+}
 </style>
