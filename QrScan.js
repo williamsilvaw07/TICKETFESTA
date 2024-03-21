@@ -132,14 +132,14 @@
                     event_pass : eventPass
                 },
                 success: function(response) {
-                    // $('#scan-button').hide();
+                    console.log("passcodeMatch function called"); // Debugging line
 
                     // Handle the response from the server
                     console.log('ajax response', response);
                     if(response.match){
                         // startScanQR(response.event_id);
                         passcodeMatch(response);
-                        console.log("passcodeMatch function called"); // Debugging line
+                        
                     }else{
                         noEventFound();
                     }
