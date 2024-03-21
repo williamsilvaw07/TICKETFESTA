@@ -142,6 +142,9 @@ body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .content-w
 
 
 .scanner_login_div h3{
+  
+}
+.scanner_login_div{
     background-color: #19191b;
     background-size: cover;
     background-position: center;
@@ -150,9 +153,6 @@ body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .content-w
     padding: 17px;
     border-radius: 10px;
     width: 100%;
-}
-.scanner_login_div{
-
 
 }
 .scanner_login_div p{
