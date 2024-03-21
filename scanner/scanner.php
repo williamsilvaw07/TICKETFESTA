@@ -141,8 +141,10 @@ body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .content-w
 
 
 
-.scanner_login_div h3{
-  
+.scanner_login_div h3 {
+    margin-bottom: 10px;
+    font-size: 21px;
+    font-weight: 700;
 }
 .scanner_login_div{
     background-color: #19191b;
@@ -152,12 +154,16 @@ body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .content-w
     position: relative;
     padding: 17px;
     border-radius: 10px;
-    width: 100%;
+    width: fit-content;
+    margin: 0 auto;
+    margin-top: 100px !important;
 
 }
 .scanner_login_div p{
     font-weight: 300;
-    color: #aaa;
+    color: #aaa !important;
+    font-size: 15px;
+    max-width: 400px;
 }
 
 
