@@ -4590,10 +4590,6 @@ function custom_qr_scanner_shortcode() {
         justify-content: center;
         align-items: center;
     }
-    .checkin-details {
-        background: green;
-        padding: 20px;
-    }
     /* Media query for responsive behavior (tablet and mobile) */
     @media (max-width: 768px) {
         .tabs-container {

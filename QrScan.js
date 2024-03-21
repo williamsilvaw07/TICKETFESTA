@@ -162,7 +162,7 @@
                 success: function(response) {
                     if(response.success){
                         $('#qr_error').hide();
-                        $('.tab-conent-2').css("background-color", "green");
+                        $('.checkin-details').css("background-color", "green");
                         if(response.fullname){
                             $('.checkin-details .name').text(response.fullname);
                             $('.checkin-details .email').text(response.email);
@@ -171,7 +171,7 @@
                             $('.checkin-details').show();
                         }
                     }else{
-                        $('.tab-conent-2').css("background-color", "red");
+                        $('.checkin-details').css("background-color", "red");
                         $('#qr_error').text(response.message);
                         $('#qr_error').show();
                         if(response.fullname){
