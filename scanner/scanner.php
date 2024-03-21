@@ -292,13 +292,13 @@ input#event-pass {
 
 
     button {
-    background-color: #007bff; /* Example background color */
-    color: white; /* Text color */
-    font-size: 16px; /* Example font size */
-    padding: 10px 20px; /* Example padding */
-    border: none; /* No border */
-    border-radius: 5px; /* Rounded corners */
-    cursor: pointer; /* Pointer cursor on hover */
+    background-color: #007bff; 
+    color: white;
+    font-size: 16px;
+    padding: 10px 20px; 
+    border: none; 
+    border-radius: 5px; 
+    cursor: pointer; 
 }
 
 button i {
