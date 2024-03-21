@@ -42,3 +42,16 @@ if (file_exists($custom_footer_path)) {
     get_footer();
 }
 ?>
+
+
+
+
+
+
+<style>
+
+body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .content-wrapper, body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .main-footer, body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .main-header {
+
+    margin-left: inherit;
+}
+</style>
