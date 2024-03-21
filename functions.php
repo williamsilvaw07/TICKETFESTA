@@ -4538,7 +4538,7 @@ function custom_qr_scanner_shortcode() {
                 </div>
                 <div class="tab-content tab-conent-2" id="tab2">
                     <div class="checkin-details"  style='display:none'>
-                        <span id="qr_error" style='display:none'>No event found that for the event pass.</span>
+                        <span id="qr_error" style='display:none'>No event found. Please check Passcode</span>
                         <div class="name"></div>
                         <div class="email"></div>
                         <div class="checkin-time"></div>
