@@ -141,7 +141,16 @@ body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .content-w
 
 
 
-
+.scanner_login_div h3{
+    background-color: #19191b;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    padding: 17px;
+    border-radius: 10px;
+    width: 100%;
+}
 .scanner_login_div{
     background-color: #19191b;
     background-size: cover;
@@ -153,7 +162,9 @@ body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .content-w
     width: 100%;
 
 }
-
+.scanner_login_div p{
+    font-weight: 300;
+}
 
 
 #check-passcode{
