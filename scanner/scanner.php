@@ -27,7 +27,7 @@ get_header('scanner/header-organizer-scanner.php'); // Include the header
 <!-- /.content-wrapper -->
 
 <?php
-get_footer('organizer'); // Include the footer
+get_footer('scanner/footer-organizer-scanner.php'); // Include the footer
 
 
 
