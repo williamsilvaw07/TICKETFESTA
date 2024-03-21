@@ -54,4 +54,7 @@ body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .content-w
 
     margin-left: inherit;
 }
+.main-header {
+    background-color: #19191b;
+}
 </style>
