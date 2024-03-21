@@ -91,7 +91,15 @@ body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .content-w
     list-style: none;
     width: fit-content;
 }
-
+.admin_dashboard-sidebar-item a {
+    color: white;
+    padding: 12px;
+    text-decoration: none;
+    display: block;
+    font-size: 14px;
+    padding-left: 0 !important;
+    white-space: nowrap;
+}
 
 
 
