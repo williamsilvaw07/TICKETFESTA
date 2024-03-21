@@ -95,13 +95,15 @@
 
 
         ///function to change event passcode
-        jQuery(".change_event_btne").on('click', function(){
-            console.log("test clicked")
-            $('.tabs-container').hide();
-            $('.scanner_login_div').show(); 
-            $('.change_event_btn').css("display", "none"); 
-
-        });
+   
+            // Delegating click event for dynamically added content
+            $(document).on('click', '.change_event_btne', function() {
+                console.log("Button clicked");
+                $('.tabs-container').hide();
+                $('.scanner_login_div').show(); 
+                $('.change_event_btn').css("display", "none");
+            });
+    
 
 
 
