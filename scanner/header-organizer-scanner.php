@@ -34,7 +34,7 @@ if (!defined('ABSPATH')) {
 <!-- Brand Logo -->
 <a href="https://ticketfesta.co.uk/" class="brand-link">
                 <img src="https://ticketfesta.co.uk/wp-content/uploads/2024/02/Group-195-2.png" alt=""
-                    class="brand-image img-circle elevation-3">
+                    class="brand-image  elevation-3">
                 <span class="brand-text font-weight-light"></span>
             </a>
             
