@@ -139,6 +139,7 @@
                     if(response.match){
                         // startScanQR(response.event_id);
                         passcodeMatch(response);
+                        console.log("passcodeMatch function called"); // Debugging line
                     }else{
                         noEventFound();
                     }
