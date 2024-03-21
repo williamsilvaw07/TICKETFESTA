@@ -26,10 +26,10 @@
             $(this).parent().addClass('active');
             $(target).addClass('active');
 
-            if($(this).parent().hasClass('tab-conent-2')){
-                // $('#html5-qrcode-button-camera-start').trigger('click');
+            if($(this).parent().hasClass('tab2')){
+                $('#html5-qrcode-button-camera-start').trigger('click');
             }else{
-                // $('#html5-qrcode-button-camera-stop').trigger('click');
+                $('#html5-qrcode-button-camera-stop').trigger('click');
             }
         });
 
