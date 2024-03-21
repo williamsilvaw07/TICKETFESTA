@@ -192,7 +192,7 @@
         }
 
         function noEventFound(){
-            console.log("passcodeMatch function called"); // Debugging line
+           
             $('event-pass').addClass('error');
             $('#event_not_found').show();
 
@@ -210,6 +210,7 @@
             startScanQR(response.event_id);
               // Hide .scanner_login_div when the passcode matches
               document.querySelector('.scanner_login_div').style.display = 'none'; // Adjust the selector accordingly
+              console.log("passcodeMatch function called"); // Debugging line
         }
 
     });
