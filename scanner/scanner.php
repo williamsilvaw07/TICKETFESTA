@@ -305,7 +305,10 @@ button i {
     margin-right: 5px; /* Space between the icon and the text */
 }
 
+#event_not_found{
+        color: red !important;
 
+}
 
     /* Media query for responsive behavior (tablet and mobile) */
     @media (max-width: 768px) {
