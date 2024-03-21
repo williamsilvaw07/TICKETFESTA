@@ -77,4 +77,34 @@ body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .content-w
 .fake_aviter span {
     color: black !important;
 }
+.user-panel .fa-angle-down:before {
+    content: "\f107";
+    color: white;
+    margin-right: 24px;
+}
+
+.dark-mode .dropdown-menu {
+    background-color: #19191b;
+    color: #fff;
+    padding: 19px;
+    text-decoration: none;
+    list-style: none;
+    width: fit-content;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </style>
