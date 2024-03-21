@@ -104,6 +104,14 @@ body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .content-w
     padding-right: 10px;
 }
 
+.line_break {
+    display: block;
+    width: 100%;
+    height: 1px;
+    background-color: #575757;
+    margin: 10px 0;
+}
+
 
 
 
