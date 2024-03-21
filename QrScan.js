@@ -93,6 +93,19 @@
         //     }, 200);
         // }
 
+
+        ///function to change event passcode
+        jQuery(".change_event_btne").on('click', function(){
+            $('.tabs-container').hide();
+            $('.scanner_login_div').show(); 
+            $('.change_event_btn').css("display", "none"); 
+
+        });
+
+
+
+
+
         function startScanQR(eventID){
             $('#event-pass').removeClass('error');
             $('#event_not_found').hide();
