@@ -207,6 +207,8 @@
             $('.event-container .date span').text(response.event_data.start_date);
             $('.event-container .tickets span').text(response.event_data.issued_ticked);
             startScanQR(response.event_id);
+              // Hide .scanner_login_div when the passcode matches
+    $('.scanner_login_div').hide(); // Use this if .scanner_login_div is a class
         }
 
     });
@@ -215,34 +217,3 @@
 
 
 
-
-
-
-
-// Wait for the DOM to be fully loaded
-document.addEventListener('DOMContentLoaded', function() {
-    const targetNode = document.querySelector('body'); // Adjust this if you can narrow down the target area
-    const scannerLoginDiv = document.getElementById('scanner_login_div');
-
-    // Callback function to execute when mutations are observed
-    const callback = function(mutationsList, observer) {
-        for (let mutation of mutationsList) {
-            if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
-                let tabsContainer = document.querySelector('.tabs-container');
-                if (tabsContainer) {
-                    // Directly checking the style property for demonstration; consider getComputedStyle for more accuracy
-                    scannerLoginDiv.style.display = tabsContainer.style.display === 'none' ? 'none' : 'block';
-                }
-            }
-        }
-    };
-
-    // Create an observer instance linked to the callback function
-    const observer = new MutationObserver(callback);
-
-    // Options for the observer (which mutations to observe)
-    const config = { attributes: true, childList: false, subtree: true, attributeFilter: ['style'] };
-
-    // Start observing the target node for configured mutations
-    observer.observe(targetNode, config);
-});
