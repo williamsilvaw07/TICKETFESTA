@@ -27,9 +27,9 @@
             $(target).addClass('active');
 
             if($(this).parent().hasClass('tab2')){
-                $('#html5-qrcode-button-camera-start').trigger('click');
+                // $('#html5-qrcode-button-camera-start').trigger('click');
             }else{
-                $('#html5-qrcode-button-camera-stop').trigger('click');
+                // $('#html5-qrcode-button-camera-stop').trigger('click');
             }
         });
 
@@ -106,7 +106,7 @@
                 }, false);
             function onScanSuccess(decodedText, decodedResult) {
                 // Handle the scanned code as needed
-                // $('#html5-qrcode-button-camera-stop').trigger('click');
+                $('#html5-qrcode-button-camera-stop').trigger('click');
                 console.log(`Code scanned = ${decodedText}`, decodedResult);
                 processQRCode(eventID, decodedText);
             }
