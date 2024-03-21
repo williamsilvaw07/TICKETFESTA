@@ -906,6 +906,9 @@ function iam00_create_event()
 }
 add_action('wp_ajax_add_event', 'iam00_create_event');
 
+
+
+
 /**
  * Recommended way to include parent theme styles.
  * (Please see http://codex.wordpress.org/Child_Themes#How_to_Create_a_Child_Theme)
@@ -915,7 +918,7 @@ add_action('wp_ajax_add_event', 'iam00_create_event');
 add_action('wp_enqueue_scripts', 'generatepress_child_style');
 function generatepress_child_style()
 {
-    if (is_page_template('organizer-template.php') || is_page_template('organizer-coupons.php')) {
+    if (is_page_template('organizer-scanner-template.php') || is_page_template('organizer-coupons.php')) {
         /** Call landing-page-template-one enqueue */
         wp_enqueue_style('fontawsome', get_stylesheet_directory_uri() . '/adminlte/plugins/fontawesome-free/css/all.min.css');
         wp_enqueue_style('tempusdominus', get_stylesheet_directory_uri() . '/adminlte/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css');
@@ -4882,6 +4885,8 @@ add_shortcode('display_html5_qrcode_scanner', 'display_html5_qrcode_scanner_shor
 
 
 
+
+//////FUNCTION TO ADD A FREE TICKET
 
 function user_events_with_tickets_shortcode() {
     if (!is_user_logged_in()) {
