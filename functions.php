@@ -4524,7 +4524,7 @@ function custom_qr_scanner_shortcode() {
                     <li class="tab tab1 active"><a href="#tab1"> Event Details</a></li>
                     <li class="tab tab2"><a href="#tab2">Scan QR Code</a></li>
                 </ul>
-            </div>
+           
             <div class="tab-content-container" style="display: none">
                 <div class="tab-content tab-conent-1 active" id="tab1">
                     <div class="event-container">
@@ -4553,7 +4553,7 @@ function custom_qr_scanner_shortcode() {
                     </div>
                 </div>
             </div>
-    
+            </div>
     <?php
     return ob_get_clean();
 }
