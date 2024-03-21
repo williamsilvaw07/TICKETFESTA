@@ -25,6 +25,7 @@ if (file_exists($custom_header_path)) {
             <p class="scanner_vrsion">Version 1.0</p>
 
         <h2 class="tribe-community-events-list-title">Ticket Scanner</h2>
+        <button><i class="fas fa-sign-in-alt"></i> Change Event</button>
             <?php
             if (have_posts()) :
                 while (have_posts()) :
@@ -287,6 +288,25 @@ input#event-pass {
         justify-content: center;
         align-items: center;
     }
+
+
+
+    button {
+    background-color: #007bff; /* Example background color */
+    color: white; /* Text color */
+    font-size: 16px; /* Example font size */
+    padding: 10px 20px; /* Example padding */
+    border: none; /* No border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+}
+
+button i {
+    margin-right: 5px; /* Space between the icon and the text */
+}
+
+
+
     /* Media query for responsive behavior (tablet and mobile) */
     @media (max-width: 768px) {
         .tabs-container {
