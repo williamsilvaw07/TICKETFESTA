@@ -96,6 +96,7 @@
 
         ///function to change event passcode
         jQuery(".change_event_btne").on('click', function(){
+            console.log("test clicked")
             $('.tabs-container').hide();
             $('.scanner_login_div').show(); 
             $('.change_event_btn').css("display", "none"); 
