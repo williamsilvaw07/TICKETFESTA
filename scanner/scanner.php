@@ -18,7 +18,7 @@ if (file_exists($custom_header_path)) {
     <!-- Main content -->
     <div class="content">
         <div class="container-fluid">
-        <h2 class="tribe-community-events-list-title">Dashboard</h2>
+        <h2 class="tribe-community-events-list-title">Ticket Scanner</h2>
             <?php
             if (have_posts()) :
                 while (have_posts()) :
