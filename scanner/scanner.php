@@ -18,6 +18,7 @@ if (file_exists($custom_header_path)) {
     <!-- Main content -->
     <div class="content">
         <div class="container-fluid">
+            <p class="scanner_vrsion">Version 1.0</p>
         <h2 class="tribe-community-events-list-title">Ticket Scanner</h2>
             <?php
             if (have_posts()) :
