@@ -18,7 +18,7 @@ if (file_exists($custom_header_path)) {
     <!-- Main content -->
     <div class="content">
         <div class="container-fluid">
-        <h2 class="elementor-heading-title elementor-size-default">Dashboard</h2>
+        <h2 class="tribe-community-events-list-title">Dashboard</h2>
             <?php
             if (have_posts()) :
                 while (have_posts()) :
@@ -114,6 +114,11 @@ body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .content-w
 }
 
 
+.container-fluid h2 {
+    padding-bottom: 11px;
+    padding-top: 13px;
+    font-weight: 700;
+}
 
 
 
