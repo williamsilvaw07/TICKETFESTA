@@ -228,16 +228,20 @@ input#event-pass {
         display: flex;
         flex-direction: column !important;
         margin: 0 auto;
-        width: 80%; /* Adjust width as needed */
+        background-color: #19191b;
+    position: relative;
+    padding: 17px;
+    border-radius: 10px;
+    width: 100%;
     }
 
     /* Style the tabs navigation list */
     .tabs-nav {
         display: flex;
-        list-style: none;
-        padding: 0;
-        margin: 0;
-        border-bottom: 1px solid #ddd; /* Optional border */
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-bottom: 0px solid #ddd;
     }
 
     /* Style the individual tabs */
