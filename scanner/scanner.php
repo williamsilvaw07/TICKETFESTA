@@ -120,11 +120,18 @@ body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .content-w
     font-weight: 700;
 }
 
+.tribe-community-events-list-title {
+    font-weight: bold;
+    font-size: 35px !important;
+}
 
 
 
-
-
+.container-fluid h2 {
+    padding-bottom: 11px;
+    padding-top: 13px;
+    font-weight: 700;
+}
 
 
 
