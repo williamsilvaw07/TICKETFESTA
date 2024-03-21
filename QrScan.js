@@ -97,7 +97,7 @@
         ///function to change event passcode
    
             // Delegating click event for dynamically added content
-            $(document).on('click', '.change_event_btne', function() {
+            $(document).on('click', '.change_event_btn', function() {
                 console.log("Button clicked");
                 $('.tabs-container').hide();
                 $('.scanner_login_div').show(); 
