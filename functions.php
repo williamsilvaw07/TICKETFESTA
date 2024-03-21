@@ -4632,17 +4632,18 @@ function custom_qr_scanner_shortcode() {
                         <!-- <div class="tickets-percent">Ticket Percent: </div> -->
                     </div>
                 </div>
-                <div class="tab-content" id="tab2">
+                <div class="tab-content tab2" id="tab2">
+                    <span id="qr_error" style='display:none'>No event found that for the event pass.</span>
                     <div class="checkin-details"  style='display:none'>
                         <div class="name"></div>
                         <div class="email"></div>
                         <div class="checkin-time"></div>
+                        <div class="scaned-by"> Scaned by: <span> </span> </div>
                     </div>
                     <div id="video-container">
                         <!-- <input type="text" id="event-pass" name="event-pass" placeholder="enter event pass"> -->
                         <!-- <video id="video" playsinline style="width: 500px"></video> -->
                         <div id="qr-reader" class="qr-reader"></div>
-                        <span id="qr_error" style='display:none'>No event found that for the event pass.</span>
                         <!-- <button id="scan-button" >Scan QR Code</button> -->
                         
                     </div>
@@ -4715,9 +4716,16 @@ function checkinTicket(){
             $now = new DateTime();
             $formatted_datetime = $now->format('Y-m-d H:i:s');
             $checkin_details = [
-                'date' => $formatted_datetime,
-                'source' => 'qr-code',
+                'date'      => $formatted_datetime,
+                'source'    => 'qr-code',
             ];
+            $scaned_by = '';
+            $current_user = wp_get_current_user();
+            if ( $current_user->ID != 0 ) {
+                $scaned_by = $current_user->user_email;
+                $checkin_details['scaned_by'] = $user_email;
+            }
+
             update_post_meta( $ticket_id, '_tribe_wooticket_checkedin_details', $checkin_details );
             $fullname = get_post_meta( $ticket_id, '_tribe_tickets_full_name', true);
             $email = get_post_meta( $ticket_id, '_tribe_tickets_email', true);
@@ -4726,6 +4734,7 @@ function checkinTicket(){
                 'message'      => 'Successfully checked in.',
                 'fullname'     => $fullname,
                 'email'        => $email,
+                'scaned_by'    => $scaned_by,
                 'checkin_time' => $formatted_datetime,
             ];
             wp_send_json($response);
@@ -4736,11 +4745,12 @@ function checkinTicket(){
             $email = get_post_meta( $ticket_id, '_tribe_tickets_email', true);
             $checkin_details = maybe_unserialize( $checkin_details );
             $response = [
-                'success'         => false,
-                'fullname'        => $fullname,
-                'email'           => $email,
-                'message'         => 'Already Checked In.',
-                'checkin_time'    => $checkin_details['date'],
+                'success'      => false,
+                'fullname'     => $fullname,
+                'email'        => $email,
+                'message'      => 'Already Checked In.',
+                'checkin_time' => $checkin_details['date'],
+                'scaned_by'    => $checkin_details['scaned_by'],
             ];
             wp_send_json($response);
         }

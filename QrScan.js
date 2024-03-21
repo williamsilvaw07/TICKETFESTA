@@ -153,21 +153,24 @@
                 },
                 success: function(response) {
                     if(response.success){
-                        $('#video-container').css("background-color", "green");
+                        $('#qr_error').hide();
+                        $('.tab2').css("background-color", "green");
                         if(response.fullname){
                             $('.checkin-details .name').text(response.fullname);
                             $('.checkin-details .email').text(response.email);
                             $('.checkin-details .checkin-time').text(response.checkin_time);
+                            $('.checkin-details .scaned_by span').text(response.scaned_by);
                             $('.checkin-details').show();
                         }
                     }else{
-                        $('#video-container').css("background-color", "red");
+                        $('.tab2').css("background-color", "red");
                         $('#qr_error').text(response.message);
                         $('#qr_error').show();
                         if(response.fullname){
                             $('.checkin-details .name').text(response.fullname);
                             $('.checkin-details .email').text(response.email);
                             $('.checkin-details .checkin-time').text(response.checkin_time);
+                            $('.checkin-details .scaned_by span').text(response.scaned_by);
                             $('.checkin-details').show();
                         }
                     }
