@@ -156,7 +156,16 @@ body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .content-w
 
 
 
-
+#check-passcode{
+    background: white;
+    color: black;
+    font-size: 14px;
+    padding: 10px 20px;
+    border: 0px;
+    border-radius: 4px;
+    position: relative;
+    top: -2px;
+}
 input#event-pass {
     border: 0px;
     border-radius: 4px;
