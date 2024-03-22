@@ -4569,30 +4569,39 @@ function validate_event_pass() {
     // Your AJAX handling logic goes here
     // You can access the posted data via $_POST
     // Process the data, perform actions, and generate a response
-    $event_pass = isset(  $_POST['event_pass'] ) ? esc_attr( $_POST['event_pass']) : false;
+    $event_pass = isset($_POST['event_pass']) ? esc_attr($_POST['event_pass']) : false;
     $events = get_posts_by_event_pass($event_pass);
-    $match  =  false;
-    $event_id =  null;
+    $match = false;
+    $event_id = null;
     $event_data = [];
-    foreach($events as $event){
-        if(isset($event->ID)){
-            $match    =  true;
+    foreach ($events as $event) {
+        if (isset($event->ID)) {
+            $match = true;
             $event_id = $event->ID;
+            // Initialize total stock quantity
+            $total_stock = 0;
+            // Get ticket IDs for the event
+            $ticket_ids = get_post_meta($event_id, '_tribe_wootickets_ticket_ids', true);
+            // Calculate total stock quantity for all tickets
+            foreach ($ticket_ids as $ticket_id) {
+                $product = wc_get_product($ticket_id);
+                if ($product && $product->is_in_stock()) {
+                    $total_stock += $product->get_stock_quantity();
+                }
+            }
             $event_data = [
-                'start_date'     => get_post_meta( $event_id, '_EventStartDate', true ),
-                'issued_ticked'  => get_post_meta( $event_id, '_tribe_progressive_ticket_current_number', true ),
-                'name'           => get_the_title( $event_id ),
-                'thumbnail_url'  => get_the_post_thumbnail_url($event_id, 'medium'),
+                'start_date'    => get_post_meta($event_id, '_EventStartDate', true),
+                'total_tickets' => $total_stock,
+                'name'          => get_the_title($event_id),
+                'thumbnail_url' => get_the_post_thumbnail_url($event_id, 'medium'),
             ];
         }
     }
     $response = array(
-        'match'      =>  $match,
-        'event_id'   =>  $event_id,
-        'event_data' =>  $event_data,
+        'match'      => $match,
+        'event_id'   => $event_id,
+        'event_data' => $event_data,
     );
-      
-   
 
     // Send the response back to the client
     wp_send_json($response);
@@ -4620,7 +4629,7 @@ function checkinTicket(){
             update_post_meta( $ticket_id, '_tribe_tpp_checkedin', 1 );
 
             $now = new DateTime();
-            $formatted_datetime = $now->format('d-m-Y H:i');
+            $formatted_datetime = $now->format('Y-m-d H:i:s');
             $checkin_details = [
                 'date'      => $formatted_datetime,
                 'source'    => 'qr-code',
