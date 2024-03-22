@@ -245,7 +245,7 @@
             $('.progress-percentage').text(precisePercentage + '%');
             
             // Update the ticket count text
-            $('.ticket-count').text(issuedTickets + '/' + totalTickets);
+            $('.ticket-count').text(issuedTickets + ' / ' + totalTickets);
         }
         
 
