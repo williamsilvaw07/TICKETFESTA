@@ -225,6 +225,11 @@
 
 
 
+
+
+
+
+
 // Function to calculate the total percentage
 function calculatePercentage(issued, total) {
     if (total === 0) {
@@ -318,7 +323,7 @@ function updateIndividualTicketInfo(ticketList) {
         container.append(progressHtml);
 
         // Update individual progress circle
-        updateIndividualProgressCircle(container.find('.individual-progress-ring__circle'), issued, capacity);
+        updateIndividualProgressCircle(container, issued, capacity);
     });
 }
 
@@ -335,8 +340,8 @@ function updateIndividualProgressCircle(container, issuedTickets, totalTickets) 
         'stroke': '#d3fa16' // Color of progress
     });
 
-// Update the individual percentage text
-container.find('.individual-progress-percentage').text(precisePercentage + '%');
+    // Update the individual percentage text
+    container.find('.individual-progress-percentage').text(precisePercentage + '%');
 }
 
 // Function to handle the passcode match response
@@ -382,6 +387,8 @@ function passcodeMatch(response) {
     // Proceed with other functions like startScanQR...
     startScanQR(response.event_id);
 }
+
+
 
     });
 })(jQuery);
