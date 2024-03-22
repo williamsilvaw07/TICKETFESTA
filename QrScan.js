@@ -223,19 +223,20 @@
         }
 
 
-// Function to calculate the total percentage
-function calculatePercentage(issued, total) {
+
+      // Function to calculate the total percentage
+function calculateTotalPercentage(issued, total) {
     return (issued / total) * 100;
 }
 
-// Function to calculate the individual percentage for a ticket
+// Function to calculate individual ticket percentage
 function calculateIndividualPercentage(issued, total) {
-    return (issued / total) * 100;
+    return total === 0 ? 0 : (issued / total) * 100;
 }
 
 // Function to update the progress circle with total percentage
 function updateProgressCircle(issuedTickets, totalTickets) {
-    var percentage = calculatePercentage(issuedTickets, totalTickets);
+    var percentage = calculateTotalPercentage(issuedTickets, totalTickets);
     var precisePercentage = percentage.toFixed(1); // To display one decimal place
     var radius = 31; // Set the radius of your SVG circle
     var circumference = 2 * Math.PI * radius;
@@ -253,9 +254,10 @@ function updateProgressCircle(issuedTickets, totalTickets) {
     $('.ticket-count').text(issuedTickets + ' / ' + totalTickets);
 }
 
-// Function to update individual ticket progress circle
+// Function to update individual progress circle
 function updateIndividualProgressCircle(container, issuedTickets, totalTickets) {
     var percentage = calculateIndividualPercentage(issuedTickets, totalTickets);
+    var precisePercentage = percentage.toFixed(1); // To display one decimal place
     var radius = 31; // Set the radius of your SVG circle
     var circumference = 2 * Math.PI * radius;
 
@@ -266,7 +268,30 @@ function updateIndividualProgressCircle(container, issuedTickets, totalTickets) 
     });
 
     // Update the individual percentage text
-    container.find('.individual-progress-percentage').text(percentage.toFixed(1) + '%');
+    container.find('.individual-progress-percentage').text(precisePercentage + '%');
+}
+
+// Function to handle the passcode match response
+function passcodeMatch(response) {
+    $('.tabs-container').show();
+    $('.tab-content-container').show();
+    $('.event-container .event-image').attr('src', response.event_data.thumbnail_url);
+    $('.event-container .name span').text(response.event_data.name);
+    $('.event-container .date span').text(response.event_data.start_date);
+
+    // Extract the total ticket information
+    var totalIssuedTickets = parseInt(response.event_data.issued_tickets, 10);
+    var totalAvailableTickets = parseInt(response.event_data.total_tickets_available, 10);
+
+    // Update the progress circle with the total data
+    updateProgressCircle(totalIssuedTickets, totalAvailableTickets);
+
+    // Display individual ticket information
+    var ticketList = response.event_data.ticket_list;
+    updateIndividualTicketInfo(ticketList);
+
+    // Proceed with other functions like startScanQR...
+    startScanQR(response.event_id);
 }
 
 // Function to update individual ticket information
@@ -302,29 +327,6 @@ function updateIndividualTicketInfo(ticketList) {
         var capacity = ticket.capacity;
         updateIndividualProgressCircle(container, issued, capacity);
     });
-}
-
-// Function to handle the passcode match response
-function passcodeMatch(response) {
-    $('.tabs-container').show();
-    $('.tab-content-container').show();
-    $('.event-container .event-image').attr('src', response.event_data.thumbnail_url);
-    $('.event-container .name span').text(response.event_data.name);
-    $('.event-container .date span').text(response.event_data.start_date);
-
-    // Extract the total ticket information
-    var totalIssuedTickets = parseInt(response.event_data.issued_tickets, 10);
-    var totalAvailableTickets = parseInt(response.event_data.total_tickets_available, 10);
-
-    // Update the progress circle with the total data
-    updateProgressCircle(totalIssuedTickets, totalAvailableTickets);
-
-    // Update individual ticket information
-    var ticketList = response.event_data.ticket_list;
-    updateIndividualTicketInfo(ticketList);
-
-    // Proceed with other functions like startScanQR...
-    startScanQR(response.event_id);
 }
 
     });
