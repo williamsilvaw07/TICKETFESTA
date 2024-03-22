@@ -225,164 +225,124 @@
 
 
 
-        // Function to calculate the total percentage
-function calculatePercentage(issued, total) {
-    if (total === 0) {
-        console.error("Total tickets cannot be 0.");
-        return 0;
-    }
-    return (issued / total) * 100;
-}
-
-// Function to update the progress circle with total percentage
-function updateProgressCircle(issuedTickets, totalTickets) {
-    var percentage = calculatePercentage(issuedTickets, totalTickets);
-    if (isNaN(percentage)) {
-        console.error("Percentage calculation error.");
-        return;
-    }
-
-    var precisePercentage = percentage.toFixed(1); // To display one decimal place
-    var radius = 31; // Set the radius of your SVG circle
-    var circumference = 2 * Math.PI * radius;
-
-    $('.progress-ring__circle').css({
-        'stroke-dasharray': circumference,
-        'stroke-dashoffset': circumference - (percentage / 100) * circumference,
-        'stroke': '#d3fa16' // Color of progress
-    });
-
-    // Update the percentage text in the center of the progress circle
-    $('.progress-percentage').text(precisePercentage + '%');
-
-    // Update the ticket count text
-    $('.ticket-count').text(issuedTickets + ' / ' + totalTickets);
-}
-
-// Function to calculate the individual percentage
-function calculateIndividualPercentage(issued, total) {
-    return total === 0 ? 0 : (issued / total) * 100;
-}
-
-// Function to update individual progress circles
-function updateIndividualProgressCircles(ticketList) {
-    $('.ticket-progress-container').each(function(index) {
-        var container = $(this);
-        var ticket = ticketList[index];
-        var issued = ticket.issued_tickets || 0;
-        var capacity = ticket.capacity;
-        var percentage = calculateIndividualPercentage(issued, capacity);
-        var precisePercentage = percentage.toFixed(1);
-
-        // Update individual progress circle
-        container.find('.progress-ring__circle-individual').css({
-            'stroke-dashoffset': (100 - percentage) + '%',
-        });
-
-        // Update the individual percentage text
-        container.find('.individual-progress-percentage').text(precisePercentage + '%');
-    });
-}
-
-// Function to update individual ticket information
-function updateIndividualTicketInfo(ticketList) {
-    var ticketInfoHtml = '';
-    ticketList.forEach(function(ticket) {
-        var ticketName = ticket.name;
-        var issued = ticket.issued_tickets || 0; // Default to 0 if undefined
-        var capacity = ticket.capacity;
-        var individualPercentage = calculateIndividualPercentage(issued, capacity);
-        var preciseIndividualPercentage = individualPercentage.toFixed(1); // To display one decimal place
-
-        ticketInfoHtml += '<li>' + ticketName + ': ' + issued + ' issued out of ' + capacity + ' available';
-        ticketInfoHtml += ' (' + preciseIndividualPercentage + '%)</li>';
-    });
-    $('.ticket-info_hidden_all ul').html(ticketInfoHtml);
-
-    // Update individual progress circles
-    $('.ticket-info_hidden_all li').each(function(index) {
-        var container = $(this);
-        var ticket = ticketList[index];
-        var issued = ticket.issued_tickets || 0;
-        var capacity = ticket.capacity;
-
-        // Append progress component to each ticket item
-        var progressHtml = '<div class="ticket-progress-container">';
-        progressHtml += '<svg class="progress-ring" width="72" height="72">';
-        progressHtml += '<circle class="progress-ring__circle-bg" cx="36" cy="36" r="31" stroke-width="6"></circle>';
-        progressHtml += '<circle class="progress-ring__circle progress-ring__circle-individual" cx="36" cy="36" r="31" stroke-width="6" style="stroke-dasharray: 194.779px; stroke-dashoffset: 192.851px; stroke: rgb(211, 250, 22);"></circle>';
-        progressHtml += `<text class="progress-percentage" x="50%" y="50%" dominant-baseline="middle" text-anchor="middle"></text>`;
-        progressHtml += '</svg>';
-        progressHtml += '<div class="individual-progress-percentage">' + preciseIndividualPercentage + '%</div>';
-        progressHtml += '</div>';
-
-        container.append(progressHtml);
-
-        // Update individual progress circle
-        updateIndividualProgressCircle(container, issued, capacity);
-    });
-}
-
-// Function to update individual progress circle
-function updateIndividualProgressCircle(container, issuedTickets, totalTickets) {
-    var percentage = calculateIndividualPercentage(issuedTickets, totalTickets);
-    var precisePercentage = percentage.toFixed(1); // To display one decimal place
-    var radius = 31; // Set the radius of your SVG circle
-    var circumference = 2 * Math.PI * radius;
-
-    container.find('.progress-ring__circle-individual').css({
-        'stroke-dasharray': circumference,
-        'stroke-dashoffset': circumference - (percentage / 100) * circumference,
-        'stroke': '#d3fa16' // Color of progress
-    });
-
-    // Update the individual percentage text
-    container.find('.individual-progress-percentage').text(precisePercentage + '%');
-}
-
-// Function to handle the passcode match response
-function passcodeMatch(response) {
-    if (!response || !response.event_data) {
-        console.error("Invalid response data.");
-        return;
-    }
-
-    $('.tabs-container').show();
-    $('.tab-content-container').show();
-    $('.event-container .event-image').attr('src', response.event_data.thumbnail_url);
-    $('.event-container .name span').text(response.event_data.name);
-    $('.event-container .date span').text(response.event_data.start_date);
-
-    // Extract the ticket information
-    var issuedTickets = parseInt(response.event_data.issued_tickets, 10);
-    var totalTickets = parseInt(response.event_data.total_tickets_available, 10);
-
-    // Check for NaN values after parsing
-    if (isNaN(issuedTickets) || isNaN(totalTickets)) {
-        console.error("Error parsing ticket information.");
-        return;
-    }
-
-    // Update the progress circle with the new data
-    updateProgressCircle(issuedTickets, totalTickets);
-
-    // Display ticket information with percentages
-    var ticketList = response.event_data.ticket_list;
-    var ticketInfoHtml = '';
-    ticketList.forEach(function(ticket) {
-        var issued = parseInt(ticket.issued_tickets, 10);
-        var capacity = parseInt(ticket.capacity, 10);
-        var percentage = calculatePercentage(issued, capacity).toFixed(1); // Calculate percentage for each ticket type
-        ticketInfoHtml += `<li>${ticket.name}: ${issued} issued out of ${capacity} available (${percentage}%)</li>`;
-    });
-    $('.ticket-info_hidden_all ul').html(ticketInfoHtml);
-
-    // Update individual progress circles
-    updateIndividualProgressCircles(ticketList);
-
-    // Proceed with other functions like startScanQR...
-    startScanQR(response.event_id);
-}
+        function calculatePercentage(issued, total) {
+            if (total === 0) {
+                console.error("Total tickets cannot be 0.");
+                return 0;
+            }
+            return (issued / total) * 100;
+        }
+        
+        function updateProgressCircle(issuedTickets, totalTickets) {
+            var percentage = calculatePercentage(issuedTickets, totalTickets);
+            if (isNaN(percentage)) {
+                console.error("Percentage calculation error.");
+                return;
+            }
+        
+            var precisePercentage = percentage.toFixed(1); // To display one decimal place
+            var radius = 31; // Set the radius of your SVG circle
+            var circumference = 2 * Math.PI * radius;
+        
+            $('.progress-ring__circle').css({
+                'stroke-dasharray': circumference,
+                'stroke-dashoffset': circumference - (percentage / 100) * circumference,
+                'stroke': '#d3fa16' // Color of progress
+            });
+        
+            // Update the percentage text in the center of the progress circle
+            $('.progress-percentage').text(precisePercentage + '%');
+        
+            // Update the ticket count text
+            $('.ticket-count').text(issuedTickets + ' / ' + totalTickets);
+        }
+        
+        function updateIndividualProgressCircle(container, issuedTickets, totalTickets) {
+            var percentage = calculatePercentage(issuedTickets, totalTickets);
+            if (isNaN(percentage)) {
+                console.error("Percentage calculation error.");
+                return;
+            }
+        
+            var precisePercentage = percentage.toFixed(1); // To display one decimal place
+            var radius = 31; // Set the radius of your SVG circle
+            var circumference = 2 * Math.PI * radius;
+        
+            // Calculate stroke-dasharray and stroke-dashoffset
+            var dashArray = circumference;
+            var dashOffset = circumference - (percentage / 100) * circumference;
+        
+            container.find('.progress-ring__circle-individual').css({
+                'stroke-dasharray': dashArray,
+                'stroke-dashoffset': dashOffset,
+                'stroke': '#d3fa16' // Color of progress
+            });
+        
+            // Update the percentage text
+            container.find('.progress-percentage').text(precisePercentage + '%');
+        }
+        
+        function passcodeMatch(response) {
+            if (!response || !response.event_data) {
+                console.error("Invalid response data.");
+                return;
+            }
+        
+            $('.tabs-container').show();
+            $('.tab-content-container').show();
+            $('.event-container .event-image').attr('src', response.event_data.thumbnail_url);
+            $('.event-container .name span').text(response.event_data.name);
+            $('.event-container .date span').text(response.event_data.start_date);
+        
+            // Extract the ticket information
+            var issuedTickets = parseInt(response.event_data.issued_tickets, 10);
+            var totalTickets = parseInt(response.event_data.total_tickets_available, 10);
+        
+            // Check for NaN values after parsing
+            if (isNaN(issuedTickets) || isNaN(totalTickets)) {
+                console.error("Error parsing ticket information.");
+                return;
+            }
+        
+            // Update the progress circle with the new data
+            updateProgressCircle(issuedTickets, totalTickets);
+        
+            // Display ticket information with percentages
+            var ticketList = response.event_data.ticket_list;
+            var ticketInfoHtml = '';
+            ticketList.forEach(function(ticket) {
+                var issued = parseInt(ticket.issued_tickets, 10);
+                var capacity = parseInt(ticket.capacity, 10);
+                var percentage = calculatePercentage(issued, capacity).toFixed(1); // Calculate percentage for each ticket type
+        
+                // HTML for individual progress components with the same class names as before
+                var individualProgressHtml = `
+                    <div class="ticket-progress-container">
+                        <svg class="progress-ring" width="72" height="72">
+                            <circle class="progress-ring__circle-bg" cx="36" cy="36" r="31" stroke-width="6"></circle>
+                            <circle class="progress-ring__circle progress-ring__circle-individual" cx="36" cy="36" r="31" stroke-width="6"></circle>
+                            <text class="progress-percentage" x="50%" y="50%" dominant-baseline="middle" text-anchor="middle">${percentage}%</text>
+                        </svg>
+                        <div class="ticket-details">
+                            <div class="ticket-name">${ticket.name}</div>
+                            <div class="ticket-count">${issued} issued out of ${capacity} available</div>
+                        </div>
+                    </div>
+                `;
+        
+                ticketInfoHtml += `<li>${ticket.name}: ${issued} issued out of ${capacity} available (${percentage}%)</li>`;
+                $('.ticket-info_hidden_all ul').html(ticketInfoHtml);
+        
+                // Append individual progress component to container
+                $('.ticket-info_hidden_all').append(individualProgressHtml);
+        
+                // Update individual progress circle with the same class names as before
+                updateIndividualProgressCircle($('.ticket-info_hidden_all .ticket-progress-container').last(), issued, capacity);
+            });
+        
+            // Proceed with other functions like startScanQR...
+            startScanQR(response.event_id);
+        }
 
 
     });
