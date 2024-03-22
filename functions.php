@@ -4581,21 +4581,22 @@ function validate_event_pass() {
             // Get ticket counts for the event
             $ticket_counts = Tribe__Tickets__Tickets::get_ticket_counts($event_id);
 
-
             // Initialize ticket totals
             $total_tickets_sold = 0;
             $total_tickets_available = 0;
 
             // Calculate the totals from ticket counts
             if (!empty($ticket_counts)) {
-                foreach ($ticket_counts as $counts) {
+                foreach ($ticket_counts as $type => $counts) {
+                    $total_tickets_sold += $counts['count']; // Total sold tickets of this type
                     $total_tickets_available += $counts['stock']; // Total available tickets of this type
                 }
             }
 
             $event_data = [
                 'start_date'               => get_post_meta($event_id, '_EventStartDate', true),
-                'issued_tickets'           => get_post_meta($event_id, '_tribe_progressive_ticket_current_number', true),
+                'issued_tickets'           => $total_tickets_sold,
+                'total_tickets_sold'       => $total_tickets_sold,
                 'total_tickets_available'  => $total_tickets_available,
                 'name'                     => get_the_title($event_id),
                 'thumbnail_url'            => get_the_post_thumbnail_url($event_id, 'medium'),
