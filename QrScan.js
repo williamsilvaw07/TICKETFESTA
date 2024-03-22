@@ -333,7 +333,22 @@
                 $('.ticket-info_hidden_all').append(individualProgressHtml);
         
                 // Update individual progress circle with the same class names as before
-                updateIndividualProgressCircle($('.ticket-info_hidden_all .ticket-progress-container').last(), issued, capacity);
+              // Function to update individual progress circle
+function updateIndividualProgressCircle(container, issuedTickets, totalTickets) {
+    var percentage = calculateIndividualPercentage(issuedTickets, totalTickets);
+    var precisePercentage = percentage.toFixed(1); // To display one decimal place
+    var radius = 31; // Set the radius of your SVG circle
+    var circumference = 2 * Math.PI * radius;
+
+    container.find('.progress-ring__circle-individual').css({
+        'stroke-dasharray': circumference,
+        'stroke-dashoffset': circumference - (percentage / 100) * circumference,
+        'stroke': 'rgb(211, 250, 22)' // Color of progress, you can adjust this color as needed
+    });
+
+    // Update the individual percentage text
+    container.find('.progress-percentage').text(precisePercentage + '%');
+}
             });
         
             // Proceed with other functions like startScanQR...
