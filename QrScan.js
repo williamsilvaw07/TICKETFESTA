@@ -228,13 +228,61 @@
             $('.event-container .event-image').attr('src', response.event_data.thumbnail_url);
             $('.event-container .name span').text(response.event_data.name);
             $('.event-container .date span').text(response.event_data.start_date);
-            // Update to display total tickets available
-            $('.event-container .tickets span').text(response.event_data.total_tickets_available + ' tickets available');
+        
+            // Update to display "tickets issued out of tickets available"
+            var issuedOutOfAvailable = response.event_data.total_tickets_sold + ' issued out of ' + response.event_data.total_tickets_available + ' available';
+            $('.event-container .tickets span').text(issuedOutOfAvailable);
+        
             startScanQR(response.event_id);
         }
 
     });
 })(jQuery);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var ctx = document.getElementById('ticketProgress').getContext('2d');
+var ticketsIssued = 3; // replace with actual dynamic data
+var ticketsAvailable = 6; // replace with actual dynamic data
+
+var ticketProgressChart = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+        labels: ['Tickets Issued', 'Tickets Available'],
+        datasets: [{
+            label: '# of Tickets',
+            data: [ticketsIssued, ticketsAvailable - ticketsIssued],
+            backgroundColor: [
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 99, 132, 0.2)'
+            ],
+            borderColor: [
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 99, 132, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        cutout: '90%', // creates a thinner doughnut ring
+        plugins: {
+            legend: {
+                display: false // hides the legend
+            }
+        }
+    }
+});
 
 
 
