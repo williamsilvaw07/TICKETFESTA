@@ -335,7 +335,7 @@ button i {
 
 .progress-ring__circle-bg {
     fill: transparent;
-    stroke: #3a3a3a;
+    stroke: #d3fa16;
     stroke-width: 10;
 }
 
