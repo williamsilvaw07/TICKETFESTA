@@ -324,7 +324,7 @@
                             
                         </svg>
 
-                        <div class="ticket-progress-container-svg">
+                        <div class="ticket-progressdddd-container-svg">
                         <p class="progress-percentage_individual" ${percentage}%</p>
                         <svg class="progress-ring" width="72" height="72">
                             <circle class="progress-ring__circle-bg" cx="36" cy="36" r="31" stroke-width="6"></circle>
