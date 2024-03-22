@@ -221,48 +221,44 @@
             $('.tabs-container').hide();
             $('.tab-content-container').hide();
         }
-
         function passcodeMatch(response) {
             $('.tabs-container').show();
             $('.tab-content-container').show();
             $('.event-container .event-image').attr('src', response.event_data.thumbnail_url);
             $('.event-container .name span').text(response.event_data.name);
             $('.event-container .date span').text(response.event_data.start_date);
-        
+            
+            // Parse the issued and total tickets to integers
             var issuedTickets = parseInt(response.event_data.issued_tickets, 10);
             var totalTickets = parseInt(response.event_data.total_tickets_available, 10);
-            var percentage = issuedTickets / totalTickets * 100;
-
-               // Calculate stroke offset for SVG
-    var circumference = 365; // Circle circumference
-    var offset = circumference - percentage / 100 * circumference;
             
-            // Update the progress circle
-            var circumference = 52 * 2 * Math.PI; // Assuming the radius of the circle is 52
-            var offset = circumference - percentage / 100 * circumference;
-            $('.progress-ring__circle').css('stroke-dasharray', `${circumference} ${circumference}`);
-            $('.progress-ring__circle').css('stroke-dashoffset', offset);
-        
-            // Update the percentage text
-            $('.progress-percentage').text(percentage.toFixed(0) + '%');
-        
-            // Update the counts
+            // Calculate the percentage of issued tickets
+            var percentage = (issuedTickets / totalTickets) * 100;
+            
+            // Calculate the circumference of the SVG circle
+            var radius = 58; // Set the radius based on your SVG's actual radius
+            var circumference = 2 * Math.PI * radius;
+            
+            // Calculate the offset for the SVG circle stroke
+            var offset = circumference - (percentage / 100 * circumference);
+            
+            // Update the SVG circle's stroke-dasharray and stroke-dashoffset
+            $('.progress-ring__circle').css({
+                'stroke-dasharray': circumference,
+                'stroke-dashoffset': offset,
+                'stroke': '#4CAF50' // Color of progress
+            });
+            
+            // Update the text for the percentage
+            $('.progress-label').text(Math.floor(percentage) + '%');
+            
+            // Update the text for the counts
             var issuedOutOfAvailable = `${issuedTickets} / ${totalTickets}`;
             $('.progress-count').text(issuedOutOfAvailable);
-        
+            
+            // Continue with the rest of your function...
             startScanQR(response.event_id);
-
-
-    // Update the SVG circle
-    $('.progress-ring__circle').css({
-        'stroke-dashoffset': offset,
-        'stroke': '#4CAF50', // Color of progress
-    });
-
-    // Update the percentage text
-    $('.progress-label').text(percentage.toFixed(0) + '%');
         }
-        
 
     });
 })(jQuery);
