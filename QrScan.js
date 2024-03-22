@@ -231,15 +231,9 @@
         
             // Update to display "tickets issued out of tickets available"
             var issuedOutOfAvailable = response.event_data.issued_tickets + ' issued out of ' + response.event_data.total_tickets_available + ' available';
-           // $('.event-container .tickets span').text(response.event_data.ticket_list);
+            $('.event-container .tickets span').text(response.event_data.ticket_list);
 
-
-            $('.event-container .ticket-list').empty();
-             // Iterate over the ticket_list and append each ticket's info
-    response.event_data.ticket_list.forEach(function(ticket) {
-        var listItem = $('<li></li>').text(ticket.name + ': ' + ticket.capacity + ' available');
-        $('.event-container .ticket-list').append(listItem);
-    });
+            
         
             startScanQR(response.event_id);
         }
