@@ -4567,7 +4567,7 @@ add_action('wp_ajax_nopriv_validate_event_pass', 'validate_event_pass'); // If y
 
 function validate_event_pass() {
     $event_pass = isset($_POST['event_pass']) ? esc_attr($_POST['event_pass']) : false;
-    $events = get_posts_by_event_pass($event_pass); // Ensure this function correctly fetches the events based on the pass.
+    $events = get_posts_by_event_pass($event_pass);
     $match = false;
     $event_id = null;
     $event_data = [];
@@ -4577,25 +4577,22 @@ function validate_event_pass() {
             $match = true;
             $event_id = $event->ID;
 
-            // Retrieve the ticket counts for the event
-            $ticket_counts = Tribe__Tickets__Tickets::get_ticket_counts($event_id);
-            $total_tickets_available = 0;
+            // Assuming you have the event ID, get the total capacity for the event
+            $total_capacity = apply_filters('tec_tickets_get_event_capacity', null, $event_id, false);
 
-            if (!empty($ticket_counts)) {
-                foreach ($ticket_counts as $counts) {
-                    $total_tickets_available += $counts['available'];
-                }
+            // Ensure total capacity is returned as an integer and is not null
+            if (is_null($total_capacity)) {
+                // Default to 0 if the filter does not return a valid capacity
+                $total_capacity = 0;
             }
 
-            // Use tribe_tickets_get_readable_amount to format the total available tickets
-            $readable_total_tickets_available = tribe_tickets_get_readable_amount($total_tickets_available, $event_id);
-
             $event_data = [
-                'start_date'               => get_post_meta($event_id, '_EventStartDate', true),
-                'issued_tickets'           => get_post_meta($event_id, '_tribe_progressive_ticket_current_number', true),
-                'total_tickets_available'  => $readable_total_tickets_available, // Now holds the readable amount
-                'name'                     => get_the_title($event_id),
-                'thumbnail_url'            => get_the_post_thumbnail_url($event_id, 'medium'),
+                'start_date'              => get_post_meta($event_id, '_EventStartDate', true),
+                'issued_tickets'          => get_post_meta($event_id, '_tribe_progressive_ticket_current_number', true),
+                // Use the total capacity directly
+                'total_tickets_available' => $total_capacity,
+                'name'                    => get_the_title($event_id),
+                'thumbnail_url'           => get_the_post_thumbnail_url($event_id, 'medium'),
             ];
         }
     }
@@ -4609,7 +4606,6 @@ function validate_event_pass() {
     wp_send_json($response);
     wp_die();
 }
-
 
 add_action('wp_ajax_custom_check_in_ticket', 'checkinTicket');
 add_action('wp_ajax_nopriv_custom_check_in_ticket', 'checkinTicket'); 
