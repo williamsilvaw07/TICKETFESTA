@@ -223,16 +223,17 @@
         }
 
 
+
+
+
         function calculatePercentage(issued, total) {
             return (issued / total) * 100;
         }
         
-        
-
         function updateProgressCircle(issuedTickets, totalTickets) {
             var percentage = calculatePercentage(issuedTickets, totalTickets);
             var precisePercentage = percentage.toFixed(1); // To display one decimal place
-            var radius = 52; // Set the radius of your SVG circle
+            var radius = 18; // Set the radius of your SVG circle
             var circumference = 2 * Math.PI * radius;
         
             $('.progress-ring__circle').css({
@@ -243,12 +244,11 @@
         
             // Update the percentage text in the center of the progress circle
             $('.progress-percentage').text(precisePercentage + '%');
-            
+        
             // Update the ticket count text
             $('.ticket-count').text(issuedTickets + ' / ' + totalTickets);
         }
         
-
         function passcodeMatch(response) {
             $('.tabs-container').show();
             $('.tab-content-container').show();
@@ -262,7 +262,14 @@
         
             // Update the progress circle with the new data
             updateProgressCircle(issuedTickets, totalTickets);
-            
+        
+            // Update the ticket list
+            var ticketListHtml = '';
+            response.event_data.ticket_list.forEach(function(ticket) {
+                ticketListHtml += '<li>' + ticket.name + ': ' + ticket.capacity + '</li>';
+            });
+            $('.ticket-info_hidden_all ul').html(ticketListHtml);
+        
             // Proceed with other functions like startScanQR...
             startScanQR(response.event_id);
         }

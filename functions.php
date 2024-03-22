@@ -4546,9 +4546,19 @@ function custom_qr_scanner_shortcode() {
         <div class="progress-percentage">0%</div>
     </div>
     </div>
+
     <div class="ticket-info info_div">
         <h6>Total Ticket Sold</h6>
         <p class="ticket-count">0<span>/</span>0</p>
+        <p class="see_more_ticket_info">See more</p>
+
+        <div class="ticket-info_hidden_all">
+            <ul>
+                <!-- Ticket list will be dynamically populated here -->
+            </ul>
+        </div>
+
+
     </div>
  
     </div>
