@@ -1362,6 +1362,9 @@ html .tickets-sold-column , html .tribe-list-column-title {
                 font-size: 15px;
 
             }
+            #tribe-community-events-list span.passcode {
+                font-size: 19px;
+            }
 
             .report_gross_income {
                 font-size: 15px;

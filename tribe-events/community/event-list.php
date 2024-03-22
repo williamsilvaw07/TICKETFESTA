@@ -222,6 +222,7 @@ do_action( 'tribe_community_events_before_list_table' );
                             'event' => $events->post,
                         ] );
                     }
+                 
                     if ( 'status' === $column_slug ) {
                         $event_id = get_the_ID();
                         $event_pass = get_post_meta($event_id, 'event_pass', true);
