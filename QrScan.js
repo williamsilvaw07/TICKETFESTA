@@ -238,7 +238,7 @@
             $('.progress-ring__circle').css({
                 'stroke-dasharray': circumference,
                 'stroke-dashoffset': circumference - (percentage / 100) * circumference,
-                'stroke': '#4CAF50' // Color of progress
+                'stroke': '#d3fa16' // Color of progress
             });
         
             // Update the percentage text in the center of the progress circle
