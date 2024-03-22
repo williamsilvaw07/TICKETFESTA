@@ -272,7 +272,7 @@
             var dashArray = circumference;
             var dashOffset = circumference - (percentage / 100) * circumference;
         
-            container.find('.individual-progress-ring__circle').css({
+            container.find('.progress-ring__circle-individual').css({
                 'stroke-dasharray': dashArray,
                 'stroke-dashoffset': dashOffset,
                 'stroke': '#d3fa16' // Color of progress
