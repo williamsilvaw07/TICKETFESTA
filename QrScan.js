@@ -225,11 +225,6 @@
 
 
 
-
-
-
-
-
 // Function to calculate the total percentage
 function calculatePercentage(issued, total) {
     if (total === 0) {
@@ -290,37 +285,37 @@ function updateIndividualProgressCircles(ticketList) {
 }
 
 // Function to update individual ticket information
+// Function to update individual ticket information
 function updateIndividualTicketInfo(ticketList) {
     var ticketInfoHtml = '';
     ticketList.forEach(function(ticket) {
         var ticketName = ticket.name;
         var issued = ticket.issued_tickets || 0; // Default to 0 if undefined
         var capacity = ticket.capacity;
+
         var individualPercentage = calculateIndividualPercentage(issued, capacity);
         var preciseIndividualPercentage = individualPercentage.toFixed(1); // To display one decimal place
 
-        ticketInfoHtml += '<li>' + ticketName + ': ' + issued + ' issued out of ' + capacity + ' available';
-        ticketInfoHtml += ' (' + preciseIndividualPercentage + '%)</li>';
+        ticketInfoHtml += '<div class="ticket-progress-container">';
+        ticketInfoHtml += '<svg class="individual-progress-ring" width="72" height="72">';
+        ticketInfoHtml += '<circle class="individual-progress-ring__circle-bg" cx="36" cy="36" r="31" stroke-width="6"></circle>'; // Background circle
+        ticketInfoHtml += '<circle class="individual-progress-ring__circle" cx="36" cy="36" r="31" stroke-width="6" style="stroke-dasharray: 194.779px; stroke-dashoffset: 192.851px; stroke: rgb(211, 250, 22);"></circle>'; // Foreground circle
+        ticketInfoHtml += '</svg>';
+        ticketInfoHtml += '<div class="individual-progress-percentage">' + preciseIndividualPercentage + '%</div>';
+        ticketInfoHtml += '<div class="ticket-details">'; // Container for ticket details
+        ticketInfoHtml += '<div class="ticket-name">' + ticketName + '</div>'; // Ticket name
+        ticketInfoHtml += '<div class="ticket-count">' + issued + ' issued out of ' + capacity + ' available</div>'; // Ticket count
+        ticketInfoHtml += '</div>';
+        ticketInfoHtml += '</div>';
     });
-    $('.ticket-info_hidden_all ul').html(ticketInfoHtml);
+    $('.ticket-info_hidden_all').html(ticketInfoHtml);
 
     // Update individual progress circles
-    $('.ticket-info_hidden_all li').each(function(index) {
+    $('.ticket-progress-container').each(function(index) {
         var container = $(this);
         var ticket = ticketList[index];
         var issued = ticket.issued_tickets || 0;
         var capacity = ticket.capacity;
-
-        // Append progress component to each ticket item
-        var progressHtml = '<div class="ticket-progress-container">';
-        progressHtml += '<svg class="individual-progress-ring" width="72" height="72">';
-        progressHtml += '<circle class="individual-progress-ring__circle-bg" cx="36" cy="36" r="31" stroke-width="6"></circle>';
-        progressHtml += '<circle class="individual-progress-ring__circle" cx="36" cy="36" r="31" stroke-width="6" style="stroke-dasharray: 194.779px; stroke-dashoffset: 192.851px; stroke: rgb(211, 250, 22);"></circle>';
-        progressHtml += '</svg>';
-        progressHtml += '<div class="individual-progress-percentage">' + preciseIndividualPercentage + '%</div>';
-        progressHtml += '</div>';
-
-        container.append(progressHtml);
 
         // Update individual progress circle
         updateIndividualProgressCircle(container, issued, capacity);
@@ -340,8 +335,8 @@ function updateIndividualProgressCircle(container, issuedTickets, totalTickets) 
         'stroke': '#d3fa16' // Color of progress
     });
 
-    // Update the individual percentage text
-    container.find('.individual-progress-percentage').text(precisePercentage + '%');
+// Update the individual percentage text
+container.find('.individual-progress-percentage').text(precisePercentage + '%');
 }
 
 // Function to handle the passcode match response
@@ -387,8 +382,6 @@ function passcodeMatch(response) {
     // Proceed with other functions like startScanQR...
     startScanQR(response.event_id);
 }
-
-
 
     });
 })(jQuery);
