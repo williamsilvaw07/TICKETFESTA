@@ -277,7 +277,7 @@
                 'stroke': '#d3fa16' // Color of progress
             });
         
-            // Update the percentage text inside SVG for individual tickets 
+            // Update the percentage text inside SVG for individual tickets
             container.find('span.progress-percentage_individual').text(precisePercentage + '%');
         }
         
