@@ -279,7 +279,7 @@
             });
         
             // Update the percentage text
-            container.find('span.progress-percentage_individual').text(precisePercentage + '%');
+            container.find('text.progress-percentage_individual').text(precisePercentage + '%');
         }
         
         function passcodeMatch(response) {
