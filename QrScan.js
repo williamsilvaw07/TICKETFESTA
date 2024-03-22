@@ -233,7 +233,7 @@
         function updateProgressCircle(issuedTickets, totalTickets) {
             var percentage = calculatePercentage(issuedTickets, totalTickets);
             var precisePercentage = percentage.toFixed(1); // To display one decimal place
-            var radius = 52; // Set the radius of your SVG circle
+            var radius = 31; // Set the radius of your SVG circle
             var circumference = 2 * Math.PI * radius;
         
             $('.progress-ring__circle').css({
@@ -244,7 +244,7 @@
         
             // Update the percentage text in the center of the progress circle
             $('.progress-percentage').text(precisePercentage + '%');
-            
+        
             // Update the ticket count text
             $('.ticket-count').text(issuedTickets + ' / ' + totalTickets);
         }
@@ -262,11 +262,18 @@
         
             // Update the progress circle with the new data
             updateProgressCircle(issuedTickets, totalTickets);
-            
+        
+            // Display ticket information
+            var ticketList = response.event_data.ticket_list;
+            var ticketInfoHtml = '';
+            ticketList.forEach(function(ticket) {
+                ticketInfoHtml += '<li>' + ticket.name + ': ' + ticket.issued + ' issued out of ' + ticket.capacity + ' available</li>';
+            });
+            $('.ticket-info_hidden_all ul').html(ticketInfoHtml);
+        
             // Proceed with other functions like startScanQR...
             startScanQR(response.event_id);
         }
-        
 
 
     });
