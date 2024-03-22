@@ -329,6 +329,7 @@ button i {
 .ticket-info-container_main{
     display: flex;
     align-items: center;
+    gap: 15px;
 }
 
 .ticket-progress-container {
@@ -365,11 +366,12 @@ button i {
 }
 
 .ticket-info {
-    text-align: center; /* Center the ticket count text */
-    color: white; /* White text color */
-    margin-top: 10px; /* Spacing from the progress container */
+    text-align: left;
+    color: white;
 }
-
+.ticket-info h6{
+    margin:0
+}
 
 
 
