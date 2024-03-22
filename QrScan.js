@@ -225,7 +225,6 @@
 
 
 
-
         function calculatePercentage(issued, total) {
             return (issued / total) * 100;
         }
@@ -267,7 +266,7 @@
             var ticketList = response.event_data.ticket_list;
             var ticketInfoHtml = '';
             ticketList.forEach(function(ticket) {
-                ticketInfoHtml += '<li>' + ticket.name + ': ' + ticket.issued + ' issued out of ' + ticket.capacity + ' available</li>';
+                ticketInfoHtml += '<li>' + ticket.name + ': ' + issuedTickets + ' issued out of ' + ticket.capacity + ' available</li>';
             });
             $('.ticket-info_hidden_all ul').html(ticketInfoHtml);
         
