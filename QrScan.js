@@ -259,13 +259,16 @@
             var ticketList = response.event_data.ticket_list;
         
             // Update the progress circle with the new data
-            updateProgressCircle(totalTickets, totalTickets); // Display progress as 100% initially
+            updateProgressCircle(0, totalTickets); // Initialize progress circle with 0% progress
         
             // Display ticket information
             var ticketInfoHtml = '';
             ticketList.forEach(function(ticket) {
-                var percentage = calculatePercentage(ticket.issued_tickets, ticket.capacity);
-                ticketInfoHtml += '<li>' + ticket.name + ': ' + ticket.issued_tickets + ' issued out of ' + ticket.capacity + ' available (' + percentage.toFixed(0) + '%)</li>';
+                var ticketName = ticket.name;
+                var issued = ticket.issued_tickets || 0; // Default to 0 if undefined
+                var capacity = ticket.capacity;
+                var percentage = calculatePercentage(issued, capacity);
+                ticketInfoHtml += '<li>' + ticketName + ': ' + issued + ' issued out of ' + capacity + ' available (' + percentage.toFixed(0) + '%)</li>';
             });
             $('.ticket-info_hidden_all ul').html(ticketInfoHtml);
         
