@@ -323,6 +323,7 @@ function passcodeMatch(response) {
     startScanQR(response.event_id);
 }
 
+
     });
 })(jQuery);
 
