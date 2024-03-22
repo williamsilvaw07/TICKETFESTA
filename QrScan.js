@@ -270,12 +270,11 @@ function passcodeMatch(response) {
         var ticketName = ticket.name;
         var issued = ticket.issued_tickets || 0; // Default to 0 if undefined
         var capacity = ticket.capacity;
-        ticketInfoHtml += '<li>' + ticketName + ': ' + issued + ' issued out of ' + capacity + ' available</li>';
-
-        // Calculate and update the percentage for individual tickets
         var individualPercentage = calculatePercentage(issued, capacity);
         var preciseIndividualPercentage = individualPercentage.toFixed(1); // To display one decimal place
-        $('.individual-ticket-percentage-' + ticketName.replace(/\s/g, '-')).text(preciseIndividualPercentage + '%');
+
+        ticketInfoHtml += '<li>' + ticketName + ': ' + issued + ' issued out of ' + capacity + ' available';
+        ticketInfoHtml += ' (' + preciseIndividualPercentage + '%)</li>';
     });
     $('.ticket-info_hidden_all ul').html(ticketInfoHtml);
 
