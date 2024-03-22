@@ -318,7 +318,11 @@ button i {
 
 }
 
-
+.event-container-details{
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
 
 
 
@@ -339,7 +343,7 @@ button i {
 .progress-ring__circle-bg {
     fill: transparent;
     stroke: #3a3a3a;
-    stroke-width: 10;
+    stroke-width: 7;
 }
 
 .progress-ring__circle {
