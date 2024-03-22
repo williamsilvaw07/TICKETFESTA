@@ -229,12 +229,26 @@
             $('.event-container .name span').text(response.event_data.name);
             $('.event-container .date span').text(response.event_data.start_date);
         
-            // Update to display "tickets issued out of tickets available"
-            var issuedOutOfAvailable = response.event_data.issued_tickets + ' issued out of ' + response.event_data.total_tickets_available + ' available';
-            $('.event-container .tickets span').text(issuedOutOfAvailable);
+            var issuedTickets = response.event_data.issued_tickets;
+            var totalTickets = response.event_data.total_tickets_available;
+            var percentage = (issuedTickets / totalTickets) * 100;
+            
+            // Update the progress circle
+            var circumference = 52 * 2 * Math.PI; // Assuming the radius of the circle is 52
+            var offset = circumference - percentage / 100 * circumference;
+            $('.progress-ring__circle').css('stroke-dasharray', `${circumference} ${circumference}`);
+            $('.progress-ring__circle').css('stroke-dashoffset', offset);
+        
+            // Update the percentage text
+            $('.progress-percentage').text(percentage.toFixed(0) + '%');
+        
+            // Update the counts
+            var issuedOutOfAvailable = `${issuedTickets} / ${totalTickets}`;
+            $('.progress-count').text(issuedOutOfAvailable);
         
             startScanQR(response.event_id);
         }
+        
 
     });
 })(jQuery);

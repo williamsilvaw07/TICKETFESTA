@@ -318,6 +318,33 @@ button i {
 
 }
 
+.ticket-progress-container {
+    position: relative;
+    width: 120px;
+    height: 120px;
+}
+
+.progress-percentage,
+.progress-count {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 18px;
+    color: white;
+}
+
+.progress-percentage {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.progress-ring__circle {
+    transition: stroke-dashoffset 0.35s;
+    transform: rotate(-90deg);
+    transform-origin: 50% 50%;
+}
 
 
 
