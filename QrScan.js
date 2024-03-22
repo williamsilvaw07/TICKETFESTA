@@ -254,20 +254,20 @@ function calculateIndividualPercentage(issued, total) {
 }
 
 // Function to update individual ticket progress circle
-function updateIndividualProgressCircle(issued, total) {
+function updateIndividualProgressCircle(container, issued, total) {
     var percentage = calculateIndividualPercentage(issued, total);
     var precisePercentage = percentage.toFixed(1); // To display one decimal place
     var radius = 31; // Set the radius of your SVG circle
     var circumference = 2 * Math.PI * radius;
 
-    $('.individual-progress-ring__circle').css({
+    container.find('.individual-progress-ring__circle').css({
         'stroke-dasharray': circumference,
         'stroke-dashoffset': circumference - (percentage / 100) * circumference,
         'stroke': '#d3fa16' // Color of progress
     });
 
     // Update the individual percentage text
-    $('.individual-progress-percentage').text(precisePercentage + '%');
+    container.find('.individual-progress-percentage').text(precisePercentage + '%');
 }
 
 // Function to update individual ticket information
@@ -278,21 +278,27 @@ function updateIndividualTicketInfo(ticketList) {
         var issued = ticket.issued_tickets || 0; // Default to 0 if undefined
         var capacity = ticket.capacity;
 
-        // Update individual ticket progress circle
-        updateIndividualProgressCircle(issued, capacity);
-
         var individualPercentage = calculateIndividualPercentage(issued, capacity);
         var preciseIndividualPercentage = individualPercentage.toFixed(1); // To display one decimal place
 
         ticketInfoHtml += '<div class="ticket-progress-container">';
         ticketInfoHtml += '<svg class="individual-progress-ring" width="72" height="72">';
         ticketInfoHtml += '<circle class="individual-progress-ring__circle-bg" cx="36" cy="36" r="31" stroke-width="6"></circle>'; // Background circle
-        ticketInfoHtml += '<circle class="individual-progress-ring__circle" cx="36" cy="36" r="31" stroke-width="6" style="stroke-dasharray: ' + circumference + 'px; stroke-dashoffset: ' + (circumference - (percentage / 100) * circumference) + 'px; stroke: #d3fa16;"></circle>'; // Foreground circle
+        ticketInfoHtml += '<circle class="individual-progress-ring__circle" cx="36" cy="36" r="31" stroke-width="6"></circle>'; // Foreground circle
         ticketInfoHtml += '</svg>';
         ticketInfoHtml += '<div class="individual-progress-percentage">' + preciseIndividualPercentage + '%</div>';
         ticketInfoHtml += '</div>';
     });
     $('.ticket-info_hidden_all').html(ticketInfoHtml);
+
+    // Update individual progress circles
+    $('.ticket-progress-container').each(function(index) {
+        var container = $(this);
+        var ticket = ticketList[index];
+        var issued = ticket.issued_tickets || 0;
+        var capacity = ticket.capacity;
+        updateIndividualProgressCircle(container, issued, capacity);
+    });
 }
 
 // Function to handle the passcode match response
@@ -316,7 +322,6 @@ function passcodeMatch(response) {
     // Proceed with other functions like startScanQR...
     startScanQR(response.event_id);
 }
-
 
     });
 })(jQuery);
