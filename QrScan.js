@@ -285,6 +285,7 @@ function updateIndividualProgressCircles(ticketList) {
 }
 
 // Function to update individual ticket information
+// Function to update individual ticket information
 function updateIndividualTicketInfo(ticketList) {
     var ticketInfoHtml = '';
     ticketList.forEach(function(ticket) {
@@ -298,7 +299,7 @@ function updateIndividualTicketInfo(ticketList) {
         ticketInfoHtml += '<div class="ticket-progress-container">';
         ticketInfoHtml += '<svg class="individual-progress-ring" width="72" height="72">';
         ticketInfoHtml += '<circle class="individual-progress-ring__circle-bg" cx="36" cy="36" r="31" stroke-width="6"></circle>'; // Background circle
-        ticketInfoHtml += '<circle class="individual-progress-ring__circle" cx="36" cy="36" r="31" stroke-width="6"></circle>'; // Foreground circle
+        ticketInfoHtml += '<circle class="individual-progress-ring__circle" cx="36" cy="36" r="31" stroke-width="6" style="stroke-dasharray: 194.779px; stroke-dashoffset: 192.851px; stroke: rgb(211, 250, 22);"></circle>'; // Foreground circle
         ticketInfoHtml += '</svg>';
         ticketInfoHtml += '<div class="individual-progress-percentage">' + preciseIndividualPercentage + '%</div>';
         ticketInfoHtml += '<div class="ticket-details">'; // Container for ticket details
