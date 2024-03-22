@@ -335,13 +335,13 @@ button i {
 
 .progress-ring__circle-bg {
     fill: transparent;
-    stroke: #d3fa16;
+    stroke: #3a3a3a;
     stroke-width: 10;
 }
 
 .progress-ring__circle {
     fill: transparent;
-    stroke: #d3fa16;
+    stroke: #4CAF50; 
     stroke-width: 10; 
     stroke-dasharray: 365; 
     stroke-dashoffset: 365;
