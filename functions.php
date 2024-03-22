@@ -4604,9 +4604,10 @@ function validate_event_pass() {
     $match = false;
     $event_id = null;
     $event_data = [];
-    $ticket_list = [];
 
     foreach ($events as $event) {
+        $ticket_list = []; // Reset ticket list for each event
+
         if (isset($event->ID)) {
             $match = true;
             $event_id = $event->ID;
