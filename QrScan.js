@@ -229,9 +229,13 @@
             $('.event-container .name span').text(response.event_data.name);
             $('.event-container .date span').text(response.event_data.start_date);
         
-            var issuedTickets = response.event_data.issued_tickets;
-            var totalTickets = response.event_data.total_tickets_available;
-            var percentage = (issuedTickets / totalTickets) * 100;
+            var issuedTickets = parseInt(response.event_data.issued_tickets, 10);
+            var totalTickets = parseInt(response.event_data.total_tickets_available, 10);
+            var percentage = issuedTickets / totalTickets * 100;
+
+               // Calculate stroke offset for SVG
+    var circumference = 365; // Circle circumference
+    var offset = circumference - percentage / 100 * circumference;
             
             // Update the progress circle
             var circumference = 52 * 2 * Math.PI; // Assuming the radius of the circle is 52
@@ -247,6 +251,16 @@
             $('.progress-count').text(issuedOutOfAvailable);
         
             startScanQR(response.event_id);
+
+
+    // Update the SVG circle
+    $('.progress-ring__circle').css({
+        'stroke-dashoffset': offset,
+        'stroke': '#4CAF50', // Color of progress
+    });
+
+    // Update the percentage text
+    $('.progress-label').text(percentage.toFixed(0) + '%');
         }
         
 

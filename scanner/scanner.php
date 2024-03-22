@@ -317,34 +317,33 @@ button i {
 .tabs-container .active{
 
 }
-
-.ticket-progress-container {
+.progress-container {
     position: relative;
-    width: 120px;
-    height: 120px;
+    display: inline-block;
 }
 
-.progress-percentage,
-.progress-count {
-    position: absolute;
-    width: 100%;
-    text-align: center;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 18px;
-    color: white;
-}
-
-.progress-percentage {
-    font-size: 20px;
-    font-weight: bold;
+.progress-ring {
+    transform: rotate(-90deg);
 }
 
 .progress-ring__circle {
-    transition: stroke-dashoffset 0.35s;
-    transform: rotate(-90deg);
-    transform-origin: 50% 50%;
+    fill: transparent;
+    stroke: white;
+    stroke-dasharray: 365; /* Circumference of the circle */
+    stroke-dashoffset: 365;
+    transition: stroke-dashoffset 0.4s;
 }
+
+.progress-label {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    line-height: 120px; /* Match the SVG height */
+    color: white;
+    font-size: 1.5em;
+    top: 0;
+}
+
 
 
 
