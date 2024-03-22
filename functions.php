@@ -4680,6 +4680,7 @@ function checkinTicket(){
             update_post_meta( $ticket_id, '_tribe_tpp_checkedin', 1 );
 
             $now = new DateTime();
+            // willam
             $formatted_datetime = $now->format('Y-m-d H:i:s');
             $checkin_details = [
                 'date'      => $formatted_datetime,
@@ -4715,7 +4716,7 @@ function checkinTicket(){
                 'fullname'     => $fullname,
                 'email'        => $email,
                 'message'      => 'Already Checked In.',
-                'checkin_time' => $checkin_details['date'],
+                'checkin_time' => $checkin_details['date'],             // willam
                 'scaned_by'    => $checkin_details['scaned_by'],
             ];
             wp_send_json($response);
