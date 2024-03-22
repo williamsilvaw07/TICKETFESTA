@@ -285,10 +285,12 @@ input#event-pass {
     }
     .tab-content.active .event-container {
         width: 100%;
-        display: inline-flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
+    display: inline-flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    margin-top: 20px;
     }
 
 

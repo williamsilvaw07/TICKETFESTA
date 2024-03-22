@@ -4620,7 +4620,7 @@ function checkinTicket(){
             update_post_meta( $ticket_id, '_tribe_tpp_checkedin', 1 );
 
             $now = new DateTime();
-            $formatted_datetime = $now->format('Y-m-d H:i:s');
+            $formatted_datetime = $now->format('d-m-Y H:i');
             $checkin_details = [
                 'date'      => $formatted_datetime,
                 'source'    => 'qr-code',
