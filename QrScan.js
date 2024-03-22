@@ -319,11 +319,20 @@
                 var individualProgressHtml = `
                     <div class="ticket-progress-container">
                         <svg class="progress-ring" width="72" height="72">
+                            <circle class="progress-ring__circle-bg" cx="36" cy="36" r="31" stroke-width="6"></circle>
+                            <circle class="progress-ring__circle progress-ring__circle-individual" cx="36" cy="36" r="31" stroke-width="6"></circle>
+                            
+                        </svg>
+
+                        <div class="ticket-progress-container-svg">
                         <p class="progress-percentage_individual" ${percentage}%</p>
+                        <svg class="progress-ring" width="72" height="72">
                             <circle class="progress-ring__circle-bg" cx="36" cy="36" r="31" stroke-width="6"></circle>
                             <circle class="progress-ring__circle progress-ring__circle-individual" cx="36" cy="36" r="31" stroke-width="6"></circle>
                            
                         </svg>
+                        </div>
+
                         <div class="ticket-details">
                             <div class="ticket-name">${ticket.name}</div>
                             <div class="ticket-count">${issued} issued out of ${capacity} available</div>
