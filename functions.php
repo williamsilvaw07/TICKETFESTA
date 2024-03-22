@@ -4618,13 +4618,14 @@ function validate_event_pass() {
                 $total_capacity = 0;
 
                 foreach ($tickets as $ticket) {
-                    $ticket_capacity = $ticket->capacity();
+                    $ticket_capacity = tribe_tickets_get_capacity($ticket->ID); // Retrieve ticket capacity
                     $total_capacity += $ticket_capacity;
 
-                    // Add each ticket's name and capacity to the ticket list
+                    // Add each ticket's name, capacity, and issued tickets to the ticket list
                     $ticket_list[] = [
                         'name' => $ticket->name,
                         'capacity' => $ticket_capacity,
+                        'issued_tickets' => get_post_meta($ticket->ID, '_tribe_progressive_ticket_current_number', true),
                     ];
                 }
             }
