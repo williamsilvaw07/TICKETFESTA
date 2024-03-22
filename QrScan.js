@@ -284,10 +284,15 @@ function updateIndividualTicketInfo(ticketList) {
         var individualPercentage = calculateIndividualPercentage(issued, capacity);
         var preciseIndividualPercentage = individualPercentage.toFixed(1); // To display one decimal place
 
-        ticketInfoHtml += '<li>' + ticketName + ': ' + issued + ' issued out of ' + capacity + ' available';
-        ticketInfoHtml += ' (' + preciseIndividualPercentage + '%)</li>';
+        ticketInfoHtml += '<div class="ticket-progress-container">';
+        ticketInfoHtml += '<svg class="individual-progress-ring" width="72" height="72">';
+        ticketInfoHtml += '<circle class="individual-progress-ring__circle-bg" cx="36" cy="36" r="31" stroke-width="6"></circle>'; // Background circle
+        ticketInfoHtml += '<circle class="individual-progress-ring__circle" cx="36" cy="36" r="31" stroke-width="6" style="stroke-dasharray: ' + circumference + 'px; stroke-dashoffset: ' + (circumference - (percentage / 100) * circumference) + 'px; stroke: #d3fa16;"></circle>'; // Foreground circle
+        ticketInfoHtml += '</svg>';
+        ticketInfoHtml += '<div class="individual-progress-percentage">' + preciseIndividualPercentage + '%</div>';
+        ticketInfoHtml += '</div>';
     });
-    $('.ticket-info_hidden_all ul').html(ticketInfoHtml);
+    $('.ticket-info_hidden_all').html(ticketInfoHtml);
 }
 
 // Function to handle the passcode match response
@@ -311,6 +316,7 @@ function passcodeMatch(response) {
     // Proceed with other functions like startScanQR...
     startScanQR(response.event_id);
 }
+
 
     });
 })(jQuery);
