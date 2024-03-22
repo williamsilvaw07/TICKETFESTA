@@ -224,13 +224,18 @@
 
 
 // Function to calculate the total percentage
-function calculateTotalPercentage(issued, total) {
+function calculatePercentage(issued, total) {
+    return (issued / total) * 100;
+}
+
+// Function to calculate the individual percentage for a ticket
+function calculateIndividualPercentage(issued, total) {
     return (issued / total) * 100;
 }
 
 // Function to update the progress circle with total percentage
-function updateTotalProgressCircle(issuedTickets, totalTickets) {
-    var percentage = calculateTotalPercentage(issuedTickets, totalTickets);
+function updateProgressCircle(issuedTickets, totalTickets) {
+    var percentage = calculatePercentage(issuedTickets, totalTickets);
     var precisePercentage = percentage.toFixed(1); // To display one decimal place
     var radius = 31; // Set the radius of your SVG circle
     var circumference = 2 * Math.PI * radius;
@@ -248,15 +253,9 @@ function updateTotalProgressCircle(issuedTickets, totalTickets) {
     $('.ticket-count').text(issuedTickets + ' / ' + totalTickets);
 }
 
-// Function to calculate the individual percentage
-function calculateIndividualPercentage(issued, total) {
-    return (issued / total) * 100;
-}
-
 // Function to update individual ticket progress circle
-function updateIndividualProgressCircle(container, issued, total) {
-    var percentage = calculateIndividualPercentage(issued, total);
-    var precisePercentage = percentage.toFixed(1); // To display one decimal place
+function updateIndividualProgressCircle(container, issuedTickets, totalTickets) {
+    var percentage = calculateIndividualPercentage(issuedTickets, totalTickets);
     var radius = 31; // Set the radius of your SVG circle
     var circumference = 2 * Math.PI * radius;
 
@@ -267,7 +266,7 @@ function updateIndividualProgressCircle(container, issued, total) {
     });
 
     // Update the individual percentage text
-    container.find('.individual-progress-percentage').text(precisePercentage + '%');
+    container.find('.individual-progress-percentage').text(percentage.toFixed(1) + '%');
 }
 
 // Function to update individual ticket information
@@ -287,6 +286,10 @@ function updateIndividualTicketInfo(ticketList) {
         ticketInfoHtml += '<circle class="individual-progress-ring__circle" cx="36" cy="36" r="31" stroke-width="6"></circle>'; // Foreground circle
         ticketInfoHtml += '</svg>';
         ticketInfoHtml += '<div class="individual-progress-percentage">' + preciseIndividualPercentage + '%</div>';
+        ticketInfoHtml += '<div class="ticket-details">'; // Container for ticket details
+        ticketInfoHtml += '<div class="ticket-name">' + ticketName + '</div>'; // Ticket name
+        ticketInfoHtml += '<div class="ticket-count">' + issued + ' issued out of ' + capacity + ' available</div>'; // Ticket count
+        ticketInfoHtml += '</div>';
         ticketInfoHtml += '</div>';
     });
     $('.ticket-info_hidden_all').html(ticketInfoHtml);
@@ -313,16 +316,16 @@ function passcodeMatch(response) {
     var totalIssuedTickets = parseInt(response.event_data.issued_tickets, 10);
     var totalAvailableTickets = parseInt(response.event_data.total_tickets_available, 10);
 
-    // Update the total progress circle with the total data
-    updateTotalProgressCircle(totalIssuedTickets, totalAvailableTickets);
+    // Update the progress circle with the total data
+    updateProgressCircle(totalIssuedTickets, totalAvailableTickets);
 
     // Update individual ticket information
-    updateIndividualTicketInfo(response.event_data.ticket_list);
+    var ticketList = response.event_data.ticket_list;
+    updateIndividualTicketInfo(ticketList);
 
     // Proceed with other functions like startScanQR...
     startScanQR(response.event_id);
 }
-
 
     });
 })(jQuery);
