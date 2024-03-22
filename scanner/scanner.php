@@ -333,12 +333,19 @@ button i {
     transform: rotate(-90deg);
 }
 
+.progress-ring__circle-bg {
+    fill: transparent;
+    stroke: #ddd; /* Color for the unfilled part */
+    stroke-width: 10; /* Match the stroke-width with the filled part */
+}
+
 .progress-ring__circle {
     fill: transparent;
-    stroke-dasharray: 326.725; /* Circumference of the circle (2 * Math.PI * 52) */
-    stroke-dashoffset: 326.725; /* Same as dash-array to start as empty */
+    stroke: #4CAF50; /* Color for the filled part */
+    stroke-width: 10; /* Your desired thickness */
+    stroke-dasharray: 365; /* Update with your circle's circumference */
+    stroke-dashoffset: 365; /* Same as the dash-array to start as empty */
     transition: stroke-dashoffset 0.35s;
-    stroke-width: 4;
 }
 
 .progress-percentage {
