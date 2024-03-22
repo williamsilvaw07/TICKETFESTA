@@ -211,7 +211,6 @@ do_action( 'tribe_community_events_before_list_table' );
                             'column_label' => $column_label,
                             'event' => $events->post,
                         ] );
-                        echo "XXXXXX";
                     } else {
                         // Display other columns as usual
                         tribe_get_template_part( 'community/columns/' . sanitize_key( $column_slug ), null, [
@@ -219,7 +218,6 @@ do_action( 'tribe_community_events_before_list_table' );
                             'column_label' => $column_label,
                             'event' => $events->post,
                         ] );
-                        echo "XXXXXX";
                     }
                     ?>
                 </td>
