@@ -335,16 +335,16 @@ button i {
 
 .progress-ring__circle-bg {
     fill: transparent;
-    stroke: #ddd; /* Color for the unfilled part */
-    stroke-width: 10; /* Match the stroke-width with the filled part */
+    stroke: #3a3a3a;
+    stroke-width: 10;
 }
 
 .progress-ring__circle {
     fill: transparent;
-    stroke: #4CAF50; /* Color for the filled part */
-    stroke-width: 10; /* Your desired thickness */
-    stroke-dasharray: 365; /* Update with your circle's circumference */
-    stroke-dashoffset: 365; /* Same as the dash-array to start as empty */
+    stroke: #d3fa16;
+    stroke-width: 10; 
+    stroke-dasharray: 365; 
+    stroke-dashoffset: 365;
     transition: stroke-dashoffset 0.35s;
 }
 
