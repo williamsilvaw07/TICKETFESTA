@@ -4534,7 +4534,10 @@ function custom_qr_scanner_shortcode() {
                         <div class="date">Date:  <span> </span> </div>
                <div class="location">Location: </div>
                         <div class="tickets">Issued Tickets:  <span> </span> </div>
-                       <div class="tickets-percent">Ticket Percent: </div>
+                        <div class="tickets">
+        <span>Tickets:</span>
+        <ul class="ticket-list"></ul>
+    </div>
                     </div>
                     </div>
                 </div>
