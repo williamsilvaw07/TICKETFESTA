@@ -297,7 +297,7 @@ function passcodeMatch(response) {
 // Function to update individual ticket information
 function updateIndividualTicketInfo(ticketList) {
     var ticketInfoHtml = '';
-    ticketList.forEach(function(ticket) {
+    ticketList.forEach(function(ticket) { 
         var ticketName = ticket.name;
         var issued = ticket.issued_tickets || 0; // Default to 0 if undefined
         var capacity = ticket.capacity;
