@@ -311,14 +311,14 @@
                 var capacity = parseInt(ticket.capacity, 10);
                 var percentage = calculatePercentage(issued, capacity).toFixed(1); // Calculate percentage for each ticket type
         
-                // HTML for individual progress components
+                // HTML for individual progress components with the same class names as before
                 var individualProgressHtml = `
                     <div class="ticket-progress-container">
-                        <svg class="individual-progress-ring" width="72" height="72">
-                            <circle class="individual-progress-ring__circle-bg" cx="36" cy="36" r="31" stroke-width="6"></circle>
-                            <circle class="individual-progress-ring__circle" cx="36" cy="36" r="31" stroke-width="6"></circle>
+                        <svg class="progress-ring" width="72" height="72">
+                            <circle class="progress-ring__circle-bg" cx="36" cy="36" r="31" stroke-width="6"></circle>
+                            <circle class="progress-ring__circle" cx="36" cy="36" r="31" stroke-width="6"></circle>
                         </svg>
-                        <div class="individual-progress-percentage">${percentage}%</div>
+                        <div class="progress-percentage">${percentage}%</div>
                         <div class="ticket-details">
                             <div class="ticket-name">${ticket.name}</div>
                             <div class="ticket-count">${issued} issued out of ${capacity} available</div>
@@ -332,7 +332,7 @@
                 // Append individual progress component to container
                 $('.ticket-info_hidden_all').append(individualProgressHtml);
         
-                // Update individual progress circle
+                // Update individual progress circle with the same class names as before
                 updateIndividualProgressCircle($('.ticket-info_hidden_all .ticket-progress-container').last(), issued, capacity);
             });
         
