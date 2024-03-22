@@ -4567,7 +4567,7 @@ add_action('wp_ajax_nopriv_validate_event_pass', 'validate_event_pass'); // If y
 
 function validate_event_pass() {
     $event_pass = isset($_POST['event_pass']) ? esc_attr($_POST['event_pass']) : false;
-    $events = get_posts_by_event_pass($event_pass);
+    $events = get_posts_by_event_pass($event_pass); // Make sure this function is defined and returns the correct events.
     $match = false;
     $event_id = null;
     $event_data = [];
@@ -4577,17 +4577,29 @@ function validate_event_pass() {
             $match = true;
             $event_id = $event->ID;
 
-        // Assuming $event_id is correctly determined by this point
-    $total_tickets_available = apply_filters('tec_tickets_get_event_capacity', null, $event_id);
+            // Get the number of issued tickets directly from post meta
+            $issued_tickets = get_post_meta($event_id, '_tribe_progressive_ticket_current_number', true);
 
-    $event_data = [
-        'start_date'              => get_post_meta($event_id, '_EventStartDate', true),
-        'issued_tickets'          => get_post_meta($event_id, '_tribe_progressive_ticket_current_number', true),
-        'total_tickets_available' => $total_tickets_available, // Assuming the filter 'tec_tickets_get_event_capacity' is correctly set up to return this
-        'name'                    => get_the_title($event_id),
-        'thumbnail_url'           => get_the_post_thumbnail_url($event_id, 'medium'),
-    ];
+            // Assuming you have a meta field or a method to calculate the total available tickets
+            // This might be a direct meta field or a calculated value
+            // For demonstration, assuming a meta field named '_total_tickets_available'
+            $total_tickets_available = get_post_meta($event_id, '_total_tickets_available', true);
 
+            if (empty($total_tickets_available) && function_exists('tec_tickets_get_event_capacity')) {
+                // If no direct meta field for total tickets, try getting capacity via a filter or function
+                $total_tickets_available = apply_filters('tec_tickets_get_event_capacity', 0, $event_id, null);
+            }
+
+            // Now $total_tickets_available should have the total tickets available
+            // Or you could apply any custom logic here to calculate it
+
+            $event_data = [
+                'start_date'              => get_post_meta($event_id, '_EventStartDate', true),
+                'issued_tickets'          => $issued_tickets,
+                'total_tickets_available' => $total_tickets_available,
+                'name'                    => get_the_title($event_id),
+                'thumbnail_url'           => get_the_post_thumbnail_url($event_id, 'medium'),
+            ];
         }
     }
 
@@ -4600,6 +4612,7 @@ function validate_event_pass() {
     wp_send_json($response);
     wp_die();
 }
+
 
 add_action('wp_ajax_custom_check_in_ticket', 'checkinTicket');
 add_action('wp_ajax_nopriv_custom_check_in_ticket', 'checkinTicket'); 
