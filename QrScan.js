@@ -230,7 +230,7 @@
             $('.event-container .date span').text(response.event_data.start_date);
         
             // Update to display "tickets issued out of tickets available"
-            var issuedOutOfAvailable = response.event_data.total_tickets_sold + ' issued out of ' + response.event_data.total_tickets_available + ' available';
+            var issuedOutOfAvailable = response.event_data.issued_tickets + ' issued out of ' + response.event_data.total_tickets_available + ' available';
             $('.event-container .tickets span').text(issuedOutOfAvailable);
         
             startScanQR(response.event_id);
