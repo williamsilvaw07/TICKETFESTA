@@ -3675,8 +3675,12 @@ display:block!important
                     margin-bottom: 16px;
                 }
 
-                .tribe-community-events-list tbody .tribe-list-column-title {
+                .tribe-community-events-list tbody .tribe-list-column-passcode {
                     grid-area: 2 / 1 / 3 / 2;
+
+                }
+                .tribe-community-events-list tbody .tribe-list-column-title {
+                    grid-area: 3 / 1 / 4 / 2;
 
                 }
 
@@ -3707,12 +3711,12 @@ display:block!important
                 }
 
                 .tribe-community-events-list tbody .tribe-list-column-organizer {
-                    grid-area: 3 / 1 / 4 / 2;
+                    grid-area: 4 / 1 / 5 / 2;
 
                 }
 
                 .tribe-community-events-list tbody .tribe-list-column-venue {
-                    grid-area: 4 / 1 / 5 / 2;
+                    grid-area: 5 / 1 / 6 / 2;
 
                 }
 
