@@ -222,16 +222,15 @@
             $('.tab-content-container').hide();
         }
 
-        function passcodeMatch(response){
+        function passcodeMatch(response) {
             $('.tabs-container').show();
             $('.tab-content-container').show();
             $('.event-container .event-image').attr('src', response.event_data.thumbnail_url);
             $('.event-container .name span').text(response.event_data.name);
             $('.event-container .date span').text(response.event_data.start_date);
-            $('.event-container .tickets span').text(response.event_data.issued_ticked);
+            // Update to display total tickets available
+            $('.event-container .tickets span').text(response.event_data.total_tickets_available + ' tickets available');
             startScanQR(response.event_id);
-         
-             
         }
 
     });

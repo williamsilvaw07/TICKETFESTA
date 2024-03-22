@@ -4567,32 +4567,48 @@ add_action('wp_ajax_nopriv_validate_event_pass', 'validate_event_pass'); // If y
 
 function validate_event_pass() {
     // Your AJAX handling logic goes here
-    // You can access the posted data via $_POST
-    // Process the data, perform actions, and generate a response
-    $event_pass = isset(  $_POST['event_pass'] ) ? esc_attr( $_POST['event_pass']) : false;
+    $event_pass = isset($_POST['event_pass']) ? esc_attr($_POST['event_pass']) : false;
     $events = get_posts_by_event_pass($event_pass);
-    $match  =  false;
-    $event_id =  null;
+    $match = false;
+    $event_id = null;
     $event_data = [];
-    foreach($events as $event){
-        if(isset($event->ID)){
-            $match    =  true;
+
+    foreach ($events as $event) {
+        if (isset($event->ID)) {
+            $match = true;
             $event_id = $event->ID;
+
+            // Get ticket counts for the event
+            $ticket_counts = Tribe__Tickets__Tickets::get_ticket_counts($event_id);
+
+            // Initialize ticket totals
+            $total_tickets_sold = 0;
+            $total_tickets_available = 0;
+
+            // Calculate the totals from ticket counts
+            if (!empty($ticket_counts)) {
+                foreach ($ticket_counts as $counts) {
+                    $total_tickets_sold += $counts['sold'];
+                    $total_tickets_available += $counts['available'];
+                }
+            }
+
             $event_data = [
-                'start_date'     => get_post_meta( $event_id, '_EventStartDate', true ),
-                'issued_ticked'  => get_post_meta( $event_id, '_tribe_progressive_ticket_current_number', true ),
-                'name'           => get_the_title( $event_id ),
-                'thumbnail_url'  => get_the_post_thumbnail_url($event_id, 'medium'),
+                'start_date'               => get_post_meta($event_id, '_EventStartDate', true),
+                'issued_tickets'           => get_post_meta($event_id, '_tribe_progressive_ticket_current_number', true),
+                'total_tickets_sold'       => $total_tickets_sold,
+                'total_tickets_available'  => $total_tickets_available,
+                'name'                     => get_the_title($event_id),
+                'thumbnail_url'            => get_the_post_thumbnail_url($event_id, 'medium'),
             ];
         }
     }
-    $response = array(
-        'match'      =>  $match,
-        'event_id'   =>  $event_id,
-        'event_data' =>  $event_data,
-    );
-      
-   
+
+    $response = [
+        'match'     => $match,
+        'event_id'  => $event_id,
+        'event_data' => $event_data,
+    ];
 
     // Send the response back to the client
     wp_send_json($response);
