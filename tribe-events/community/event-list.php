@@ -200,7 +200,10 @@ do_action( 'tribe_community_events_before_list_table' );
                     class="tribe-dependent tribe-list-column <?php echo sanitize_html_class( 'tribe-list-column-' . $column_slug ); ?>"
                 >
                     <?php   
-                     echo $column_slug;
+                     
+                    if ( 'status' === $column_slug ) {
+                        echo "$column_slug</td><td>";
+                    }
                     if ( 'title' === $column_slug ) {
                         // Display the event image
                         if ( has_post_thumbnail() ) {
