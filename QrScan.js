@@ -257,26 +257,26 @@
             $('.ticket-count').text(issuedTickets + ' / ' + totalTickets);
         }
         
-  // Function to update individual progress circle
-function updateIndividualProgressCircle(container, issuedTickets, totalTickets) {
-    var percentage = calculateIndividualPercentage(issuedTickets, totalTickets);
-    var precisePercentage = percentage.toFixed(1); // To display one decimal place
-    var radius = 31; // Set the radius of your SVG circle
-    var circumference = 2 * Math.PI * radius;
-
-    // Calculate stroke-dasharray and stroke-dashoffset
-    var dashArray = circumference;
-    var dashOffset = circumference - (percentage / 100) * circumference;
-
-    container.find('.individual-progress-ring__circle').css({
-        'stroke-dasharray': dashArray,
-        'stroke-dashoffset': dashOffset,
-        'stroke': '#d3fa16' // Color of progress
-    });
-
-    // Update the individual percentage text
-    container.find('.individual-progress-percentage').text(precisePercentage + '%');
-}
+        function updateIndividualProgressCircle(container, issuedTickets, totalTickets) {
+            var percentage = calculatePercentage(issuedTickets, totalTickets);
+            if (isNaN(percentage)) {
+                console.error("Percentage calculation error.");
+                return;
+            }
+        
+            var precisePercentage = percentage.toFixed(1); // To display one decimal place
+            var radius = 31; // Set the radius of your SVG circle
+            var circumference = 2 * Math.PI * radius;
+        
+            container.find('.individual-progress-ring__circle').css({
+                'stroke-dasharray': 433,
+                'stroke-dashoffset': circumference - (percentage / 100) * circumference,
+                'stroke': '#d3fa16' // Color of progress
+            });
+        
+            // Update the percentage text
+            container.find('.individual-progress-percentage').text(precisePercentage + '%');
+        }
         
         function passcodeMatch(response) {
             if (!response || !response.event_data) {
