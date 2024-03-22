@@ -4567,7 +4567,7 @@ add_action('wp_ajax_nopriv_validate_event_pass', 'validate_event_pass'); // If y
 
 function validate_event_pass() {
     $event_pass = isset($_POST['event_pass']) ? esc_attr($_POST['event_pass']) : false;
-    $events = get_posts_by_event_pass($event_pass); // Make sure this function is defined and returns the correct events.
+    $events = get_posts_by_event_pass($event_pass);
     $match = false;
     $event_id = null;
     $event_data = [];
@@ -4577,26 +4577,20 @@ function validate_event_pass() {
             $match = true;
             $event_id = $event->ID;
 
-            // Get the number of issued tickets directly from post meta
-            $issued_tickets = get_post_meta($event_id, '_tribe_progressive_ticket_current_number', true);
+            // Assuming you have the event ID, get the total capacity for the event
+            $total_capacity = apply_filters('tec_tickets_get_event_capacity', null, $event_id, false);
 
-            // Assuming you have a meta field or a method to calculate the total available tickets
-            // This might be a direct meta field or a calculated value
-            // For demonstration, assuming a meta field named '_total_tickets_available'
-            $total_tickets_available = get_post_meta($event_id, '_total_tickets_available', true);
-
-            if (empty($total_tickets_available) && function_exists('tec_tickets_get_event_capacity')) {
-                // If no direct meta field for total tickets, try getting capacity via a filter or function
-                $total_tickets_available = apply_filters('tec_tickets_get_event_capacity', 0, $event_id, null);
+            // Ensure total capacity is returned as an integer and is not null
+            if (is_null($total_capacity)) {
+                // Default to 0 if the filter does not return a valid capacity
+                $total_capacity = 0;
             }
-
-            // Now $total_tickets_available should have the total tickets available
-            // Or you could apply any custom logic here to calculate it
 
             $event_data = [
                 'start_date'              => get_post_meta($event_id, '_EventStartDate', true),
-                'issued_tickets'          => $issued_tickets,
-                'total_tickets_available' => $total_tickets_available,
+                'issued_tickets'          => get_post_meta($event_id, '_tribe_progressive_ticket_current_number', true),
+                // Use the total capacity directly
+                'total_tickets_available' => $total_capacity,
                 'name'                    => get_the_title($event_id),
                 'thumbnail_url'           => get_the_post_thumbnail_url($event_id, 'medium'),
             ];
@@ -4612,6 +4606,8 @@ function validate_event_pass() {
     wp_send_json($response);
     wp_die();
 }
+
+// Remember to properly hook your function to WordPress AJAX actions if it's intended for AJAX.
 
 
 add_action('wp_ajax_custom_check_in_ticket', 'checkinTicket');
