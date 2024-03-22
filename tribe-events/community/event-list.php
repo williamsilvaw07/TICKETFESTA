@@ -201,9 +201,7 @@ do_action( 'tribe_community_events_before_list_table' );
                 >
                     <?php   
                      
-                    if ( 'status' === $column_slug ) {
-                        echo "$column_slug</td><td>";
-                    }
+
                     if ( 'title' === $column_slug ) {
                         // Display the event image
                         if ( has_post_thumbnail() ) {
@@ -223,6 +221,9 @@ do_action( 'tribe_community_events_before_list_table' );
                             'column_label' => $column_label,
                             'event' => $events->post,
                         ] );
+                    }
+                    if ( 'status' === $column_slug ) {
+                        echo "</td><td>$column_slug";
                     }
                     ?>
                 </td>
