@@ -247,7 +247,7 @@
             $('.ticket-count').text(issuedTickets + ' / ' + totalTickets);
         }
         
-        function passcodeMatch(response) {
+        ffunction passcodeMatch(response) {
             $('.tabs-container').show();
             $('.tab-content-container').show();
             $('.event-container .event-image').attr('src', response.event_data.thumbnail_url);
@@ -255,27 +255,23 @@
             $('.event-container .date span').text(response.event_data.start_date);
         
             // Extract the ticket information
-            var issuedTickets = parseInt(response.event_data.issued_tickets, 10);
             var totalTickets = parseInt(response.event_data.total_tickets_available, 10);
+            var ticketList = response.event_data.ticket_list;
         
             // Update the progress circle with the new data
-            updateProgressCircle(issuedTickets, totalTickets);
+            updateProgressCircle(totalTickets, totalTickets); // Display progress as 100% initially
         
             // Display ticket information
-            var ticketList = response.event_data.ticket_list;
             var ticketInfoHtml = '';
             ticketList.forEach(function(ticket) {
-                var ticketName = ticket.name;
-                var issued = ticket.issued_tickets || 0; // Default to 0 if undefined
-                var capacity = ticket.capacity;
-                ticketInfoHtml += '<li>' + ticketName + ': ' + issued + ' issued out of ' + capacity + ' available</li>';
+                var percentage = calculatePercentage(ticket.issued_tickets, ticket.capacity);
+                ticketInfoHtml += '<li>' + ticket.name + ': ' + ticket.issued_tickets + ' issued out of ' + ticket.capacity + ' available (' + percentage.toFixed(0) + '%)</li>';
             });
             $('.ticket-info_hidden_all ul').html(ticketInfoHtml);
         
             // Proceed with other functions like startScanQR...
             startScanQR(response.event_id);
         }
-
     });
 })(jQuery);
 
