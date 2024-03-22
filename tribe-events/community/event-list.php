@@ -200,6 +200,7 @@ do_action( 'tribe_community_events_before_list_table' );
                     class="tribe-dependent tribe-list-column <?php echo sanitize_html_class( 'tribe-list-column-' . $column_slug ); ?>"
                 >
                     <?php   
+                     echo $column_slug;
                     if ( 'title' === $column_slug ) {
                         // Display the event image
                         if ( has_post_thumbnail() ) {
@@ -212,6 +213,7 @@ do_action( 'tribe_community_events_before_list_table' );
                             'event' => $events->post,
                         ] );
                     } else {
+                       
                         // Display other columns as usual
                         tribe_get_template_part( 'community/columns/' . sanitize_key( $column_slug ), null, [
                             'column_slug' => $column_slug,
