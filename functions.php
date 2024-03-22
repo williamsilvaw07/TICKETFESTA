@@ -4577,8 +4577,7 @@ function validate_event_pass() {
             $match = true;
             $event_id = $event->ID;
 
-            // Assuming you have the event ID, get the total capacity for the event
-            $total_capacity = apply_filters('tec_tickets_get_event_capacity', null, $event_id, false);
+
 
             // Ensure total capacity is returned as an integer and is not null
             if (is_null($total_capacity)) {
@@ -4590,7 +4589,7 @@ function validate_event_pass() {
                 'start_date'              => get_post_meta($event_id, '_EventStartDate', true),
                 'issued_tickets'          => get_post_meta($event_id, '_tribe_progressive_ticket_current_number', true),
                 // Use the total capacity directly
-                'total_tickets_available' => $total_capacity,
+                'total_tickets_available' => apply_filters('tec_tickets_get_event_capacity', $event_id, true),
                 'name'                    => get_the_title($event_id),
                 'thumbnail_url'           => get_the_post_thumbnail_url($event_id, 'medium'),
             ];
