@@ -221,6 +221,11 @@ do_action( 'tribe_community_events_before_list_table' );
                     }
                     ?>
                 </td>
+                <?php 
+                    if('title' === $column_slug){
+                            echo "XXXXXX";
+                    }
+                ?>
             <?php endforeach; ?>
         </tr>
     <?php endwhile; ?>
