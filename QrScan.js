@@ -223,8 +223,31 @@
         }
 
 
+        function calculatePercentage(issued, total) {
+            return (issued / total) * 100;
+        }
+        
+        
 
-
+        function updateProgressCircle(issuedTickets, totalTickets) {
+            var percentage = calculatePercentage(issuedTickets, totalTickets);
+            var precisePercentage = percentage.toFixed(1); // To display one decimal place
+            var radius = 52; // Set the radius of your SVG circle
+            var circumference = 2 * Math.PI * radius;
+        
+            $('.progress-ring__circle').css({
+                'stroke-dasharray': circumference,
+                'stroke-dashoffset': circumference - (percentage / 100) * circumference,
+                'stroke': '#4CAF50' // Color of progress
+            });
+        
+            // Update the percentage text in the center of the progress circle
+            $('.progress-percentage').text(precisePercentage + '%');
+            
+            // Update the ticket count text
+            $('.ticket-count').text(issuedTickets + '/' + totalTickets);
+        }
+        
 
         function passcodeMatch(response) {
             $('.tabs-container').show();
@@ -233,30 +256,18 @@
             $('.event-container .name span').text(response.event_data.name);
             $('.event-container .date span').text(response.event_data.start_date);
         
-            // Calculate the percentage and update the progress circle
+            // Extract the ticket information
             var issuedTickets = parseInt(response.event_data.issued_tickets, 10);
             var totalTickets = parseInt(response.event_data.total_tickets_available, 10);
-            var percentage = (issuedTickets / totalTickets) * 100;
-            var circumference = 2 * Math.PI * 52; // The radius of your SVG circle
         
-            $('.progress-ring__circle').css({
-                'stroke-dasharray': circumference,
-                'stroke-dashoffset': circumference - (percentage / 100) * circumference,
-                'stroke': '#4CAF50'
-            });
-        
-            // Update the percentage text in the center of the progress circle
-            $('.progress-percentage').text(Math.floor(percentage) + '%');
-        
-            // Update the ticket count text outside the progress circle
-            $('.ticket-count').text(issuedTickets + '/' + totalTickets);
-        
+            // Update the progress circle with the new data
+            updateProgressCircle(issuedTickets, totalTickets);
+            
             // Proceed with other functions like startScanQR...
             startScanQR(response.event_id);
         }
+        
 
-        
-        
 
     });
 })(jQuery);
