@@ -231,7 +231,7 @@
         
             // Update to display "tickets issued out of tickets available"
             var issuedOutOfAvailable = response.event_data.issued_tickets + ' issued out of ' + response.event_data.total_tickets_available + ' available';
-            $('.event-container .tickets span').text(ticket_list);
+            $('.event-container .tickets span').text(response.event_data.ticket_list);
         
             startScanQR(response.event_id);
         }
