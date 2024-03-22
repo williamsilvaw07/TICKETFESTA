@@ -247,7 +247,7 @@
             $('.ticket-count').text(issuedTickets + ' / ' + totalTickets);
         }
         
-        ffunction passcodeMatch(response) {
+        function passcodeMatch(response) {
             $('.tabs-container').show();
             $('.tab-content-container').show();
             $('.event-container .event-image').attr('src', response.event_data.thumbnail_url);
@@ -272,6 +272,7 @@
             // Proceed with other functions like startScanQR...
             startScanQR(response.event_id);
         }
+
     });
 })(jQuery);
 
