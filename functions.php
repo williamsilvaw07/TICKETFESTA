@@ -4535,15 +4535,18 @@ function custom_qr_scanner_shortcode() {
                <div class="location">Location: </div>
 
 
-               <div class="progress-container">
+               <div class="ticket-progress-container">
         <svg class="progress-ring" width="120" height="120">
-            <circle class="progress-ring__circle" stroke-width="4" r="58" cx="60" cy="60" />
+            <circle class="progress-ring__circle" stroke="white" stroke-width="4" fill="transparent" r="52" cx="60" cy="60"></circle>
         </svg>
-        <span class="progress-label">0%</span>
+        <div class="progress-percentage">0%</div>
+    </div>
+    <div class="ticket-info">
+        <span class="ticket-count">0/0</span>
     </div>
 
 
-
+    
                        <div class="tickets-percent">Ticket Percent: </div>
                     </div>
                     </div>

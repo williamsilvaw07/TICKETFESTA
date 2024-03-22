@@ -317,7 +317,14 @@ button i {
 .tabs-container .active{
 
 }
-.progress-container {
+
+
+
+
+
+
+
+.ticket-progress-container {
     position: relative;
     display: inline-block;
 }
@@ -328,20 +335,25 @@ button i {
 
 .progress-ring__circle {
     fill: transparent;
-    stroke: white;
-    stroke-dasharray: 365; /* Circumference of the circle */
-    stroke-dashoffset: 365;
-    transition: stroke-dashoffset 0.4s;
+    stroke-dasharray: 326.725; /* Circumference of the circle (2 * Math.PI * 52) */
+    stroke-dashoffset: 326.725; /* Same as dash-array to start as empty */
+    transition: stroke-dashoffset 0.35s;
+    stroke-width: 4;
 }
 
-.progress-label {
+.progress-percentage {
     position: absolute;
-    width: 100%;
-    text-align: center;
-    line-height: 120px; /* Match the SVG height */
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1em;
     color: white;
-    font-size: 1.5em;
-    top: 0;
+}
+
+.ticket-info {
+    text-align: center; /* Center the ticket count text */
+    color: white; /* White text color */
+    margin-top: 10px; /* Spacing from the progress container */
 }
 
 
