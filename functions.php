@@ -4551,7 +4551,6 @@ function custom_qr_scanner_shortcode() {
         <h6>Total Ticket Sold</h6>
         <p class="ticket-count">0<span>/</span>0</p>
         <p class="see_more_ticket_info">See more</p>
-
         <div class="ticket-info_hidden_all">
             <ul>
                 <!-- Ticket list will be dynamically populated here -->
