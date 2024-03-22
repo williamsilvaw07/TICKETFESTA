@@ -297,7 +297,7 @@ function passcodeMatch(response) {
 // Function to update individual ticket information
 function updateIndividualTicketInfo(ticketList) {
     var ticketInfoHtml = '';
-    ticketList.forEach(function(ticket) { 
+    ticketList.forEach(function(ticket) {
         var ticketName = ticket.name;
         var issued = ticket.issued_tickets || 0; // Default to 0 if undefined
         var capacity = ticket.capacity;
@@ -319,15 +319,34 @@ function updateIndividualTicketInfo(ticketList) {
     });
     $('.ticket-info_hidden_all').html(ticketInfoHtml);
 
-    // Update individual progress circles
-    $('.ticket-progress-container').each(function(index) {
-        var container = $(this);
-        var ticket = ticketList[index];
-        var issued = ticket.issued_tickets || 0;
-        var capacity = ticket.capacity;
-        updateIndividualProgressCircle(container, issued, capacity);
-    });
-}
+        // Update individual progress circles
+        $('.ticket-progress-container').each(function(index) {
+            var container = $(this);
+            var ticket = ticketList[index];
+            var issued = ticket.issued_tickets || 0;
+            var capacity = ticket.capacity;
+            
+            // Update individual progress circle
+            updateIndividualProgressCircle(container, issued, capacity);
+        });
+    }
+    
+    // Function to update individual progress circle
+    function updateIndividualProgressCircle(container, issuedTickets, totalTickets) {
+        var percentage = calculateIndividualPercentage(issuedTickets, totalTickets);
+        var precisePercentage = percentage.toFixed(1); // To display one decimal place
+        var radius = 31; // Set the radius of your SVG circle
+        var circumference = 2 * Math.PI * radius;
+    
+        container.find('.individual-progress-ring__circle').css({
+            'stroke-dasharray': circumference,
+            'stroke-dashoffset': circumference - (percentage / 100) * circumference,
+            'stroke': '#d3fa16' // Color of progress
+        });
+    
+        // Update the individual percentage text
+        container.find('.individual-progress-percentage').text(precisePercentage + '%');
+    }
 
     });
 })(jQuery);
