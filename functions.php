@@ -4533,36 +4533,7 @@ function custom_qr_scanner_shortcode() {
                         <div class="name">Name: <span> </span>  </div>
                         <div class="date">Date:  <span> </span> </div>
                <div class="location">Location: </div>
-
-
-
-               <div class="ticket-info-container_main">
-               <div class="ticket-progress-container_main">
-               <div class="ticket-progress-container">
-               <svg class="progress-ring" width="72" height="72">
-    <circle class="progress-ring__circle-bg" cx="36" cy="36" r="31" stroke-width="6"></circle> <!-- Background circle -->
-    <circle class="progress-ring__circle" cx="36" cy="36" r="31" stroke-width="6"></circle> <!-- Foreground circle -->
-</svg>
-        <div class="progress-percentage">0%</div>
-    </div>
-    </div>
-
-    <div class="ticket-info info_div">
-        <h6>Total Ticket Sold</h6>
-        <p class="ticket-count">0<span>/</span>0</p>
-        <p class="see_more_ticket_info">See more</p>
-
-        <div class="ticket-info_hidden_all">
-            <ul>
-                <!-- Ticket list will be dynamically populated here -->
-            </ul>
-        </div>
-
-
-    </div>
- 
-    </div>
-    
+                        <div class="tickets">Issued Tickets:  <span> </span> </div>
                        <div class="tickets-percent">Ticket Percent: </div>
                     </div>
                     </div>
@@ -4594,65 +4565,66 @@ add_shortcode('custom_qr_scanner', 'custom_qr_scanner_shortcode');
 add_action('wp_ajax_validate_event_pass', 'validate_event_pass');
 add_action('wp_ajax_nopriv_validate_event_pass', 'validate_event_pass'); // If you want to allow non-logged-in users to access the AJAX endpoint
 
-
-
-
-
 function validate_event_pass() {
+    // Check for the 'event_pass' POST variable
     $event_pass = isset($_POST['event_pass']) ? esc_attr($_POST['event_pass']) : false;
+
+    // Retrieve events based on the event pass
     $events = get_posts_by_event_pass($event_pass);
+
+    // Initialize response variables
     $match = false;
     $event_id = null;
     $event_data = [];
 
+    // Loop through the events
     foreach ($events as $event) {
-        $ticket_list = []; // Reset ticket list for each event
-
         if (isset($event->ID)) {
             $match = true;
             $event_id = $event->ID;
+
+            // Attempt to use the 'tribe_tickets_total_event_capacity' filter to get the total capacity
             $total_capacity = apply_filters('tribe_tickets_total_event_capacity', null, $event_id);
 
+            // If no filter has modified the capacity, calculate it manually
             if (null === $total_capacity) {
-                $tickets = Tribe__Tickets__Tickets::get_all_event_tickets($event_id);
+                // Get ticket counts for the event
+                $ticket_counts = Tribe__Tickets__Tickets::get_ticket_counts($event_id);
+                
+                // Initialize the total available tickets
                 $total_capacity = 0;
 
-                foreach ($tickets as $ticket) {
-                    $ticket_capacity = tribe_tickets_get_capacity($ticket->ID); // Retrieve ticket capacity
-                    $total_capacity += $ticket_capacity;
-
-                    // Add each ticket's name, capacity, and issued tickets to the ticket list
-                    $ticket_list[] = [
-                        'name' => $ticket->name,
-                        'capacity' => $ticket_capacity,
-                        'issued_tickets' => get_post_meta($ticket->ID, '_tribe_progressive_ticket_current_number', true),
-                    ];
+                // Sum up the available tickets across all ticket types
+                foreach ($ticket_counts as $type => $counts) {
+                    $total_capacity += $counts['available'];
                 }
             }
 
+            // Get other event data and add the calculated total capacity
             $event_data = [
                 'start_date'              => get_post_meta($event_id, '_EventStartDate', true),
                 'issued_tickets'          => get_post_meta($event_id, '_tribe_progressive_ticket_current_number', true),
                 'total_tickets_available' => $total_capacity,
-                'ticket_list'             => $ticket_list,
+                'titcket_list' => ,
                 'name'                    => get_the_title($event_id),
                 'thumbnail_url'           => get_the_post_thumbnail_url($event_id, 'medium'),
             ];
         }
     }
 
+    // Prepare the response
     $response = [
-        'match'      => $match,
-        'event_id'   => $event_id,
+        'match'     => $match,
+        'event_id'  => $event_id,
         'event_data' => $event_data,
     ];
 
+    // Send the response back to the client
     wp_send_json($response);
+
+    // Always remember to exit after sending the response
     wp_die();
 }
-
-
-
 
 // Remember to properly hook your function to WordPress AJAX actions if it's intended for AJAX.
 
