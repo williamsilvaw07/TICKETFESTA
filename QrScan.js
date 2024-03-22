@@ -225,55 +225,54 @@
 
 
 
+function calculatePercentage(issued, total) {
+    return (issued / total) * 100;
+}
 
-        function calculatePercentage(issued, total) {
-            return (issued / total) * 100;
-        }
-        
-        function updateProgressCircle(issuedTickets, totalTickets) {
-            var percentage = calculatePercentage(issuedTickets, totalTickets);
-            var precisePercentage = percentage.toFixed(1); // To display one decimal place
-            var radius = 31; // Set the radius of your SVG circle
-            var circumference = 2 * Math.PI * radius;
-        
-            $('.progress-ring__circle').css({
-                'stroke-dasharray': circumference,
-                'stroke-dashoffset': circumference - (percentage / 100) * circumference,
-                'stroke': '#d3fa16' // Color of progress
-            });
-        
-            // Update the percentage text in the center of the progress circle
-            $('.progress-percentage').text(precisePercentage + '%');
-        
-            // Update the ticket count text
-            $('.ticket-count').text(issuedTickets + ' / ' + totalTickets);
-        }
-        
-        function passcodeMatch(response) {
-            $('.tabs-container').show();
-            $('.tab-content-container').show();
-            $('.event-container .event-image').attr('src', response.event_data.thumbnail_url);
-            $('.event-container .name span').text(response.event_data.name);
-            $('.event-container .date span').text(response.event_data.start_date);
-        
-            // Extract the ticket information
-            var issuedTickets = parseInt(response.event_data.issued_tickets, 10);
-            var totalTickets = parseInt(response.event_data.total_tickets_available, 10);
-        
-            // Update the progress circle with the new data
-            updateProgressCircle(issuedTickets, totalTickets);
-        
-            // Display ticket information
-            var ticketList = response.event_data.ticket_list;
-            var ticketInfoHtml = '';
-            ticketList.forEach(function(ticket) {
-                ticketInfoHtml += '<li>' + ticket.name + ': ' + ticket.issued + ' issued out of ' + ticket.capacity + ' available</li>';
-            });
-            $('.ticket-info_hidden_all ul').html(ticketInfoHtml);
-        
-            // Proceed with other functions like startScanQR...
-            startScanQR(response.event_id);
-        }
+function updateProgressCircle(issuedTickets, totalTickets) {
+    var percentage = calculatePercentage(issuedTickets, totalTickets);
+    var precisePercentage = percentage.toFixed(1); // To display one decimal place
+    var radius = 31; // Set the radius of your SVG circle
+    var circumference = 2 * Math.PI * radius;
+
+    $('.progress-ring__circle').css({
+        'stroke-dasharray': circumference,
+        'stroke-dashoffset': circumference - (percentage / 100) * circumference,
+        'stroke': '#d3fa16' // Color of progress
+    });
+
+    // Update the percentage text in the center of the progress circle
+    $('.progress-percentage').text(precisePercentage + '%');
+
+    // Update the ticket count text
+    $('.ticket-count').text(issuedTickets + ' / ' + totalTickets);
+}
+
+function passcodeMatch(response) {
+    $('.tabs-container').show();
+    $('.tab-content-container').show();
+    $('.event-container .event-image').attr('src', response.event_data.thumbnail_url);
+    $('.event-container .name span').text(response.event_data.name);
+    $('.event-container .date span').text(response.event_data.start_date);
+
+    // Extract the ticket information
+    var issuedTickets = parseInt(response.event_data.issued_tickets, 10);
+    var totalTickets = parseInt(response.event_data.total_tickets_available, 10);
+
+    // Update the progress circle with the new data
+    updateProgressCircle(issuedTickets, totalTickets);
+
+    // Display ticket information
+    var ticketList = response.event_data.ticket_list;
+    var ticketInfoHtml = '';
+    ticketList.forEach(function(ticket) {
+        ticketInfoHtml += '<li>' + ticket.name + ': ' + ticket.issued_tickets + ' issued out of ' + ticket.capacity + ' available</li>';
+    });
+    $('.ticket-info_hidden_all ul').html(ticketInfoHtml);
+
+    // Proceed with other functions like startScanQR...
+    startScanQR(response.event_id);
+}
 
 
     });
