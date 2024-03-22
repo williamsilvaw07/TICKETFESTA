@@ -4566,64 +4566,50 @@ add_action('wp_ajax_validate_event_pass', 'validate_event_pass');
 add_action('wp_ajax_nopriv_validate_event_pass', 'validate_event_pass'); // If you want to allow non-logged-in users to access the AJAX endpoint
 
 function validate_event_pass() {
-    // Check for the 'event_pass' POST variable
     $event_pass = isset($_POST['event_pass']) ? esc_attr($_POST['event_pass']) : false;
-
-    // Retrieve events based on the event pass
-    $events = get_posts_by_event_pass($event_pass);
-
-    // Initialize response variables
+    $events = get_posts_by_event_pass($event_pass); // Ensure this function correctly fetches the events based on the pass.
     $match = false;
     $event_id = null;
     $event_data = [];
 
-    // Loop through the events
     foreach ($events as $event) {
         if (isset($event->ID)) {
             $match = true;
             $event_id = $event->ID;
 
-            // Attempt to use the 'tribe_tickets_total_event_capacity' filter to get the total capacity
-            $total_capacity = apply_filters('tribe_tickets_total_event_capacity', null, $event_id);
+            // Retrieve the ticket counts for the event
+            $ticket_counts = Tribe__Tickets__Tickets::get_ticket_counts($event_id);
+            $total_tickets_available = 0;
 
-            // If no filter has modified the capacity, calculate it manually
-            if (null === $total_capacity) {
-                // Get ticket counts for the event
-                $ticket_counts = Tribe__Tickets__Tickets::get_ticket_counts($event_id);
-                
-                // Initialize the total available tickets
-                $total_capacity = 0;
-
-                // Sum up the available tickets across all ticket types
-                foreach ($ticket_counts as $type => $counts) {
-                    $total_capacity += $counts['available'];
+            if (!empty($ticket_counts)) {
+                foreach ($ticket_counts as $counts) {
+                    $total_tickets_available += $counts['available'];
                 }
             }
 
-            // Get other event data and add the calculated total capacity
+            // Use tribe_tickets_get_readable_amount to format the total available tickets
+            $readable_total_tickets_available = tribe_tickets_get_readable_amount($total_tickets_available, $event_id);
+
             $event_data = [
-                'start_date'              => get_post_meta($event_id, '_EventStartDate', true),
-                'issued_tickets'          => get_post_meta($event_id, '_tribe_progressive_ticket_current_number', true),
-                'total_tickets_available' => $total_capacity,
-                'name'                    => get_the_title($event_id),
-                'thumbnail_url'           => get_the_post_thumbnail_url($event_id, 'medium'),
+                'start_date'               => get_post_meta($event_id, '_EventStartDate', true),
+                'issued_tickets'           => get_post_meta($event_id, '_tribe_progressive_ticket_current_number', true),
+                'total_tickets_available'  => $readable_total_tickets_available, // Now holds the readable amount
+                'name'                     => get_the_title($event_id),
+                'thumbnail_url'            => get_the_post_thumbnail_url($event_id, 'medium'),
             ];
         }
     }
 
-    // Prepare the response
     $response = [
-        'match'     => $match,
-        'event_id'  => $event_id,
+        'match'      => $match,
+        'event_id'   => $event_id,
         'event_data' => $event_data,
     ];
 
-    // Send the response back to the client
     wp_send_json($response);
-
-    // Always remember to exit after sending the response
     wp_die();
 }
+
 
 add_action('wp_ajax_custom_check_in_ticket', 'checkinTicket');
 add_action('wp_ajax_nopriv_custom_check_in_ticket', 'checkinTicket'); 
