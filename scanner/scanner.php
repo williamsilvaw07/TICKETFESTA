@@ -376,9 +376,10 @@ button i {
     font-weight: 300;
     color: #aaa !important;
 }
-.info_div span{
+.info_div p{
     font-weight: 700;
     font-size: 16px;
+    margin:0;
 }
 
 
