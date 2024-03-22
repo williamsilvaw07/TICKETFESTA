@@ -166,9 +166,9 @@ do_action( 'tribe_community_events_before_list_table' );
     <th class="event-column">
         Event
     </th>
-    <!-- <th class="tickets-passcode-column">
+    <th class="tickets-passcode-column">
         Ticket Passcode
-    </th> -->
+    </th>
     <th class="tickets-sold-column">
         Ticket Sold
     </th>

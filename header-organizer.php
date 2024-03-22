@@ -1420,7 +1420,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
 
             .tribe-community-events-list thead tr {
                 display: grid;
-                grid-template-columns: 50% 12% 14% 14% 10%;
+                grid-template-columns: 38% 12% 12% 14% 14% 10%;
 
                 justify-items: stretch;
                 justify-content: start;
