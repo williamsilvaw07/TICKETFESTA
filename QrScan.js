@@ -228,7 +228,7 @@
 
 
 
-        Copy code
+    
         // Function to calculate the total percentage
         function calculatePercentage(issued, total) {
             return (issued / total) * 100;
