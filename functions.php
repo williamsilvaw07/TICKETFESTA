@@ -4624,7 +4624,8 @@ function validate_event_pass() {
                     $issued_tickets_message = tribe_tickets_get_ticket_stock_message($ticket, __('issued', 'event-tickets'));
 
                     // Extract the number of issued tickets from the message
-                    $issued_tickets = preg_replace('/[^0-9]/', '', $issued_tickets_message);
+                    preg_match('/\d+/', $issued_tickets_message, $matches);
+                    $issued_tickets = isset($matches[0]) ? $matches[0] : 0;
 
                     // Add each ticket's name, capacity, and issued tickets to the ticket list
                     $ticket_list[] = [
