@@ -223,8 +223,7 @@
         }
 
 
-
-      // Function to calculate the total percentage
+// Function to calculate the total percentage
 function calculatePercentage(issued, total) {
     return (issued / total) * 100;
 }
@@ -247,11 +246,6 @@ function updateProgressCircle(issuedTickets, totalTickets) {
 
     // Update the total ticket count text
     $('.ticket-count').text(issuedTickets + ' / ' + totalTickets);
-}
-
-// Function to calculate the percentage of individual tickets sold
-function calculateIndividualTicketPercentage(issued, capacity) {
-    return (issued / capacity) * 100;
 }
 
 // Function to handle the passcode match response
@@ -279,7 +273,7 @@ function passcodeMatch(response) {
         ticketInfoHtml += '<li>' + ticketName + ': ' + issued + ' issued out of ' + capacity + ' available</li>';
 
         // Calculate and update the percentage for individual tickets
-        var individualPercentage = calculateIndividualTicketPercentage(issued, capacity);
+        var individualPercentage = calculatePercentage(issued, capacity);
         var preciseIndividualPercentage = individualPercentage.toFixed(1); // To display one decimal place
         $('.individual-ticket-percentage-' + ticketName.replace(/\s/g, '-')).text(preciseIndividualPercentage + '%');
     });
@@ -288,6 +282,7 @@ function passcodeMatch(response) {
     // Proceed with other functions like startScanQR...
     startScanQR(response.event_id);
 }
+
 
     });
 })(jQuery);
