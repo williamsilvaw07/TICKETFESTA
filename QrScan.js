@@ -335,7 +335,7 @@ function updateIndividualProgressCircle(container, issuedTickets, totalTickets) 
     });
 
 // Update the individual percentage text
-container.find('.individual-progress-percentage').text(precisePercentage + '%');
+    container.find('.individual-progress-percentage').text(precisePercentage + '%');
 }
 
 // Function to handle the passcode match response
