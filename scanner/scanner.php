@@ -361,16 +361,24 @@ button i {
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    font-size: 1em;
-    color: white;
+    font-size: 14px;
+    color: aliceblue;
+    font-weight: bolder;
 }
 
 .ticket-info {
     text-align: left;
     color: white;
 }
-.ticket-info h6{
-    margin:0
+.info_div h6{
+    margin:0;
+    font-size: 14px;
+    font-weight: 300;
+    color: #aaa !important;
+}
+.info_div span{
+    font-weight: 700;
+    font-size: 16px;
 }
 
 
