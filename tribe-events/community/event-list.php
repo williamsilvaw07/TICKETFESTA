@@ -223,7 +223,7 @@ do_action( 'tribe_community_events_before_list_table' );
                         ] );
                     }
                     if ( 'status' === $column_slug ) {
-                        echo "</td><td>$column_slug";
+                        echo "</td><td><span class='passcode'>$column_slug</span>";
                     }
                     ?>
                 </td>
