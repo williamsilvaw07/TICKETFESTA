@@ -244,6 +244,7 @@ input#event-pass {
     padding: 0;
     margin: 0;
     border-bottom: 0px solid #ddd;
+    justify-content: center;
     }
 
     /* Style the individual tabs */
@@ -254,7 +255,8 @@ input#event-pass {
 
     /* Style the active tab */
     .tabs-nav li.tab.active {
-        background-color: #eee;
+        background-color: #fff;
+    border-radius: 4px;
     }
 
     /* Style the tabs navigation links */
@@ -309,6 +311,21 @@ button i {
         color: red !important;
 
 }
+
+.tabs-container .active{
+
+}
+
+
+
+
+
+
+
+
+
+
+
 
     /* Media query for responsive behavior (tablet and mobile) */
     @media (max-width: 768px) {

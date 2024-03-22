@@ -4529,11 +4529,13 @@ function custom_qr_scanner_shortcode() {
                 <div class="tab-content tab-conent-1 active" id="tab1">
                     <div class="event-container">
                         <img src="#" alt="" class="event-image">
+                        <div class="event-container-details">
                         <div class="name">Name: <span> </span>  </div>
                         <div class="date">Date:  <span> </span> </div>
-                        <!-- <div class="location">Location: </div> -->
+               <div class="location">Location: </div>
                         <div class="tickets">Issued Tickets:  <span> </span> </div>
-                        <!-- <div class="tickets-percent">Ticket Percent: </div> -->
+                       <div class="tickets-percent">Ticket Percent: </div>
+                    </div>
                     </div>
                 </div>
                 <div class="tab-content tab-conent-2" id="tab2">
