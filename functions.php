@@ -4621,7 +4621,10 @@ function validate_event_pass() {
                     $total_capacity += $ticket_capacity;
 
                     // Retrieve the number of issued tickets for this ticket
-                    $issued_tickets = get_post_meta($ticket->ID, '_tribe_progressive_ticket_current_number', true);
+                    $issued_tickets_message = tribe_tickets_get_ticket_stock_message($ticket, __('issued', 'event-tickets'));
+
+                    // Extract the number of issued tickets from the message
+                    $issued_tickets = preg_replace('/[^0-9]/', '', $issued_tickets_message);
 
                     // Add each ticket's name, capacity, and issued tickets to the ticket list
                     $ticket_list[] = [
