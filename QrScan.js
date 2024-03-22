@@ -279,7 +279,7 @@
             });
         
             // Update the percentage text
-            container.find('.individual-progress-percentage').text(precisePercentage + '%');
+            container.find('.progress-percentage').text(precisePercentage + '%');
         }
         
         function passcodeMatch(response) {
@@ -321,8 +321,8 @@
                         <svg class="progress-ring" width="72" height="72">
                             <circle class="progress-ring__circle-bg" cx="36" cy="36" r="31" stroke-width="6"></circle>
                             <circle class="progress-ring__circle progress-ring__circle-individual" cx="36" cy="36" r="31" stroke-width="6"></circle>
+                            <text class="progress-percentage" x="50%" y="50%" dominant-baseline="middle" text-anchor="middle">${percentage}%</text>
                         </svg>
-                        <div class="progress-percentage">${percentage}%</div>
                         <div class="ticket-details">
                             <div class="ticket-name">${ticket.name}</div>
                             <div class="ticket-count">${issued} issued out of ${capacity} available</div>
@@ -343,7 +343,6 @@
             // Proceed with other functions like startScanQR...
             startScanQR(response.event_id);
         }
-
 
 
     });
