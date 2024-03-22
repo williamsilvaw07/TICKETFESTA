@@ -224,12 +224,12 @@
 
 
 
-     // Function to calculate the percentage
+      // Function to calculate the total percentage
 function calculatePercentage(issued, total) {
     return (issued / total) * 100;
 }
 
-// Function to update the progress circle
+// Function to update the progress circle with total percentage
 function updateProgressCircle(issuedTickets, totalTickets) {
     var percentage = calculatePercentage(issuedTickets, totalTickets);
     var precisePercentage = percentage.toFixed(1); // To display one decimal place
@@ -242,11 +242,16 @@ function updateProgressCircle(issuedTickets, totalTickets) {
         'stroke': '#d3fa16' // Color of progress
     });
 
-    // Update the percentage text in the center of the progress circle
+    // Update the total percentage text in the center of the progress circle
     $('.progress-percentage').text(precisePercentage + '%');
 
-    // Update the ticket count text
+    // Update the total ticket count text
     $('.ticket-count').text(issuedTickets + ' / ' + totalTickets);
+}
+
+// Function to calculate the percentage of individual tickets sold
+function calculateIndividualTicketPercentage(issued, capacity) {
+    return (issued / capacity) * 100;
 }
 
 // Function to handle the passcode match response
@@ -257,12 +262,12 @@ function passcodeMatch(response) {
     $('.event-container .name span').text(response.event_data.name);
     $('.event-container .date span').text(response.event_data.start_date);
 
-    // Extract the ticket information
-    var issuedTickets = parseInt(response.event_data.issued_tickets, 10);
-    var totalTickets = parseInt(response.event_data.total_tickets_available, 10);
+    // Extract the total ticket information
+    var totalIssuedTickets = parseInt(response.event_data.issued_tickets, 10);
+    var totalAvailableTickets = parseInt(response.event_data.total_tickets_available, 10);
 
-    // Update the progress circle with the new data
-    updateProgressCircle(issuedTickets, totalTickets);
+    // Update the progress circle with the total data
+    updateProgressCircle(totalIssuedTickets, totalAvailableTickets);
 
     // Display ticket information
     var ticketList = response.event_data.ticket_list;
@@ -272,6 +277,11 @@ function passcodeMatch(response) {
         var issued = ticket.issued_tickets || 0; // Default to 0 if undefined
         var capacity = ticket.capacity;
         ticketInfoHtml += '<li>' + ticketName + ': ' + issued + ' issued out of ' + capacity + ' available</li>';
+
+        // Calculate and update the percentage for individual tickets
+        var individualPercentage = calculateIndividualTicketPercentage(issued, capacity);
+        var preciseIndividualPercentage = individualPercentage.toFixed(1); // To display one decimal place
+        $('.individual-ticket-percentage-' + ticketName.replace(/\s/g, '-')).text(preciseIndividualPercentage + '%');
     });
     $('.ticket-info_hidden_all ul').html(ticketInfoHtml);
 
