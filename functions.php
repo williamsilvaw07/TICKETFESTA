@@ -4577,22 +4577,17 @@ function validate_event_pass() {
             $match = true;
             $event_id = $event->ID;
 
+        // Assuming $event_id is correctly determined by this point
+    $total_tickets_available = apply_filters('tec_tickets_get_event_capacity', null, $event_id);
 
+    $event_data = [
+        'start_date'              => get_post_meta($event_id, '_EventStartDate', true),
+        'issued_tickets'          => get_post_meta($event_id, '_tribe_progressive_ticket_current_number', true),
+        'total_tickets_available' => $total_tickets_available, // Assuming the filter 'tec_tickets_get_event_capacity' is correctly set up to return this
+        'name'                    => get_the_title($event_id),
+        'thumbnail_url'           => get_the_post_thumbnail_url($event_id, 'medium'),
+    ];
 
-            // Ensure total capacity is returned as an integer and is not null
-            if (is_null($total_capacity)) {
-                // Default to 0 if the filter does not return a valid capacity
-                $total_capacity = 0;
-            }
-
-            $event_data = [
-                'start_date'              => get_post_meta($event_id, '_EventStartDate', true),
-                'issued_tickets'          => get_post_meta($event_id, '_tribe_progressive_ticket_current_number', true),
-                // Use the total capacity directly
-                'total_tickets_available' => apply_filters('tec_tickets_get_event_capacity', $event_id, true),
-                'name'                    => get_the_title($event_id),
-                'thumbnail_url'           => get_the_post_thumbnail_url($event_id, 'medium'),
-            ];
         }
     }
 
