@@ -265,39 +265,3 @@
 
 
 
-
-var ctx = document.getElementById('ticketProgress').getContext('2d');
-var ticketsIssued = 3; // replace with actual dynamic data
-var ticketsAvailable = 6; // replace with actual dynamic data
-
-var ticketProgressChart = new Chart(ctx, {
-    type: 'doughnut',
-    data: {
-        labels: ['Tickets Issued', 'Tickets Available'],
-        datasets: [{
-            label: '# of Tickets',
-            data: [ticketsIssued, ticketsAvailable - ticketsIssued],
-            backgroundColor: [
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 99, 132, 0.2)'
-            ],
-            borderColor: [
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 99, 132, 1)'
-            ],
-            borderWidth: 1
-        }]
-    },
-    options: {
-        cutout: '90%', // creates a thinner doughnut ring
-        plugins: {
-            legend: {
-                display: false // hides the legend
-            }
-        }
-    }
-});
-
-
-
-
