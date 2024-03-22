@@ -4579,13 +4579,13 @@ function validate_event_pass() {
 
             // Assuming '_tribe_ticket_total_sold' and '_tribe_ticket_total_available' are the meta keys
             $total_issued_tickets = get_post_meta($event_id, '_tribe_ticket_total_sold', true);
-            $total_available_tickets = get_post_meta($event_id, '_tribe_ticket_total_available', true);
+            
 
             $event_data = [
                 'start_date'          => get_post_meta($event_id, '_EventStartDate', true),
                 'issued_ticked'       => get_post_meta($event_id, '_tribe_progressive_ticket_current_number', true),
                 'total_issued_tickets'=> $total_issued_tickets,
-                'total_available_tickets' => $total_available_tickets,
+                'total_available_tickets' => get_post_meta($event_id, '_tribe_ticket_total_available', true),
                 'name'                => get_the_title($event_id),
                 'thumbnail_url'       => get_the_post_thumbnail_url($event_id, 'medium'),
             ];
