@@ -224,19 +224,14 @@
 
 
 
-      // Function to calculate the total percentage
-function calculateTotalPercentage(issued, total) {
+// Function to calculate the total percentage
+function calculatePercentage(issued, total) {
     return (issued / total) * 100;
-}
-
-// Function to calculate individual ticket percentage
-function calculateIndividualPercentage(issued, total) {
-    return total === 0 ? 0 : (issued / total) * 100;
 }
 
 // Function to update the progress circle with total percentage
 function updateProgressCircle(issuedTickets, totalTickets) {
-    var percentage = calculateTotalPercentage(issuedTickets, totalTickets);
+    var percentage = calculatePercentage(issuedTickets, totalTickets);
     var precisePercentage = percentage.toFixed(1); // To display one decimal place
     var radius = 31; // Set the radius of your SVG circle
     var circumference = 2 * Math.PI * radius;
@@ -254,21 +249,29 @@ function updateProgressCircle(issuedTickets, totalTickets) {
     $('.ticket-count').text(issuedTickets + ' / ' + totalTickets);
 }
 
-// Function to update individual progress circle
-function updateIndividualProgressCircle(container, issuedTickets, totalTickets) {
-    var percentage = calculateIndividualPercentage(issuedTickets, totalTickets);
-    var precisePercentage = percentage.toFixed(1); // To display one decimal place
-    var radius = 31; // Set the radius of your SVG circle
-    var circumference = 2 * Math.PI * radius;
+// Function to calculate the individual percentage
+function calculateIndividualPercentage(issued, total) {
+    return total === 0 ? 0 : (issued / total) * 100;
+}
 
-    container.find('.individual-progress-ring__circle').css({
-        'stroke-dasharray': circumference,
-        'stroke-dashoffset': circumference - (percentage / 100) * circumference,
-        'stroke': '#d3fa16' // Color of progress
+// Function to update individual progress circles
+function updateIndividualProgressCircles(ticketList) {
+    $('.ticket-progress-container').each(function(index) {
+        var container = $(this);
+        var ticket = ticketList[index];
+        var issued = ticket.issued_tickets || 0;
+        var capacity = ticket.capacity;
+        var percentage = calculateIndividualPercentage(issued, capacity);
+        var precisePercentage = percentage.toFixed(1);
+
+        // Update individual progress circle
+        container.find('.individual-progress-ring__circle').css({
+            'stroke-dashoffset': (100 - percentage) + '%',
+        });
+
+        // Update the individual percentage text
+        container.find('.individual-progress-percentage').text(precisePercentage + '%');
     });
-
-    // Update the individual percentage text
-    container.find('.individual-progress-percentage').text(precisePercentage + '%');
 }
 
 // Function to handle the passcode match response
@@ -286,9 +289,23 @@ function passcodeMatch(response) {
     // Update the progress circle with the total data
     updateProgressCircle(totalIssuedTickets, totalAvailableTickets);
 
-    // Display individual ticket information
+    // Display ticket information
     var ticketList = response.event_data.ticket_list;
-    updateIndividualTicketInfo(ticketList);
+    var ticketInfoHtml = '';
+    ticketList.forEach(function(ticket) {
+        var ticketName = ticket.name;
+        var issued = ticket.issued_tickets || 0; // Default to 0 if undefined
+        var capacity = ticket.capacity;
+        var individualPercentage = calculateIndividualPercentage(issued, capacity);
+        var preciseIndividualPercentage = individualPercentage.toFixed(1); // To display one decimal place
+
+        ticketInfoHtml += '<li>' + ticketName + ': ' + issued + ' issued out of ' + capacity + ' available';
+        ticketInfoHtml += ' (' + preciseIndividualPercentage + '%)</li>';
+    });
+    $('.ticket-info_hidden_all ul').html(ticketInfoHtml);
+
+    // Update individual progress circles
+    updateIndividualProgressCircles(ticketList);
 
     // Proceed with other functions like startScanQR...
     startScanQR(response.event_id);
