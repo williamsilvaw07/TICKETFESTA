@@ -64,7 +64,7 @@ if ($event_tickets->have_posts()) {
 }
 
 if('title' === $column_slug){
-        echo "XXXXXX";
+        echo "XXXXXX</td><td>";
 }
 // Display the overall tickets sold and total capacity
 echo "<span class='overall-info'> $overall_tickets_sold / $overall_capacity</span>";
