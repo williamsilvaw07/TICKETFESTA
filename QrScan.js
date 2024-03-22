@@ -268,9 +268,13 @@
             var radius = 31; // Set the radius of your SVG circle
             var circumference = 2 * Math.PI * radius;
         
+            // Calculate stroke-dasharray and stroke-dashoffset
+            var dashArray = circumference;
+            var dashOffset = circumference - (percentage / 100) * circumference;
+        
             container.find('.individual-progress-ring__circle').css({
-                'stroke-dasharray': 433,
-                'stroke-dashoffset': circumference - (percentage / 100) * circumference,
+                'stroke-dasharray': dashArray,
+                'stroke-dashoffset': dashOffset,
                 'stroke': '#d3fa16' // Color of progress
             });
         
