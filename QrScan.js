@@ -278,8 +278,8 @@
                 'stroke': '#d3fa16' // Color of progress
             });
         
-            // Update the percentage text
-            container.find('text.progress-percentage_individual').text(precisePercentage + '%');
+        // Update the percentage text inside SVG for individual tickets 
+    container.find('span.progress-percentage_individual').text(precisePercentage + '%');
         }
         
         function passcodeMatch(response) {
