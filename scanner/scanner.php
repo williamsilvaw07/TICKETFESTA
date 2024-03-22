@@ -322,7 +322,10 @@ button i {
 
 
 
-
+.ticket-info-container_main{
+    display: flex;
+    align-items: center;
+}
 
 .ticket-progress-container {
     position: relative;
