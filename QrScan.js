@@ -317,14 +317,13 @@
                 // HTML for individual progress components with the same class names as before
                 var individualProgressHtml = `
                     <div class="ticket-progress-container">
-                    <div class="ticket-progress-container_svg">
-                        <svg class="progress-ring" width="72" height="72">
-                            <circle class="progress-ring__circle-bg" cx="36" cy="36" r="31" stroke-width="6"></circle>
-                            <circle class="progress-ring__circle progress-ring__circle-individual" cx="36" cy="36" r="31" stroke-width="6"></circle>
-                        </svg>
-                        <span class="progress-percentage_individual">${percentage}%</span>
+                        <div class="ticket-progress-container_svg">
+                            <svg class="progress-ring" width="72" height="72">
+                                <circle class="progress-ring__circle-bg" cx="36" cy="36" r="31" stroke-width="6"></circle>
+                                <circle class="progress-ring__circle progress-ring__circle-individual" cx="36" cy="36" r="31" stroke-width="6"></circle>
+                            </svg>
+                            <span class="progress-percentage_individual">${percentage}%</span>
                         </div>
-                      
                         <div class="ticket-details">
                             <div class="ticket-name">${ticket.name}</div>
                             <div class="ticket-count">${issued} issued out of ${capacity} available</div>
@@ -333,18 +332,19 @@
                 `;
         
                 ticketInfoHtml += `<li>${ticket.name}: ${issued} issued out of ${capacity} available (${percentage}%)</li>`;
-                $('.ticket-info_hidden_all ul').html(ticketInfoHtml);
-        
-                // Append individual progress component to container
-                $('.ticket-info_hidden_all').append(individualProgressHtml);
-        
-                // Update individual progress circle with the same class names as before
-                updateIndividualProgressCircle($('.ticket-info_hidden_all .ticket-progress-container').last(), issued, capacity);
             });
+        
+            // Append individual progress components to container outside the loop
+            $('.ticket-info_hidden_all ul').html(ticketInfoHtml);
+            $('.ticket-info_hidden_all').append(individualProgressHtml);
+        
+            // Update individual progress circles with the same class names as before
+            updateIndividualProgressCircle($('.ticket-info_hidden_all .ticket-progress-container'), issuedTickets, totalTickets);
         
             // Proceed with other functions like startScanQR...
             startScanQR(response.event_id);
         }
+        
 
 
     });
