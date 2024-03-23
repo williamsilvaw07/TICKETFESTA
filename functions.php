@@ -4551,6 +4551,7 @@ function custom_qr_scanner_shortcode() {
         <h6>Total Ticket Sold</h6>
         <p class="ticket-count">0<span>/</span>0</p>
         <p class="see_more_ticket_info">See more</p>
+        
         <div class="ticket-info_hidden_all">
             <ul>
                 <!-- Ticket list will be dynamically populated here -->
@@ -4592,7 +4593,6 @@ add_shortcode('custom_qr_scanner', 'custom_qr_scanner_shortcode');
 
 add_action('wp_ajax_validate_event_pass', 'validate_event_pass');
 add_action('wp_ajax_nopriv_validate_event_pass', 'validate_event_pass'); // If you want to allow non-logged-in users to access the AJAX endpoint
-
 
 
 
@@ -4656,13 +4656,10 @@ function validate_event_pass() {
     wp_die();
 }
 
+// Hook the AJAX action
+add_action('wp_ajax_custom_check_in_ticket', 'validate_event_pass');
+add_action('wp_ajax_nopriv_custom_check_in_ticket', 'validate_event_pass');
 
-
-// Remember to properly hook your function to WordPress AJAX actions if it's intended for AJAX.
-
-
-add_action('wp_ajax_custom_check_in_ticket', 'checkinTicket');
-add_action('wp_ajax_nopriv_custom_check_in_ticket', 'checkinTicket'); 
 
 function checkinTicket(){
     $ticket_id = isset(  $_POST['ticket_id'] ) ? esc_attr( $_POST['ticket_id']) : false;
