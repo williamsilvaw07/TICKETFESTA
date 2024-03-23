@@ -223,7 +223,6 @@
 
 
 
-
         function calculatePercentage(issued, total) {
             if (total === 0) {
                 console.error("Total tickets cannot be 0.");
@@ -280,71 +279,68 @@
             // Update the percentage text inside SVG for individual tickets
             container.find('span.progress-percentage_individual').text(precisePercentage + '%');
         }
-
-
-
+        
         function passcodeMatch(response) {
-    if (!response || !response.event_data) {
-        console.error("Invalid response data.");
-        return;
-    }
-
-    $('.tabs-container').show();
-    $('.tab-content-container').show();
-    $('.event-container .event-image').attr('src', response.event_data.thumbnail_url);
-    $('.event-container .name span').text(response.event_data.name);
-    $('.event-container .date span').text(response.event_data.start_date);
-
-    // Extract the ticket information
-    var issuedTickets = parseInt(response.event_data.issued_tickets, 10);
-    var totalTickets = parseInt(response.event_data.total_tickets_available, 10);
-
-    // Check for NaN values after parsing
-    if (isNaN(issuedTickets) || isNaN(totalTickets)) {
-        console.error("Error parsing ticket information.");
-        return;
-    }
-
-    // Update the progress circle with the new data
-    updateProgressCircle(issuedTickets, totalTickets);
-
-    // Display ticket information with percentages
-    var ticketList = response.event_data.ticket_list;
-    var ticketInfoHtml = '';
-    ticketList.forEach(function(ticket) {
-        var issued = parseInt(ticket.issued_tickets, 10);
-        var capacity = parseInt(ticket.capacity, 10);
-        var percentage = calculatePercentage(issued, capacity).toFixed(1); // Calculate percentage for each ticket type
-
-        // HTML for individual progress components with the same class names as before
-        var individualProgressHtml = `
-            <div class="ticket-progress-container">
-                <div class="ticket-progress-container_svg">
-                    <svg class="progress-ring" width="72" height="72">
-                        <circle class="progress-ring__circle-bg" cx="36" cy="36" r="31" stroke-width="6"></circle>
-                        <circle class="progress-ring__circle progress-ring__circle-individual" cx="36" cy="36" r="31" stroke-width="6"></circle>
-                    </svg>
-                    <span class="progress-percentage_individual">${percentage}%</span>
-                </div>
-                <div class="ticket-details">
-                    <div class="ticket-name">${ticket.name}</div>
-                    <div class="ticket-count">${issued} issued out of ${capacity} available</div>
-                </div>
-            </div>
-        `;
-
-        // Append individual progress components to container within the loop
-        $('.ticket-info_hidden_all ul').append(`<li>${ticket.name}: ${issued} issued out of ${capacity} available (${percentage}%)</li>`);
-        $('.ticket-info_hidden_all').append(individualProgressHtml);
-
-        // Update individual progress circles with the correct percentage
-        updateIndividualProgressCircle($('.ticket-info_hidden_all .ticket-progress-container').last(), issued, capacity);
-    });
-
-    // Proceed with other functions like startScanQR...
-    startScanQR(response.event_id);
-}
-
+            if (!response || !response.event_data) {
+                console.error("Invalid response data.");
+                return;
+            }
+        
+            $('.tabs-container').show();
+            $('.tab-content-container').show();
+            $('.event-container .event-image').attr('src', response.event_data.thumbnail_url);
+            $('.event-container .name span').text(response.event_data.name);
+            $('.event-container .date span').text(response.event_data.start_date);
+        
+            // Extract the ticket information
+            var issuedTickets = parseInt(response.event_data.issued_tickets, 10);
+            var totalTickets = parseInt(response.event_data.total_tickets_available, 10);
+        
+            // Check for NaN values after parsing
+            if (isNaN(issuedTickets) || isNaN(totalTickets)) {
+                console.error("Error parsing ticket information.");
+                return;
+            }
+        
+            // Update the progress circle with the new data
+            updateProgressCircle(issuedTickets, totalTickets);
+        
+            // Display ticket information with percentages
+            var ticketList = response.event_data.ticket_list;
+            var ticketInfoHtml = '';
+            ticketList.forEach(function(ticket) {
+                var issued = parseInt(ticket.issued_tickets, 10);
+                var capacity = parseInt(ticket.capacity, 10);
+                var percentage = calculatePercentage(issued, capacity).toFixed(1); // Calculate percentage for each ticket type
+        
+                // HTML for individual progress components with the same class names as before
+                var individualProgressHtml = `
+                    <div class="ticket-progress-container">
+                        <div class="ticket-progress-container_svg">
+                            <svg class="progress-ring" width="72" height="72">
+                                <circle class="progress-ring__circle-bg" cx="36" cy="36" r="31" stroke-width="6"></circle>
+                                <circle class="progress-ring__circle progress-ring__circle-individual" cx="36" cy="36" r="31" stroke-width="6"></circle>
+                            </svg>
+                            <span class="progress-percentage_individual">${percentage}%</span>
+                        </div>
+                        <div class="ticket-details">
+                            <div class="ticket-name">${ticket.name}</div>
+                            <div class="ticket-count">${issued} issued out of ${capacity} available</div>
+                        </div>
+                    </div>
+                `;
+        
+                // Append individual progress components to container within the loop
+                $('.ticket-info_hidden_all ul').append(`<li>${ticket.name}: ${issued} issued out of ${capacity} available (${percentage}%)</li>`);
+                $('.ticket-info_hidden_all').append(individualProgressHtml);
+        
+                // Update individual progress circles with the correct percentage
+                updateIndividualProgressCircle($('.ticket-info_hidden_all .ticket-progress-container').last(), issued, capacity);
+            });
+        
+            // Proceed with other functions like startScanQR...
+            startScanQR(response.event_id);
+        }
     });
 })(jQuery);
 
