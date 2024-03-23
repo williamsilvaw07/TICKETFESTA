@@ -345,7 +345,7 @@
         
 
 
-
+ 
         // Button to refresh the section
 $('#refreshButton').on('click', function() {
     // Fetch updated data from the server
