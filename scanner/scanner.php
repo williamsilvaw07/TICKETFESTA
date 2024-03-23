@@ -334,7 +334,8 @@ button i {
 
 .ticket-progress-container {
     position: relative;
-    display:flex;
+    display: flex;
+    gap: 14px;
 }
 
 .progress-ring {
