@@ -341,6 +341,68 @@
             // Proceed with other functions like startScanQR...
             startScanQR(response.event_id);
         }
+
+
+
+
+        // Define global variables to store initial ticket data
+var initialTicketData = null;
+
+// Function to fetch ticket data from the server
+function fetchTicketData() {
+    // Make your AJAX call to fetch ticket data here
+    // This example assumes you have a function called getTicketDataFromServer
+    getTicketDataFromServer()
+        .then(function(response) {
+            if (response && response.event_data) {
+                // If initial ticket data is not set, store the fetched data as initial data
+                if (initialTicketData === null) {
+                    initialTicketData = response.event_data.ticket_list;
+                } else {
+                    // Compare fetched data with initial data to check for changes
+                    var newTicketData = response.event_data.ticket_list;
+                    checkForChanges(newTicketData);
+                }
+            }
+        })
+        .catch(function(error) {
+            console.error("Failed to fetch ticket data:", error);
+        });
+}
+
+// Function to check for changes in ticket data
+function checkForChanges(newData) {
+    // Compare each ticket in the new data with the initial data
+    for (var i = 0; i < newData.length; i++) {
+        var newTicket = newData[i];
+        var initialTicket = initialTicketData[i];
+
+        // Check if any properties of the ticket have changed
+        if (newTicket.issued_tickets !== initialTicket.issued_tickets ||
+            newTicket.capacity !== initialTicket.capacity) {
+            // Update the UI to reflect the changes
+            updateTicketUI(newTicket);
+        }
+    }
+}
+
+// Function to update UI with new ticket data
+function updateTicketUI(ticket) {
+    // Update UI elements to reflect changes in the ticket
+    // This is just an example, you would update your UI accordingly
+    var ticketElement = $('.ticket[data-ticket-id="' + ticket.id + '"]');
+    ticketElement.find('.issued-tickets').text(ticket.issued_tickets);
+    ticketElement.find('.total-tickets').text(ticket.capacity);
+}
+
+// Initial fetch of ticket data
+fetchTicketData();
+
+// Set interval to periodically check for changes in ticket data
+setInterval(fetchTicketData, 30000); // Refresh every 30 seconds
+
+
+
     });
 })(jQuery);
 
