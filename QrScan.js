@@ -415,7 +415,7 @@
          CheckProgressData();
          
          // Set an interval to call the function every 30 seconds
-         var intervalId = setInterval(CheckProgressData, 10000);
+         var intervalId = setInterval(CheckProgressData, 30000);
          
          // (Optional) Clear the interval when the user leaves the page
         //  $(window).unload(function() {
