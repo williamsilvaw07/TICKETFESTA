@@ -396,7 +396,7 @@ button i {
 
 
 .ticket-info_hidden_all{
-    display: flex;
+    display: none;
     flex-direction: column;
     gap: 22px;
     margin-top: 22px;

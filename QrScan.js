@@ -440,3 +440,28 @@
 
 
 
+
+
+
+
+
+
+jQuery(document).ready(function($) {
+    // Handle click event of the "See More" button
+    $('#seeMoreButton').click(function() {
+        // Toggle the visibility of the ticket information section
+        $('.ticket-info_hidden_all').toggleClass('show');
+
+        // Toggle the visibility of the close button
+        $('.ticket-info_hidden_all_close').toggleClass('show');
+    });
+
+    // Handle click event of the close button
+    $('.ticket-info_hidden_all_close').click(function() {
+        // Hide the ticket information section
+        $('.ticket-info_hidden_all').removeClass('show');
+
+        // Hide the close button
+        $(this).removeClass('show');
+    });
+});

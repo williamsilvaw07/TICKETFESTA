@@ -4553,6 +4553,7 @@ function custom_qr_scanner_shortcode() {
         <p class="see_more_ticket_info">See more</p>
         
         <div class="ticket-info_hidden_all">
+            <span class="ticket-info_hidden_all_close">Close</span>
             <ul>
                 <!-- Ticket list will be dynamically populated here -->
             </ul>
