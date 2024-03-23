@@ -447,7 +447,7 @@
 
 jQuery(document).ready(function($) {
     // Handle click event of the "See More" button
-    $('#seeMoreButton').click(function() {
+    $('.see_more_ticket_info').click(function() {
         console.log("See More button clicked.");
         // Toggle the visibility of the ticket information section
         $('.ticket-info_hidden_all').toggleClass('show');
