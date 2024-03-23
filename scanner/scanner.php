@@ -350,8 +350,8 @@ button i {
 .progress-ring__circle {
     fill: transparent;
     stroke: #4CAF50; 
-    stroke-width: 10; 
-    stroke-dasharray: 365; 
+    stroke-width: 7; 
+    stroke-dasharray: 965; 
     stroke-dashoffset: 365;
     transition: stroke-dashoffset 0.35s;
 }
