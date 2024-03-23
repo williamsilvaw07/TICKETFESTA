@@ -531,7 +531,7 @@ function set_default_organizer($customer_id){
         'posts_per_page' => -1
     ));
     update_user_meta($customer_id, '_tribe_organizer_id', $organisers[0]->ID);
-    return $organisers[0]->ID;
+    return get_the_title($organisers[0]->ID);
 }
 function register_as_media($url){
     // require_once("wp-load.php");
