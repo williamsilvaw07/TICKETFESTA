@@ -4635,6 +4635,7 @@ function validate_event_pass() {
                     ];
                 }
             }
+            var_dump(get_post_meta($event_id));
 
             $event_data = [
                 'start_date'              => get_post_meta($event_id, '_EventStartDate', true),
@@ -4984,7 +4985,6 @@ function tribe_check_progress_data(){
 
     $event_id = isset($_POST['event_id']) ? esc_attr( $_POST['event_id'] ) : false;
     if( $event_id ){
-
         $total_capacity = apply_filters('tribe_tickets_total_event_capacity', null, $event_id);
         $total_capacity = 0;
         if (null === $total_capacity) {
