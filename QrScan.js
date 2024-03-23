@@ -346,6 +346,29 @@
 
 
 
+        // Button to refresh the section
+$('#refreshButton').on('click', function() {
+    // Fetch updated data from the server
+    $.ajax({
+        url: ajaxurl, // Use WordPress AJAX URL
+        method: 'POST', // Use POST method
+        data: {
+            action: 'custom_check_in_ticket', // AJAX action hook
+        },
+        success: function(response) {
+            // Parse the JSON response into JavaScript object
+            var eventData = JSON.parse(response);
+            
+            // Call passcodeMatch function with updated data
+            passcodeMatch(eventData);
+        },
+        error: function(xhr, status, error) {
+            console.error("Error fetching updated data:", error);
+        }
+    });
+});
+
+
 
     });
 })(jQuery);
