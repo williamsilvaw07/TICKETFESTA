@@ -418,9 +418,9 @@
          var intervalId = setInterval(CheckProgressData, 3000);
          
          // (Optional) Clear the interval when the user leaves the page
-         $(window).unload(function() {
-             clearInterval(intervalId);
-         });
+        //  $(window).unload(function() {
+        //      clearInterval(intervalId);
+        //  });
     });
 
       
