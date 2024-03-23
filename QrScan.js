@@ -280,7 +280,6 @@
             // Update the percentage text inside SVG for individual tickets
             container.find('span.progress-percentage_individual').text(precisePercentage + '%');
         }
-        
         function passcodeMatch(response) {
             if (!response || !response.event_data) {
                 console.error("Invalid response data.");
@@ -331,12 +330,10 @@
                     </div>
                 `;
         
-                ticketInfoHtml += `<li>${ticket.name}: ${issued} issued out of ${capacity} available (${percentage}%)</li>`;
+                // Append individual progress components to container within the loop
+                $('.ticket-info_hidden_all ul').append(`<li>${ticket.name}: ${issued} issued out of ${capacity} available (${percentage}%)</li>`);
+                $('.ticket-info_hidden_all').append(individualProgressHtml);
             });
-        
-            // Append individual progress components to container outside the loop
-            $('.ticket-info_hidden_all ul').html(ticketInfoHtml);
-            $('.ticket-info_hidden_all').append(individualProgressHtml);
         
             // Update individual progress circles with the same class names as before
             updateIndividualProgressCircle($('.ticket-info_hidden_all .ticket-progress-container'), issuedTickets, totalTickets);
@@ -344,8 +341,6 @@
             // Proceed with other functions like startScanQR...
             startScanQR(response.event_id);
         }
-        
-
 
     });
 })(jQuery);
