@@ -1,6 +1,7 @@
 (function($) {
     
     document.addEventListener("DOMContentLoaded", function(event) {
+        var event_id_global = '';
         // const video = document.getElementById('video');
 
         // Check if getUserMedia is supported
@@ -340,14 +341,89 @@
             });
         
             // Proceed with other functions like startScanQR...
+            event_id_global = response.event_id;
             startScanQR(response.event_id);
         }
+
+        function CheckProgressData() {
+            if(event_id_global){
+                 $.ajax({
+                 url: admin_ajax_url.ajax_url,
+                 type: 'post',
+                 data: {
+                     action: 'check_progress_data',
+                     event_id: event_id_global
+                 },
+                 success: function(response) {
+                     console.log(response); 
+                     var issuedTickets = parseInt(response.event_data.issued_tickets, 10);
+                     var totalTickets = parseInt(response.event_data.total_tickets_available, 10);
+                       // Check for NaN values after parsing
+                     if (isNaN(issuedTickets) || isNaN(totalTickets)) {
+                         console.error("Error parsing ticket information.");
+                         return;
+                     }
+                 
+                     // Update the progress circle with the new data
+                     updateProgressCircle(issuedTickets, totalTickets);
+
+                    // Clear existing ticket information
+            $('.ticket-info_hidden_all').empty();
         
-
-
-
-
+            // Display ticket information with percentages
+            var ticketList = response.event_data.ticket_list;
+            ticketList.forEach(function(ticket) {
+                var issued = parseInt(ticket.issued_tickets, 10);
+                var capacity = parseInt(ticket.capacity, 10);
+                var percentage = calculatePercentage(issued, capacity).toFixed(1); // Calculate percentage for each ticket type
+        
+                // HTML for individual progress components with the same class names as before
+                var individualProgressHtml = `
+                    <div class="ticket-progress-container">
+                        <div class="ticket-progress-container_svg">
+                            <svg class="progress-ring" width="72" height="72">
+                                <circle class="progress-ring__circle-bg" cx="36" cy="36" r="31" stroke-width="6"></circle>
+                                <circle class="progress-ring__circle progress-ring__circle-individual" cx="36" cy="36" r="31" stroke-width="6"></circle>
+                            </svg>
+                            <span class="progress-percentage_individual">${percentage}%</span>
+                        </div>
+                        <div class="ticket-details">
+                            <div class="ticket-name">${ticket.name}</div>
+                            <div class="ticket-count">${issued} issued out of ${capacity} available</div>
+                        </div>
+                    </div>
+                `;
+        
+                // Append individual progress components to container within the loop
+                $('.ticket-info_hidden_all').append(individualProgressHtml);
+        
+                // Update individual progress circles with the correct percentage
+                updateIndividualProgressCircle($('.ticket-info_hidden_all .ticket-progress-container').last(), issued, capacity);
+            });
+        
+            // 
+                 },
+                 error: function(jqXHR, textStatus, errorThrown) {
+                     console.error("AJAX Error:", textStatus, errorThrown);
+                 }
+                 });
+             }
+         }
+         
+         // Call the function immediately to update on page load
+         CheckProgressData();
+         
+         // Set an interval to call the function every 30 seconds
+         var intervalId = setInterval(CheckProgressData, 30000);
+         
+         // (Optional) Clear the interval when the user leaves the page
+         $(window).unload(function() {
+             clearInterval(intervalId);
+         });
     });
+
+      
+    
 })(jQuery);
 
 
