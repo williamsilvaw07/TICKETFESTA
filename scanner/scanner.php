@@ -381,9 +381,17 @@ button i {
     font-size: 16px;
     margin:0;
 }
+.ticket-progress-container_svg{
+    width: fit-content;
+    position: relative;
+}
 
-
-
+.position-center {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
 
 
 
