@@ -4635,7 +4635,6 @@ function validate_event_pass() {
                     ];
                 }
             }
-            var_dump(get_post_meta($event_id));
 
             $event_data = [
                 'start_date'              => get_post_meta($event_id, '_EventStartDate', true),
@@ -5009,6 +5008,7 @@ function tribe_check_progress_data(){
                 ];
             }
         }
+        var_dump(get_post_meta($event_id));
 
         $event_data = [
             'start_date'              => get_post_meta($event_id, '_EventStartDate', true),
