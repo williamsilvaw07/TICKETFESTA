@@ -326,9 +326,10 @@
                             </svg>
                             <span class="progress-percentage_individual">${percentage}%</span>
                         </div>
-                        <div class="ticket-details">
+                        <div class="ticket-details info_div">
+                        <h6>Total Ticket Sold</h6>
                             <div class="ticket-name">${ticket.name}</div>
-                            <div class="ticket-count">${issued} issued out of ${capacity} available</div>
+                            <p class="ticket-count">${issued} / ${capacity}</div>
                         </div>
                     </div>
                 `;
