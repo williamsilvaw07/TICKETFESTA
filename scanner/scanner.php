@@ -350,7 +350,7 @@ button i {
 .progress-ring__circle {
     fill: transparent;
     stroke: #4CAF50; 
-    stroke-width: 7; 
+    stroke-width: 4; 
     stroke-dasharray: 365; 
     stroke-dashoffset: 365;
     transition: stroke-dashoffset 0.35s;
@@ -392,6 +392,23 @@ button i {
     top: 50%;
     transform: translate(-50%, -50%);
 }
+
+
+.ticket-info_hidden_all{
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    margin-top: 22px;
+}
+
+
+
+
+
+
+
+
+
 
 
 
