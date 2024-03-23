@@ -228,7 +228,7 @@ if ($banner_image_id) {
                 <small class="req"><?php esc_html_e( '(required)', 'tribe-events-community' ); ?></small>
             </label>
 
-            <input type="textarea" placeholder="Organiser Description" name="organizer_description" id="organizer_description_input" value="<?php echo esc_attr( $organizer_description ); ?>" readonly/>
+            <textarea type="textarea" placeholder="Organiser Description" name="organizer_description" id="organizer_description_input" value="<?php echo esc_attr( $organizer_description ); ?>" readonly > </textarea>
             <svg class="edit_svg_click organizer_description_edit_btn" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#d3fa16" viewBox="0 0 24 24"><path d="M4 16.668V20h3.333l9.83-9.83-3.333-3.332zm15.74-9.075a.885.885 0 0 0 0-1.253l-2.08-2.08a.885.885 0 0 0-1.253 0L14.78 5.886l3.333 3.333zM6 17l8-8 1 1-8 8z"></path></svg>
 
         </div>
@@ -281,7 +281,7 @@ if ($banner_image_id) {
 document.addEventListener('DOMContentLoaded', function() {
  
     remove_read_only('input[name="post_title"]', '.organizer_title_edit_btn');
-    remove_read_only('input[name="organizer_description"]', '.organizer_description_edit_btn');
+    remove_read_only('textarea[name="organizer_description"]', '.organizer_description_edit_btn');
     remove_read_only('input[name="organizer_email"]', '.organizer_email_edit_btn');
     remove_read_only('input[name="organizer_facebook"]', '.organizer_facebook_edit_btn');
     remove_read_only('input[name="organizer_twitter"]', '.organizer_twitter_edit_btn');
@@ -348,7 +348,7 @@ document.addEventListener('DOMContentLoaded', function() {
         var xhr = new XMLHttpRequest();
         xhr.open('POST', ajaxurl, true);
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-        var organizer_description = document.querySelector('input[name="organizer_description"]').value.trim();
+        var organizer_description = document.querySelector('textarea[name="organizer_description"]').value.trim();
         var organizer_email = document.querySelector('input[name="organizer_email"]').value.trim();
         var organizer_facebook = document.querySelector('input[name="organizer_facebook"]').value.trim();
         var organizer_twitter = document.querySelector('input[name="organizer_twitter"]').value.trim();
