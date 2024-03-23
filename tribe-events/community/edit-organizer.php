@@ -594,8 +594,10 @@ if (bannerInput) {
     width: 100% !important;
 }
 #organizer_description_input{
-    color:white;
+    background: transparent !important;
+    color: white;
     width: 100%;
+    border: none !important;
     min-height: 120px;
 }
 .edit_organizer_main input{
