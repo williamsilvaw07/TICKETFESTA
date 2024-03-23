@@ -4596,6 +4596,7 @@ add_action('wp_ajax_nopriv_validate_event_pass', 'validate_event_pass'); // If y
 
 
 
+
 function validate_event_pass() {
     $event_pass = isset($_POST['event_pass']) ? esc_attr($_POST['event_pass']) : false;
     $events = get_posts_by_event_pass($event_pass);
@@ -4656,10 +4657,13 @@ function validate_event_pass() {
     wp_die();
 }
 
-// Hook the AJAX action
-add_action('wp_ajax_custom_check_in_ticket', 'validate_event_pass');
-add_action('wp_ajax_nopriv_custom_check_in_ticket', 'validate_event_pass');
 
+
+// Remember to properly hook your function to WordPress AJAX actions if it's intended for AJAX.
+
+
+add_action('wp_ajax_custom_check_in_ticket', 'checkinTicket');
+add_action('wp_ajax_nopriv_custom_check_in_ticket', 'checkinTicket'); 
 
 function checkinTicket(){
     $ticket_id = isset(  $_POST['ticket_id'] ) ? esc_attr( $_POST['ticket_id']) : false;

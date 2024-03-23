@@ -305,9 +305,11 @@
             // Update the progress circle with the new data
             updateProgressCircle(issuedTickets, totalTickets);
         
+            // Clear existing ticket information
+            $('.ticket-info_hidden_all').empty();
+        
             // Display ticket information with percentages
             var ticketList = response.event_data.ticket_list;
-            var ticketInfoHtml = '';
             ticketList.forEach(function(ticket) {
                 var issued = parseInt(ticket.issued_tickets, 10);
                 var capacity = parseInt(ticket.capacity, 10);
@@ -331,7 +333,6 @@
                 `;
         
                 // Append individual progress components to container within the loop
-               // $('.ticket-info_hidden_all ul').append(`<li>${ticket.name}: ${issued} issued out of ${capacity} available (${percentage}%)</li>`);
                 $('.ticket-info_hidden_all').append(individualProgressHtml);
         
                 // Update individual progress circles with the correct percentage
@@ -346,34 +347,6 @@
 
 
 
-        function fetchTicketData() {
-            $.ajax({
-                url: ajaxurl, // Assumes ajaxurl is defined in your WordPress environment
-                type: 'POST',
-                data: {
-                    action: 'custom_check_in_ticket',
-                    event_pass: 'your_event_pass', // Replace 'your_event_pass' with the actual event pass value
-                },
-                success: function(response) {
-                    if (response && response.event_data) {
-                        // Update the UI with the fetched ticket data
-                        passcodeMatch(response);
-                    }
-                },
-                error: function(xhr, status, error) {
-                    console.error("AJAX error:", error);
-                }
-            });
-        }
-        
-        // Initial fetch of ticket data
-        fetchTicketData();
-        
-        // Set interval to periodically fetch and update ticket data
-        setInterval(fetchTicketData, 30000); // Refresh every 30 seconds
-
-        
-        
     });
 })(jQuery);
 
