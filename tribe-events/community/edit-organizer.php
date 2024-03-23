@@ -452,7 +452,10 @@ document.addEventListener("DOMContentLoaded", function() {
             <input type="submit" class="button submit events-community-submit" value="<?php
             echo esc_attr( $organizer_id ? sprintf( __( 'Update %s', 'tribe-events-community' ), $organizer_label_singular ) : sprintf( __( 'Submit %s', 'tribe-events-community' ), $organizer_label_singular ) );
             ?>" name="community-event"/>
-        </div><!-- .tribe-events-community-footer -->
+            <a class="back-organizer-setting" href="https://ticketfesta.co.uk/dashboard/organisation-settings/">Back</a>
+        </div>
+        
+        <!-- .tribe-events-community-footer -->
     </form>
 </div>
 </div>
