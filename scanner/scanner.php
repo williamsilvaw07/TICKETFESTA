@@ -386,7 +386,7 @@ button i {
     position: relative;
 }
 
-.position-center {
+.progress-percentage_individual {
     position: absolute;
     left: 50%;
     top: 50%;
