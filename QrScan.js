@@ -331,7 +331,7 @@
                 `;
         
                 // Append individual progress components to container within the loop
-                $('.ticket-info_hidden_all ul').append(`<li>${ticket.name}: ${issued} issued out of ${capacity} available (${percentage}%)</li>`);
+               // $('.ticket-info_hidden_all ul').append(`<li>${ticket.name}: ${issued} issued out of ${capacity} available (${percentage}%)</li>`);
                 $('.ticket-info_hidden_all').append(individualProgressHtml);
         
                 // Update individual progress circles with the correct percentage
