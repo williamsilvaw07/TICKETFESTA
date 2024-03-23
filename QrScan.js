@@ -444,25 +444,25 @@
 
 
 
-
 jQuery(document).ready(function($) {
     // Handle click event of the "See More" button
     $('.see_more_ticket_info').click(function() {
         console.log("See More button clicked.");
         // Toggle the visibility of the ticket information section
-        $('.ticket-info_hidden_all').toggleClass('show');
+        $('.ticket-info_hidden_all').css('display', 'flex');
 
         // Toggle the visibility of the close button
-        $('.ticket-info_hidden_all_close').toggleClass('show');
+        $('.ticket-info_hidden_all_close').css('display', 'block');
     });
 
     // Handle click event of the close button
     $('.ticket-info_hidden_all_close').click(function() {
         console.log("Close button clicked.");
         // Hide the ticket information section
-        $('.ticket-info_hidden_all').removeClass('show');
+        $('.ticket-info_hidden_all').css('display', 'none');
 
         // Hide the close button
-        $(this).removeClass('show');
+        $(this).css('display', 'none');
     });
 });
+
