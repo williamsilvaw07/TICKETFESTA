@@ -381,6 +381,7 @@
         
                 // HTML for individual progress components with the same class names as before
                 var individualProgressHtml = `
+                <span class="ticket-info_hidden_all_close">Close</span>
                     <div class="ticket-progress-container">
                         <div class="ticket-progress-container_svg">
                             <svg class="progress-ring" width="72" height="72">
