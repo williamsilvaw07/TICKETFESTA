@@ -347,6 +347,7 @@
 
         function CheckProgressData() {
             if(event_id_global){
+                console.log('ajax called');
                  $.ajax({
                  url: admin_ajax_url.ajax_url,
                  type: 'post',
@@ -414,7 +415,7 @@
          CheckProgressData();
          
          // Set an interval to call the function every 30 seconds
-         var intervalId = setInterval(CheckProgressData, 30000);
+         var intervalId = setInterval(CheckProgressData, 3000);
          
          // (Optional) Clear the interval when the user leaves the page
          $(window).unload(function() {
