@@ -349,7 +349,7 @@
             if(event_id_global){
                 console.log('ajax called');
                  $.ajax({
-                 url: admin_ajax_url.ajax_url,
+                 url: window.tribe_ajax.ajax_url,
                  type: 'post',
                  data: {
                      action: 'check_progress_data',
