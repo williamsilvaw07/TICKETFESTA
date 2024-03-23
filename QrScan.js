@@ -444,7 +444,6 @@
 
 
 
-
 jQuery(document).ready(function($) {
     // Handle click event of the "See More" button
     $('.see_more_ticket_info').click(function() {
@@ -452,18 +451,18 @@ jQuery(document).ready(function($) {
         // Toggle the visibility of the ticket information section
         $('.ticket-info_hidden_all').css('display', 'flex');
 
-        // Toggle the visibility of the close button
-        $('.ticket-info_hidden_all_close').css('display', 'block');
+        // Create and append the close button
+        var closeButton = $('<span class="ticket-info_hidden_all_close">Close</span>');
+        $('.ticket-info_hidden_all').append(closeButton);
     });
 
     // Handle click event of the close button
-    $('.ticket-info_hidden_all_close').click(function() {
+    $(document).on('click', '.ticket-info_hidden_all_close', function() {
         console.log("Close button clicked.");
         // Hide the ticket information section
         $('.ticket-info_hidden_all').css('display', 'none');
 
-        // Hide the close button
-        $(this).css('display', 'none');
+        // Remove the close button
+        $(this).remove();
     });
 });
-
