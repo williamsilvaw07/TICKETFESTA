@@ -91,7 +91,7 @@ if ('POST' === $_SERVER['REQUEST_METHOD']) {
     ?>
     <script>
     // Specify the URL you want to redirect to
-    var redirectUrl = 'https://ticketfesta.co.uk/dashboard/organisers-list/?organizer_updated=true';
+    var redirectUrl = 'https://ticketfesta.co.uk/dashboard/organisation-settings/?organizer_updated=true';
 
         // Perform the redirect
         window.location.href = redirectUrl;
