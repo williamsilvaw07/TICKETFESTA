@@ -5076,16 +5076,14 @@ function tribe_check_progress_data(){
 
 
 
-
-
 function display_checked_in_percentage_shortcode($atts) {
     // Start output buffering to catch debug output
     ob_start();
 
     echo '<p>Debug: Shortcode function called.</p>';
 
-    // Extract the event ID from the shortcode attributes, default to 0 if not provided
-    $event_id = isset($atts['event_id']) ? intval($atts['event_id']) : 0;
+    // Directly use the specified event ID
+    $event_id = 3789; // Hardcoded for simplicity
     echo '<p>Debug: Event ID - ' . $event_id . '</p>';
 
     // Check if the tribe_tickets_get_total_checked_in function exists
@@ -5093,7 +5091,7 @@ function display_checked_in_percentage_shortcode($atts) {
         $total_checked_in = tribe_tickets_get_total_checked_in($event_id);
         echo '<p>Debug: Total Checked-in Attendees - ' . $total_checked_in . '</p>';
     } else {
-        echo '<p>Error: Function tribe_tickets_get_total_checked_in does not exist.</p>';
+        echo '<p>Error: Function tribe_tickets_get_total_checked_in does not exist. Ensure The Events Calendar or necessary add-ons are installed and activated.</p>';
     }
 
     // Check if the tribe_tickets_get_total_attendees function exists
@@ -5101,7 +5099,7 @@ function display_checked_in_percentage_shortcode($atts) {
         $total_attendees = tribe_tickets_get_total_attendees($event_id);
         echo '<p>Debug: Total Attendees - ' . $total_attendees . '</p>';
     } else {
-        echo '<p>Error: Function tribe_tickets_get_total_attendees does not exist.</p>';
+        echo '<p>Error: Function tribe_tickets_get_total_attendees does not exist. Ensure The Events Calendar or necessary add-ons are installed and activated.</p>';
     }
 
     // Assuming both functions exist and returned data
