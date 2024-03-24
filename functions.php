@@ -4693,7 +4693,8 @@ function checkinTicket(){
 
             $now = new DateTime();
             // willam
-            $formatted_datetime = $now->format('Y-m-d H:i:s');
+            $formatted_datetime = $now->format('d F Y H:i:s');
+
             $checkin_details = [
                 'date'      => $formatted_datetime,
                 'source'    => 'qr-code',
