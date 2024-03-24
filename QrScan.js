@@ -285,20 +285,22 @@
 
 
 
-
         function passcodeMatch(response) {
             if (!response || !response.event_data) {
                 console.error("Invalid response data.");
                 return;
             }
         
+            console.log("Response received:", response);
+        
             $('.tabs-container').show();
             $('.tab-content-container').show();
             $('.event-container .event-image').attr('src', response.event_data.thumbnail_url);
             $('.event-container .name span').text(response.event_data.name);
             $('.event-container .date span').text(response.event_data.start_date);
-            $('.event-container .checkedin span').text(response.event_data.checkedin_percentage + '%');
-
+            $('.event-container .checkedin span').text(response.event_data.checkedin_percentage);
+        
+            console.log("Checked-in percentage:", response.event_data.checkedin_percentage);
         
             // Extract the ticket information
             var issuedTickets = parseInt(response.event_data.issued_tickets, 10);
@@ -334,7 +336,7 @@
                             <span class="progress-percentage_individual">${percentage}%</span>
                         </div>
                         <div class="ticket-details info_div">
-                        <h6>Total Ticket Sold</h6>
+                            <h6>Total Ticket Sold</h6>
                             <div class="ticket-name">${ticket.name}</div>
                             <p class="ticket-count">${issued} / ${capacity}</div>
                         </div>
@@ -352,7 +354,6 @@
             event_id_global = response.event_id;
             startScanQR(response.event_id);
         }
-
 
 
 
