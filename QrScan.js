@@ -447,21 +447,15 @@ jQuery(document).ready(function($) {
     $('.see_more_ticket_info').click(function() {
         console.log("See More button clicked.");
         // Toggle the visibility of the ticket information section
-        $('.ticket-info_hidden_all').toggleClass('show');
-
-        // Toggle the text of the "See more" button
-        $(this).text(function(i, text){
-            return text === "See more" ? "View less" : "See more";
-        });
-    });
-
-    // Handle click event of the close button
-    $('.ticket-info_hidden_all_close').click(function() {
-        console.log("Close button clicked.");
-        // Hide the ticket information section
-        $('.ticket-info_hidden_all').removeClass('show');
-        
-        // Restore the text of the "See more" button
-        $('.see_more_ticket_info').text("See more");
+        var ticketInfo = $('.ticket-info_hidden_all');
+        if (ticketInfo.css('display') === 'none') {
+            ticketInfo.css('display', 'flex');
+            // Change the text of the button to "View less"
+            $(this).text('View less');
+        } else {
+            ticketInfo.css('display', 'none');
+            // Change the text of the button to "See more"
+            $(this).text('See more');
+        }
     });
 });
