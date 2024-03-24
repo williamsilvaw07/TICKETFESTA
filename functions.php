@@ -4612,6 +4612,26 @@ add_action('wp_ajax_validate_event_pass', 'validate_event_pass');
 add_action('wp_ajax_nopriv_validate_event_pass', 'validate_event_pass'); // If you want to allow non-logged-in users to access the AJAX endpoint
 
 
+
+
+
+
+function update_event_checkin_stats(&$event_total_checked, &$event_total_overall) {
+    // Assuming the event ID is defined or retrieved elsewhere in your application
+    $event_id = get_current_event_id(); // Placeholder function
+
+    // Get the total number of issued tickets for the event
+    $event_total_overall = get_total_issued_tickets($event_id);
+
+    // Assuming an instance creation and method call similar to before for checking attendance
+    $attendance_totals = new Tribe__Tickets__Attendance_Totals($event_id);
+    $event_total_checked = $attendance_totals->get_total_checked_in();
+}
+
+
+
+
+
 function validate_event_pass() {
     $event_pass = isset($_POST['event_pass']) ? esc_attr($_POST['event_pass']) : false;
     $events = get_posts_by_event_pass($event_pass);
