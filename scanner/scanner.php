@@ -113,7 +113,11 @@ body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .content-w
     padding-right: 10px;
 }
 .scanner_login_divs{
-    display:flex
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
 }
 .line_break {
     display: block;
@@ -138,9 +142,10 @@ body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .content-w
 
 
 .container-fluid h2 {
-    padding-bottom: 11px;
+    padding-bottom: 0;
     padding-top: 13px;
     font-weight: 700;
+    margin-bottom:0!important
 }
 
 
@@ -299,13 +304,14 @@ input#event-pass {
 
 
     button {
-    background-color: #E72929; 
+        background-color: #E72929;
     color: white;
-    font-size: 16px;
-    padding: 10px 20px; 
-    border: none; 
-    border-radius: 5px; 
-    cursor: pointer; 
+    font-size: 13px;
+    padding: 2px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    height: 40px;
 }
 
 button i {
