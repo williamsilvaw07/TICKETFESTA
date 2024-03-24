@@ -271,6 +271,7 @@ input#event-pass {
     .tabs-nav li.tab {
         padding: 10px 20px;
         cursor: pointer;
+        font-size:14px
     }
 
     /* Style the active tab */
