@@ -5073,6 +5073,14 @@ function tribe_check_progress_data(){
 
 
 
+
+
+
+
+
+
+
+
 function display_checked_in_percentage_shortcode($atts) {
     // Start output buffering to catch debug output
     ob_start();
@@ -5081,6 +5089,10 @@ function display_checked_in_percentage_shortcode($atts) {
     $event_id = 3789;
     echo '<p>Debug: Shortcode function called.</p>';
     echo '<p>Debug: Event ID - ' . $event_id . '</p>';
+
+    // Get the total tickets capacity for the event
+    $total_capacity = get_total_tickets_capacity($event_id);
+    echo '<p>Debug: Total Tickets Capacity - ' . $total_capacity . '</p>';
 
     // Create an instance of the Tribe__Tickets__Attendance_Totals class
     $attendance_totals = new Tribe__Tickets__Attendance_Totals($event_id);
@@ -5105,3 +5117,26 @@ function display_checked_in_percentage_shortcode($atts) {
     return $output;
 }
 add_shortcode('display_checked_in_percentage', 'display_checked_in_percentage_shortcode');
+
+function get_total_tickets_capacity($event_id) {
+    $total_capacity = apply_filters('tribe_tickets_total_event_capacity', null, $event_id);
+    if (null === $total_capacity) {
+        $tickets = Tribe__Tickets__Tickets::get_all_event_tickets($event_id);
+        $total_capacity = 0;
+
+        foreach ($tickets as $ticket) {
+            $ticket_capacity = tribe_tickets_get_capacity($ticket->ID); // Retrieve ticket capacity
+            $total_capacity += $ticket_capacity;
+
+            // Retrieve the number of issued tickets for this ticket
+            $issued_tickets_message = tribe_tickets_get_ticket_stock_message($ticket, __('issued', 'event-tickets'));
+
+            // Extract the number of issued tickets from the message
+            preg_match('/\d+/', $issued_tickets_message, $matches);
+            $issued_tickets = isset($matches[0]) ? $matches[0] : 0;
+
+            // Add each ticket's name, capacity, and issued tickets to the ticket list (optional)
+        }
+    }
+    return $total_capacity;
+}
