@@ -366,6 +366,10 @@ button i {
     color: aliceblue;
     font-weight: bolder;
 }
+.ticket-progress-container_main{
+    display: flex;
+    gap: 10px;
+}
 
 .ticket-info {
     text-align: left;
