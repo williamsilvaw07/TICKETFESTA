@@ -478,6 +478,10 @@ button i {
     bottom: 0;
     background: #121212 !important;
     width: 100%;
+}.tabs-container {
+
+    padding: 0px;
+ 
 }
     }
 
