@@ -4897,7 +4897,7 @@ add_shortcode('display_html5_qrcode_scanner', 'display_html5_qrcode_scanner_shor
 
 
 //////FUNCTION TO ADD A FREE TICKET
-/*
+
 function user_events_with_tickets_shortcode() {
     if (!is_user_logged_in()) {
         return 'You must be logged in to view your events.';
@@ -5071,7 +5071,12 @@ function tribe_check_progress_data(){
 }
 
 
-*/
+
+
+
+
+
+
 
 
 
@@ -5085,81 +5090,44 @@ function display_checked_in_percentage_shortcode($atts) {
     echo '<p>Debug: Shortcode function called.</p>';
     echo '<p>Debug: Event ID - ' . $event_id . '</p>';
 
-    // Get the list of tickets for the event
-    $tickets = get_tickets_for_event($event_id);
-    echo '<p>Debug: Tickets for Event ID ' . $event_id . '</p>';
-    foreach ($tickets as $ticket) {
-        echo '<p>Ticket Name: ' . $ticket->get_title() . '</p>';
+    // Get the total number of issued tickets for the event
+    $issued_tickets = get_total_issued_tickets($event_id);
+    echo '<p>Debug: Total Issued Tickets - ' . $issued_tickets . '</p>';
 
-        // Get the total issued tickets for this ticket
-        $total_issued_tickets = get_total_issued_tickets_for_ticket($event_id, $ticket->get_id());
-        echo '<p>Debug: Total Issued Tickets for ' . $ticket->get_title() . ': ' . $total_issued_tickets . '</p>';
-    }
+    // Create an instance of the Tribe__Tickets__Attendance_Totals class
+    $attendance_totals = new Tribe__Tickets__Attendance_Totals($event_id);
 
     // Get the total checked-in attendees for the event
-    $total_checked_in = get_total_checked_in_for_event($event_id);
+    $total_checked_in = $attendance_totals->get_total_checked_in();
     echo '<p>Debug: Total Checked-in Attendees - ' . $total_checked_in . '</p>';
 
-    // Calculate the percentage of attendees checked in
-    $percentage_checked_in = ($total_checked_in / $total_capacity) * 100;
-    echo '<p>Debug: Checked-in Percentage - ' . $percentage_checked_in . '%</p>';
+    // Calculate the checked-in percentage and round up
+    $percent_checked_in = ($issued_tickets > 0) ? ceil(($total_checked_in / $issued_tickets) * 100) : 0;
+
+    // Format and output the desired information
+    $output = sprintf('<div class="checked-in-percentage">Checked: %d / %d - %d%%</div>',
+        $total_checked_in, $issued_tickets, $percent_checked_in);
 
     // Get the buffered output
     $buffered_output = ob_get_clean();
-    return $buffered_output;
+    return $output;
 }
 add_shortcode('display_checked_in_percentage', 'display_checked_in_percentage_shortcode');
 
-function get_tickets_for_event($event_id) {
-    $tickets = array();
-
-    // Check if WooCommerce is active and if Tribe__Tickets_Plus__Commerce__WooCommerce__Main class exists
-    if (class_exists('Tribe__Tickets_Plus__Commerce__WooCommerce__Main')) {
-        $woo_tickets = Tribe__Tickets_Plus__Commerce__WooCommerce__Main::get_instance();
-        $ticket_ids = $woo_tickets->get_tickets_ids($event_id);
-
-        foreach ($ticket_ids as $ticket_id) {
-            $product = wc_get_product($ticket_id);
-            if ($product) {
-                $tickets[] = $product;
-            }
-        }
-    }
-
-    return $tickets;
-}
-
-function get_total_issued_tickets_for_ticket($event_id, $ticket_id) {
-    // Initialize the total issued tickets variable
+function get_total_issued_tickets($event_id) {
+    $tickets = Tribe__Tickets__Tickets::get_all_event_tickets($event_id);
     $total_issued_tickets = 0;
 
-    // Retrieve all orders for the event
-    $orders = tribe_tickets_get_event_orders($event_id);
+    foreach ($tickets as $ticket) {
+        // Retrieve the number of issued tickets for this ticket
+        $issued_tickets_message = tribe_tickets_get_ticket_stock_message($ticket, __('issued', 'event-tickets'));
 
-    // Loop through each order to count the total issued tickets for the given ticket ID
-    foreach ($orders as $order) {
-        // Retrieve the quantity of tickets in the order
-        $quantity = tribe_tickets_get_order_quantity($order, $ticket_id);
-        
-        // Increment the total issued tickets by the quantity in the order
-        $total_issued_tickets += $quantity;
+        // Extract the number of issued tickets from the message
+        preg_match('/\d+/', $issued_tickets_message, $matches);
+        $issued_tickets = isset($matches[0]) ? intval($matches[0]) : 0;
+
+        $total_issued_tickets += $issued_tickets;
     }
 
     return $total_issued_tickets;
-}
-
-function get_total_checked_in_for_event($event_id) {
-    // Initialize the total checked-in attendees variable
-    $total_checked_in = 0;
-
-    // Retrieve all check-ins for the event
-    $checkins = tribe_tickets_get_event_checkins($event_id);
-
-    // Loop through each check-in to count the total checked-in attendees
-    foreach ($checkins as $checkin) {
-        // Increment the total checked-in attendees for each check-in
-        $total_checked_in++;
-    }
-
-    return $total_checked_in;
 }
