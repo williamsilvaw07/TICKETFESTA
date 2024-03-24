@@ -4645,23 +4645,17 @@ function validate_event_pass() {
                 }
             }
 
-          
-
-$start_date = get_post_meta($event_id, '_EventStartDate', true);
-$formatted_start_date = date('d F Y H:i:s', strtotime($start_date));
-
-// Format the time part to ensure two digits for hour and minute
-$formatted_start_date = preg_replace('/\b(\d{1})(?=:)/', '0$1', $formatted_start_date);
-$formatted_start_date = preg_replace('/\b(\d{1})(?=:|\s)/', '0$1', $formatted_start_date);
-
-$event_data = [
-    'start_date'              => $formatted_start_date,
-    'issued_tickets'          => get_post_meta($event_id, '_tribe_progressive_ticket_current_number', true),
-    'total_tickets_available' => $total_capacity,
-    'ticket_list'             => $ticket_list,
-    'name'                    => get_the_title($event_id),
-    'thumbnail_url'           => get_the_post_thumbnail_url($event_id, 'medium'),
-];
+            $start_date = get_post_meta($event_id, '_EventStartDate', true);
+            $formatted_start_date = date('d F Y H:i', strtotime($start_date));
+            
+            $event_data = [
+                'start_date'              => $formatted_start_date,
+                'issued_tickets'          => get_post_meta($event_id, '_tribe_progressive_ticket_current_number', true),
+                'total_tickets_available' => $total_capacity,
+                'ticket_list'             => $ticket_list,
+                'name'                    => get_the_title($event_id),
+                'thumbnail_url'           => get_the_post_thumbnail_url($event_id, 'medium'),
+            ];
         }
     }
 
