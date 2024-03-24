@@ -4897,7 +4897,7 @@ add_shortcode('display_html5_qrcode_scanner', 'display_html5_qrcode_scanner_shor
 
 
 //////FUNCTION TO ADD A FREE TICKET
-
+/*
 function user_events_with_tickets_shortcode() {
     if (!is_user_logged_in()) {
         return 'You must be logged in to view your events.';
@@ -5071,8 +5071,7 @@ function tribe_check_progress_data(){
 }
 
 
-
-
+*/
 
 
 
@@ -5105,10 +5104,12 @@ function display_checked_in_percentage_shortcode($atts) {
     $percent_checked_in = ($issued_tickets > 0) ? ceil(($total_checked_in / $issued_tickets) * 100) : 0;
 
     // Get the list of tickets for the event
-    $tickets = get_event_tickets($event_id);
+    $tickets = get_tickets_for_event($event_id);
     echo '<p>Debug: Tickets for Event ID ' . $event_id . '</p>';
     foreach ($tickets as $ticket) {
-        echo '<p>Ticket Name: ' . $ticket->name . '</p>';
+        echo '<p>Ticket Name: ' . $ticket->get_title() . '</p>';
+        echo '<p>Ticket Price: ' . $ticket->get_price_html() . '</p>';
+        echo '<p>Ticket Stock: ' . ($ticket->is_in_stock() ? 'In stock' : 'Out of stock') . '</p>';
     }
 
     // Format and output the desired information
@@ -5121,24 +5122,21 @@ function display_checked_in_percentage_shortcode($atts) {
 }
 add_shortcode('display_checked_in_percentage', 'display_checked_in_percentage_shortcode');
 
-function get_total_issued_tickets($event_id) {
-    $tickets = Tribe__Tickets__Tickets::get_all_event_tickets($event_id);
-    $total_issued_tickets = 0;
+function get_tickets_for_event($event_id) {
+    $tickets = array();
 
-    foreach ($tickets as $ticket) {
-        // Retrieve the number of issued tickets for this ticket
-        $issued_tickets_message = tribe_tickets_get_ticket_stock_message($ticket, __('issued', 'event-tickets'));
+    // Check if WooCommerce is active and if Tribe__Tickets_Plus__Commerce__WooCommerce__Main class exists
+    if (class_exists('Tribe__Tickets_Plus__Commerce__WooCommerce__Main')) {
+        $woo_tickets = Tribe__Tickets_Plus__Commerce__WooCommerce__Main::get_instance();
+        $ticket_ids = $woo_tickets->get_tickets_ids($event_id);
 
-        // Extract the number of issued tickets from the message
-        preg_match('/\d+/', $issued_tickets_message, $matches);
-        $issued_tickets = isset($matches[0]) ? intval($matches[0]) : 0;
-
-        $total_issued_tickets += $issued_tickets;
+        foreach ($ticket_ids as $ticket_id) {
+            $product = wc_get_product($ticket_id);
+            if ($product) {
+                $tickets[] = $product;
+            }
+        }
     }
 
-    return $total_issued_tickets;
-}
-
-function get_event_tickets($event_id) {
-    return Tribe__Tickets__Tickets::get_all_event_tickets($event_id);
+    return $tickets;
 }
