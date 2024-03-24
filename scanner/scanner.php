@@ -324,9 +324,11 @@ button i {
     gap: 14px;
 }
 
-.tickets_total_sections{
+.tickets_total_sections {
     display: flex;
     flex-direction: row;
+    justify-content: space-around;
+    gap: 49px;
 }
 
 .ticket-info-container_main{
