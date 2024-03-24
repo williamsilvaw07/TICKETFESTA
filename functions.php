@@ -5078,36 +5078,43 @@ function tribe_check_progress_data(){
 
 
 
-
 function display_checked_in_percentage_shortcode($atts) {
-    // Initialize output with a debug message
-    $output = '<p>Shortcode function called.</p>';
+    // Start output buffering to catch debug output
+    ob_start();
+
+    echo '<p>Debug: Shortcode function called.</p>';
 
     // Extract the event ID from the shortcode attributes, default to 0 if not provided
     $event_id = isset($atts['event_id']) ? intval($atts['event_id']) : 0;
+    echo '<p>Debug: Event ID - ' . $event_id . '</p>';
 
-    // Append the event ID to the output for debugging
-    $output .= '<p>Event ID: ' . $event_id . '</p>';
-
-    // Attempt to get the total checked-in attendees for the event
-    try {
+    // Check if the tribe_tickets_get_total_checked_in function exists
+    if (function_exists('tribe_tickets_get_total_checked_in')) {
         $total_checked_in = tribe_tickets_get_total_checked_in($event_id);
-        $output .= '<p>Total Checked-in Attendees: ' . $total_checked_in . '</p>';
-    } catch (Exception $e) {
-        // Catch any errors and append them to the output
-        $output .= '<p>Error getting total checked-in attendees: ' . $e->getMessage() . '</p>';
+        echo '<p>Debug: Total Checked-in Attendees - ' . $total_checked_in . '</p>';
+    } else {
+        echo '<p>Error: Function tribe_tickets_get_total_checked_in does not exist.</p>';
     }
 
-    // Attempt to get the total number of attendees for the event
-    try {
+    // Check if the tribe_tickets_get_total_attendees function exists
+    if (function_exists('tribe_tickets_get_total_attendees')) {
         $total_attendees = tribe_tickets_get_total_attendees($event_id);
-        $percent_checked_in = ($total_attendees > 0) ? round(($total_checked_in / $total_attendees) * 100, 2) : 0;
-        $output .= '<div class="checked-in-percentage">Checked-in Percentage: ' . $percent_checked_in . '%</div>';
-    } catch (Exception $e) {
-        // Catch any errors and append them to the output
-        $output .= '<p>Error getting total attendees: ' . $e->getMessage() . '</p>';
+        echo '<p>Debug: Total Attendees - ' . $total_attendees . '</p>';
+    } else {
+        echo '<p>Error: Function tribe_tickets_get_total_attendees does not exist.</p>';
     }
 
+    // Assuming both functions exist and returned data
+    if (isset($total_checked_in) && isset($total_attendees)) {
+        // Calculate the checked-in percentage
+        $percent_checked_in = ($total_attendees > 0) ? round(($total_checked_in / $total_attendees) * 100, 2) : 0;
+        echo '<div class="checked-in-percentage">Checked-in Percentage: ' . $percent_checked_in . '%</div>';
+    } else {
+        echo '<p>Error: Could not calculate checked-in percentage due to missing data.</p>';
+    }
+
+    // Get the buffered output
+    $output = ob_get_clean();
     return $output;
 }
 add_shortcode('display_checked_in_percentage', 'display_checked_in_percentage_shortcode');
