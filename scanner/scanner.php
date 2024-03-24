@@ -478,6 +478,7 @@ button i {
     bottom: 0;
     background: #121212 !important;
     width: 100%;
+    z-index: 999;
 }.tabs-container {
 
     padding: 0px;
