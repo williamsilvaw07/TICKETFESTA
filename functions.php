@@ -4618,6 +4618,37 @@ add_action('wp_ajax_nopriv_validate_event_pass', 'validate_event_pass'); // If y
 
 
 
+function display_checked_in_percentage($event_id) {
+    // Ensure $event_id is provided and valid
+    if (!$event_id) {
+        return 'Event ID is required.';
+    }
+
+    // Get the total number of issued tickets for the event
+    $issued_tickets = get_total_issued_tickets($event_id);
+
+    // Create an instance of the Tribe__Tickets__Attendance_Totals class
+    $attendance_totals = new Tribe__Tickets__Attendance_Totals($event_id);
+
+    // Get the total checked-in attendees for the event
+    $total_checked_in = $attendance_totals->get_total_checked_in();
+
+    // Calculate the checked-in percentage and round up
+    $percent_checked_in = ($issued_tickets > 0) ? ceil(($total_checked_in / $issued_tickets) * 100) : 0;
+
+    // Format and return the desired information
+    $output = sprintf('<div class="checked-in-percentage">Checked: %d / %d - %d%%</div>',
+        $total_checked_in, $issued_tickets, $percent_checked_in);
+
+    return $output;
+}
+
+
+
+
+
+
+
 
 function validate_event_pass() {
     $event_pass = isset($_POST['event_pass']) ? esc_attr($_POST['event_pass']) : false;
