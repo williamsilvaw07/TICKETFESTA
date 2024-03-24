@@ -4653,8 +4653,7 @@ function validate_event_pass() {
             }
             
             // Get the number of attendees who have checked in
-            $attendees_checked_in = 0;
-            // Your logic to retrieve the number of attendees checked in
+            $attendees_checked_in = get_total_checked_in_for_event($event_id);
             
             // Calculate the percentage of attendees checked in
             $percentage_checked_in = ($attendees_checked_in / $total_capacity) * 100;
@@ -4894,7 +4893,6 @@ add_shortcode('display_html5_qrcode_scanner', 'display_html5_qrcode_scanner_shor
 
 
 
-/*
 
 //////FUNCTION TO ADD A FREE TICKET
 
@@ -5132,4 +5130,3 @@ function get_total_issued_tickets($event_id) {
 
     return $total_issued_tickets;
 }
-*/
