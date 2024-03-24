@@ -4645,8 +4645,11 @@ function validate_event_pass() {
                 }
             }
 
+            $start_date = get_post_meta($event_id, '_EventStartDate', true);
+            $formatted_start_date = date('d F Y H:i:s', strtotime($start_date));
+            
             $event_data = [
-                'start_date'              => get_post_meta($event_id, '_EventStartDate', true),
+                'start_date'              => $formatted_start_date,
                 'issued_tickets'          => get_post_meta($event_id, '_tribe_progressive_ticket_current_number', true),
                 'total_tickets_available' => $total_capacity,
                 'ticket_list'             => $ticket_list,
@@ -4692,7 +4695,7 @@ function checkinTicket(){
             update_post_meta( $ticket_id, '_tribe_tpp_checkedin', 1 );
 
             $now = new DateTime();
-            // willam
+     
             $formatted_datetime = $now->format('d F Y H:i:s');
 
             $checkin_details = [
