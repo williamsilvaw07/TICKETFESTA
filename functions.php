@@ -5074,30 +5074,39 @@ function tribe_check_progress_data(){
 
 
 
+
+
+
+
+
 function display_checked_in_percentage_shortcode($atts) {
-    // Debug statement to check if the shortcode function is called
+    // Initialize output with a debug message
     $output = '<p>Shortcode function called.</p>';
 
     // Extract the event ID from the shortcode attributes, default to 0 if not provided
     $event_id = isset($atts['event_id']) ? intval($atts['event_id']) : 0;
 
-    // Debug statement to display the event ID
+    // Append the event ID to the output for debugging
     $output .= '<p>Event ID: ' . $event_id . '</p>';
 
-    // Get the total checked-in attendees for the event
-    $total_checked_in = tribe_tickets_get_total_checked_in($event_id);
+    // Attempt to get the total checked-in attendees for the event
+    try {
+        $total_checked_in = tribe_tickets_get_total_checked_in($event_id);
+        $output .= '<p>Total Checked-in Attendees: ' . $total_checked_in . '</p>';
+    } catch (Exception $e) {
+        // Catch any errors and append them to the output
+        $output .= '<p>Error getting total checked-in attendees: ' . $e->getMessage() . '</p>';
+    }
 
-    // Debug statement to display the total checked-in attendees
-    $output .= '<p>Total Checked-in Attendees: ' . $total_checked_in . '</p>';
-
-    // Get the total number of attendees for the event
-    $total_attendees = tribe_tickets_get_total_attendees($event_id);
-
-    // Calculate the checked-in percentage
-    $percent_checked_in = ($total_attendees > 0) ? round(($total_checked_in / $total_attendees) * 100, 2) : 0;
-
-    // Output the checked-in percentage along with debug information
-    $output .= '<div class="checked-in-percentage">Checked-in Percentage: ' . $percent_checked_in . '%</div>';
+    // Attempt to get the total number of attendees for the event
+    try {
+        $total_attendees = tribe_tickets_get_total_attendees($event_id);
+        $percent_checked_in = ($total_attendees > 0) ? round(($total_checked_in / $total_attendees) * 100, 2) : 0;
+        $output .= '<div class="checked-in-percentage">Checked-in Percentage: ' . $percent_checked_in . '%</div>';
+    } catch (Exception $e) {
+        // Catch any errors and append them to the output
+        $output .= '<p>Error getting total attendees: ' . $e->getMessage() . '</p>';
+    }
 
     return $output;
 }
