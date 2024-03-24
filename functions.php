@@ -5076,6 +5076,34 @@ function tribe_check_progress_data(){
 
 
 
+
+
+
+function get_tickets_with_event($event_id) {
+    $tickets = Tribe__Tickets__Tickets::get_all_event_tickets($event_id);
+    $ticket_data = [];
+
+    foreach ($tickets as $ticket) {
+        // Retrieve the number of issued tickets for this ticket
+        $issued_tickets_message = tribe_tickets_get_ticket_stock_message($ticket, __('issued', 'event-tickets'));
+
+        // Extract the number of issued tickets from the message
+        preg_match('/\d+/', $issued_tickets_message, $matches);
+        $issued_tickets = isset($matches[0]) ? intval($matches[0]) : 0;
+
+        // Get ticket capacity
+        $ticket_capacity = tribe_tickets_get_capacity($ticket->ID);
+
+        // Add ticket data to the array
+        $ticket_data[] = [
+            'name' => $ticket->name,
+            'capacity' => $ticket_capacity,
+            'issued_tickets' => $issued_tickets,
+        ];
+    }
+
+    return $ticket_data;
+}
 function display_checked_in_percentage_shortcode($atts) {
     // Start output buffering to catch debug output
     ob_start();
@@ -5089,9 +5117,9 @@ function display_checked_in_percentage_shortcode($atts) {
     $issued_tickets = get_total_issued_tickets($event_id);
     echo '<p>Debug: Total Issued Tickets - ' . $issued_tickets . '</p>';
 
-    // Get the tickets with the event
-    $tickets = get_tickets_with_event($event_id);
-    echo '<p>Debug: Tickets with Event - ' . print_r($tickets, true) . '</p>';
+    // Get ticket data for the event
+    $ticket_data = get_tickets_with_event($event_id);
+    echo '<p>Debug: Ticket Data - ' . print_r($ticket_data, true) . '</p>';
 
     // Create an instance of the Tribe__Tickets__Attendance_Totals class
     $attendance_totals = new Tribe__Tickets__Attendance_Totals($event_id);
@@ -5109,6 +5137,6 @@ function display_checked_in_percentage_shortcode($atts) {
 
     // Get the buffered output
     $buffered_output = ob_get_clean();
-    return $buffered_output . $output;
+    return $output;
 }
 add_shortcode('display_checked_in_percentage', 'display_checked_in_percentage_shortcode');
