@@ -5079,31 +5079,8 @@ function tribe_check_progress_data(){
 
 
 
-function get_tickets_with_event($event_id) {
-    $tickets = Tribe__Tickets__Tickets::get_all_event_tickets($event_id);
-    $ticket_data = [];
 
-    foreach ($tickets as $ticket) {
-        // Retrieve the number of issued tickets for this ticket
-        $issued_tickets_message = tribe_tickets_get_ticket_stock_message($ticket, __('issued', 'event-tickets'));
 
-        // Extract the number of issued tickets from the message
-        preg_match('/\d+/', $issued_tickets_message, $matches);
-        $issued_tickets = isset($matches[0]) ? intval($matches[0]) : 0;
-
-        // Get ticket capacity
-        $ticket_capacity = tribe_tickets_get_capacity($ticket->ID);
-
-        // Add ticket data to the array
-        $ticket_data[] = [
-            'name' => $ticket->name,
-            'capacity' => $ticket_capacity,
-            'issued_tickets' => $issued_tickets,
-        ];
-    }
-
-    return $ticket_data;
-}
 function display_checked_in_percentage_shortcode($atts) {
     // Start output buffering to catch debug output
     ob_start();
@@ -5116,10 +5093,6 @@ function display_checked_in_percentage_shortcode($atts) {
     // Get the total number of issued tickets for the event
     $issued_tickets = get_total_issued_tickets($event_id);
     echo '<p>Debug: Total Issued Tickets - ' . $issued_tickets . '</p>';
-
-    // Get ticket data for the event
-    $ticket_data = get_tickets_with_event($event_id);
-    echo '<p>Debug: Ticket Data - ' . print_r($ticket_data, true) . '</p>';
 
     // Create an instance of the Tribe__Tickets__Attendance_Totals class
     $attendance_totals = new Tribe__Tickets__Attendance_Totals($event_id);
@@ -5140,3 +5113,21 @@ function display_checked_in_percentage_shortcode($atts) {
     return $output;
 }
 add_shortcode('display_checked_in_percentage', 'display_checked_in_percentage_shortcode');
+
+function get_total_issued_tickets($event_id) {
+    $tickets = Tribe__Tickets__Tickets::get_all_event_tickets($event_id);
+    $total_issued_tickets = 0;
+
+    foreach ($tickets as $ticket) {
+        // Retrieve the number of issued tickets for this ticket
+        $issued_tickets_message = tribe_tickets_get_ticket_stock_message($ticket, __('issued', 'event-tickets'));
+
+        // Extract the number of issued tickets from the message
+        preg_match('/\d+/', $issued_tickets_message, $matches);
+        $issued_tickets = isset($matches[0]) ? intval($matches[0]) : 0;
+
+        $total_issued_tickets += $issued_tickets;
+    }
+
+    return $total_issued_tickets;
+}
