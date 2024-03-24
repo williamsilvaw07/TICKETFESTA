@@ -4523,7 +4523,7 @@ function custom_qr_scanner_shortcode() {
 
             <div class="tabs-container" style="display: none">
             <div class="event_data">
-            <div class="event-container-details">
+            <div class="event-container">
                         <div class="name"> <span> </span>  </div>
                         <div class="date">Date:  <span> </span> </div>
 </div>
