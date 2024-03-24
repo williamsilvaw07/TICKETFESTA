@@ -5077,9 +5077,6 @@ function tribe_check_progress_data(){
 
 
 
-
-
-
 function display_checked_in_percentage_shortcode($atts) {
     // Start output buffering to catch debug output
     ob_start();
@@ -5089,13 +5086,24 @@ function display_checked_in_percentage_shortcode($atts) {
     echo '<p>Debug: Shortcode function called.</p>';
     echo '<p>Debug: Event ID - ' . $event_id . '</p>';
 
-    // Get the list of tickets for the event
+    // Retrieve tickets for the hardcoded event ID
     $tickets = get_tickets_for_event($event_id);
-    echo '<p>Debug: Tickets for Event ID ' . $event_id . '</p>';
+
+    // Initialize an array to store ticket names
+    $ticket_names = array();
+
+    // Loop through each ticket and retrieve its name
     foreach ($tickets as $ticket) {
-        echo '<p>Ticket Name: ' . $ticket->get_title() . '</p>';
-        echo '<p>Ticket Price: ' . $ticket->get_price_html() . '</p>';
-        echo '<p>Ticket Stock: ' . ($ticket->is_in_stock() ? 'In stock' : 'Out of stock') . '</p>';
+        // Retrieve the ticket name
+        $ticket_name = $ticket->get_title();
+        // Add the ticket name to the array
+        $ticket_names[] = $ticket_name;
+    }
+
+    // Output debug information
+    echo '<p>Debug: Tickets for Event ID ' . $event_id . '</p>';
+    foreach ($ticket_names as $ticket_name) {
+        echo '<p>Ticket Name: ' . $ticket_name . '</p>';
     }
 
     // Get the buffered output
@@ -5105,6 +5113,9 @@ function display_checked_in_percentage_shortcode($atts) {
 add_shortcode('display_checked_in_percentage', 'display_checked_in_percentage_shortcode');
 
 function get_tickets_for_event($event_id) {
+    // Retrieve tickets for the event with the given ID
+    // Replace this with your actual logic to fetch tickets based on the event ID
+    // For demonstration purposes, I'll return an empty array
     $tickets = array();
 
     // Check if WooCommerce is active and if Tribe__Tickets_Plus__Commerce__WooCommerce__Main class exists
@@ -5122,3 +5133,4 @@ function get_tickets_for_event($event_id) {
 
     return $tickets;
 }
+
