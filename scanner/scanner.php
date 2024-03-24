@@ -467,7 +467,18 @@ button i {
  
 }
 
-
+.tabs-nav {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-bottom: 0px solid #ddd;
+    justify-content: center;
+    position: fixed;
+    bottom: 0;
+    background: #121212 !important;
+    width: 100%;
+}
     }
 
     /* Media query for desktop (optional, for more control) */
