@@ -318,7 +318,7 @@ button i {
 
 }
 .event-container img{
-    display:none
+    display:none!important
 }
 .event-container-details{
     display: flex;
