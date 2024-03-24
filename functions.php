@@ -5074,44 +5074,32 @@ function tribe_check_progress_data(){
 
 
 
-
-
-
-
-
-
-
-
-
-
 function display_checked_in_percentage_shortcode($atts) {
     // Start output buffering to catch debug output
     ob_start();
 
-    // Hardcode the event ID for demonstration purposes or extract from shortcode attributes
-    $event_id = isset($atts['event_id']) ? intval($atts['event_id']) : 3789;
+    // Hardcode the event ID for demonstration purposes
+    $event_id = 3789;
     echo '<p>Debug: Shortcode function called.</p>';
     echo '<p>Debug: Event ID - ' . $event_id . '</p>';
 
-    // Use the provided filter to get the total event capacity (total attendees)
-    $total_capacity = apply_filters('tribe_tickets_total_event_capacity', null, $event_id);
-    echo '<p>Debug: Total Capacity - ' . $total_capacity . '</p>';
+    // Create an instance of the Tribe__Tickets__Attendance_Totals class
+    $attendance_totals = new Tribe__Tickets__Attendance_Totals($event_id);
 
-    // Placeholder for getting the total checked-in count
-    // You need to replace this with the actual method or data retrieval logic
-    $total_checked_in = 0; // Replace this with actual data retrieval logic
-    echo '<p>Debug: Total Checked-in - ' . $total_checked_in . '</p>';
+    // Get the total checked-in attendees for the event
+    $total_checked_in = $attendance_totals->get_total_checked_in();
+    echo '<p>Debug: Total Checked-in Attendees - ' . $total_checked_in . '</p>';
+
+    // Get the total number of attendees for the event
+    $total_attendees = $attendance_totals->get_event_attendees_count();
+    echo '<p>Debug: Total Attendees - ' . $total_attendees . '</p>';
 
     // Calculate the checked-in percentage
-    $percent_checked_in = ($total_capacity > 0) ? round(($total_checked_in / $total_capacity) * 100, 2) : 0;
-
-    // Format and output the desired information
-    $output = sprintf('<div class="checked-in-info">%d / %d - %s%%</div>',
-        $total_checked_in, $total_capacity, $percent_checked_in);
+    $percent_checked_in = ($total_attendees > 0) ? round(($total_checked_in / $total_attendees) * 100, 2) : 0;
+    echo '<div class="checked-in-percentage">Checked-in Percentage: ' . $percent_checked_in . '%</div>';
 
     // Get the buffered output
-    $buffered_output = ob_get_clean();
-
-    return $buffered_output . $output;
+    $output = ob_get_clean();
+    return $output;
 }
 add_shortcode('display_checked_in_percentage', 'display_checked_in_percentage_shortcode');
