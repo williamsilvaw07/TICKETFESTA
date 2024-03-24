@@ -4611,7 +4611,6 @@ add_action('wp_ajax_validate_event_pass', 'validate_event_pass');
 add_action('wp_ajax_nopriv_validate_event_pass', 'validate_event_pass'); // If you want to allow non-logged-in users to access the AJAX endpoint
 
 
-
 function validate_event_pass() {
     $event_pass = isset($_POST['event_pass']) ? esc_attr($_POST['event_pass']) : false;
     $events = get_posts_by_event_pass($event_pass);
@@ -4651,9 +4650,8 @@ function validate_event_pass() {
                 }
             }
             
-            // Get the number of attendees who have checked in
+            // Get the number of attendees who have checked in (Your logic to retrieve this value)
             $attendees_checked_in = 0;
-            // Your logic to retrieve the number of attendees checked in
             
             // Calculate the percentage of attendees checked in
             $percentage_checked_in = ($attendees_checked_in / $total_capacity) * 100;
