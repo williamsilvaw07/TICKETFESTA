@@ -4534,7 +4534,7 @@ function custom_qr_scanner_shortcode() {
                         <div class="event-container-details">
                         <div class="name">Name: <span> </span>  </div>
                         <div class="date">Date:  <span> </span> </div>
-               <div class="location">Location: </div>
+               <!-- <div class="location">Location: </div>-->
 
 
                <div class="tickets_total_sections">
