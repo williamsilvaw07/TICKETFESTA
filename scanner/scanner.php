@@ -300,12 +300,12 @@ input#event-pass {
     button {
         background-color: #E72929;
     color: white;
-    font-size: 13px;
-    padding: 2px 15px;
+    font-size: 11px;
+    padding: 2px 9px;
     border: none;
     border-radius: 5px;
-    cursor: pointer;
-    height: 40px;
+    cursor: pointer!important;
+    height: 32px;
 }
 
 button i {
