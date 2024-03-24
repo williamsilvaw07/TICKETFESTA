@@ -333,7 +333,7 @@ button i {
     display: flex;
     align-items: center;
     gap: 15px;
-    flex-direction: column;
+    flex-direction: row;
 }
 
 .ticket-progress-container {

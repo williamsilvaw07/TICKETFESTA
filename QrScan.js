@@ -452,10 +452,14 @@ jQuery(document).ready(function($) {
             ticketInfo.css('display', 'flex');
             // Change the text of the button to "View less"
             $(this).text('View less');
+            // Change flex-direction to column
+            $('.ticket-info-container_main').css('flex-direction', 'column');
         } else {
             ticketInfo.css('display', 'none');
             // Change the text of the button to "See more"
             $(this).text('See more');
+            // Remove flex-direction property
+            $('.ticket-info-container_main').css('flex-direction', '');
         }
     });
 });
