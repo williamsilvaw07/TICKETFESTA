@@ -434,7 +434,9 @@ button i {
     gap: 22px;
 }
 
-
+.container-fluid , .content-wrapper>.content{
+    padding:0!important
+}
 
 
 
