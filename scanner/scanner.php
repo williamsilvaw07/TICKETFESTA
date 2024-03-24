@@ -297,7 +297,7 @@ input#event-pass {
 
 
 
-    button {
+    .change_event_btn {
         background-color: #E72929;
     color: white;
     font-size: 11px;
