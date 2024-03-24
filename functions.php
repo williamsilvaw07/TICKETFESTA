@@ -4656,24 +4656,12 @@ function validate_event_pass() {
             // Calculate the percentage of attendees checked in
             $percentage_checked_in = ($attendees_checked_in / $total_capacity) * 100;
 
-            $start_date = get_post_meta($event_id, '_EventStartDate', true);
-            $start_date_timestamp = strtotime($start_date);
-            
-            // Get the day of the week in abbreviated format (e.g., "Thur")
-            $day_of_week = date('D', $start_date_timestamp);
-            
-            // Get the day of the month with the appropriate suffix (e.g., "25th")
-            $day_of_month = date('jS', $start_date_timestamp);
-            
-            // Get the month in abbreviated format (e.g., "Mar")
-            $month = date('M', $start_date_timestamp);
-            
-            // Get the time in 24-hour format (e.g., "08:00")
-            $time = date('H:i', $start_date_timestamp);
-            
-            // Combine the formatted components
-            $formatted_start_date = "$day_of_week, $day_of_month $month at $time";
-            
+            // Include the template file
+            ob_start();
+            include 'path/to/attendance-totals-template.php';
+            $template_content = ob_get_clean();
+
+            // Store the template content in the event data
             $event_data = [
                 'start_date'              => $formatted_start_date,
                 'issued_tickets'          => get_post_meta($event_id, '_tribe_progressive_ticket_current_number', true),
@@ -4682,6 +4670,7 @@ function validate_event_pass() {
                 'name'                    => get_the_title($event_id),
                 'thumbnail_url'           => get_the_post_thumbnail_url($event_id, 'medium'),
                 'checkedin_percentage'    => $percentage_checked_in,
+                'attendance_totals'       => $template_content,
             ];
             
         }
