@@ -317,7 +317,9 @@ button i {
 .tabs-container .active{
 
 }
-
+.event-container img{
+    display:none
+}
 .event-container-details{
     display: flex;
     flex-direction: column;
