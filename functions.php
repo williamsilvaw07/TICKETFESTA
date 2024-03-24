@@ -4656,7 +4656,7 @@ function validate_event_pass() {
             $attendees_checked_in = get_total_checked_in_for_event($event_id);
             
             // Calculate the percentage of attendees checked in
-            $percentage_checked_in = ($attendees_checked_in / 23) * 100;
+            $percentage_checked_in = ($attendees_checked_in / $total_capacity) * 100;
 
             $start_date = get_post_meta($event_id, '_EventStartDate', true);
             $start_date_timestamp = strtotime($start_date);
