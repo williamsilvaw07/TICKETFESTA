@@ -20,7 +20,7 @@ if (file_exists($custom_header_path)) {
         <div class="container-fluid">
 
   
-            <p class="scanner_vrsion">Version 1.0</p>
+              <!--  <p class="scanner_vrsion">Version 1.0</p> -->
       <div class="scanner_login_divs"> 
 
 
