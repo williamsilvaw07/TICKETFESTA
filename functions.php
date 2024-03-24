@@ -5073,14 +5073,10 @@ function tribe_check_progress_data(){
 
 
 
-
-
-
-
 function display_checked_in_percentage_shortcode($atts) {
     // Extract shortcode attributes
     $atts = shortcode_atts(array(
-        'event_id' => '', // Default event ID
+        'event_id' => '3789', // Default event ID
     ), $atts);
 
     // Get the event ID from shortcode attributes
@@ -5098,8 +5094,10 @@ function display_checked_in_percentage_shortcode($atts) {
     // Calculate the checked-in percentage
     $percent_checked_in = ($total_attendees > 0) ? round(($total_checked_in / $total_attendees) * 100, 2) : 0;
 
-    // Output the checked-in percentage
-    return 'Checked-in Percentage: ' . $percent_checked_in . '%';
+    // Output debug information
+    $debug_output = "Event ID: $event_id<br>Total Checked-in Attendees: $total_checked_in<br>Total Attendees: $total_attendees<br>";
+
+    // Output the checked-in percentage along with debug information
+    return '<div class="checked-in-percentage">' . $debug_output . 'Checked-in Percentage: ' . $percent_checked_in . '%</div>';
 }
 add_shortcode('display_checked_in_percentage', 'display_checked_in_percentage_shortcode');
-
