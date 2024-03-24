@@ -4511,7 +4511,9 @@ function custom_qr_scanner_shortcode() {
     <h3>Log in to scan ticket QR codes.</h3>
 <p>You can locate the event passcode on the organizer's dashboard under the events section.</p>
     <input type="text" id="event-pass" name="event-pass" placeholder="Event Passcode">
-    <button id="check-passcode"> Login </button>
+    <button id="check-passcode">
+    <i class="fas fa-sign-in-alt"></i> Login
+</button>
     <span id="event_not_found" style='display:none'>Event not found. Please verify the Passcode</span>
 </div>
 
