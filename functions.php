@@ -4529,8 +4529,9 @@ function custom_qr_scanner_shortcode() {
 </div>
 </div>
                 <ul class="tabs-nav">
-                    <li class="tab tab1 active"><a href="#tab1"> Event Details</a></li>
-                    <li class="tab tab2"><a href="#tab2">Scan QR Code</a></li>
+                <li class="tab tab1 active"><a href="#tab1"><i class="fas fa-info-circle"></i> Event Details</a></li>
+<li class="tab tab2"><a href="#tab2"><i class="fas fa-qrcode"></i> Scan QR Code</a></li>
+
                 </ul>
            
             <div class="tab-content-container" style="display: none">
