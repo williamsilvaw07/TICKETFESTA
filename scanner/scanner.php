@@ -128,11 +128,6 @@ body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .content-w
 }
 
 
-.container-fluid h2 {
-    padding-bottom: 11px;
-    padding-top: 13px;
-    font-weight: 700;
-}
 
 .tribe-community-events-list-title {
     font-weight: bold;
@@ -143,7 +138,6 @@ body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .content-w
 
 .container-fluid h2 {
     padding-bottom: 0;
-    padding-top: 13px;
     font-weight: 700;
     margin-bottom:0!important
 }
