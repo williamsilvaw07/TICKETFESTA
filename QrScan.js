@@ -442,27 +442,26 @@
 
 
 
-
-
 jQuery(document).ready(function($) {
     // Handle click event of the "See More" button
     $('.see_more_ticket_info').click(function() {
         console.log("See More button clicked.");
         // Toggle the visibility of the ticket information section
-        $('.ticket-info_hidden_all').css('display', 'flex');
+        $('.ticket-info_hidden_all').toggleClass('show');
 
-        // Create and append the close button
-        var closeButton = $('<span class="ticket-info_hidden_all_close">Close</span>');
-        $('.ticket-info_hidden_all').append(closeButton);
+        // Toggle the text of the "See more" button
+        $(this).text(function(i, text){
+            return text === "See more" ? "View less" : "See more";
+        });
     });
 
     // Handle click event of the close button
-    $(document).on('click', '.ticket-info_hidden_all_close', function() {
+    $('.ticket-info_hidden_all_close').click(function() {
         console.log("Close button clicked.");
         // Hide the ticket information section
-        $('.ticket-info_hidden_all').css('display', 'none');
-
-        // Remove the close button
-        $(this).remove();
+        $('.ticket-info_hidden_all').removeClass('show');
+        
+        // Restore the text of the "See more" button
+        $('.see_more_ticket_info').text("See more");
     });
 });
