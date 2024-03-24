@@ -5068,3 +5068,29 @@ function tribe_check_progress_data(){
         wp_send_json_error('No tickets found for this event.');
     }
 }
+
+
+
+
+
+
+
+
+
+
+$event_id = 3789; // Replace with your actual event ID
+$percentage_checked_in = get_checked_in_percentage($event_id);
+?>
+<!-- Display the checked-in percentage above the header -->
+<div class="checked-in-percentage">
+    Checked-in Percentage: <?php echo $percentage_checked_in; ?>%
+</div>
+
+<!DOCTYPE html>
+<html <?php language_attributes(); ?>>
+<head>
+    <meta charset="<?php bloginfo( 'charset' ); ?>">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <?php wp_head(); ?>
+</head>
+<body <?php body_class(); ?>>
