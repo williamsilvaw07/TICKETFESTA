@@ -5089,20 +5089,6 @@ function display_checked_in_percentage_shortcode($atts) {
     echo '<p>Debug: Shortcode function called.</p>';
     echo '<p>Debug: Event ID - ' . $event_id . '</p>';
 
-    // Get the total number of issued tickets for the event
-    $issued_tickets = get_total_issued_tickets($event_id);
-    echo '<p>Debug: Total Issued Tickets - ' . $issued_tickets . '</p>';
-
-    // Create an instance of the Tribe__Tickets__Attendance_Totals class
-    $attendance_totals = new Tribe__Tickets__Attendance_Totals($event_id);
-
-    // Get the total checked-in attendees for the event
-    $total_checked_in = $attendance_totals->get_total_checked_in();
-    echo '<p>Debug: Total Checked-in Attendees - ' . $total_checked_in . '</p>';
-
-    // Calculate the checked-in percentage and round up
-    $percent_checked_in = ($issued_tickets > 0) ? ceil(($total_checked_in / $issued_tickets) * 100) : 0;
-
     // Get the list of tickets for the event
     $tickets = get_tickets_for_event($event_id);
     echo '<p>Debug: Tickets for Event ID ' . $event_id . '</p>';
@@ -5112,13 +5098,9 @@ function display_checked_in_percentage_shortcode($atts) {
         echo '<p>Ticket Stock: ' . ($ticket->is_in_stock() ? 'In stock' : 'Out of stock') . '</p>';
     }
 
-    // Format and output the desired information
-    $output = sprintf('<div class="checked-in-percentage">Checked: %d / %d - %d%%</div>',
-        $total_checked_in, $issued_tickets, $percent_checked_in);
-
     // Get the buffered output
     $buffered_output = ob_get_clean();
-    return $output;
+    return $buffered_output;
 }
 add_shortcode('display_checked_in_percentage', 'display_checked_in_percentage_shortcode');
 
