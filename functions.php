@@ -5081,7 +5081,6 @@ function tribe_check_progress_data(){
 
 
 
-
 function display_checked_in_percentage_shortcode($atts) {
     // Start output buffering to catch debug output
     ob_start();
@@ -5132,6 +5131,3 @@ function get_total_issued_tickets($event_id) {
 
     return $total_issued_tickets;
 }
-
-
-
