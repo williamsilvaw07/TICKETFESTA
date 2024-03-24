@@ -5072,8 +5072,10 @@ function tribe_check_progress_data(){
 
 
 
-
 function display_checked_in_percentage_shortcode($atts) {
+    // Debug statement to check if the shortcode function is called
+    echo '<p>Shortcode function called.</p>';
+
     // Extract shortcode attributes
     $atts = shortcode_atts(array(
         'event_id' => '3789', // Default event ID
@@ -5084,7 +5086,7 @@ function display_checked_in_percentage_shortcode($atts) {
 
     // Check if event ID is provided
     if (!$event_id) {
-        return 'Error: Event ID is missing.';
+        return '<p>Error: Event ID is missing.</p>';
     }
 
     // Get the total checked-in attendees and total attendees for the event
