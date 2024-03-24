@@ -5132,3 +5132,20 @@ function get_total_issued_tickets($event_id) {
 
     return $total_issued_tickets;
 }
+
+
+
+
+
+// This is for RSVPs
+add_action( ‘event_tickets_checkin’, ‘my_checkin’ );
+
+// This is for WooCommerce Tickets
+add_action( ‘wootickets_checkin’, ‘my_checkin’ );
+
+// This is for Tribe Commerce Tickets
+add_action( ‘rsvp_checkin’, ‘my_checkin’ );
+
+function my_checkin( $attendee_id ) {
+update_post_meta( $attendee_id, ‘_tribe_check_in_time’, date(‘Y-m-d H:i:s’) );
+}
