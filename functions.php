@@ -4577,9 +4577,10 @@ function custom_qr_scanner_shortcode() {
    
  
     </div>
-    
-                       <div class="tickets-percent">Ticket Percent: </div>
-                   
+    <div class="ticket-info-container_main">
+    <div class="tickets-percent">Ticket Percent: </div>
+    <div class="checkedin">Ticket Percent:<span></span> </div>
+    </div>             
                     </div>
                 </div>
                 <div class="tab-content tab-conent-2" id="tab2">
@@ -4608,7 +4609,6 @@ add_shortcode('custom_qr_scanner', 'custom_qr_scanner_shortcode');
 
 add_action('wp_ajax_validate_event_pass', 'validate_event_pass');
 add_action('wp_ajax_nopriv_validate_event_pass', 'validate_event_pass'); // If you want to allow non-logged-in users to access the AJAX endpoint
-
 
 
 
@@ -4650,6 +4650,14 @@ function validate_event_pass() {
                     ];
                 }
             }
+            
+            // Get the number of attendees who have checked in
+            $attendees_checked_in = 0;
+            // Your logic to retrieve the number of attendees checked in
+            
+            // Calculate the percentage of attendees checked in
+            $percentage_checked_in = ($attendees_checked_in / $total_capacity) * 100;
+
             $start_date = get_post_meta($event_id, '_EventStartDate', true);
             $start_date_timestamp = strtotime($start_date);
             
@@ -4675,6 +4683,7 @@ function validate_event_pass() {
                 'ticket_list'             => $ticket_list,
                 'name'                    => get_the_title($event_id),
                 'thumbnail_url'           => get_the_post_thumbnail_url($event_id, 'medium'),
+                'checkedin_percentage'    => $percentage_checked_in,
             ];
             
         }
@@ -4689,7 +4698,6 @@ function validate_event_pass() {
     wp_send_json($response);
     wp_die();
 }
-
 
 
 // Remember to properly hook your function to WordPress AJAX actions if it's intended for AJAX.

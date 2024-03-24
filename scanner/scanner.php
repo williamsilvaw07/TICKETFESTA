@@ -479,10 +479,19 @@ button i {
     background: #121212 !important;
     width: 100%;
     z-index: 999;
-}.tabs-container {
+    padding-top: 15px;
+    padding-bottom: 26px;
+    gap: 22p
+}
+.tabs-container {
 
     padding: 0px;
  
+}
+.tabs-nav li.tab {
+    padding: 6px 9px;
+    cursor: pointer;
+    font-size: 14px;
 }
     }
 

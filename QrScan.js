@@ -281,6 +281,11 @@
             container.find('span.progress-percentage_individual').text(precisePercentage + '%');
         }
         
+
+
+
+
+
         function passcodeMatch(response) {
             if (!response || !response.event_data) {
                 console.error("Invalid response data.");
@@ -292,6 +297,8 @@
             $('.event-container .event-image').attr('src', response.event_data.thumbnail_url);
             $('.event-container .name span').text(response.event_data.name);
             $('.event-container .date span').text(response.event_data.start_date);
+            $('.event-container .checkedin span').text(response.event_data.checkedin_percentage + '%');
+
         
             // Extract the ticket information
             var issuedTickets = parseInt(response.event_data.issued_tickets, 10);
@@ -345,6 +352,14 @@
             event_id_global = response.event_id;
             startScanQR(response.event_id);
         }
+
+
+
+
+
+
+
+
 
         function CheckProgressData() {
             if(event_id_global){
