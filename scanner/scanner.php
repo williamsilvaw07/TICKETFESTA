@@ -118,6 +118,7 @@ body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .content-w
     justify-content: center;
     align-items: center;
     gap: 40px;
+    margin-bottom:40px
 }
 .line_break {
     display: block;
@@ -159,7 +160,6 @@ body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .content-w
     border-radius: 10px;
     width: fit-content;
     margin: 0 auto;
-    margin-top: 50px !important;
 
 }
 .scanner_login_div p{
