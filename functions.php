@@ -4535,6 +4535,11 @@ function custom_qr_scanner_shortcode() {
                <div class="location">Location: </div>
 
 
+               <div class="tickets_total_sections">
+               <p class="title_ticket_info">Tickets Sold / Tcikets Available</p>
+               <p class="see_more_ticket_info">See more</p>
+               </div>
+           
 
                <div class="ticket-info-container_main">
                <div class="ticket-progress-container_main">
@@ -4550,7 +4555,7 @@ function custom_qr_scanner_shortcode() {
     <div class="ticket-info info_div">
         <h6>Total Ticket Sold</h6>
         <p class="ticket-count">0<span>/</span>0</p>
-        <p class="see_more_ticket_info">See more</p>
+       
         </div>
         </div>
         <div class="ticket-info_hidden_all">
