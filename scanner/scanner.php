@@ -159,7 +159,7 @@ body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .content-w
     border-radius: 10px;
     width: fit-content;
     margin: 0 auto;
-    margin-top: 100px !important;
+    margin-top: 50px !important;
 
 }
 .scanner_login_div p{
