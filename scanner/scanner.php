@@ -19,13 +19,14 @@ if (file_exists($custom_header_path)) {
     <div class="content">
         <div class="container-fluid">
 
-        <div class="scanner_login_divs"> 
-
-</div>
+  
             <p class="scanner_vrsion">Version 1.0</p>
+      <div class="scanner_login_divs"> 
+
 
         <h2 class="tribe-community-events-list-title">Ticket Scanner</h2>
         <button class="change_event_btn" style="display:none"><i class="fas fa-sign-in-alt"></i> Change Event</button>
+        </div>
             <?php
             if (have_posts()) :
                 while (have_posts()) :
@@ -111,7 +112,9 @@ body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .content-w
 .admin_dashboard-sidebar-item i {
     padding-right: 10px;
 }
-
+.scanner_login_divs{
+    display:flex
+}
 .line_break {
     display: block;
     width: 100%;
