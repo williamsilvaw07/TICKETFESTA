@@ -335,7 +335,6 @@ button i {
 
 .ticket-info-container_main{
     display: flex;
-    align-items: center;
     gap: 15px;
     flex-direction: row;
 }
