@@ -410,7 +410,6 @@ button i {
     display: none;
     flex-direction: column;
     gap: 22px;
-    margin-top: 22px;
 }
 
 
