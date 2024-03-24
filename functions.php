@@ -4578,6 +4578,43 @@ function custom_qr_scanner_shortcode() {
    
  
     </div>
+
+
+
+
+
+
+    <div class="tickets_checkedin_total_sections">
+               <p class="checkedin_title_ticket_info">Tickets Sold / Tickets Available</p>
+               <p class="see_more_ticket_info">See more</p>
+               </div>
+
+               <div class="checkedin_ticket-progress-container">
+               <svg class="checkedin_progress-ring" width="72" height="72">
+    <circle class="checkedin_progress-ring__circle-bg" cx="36" cy="36" r="31" stroke-width="6"></circle> <!-- Background circle -->
+    <circle class="checkedin_progress-ring__circle" cx="36" cy="36" r="31" stroke-width="6"></circle> <!-- Foreground circle -->
+</svg>
+        <div class="checkedin_progress-percentage">0%</div>
+    </div>
+
+
+
+    <div class="ticket-info info_div">
+        <h6>Ticket Percent:</h6>
+        <p class="ticket-count">0<span>/</span>0</p>
+       
+        </div>
+
+
+
+
+
+
+
+
+
+
+
     <div class="ticket-info-container_main">
     <div class="tickets-percent">Ticket Percent: </div>
     <div class="checkedin">Ticket Percent:<span></span> </div>
@@ -4610,7 +4647,6 @@ add_shortcode('custom_qr_scanner', 'custom_qr_scanner_shortcode');
 
 add_action('wp_ajax_validate_event_pass', 'validate_event_pass');
 add_action('wp_ajax_nopriv_validate_event_pass', 'validate_event_pass'); // If you want to allow non-logged-in users to access the AJAX endpoint
-
 
 
 function validate_event_pass() {
@@ -4653,8 +4689,7 @@ function validate_event_pass() {
             }
             
             // Get the number of attendees who have checked in
-            $attendees_checked_in = 0;
-            // Your logic to retrieve the number of attendees checked in
+            $attendees_checked_in = get_total_checked_in_for_event($event_id);
             
             // Calculate the percentage of attendees checked in
             $percentage_checked_in = ($attendees_checked_in / $total_capacity) * 100;
@@ -4699,6 +4734,7 @@ function validate_event_pass() {
     wp_send_json($response);
     wp_die();
 }
+
 
 
 // Remember to properly hook your function to WordPress AJAX actions if it's intended for AJAX.
@@ -5079,55 +5115,3 @@ function tribe_check_progress_data(){
 
 
 
-
-
-function display_checked_in_percentage_shortcode($atts) {
-    // Start output buffering to catch debug output
-    ob_start();
-
-    // Hardcode the event ID for demonstration purposes
-    $event_id = 3789;
-    echo '<p>Debug: Shortcode function called.</p>';
-    echo '<p>Debug: Event ID - ' . $event_id . '</p>';
-
-    // Get the total number of issued tickets for the event
-    $issued_tickets = get_total_issued_tickets($event_id);
-    echo '<p>Debug: Total Issued Tickets - ' . $issued_tickets . '</p>';
-
-    // Create an instance of the Tribe__Tickets__Attendance_Totals class
-    $attendance_totals = new Tribe__Tickets__Attendance_Totals($event_id);
-
-    // Get the total checked-in attendees for the event
-    $total_checked_in = $attendance_totals->get_total_checked_in();
-    echo '<p>Debug: Total Checked-in Attendees - ' . $total_checked_in . '</p>';
-
-    // Calculate the checked-in percentage and round up
-    $percent_checked_in = ($issued_tickets > 0) ? ceil(($total_checked_in / $issued_tickets) * 100) : 0;
-
-    // Format and output the desired information
-    $output = sprintf('<div class="checked-in-percentage">Checked: %d / %d - %d%%</div>',
-        $total_checked_in, $issued_tickets, $percent_checked_in);
-
-    // Get the buffered output
-    $buffered_output = ob_get_clean();
-    return $output;
-}
-add_shortcode('display_checked_in_percentage', 'display_checked_in_percentage_shortcode');
-
-function get_total_issued_tickets($event_id) {
-    $tickets = Tribe__Tickets__Tickets::get_all_event_tickets($event_id);
-    $total_issued_tickets = 0;
-
-    foreach ($tickets as $ticket) {
-        // Retrieve the number of issued tickets for this ticket
-        $issued_tickets_message = tribe_tickets_get_ticket_stock_message($ticket, __('issued', 'event-tickets'));
-
-        // Extract the number of issued tickets from the message
-        preg_match('/\d+/', $issued_tickets_message, $matches);
-        $issued_tickets = isset($matches[0]) ? intval($matches[0]) : 0;
-
-        $total_issued_tickets += $issued_tickets;
-    }
-
-    return $total_issued_tickets;
-}
