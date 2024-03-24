@@ -5073,7 +5073,6 @@ function tribe_check_progress_data(){
 
 
 
-
 function display_checked_in_percentage_shortcode($atts) {
     // Start output buffering to catch debug output
     ob_start();
@@ -5096,10 +5095,13 @@ function display_checked_in_percentage_shortcode($atts) {
 
     // Calculate the checked-in percentage
     $percent_checked_in = ($total_attendees > 0) ? round(($total_checked_in / $total_attendees) * 100, 2) : 0;
-    echo '<div class="checked-in-percentage">Checked-in Percentage: ' . $percent_checked_in . '%</div>';
+
+    // Format and output the desired information
+    $output = sprintf('<div class="checked-in-percentage">Checked: %d / %d - %s%%</div>',
+        $total_checked_in, $total_attendees, $percent_checked_in);
 
     // Get the buffered output
-    $output = ob_get_clean();
+    $buffered_output = ob_get_clean();
     return $output;
 }
 add_shortcode('display_checked_in_percentage', 'display_checked_in_percentage_shortcode');
