@@ -5074,42 +5074,29 @@ function tribe_check_progress_data(){
 
 
 
-
-
 function display_checked_in_percentage_shortcode($atts) {
     // Start output buffering to catch debug output
     ob_start();
 
+    // Hardcode the event ID for demonstration purposes
+    $event_id = 3789;
     echo '<p>Debug: Shortcode function called.</p>';
-
-    // Directly use the specified event ID
-    $event_id = 3789; // Hardcoded for simplicity
     echo '<p>Debug: Event ID - ' . $event_id . '</p>';
 
-    // Check if the tribe_tickets_get_total_checked_in function exists
-    if (function_exists('tribe_tickets_get_total_checked_in')) {
-        $total_checked_in = tribe_tickets_get_total_checked_in($event_id);
-        echo '<p>Debug: Total Checked-in Attendees - ' . $total_checked_in . '</p>';
-    } else {
-        echo '<p>Error: Function tribe_tickets_get_total_checked_in does not exist. Ensure The Events Calendar or necessary add-ons are installed and activated.</p>';
-    }
+    // Create an instance of the Tribe__Tickets__Attendance_Totals class
+    $attendance_totals = new Tribe__Tickets__Attendance_Totals($event_id);
 
-    // Check if the tribe_tickets_get_total_attendees function exists
-    if (function_exists('tribe_tickets_get_total_attendees')) {
-        $total_attendees = tribe_tickets_get_total_attendees($event_id);
-        echo '<p>Debug: Total Attendees - ' . $total_attendees . '</p>';
-    } else {
-        echo '<p>Error: Function tribe_tickets_get_total_attendees does not exist. Ensure The Events Calendar or necessary add-ons are installed and activated.</p>';
-    }
+    // Get the total checked-in attendees for the event
+    $total_checked_in = $attendance_totals->get_total_checked_in();
+    echo '<p>Debug: Total Checked-in Attendees - ' . $total_checked_in . '</p>';
 
-    // Assuming both functions exist and returned data
-    if (isset($total_checked_in) && isset($total_attendees)) {
-        // Calculate the checked-in percentage
-        $percent_checked_in = ($total_attendees > 0) ? round(($total_checked_in / $total_attendees) * 100, 2) : 0;
-        echo '<div class="checked-in-percentage">Checked-in Percentage: ' . $percent_checked_in . '%</div>';
-    } else {
-        echo '<p>Error: Could not calculate checked-in percentage due to missing data.</p>';
-    }
+    // Get the total number of attendees for the event
+    $total_attendees = $attendance_totals->get_event_attendees_count();
+    echo '<p>Debug: Total Attendees - ' . $total_attendees . '</p>';
+
+    // Calculate the checked-in percentage
+    $percent_checked_in = ($total_attendees > 0) ? round(($total_checked_in / $total_attendees) * 100, 2) : 0;
+    echo '<div class="checked-in-percentage">Checked-in Percentage: ' . $percent_checked_in . '%</div>';
 
     // Get the buffered output
     $output = ob_get_clean();
