@@ -455,6 +455,17 @@ button i {
         .tabs-container {
             flex-direction: column; /* Stack tabs vertically on mobile */
         }
+        .tribe-community-events-list-title {
+    font-weight: bold;
+    font-size: 25px !important;
+}.scanner_login_divs {
+
+    align-content: center;
+    justify-content: flex-start;
+ 
+}
+
+
     }
 
     /* Media query for desktop (optional, for more control) */
