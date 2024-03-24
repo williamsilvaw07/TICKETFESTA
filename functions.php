@@ -5070,36 +5070,28 @@ function tribe_check_progress_data(){
 }
 
 
-
-
 function display_checked_in_percentage_shortcode($atts) {
     // Debug statement to check if the shortcode function is called
     echo '<p>Shortcode function called.</p>';
 
-    // Extract shortcode attributes
-    $atts = shortcode_atts(array(
-        'event_id' => '3789', // Default event ID
-    ), $atts);
+    // Hardcoded event ID
+    $event_id = 3789; // Replace with your desired event ID
 
-    // Get the event ID from shortcode attributes
-    $event_id = isset($atts['event_id']) ? intval($atts['event_id']) : '';
-
-    // Check if event ID is provided
-    if (!$event_id) {
-        return '<p>Error: Event ID is missing.</p>';
-    }
+    // Debug statement to display the event ID
+    echo '<p>Event ID: ' . $event_id . '</p>';
 
     // Get the total checked-in attendees and total attendees for the event
     $total_checked_in = tribe_tickets_get_total_checked_in($event_id);
     $total_attendees = tribe_tickets_get_total_attendees($event_id);
 
+    // Debug statements to display the checked-in and total attendee counts
+    echo '<p>Total Checked-in Attendees: ' . $total_checked_in . '</p>';
+    echo '<p>Total Attendees: ' . $total_attendees . '</p>';
+
     // Calculate the checked-in percentage
     $percent_checked_in = ($total_attendees > 0) ? round(($total_checked_in / $total_attendees) * 100, 2) : 0;
 
-    // Output debug information
-    $debug_output = "Event ID: $event_id<br>Total Checked-in Attendees: $total_checked_in<br>Total Attendees: $total_attendees<br>";
-
     // Output the checked-in percentage along with debug information
-    return '<div class="checked-in-percentage">' . $debug_output . 'Checked-in Percentage: ' . $percent_checked_in . '%</div>';
+    return '<div class="checked-in-percentage">Checked-in Percentage: ' . $percent_checked_in . '%</div>';
 }
 add_shortcode('display_checked_in_percentage', 'display_checked_in_percentage_shortcode');
