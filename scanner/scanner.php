@@ -201,6 +201,9 @@ input#event-pass {
     text-align: center;
     text-transform: capitalize;
 }
+.event-container {
+    text-align: center;  
+}
 .event_data .date span{
     text-align: center;
     font-size: 14px;
