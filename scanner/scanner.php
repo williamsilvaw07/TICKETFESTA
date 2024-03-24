@@ -188,9 +188,25 @@ input#event-pass {
     margin-right: 11px;
 }
 
-
-
-
+.event_data{
+    border-radius: 2px;
+    margin-bottom: 21px;
+    background: #121212 !important;
+    padding: 7px;
+}
+.event_data .name span{
+    color: #d3fa16 !important;
+    font-size: 20px;
+    font-weight: 500;
+    text-align: center;
+    text-transform: capitalize;
+}
+.event_data .date span{
+    text-align: center;
+    font-size: 14px;
+    color: #d3fa16 !important;
+    font-weight: 300;
+}
 
 #video-container {
         width: 100%;
