@@ -5077,20 +5077,34 @@ function tribe_check_progress_data(){
 
 
 
+/**
+ * Retrieve the checked-in percentage for a specific event.
+ *
+ * @param int $event_id The ID of the event.
+ * @return float The checked-in percentage.
+ */
+function get_event_checked_in_percentage($event_id) {
+    $total_attendees = get_total_attendees($event_id); // Assuming you have a function to retrieve total attendees
+    $total_checked_in = get_total_checked_in($event_id); // Assuming you have a function to retrieve total checked-in attendees
+    
+    if ($total_attendees > 0) {
+        $percentage_checked_in = ($total_checked_in / $total_attendees) * 100;
+        return round($percentage_checked_in, 2); // Round to 2 decimal places
+    } else {
+        return 0; // Return 0 if there are no attendees
+    }
+}
 
-$event_id = 3789; // Replace with your actual event ID
-$percentage_checked_in = get_checked_in_percentage($event_id);
-?>
-<!-- Display the checked-in percentage above the header -->
-<div class="checked-in-percentage">
-    Checked-in Percentage: <?php echo $percentage_checked_in; ?>%
-</div>
-
-<!DOCTYPE html>
-<html <?php language_attributes(); ?>>
-<head>
-    <meta charset="<?php bloginfo( 'charset' ); ?>">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <?php wp_head(); ?>
-</head>
-<body <?php body_class(); ?>>
+/**
+ * Display the checked-in percentage for a specific event above the header.
+ */
+function display_event_checked_in_percentage() {
+    $event_id = 3789; // Replace with your actual event ID
+    $percentage_checked_in = get_event_checked_in_percentage($event_id);
+    ?>
+    <!-- Display the checked-in percentage above the header -->
+    <div class="checked-in-percentage">
+        Checked-in Percentage: <?php echo $percentage_checked_in; ?>%
+    </div>
+    <?php
+}
