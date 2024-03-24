@@ -443,6 +443,10 @@
 
 
 jQuery(document).ready(function($) {
+
+
+    ///function to hide the event data and show when see more button is clicked 
+
     // Handle click event of the "See More" button
     $('.see_more_ticket_info').click(function() {
         console.log("See More button clicked.");
@@ -462,4 +466,22 @@ jQuery(document).ready(function($) {
             $('.ticket-info-container_main').css('flex-direction', '');
         }
     });
+
+
+
+
+
+
+
+
+
+        // Wait until there is data inside the HTML
+        if ($('.event-container-details .name span').text().trim() !== '' && $('.event-container-details .date span').text().trim() !== '') {
+            // Clone the HTML content
+            var eventDataHtml = $('.event-container-details').clone();
+    
+            // Append the cloned HTML to the .event_data div
+            $('.event_data').append(eventDataHtml);
+        }
+
 });
