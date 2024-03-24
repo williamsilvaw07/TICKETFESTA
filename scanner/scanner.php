@@ -306,7 +306,7 @@ input#event-pass {
     .tab-content.active .event-container {
         width: 100%;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 20px;
