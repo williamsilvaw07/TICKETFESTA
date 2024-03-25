@@ -123,7 +123,7 @@ body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .content-w
     justify-content: center;
     align-items: center;
     gap: 40px;
-   padding-bottom:40px
+   padding-bottom:20px
 }
 .line_break {
     display: block;
@@ -319,14 +319,16 @@ input#event-pass {
 
 
     .change_event_btn {
-        background-color: #E72929;
+        background-color: #19191b;
     color: white;
     font-size: 11px;
     padding: 2px 9px;
     border: none;
     border-radius: 5px;
-    cursor: pointer!important;
+    cursor: pointer !important;
     height: 32px;
+    margin-top: 15px;
+    margin-left: 13px;
 }
 
 button i {
@@ -597,6 +599,18 @@ li.tab a{
     padding: 6px 9px;
     cursor: pointer;
     font-size: 14px;
+}
+.brand-link .brand-image {
+  
+    width: 100px;
+}
+.user-panel .info{
+    font-size: 14px;
+}.fake_aviter {
+    font-size: 12px;
+    width: 30px;
+    height: 30px;
+
 }
     }
 
