@@ -255,7 +255,7 @@ input#event-pass {
         display: flex;
     flex-direction: column !important;
     margin: 0 auto;
-
+    padding: 0 15px !important;
     position: relative;
     border-radius: 10px;
     width: 100%;
