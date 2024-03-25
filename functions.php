@@ -4584,40 +4584,16 @@ function custom_qr_scanner_shortcode() {
 
 
 
-                
+
                     <div class="event-container">
                         <img src="#" alt="" class="event-image">
-                        <div class="event-container-details">
-                        </div>
+                      
                <!-- <div class="location">Location: </div>-->
 
-
-               <div class="tickets_total_sections">
-               <p class="title_ticket_info">Tickets Sold / Tickets Available</p>
-               <p class="see_more_ticket_info">See more</p>
-               </div>
            
 
                <div class="ticket-info-container_main">
-               <div class="ticket-progress-container_main">
-               <div class="ticket-progress-container">
-               <svg class="progress-ring" width="72" height="72">
-    <circle class="progress-ring__circle-bg" cx="36" cy="36" r="31" stroke-width="6"></circle> <!-- Background circle -->
-    <circle class="progress-ring__circle" cx="36" cy="36" r="31" stroke-width="6"></circle> <!-- Foreground circle -->
-</svg>
-        <div class="progress-percentage">0%</div>
-    </div>
-    
-
-
-
-
-    <div class="ticket-info info_div">
-        <h6>Total Ticket Sold</h6>
-        <p class="ticket-count">0<span>/</span>0</p>
-       
-        </div>
-        </div>
+         
 
 
 
