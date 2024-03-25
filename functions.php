@@ -4535,6 +4535,23 @@ function custom_qr_scanner_shortcode() {
 
                 </ul>
            
+
+
+                <div class="main_stats">
+
+                <div class="ticket_sold_main_stats">
+    <i class="fas fa-ticket-alt"></i>
+</div>
+
+<div class="ticket_checkedin_main_stats">
+    <i class="fas fa-check-circle"></i>
+</div>
+
+                </div>
+
+
+
+
             <div class="tab-content-container" style="display: none">
                 <div class="tab-content tab-conent-1 active" id="tab1">
                     <div class="event-container">
