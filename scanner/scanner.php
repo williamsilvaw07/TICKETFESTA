@@ -433,11 +433,14 @@ button i {
     font-weight: 600;
     margin-bottom: 11px;
 }
-.info_div p{
+.stats_count_main{
     font-weight: 700;
-    font-size: 16px;
-    margin:0;
+    font-size: 26px;
+    margin-bottom: 4px;
+    color: #d3fa16 !important;
+    white-space: nowrap;
 }
+
 .ticket-progress-container_svg{
     width: fit-content;
     position: relative;
