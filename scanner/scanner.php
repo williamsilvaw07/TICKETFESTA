@@ -347,7 +347,7 @@ button i {
     background-position: center;
     background-repeat: no-repeat;
     position: relative;
-    padding: 17px;
+    padding: 9px;
     border-radius: 10px;
     width: 100%;
     max-width: fit-content;
@@ -443,7 +443,7 @@ button i {
 }
 .info_div h6{
     margin: 0;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 600;
     margin-bottom: 4px;
 }
@@ -456,13 +456,13 @@ button i {
 }
 .stats_count_main{
     font-weight: 700;
-    font-size: 19px;
+    font-size: 16px;
     margin-bottom: 0px;
     color: #d3fa16 !important;
     white-space: nowrap;
 }.stats_count_main span{
     font-weight: 700;
-    font-size: 19px;
+    font-size: 16px;
     margin-bottom: 0px;
     color: #d3fa16 !important;
     white-space: nowrap;
