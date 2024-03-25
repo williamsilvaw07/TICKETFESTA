@@ -508,7 +508,8 @@ li.tab a{
     flex-direction: column;
     justify-content: center!important;
     align-items: flex-start!important;
-  margin-top:20px
+  margin-top:20px!important;
+  margin: 0 auto;
 }
 
 
