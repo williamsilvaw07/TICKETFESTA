@@ -356,6 +356,8 @@ button i {
     width: 100%;
     max-width: fit-content;
     flex-direction: row-reverse!important;
+    display: flex!important;
+    gap: 10px;
 }
 
 
