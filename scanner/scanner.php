@@ -513,7 +513,9 @@ li.tab a{
     align-items: flex-start;
     display: flex !important;
     gap: 10px;
-
+    flex-direction: column;
+    justify-content: center!important;
+    align-items: flex-start!important;
   
 }
 
