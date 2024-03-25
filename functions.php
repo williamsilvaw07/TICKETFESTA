@@ -4612,7 +4612,6 @@ add_action('wp_ajax_validate_event_pass', 'validate_event_pass');
 add_action('wp_ajax_nopriv_validate_event_pass', 'validate_event_pass'); // If you want to allow non-logged-in users to access the AJAX endpoint
 
 
-
 function validate_event_pass() {
     $event_pass = isset($_POST['event_pass']) ? esc_attr($_POST['event_pass']) : false;
     $events = get_posts_by_event_pass($event_pass);
@@ -4631,6 +4630,7 @@ function validate_event_pass() {
             if (null === $total_capacity) {
                 $tickets = Tribe__Tickets__Tickets::get_all_event_tickets($event_id);
                 $total_capacity = 0;
+                $total_issued_tickets = 0; // Total issued tickets for percentage calculation
 
                 foreach ($tickets as $ticket) {
                     $ticket_capacity = tribe_tickets_get_capacity($ticket->ID); // Retrieve ticket capacity
@@ -4638,10 +4638,10 @@ function validate_event_pass() {
 
                     // Retrieve the number of issued tickets for this ticket
                     $issued_tickets_message = tribe_tickets_get_ticket_stock_message($ticket, __('issued', 'event-tickets'));
-
-                    // Extract the number of issued tickets from the message
                     preg_match('/\d+/', $issued_tickets_message, $matches);
-                    $issued_tickets = isset($matches[0]) ? $matches[0] : 0;
+                    $issued_tickets = isset($matches[0]) ? intval($matches[0]) : 0;
+
+                    $total_issued_tickets += $issued_tickets; // Summing up issued tickets
 
                     // Add each ticket's name, capacity, and issued tickets to the ticket list
                     $ticket_list[] = [
@@ -4651,54 +4651,44 @@ function validate_event_pass() {
                     ];
                 }
             }
-            
-            // Get the number of attendees who have checked in
-            $attendees_checked_in = 0;
-            // Your logic to retrieve the number of attendees checked in
-            
-            // Calculate the percentage of attendees checked in
-            $percentage_checked_in = ($attendees_checked_in / $total_capacity) * 100;
+
+            // Assuming an instance creation and method call similar to before for checking attendance
+            $attendance_totals = new Tribe__Tickets__Attendance_Totals($event_id);
+            $total_checked_in = $attendance_totals->get_total_checked_in();
+
+            // Calculate the checked-in percentage and round up if necessary
+            $percent_checked_in = ($total_issued_tickets > 0) ? ceil(($total_checked_in / $total_issued_tickets) * 100) : 0;
 
             $start_date = get_post_meta($event_id, '_EventStartDate', true);
             $start_date_timestamp = strtotime($start_date);
-            
-            // Get the day of the week in abbreviated format (e.g., "Thur")
             $day_of_week = date('D', $start_date_timestamp);
-            
-            // Get the day of the month with the appropriate suffix (e.g., "25th")
             $day_of_month = date('jS', $start_date_timestamp);
-            
-            // Get the month in abbreviated format (e.g., "Mar")
             $month = date('M', $start_date_timestamp);
-            
-            // Get the time in 24-hour format (e.g., "08:00")
             $time = date('H:i', $start_date_timestamp);
-            
-            // Combine the formatted components
             $formatted_start_date = "$day_of_week, $day_of_month $month at $time";
-            
+
             $event_data = [
-                'start_date'              => $formatted_start_date,
-                'issued_tickets'          => get_post_meta($event_id, '_tribe_progressive_ticket_current_number', true),
+                'start_date' => $formatted_start_date,
+                'issued_tickets' => $total_issued_tickets,
                 'total_tickets_available' => $total_capacity,
-                'ticket_list'             => $ticket_list,
-                'name'                    => get_the_title($event_id),
-                'thumbnail_url'           => get_the_post_thumbnail_url($event_id, 'medium'),
-                'checkedin_percentage'    => $percentage_checked_in,
+                'ticket_list' => $ticket_list,
+                'name' => get_the_title($event_id),
+                'thumbnail_url' => get_the_post_thumbnail_url($event_id, 'medium'),
+                'checked_in_percentage' => $percent_checked_in, // Updated to use calculated percentage
             ];
-            
         }
     }
 
     $response = [
-        'match'      => $match,
-        'event_id'   => $event_id,
+        'match' => $match,
+        'event_id' => $event_id,
         'event_data' => $event_data,
     ];
 
     wp_send_json($response);
     wp_die();
 }
+
 
 
 // Remember to properly hook your function to WordPress AJAX actions if it's intended for AJAX.
