@@ -518,7 +518,9 @@ li.tab a{
     align-items: flex-start!important;
   
 }
-
+.tab-content.active .single_ticket_section{
+    align-items: flex-start!important;
+}
 
 
 
