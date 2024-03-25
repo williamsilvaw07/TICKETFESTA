@@ -164,7 +164,7 @@ body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .content-w
     padding: 17px;
     border-radius: 10px;
     width: fit-content;
-    margin: 0 auto;
+    margin: 0 4%;
 
 }
 .scanner_login_div p{
@@ -188,7 +188,7 @@ body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .content-w
 input#event-pass {
     border: 0px;
     width: 100%;
-    max-width: 200px;
+    max-width: 170px;
     border-radius: 4px;
     margin-right: 11px;
 }
