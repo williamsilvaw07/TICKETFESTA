@@ -340,6 +340,9 @@ function updateCheckedInProgress(response) {
     $('.ticket_checkedin_main_stats .checkedin-progress-ring-container').html(checkedInProgressHtml);
 }
 
+
+
+
 // Function to handle passcode match response
 function passcodeMatch(response) {
     if (!response || !response.event_data) {
@@ -368,7 +371,6 @@ function passcodeMatch(response) {
     var checkedIn = parseInt(response.event_data.checked_in.split(' / ')[0], 10);
     var checkedInPercentage = checkedIn === 0 ? 0 : Math.ceil((checkedIn / issuedTickets) * 100); // Round up the percentage
     var checkedInText = checkedInPercentage === 0 ? '0%' : checkedInPercentage.toFixed(0) + '%';
-    
 
     // Update the progress circle with the new data
     updateProgressCircle(issuedTickets, totalTickets);
@@ -410,6 +412,9 @@ function passcodeMatch(response) {
         // Update individual progress circles with the correct percentage
         updateIndividualProgressCircle($('.ticket-info_hidden_all .ticket-progress-container').last(), issued, capacity);
     });
+
+    // Append the shortcode output to the ticket-info_hidden_all div
+    $('.ticket-info_hidden_all').append(response.shortcode_output);
 
     // Proceed with other functions like startScanQR...
     event_id_global = response.event_id;
