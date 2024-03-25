@@ -476,7 +476,7 @@ button i {
 .ticket-info_hidden_all{
     display: flex;
     flex-direction: column;
-    gap: 22px;
+    gap: 10px;
 }
 
 .container-fluid , .content-wrapper>.content{
@@ -520,7 +520,7 @@ li.tab a{
     width: 100%;
     align-items: flex-start;
     display: flex !important;
-    gap: 25px;
+    gap: 35px;
     flex-direction: column;
     justify-content: center!important;
     align-items: flex-start!important;
