@@ -534,21 +534,15 @@ $('.ticket_dropdown').on('click', function() {
 
     // Check if the inner element has the 'display-block' class
     if (innerElement.hasClass('display-block')) {
-        // If it does, use the fadeOut method to hide the element
-        innerElement.fadeOut('slow', function() {
-            // After the fadeOut animation is complete, remove the 'display-block' class
-            innerElement.removeClass('display-block');
-            // and change the icon's class to fa-angle-up
-            iconElement.removeClass('fa-angle-down').addClass('fa-angle-up');
-        });
+        // If it does, remove the 'display-block' class
+        innerElement.removeClass('display-block');
+        // and change the icon's class to fa-angle-up
+        iconElement.removeClass('fa-angle-down').addClass('fa-angle-up');
     } else {
-        // If the inner element doesn't have the 'display-block' class, use the fadeIn method to show the element
-        innerElement.fadeIn('slow', function() {
-            // After the fadeIn animation is complete, add the 'display-block' class
-            innerElement.addClass('display-block');
-            // and change the icon's class to fa-angle-down
-            iconElement.removeClass('fa-angle-up').addClass('fa-angle-down');
-        });
+        // If the inner element doesn't have the 'display-block' class, add the 'display-block' class
+        innerElement.addClass('display-block');
+        // and change the icon's class to fa-angle-down
+        iconElement.removeClass('fa-angle-up').addClass('fa-angle-down');
     }
 });
 
