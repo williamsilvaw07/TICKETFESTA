@@ -4597,6 +4597,9 @@ function custom_qr_scanner_shortcode() {
 
                     <div class="event-container single_ticket_section">
                     <h6>Ticket Types Information:</h6>
+
+
+                    <div class="event-container single_ticket_section_inner">
                         <img src="#" alt="" class="event-image">     
                <!-- <div class="location">Location: </div>-->
   <div class="ticket-info-container_main">
@@ -4608,6 +4611,8 @@ function custom_qr_scanner_shortcode() {
 </div>
 
     </div>
+                
+</div>
 </div>
                 
 
