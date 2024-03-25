@@ -298,7 +298,7 @@
             $('.event-container .name span').text(response.event_data.name);
             $('.event-container .date span').text(response.event_data.start_date);
             $('.event-container .checkedin span').text(response.event_data.checked_in);
-        
+            
             // Extract the ticket information
             var issuedTickets = parseInt(response.event_data.issued_tickets, 10);
             var totalTickets = parseInt(response.event_data.total_tickets_available, 10);
@@ -309,9 +309,9 @@
                 return;
             }
         
-            // Calculate the percentage of tickets checked in and update the text
-            var checkedInPercentage = issuedTickets && totalTickets ? ((issuedTickets / totalTickets) * 100).toFixed(2) : "0";
-            $('.event-container .checkedin_tickets_percent span').text(checkedInPercentage + '%');
+            // Calculate the checked-in percentage
+            var checkedInPercentage = (issuedTickets / totalTickets) * 100;
+            $('.event-container .checkedin_tickets_percent span').text(checkedInPercentage.toFixed(2) + '%');
         
             // Update the progress circle with the new data
             updateProgressCircle(issuedTickets, totalTickets);
@@ -337,14 +337,14 @@
                             <span class="progress-percentage_individual">${percentage}%</span>
                         </div>
                         <div class="ticket-details info_div">
-                        <h6>Total Ticket Sold</h6>
+                            <h6>Total Ticket Sold</h6>
                             <div class="ticket-name">${ticket.name}</div>
                             <p class="ticket-count">${issued} / ${capacity}</p>
                         </div>
                     </div>
                 `;
         
-                // Append individual progress components to container within the loop
+                // Append individual progress components to container
                 $('.ticket-info_hidden_all').append(individualProgressHtml);
         
                 // Update individual progress circles with the correct percentage
