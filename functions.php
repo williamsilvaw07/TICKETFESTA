@@ -4940,239 +4940,39 @@ add_shortcode('display_html5_qrcode_scanner', 'display_html5_qrcode_scanner_shor
 
 
 
-//////FUNCTION TO ADD A FREE TICKET
 
-function user_events_with_tickets_shortcode() {
-    if (!is_user_logged_in()) {
-        return 'You must be logged in to view your events.';
+
+
+
+
+
+function fetch_and_display_attendee_info($atts) {
+    // Shortcode attributes, defaulting to event ID 3789 if none is provided
+    $attributes = shortcode_atts(array(
+        'id' => '3789',
+    ), $atts);
+
+    $event_id = $attributes['id'];
+
+    // Assuming you have a function to get attendee information based on event ID
+    $attendees = get_attendee_info_by_event_id($event_id);
+
+    if (empty($attendees)) {
+        return 'No attendees found for this event.';
     }
 
-    $current_user = wp_get_current_user();
-    $args = array(
-        'post_type' => 'tribe_events',
-        'author' => $current_user->ID,
-        'posts_per_page' => -1,
-    );
-
-    $events_query = new WP_Query($args);
-
-    $output = '<select id="user_events">';
-    $output .= '<option value="">Select Your Event</option>';
-
-    foreach ($events_query->posts as $post) {
-        $output .= sprintf('<option value="%d">%s</option>', esc_attr($post->ID), esc_html(get_the_title($post->ID)));
+    // Start building the output
+    $output = '<div class="event-attendees">';
+    foreach ($attendees as $attendee) {
+        // Customize this part based on how your attendee information is structured
+        $output .= '<div class="attendee">';
+        $output .= '<p>Name: ' . esc_html($attendee['name']) . '</p>';
+        $output .= '<p>Email: ' . esc_html($attendee['email']) . '</p>';
+        // Add more attendee details as needed
+        $output .= '</div>';
     }
-
-    if (empty($events_query->posts)) {
-        $output .= '<option value="">No events found.</option>';
-    }
-
-    wp_reset_postdata();
-
-    $output .= '</select>';
-    $output .= '<div id="ticket_info"></div>'; // Container for the ticket info
-
-    $output .= "<script>
-    jQuery(document).ready(function($) {
-        $('#user_events').on('change', function() {
-            var eventId = $(this).val();
-            if (eventId) {
-                $.ajax({
-                    url: '" . admin_url('admin-ajax.php') . "',
-                    type: 'POST',
-                    data: {
-                        action: 'get_tickets_for_event',
-                        event_id: eventId
-                    },
-                    success: function(response) {
-                        $('#ticket_info').html(response.data);
-                    }
-                });
-            } else {
-                $('#ticket_info').html('');
-            }
-        });
-
-        $(document).on('submit', '.purchase_ticket_form', function(e) {
-            e.preventDefault();
-            var formData = $(this).serialize();
-            $.ajax({
-                url: '" . admin_url('admin-ajax.php') . "',
-                type: 'POST',
-                data: formData,
-                success: function(response) {
-                    alert('Ticket has been ordered successfully.');
-                },
-                error: function() {
-                    alert('Failed to order the ticket. Please try again.');
-                }
-            });
-        });
-    });
-    </script>";
+    $output .= '</div>';
 
     return $output;
 }
-add_shortcode('user_events_with_tickets', 'user_events_with_tickets_shortcode');
-
-
-
-function get_tickets_for_event_ajax() {
-    if (!isset($_POST['event_id']) || empty($_POST['event_id'])) {
-        wp_send_json_error('Event ID is required.');
-        wp_die();
-    }
-
-    $event_id = intval($_POST['event_id']);
-    $ticket_info = '';
-
-    if (class_exists('Tribe__Tickets_Plus__Commerce__WooCommerce__Main')) {
-        $woo_tickets = Tribe__Tickets_Plus__Commerce__WooCommerce__Main::get_instance();
-        $ticket_ids = $woo_tickets->get_tickets_ids($event_id);
-
-        foreach ($ticket_ids as $ticket_id) {
-            $product = wc_get_product($ticket_id);
-            if ($product) {
-                $price_html = $product->get_price_html();
-                $stock_quantity = $product->get_stock_quantity();
-                $nonce_field = wp_nonce_field('free_ticket_nonce_' . $ticket_id, '_wpnonce', true, false);
-                $ticket_info .= sprintf(
-                    '<div>%s - Price: %s - Stock: %s</div>
-                    <form class="purchase_ticket_form" method="post">
-                        <input type="hidden" name="action" value="purchase_ticket_for_free" />
-                        <input type="hidden" name="ticket_id" value="%d" />
-                        %s
-                        <input type="email" name="recipient_email" placeholder="Recipient email (optional)" />
-                        <button type="submit">Get Ticket for Free</button>
-                    </form>',
-                    esc_html($product->get_title()), $price_html, $stock_quantity ?: 'Out of stock', $ticket_id, $nonce_field
-                );
-            }
-        }
-    }
-
-    if (empty($ticket_info)) {
-        wp_send_json_error('No tickets found for this event.');
-    } else {
-        wp_send_json_success($ticket_info);
-    }
-
-    wp_die();
-}
-add_action('wp_ajax_get_tickets_for_event', 'get_tickets_for_event_ajax');
-add_action('wp_ajax_nopriv_get_tickets_for_event', 'get_tickets_for_event_ajax');
-
-
-
-add_action('wp_ajax_check_progress_data', 'tribe_check_progress_data');
-add_action('wp_ajax_nopriv_check_progress_data', 'tribe_check_progress_data');
-
-function tribe_check_progress_data(){
-
-    $event_id = isset($_POST['event_id']) ? esc_attr( $_POST['event_id'] ) : false;
-    if( $event_id ){
-        $total_capacity = apply_filters('tribe_tickets_total_event_capacity', null, $event_id);
-        if (null === $total_capacity) {
-            $tickets = Tribe__Tickets__Tickets::get_all_event_tickets($event_id);
-
-            foreach ($tickets as $ticket) {
-                $ticket_capacity = tribe_tickets_get_capacity($ticket->ID); // Retrieve ticket capacity
-                $total_capacity += $ticket_capacity;
-
-                // Retrieve the number of issued tickets for this ticket
-                $issued_tickets_message = tribe_tickets_get_ticket_stock_message($ticket, __('issued', 'event-tickets'));
-
-                // Extract the number of issued tickets from the message
-                preg_match('/\d+/', $issued_tickets_message, $matches);
-                $issued_tickets = isset($matches[0]) ? $matches[0] : 0;
-
-                // Add each ticket's name, capacity, and issued tickets to the ticket list
-                $ticket_list[] = [
-                    'name' => $ticket->name,
-                    'capacity' => $ticket_capacity,
-                    'issued_tickets' => $issued_tickets,
-                ];
-            }
-        }
-
-        $event_data = [
-            'start_date'              => get_post_meta($event_id, '_EventStartDate', true),
-            'issued_tickets'          => get_post_meta($event_id, '_tribe_progressive_ticket_current_number', true),
-            'total_tickets_available' => $total_capacity,
-            'ticket_list'             => $ticket_list,
-            'name'                    => get_the_title($event_id),
-            'thumbnail_url'           => get_the_post_thumbnail_url($event_id, 'medium'),
-        ];
-
-        $response = [
-            'event_data' => $event_data,
-        ];
-    
-        wp_send_json($response);
-    }else{
-        wp_send_json_error('No tickets found for this event.');
-    }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-function display_checked_in_percentage_shortcode($atts) {
-    // Start output buffering to catch debug output
-    ob_start();
-
-    // Hardcode the event ID for demonstration purposes
-    $event_id = 3789;
-    echo '<p>Debug: Shortcode function called.</p>';
-    echo '<p>Debug: Event ID - ' . $event_id . '</p>';
-
-    // Get the total number of issued tickets for the event
-    $issued_tickets = get_total_issued_tickets($event_id);
-    echo '<p>Debug: Total Issued Tickets - ' . $issued_tickets . '</p>';
-
-    // Create an instance of the Tribe__Tickets__Attendance_Totals class
-    $attendance_totals = new Tribe__Tickets__Attendance_Totals($event_id);
-
-    // Get the total checked-in attendees for the event
-    $total_checked_in = $attendance_totals->get_total_checked_in();
-    echo '<p>Debug: Total Checked-in Attendees - ' . $total_checked_in . '</p>';
-
-    // Calculate the checked-in percentage and round up
-    $percent_checked_in = ($issued_tickets > 0) ? ceil(($total_checked_in / $issued_tickets) * 100) : 0;
-
-    // Format and output the desired information
-    $output = sprintf('<div class="checked-in-percentage">Checked: %d / %d - %d%%</div>',
-        $total_checked_in, $issued_tickets, $percent_checked_in);
-
-    // Get the buffered output
-    $buffered_output = ob_get_clean();
-    return $output;
-}
-add_shortcode('display_checked_in_percentage', 'display_checked_in_percentage_shortcode');
-
-function get_total_issued_tickets($event_id) {
-    $tickets = Tribe__Tickets__Tickets::get_all_event_tickets($event_id);
-    $total_issued_tickets = 0;
-
-    foreach ($tickets as $ticket) {
-        // Retrieve the number of issued tickets for this ticket
-        $issued_tickets_message = tribe_tickets_get_ticket_stock_message($ticket, __('issued', 'event-tickets'));
-
-        // Extract the number of issued tickets from the message
-        preg_match('/\d+/', $issued_tickets_message, $matches);
-        $issued_tickets = isset($matches[0]) ? intval($matches[0]) : 0;
-
-        $total_issued_tickets += $issued_tickets;
-    }
-
-    return $total_issued_tickets;
-}
+add_shortcode('event_attendees', 'fetch_and_display_attendee_info');

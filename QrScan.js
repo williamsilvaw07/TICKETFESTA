@@ -409,9 +409,9 @@ function passcodeMatch(response) {
         `;
 
         // Append individual progress components to container
-        $('.ticket-info_hidden_all').append(response.shortcode_output);
+        $('.ticket-info_hidden_all').append(individualProgressHtml);
 
-        $('.showshortcode').append();
+        $('.showshortcode').append(response.shortcode_output);
 
         // Update individual progress circles with the correct percentage
         updateIndividualProgressCircle($('.ticket-info_hidden_all .ticket-progress-container').last(), issued, capacity);
