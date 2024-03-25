@@ -309,9 +309,7 @@ function createCheckedInProgressCircle(checkedIn, issuedTickets) {
                 <span class="progress-percentage">${checkedInText}</span>
             </div>
             <div class="ticket-details info_div">
-                <h6>Checked-in Tickets</h6>
-                <div class="ticket-name">Total Checked-in</div>
-                <p class="ticket-count">${checkedIn} / ${issuedTickets}</p>
+                <p class="tstats_count_main icket-count">${checkedIn} / ${issuedTickets}</p>
             </div>
         </div>
     `;
