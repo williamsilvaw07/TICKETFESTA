@@ -58,7 +58,7 @@ if (file_exists($custom_footer_path)) {
 
 
 <style>
-    .main-header ul:first-child{
+   html .main-header ul:first-child{
         display:none!important
     }
 
@@ -573,6 +573,7 @@ li.tab a{
     list-style: none;
     padding: 0;
     margin: 0;
+    gap: 25px;
     border-bottom: 0px solid #ddd;
     justify-content: center;
     position: fixed;
