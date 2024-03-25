@@ -4523,6 +4523,7 @@ function custom_qr_scanner_shortcode() {
     ?>
 
             <div class="tabs-container" style="display: none">
+            <div class="main_div_event_data">
             <div class="event_data">
             <div class="event-container ">
                         <div class="name"><span> </span>  </div>
@@ -4640,6 +4641,7 @@ function custom_qr_scanner_shortcode() {
                         
                     </div>
                 </div>
+            </div>
             </div>
             </div>
     <?php
