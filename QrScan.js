@@ -298,7 +298,6 @@
             $('.event-container .name span').text(response.event_data.name);
             $('.event-container .date span').text(response.event_data.start_date);
             $('.event-container .checkedin span').text(response.event_data.checked_in);
-
         
             // Extract the ticket information
             var issuedTickets = parseInt(response.event_data.issued_tickets, 10);
@@ -309,6 +308,10 @@
                 console.error("Error parsing ticket information.");
                 return;
             }
+        
+            // Calculate the percentage of tickets checked in and update the text
+            var checkedInPercentage = issuedTickets && totalTickets ? ((issuedTickets / totalTickets) * 100).toFixed(2) : "0";
+            $('.event-container .checkedin_tickets_percent span').text(checkedInPercentage + '%');
         
             // Update the progress circle with the new data
             updateProgressCircle(issuedTickets, totalTickets);
@@ -323,7 +326,7 @@
                 var capacity = parseInt(ticket.capacity, 10);
                 var percentage = calculatePercentage(issued, capacity).toFixed(1); // Calculate percentage for each ticket type
         
-                // HTML for individual progress components with the same class names as before
+                // HTML for individual progress components
                 var individualProgressHtml = `
                     <div class="ticket-progress-container">
                         <div class="ticket-progress-container_svg">
@@ -336,7 +339,7 @@
                         <div class="ticket-details info_div">
                         <h6>Total Ticket Sold</h6>
                             <div class="ticket-name">${ticket.name}</div>
-                            <p class="ticket-count">${issued} / ${capacity}</div>
+                            <p class="ticket-count">${issued} / ${capacity}</p>
                         </div>
                     </div>
                 `;
@@ -352,8 +355,7 @@
             event_id_global = response.event_id;
             startScanQR(response.event_id);
         }
-
-
+        
 
 
 

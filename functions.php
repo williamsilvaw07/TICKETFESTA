@@ -4579,8 +4579,9 @@ function custom_qr_scanner_shortcode() {
  
     </div>
     <div class="ticket-info-container_main">
-    <div class="tickets-percent">Ticket Percent: </div>
-    <div class="checkedin">Ticket Percent:<span></span> </div>
+    
+    <div class="checkedin">Checked in Tickets:<span></span> </div>
+    <div class="checkedin_tickets_percent"><span></span></div>
     </div>             
                     </div>
                 </div>
