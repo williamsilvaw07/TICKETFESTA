@@ -337,12 +337,12 @@ button i {
 
 }
 .main_stats i{
-opacity: 0.2;
-    transform: rotate(302deg);
-    font-size: 56px;
+    opacity: 0.1;
+    transform: rotate(302deg) !important;
+    font-size: 46px;
     position: absolute;
     top: 50%;
-    transform: translateY(-50%);
+    right: 0;
 }
 
 .main_stats_block{
