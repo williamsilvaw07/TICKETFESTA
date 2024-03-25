@@ -355,7 +355,6 @@
         }
 
 
-
         function updateCheckedInStats(response) {
             if (!response || !response.event_data) {
                 console.error("Invalid response data.");
@@ -369,7 +368,7 @@
             // Update checked-in percentage
             var issuedTickets = parseInt(response.event_data.issued_tickets, 10);
             var checkedIn = parseInt(checkedInCount, 10);
-            var checkedInPercentage = (checkedIn / issuedTickets) * 100;
+            var checkedInPercentage = issuedTickets === 0 ? 0 : (checkedIn / issuedTickets) * 100;
             var roundedPercentage = Math.round(checkedInPercentage * 10) / 10; // Round to one decimal place
             $('.checkedin-progress-percentage').text(roundedPercentage + "%");
         
@@ -382,6 +381,9 @@
                 'stroke-dashoffset': dashOffset
             });
         }
+
+
+
 
 
         function CheckProgressData() {
