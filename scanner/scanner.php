@@ -249,7 +249,7 @@ input#event-pass {
         display: flex;
     flex-direction: column !important;
     margin: 0 auto;
-    background-color: #19191b;
+
     position: relative;
     padding: 17px;
     border-radius: 10px;
