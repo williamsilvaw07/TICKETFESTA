@@ -336,7 +336,14 @@ button i {
         color: red !important;
 
 }
-
+.main_stats i{
+opacity: 0.2;
+    transform: rotate(302deg);
+    font-size: 56px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
 
 .main_stats_block{
     background-color: #19191b;
