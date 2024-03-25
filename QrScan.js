@@ -287,7 +287,7 @@
 
 
         function generateCheckedInProgressHtml(checkedInCount, totalCount, sectionClassName) {
-            const percentage = (checkedInCount / totalCount) * 100;
+            const percentage = Math.ceil((checkedInCount / totalCount) * 100); // Round up the percentage
         
             // Calculate dash array and offset for the progress circle
             const circumference = 2 * Math.PI * 31; // Circumference of the circle with radius 31
@@ -303,7 +303,7 @@
                             style="stroke-dasharray: ${dashArray}px; stroke-dashoffset: ${dashOffset}px; stroke: rgb(211, 250, 22);">
                         </circle>
                     </svg>
-                    <div class="${sectionClassName}-progress-percentage">${percentage.toFixed(1)}%</div>
+                    <div class="${sectionClassName}-progress-percentage">${percentage}%</div>
                 </div>
             `;
         
@@ -335,13 +335,13 @@
         
             // Calculate the checked-in percentage
             var checkedIn = parseInt(response.event_data.checked_in.split(' / ')[0], 10);
-            var checkedInPercentage = checkedIn === 0 ? 0 : Math.ceil((checkedIn / issuedTickets) * 100); // Round up the percentage
-            var checkedInText = checkedInPercentage === 0 ? '0%' : checkedInPercentage.toFixed(0) + '%';
-            $('.event-container .checkedin-progress-percentage').text(checkedInText);
         
             // Generate HTML for checked-in progress component
-            const checkedInProgressHtml = generateCheckedInProgressHtml(checkedIn, issuedTickets, 'event-container');
-            $('.checkedin-progress-ring-container').html(checkedInProgressHtml);
+            const checkedInProgressHtml = generateCheckedInProgressHtml(checkedIn, issuedTickets, 'ticket_sold_main_stats');
+            $('.ticket-progress-container_main').html(checkedInProgressHtml);
+        
+            // Update the ticket count
+            $('.ticket-count').text(`${checkedIn} / ${issuedTickets}`);
         
             // Clear existing ticket information
             $('.ticket-info_hidden_all').empty();
