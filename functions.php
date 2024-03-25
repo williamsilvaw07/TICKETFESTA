@@ -4609,10 +4609,12 @@ function custom_qr_scanner_shortcode() {
 
 
         <div class="ticket-info_hidden_all">
-            
+            <h6>Ticket Information:</h6>
             <ul>
                 <!-- Ticket list will be dynamically populated here -->
             </ul>
+            <?php echo do_shortcode('[tribe_community_tickets view="attendees_report" id="' . $event_id . '"]'); ?>
+
         </div>
 
 
