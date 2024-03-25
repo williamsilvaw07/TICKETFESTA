@@ -414,14 +414,28 @@ function passcodeMatch(response) {
         updateIndividualProgressCircle($('.ticket-info_hidden_all .ticket-progress-container').last(), issued, capacity);
     });
 
-    // Append the shortcode output to the ticketnewewew div
-    $('.ticketnewewew').html(response.shortcode_output);
-
     // Proceed with other functions like startScanQR...
     event_id_global = response.event_id;
-    startScanQR(response.event_id);
+    startScanQR(response.event_id); // Pass the event ID to the startScanQR function
 }
 
+// Function to validate event passcode and retrieve event details
+function validateEventPass(eventPass) {
+    $.ajax({
+        url: ajaxurl, // AJAX URL provided by WordPress
+        method: 'POST',
+        data: {
+            action: 'validate_event_pass',
+            event_pass: eventPass
+        },
+        success: function(response) {
+            passcodeMatch(response);
+        },
+        error: function(xhr, status, error) {
+            console.error(error);
+        }
+    });
+}
 
 
 
