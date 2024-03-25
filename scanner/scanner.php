@@ -552,7 +552,14 @@ li.tab a{
     padding-top: 20px;
     margin-bottom: 100px;
 }
-
+.ticket-count{
+    margin-bottom:0;
+    font-weight: 700;
+    font-size: 16px;
+    margin-bottom: 0px;
+    color: #d3fa16 !important;
+    white-space: nowrap;
+}
 
 
 
