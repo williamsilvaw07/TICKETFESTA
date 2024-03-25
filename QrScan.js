@@ -526,11 +526,27 @@ function passcodeMatch(response) {
 
 
 
-    $('.ticket_dropdown').on('click', function() {
-        $('.single_ticket_section_inner').toggleClass('display-block');
-    });
+ // Add a click event listener to the .ticket_dropdown element
+$('.ticket_dropdown').on('click', function() {
+    // Get the .single_ticket_section_inner element
+    var innerElement = $('.single_ticket_section_inner');
 
-    
+    // Check if the inner element has the 'display-block' class
+    if (innerElement.hasClass('display-block')) {
+        // If it does, use the fadeOut method to hide the element
+        innerElement.fadeOut('slow', function() {
+            // After the fadeOut animation is complete, remove the 'display-block' class
+            innerElement.removeClass('display-block');
+        });
+    } else {
+        // If the inner element doesn't have the 'display-block' class, use the fadeIn method to show the element
+        innerElement.fadeIn('slow', function() {
+            // After the fadeIn animation is complete, add the 'display-block' class
+            innerElement.addClass('display-block');
+        });
+    }
+});
+
 })(jQuery);
 
 
