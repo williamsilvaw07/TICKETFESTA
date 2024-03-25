@@ -305,15 +305,7 @@ input#event-pass {
     li.tab.active a {
         color: #000 !important;
     }
-    .tab-content.active .event-container {
-        width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
-    margin-top: 20px;
-    }
+   
 
 
 
@@ -516,11 +508,9 @@ li.tab a{
     flex-direction: column;
     justify-content: center!important;
     align-items: flex-start!important;
-  
+  margin-top:20px
 }
-.tab-content.active .single_ticket_section{
-    align-items: flex-start!important;
-}
+
 
 
 
