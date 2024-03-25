@@ -297,7 +297,7 @@
             $('.event-container .event-image').attr('src', response.event_data.thumbnail_url);
             $('.event-container .name span').text(response.event_data.name);
             $('.event-container .date span').text(response.event_data.start_date);
-            $('.event-container .checkedin span').text(response.event_data.checked_in_percentage);
+            $('.event-container .checkedin span').text(response.event_data.checked_in);
 
         
             // Extract the ticket information
@@ -396,7 +396,7 @@
         
                 // HTML for individual progress components with the same class names as before
                 var individualProgressHtml = `
-                <span class="ticket-info_hidden_all_close">Close</span>
+        
                     <div class="ticket-progress-container">
                         <div class="ticket-progress-container_svg">
                             <svg class="progress-ring" width="72" height="72">
