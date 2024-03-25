@@ -354,6 +354,8 @@ button i {
     flex-direction: row-reverse!important;
     display: flex!important;
     gap: 10px;
+    padding-top: 17px;
+    padding-bottom: 17px;
 }
 
 
@@ -539,6 +541,8 @@ li.tab a{
     align-items: flex-start!important;
   margin-top:11px!important;
   margin: 0 auto;
+  padding-bottom: 20px;
+    padding-top: 20px;
 }
 
 
