@@ -414,7 +414,7 @@ function passcodeMatch(response) {
     });
 
     // Append the shortcode output to the ticket-info_hidden_all div
-    $('.ticket-info_hidden_all').append(response.shortcode_output);
+    $('.ticketnewewew').append(response.shortcode_output);
 
     // Proceed with other functions like startScanQR...
     event_id_global = response.event_id;
