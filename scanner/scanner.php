@@ -586,8 +586,8 @@ li.tab a{
     background: #121212 !important;
     width: 100%;
     z-index: 999;
-    padding-top: 15px;
-    padding-bottom: 26px;
+    padding-top: 14px;
+    padding-bottom: 15px;
 
 }
 .tabs-container {
