@@ -526,10 +526,11 @@ function passcodeMatch(response) {
 
 
 
- // Add a click event listener to the .ticket_dropdown element
+// Add a click event listener to the .ticket_dropdown element
 $('.ticket_dropdown').on('click', function() {
-    // Get the .single_ticket_section_inner element
+    // Get the .single_ticket_section_inner and <i class="fas fa-angle-down"></i> elements
     var innerElement = $('.single_ticket_section_inner');
+    var iconElement = $('.ticket_dropdown i.fas');
 
     // Check if the inner element has the 'display-block' class
     if (innerElement.hasClass('display-block')) {
@@ -537,15 +538,20 @@ $('.ticket_dropdown').on('click', function() {
         innerElement.fadeOut('slow', function() {
             // After the fadeOut animation is complete, remove the 'display-block' class
             innerElement.removeClass('display-block');
+            // and change the icon's class to fa-angle-up
+            iconElement.removeClass('fa-angle-down').addClass('fa-angle-up');
         });
     } else {
         // If the inner element doesn't have the 'display-block' class, use the fadeIn method to show the element
         innerElement.fadeIn('slow', function() {
             // After the fadeIn animation is complete, add the 'display-block' class
             innerElement.addClass('display-block');
+            // and change the icon's class to fa-angle-down
+            iconElement.removeClass('fa-angle-up').addClass('fa-angle-down');
         });
     }
 });
+
 
 })(jQuery);
 
