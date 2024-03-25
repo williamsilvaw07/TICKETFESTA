@@ -564,30 +564,39 @@ $('.ticket_dropdown').on('click', function() {
 
 
 
+// When the document is fully loaded and ready
 $(document).ready(function() {
+    // Initially load passcodes from Local Storage and populate the datalist
     loadPasscodes();
 
+    // Event handler for clicking the login button
     $('#check-passcode').click(function() {
+        // Retrieve the current value entered in the passcode input field
         var passcodeInput = $('#event-pass').val();
+        // Get the existing passcodes from Local Storage or initialize an empty array if none exist
         var passcodes = JSON.parse(localStorage.getItem('passcodes')) || [];
         
+        // Check if the current input passcode is not already saved in Local Storage
         if ($.inArray(passcodeInput, passcodes) === -1) {
+            // Add the new passcode to the array of saved passcodes
             passcodes.push(passcodeInput);
+            // Update Local Storage with the new set of passcodes
             localStorage.setItem('passcodes', JSON.stringify(passcodes));
 
-            // Refresh the datalist with the new entry
+            // Refresh the datalist with the new entry to include the newly saved passcode
             loadPasscodes();
         }
 
-        // Implement your login logic here
-        console.log('Implement your login logic here');
-        // For example, send passcode to server for validation
     });
 });
 
+// Function to load passcodes from Local Storage and populate the datalist
 function loadPasscodes() {
+    // Retrieve passcodes from Local Storage or initialize an empty array if none exist
     var passcodes = JSON.parse(localStorage.getItem('passcodes')) || [];
-    $('#passcodes').empty(); // Clear existing options
+    // Clear any existing options from the datalist to prepare for repopulation
+    $('#passcodes').empty();
+    // Iterate through each saved passcode and append it as an option to the datalist
     $.each(passcodes, function(index, passcode) {
         $('#passcodes').append($('<option></option>').attr('value', passcode));
     });
