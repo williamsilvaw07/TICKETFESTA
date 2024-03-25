@@ -4596,43 +4596,25 @@ function custom_qr_scanner_shortcode() {
 
 
                     <div class="event-container">
-                        <img src="#" alt="" class="event-image">
-                      
+                        <img src="#" alt="" class="event-image">     
                <!-- <div class="location">Location: </div>-->
-
-           
-
-               <div class="ticket-info-container_main">
-         
-
-
-
-
-        <div class="ticket-info_hidden_all">
-            <h6>Ticket Types Information:</h6>
+  <div class="ticket-info-container_main">
+          <div class="ticket-info_hidden_all">
             <ul>
                 <!-- Ticket list will be dynamically populated here -->
             </ul>
             
-        </div>
+</div>
 
-        <div class="ticketnewewew">
-         
-        </div>
-            
- 
     </div>
-             
-                    </div>
-                </div>
+</div>
+                
 
 
+</div>
 
 
-
-
-
-                <div class="tab-content tab-conent-2" id="tab2">
+<div class="tab-content tab-conent-2" id="tab2">
                     <div class="checkin-details"  style='display:none'>
                         <span id="qr_error" style='display:none'>Event not found. Please verify the Passcode</span>
                         <div class="name"></div>
