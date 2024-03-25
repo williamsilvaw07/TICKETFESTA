@@ -337,7 +337,7 @@ button i {
     transform: rotate(302deg) !important;
     font-size: 46px;
     position: absolute;
-    top: 50%;
+    top: 20%;
     right: 0;
 }
 
