@@ -4539,7 +4539,7 @@ function custom_qr_scanner_shortcode() {
 
                 <div class="main_stats">
 
-                <div class="ticket_sold_main_stats">
+            <div class="ticket_sold_main_stats">
     <i class="bi bi-ticket"></i>
 </div>
 
