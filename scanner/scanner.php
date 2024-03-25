@@ -441,7 +441,7 @@ button i {
 
 .main_stats{
     display: flex;
-    gap: 43px;
+    gap: 10px;
     align-items: center;
     justify-content: center;
 }
@@ -524,7 +524,7 @@ li.tab a{
     flex-direction: column;
     justify-content: center!important;
     align-items: flex-start!important;
-  margin-top:20px!important;
+  margin-top:11px!important;
   margin: 0 auto;
 }
 
