@@ -314,8 +314,8 @@
             var checkedInText = checkedInPercentage === 0 ? '0%' : checkedInPercentage.toFixed(0) + '%';
             $('.event-container .checkedin_tickets_percent span').text(checkedInText);
         
-            // Update the progress circle with the new data
-            updateProgressCircle(issuedTickets, totalTickets);
+            // Update the progress circle with the new checked-in percentage
+            updateProgressCircle(checkedInPercentage); // Pass the checked-in percentage directly
         
             // Clear existing ticket information
             $('.ticket-info_hidden_all').empty();
