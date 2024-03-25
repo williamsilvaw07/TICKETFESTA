@@ -355,7 +355,8 @@ button i {
 
 
 .tabs-container .active{
-
+    max-width: 500px;
+    margin: 0 auto;
 }
 .event-container img{
     display:none!important
