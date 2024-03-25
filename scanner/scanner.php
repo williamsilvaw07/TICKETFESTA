@@ -510,10 +510,11 @@ li.tab a{
     border-radius: 10px;
     max-width: 500px;
     width: 100%;
-    flex-direction: row-reverse !important;
+    align-items: flex-start;
     display: flex !important;
     gap: 10px;
-    margin:0 auto
+
+  
 }
 
 
