@@ -475,7 +475,7 @@ function passcodeMatch(response) {
         
                 // HTML for individual progress components with the same class names as before
                 var individualProgressHtml = `
-                <h6>Ticket Types Information:</h6>
+           
                     <div class="ticket-progress-container">
                         <div class="ticket-progress-container_svg">
                             <svg class="progress-ring" width="72" height="72">
