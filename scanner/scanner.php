@@ -361,6 +361,8 @@ button i {
 .tabs-container .active{
     max-width: 500px;
     margin: 0 auto;
+    padding: 0;
+    margin-top: 10px;
 }
 .event-container img{
     display:none!important
@@ -448,7 +450,7 @@ button i {
     display: flex;
     gap: 10px;
     align-items: center;
-    justify-content: center;
+    justify-content: space-around;
 }
 .stats_count_main{
     font-weight: 700;
