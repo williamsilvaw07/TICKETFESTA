@@ -191,7 +191,7 @@ input#event-pass {
 .event_data{
     border-radius: 2px;
     margin-bottom: 21px;
-    background: #121212 !important;
+    background-color: #19191b;
     padding: 7px;
 }
 .event_data .name span{
