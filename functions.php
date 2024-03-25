@@ -4618,20 +4618,8 @@ add_action('wp_ajax_nopriv_validate_event_pass', 'validate_event_pass'); // If y
 
 function update_event_checkin_stats(&$event_total_checked, &$event_total_overall) {
     // Assuming the event ID is defined or retrieved elsewhere in your application
-    $event_id = get_current_event_id(); // Placeholder function
+    $event_id = get_current_event_id(); // Placeholder function for obtaining the current event ID
 
-    // Get the total number of issued tickets for the event
-    $event_total_overall = get_total_issued_tickets($event_id);
-
-    // Assuming an instance creation and method call similar to before for checking attendance
-    $attendance_totals = new Tribe__Tickets__Attendance_Totals($event_id);
-    $event_total_checked = $attendance_totals->get_total_checked_in();
-}
-
-
-
-
-function update_event_checkin_stats(&$event_total_checked, &$event_total_overall, $event_id) {
     // Get the total number of issued tickets for the event
     $event_total_overall = get_total_issued_tickets($event_id);
 
@@ -4652,17 +4640,40 @@ function validate_event_pass() {
             $match = true;
             $event_id = $event->ID;
 
-            // Variables to hold the stats, these will be passed by reference
+            // Initial setup for capacity and checked-in calculations
+            $total_capacity = apply_filters('tribe_tickets_total_event_capacity', null, $event_id);
             $event_total_checked = 0;
             $event_total_overall = 0;
+            $ticket_list = [];
 
-            // Call the function to update stats
-            update_event_checkin_stats($event_total_checked, $event_total_overall, $event_id);
+            if (null === $total_capacity) {
+                $tickets = Tribe__Tickets__Tickets::get_all_event_tickets($event_id);
+                $total_capacity = 0;
 
-            // Assuming get_total_checked_in_for_event and other functionality is already defined
+                foreach ($tickets as $ticket) {
+                    $ticket_capacity = tribe_tickets_get_capacity($ticket->ID); // Retrieve ticket capacity
+                    $total_capacity += $ticket_capacity;
+
+                    // Retrieve the number of issued tickets for this ticket
+                    $issued_tickets_message = tribe_tickets_get_ticket_stock_message($ticket, __('issued', 'event-tickets'));
+                    preg_match('/\d+/', $issued_tickets_message, $matches);
+                    $issued_tickets = isset($matches[0]) ? intval($matches[0]) : 0;
+
+                    $event_total_overall += $issued_tickets; // Accumulate the total number of issued tickets
+
+                    // Add each ticket's name, capacity, and issued tickets to the ticket list
+                    $ticket_list[] = [
+                        'name' => $ticket->name,
+                        'capacity' => $ticket_capacity,
+                        'issued_tickets' => $issued_tickets,
+                    ];
+                }
+            }
+
+            // Assume get_total_checked_in_for_event is a function that retrieves the total checked-in attendees for an event
+            $event_total_checked = get_total_checked_in_for_event($event_id);
 
             // Calculate the percentage of attendees checked in
-            $total_capacity = $event_total_overall;
             $percentage_checked_in = ($total_capacity > 0) ? ($event_total_checked / $total_capacity) * 100 : 0;
 
             // Formatting event start date, time, etc.
@@ -4678,6 +4689,7 @@ function validate_event_pass() {
                 'start_date' => $formatted_start_date,
                 'issued_tickets' => $event_total_overall,
                 'total_tickets_available' => $total_capacity,
+                'ticket_list' => $ticket_list,
                 'name' => get_the_title($event_id),
                 'thumbnail_url' => get_the_post_thumbnail_url($event_id, 'medium'),
                 'checked_in' => $event_total_checked,
