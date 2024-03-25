@@ -352,7 +352,7 @@ function passcodeMatch(response) {
     $('.event-container .event-image').attr('src', response.event_data.thumbnail_url);
     $('.event-container .name span').text(response.event_data.name);
     $('.event-container .date span').text(response.event_data.start_date);
-    $('.event-container .checkedin_ticket-count span').text(response.event_data.checked_in);
+    $('.event-container .checkedin_ticket-count span').html(response.event_data.checked_in);
 
     // Extract the ticket information
     var issuedTickets = parseInt(response.event_data.issued_tickets, 10);
