@@ -4529,7 +4529,7 @@ function custom_qr_scanner_shortcode() {
 </div>
 </div>
                 <ul class="tabs-nav">
-                <li class="tab tab1 active"><a href="#tab1"><i class="fas fa-info-circle"></i> Event Details</a></li>
+  <li class="tab tab1 active"><a href="#tab1"><i class="fas fa-info-circle"></i> Event Details</a></li>
 <li class="tab tab2"><a href="#tab2"><i class="fas fa-barcode"></i> Scan QR Code</a></li>
 
 
@@ -4653,7 +4653,8 @@ function validate_event_pass() {
             }
             
             // Get the number of attendees who have checked in
-            $attendees_checked_in = get_total_checked_in_for_event($event_id);
+            $attendees_checked_in = 0;
+            // Your logic to retrieve the number of attendees checked in
             
             // Calculate the percentage of attendees checked in
             $percentage_checked_in = ($attendees_checked_in / $total_capacity) * 100;
@@ -4838,11 +4839,6 @@ function generate_unique_random_hash($length) {
 
 
 
-
-
-
-
-
 function my_enqueue_qrcode_script() {
     // Enqueue html5-qrcode script with jQuery dependency
     wp_enqueue_script('html5-qrcode', 'https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.7/html5-qrcode.min.js', array('jquery'), null, true);
@@ -4898,7 +4894,7 @@ add_shortcode('display_html5_qrcode_scanner', 'display_html5_qrcode_scanner_shor
 
 
 
-/*
+
 
 //////FUNCTION TO ADD A FREE TICKET
 
@@ -5136,4 +5132,3 @@ function get_total_issued_tickets($event_id) {
 
     return $total_issued_tickets;
 }
-*/
