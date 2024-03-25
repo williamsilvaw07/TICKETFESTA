@@ -497,7 +497,8 @@ li.tab a{
     cursor: pointer;
 }
 .ticket_dropdown h6{
-    margin-bottom:0
+    margin-bottom:0;
+    font-weight: 600;
 }
 .single_ticket_section_inner{
     width: 100%;
