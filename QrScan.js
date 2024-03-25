@@ -224,7 +224,7 @@
 
 
 
-// Function to calculate percentage
+    // Function to calculate percentage
 function calculatePercentage(issued, total) {
     if (total === 0) {
         console.error("Total tickets cannot be 0.");
@@ -233,7 +233,7 @@ function calculatePercentage(issued, total) {
     return (issued / total) * 100;
 }
 
-// Function to update the progress circle for individual tickets
+// Function to update the progress circle
 function updateProgressCircle(issuedTickets, totalTickets) {
     var percentage = calculatePercentage(issuedTickets, totalTickets);
     if (isNaN(percentage)) {
@@ -258,7 +258,7 @@ function updateProgressCircle(issuedTickets, totalTickets) {
     $('.ticket-count').text(issuedTickets + ' / ' + totalTickets);
 }
 
-// Function to update the progress circle for individual tickets in a specific container
+// Function to update individual progress circles
 function updateIndividualProgressCircle(container, issuedTickets, totalTickets) {
     var percentage = calculatePercentage(issuedTickets, totalTickets);
     if (isNaN(percentage)) {
@@ -281,28 +281,65 @@ function updateIndividualProgressCircle(container, issuedTickets, totalTickets) 
     });
 
     // Update the percentage text inside SVG for individual tickets
-    container.find('.progress-percentage_individual').text(precisePercentage + '%');
+    container.find('span.progress-percentage_individual').text(precisePercentage + '%');
 }
 
-// Function to update the checked-in progress component
-function updateCheckedInProgress(checkedIn, issuedTickets) {
-    var checkedInPercentage = calculatePercentage(checkedIn, issuedTickets);
-    var precisePercentage = checkedInPercentage.toFixed(1); // To display one decimal place
 
-    // Calculate stroke-dasharray and stroke-dashoffset
-    var circumference = 2 * Math.PI * 31; // Assuming the radius is 31
-    var dashArray = circumference;
-    var dashOffset = circumference - (checkedInPercentage / 100) * circumference;
 
-    // Update SVG elements
-    $('.progress-ring__circle-checkedin').css({
-        'stroke-dasharray': dashArray,
-        'stroke-dashoffset': dashOffset
-    });
 
-    // Update the percentage text
-    $('.ticket_checkedin_main_stats .progress-percentage').text(precisePercentage + '%');
-    $('.ticket_checkedin_main_stats .ticket-count').text(checkedIn + ' / ' + issuedTickets);
+
+
+
+
+
+// Function to create the checked-in progress component dynamically
+function createCheckedInProgressCircle(checkedIn, issuedTickets) {
+    var checkedInPercentage = checkedIn === 0 ? 0 : Math.ceil((checkedIn / issuedTickets) * 100); // Calculate the checked-in percentage
+    var checkedInText = checkedInPercentage === 0 ? '0%' : checkedInPercentage.toFixed(1) + '%';
+
+    // Dynamic creation of progress circle for checked-in percentage
+    var checkedInProgressHtml = `
+        <div class="ticket-progress-container checkedin-progress">
+            <div class="ticket-progress-container_svg">
+                <svg class="progress-ring" width="72" height="72">
+                    <circle class="progress-ring__circle-bg-checkedin" cx="36" cy="36" r="31" stroke-width="6"></circle>
+                    <circle class="progress-ring__circle progress-ring__circle-checkedin" cx="36" cy="36" r="31" stroke-width="6"></circle>
+                </svg>
+                <span class="progress-percentage">${checkedInText}</span>
+            </div>
+            <div class="ticket-details info_div">
+                <h6>Checked-in Tickets</h6>
+                <div class="ticket-name">Total Checked-in</div>
+                <p class="ticket-count">${checkedIn} / ${issuedTickets}</p>
+            </div>
+        </div>
+    `;
+
+    return checkedInProgressHtml;
+}
+
+// Function to update the checked-in progress component specifically for .ticket_checkedin_main_stats
+function updateCheckedInProgress(response) {
+    if (!response || !response.event_data) {
+        console.error("Invalid response data.");
+        return;
+    }
+
+    // Extract the checked-in information
+    var checkedIn = parseInt(response.event_data.checked_in.split(' / ')[0], 10);
+    var issuedTickets = parseInt(response.event_data.issued_tickets, 10);
+
+    // Check for NaN values after parsing
+    if (isNaN(checkedIn) || isNaN(issuedTickets)) {
+        console.error("Error parsing checked-in information.");
+        return;
+    }
+
+    // Create the checked-in progress component HTML
+    var checkedInProgressHtml = createCheckedInProgressCircle(checkedIn, issuedTickets);
+
+    // Update the checked-in progress component in the DOM
+    $('.ticket_checkedin_main_stats .checkedin-progress-ring-container').html(checkedInProgressHtml);
 }
 
 // Function to handle passcode match response
@@ -312,18 +349,34 @@ function passcodeMatch(response) {
         return;
     }
 
-    // Update event details
+    $('.tabs-container').show();
+    $('.tab-content-container').show();
     $('.event-container .event-image').attr('src', response.event_data.thumbnail_url);
     $('.event-container .name span').text(response.event_data.name);
     $('.event-container .date span').text(response.event_data.start_date);
     $('.event-container .checkedin span').text(response.event_data.checked_in);
 
-    // Extract ticket information
+    // Extract the ticket information
     var issuedTickets = parseInt(response.event_data.issued_tickets, 10);
-    var checkedIn = parseInt(response.event_data.checked_in.split(' / ')[0], 10);
+    var totalTickets = parseInt(response.event_data.total_tickets_available, 10);
 
-    // Update checked-in progress component
-    updateCheckedInProgress(checkedIn, issuedTickets);
+    // Check for NaN values after parsing
+    if (isNaN(issuedTickets) || isNaN(totalTickets)) {
+        console.error("Error parsing ticket information.");
+        return;
+    }
+
+    // Calculate the checked-in percentage
+    var checkedIn = parseInt(response.event_data.checked_in.split(' / ')[0], 10);
+    var checkedInPercentage = checkedIn === 0 ? 0 : Math.ceil((checkedIn / issuedTickets) * 100); // Round up the percentage
+    var checkedInText = checkedInPercentage === 0 ? '0%' : checkedInPercentage.toFixed(0) + '%';
+    $('.event-container .checkedin-progress-percentage').text(checkedInText);
+
+    // Update the progress circle with the new data
+    updateProgressCircle(issuedTickets, totalTickets);
+
+    // Update the checked-in progress component
+    updateCheckedInProgress(response);
 
     // Clear existing ticket information
     $('.ticket-info_hidden_all').empty();
@@ -364,6 +417,8 @@ function passcodeMatch(response) {
     event_id_global = response.event_id;
     startScanQR(response.event_id);
 }
+
+
 
 
 
