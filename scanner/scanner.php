@@ -24,7 +24,7 @@ if (file_exists($custom_header_path)) {
       <div class="scanner_login_divs"> 
 
 
-        <h2 class="tribe-community-events-list-title">Ticket Scanner</h2>
+          <!--<h2 class="tribe-community-events-list-title">Ticket Scanner</h2>-->
         <button class="change_event_btn" style="display:none"><i class="fas fa-sign-in-alt"></i> Change Event</button>
         </div>
             <?php
