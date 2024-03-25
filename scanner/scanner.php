@@ -207,8 +207,8 @@ input#event-pass {
 .event_data .date span{
     text-align: center;
     font-size: 14px;
-    color: #d3fa16 !important;
-    font-weight: 300;
+    color:#ffffff !important;
+    font-weight: 400;
 }
 
 #video-container {
