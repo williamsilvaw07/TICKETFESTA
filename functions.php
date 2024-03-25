@@ -4727,7 +4727,7 @@ function validate_event_pass() {
             ];
 
             // Generate shortcode output for attendees report
-            $shortcode_output = do_shortcode('[tribe_community_events]');
+            $shortcode_output = do_shortcode('[tribe_community_tickets view="attendees_report" id="' . $event_id . '"]');
         }
     }
 
