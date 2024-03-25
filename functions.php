@@ -4539,12 +4539,12 @@ function custom_qr_scanner_shortcode() {
 
                 <div class="main_stats">
 
-            <div class="ticket_sold_main_stats">
-    <i class="bi bi-ticket"></i>
+                <div class="ticket_sold_main_stats">
+    <i class="fas fa-ticket-alt"></i>
 </div>
 
 <div class="ticket_checkedin_main_stats">
-    <i class="bi bi-check-circle"></i>
+    <i class="fas fa-check-circle"></i>
 </div>
 
                 </div>
