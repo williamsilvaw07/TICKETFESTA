@@ -4575,7 +4575,7 @@ function custom_qr_scanner_shortcode() {
     <i class="fas fa-check-circle"></i>
     <div class="checkedin_ticket-info info_div">
         <h6>Checked-in Tickets</h6>
-        <p class="stats_count_main checkedin_ticket-count">0<span>/</span>0</p>
+        <p class="stats_count_main checkedin_ticket-count"><span></span></p>
        
         </div>
     <div class="checkedin-progress-ring-container">
