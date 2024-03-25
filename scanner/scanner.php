@@ -428,15 +428,15 @@ button i {
     color: white;
 }
 .info_div h6{
-    margin:0;
+    margin: 0;
     font-size: 15px;
     font-weight: 600;
-    margin-bottom: 11px;
+    margin-bottom: 4px;
 }
 .stats_count_main{
     font-weight: 700;
-    font-size: 26px;
-    margin-bottom: 4px;
+    font-size: 19px;
+    margin-bottom: 0px;
     color: #d3fa16 !important;
     white-space: nowrap;
 }
