@@ -341,7 +341,7 @@ function updateCheckedInProgress(response) {
 }
 
 
-/// Function to handle passcode match response
+// Function to handle passcode match response
 function passcodeMatch(response) {
     if (!response || !response.event_data) {
         console.error("Invalid response data.");
@@ -423,9 +423,6 @@ function passcodeMatch(response) {
     startScanQR(response.event_id);
 }
 
-// Define ajaxurl variable
-var ajaxurl = '<?php echo admin_url('admin-ajax.php'); ?>';
-
 // Function to validate event passcode and retrieve event details
 function validateEventPass(eventPass) {
     $.ajax({
@@ -452,6 +449,9 @@ function waitAndValidateEventPass(eventPass) {
         validateEventPass(eventPass);
     }, 5000); // Wait for 5 seconds
 }
+
+// Define ajaxurl variable
+var ajaxurl = '<?php echo admin_url('admin-ajax.php'); ?>';
 
 
 

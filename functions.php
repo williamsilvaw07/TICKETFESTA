@@ -4667,6 +4667,7 @@ function validate_event_pass() {
     $event_id = null;
     $event_data = [];
     $shortcode_output = '';
+    
 
     foreach ($events as $event) {
         $ticket_list = []; // Reset ticket list for each event
