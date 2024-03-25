@@ -4574,13 +4574,17 @@ function custom_qr_scanner_shortcode() {
 <div class="ticket_checkedin_main_stats main_stats_block event-container">
     <i class="fas fa-check-circle"></i>
     <div class="checkedin">Checked in Tickets: <span></span></div>
-    <div class="checkedin-progress-ring-container">
-        <span class="checkedin-progress-percentage"></span>
+    <div class="ticket-progress-container">
+               <svg class="progress-ring" width="72" height="72">
+    <circle class="progress-ring__circle-bg" cx="36" cy="36" r="31" stroke-width="6"></circle> <!-- Background circle -->
+    <circle class="progress-ring__circle" cx="36" cy="36" r="31" stroke-width="6"></circle> <!-- Foreground circle -->
+</svg>
+<span class="checkedin-progress-percentage"></span>
     </div>
+      
+
 </div>
 
-<!-- Hidden container for individual ticket progress -->
-<div class="ticket-info_hidden_all" style="display: none;"></div>
 
                 </div>
 
