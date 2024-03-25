@@ -61,6 +61,10 @@ if (file_exists($custom_footer_path)) {
 .main-header .d-block{
     display:none!important
 }
+.main-header{
+    padding-left: 0;
+    padding-right: 0;
+}
 body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .content-wrapper, body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .main-footer, body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .main-header {
 
     margin-left: inherit;
