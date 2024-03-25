@@ -285,28 +285,30 @@
 
 
 
-
         function passcodeMatch(response) {
             if (!response || !response.event_data) {
                 console.error("Invalid response data.");
                 return;
             }
         
+            // Display event data including image, name, and date
             $('.tabs-container').show();
             $('.tab-content-container').show();
             $('.event-container .event-image').attr('src', response.event_data.thumbnail_url);
             $('.event-container .name span').text(response.event_data.name);
             $('.event-container .date span').text(response.event_data.start_date);
-            $('.event-container .checkedin span').text(response.event_data.checked_in_percentage + '%');
-
-        
-            // Extract the ticket information
+            // Adjusting the format for checked_in_percentage as "checked in total / total"
+            // Assuming response.event_data.checked_in_percentage is already in the correct numerical percentage format
+            var checkedInTotal = response.event_data.checked_in_percentage;
             var issuedTickets = parseInt(response.event_data.issued_tickets, 10);
             var totalTickets = parseInt(response.event_data.total_tickets_available, 10);
         
-            // Check for NaN values after parsing
-            if (isNaN(issuedTickets) || isNaN(totalTickets)) {
-                console.error("Error parsing ticket information.");
+            // Ensure numbers are valid to prevent any NaN results
+            if (!isNaN(checkedInTotal) && !isNaN(issuedTickets) && !isNaN(totalTickets)) {
+                // Format and display the checked-in information as "checked in total / total"
+                $('.event-container .checkedin span').text(`${issuedTickets} / ${totalTickets}`);
+            } else {
+                console.error("Error parsing attendance information.");
                 return;
             }
         
@@ -323,7 +325,7 @@
                 var capacity = parseInt(ticket.capacity, 10);
                 var percentage = calculatePercentage(issued, capacity).toFixed(1); // Calculate percentage for each ticket type
         
-                // HTML for individual progress components with the same class names as before
+                // HTML for individual progress components
                 var individualProgressHtml = `
                     <div class="ticket-progress-container">
                         <div class="ticket-progress-container_svg">
@@ -348,10 +350,11 @@
                 updateIndividualProgressCircle($('.ticket-info_hidden_all .ticket-progress-container').last(), issued, capacity);
             });
         
-            // Proceed with other functions like startScanQR...
+            // Additional logic for QR scanning and event setup
             event_id_global = response.event_id;
             startScanQR(response.event_id);
         }
+        
 
 
 
