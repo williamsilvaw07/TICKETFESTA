@@ -4552,7 +4552,7 @@ function custom_qr_scanner_shortcode() {
 
     <div class="ticket-info info_div">
         <h6>Total Ticket Sold</h6>
-        <p class="ticket-count">0<span>/</span>0</p>
+        <p class="stats_count_main ticket-count">0<span>/</span>0</p>
        
         </div>
         </div>
