@@ -494,6 +494,7 @@ li.tab a{
     display: flex;
     justify-content: space-between;
     width: 100%;
+    cursor: pointer;
 }
 .single_ticket_section_inner{
     width: 100%;
