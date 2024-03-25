@@ -354,7 +354,6 @@
             startScanQR(response.event_id);
         }
 
-
         function updateCheckedInStats(response) {
             if (!response || !response.event_data) {
                 console.error("Invalid response data.");
@@ -363,23 +362,25 @@
         
             // Update checked-in ticket count
             var checkedInCount = response.event_data.checked_in.split(' / ')[0];
-            $('.checkedin span').text(checkedInCount);
+            document.querySelector('.checkedin span').textContent = checkedInCount;
         
             // Update checked-in percentage
             var issuedTickets = parseInt(response.event_data.issued_tickets, 10);
             var checkedIn = parseInt(checkedInCount, 10);
-            var checkedInPercentage = issuedTickets === 0 ? 0 : (checkedIn / issuedTickets) * 100;
+            var checkedInPercentage = (checkedIn / issuedTickets) * 100;
             var roundedPercentage = Math.round(checkedInPercentage * 10) / 10; // Round to one decimal place
-            $('.checkedin-progress-percentage').text(roundedPercentage + "%");
+            document.querySelector('.checkedin-progress-percentage').textContent = roundedPercentage + "%";
         
             // Update checked-in progress circle
             var radius = 31;
             var circumference = 2 * Math.PI * radius;
             var dashOffset = circumference - (checkedInPercentage / 100) * circumference;
-            $('.checkedin-progress-ring__circle').css({
-                'stroke-dasharray': circumference,
-                'stroke-dashoffset': dashOffset
-            });
+        
+            var checkedInCircle = document.querySelector('.checkedin-progress-ring__circle');
+            if (checkedInCircle) {
+                checkedInCircle.setAttribute('stroke-dasharray', circumference);
+                checkedInCircle.setAttribute('stroke-dashoffset', dashOffset);
+            }
         }
 
 
