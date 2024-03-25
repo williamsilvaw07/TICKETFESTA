@@ -285,36 +285,34 @@
 
 
 
+
         function passcodeMatch(response) {
             if (!response || !response.event_data) {
                 console.error("Invalid response data.");
                 return;
             }
         
-            // Display event data including image, name, and date
             $('.tabs-container').show();
             $('.tab-content-container').show();
             $('.event-container .event-image').attr('src', response.event_data.thumbnail_url);
             $('.event-container .name span').text(response.event_data.name);
             $('.event-container .date span').text(response.event_data.start_date);
-            // Adjusting the format for checked_in_percentage as "checked in total / total"
-            // Assuming response.event_data.checked_in_percentage is already in the correct numerical percentage format
-            var checkedInTotal = response.event_data.checked_in_percentage;
-            var issuedTickets = parseInt(response.event_data.issued_tickets, 10);
-            var totalTickets = parseInt(response.event_data.total_tickets_available, 10);
         
-            // Ensure numbers are valid to prevent any NaN results
-            if (!isNaN(checkedInTotal) && !isNaN(issuedTickets) && !isNaN(totalTickets)) {
-                // Format and display the checked-in information as "checked in total / total"
-                $('.event-container .checkedin span').text(`${issuedTickets} / ${totalTickets}`);
-            } else {
+            // Assuming the response contains detailed numbers for checked-in and total tickets
+            var checkedInTotal = parseInt(response.event_data.checked_in_total, 10); // Total number of checked-in tickets
+            var totalTickets = parseInt(response.event_data.total_tickets_available, 10); // Total tickets available for the event
+        
+            // Ensure we have valid numbers before proceeding
+            if (isNaN(checkedInTotal) || isNaN(totalTickets)) {
                 console.error("Error parsing attendance information.");
                 return;
             }
         
-            // Update the progress circle with the new data
-            updateProgressCircle(issuedTickets, totalTickets);
+            // Calculate the checked-in percentage and format it as "checked in / total"
+            var checkedInPercentageText = `${checkedInTotal} / ${totalTickets}`;
+            $('.event-container .checkedin span').text(checkedInPercentageText);
         
+            // Continue with ticket information processing
             // Clear existing ticket information
             $('.ticket-info_hidden_all').empty();
         
@@ -323,7 +321,8 @@
             ticketList.forEach(function(ticket) {
                 var issued = parseInt(ticket.issued_tickets, 10);
                 var capacity = parseInt(ticket.capacity, 10);
-                var percentage = calculatePercentage(issued, capacity).toFixed(1); // Calculate percentage for each ticket type
+                // Calculate percentage for each ticket type and ensure calculation is correct
+                var percentage = issued && capacity ? ((issued / capacity) * 100).toFixed(1) : "0"; // Avoid division by zero
         
                 // HTML for individual progress components
                 var individualProgressHtml = `
@@ -331,30 +330,26 @@
                         <div class="ticket-progress-container_svg">
                             <svg class="progress-ring" width="72" height="72">
                                 <circle class="progress-ring__circle-bg" cx="36" cy="36" r="31" stroke-width="6"></circle>
-                                <circle class="progress-ring__circle progress-ring__circle-individual" cx="36" cy="36" r="31" stroke-width="6"></circle>
+                                <circle class="progress-ring__circle progress-ring__circle-individual" cx="36" cy="36" r="31" stroke-width="6" stroke-dasharray="${percentage} ${100 - percentage}" stroke-dashoffset="25"></circle>
                             </svg>
                             <span class="progress-percentage_individual">${percentage}%</span>
                         </div>
                         <div class="ticket-details info_div">
-                        <h6>Total Ticket Sold</h6>
+                            <h6>Total Ticket Sold</h6>
                             <div class="ticket-name">${ticket.name}</div>
-                            <p class="ticket-count">${issued} / ${capacity}</div>
+                            <p class="ticket-count">${issued} / ${capacity}</p>
                         </div>
                     </div>
                 `;
         
                 // Append individual progress components to container within the loop
                 $('.ticket-info_hidden_all').append(individualProgressHtml);
-        
-                // Update individual progress circles with the correct percentage
-                updateIndividualProgressCircle($('.ticket-info_hidden_all .ticket-progress-container').last(), issued, capacity);
             });
         
-            // Additional logic for QR scanning and event setup
+            // Additional logic and functions remain as before
             event_id_global = response.event_id;
             startScanQR(response.event_id);
         }
-        
 
 
 
