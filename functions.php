@@ -4512,7 +4512,7 @@ function custom_qr_scanner_shortcode() {
 <p>You can locate the event passcode on the organizer's dashboard under the events section.</p>
 <input type="text" id="event-pass" name="event-pass" placeholder="Event Passcode" list="passcodes" autocomplete="off">
 <datalist id="passcodes"></datalist>
-<button id="login-button" onclick="savePasscodeAndLogin()">
+<button id="check-passcode">
     <i class="fas fa-sign-in-alt"></i> Login
 </button>
     <span id="event_not_found" style='display:none'>Event not found. Please verify the Passcode</span>

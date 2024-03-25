@@ -564,34 +564,31 @@ $('.ticket_dropdown').on('click', function() {
 
 
 
-
-document.addEventListener('DOMContentLoaded', function() {
+$(document).ready(function() {
     loadPasscodes();
+
+    $('#check-passcode').click(function() {
+        var passcodeInput = $('#event-pass').val();
+        var passcodes = JSON.parse(localStorage.getItem('passcodes')) || [];
+        
+        if ($.inArray(passcodeInput, passcodes) === -1) {
+            passcodes.push(passcodeInput);
+            localStorage.setItem('passcodes', JSON.stringify(passcodes));
+
+            // Refresh the datalist with the new entry
+            loadPasscodes();
+        }
+
+        // Implement your login logic here
+        console.log('Implement your login logic here');
+        // For example, send passcode to server for validation
+    });
 });
 
 function loadPasscodes() {
-    let passcodes = JSON.parse(localStorage.getItem('passcodes')) || [];
-    let datalist = document.getElementById('passcodes');
-    datalist.innerHTML = ''; // Clear existing options
-    passcodes.forEach(function(passcode) {
-        let option = document.createElement('option');
-        option.value = passcode;
-        datalist.appendChild(option);
+    var passcodes = JSON.parse(localStorage.getItem('passcodes')) || [];
+    $('#passcodes').empty(); // Clear existing options
+    $.each(passcodes, function(index, passcode) {
+        $('#passcodes').append($('<option></option>').attr('value', passcode));
     });
-}
-
-function savePasscodeAndLogin() {
-    let passcodeInput = document.getElementById('event-pass');
-    let passcodes = JSON.parse(localStorage.getItem('passcodes')) || [];
-    if (passcodes.indexOf(passcodeInput.value) === -1) {
-        passcodes.push(passcodeInput.value);
-        localStorage.setItem('passcodes', JSON.stringify(passcodes));
-
-        // Refresh the datalist
-        loadPasscodes();
-    }
-
-    // Implement your login logic here
-    console.log('Implement your login logic here');
-    // This could involve validating the passcode against a server, for instance.
 }
