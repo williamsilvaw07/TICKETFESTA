@@ -418,62 +418,6 @@ function passcodeMatch(response) {
 
 
 
-// Function to create the checked-in progress component dynamically
-function createCheckedInProgressCircle(checkedIn, issuedTickets) {
-    var checkedInPercentage = checkedIn === 0 ? 0 : Math.ceil((checkedIn / issuedTickets) * 100); // Calculate the checked-in percentage
-    var checkedInText = checkedInPercentage === 0 ? '0%' : checkedInPercentage.toFixed(1) + '%';
-
-    // Dynamic creation of progress circle for checked-in percentage
-    var checkedInProgressHtml = `
-        <div class="ticket-progress-container checkedin-progress">
-            <div class="ticket-progress-container_svg">
-                <svg class="progress-ring" width="72" height="72">
-                    <circle class="progress-ring__circle-bg-checkedin" cx="36" cy="36" r="31" stroke-width="6"></circle>
-                    <circle class="progress-ring__circle progress-ring__circle-checkedin" cx="36" cy="36" r="31" stroke-width="6"></circle>
-                </svg>
-                <span class="progress-percentage">${checkedInText}</span>
-            </div>
-            <div class="ticket-details info_div">
-                <h6>Checked-in Tickets</h6>
-                <div class="ticket-name">Total Checked-in</div>
-                <p class="ticket-count">${checkedIn} / ${issuedTickets}</p>
-            </div>
-        </div>
-    `;
-
-    return checkedInProgressHtml;
-}
-
-// Function to update the checked-in progress component specifically for .ticket_checkedin_main_stats
-function updateCheckedInProgress(response) {
-    if (!response || !response.event_data) {
-        console.error("Invalid response data.");
-        return;
-    }
-
-    // Extract the checked-in information
-    var checkedIn = parseInt(response.event_data.checked_in.split(' / ')[0], 10);
-    var issuedTickets = parseInt(response.event_data.issued_tickets, 10);
-
-    // Check for NaN values after parsing
-    if (isNaN(checkedIn) || isNaN(issuedTickets)) {
-        console.error("Error parsing checked-in information.");
-        return;
-    }
-
-    // Create the checked-in progress component HTML
-    var checkedInProgressHtml = createCheckedInProgressCircle(checkedIn, issuedTickets);
-
-    // Update the checked-in progress component in the DOM
-    $('.ticket_checkedin_main_stats .checkedin-progress-ring-container').html(checkedInProgressHtml);
-}
-
-
-
-
-
-
-
 
 
 
