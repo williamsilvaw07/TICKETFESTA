@@ -58,7 +58,7 @@ if (file_exists($custom_footer_path)) {
 
 
 <style>
-    .main-header ul:last-child{
+    .main-header ul:first-child{
         display:none!important
     }
 
