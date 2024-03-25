@@ -535,37 +535,3 @@ function passcodeMatch(response) {
 
 
 
-
-jQuery(document).ready(function($) {
-
-
-    ///function to hide the event data and show when see more button is clicked 
-
-    // Handle click event of the "See More" button
-    $('.see_more_ticket_info').click(function() {
-        console.log("See More button clicked.");
-        // Toggle the visibility of the ticket information section
-        var ticketInfo = $('.ticket-info_hidden_all');
-        if (ticketInfo.css('display') === 'none') {
-            ticketInfo.css('display', 'flex');
-            // Change the text of the button to "View less"
-            $(this).text('View less');
-            // Change flex-direction to column
-            $('.ticket-info-container_main').css('flex-direction', 'column');
-        } else {
-            ticketInfo.css('display', 'none');
-            // Change the text of the button to "See more"
-            $(this).text('See more');
-            // Remove flex-direction property
-            $('.ticket-info-container_main').css('flex-direction', '');
-        }
-    });
-
-
-
-
-
-
-
-
-});
