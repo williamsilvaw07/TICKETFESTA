@@ -4553,7 +4553,7 @@ function custom_qr_scanner_shortcode() {
                 <div class="ticket_sold_main_stats  main_stats_block">
                 <div class="ticket-progress-container_main">
                <div class="ticket-progress-container">
-               <svg class="progress-ring" width="72" height="72">
+               <svg class="progress-ring" width="42" height="42">
     <circle class="progress-ring__circle-bg" cx="36" cy="36" r="31" stroke-width="6"></circle> <!-- Background circle -->
     <circle class="progress-ring__circle" cx="36" cy="36" r="31" stroke-width="6" stroke-dasharray="155.82 194.78"></circle> <!-- Foreground circle with updated progress -->
 </svg>
