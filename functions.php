@@ -4600,7 +4600,12 @@ function custom_qr_scanner_shortcode() {
                       
                <!-- <div class="location">Location: </div>-->
 
+           
+
+               <div class="ticket-info-container_main">
         
+        
+    </div>
              
                     </div>
                 </div>
