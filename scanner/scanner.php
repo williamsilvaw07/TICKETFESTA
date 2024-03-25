@@ -434,6 +434,13 @@ button i {
     font-weight: 600;
     margin-bottom: 4px;
 }
+
+.main_stats{
+    display: flex;
+    gap: 43px;
+    align-items: center;
+    justify-content: center;
+}
 .stats_count_main{
     font-weight: 700;
     font-size: 19px;
