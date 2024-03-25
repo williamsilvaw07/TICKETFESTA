@@ -4608,6 +4608,14 @@ function custom_qr_scanner_shortcode() {
 
 
 
+        <div class="ticket-info_hidden_all">
+            <h6>Ticket Types Information:</h6>
+            <ul>
+                <!-- Ticket list will be dynamically populated here -->
+            </ul>
+            
+        </div>
+
         <div class="ticketnewewew">
          
         </div>
