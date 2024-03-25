@@ -301,7 +301,7 @@ function createCheckedInProgressCircle(checkedIn, issuedTickets) {
         <div class="ticket-progress-container">
             <svg class="progress-ring" width="72" height="72">
                 <circle class="progress-ring__circle-bg" cx="36" cy="36" r="31" stroke-width="6"></circle>
-                <circle class="progress-ring__circle" cx="36" cy="36" r="31" stroke-width="6" style="stroke-dasharray: ${dashArray}px; stroke-dashoffset: ${dashOffset}px;"></circle>
+                <circle class="progress-ring__circle" cx="36" cy="36" r="31" stroke-width="6" style="stroke-dasharray: 4333px; stroke-dashoffset: ${dashOffset}px;"></circle>
             </svg>
             <div class="progress-percentage">${checkedInText}</div>
         </div>
