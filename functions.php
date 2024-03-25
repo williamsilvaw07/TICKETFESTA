@@ -4598,7 +4598,7 @@ function custom_qr_scanner_shortcode() {
                     <div class="event-container single_ticket_section">
 
                     <div class="ticket_dropdown">
-    <h6>Ticket Types Information:</h6>
+    <h6>Ticket Types Breakdown:</h6>
     <i class="fas fa-angle-down"></i>
 </div>
 
