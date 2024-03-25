@@ -4674,7 +4674,7 @@ function validate_event_pass() {
                 'ticket_list' => $ticket_list,
                 'name' => get_the_title($event_id),
                 'thumbnail_url' => get_the_post_thumbnail_url($event_id, 'medium'),
-                'checked_in' => $checked_in_format, // Now in "checked in / total" format
+                'checked_in' => $checked_in_format, //"checked in / total" format
             ];
         }
     }
