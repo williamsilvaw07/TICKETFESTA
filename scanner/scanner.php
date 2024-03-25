@@ -444,6 +444,7 @@ button i {
 .ticket-progress-container_svg{
     width: fit-content;
     position: relative;
+    height: fit-content;
 }
 
 .progress-percentage_individual {
