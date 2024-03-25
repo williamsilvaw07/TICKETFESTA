@@ -123,7 +123,7 @@ body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .content-w
     justify-content: center;
     align-items: center;
     gap: 40px;
-    margin-bottom:40px
+   padding-bottom:40px
 }
 .line_break {
     display: block;
@@ -188,7 +188,7 @@ body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .content-w
 input#event-pass {
     border: 0px;
     width: 100%;
-    max-width: 280px;
+    max-width: 200px;
     border-radius: 4px;
     margin-right: 11px;
 }
