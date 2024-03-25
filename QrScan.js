@@ -284,7 +284,6 @@ function updateIndividualProgressCircle(container, issuedTickets, totalTickets) 
     container.find('span.progress-percentage_individual').text(precisePercentage + '%');
 }
 
-
 // Function to create the checked-in progress component dynamically
 function createCheckedInProgressCircle(checkedIn, issuedTickets) {
     var checkedInPercentage = checkedIn === 0 ? 0 : Math.ceil((checkedIn / issuedTickets) * 100); // Calculate the checked-in percentage
@@ -292,12 +291,12 @@ function createCheckedInProgressCircle(checkedIn, issuedTickets) {
 
     // Calculate stroke-dasharray and stroke-dashoffset for the first half
     var circumference = 2 * Math.PI * 31; // 31 is the radius of the circle
-    var dashArray1 = (checkedInPercentage / 2) * circumference / 100;
-    var dashOffset1 = circumference / 4; // Start from the 12 o'clock position
+    var dashArray1 = checkedInPercentage <= 50 ? (checkedInPercentage / 100) * circumference : circumference / 2;
+    var dashOffset1 = 0;
 
     // Calculate stroke-dasharray and stroke-dashoffset for the second half
-    var dashArray2 = dashArray1;
-    var dashOffset2 = dashOffset1 - (checkedInPercentage / 2) * circumference / 100;
+    var dashArray2 = checkedInPercentage > 50 ? ((checkedInPercentage - 50) / 100) * circumference : 0;
+    var dashOffset2 = checkedInPercentage > 50 ? dashArray1 : 0;
 
     // Dynamic creation of progress circle for checked-in percentage
     var checkedInProgressHtml = `
