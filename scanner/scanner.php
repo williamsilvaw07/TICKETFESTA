@@ -513,6 +513,7 @@ li.tab a{
     flex-direction: row-reverse !important;
     display: flex !important;
     gap: 10px;
+    margin:0 auto
 }
 
 
