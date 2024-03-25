@@ -430,6 +430,9 @@ button i {
     text-align: left;
     color: white;
 }
+.ticket_checkedin_main_stats {
+    margin-top:0!important
+}
 .info_div h6{
     margin: 0;
     font-size: 15px;
