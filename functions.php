@@ -4616,8 +4616,10 @@ function custom_qr_scanner_shortcode() {
             
         </div>
 
-
-   
+        <div class="ticketnewewew">
+         
+        </div>
+            
  
     </div>
              
