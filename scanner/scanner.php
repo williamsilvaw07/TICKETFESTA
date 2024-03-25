@@ -355,7 +355,7 @@ button i {
     border-radius: 10px;
     width: 100%;
     max-width: fit-content;
-    flex-direction: row-reverse;
+    flex-direction: row-reverse!important;
 }
 
 
