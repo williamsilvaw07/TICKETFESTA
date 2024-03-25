@@ -4617,8 +4617,7 @@ function custom_qr_scanner_shortcode() {
         </div>
 
         <div class="ticketnewewew">
-        <?php echo do_shortcode('[tribe_community_tickets view="attendees_report" id="' . $event_id . '"]'); ?>
-
+         
         </div>
             
  
