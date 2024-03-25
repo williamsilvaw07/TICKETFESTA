@@ -425,7 +425,14 @@ button i {
     display: flex;
     gap: 10px;
 }
-
+.ticket_checkedin_main_stats i {
+    opacity: 0.1;
+    transform: rotate(0deg) !important;
+    font-size: 46px;
+    position: absolute;
+    top: 50%;
+    right: 0;
+}
 .ticket-info {
     text-align: left;
     color: white;
