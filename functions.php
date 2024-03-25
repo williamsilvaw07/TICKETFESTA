@@ -4523,20 +4523,20 @@ function custom_qr_scanner_shortcode() {
     ?>
 
             <div class="tabs-container" style="display: none">
-           
-            <div class="event_data">
-           
-</div>
+            <div class="main_div_event_data">
+ 
                 <ul class="tabs-nav">
   <li class="tab tab1 active"><a href="#tab1"><i class="fas fa-info-circle"></i> Event Details</a></li>
 <li class="tab tab2"><a href="#tab2"><i class="fas fa-barcode"></i> Scan QR Code</a></li>
 
 
                 </ul>
-                <div class="main_div_event_data">
-                <div class="event-container ">
+           
+                <div class="event_data">
+            <div class="event-container ">
                         <div class="name"><span> </span>  </div>
                         <div class="date"><span> </span> </div>
+</div>
 </div>
 
 
