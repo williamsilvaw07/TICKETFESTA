@@ -342,7 +342,6 @@ function updateCheckedInProgress(response) {
 
 
 
-
 // Function to handle passcode match response
 function passcodeMatch(response) {
     if (!response || !response.event_data) {
@@ -350,14 +349,17 @@ function passcodeMatch(response) {
         return;
     }
 
+    // Show the tabs container and tab content container
     $('.tabs-container').show();
     $('.tab-content-container').show();
+
+    // Update event details
     $('.event-container .event-image').attr('src', response.event_data.thumbnail_url);
     $('.event-container .name span').text(response.event_data.name);
     $('.event-container .date span').text(response.event_data.start_date);
     $('.checkedin_ticket-count span').text(response.event_data.checked_in);
 
-    // Extract the ticket information
+    // Extract ticket information
     var issuedTickets = parseInt(response.event_data.issued_tickets, 10);
     var totalTickets = parseInt(response.event_data.total_tickets_available, 10);
 
@@ -413,8 +415,8 @@ function passcodeMatch(response) {
         updateIndividualProgressCircle($('.ticket-info_hidden_all .ticket-progress-container').last(), issued, capacity);
     });
 
-    // Append the shortcode output to the ticket-info_hidden_all div
-    $('.ticketnewewew').text(response.shortcode_output);
+    // Append the shortcode output to the ticketnewewew div
+    $('.ticketnewewew').html(response.shortcode_output);
 
     // Proceed with other functions like startScanQR...
     event_id_global = response.event_id;
