@@ -4603,8 +4603,16 @@ function custom_qr_scanner_shortcode() {
            
 
                <div class="ticket-info-container_main">
-        
-        
+         
+
+
+
+
+        <div class="ticketnewewew">
+         
+        </div>
+            
+ 
     </div>
              
                     </div>
