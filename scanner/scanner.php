@@ -440,6 +440,12 @@ button i {
     margin-bottom: 0px;
     color: #d3fa16 !important;
     white-space: nowrap;
+}.stats_count_main span{
+    font-weight: 700;
+    font-size: 19px;
+    margin-bottom: 0px;
+    color: #d3fa16 !important;
+    white-space: nowrap;
 }
 
 .ticket-progress-container_svg{
