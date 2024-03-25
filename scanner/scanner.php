@@ -189,10 +189,12 @@ input#event-pass {
 }
 
 .event_data{
-    border-radius: 2px;
-    margin-bottom: 21px;
+    border-radius: 10px;
     background-color: #19191b;
     padding: 7px;
+    max-width: 500px;
+    width: 100%;
+    margin: 0 auto;
 }
 .event_data .name span{
     color: #d3fa16 !important;
