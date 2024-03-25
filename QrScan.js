@@ -285,7 +285,6 @@
 
 
 
-
         function passcodeMatch(response) {
             if (!response || !response.event_data) {
                 console.error("Invalid response data.");
@@ -357,7 +356,6 @@
             event_id_global = response.event_id;
             startScanQR(response.event_id);
         }
-
 
 
 
