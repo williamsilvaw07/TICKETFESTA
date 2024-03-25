@@ -285,6 +285,8 @@ function updateIndividualProgressCircle(container, issuedTickets, totalTickets) 
 }
 
 
+
+
 // Function to create the checked-in progress component dynamically
 function createCheckedInProgressCircle(checkedIn, issuedTickets) {
     var checkedInPercentage = checkedIn === 0 ? 0 : Math.ceil((checkedIn / issuedTickets) * 100); // Calculate the checked-in percentage
@@ -318,7 +320,6 @@ function createCheckedInProgressCircle(checkedIn, issuedTickets) {
 
     return checkedInProgressHtml;
 }
-
 // Function to update the checked-in progress component specifically for .ticket_checkedin_main_stats
 function updateCheckedInProgress(response) {
     if (!response || !response.event_data) {
