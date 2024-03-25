@@ -58,7 +58,9 @@ if (file_exists($custom_footer_path)) {
 
 
 <style>
-    
+    .main-header ul:last-child{
+        display:none!important
+    }
 
 body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .content-wrapper, body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .main-footer, body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .main-header {
 
