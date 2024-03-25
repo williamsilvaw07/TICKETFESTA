@@ -4627,10 +4627,10 @@ function validate_event_pass() {
             $event_id = $event->ID;
             $total_capacity = apply_filters('tribe_tickets_total_event_capacity', null, $event_id);
 
+            $total_issued_tickets = 0; // Total issued tickets for the ratio calculation
             if (null === $total_capacity) {
                 $tickets = Tribe__Tickets__Tickets::get_all_event_tickets($event_id);
                 $total_capacity = 0;
-                $total_issued_tickets = 0; // Total issued tickets for percentage calculation
 
                 foreach ($tickets as $ticket) {
                     $ticket_capacity = tribe_tickets_get_capacity($ticket->ID); // Retrieve ticket capacity
@@ -4656,8 +4656,8 @@ function validate_event_pass() {
             $attendance_totals = new Tribe__Tickets__Attendance_Totals($event_id);
             $total_checked_in = $attendance_totals->get_total_checked_in();
 
-            // Calculate the checked-in percentage and round up if necessary
-            $percent_checked_in = ($total_issued_tickets > 0) ? ceil(($total_checked_in / $total_issued_tickets) * 100) : 0;
+            // Format the data for checked in total / total issued tickets
+            $checked_in_format = sprintf('%d / %d', $total_checked_in, $total_issued_tickets);
 
             $start_date = get_post_meta($event_id, '_EventStartDate', true);
             $start_date_timestamp = strtotime($start_date);
@@ -4674,7 +4674,7 @@ function validate_event_pass() {
                 'ticket_list' => $ticket_list,
                 'name' => get_the_title($event_id),
                 'thumbnail_url' => get_the_post_thumbnail_url($event_id, 'medium'),
-                'checked_in_percentage' => $percent_checked_in, // Updated to use calculated percentage
+                'checked_in_percentage' => $checked_in_format, // Now in "checked in / total" format
             ];
         }
     }
