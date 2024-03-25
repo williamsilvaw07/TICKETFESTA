@@ -565,30 +565,33 @@ $('.ticket_dropdown').on('click', function() {
 
 
 
-
-
 document.addEventListener('DOMContentLoaded', function() {
-    // Load and display previous passcodes
+    loadPasscodes();
+});
+
+function loadPasscodes() {
     let passcodes = JSON.parse(localStorage.getItem('passcodes')) || [];
     let datalist = document.getElementById('passcodes');
+    datalist.innerHTML = ''; // Clear existing options
     passcodes.forEach(function(passcode) {
         let option = document.createElement('option');
         option.value = passcode;
         datalist.appendChild(option);
     });
-});
+}
 
-function savePasscode() {
+function savePasscodeAndLogin() {
     let passcodeInput = document.getElementById('event-pass');
     let passcodes = JSON.parse(localStorage.getItem('passcodes')) || [];
     if (passcodes.indexOf(passcodeInput.value) === -1) {
         passcodes.push(passcodeInput.value);
         localStorage.setItem('passcodes', JSON.stringify(passcodes));
 
-        // Optionally, refresh the datalist
-        let datalist = document.getElementById('passcodes');
-        let option = document.createElement('option');
-        option.value = passcodeInput.value;
-        datalist.appendChild(option);
+        // Refresh the datalist
+        loadPasscodes();
     }
+
+    // Implement your login logic here
+    console.log('Implement your login logic here');
+    // This could involve validating the passcode against a server, for instance.
 }
