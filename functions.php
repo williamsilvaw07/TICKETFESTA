@@ -4577,7 +4577,7 @@ function custom_qr_scanner_shortcode() {
     <div class="checkedin-progress-ring-container">
         <span class="checkedin-progress-percentage"></span>
     </div>
-</div>
+</div>  
 
 
                 </div>
