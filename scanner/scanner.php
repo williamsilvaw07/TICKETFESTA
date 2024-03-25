@@ -500,7 +500,22 @@ li.tab a{
 }
 
 
+.progress-ring__circle {
+    animation: glow 1.5s infinite alternate; /* Apply glowing animation */
+}
 
+@keyframes glow {
+    0% {
+        stroke: #d3fa16; /* Initial color */
+        stroke-width: 6px; /* Initial stroke width */
+        filter: brightness(150%); /* Initial brightness */
+    }
+    100% {
+        stroke: #d3fa16; /* Final color */
+        stroke-width: 8px; /* Final stroke width */
+        filter: brightness(200%); /* Final brightness */
+    }
+}
 
 
 
