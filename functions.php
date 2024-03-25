@@ -4943,39 +4943,35 @@ add_shortcode('display_html5_qrcode_scanner', 'display_html5_qrcode_scanner_shor
 
 
 
-
-function hardcoded_event_attendees_shortcode() {
-    // Hardcoded event ID
+function display_event_attendees_shortcode() {
+    // Hardcoded event ID for demonstration purposes
     $event_id = 3789;
-
-    // Placeholder for attendees content
-    $attendees_content = "<div class='event-attendees-list'><h2>Attendees for Event ID $event_id</h2>";
-
-    // Hypothetical method to get attendees - this needs to be replaced or implemented based on your actual data structure
-    // For illustration, we're creating a mock array of attendees
-    $attendees = [
-        ['name' => 'John Doe', 'email' => 'john@example.com'],
-        ['name' => 'Jane Smith', 'email' => 'jane@example.com'],
-        // Add more mock attendees here
-    ];
-
-    // Check if we have any attendees to show
-    if (!empty($attendees)) {
-        $attendees_content .= "<ul>";
-        foreach ($attendees as $attendee) {
-            // Sanitize the output to avoid XSS attacks
-            $name = sanitize_text_field($attendee['name']);
-            $email = sanitize_email($attendee['email']);
-
-            $attendees_content .= "<li>$name - $email</li>";
+    
+    // Initialize output variable
+    $output = '<div class="event-attendees"><h2>Event Attendees</h2>';
+    
+    // Check if the Tribe Tickets RSVP class exists
+    if ( class_exists( 'Tribe__Tickets__RSVP' ) ) {
+        $rsvp = new Tribe__Tickets__RSVP();
+        
+        // Fetch attendees for the event. You'll need to adjust this part to loop through attendees.
+        // This is a simplification. You would typically fetch all RSVPs/attendees for the event and loop through them.
+        $attendees = []; // You'll need to implement fetching of attendee IDs yourself
+        
+        foreach ( $attendees as $attendee_id ) {
+            $attendee_info = $rsvp->get_attendee( $attendee_id, $event_id );
+            
+            // Check if we got attendee info back
+            if ( $attendee_info ) {
+                // Display desired attendee information
+                $output .= '<p>' . esc_html( $attendee_info['holder_name'] ) . ' - ' . esc_html( $attendee_info['holder_email'] ) . '</p>';
+            }
         }
-        $attendees_content .= "</ul>";
     } else {
-        $attendees_content .= "<p>No attendees found for this event.</p>";
+        $output .= '<p>The required class is not available.</p>';
     }
-
-    $attendees_content .= "</div>";
-
-    return $attendees_content;
+    
+    $output .= '</div>';
+    return $output;
 }
-add_shortcode('hardcoded_event_attendees', 'hardcoded_event_attendees_shortcode');
+add_shortcode('display_event_attendees', 'display_event_attendees_shortcode');
