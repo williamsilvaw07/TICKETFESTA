@@ -396,8 +396,8 @@ passcodeMatch(response); // Call passcodeMatch with the response
 // After passcodeMatch function call, generate and append the progress component
 var checkedIn = parseInt(response.event_data.checked_in.split(' / ')[0], 10);
 var issuedTickets = parseInt(response.event_data.issued_tickets, 10);
-const checkedInProgressHtml = generateCheckedInProgressHtml(checkedIn, issuedTickets, 'ticket_sold_main_stats');
-$('.ticket-progress-container_main').html(checkedInProgressHtml);
+const checkedInProgressHtml = generateCheckedInProgressHtml(checkedIn, issuedTickets, 'ticket_checkedin_main_stats');
+$('.checkedin-progress-ring-container').after(checkedInProgressHtml);
 
 
 
