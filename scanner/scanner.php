@@ -500,7 +500,20 @@ li.tab a{
 }
 
 
-
+.single_ticket_section{
+    background-color: #19191b;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    padding: 17px;
+    border-radius: 10px;
+    max-width: 500px;
+    width: 100%;
+    flex-direction: row-reverse !important;
+    display: flex !important;
+    gap: 10px;
+}
 
 
 
