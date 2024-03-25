@@ -341,7 +341,6 @@ function updateCheckedInProgress(response) {
 }
 
 
-
 // Function to handle passcode match response
 function passcodeMatch(response) {
     if (!response || !response.event_data) {
