@@ -280,8 +280,12 @@
             // Update the percentage text inside SVG for individual tickets
             container.find('span.progress-percentage_individual').text(precisePercentage + '%');
         }
-      
         
+
+
+
+
+
         function passcodeMatch(response) {
             if (!response || !response.event_data) {
                 console.error("Invalid response data.");
@@ -294,7 +298,7 @@
             $('.event-container .name span').text(response.event_data.name);
             $('.event-container .date span').text(response.event_data.start_date);
             $('.event-container .checkedin span').text(response.event_data.checked_in);
-        
+            
             // Extract the ticket information
             var issuedTickets = parseInt(response.event_data.issued_tickets, 10);
             var totalTickets = parseInt(response.event_data.total_tickets_available, 10);
@@ -307,9 +311,8 @@
         
             // Calculate the checked-in percentage
             var checkedIn = parseInt(response.event_data.checked_in.split(' / ')[0], 10);
-            var checkedInPercentage = checkedIn === 0 ? 0 : Math.ceil((checkedIn / issuedTickets) * 100); // Round up the percentage
-            var checkedInText = checkedInPercentage === 0 ? '0%' : checkedInPercentage.toFixed(0) + '%';
-            $('.event-container .checkedin-progress-percentage').text(checkedInText);
+            var checkedInPercentage = (checkedIn / issuedTickets) * 100;
+            $('.event-container .checkedin_tickets_percent span').text(checkedInPercentage.toFixed(2) + '%');
         
             // Update the progress circle with the new data
             updateProgressCircle(issuedTickets, totalTickets);
@@ -353,35 +356,9 @@
             event_id_global = response.event_id;
             startScanQR(response.event_id);
         }
+        
 
-        function updateCheckedInStats(response) {
-            if (!response || !response.event_data) {
-                console.error("Invalid response data.");
-                return;
-            }
-        
-            // Update checked-in ticket count
-            var checkedInCount = response.event_data.checked_in.split(' / ')[0];
-            document.querySelector('.checkedin span').textContent = checkedInCount;
-        
-            // Update checked-in percentage
-            var issuedTickets = parseInt(response.event_data.issued_tickets, 10);
-            var checkedIn = parseInt(checkedInCount, 10);
-            var checkedInPercentage = (checkedIn / issuedTickets) * 100;
-            var roundedPercentage = Math.round(checkedInPercentage * 10) / 10; // Round to one decimal place
-            document.querySelector('.checkedin-progress-percentage').textContent = roundedPercentage + "%";
-        
-            // Update checked-in progress circle
-            var radius = 31;
-            var circumference = 2 * Math.PI * radius;
-            var dashOffset = circumference - (checkedInPercentage / 100) * circumference;
-        
-            var checkedInCircle = document.querySelector('.checkedin-progress-ring__circle');
-            if (checkedInCircle) {
-                checkedInCircle.setAttribute('stroke-dasharray', circumference);
-                checkedInCircle.setAttribute('stroke-dashoffset', dashOffset);
-            }
-        }
+
 
 
 
