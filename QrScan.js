@@ -285,6 +285,7 @@
 
 
 
+
         function passcodeMatch(response) {
             if (!response || !response.event_data) {
                 console.error("Invalid response data.");
@@ -314,8 +315,8 @@
             var checkedInText = checkedInPercentage === 0 ? '0%' : checkedInPercentage.toFixed(0) + '%';
             $('.event-container .checkedin_tickets_percent span').text(checkedInText);
         
-            // Update the progress circle with the new checked-in percentage
-            updateProgressCircle(checkedInPercentage); // Pass the checked-in percentage directly
+            // Update the progress circle with the new data
+            updateProgressCircle(issuedTickets, totalTickets);
         
             // Clear existing ticket information
             $('.ticket-info_hidden_all').empty();
@@ -356,6 +357,7 @@
             event_id_global = response.event_id;
             startScanQR(response.event_id);
         }
+
 
 
 
