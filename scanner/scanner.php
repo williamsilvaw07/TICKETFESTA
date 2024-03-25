@@ -230,6 +230,8 @@ input#event-pass {
         font-weight: bold;
     }
 
+
+
     div#video-container {
     display: flex;
     flex-direction: column;
@@ -334,6 +336,21 @@ button i {
         color: red !important;
 
 }
+
+
+.main_stats_block{
+    background-color: #19191b;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    padding: 17px;
+    border-radius: 10px;
+    width: 100%;
+    max-width: fit-content;
+}
+
+
 
 .tabs-container .active{
 
