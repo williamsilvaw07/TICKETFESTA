@@ -367,9 +367,6 @@
 
 
 
-
-
-
 // Function to create the checked-in progress component dynamically
 function createCheckedInProgressCircle(checkedIn, issuedTickets) {
     var checkedInPercentage = checkedIn === 0 ? 0 : Math.ceil((checkedIn / issuedTickets) * 100); // Calculate the checked-in percentage
@@ -381,7 +378,7 @@ function createCheckedInProgressCircle(checkedIn, issuedTickets) {
             <div class="ticket-progress-container_svg">
                 <svg class="progress-ring" width="72" height="72">
                     <circle class="progress-ring__circle-bg-checkedin" cx="36" cy="36" r="31" stroke-width="6"></circle>
-                    <circle class="progress-ring__circle progress-ring__circle-checkedin" cx="36" cy="36" r="31" stroke-width="6" style="stroke-dasharray: ${checkedInPercentage * 1.94779}px; stroke-dashoffset: ${(100 - checkedInPercentage) * 1.91566}px; stroke: rgb(211, 250, 22);"></circle>
+                    <circle class="progress-ring__circle progress-ring__circle-checkedin" cx="36" cy="36" r="31" stroke-width="6"></circle>
                 </svg>
                 <span class="progress-percentage">${checkedInText}</span>
             </div>
@@ -417,10 +414,8 @@ function updateCheckedInProgress(response) {
     var checkedInProgressHtml = createCheckedInProgressCircle(checkedIn, issuedTickets);
 
     // Update the checked-in progress component in the DOM
-    $('.ticket_checkedin_main_stats .ticket-progress-container').html(checkedInProgressHtml);
+    $('.ticket_checkedin_main_stats .checkedin-progress-ring-container').html(checkedInProgressHtml);
 }
-
-
 
 
 
