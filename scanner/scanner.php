@@ -496,6 +496,9 @@ li.tab a{
     width: 100%;
     cursor: pointer;
 }
+.ticket_dropdown h6{
+    margin-bottom:0
+}
 .single_ticket_section_inner{
     width: 100%;
     display:none
