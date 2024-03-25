@@ -388,7 +388,7 @@ function createCheckedInProgressCircle(checkedIn, issuedTickets) {
     return checkedInProgressHtml;
 }
 
-// Update the checked-in progress component specifically for .ticket_checkedin_main_stats
+// Function to update the checked-in progress component specifically for .ticket_checkedin_main_stats
 function updateCheckedInProgress(response) {
     if (!response || !response.event_data) {
         console.error("Invalid response data.");
