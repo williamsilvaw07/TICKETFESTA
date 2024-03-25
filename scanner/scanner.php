@@ -520,7 +520,7 @@ li.tab a{
     width: 100%;
     align-items: flex-start;
     display: flex !important;
-    gap: 15px;
+    gap: 25px;
     flex-direction: column;
     justify-content: center!important;
     align-items: flex-start!important;
