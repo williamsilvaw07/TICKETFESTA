@@ -312,7 +312,7 @@
             // Calculate the checked-in percentage
             var checkedIn = parseInt(response.event_data.checked_in.split(' / ')[0], 10);
             var checkedInPercentage = Math.ceil((checkedIn / issuedTickets) * 100); // Round up the percentage
-            $('.event-container .checkedin_tickets_percent span').text(checkedInPercentage.toFixed(2) + '%');
+            $('.event-container .checkedin_tickets_percent span').text(checkedInPercentage.toFixed(0) + '%');
         
             // Update the progress circle with the new data
             updateProgressCircle(issuedTickets, totalTickets);
