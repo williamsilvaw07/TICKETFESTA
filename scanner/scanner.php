@@ -492,9 +492,15 @@ button i {
 }
 
 
+li.tab.active a
 
-
-
+{
+    color: #000 !important;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+}
 
 
 
