@@ -341,6 +341,8 @@ function updateCheckedInProgress(response) {
 }
 
 
+
+
 // Function to handle passcode match response
 function passcodeMatch(response) {
     if (!response || !response.event_data) {
@@ -348,19 +350,15 @@ function passcodeMatch(response) {
         return;
     }
 
-    console.log("Passcode match response:", response);
-
-    // Show the tabs container and tab content container
     $('.tabs-container').show();
     $('.tab-content-container').show();
-
-    // Update event details
     $('.event-container .event-image').attr('src', response.event_data.thumbnail_url);
     $('.event-container .name span').text(response.event_data.name);
     $('.event-container .date span').text(response.event_data.start_date);
     $('.checkedin_ticket-count span').text(response.event_data.checked_in);
+    $('.ticket-info_hidden_all ').text();
 
-    // Extract ticket information
+    // Extract the ticket information
     var issuedTickets = parseInt(response.event_data.issued_tickets, 10);
     var totalTickets = parseInt(response.event_data.total_tickets_available, 10);
 
@@ -374,8 +372,7 @@ function passcodeMatch(response) {
     var checkedIn = parseInt(response.event_data.checked_in.split(' / ')[0], 10);
     var checkedInPercentage = checkedIn === 0 ? 0 : Math.ceil((checkedIn / issuedTickets) * 100); // Round up the percentage
     var checkedInText = checkedInPercentage === 0 ? '0%' : checkedInPercentage.toFixed(0) + '%';
-
-    console.log("Checked-in percentage:", checkedInPercentage);
+    
 
     // Update the progress circle with the new data
     updateProgressCircle(issuedTickets, totalTickets);
@@ -412,7 +409,9 @@ function passcodeMatch(response) {
         `;
 
         // Append individual progress components to container
-        $('.ticket-info_hidden_all').append(individualProgressHtml);
+        $('.ticket-info_hidden_all').append(response.shortcode_output);
+
+        $('.showshortcode').append();
 
         // Update individual progress circles with the correct percentage
         updateIndividualProgressCircle($('.ticket-info_hidden_all .ticket-progress-container').last(), issued, capacity);
@@ -423,35 +422,10 @@ function passcodeMatch(response) {
     startScanQR(response.event_id);
 }
 
-// Function to validate event passcode and retrieve event details
-function validateEventPass(eventPass) {
-    $.ajax({
-        url: ajaxurl,
-        method: 'POST',
-        data: {
-            action: 'validate_event_pass',
-            event_pass: eventPass
-        },
-        success: function(response) {
-            passcodeMatch(response);
-        },
-        error: function(xhr, status, error) {
-            console.error(error);
-        }
-    });
-}
 
-// Function to wait 5 seconds before calling validateEventPass
-function waitAndValidateEventPass(eventPass) {
-    console.log("Waiting for 5 seconds...");
-    setTimeout(function() {
-        console.log("5 seconds passed. Validating event passcode...");
-        validateEventPass(eventPass);
-    }, 5000); // Wait for 5 seconds
-}
 
-// Define ajaxurl variable
-var ajaxurl = custom_script_vars.ajaxurl;
+
+
 
 
 

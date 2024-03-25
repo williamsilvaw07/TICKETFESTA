@@ -4742,15 +4742,7 @@ function validate_event_pass() {
     wp_send_json($response);
     wp_die();
 }
-function enqueue_custom_script() {
-    wp_enqueue_script('custom-script', 'path/to/QrScan.js', array('jquery'), null, true);
 
-    // Pass admin_url to the JavaScript file
-    wp_localize_script('custom-script', 'custom_script_vars', array(
-        'ajaxurl' => admin_url('admin-ajax.php')
-    ));
-}
-add_action('wp_enqueue_scripts', 'enqueue_custom_script');
 
 
 // Remember to properly hook your function to WordPress AJAX actions if it's intended for AJAX.
