@@ -521,6 +521,16 @@ function passcodeMatch(response) {
 
       
     
+
+
+
+
+
+    $('.ticket_dropdown').on('click', function() {
+        $('.single_ticket_section_inner').toggleClass('display-block');
+    });
+
+    
 })(jQuery);
 
 

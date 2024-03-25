@@ -490,8 +490,19 @@ li.tab a{
     align-content: center;
     align-items: center;
 }
+.ticket_dropdown{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+.single_ticket_section_inner{
+    width: 100%;
+    display:none
+}
 
-
+.display-block{
+    display:block
+}
 .single_ticket_section{
     background-color: #19191b;
     background-size: cover;
