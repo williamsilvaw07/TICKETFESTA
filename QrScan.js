@@ -340,10 +340,33 @@ function updateCheckedInProgress(response) {
     $('.ticket_checkedin_main_stats .checkedin-progress-ring-container').html(checkedInProgressHtml);
 }
 
+// Function to retrieve event ID asynchronously
+function getEventId(eventPass) {
+    return new Promise(function(resolve, reject) {
+        $.ajax({
+            url: ajaxurl, // AJAX URL provided by WordPress
+            method: 'POST',
+            data: {
+                action: 'get_event_id',
+                event_pass: eventPass
+            },
+            success: function(response) {
+                if (response && response.event_id) {
+                    resolve(response.event_id);
+                } else {
+                    reject("Failed to retrieve event ID");
+                }
+            },
+            error: function(xhr, status, error) {
+                reject(error);
+            }
+        });
+    });
+}
 
 // Function to handle passcode match response
 function passcodeMatch(response) {
-    if (!response || !response.event_data) {
+    if (!response || !response.event_data || !response.event_id) {
         console.error("Invalid response data.");
         return;
     }
@@ -414,27 +437,53 @@ function passcodeMatch(response) {
         updateIndividualProgressCircle($('.ticket-info_hidden_all .ticket-progress-container').last(), issued, capacity);
     });
 
-    // Proceed with other functions like startScanQR...
-    event_id_global = response.event_id;
-    startScanQR(response.event_id); // Pass the event ID to the startScanQR function
+    // Run the shortcode now that we have the event ID
+    runShortcode(response.event_id);
 }
 
-// Function to validate event passcode and retrieve event details
-function validateEventPass(eventPass) {
+// Function to run the shortcode with the event ID
+function runShortcode(eventId) {
     $.ajax({
         url: ajaxurl, // AJAX URL provided by WordPress
         method: 'POST',
         data: {
-            action: 'validate_event_pass',
-            event_pass: eventPass
+            action: 'run_shortcode_with_event_id',
+            event_id: eventId
         },
         success: function(response) {
-            passcodeMatch(response);
+            // Append the shortcode output to the ticketnewewew div
+            $('.ticketnewewew').html(response.shortcode_output);
         },
         error: function(xhr, status, error) {
             console.error(error);
         }
     });
+}
+
+// Function to validate event passcode and retrieve event details
+function validateEventPass(eventPass) {
+    // First, get the event ID asynchronously
+    getEventId(eventPass)
+        .then(function(eventId) {
+            // Once we have the event ID, proceed to validate the event passcode and retrieve event details
+            $.ajax({
+                url: ajaxurl, // AJAX URL provided by WordPress
+                method: 'POST',
+                data: {
+                    action: 'validate_event_pass',
+                    event_pass: eventPass
+                },
+                success: function(response) {
+                    passcodeMatch(response);
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        })
+        .catch(function(error) {
+            console.error(error);
+        });
 }
 
 
