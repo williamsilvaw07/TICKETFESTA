@@ -341,12 +341,14 @@ function updateCheckedInProgress(response) {
 }
 
 
-// Function to handle passcode match response
+/// Function to handle passcode match response
 function passcodeMatch(response) {
     if (!response || !response.event_data) {
         console.error("Invalid response data.");
         return;
     }
+
+    console.log("Passcode match response:", response);
 
     // Show the tabs container and tab content container
     $('.tabs-container').show();
@@ -372,6 +374,8 @@ function passcodeMatch(response) {
     var checkedIn = parseInt(response.event_data.checked_in.split(' / ')[0], 10);
     var checkedInPercentage = checkedIn === 0 ? 0 : Math.ceil((checkedIn / issuedTickets) * 100); // Round up the percentage
     var checkedInText = checkedInPercentage === 0 ? '0%' : checkedInPercentage.toFixed(0) + '%';
+
+    console.log("Checked-in percentage:", checkedInPercentage);
 
     // Update the progress circle with the new data
     updateProgressCircle(issuedTickets, totalTickets);
@@ -414,42 +418,38 @@ function passcodeMatch(response) {
         updateIndividualProgressCircle($('.ticket-info_hidden_all .ticket-progress-container').last(), issued, capacity);
     });
 
-    // Wait for 5 seconds before getting the event ID and running the shortcode
+    // Proceed with other functions like startScanQR...
+    event_id_global = response.event_id;
+    startScanQR(response.event_id);
+}
+
+// Define ajaxurl variable
+var ajaxurl = '<?php echo admin_url('admin-ajax.php'); ?>';
+
+// Function to validate event passcode and retrieve event details
+function validateEventPass(eventPass) {
+    $.ajax({
+        url: ajaxurl,
+        method: 'POST',
+        data: {
+            action: 'validate_event_pass',
+            event_pass: eventPass
+        },
+        success: function(response) {
+            passcodeMatch(response);
+        },
+        error: function(xhr, status, error) {
+            console.error(error);
+        }
+    });
+}
+
+// Function to wait 5 seconds before calling validateEventPass
+function waitAndValidateEventPass(eventPass) {
+    console.log("Waiting for 5 seconds...");
     setTimeout(function() {
-        // Get the event ID asynchronously
-        $.ajax({
-            url: ajaxurl, // AJAX URL provided by WordPress
-            method: 'POST',
-            data: {
-                action: 'get_event_id_after_delay',
-                // You can pass any additional data needed for getting the event ID
-            },
-            success: function(response) {
-                if (response && response.event_id) {
-                    // Run the PHP shortcode with the event ID
-                    $.ajax({
-                        url: ajaxurl, // AJAX URL provided by WordPress
-                        method: 'POST',
-                        data: {
-                            action: 'run_shortcode_with_event_id',
-                            event_id: response.event_id
-                        },
-                        success: function(response) {
-                            // Append the shortcode output to the ticketnewewew div
-                            $('.ticketnewewew').html(response.shortcode_output);
-                        },
-                        error: function(xhr, status, error) {
-                            console.error(error);
-                        }
-                    });
-                } else {
-                    console.error("Failed to retrieve event ID.");
-                }
-            },
-            error: function(xhr, status, error) {
-                console.error(error);
-            }
-        });
+        console.log("5 seconds passed. Validating event passcode...");
+        validateEventPass(eventPass);
     }, 5000); // Wait for 5 seconds
 }
 
