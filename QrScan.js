@@ -464,7 +464,7 @@ function passcodeMatch(response) {
                      updateProgressCircle(issuedTickets, totalTickets);
 
                     // Clear existing ticket information
-            $('.ticket-info_hidden_all').empty();
+         
         
             // Display ticket information with percentages
             var ticketList = response.event_data.ticket_list;
