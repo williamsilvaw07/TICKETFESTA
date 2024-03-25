@@ -4575,8 +4575,9 @@ function custom_qr_scanner_shortcode() {
     <i class="fas fa-check-circle"></i>
     <div class="checkedin">Checked in Tickets: <span></span></div>
     <div class="checkedin-progress-ring-container">
-        <span class="checkedin-progress-percentage"></span>
+       
     </div>
+    <span class="checkedin-progress-percentage"></span>
 </div>  
 
 
