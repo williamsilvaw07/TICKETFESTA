@@ -399,7 +399,7 @@ button i {
 .progress-ring__circle-bg {
     fill: transparent;
     stroke: #3a3a3a;
-    stroke-width: 7;
+    stroke-width: 4;
 }
 
 .progress-ring__circle {
@@ -416,13 +416,15 @@ button i {
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    font-size: 14px;
+    font-size: 12px;
     color: aliceblue;
     font-weight: bolder;
 }
 .ticket-progress-container_main{
     display: flex;
     gap: 10px;
+    height: fit-content;
+
 }
 .ticket_checkedin_main_stats i {
     opacity: 0.1;
