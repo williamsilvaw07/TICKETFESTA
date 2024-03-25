@@ -284,6 +284,32 @@
 
 
 
+
+
+        function generateCheckedInProgressHtml(checkedInCount, totalCount, sectionClassName) {
+            const percentage = (checkedInCount / totalCount) * 100;
+        
+            // Calculate dash array and offset for the progress circle
+            const circumference = 2 * Math.PI * 31; // Circumference of the circle with radius 31
+            const dashArray = circumference;
+            const dashOffset = circumference * (1 - (checkedInCount / totalCount));
+        
+            // Generate HTML for the progress component with section-specific class names
+            const html = `
+                <div class="${sectionClassName}-progress-container">
+                    <svg class="${sectionClassName}-progress-ring" width="72" height="72">
+                        <circle class="${sectionClassName}-progress-ring__circle-bg" cx="36" cy="36" r="31" stroke-width="6"></circle>
+                        <circle class="${sectionClassName}-progress-ring__circle" cx="36" cy="36" r="31" stroke-width="6"
+                            style="stroke-dasharray: ${dashArray}px; stroke-dashoffset: ${dashOffset}px; stroke: rgb(211, 250, 22);">
+                        </circle>
+                    </svg>
+                    <div class="${sectionClassName}-progress-percentage">${percentage.toFixed(1)}%</div>
+                </div>
+            `;
+        
+            return html;
+        }
+        
         function passcodeMatch(response) {
             if (!response || !response.event_data) {
                 console.error("Invalid response data.");
@@ -313,8 +339,9 @@
             var checkedInText = checkedInPercentage === 0 ? '0%' : checkedInPercentage.toFixed(0) + '%';
             $('.event-container .checkedin-progress-percentage').text(checkedInText);
         
-            // Update the progress circle with the new data
-            updateProgressCircle(issuedTickets, totalTickets);
+            // Generate HTML for checked-in progress component
+            const checkedInProgressHtml = generateCheckedInProgressHtml(checkedIn, issuedTickets, 'event-container');
+            $('.checkedin-progress-ring-container').html(checkedInProgressHtml);
         
             // Clear existing ticket information
             $('.ticket-info_hidden_all').empty();
@@ -354,16 +381,6 @@
             // Proceed with other functions like startScanQR...
             event_id_global = response.event_id;
             startScanQR(response.event_id);
-        }
-        
-        // Function to update individual progress circles
-        function updateIndividualProgressCircle(progressContainer, issued, capacity) {
-            var percentage = calculatePercentage(issued, capacity);
-            var circle = progressContainer.find('.progress-ring__circle');
-            var circumference = 2 * Math.PI * circle.attr('r');
-            var progress = percentage / 100 * circumference;
-            circle.css('stroke-dasharray', circumference);
-            circle.css('stroke-dashoffset', circumference - progress);
         }
 
 

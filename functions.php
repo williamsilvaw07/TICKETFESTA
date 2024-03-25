@@ -4578,6 +4578,10 @@ function custom_qr_scanner_shortcode() {
         <span class="checkedin-progress-percentage"></span>
     </div>
 </div>
+
+<!-- Hidden container for individual ticket progress -->
+<div class="ticket-info_hidden_all" style="display: none;"></div>
+
                 </div>
 
 
