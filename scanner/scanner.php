@@ -422,8 +422,9 @@ button i {
 }
 .ticket-progress-container_main{
     display: flex;
-    gap: 10px;
+    gap: 6px;
     height: fit-content;
+    align-items: center;
 
 }
 .ticket_checkedin_main_stats i {
