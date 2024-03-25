@@ -500,9 +500,6 @@ li.tab a{
 }
 
 
-.progress-ring__circle {
-    filter: drop-shadow(0 0 10px rgba(211, 250, 22, 0.8)); /* Add shadow effect for glowing */
-}
 
 
 
