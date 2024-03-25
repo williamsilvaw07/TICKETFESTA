@@ -429,9 +429,9 @@ button i {
 }
 .info_div h6{
     margin:0;
-    font-size: 14px;
-    font-weight: 300;
-    color: #aaa !important;
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 11px;
 }
 .info_div p{
     font-weight: 700;
