@@ -492,10 +492,7 @@ button i {
 }
 
 
-li.tab a
-
-{
-    color: #000 !important;
+li.tab a{
     display: flex;
     flex-direction: column;
     align-content: center;
