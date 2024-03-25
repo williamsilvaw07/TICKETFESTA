@@ -4613,8 +4613,7 @@ function custom_qr_scanner_shortcode() {
             <ul>
                 <!-- Ticket list will be dynamically populated here -->
             </ul>
-            <?php echo do_shortcode('[tribe_community_tickets view="attendees_report" id="' . $event_id . '"]'); ?>
-
+            
         </div>
 
 
@@ -4665,6 +4664,7 @@ function validate_event_pass() {
     $match = false;
     $event_id = null;
     $event_data = [];
+    $shortcode_output = '';
 
     foreach ($events as $event) {
         $ticket_list = []; // Reset ticket list for each event
@@ -4723,6 +4723,9 @@ function validate_event_pass() {
                 'thumbnail_url' => get_the_post_thumbnail_url($event_id, 'medium'),
                 'checked_in' => $checked_in_format, //"checked in / total" format
             ];
+
+            // Generate shortcode output for attendees report
+            $shortcode_output = do_shortcode('[tribe_community_tickets view="attendees_report" id="' . $event_id . '"]');
         }
     }
 
@@ -4730,6 +4733,7 @@ function validate_event_pass() {
         'match' => $match,
         'event_id' => $event_id,
         'event_data' => $event_data,
+        'shortcode_output' => $shortcode_output, // Include the shortcode output in the response
     ];
 
     wp_send_json($response);
