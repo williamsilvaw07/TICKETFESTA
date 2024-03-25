@@ -362,7 +362,7 @@ button i {
 
 
 
-.tabs-container .active{
+.tab-content{
     max-width: 500px;
     margin: 0 auto;
     padding: 0;
