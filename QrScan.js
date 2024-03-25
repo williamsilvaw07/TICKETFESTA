@@ -281,7 +281,6 @@
             container.find('span.progress-percentage_individual').text(precisePercentage + '%');
         }
         
-
         function updateCheckedInStats(response) {
             if (!response || !response.event_data) {
                 console.error("Invalid response data.");
