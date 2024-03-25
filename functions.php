@@ -4944,35 +4944,38 @@ add_shortcode('display_html5_qrcode_scanner', 'display_html5_qrcode_scanner_shor
 
 
 
+function hardcoded_event_attendees_shortcode() {
+    // Hardcoded event ID
+    $event_id = 3789;
 
+    // Placeholder for attendees content
+    $attendees_content = "<div class='event-attendees-list'><h2>Attendees for Event ID $event_id</h2>";
 
-function fetch_and_display_attendee_info($atts) {
-    // Shortcode attributes, defaulting to event ID 3789 if none is provided
-    $attributes = shortcode_atts(array(
-        'id' => '3789',
-    ), $atts);
+    // Hypothetical method to get attendees - this needs to be replaced or implemented based on your actual data structure
+    // For illustration, we're creating a mock array of attendees
+    $attendees = [
+        ['name' => 'John Doe', 'email' => 'john@example.com'],
+        ['name' => 'Jane Smith', 'email' => 'jane@example.com'],
+        // Add more mock attendees here
+    ];
 
-    $event_id = $attributes['id'];
+    // Check if we have any attendees to show
+    if (!empty($attendees)) {
+        $attendees_content .= "<ul>";
+        foreach ($attendees as $attendee) {
+            // Sanitize the output to avoid XSS attacks
+            $name = sanitize_text_field($attendee['name']);
+            $email = sanitize_email($attendee['email']);
 
-    // Assuming you have a function to get attendee information based on event ID
-    $attendees = get_attendee_info_by_event_id($event_id);
-
-    if (empty($attendees)) {
-        return 'No attendees found for this event.';
+            $attendees_content .= "<li>$name - $email</li>";
+        }
+        $attendees_content .= "</ul>";
+    } else {
+        $attendees_content .= "<p>No attendees found for this event.</p>";
     }
 
-    // Start building the output
-    $output = '<div class="event-attendees">';
-    foreach ($attendees as $attendee) {
-        // Customize this part based on how your attendee information is structured
-        $output .= '<div class="attendee">';
-        $output .= '<p>Name: ' . esc_html($attendee['name']) . '</p>';
-        $output .= '<p>Email: ' . esc_html($attendee['email']) . '</p>';
-        // Add more attendee details as needed
-        $output .= '</div>';
-    }
-    $output .= '</div>';
+    $attendees_content .= "</div>";
 
-    return $output;
+    return $attendees_content;
 }
-add_shortcode('event_attendees', 'fetch_and_display_attendee_info');
+add_shortcode('hardcoded_event_attendees', 'hardcoded_event_attendees_shortcode');
