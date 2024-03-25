@@ -4619,8 +4619,6 @@ function validate_event_pass() {
     $match = false;
     $event_id = null;
     $event_data = [];
-    $event_total_checked
-    $event_total_overall 
 
     foreach ($events as $event) {
         $ticket_list = []; // Reset ticket list for each event
@@ -4685,7 +4683,7 @@ function validate_event_pass() {
                 'ticket_list'             => $ticket_list,
                 'name'                    => get_the_title($event_id),
                 'thumbnail_url'           => get_the_post_thumbnail_url($event_id, 'medium'),
-                'checkedin'    => 
+                'checkedin_percentage'    => $percentage_checked_in,
             ];
             
         }
