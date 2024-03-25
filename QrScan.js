@@ -298,19 +298,12 @@ function createCheckedInProgressCircle(checkedIn, issuedTickets) {
 
     // Dynamic creation of progress circle for checked-in percentage
     var checkedInProgressHtml = `
-        <div class="ticket-progress-container checkedin-progress">
-            <div class="ticket-progress-container_svg">
-                <svg class="progress-ring" width="72" height="72">
-                    <circle class="progress-ring__circle-bg-checkedin" cx="36" cy="36" r="31" stroke-width="6"></circle>
-                    <circle class="progress-ring__circle progress-ring__circle-checkedin" cx="36" cy="36" r="31" stroke-width="6" style="stroke-dasharray:94.779px; stroke-dashoffset: 191.566px;"></circle>
-                </svg>
-                <span class="progress-percentage">${checkedInText}</span>
-            </div>
-            <div class="ticket-details info_div">
-                <h6>Checked-in Tickets</h6>
-                <div class="ticket-name">Total Checked-in</div>
-                <p class="ticket-count">${checkedIn} / ${issuedTickets}</p>
-            </div>
+        <div class="ticket-progress-container">
+            <svg class="progress-ring" width="72" height="72">
+                <circle class="progress-ring__circle-bg" cx="36" cy="36" r="31" stroke-width="6"></circle>
+                <circle class="progress-ring__circle" cx="36" cy="36" r="31" stroke-width="6" style="stroke-dasharray: ${dashArray}px; stroke-dashoffset: ${dashOffset}px;"></circle>
+            </svg>
+            <div class="progress-percentage">${checkedInText}</div>
         </div>
     `;
 
