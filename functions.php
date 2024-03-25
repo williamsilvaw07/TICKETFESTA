@@ -4539,7 +4539,7 @@ function custom_qr_scanner_shortcode() {
 
                 <div class="main_stats">
 
-                <div class="ticket_sold_main_stats main_stats_block">
+                <div class="ticket_sold_main_stats  main_stats_block">
                 <div class="ticket-progress-container_main">
                <div class="ticket-progress-container">
                <svg class="progress-ring" width="72" height="72">
