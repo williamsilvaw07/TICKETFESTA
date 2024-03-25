@@ -4537,6 +4537,17 @@ function custom_qr_scanner_shortcode() {
            
 
 
+
+
+                
+
+            <div class="tab-content-container" style="display: none">
+                <div class="tab-content tab-conent-1 active" id="tab1">
+
+
+
+
+
                 <div class="main_stats">
 
                 <div class="ticket_sold_main_stats  main_stats_block">
@@ -4567,10 +4578,13 @@ function custom_qr_scanner_shortcode() {
                 </div>
 
 
-                
 
-            <div class="tab-content-container" style="display: none">
-                <div class="tab-content tab-conent-1 active" id="tab1">
+
+
+
+
+
+                
                     <div class="event-container">
                         <img src="#" alt="" class="event-image">
                         <div class="event-container-details">
@@ -4594,6 +4608,9 @@ function custom_qr_scanner_shortcode() {
         <div class="progress-percentage">0%</div>
     </div>
     
+
+
+
 
     <div class="ticket-info info_div">
         <h6>Total Ticket Sold</h6>
