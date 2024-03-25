@@ -4609,7 +4609,7 @@ function custom_qr_scanner_shortcode() {
 
 
         <div class="ticket-info_hidden_all">
-            <h6>Ticket Information:</h6>
+            <h6>Ticket Types Information:</h6>
             <ul>
                 <!-- Ticket list will be dynamically populated here -->
             </ul>
@@ -4742,9 +4742,6 @@ function validate_event_pass() {
     wp_send_json($response);
     wp_die();
 }
-
-
-
 // Remember to properly hook your function to WordPress AJAX actions if it's intended for AJAX.
 
 
@@ -4883,43 +4880,6 @@ function generate_unique_random_hash($length) {
 
 
 
-function my_enqueue_qrcode_script() {
-    // Enqueue html5-qrcode script with jQuery dependency
-    wp_enqueue_script('html5-qrcode', 'https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.7/html5-qrcode.min.js', array('jquery'), null, true);
-}
-add_action('wp_enqueue_scripts', 'my_enqueue_qrcode_script');
-
-function display_html5_qrcode_scanner_shortcode() {
-    my_enqueue_qrcode_script(); // Ensures the QR code script is enqueued
-
-    // Scanner HTML setup with responsive design adjustments
-    $scanner_html = '<div class="qrcode_sanner_wrapper_div"><div id="qr-reader" style="aspect-ratio: 1 / 1;"></div></div>';
-
-    // Inline JavaScript for initializing the QR code scanner with a square viewfinder
-    $inline_script = "
-    <script>
-    jQuery(document).ready(function($) {
-        let html5QrcodeScanner = new Html5QrcodeScanner(
-            'qr-reader', {
-                fps: 10,
-                qrbox: 250, // Set qrbox size to keep the scanning area square
-                rememberLastUsedCamera: true,
-                aspectRatio: 1,
-                disableFlip: true // Disable the option to flip camera
-            }, false);
-        
-        function onScanSuccess(decodedText, decodedResult) {
-            // Handle the scanned code as needed
-            console.log(`Code scanned = ${decodedText}`, decodedResult);
-        }
-        
-        html5QrcodeScanner.render(onScanSuccess);
-    });
-    </script>";
-
-    return $scanner_html . $inline_script;
-}
-add_shortcode('display_html5_qrcode_scanner', 'display_html5_qrcode_scanner_shortcode');
 
 
 
@@ -4928,50 +4888,3 @@ add_shortcode('display_html5_qrcode_scanner', 'display_html5_qrcode_scanner_shor
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-function display_event_attendees_shortcode() {
-    // Hardcoded event ID for demonstration purposes
-    $event_id = 3789;
-    
-    // Initialize output variable
-    $output = '<div class="event-attendees"><h2>Event Attendees</h2>';
-    
-    // Check if the Tribe Tickets RSVP class exists
-    if ( class_exists( 'Tribe__Tickets__RSVP' ) ) {
-        $rsvp = new Tribe__Tickets__RSVP();
-        
-        // Fetch attendees for the event. You'll need to adjust this part to loop through attendees.
-        // This is a simplification. You would typically fetch all RSVPs/attendees for the event and loop through them.
-        $attendees = []; // You'll need to implement fetching of attendee IDs yourself
-        
-        foreach ( $attendees as $attendee_id ) {
-            $attendee_info = $rsvp->get_attendee( $attendee_id, $event_id );
-            
-            // Check if we got attendee info back
-            if ( $attendee_info ) {
-                // Display desired attendee information
-                $output .= '<p>' . esc_html( $attendee_info['holder_name'] ) . ' - ' . esc_html( $attendee_info['holder_email'] ) . '</p>';
-            }
-        }
-    } else {
-        $output .= '<p>The required class is not available.</p>';
-    }
-    
-    $output .= '</div>';
-    return $output;
-}
-add_shortcode('display_event_attendees', 'display_event_attendees_shortcode');
