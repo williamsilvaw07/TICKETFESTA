@@ -419,6 +419,7 @@ button i {
     font-size: 12px;
     color: aliceblue;
     font-weight: bolder;
+    font-weight: 500 !important;
 }
 .ticket-progress-container_main{
     display: flex;

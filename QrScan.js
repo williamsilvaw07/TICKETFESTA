@@ -394,10 +394,10 @@ function passcodeMatch(response) {
         var individualProgressHtml = `
             <div class="ticket-progress-container">
                 <div class="ticket-progress-container_svg">
-                    <svg class="progress-ring" width="72" height="72">
-                        <circle class="progress-ring__circle-bg" cx="36" cy="36" r="31" stroke-width="6"></circle>
-                        <circle class="progress-ring__circle progress-ring__circle-individual" cx="36" cy="36" r="31" stroke-width="6"></circle>
-                    </svg>
+                <svg class="progress-ring" width="58" height="58">
+                <circle class="progress-ring__circle-bg" cx="29" cy="29" r="24" stroke-width="6"></circle>
+                <circle class="progress-ring__circle progress-ring__circle-individual" cx="29" cy="29" r="24" stroke-width="6"></circle>
+            </svg>
                     <span class="progress-percentage_individual">${percentage}%</span>
                 </div>
                 <div class="ticket-details info_div">
@@ -478,10 +478,10 @@ function passcodeMatch(response) {
            
                     <div class="ticket-progress-container">
                         <div class="ticket-progress-container_svg">
-                            <svg class="progress-ring" width="72" height="72">
-                                <circle class="progress-ring__circle-bg" cx="36" cy="36" r="31" stroke-width="6"></circle>
-                                <circle class="progress-ring__circle progress-ring__circle-individual" cx="36" cy="36" r="31" stroke-width="6"></circle>
-                            </svg>
+                        <svg class="progress-ring" width="58" height="58">
+                        <circle class="progress-ring__circle-bg" cx="29" cy="29" r="24" stroke-width="6"></circle>
+                        <circle class="progress-ring__circle progress-ring__circle-individual" cx="29" cy="29" r="24" stroke-width="6"></circle>
+                    </svg>
                             <span class="progress-percentage_individual">${percentage}%</span>
                         </div>
                         <div class="ticket-details">
