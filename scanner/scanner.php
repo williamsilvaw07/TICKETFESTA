@@ -249,7 +249,9 @@ input#event-pass {
     input#event-pass.error {
         border: 2px solid #ea4335 !important;
     }
-
+.main_div_event_data{
+    padding:0 10px
+}
         /* Style the tabs container */
     .tabs-container {
         display: flex;
