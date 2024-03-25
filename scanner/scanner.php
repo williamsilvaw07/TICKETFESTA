@@ -410,14 +410,16 @@ button i {
     stroke-dashoffset: 365;
     transition: stroke-dashoffset 0.35s;
 }
-
+.progress-percentage_individual{
+    font-size: 12px;
+}
 .progress-percentage {
     position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
     font-size: 12px;
-    color: aliceblue;
+    color: white;
     font-weight: bolder;
     font-weight: 500 !important;
 }
