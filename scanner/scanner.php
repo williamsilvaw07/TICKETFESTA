@@ -492,7 +492,7 @@ button i {
 }
 
 
-li.tab.active a
+li.tab a
 
 {
     color: #000 !important;
