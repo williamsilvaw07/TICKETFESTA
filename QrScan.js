@@ -451,10 +451,7 @@ function waitAndValidateEventPass(eventPass) {
 }
 
 // Define ajaxurl variable
-var ajaxurl = '<?php echo admin_url('admin-ajax.php'); ?>';
-
-
-
+var ajaxurl = custom_script_vars.ajaxurl;
 
 
 
