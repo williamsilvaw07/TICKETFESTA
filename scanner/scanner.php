@@ -251,7 +251,6 @@ input#event-pass {
     margin: 0 auto;
 
     position: relative;
-    padding: 17px;
     border-radius: 10px;
     width: 100%;
     max-width: 900px;
