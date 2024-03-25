@@ -450,7 +450,7 @@ button i {
     display: flex;
     gap: 10px;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-between;
 }
 .stats_count_main{
     font-weight: 700;
