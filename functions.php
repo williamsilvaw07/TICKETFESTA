@@ -4571,7 +4571,7 @@ function custom_qr_scanner_shortcode() {
 
 </div>
 
-<div class="ticket_checkedin_main_stats main_stats_block">
+<div class="ticket_checkedin_main_stats main_stats_block event-container">
     <i class="fas fa-check-circle"></i>
     <div class="checkedin_ticket-info info_div">
         <h6>Checked-in Tickets</h6>
