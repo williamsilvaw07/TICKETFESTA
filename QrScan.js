@@ -369,7 +369,7 @@ function createCheckedInProgressCircle(checkedIn, issuedTickets) {
 
     // Dynamic creation of progress circle for checked-in percentage
     var checkedInProgressHtml = `
-        <div class="ticket-progress-container">
+        <div class="ticket-progress-container checkedin-progress">
             <div class="ticket-progress-container_svg">
                 <svg class="progress-ring" width="72" height="72">
                     <circle class="progress-ring__circle-bg" cx="36" cy="36" r="31" stroke-width="6"></circle>
@@ -388,13 +388,7 @@ function createCheckedInProgressCircle(checkedIn, issuedTickets) {
     return checkedInProgressHtml;
 }
 
-// Update the checked-in progress component
-function updateCheckedInProgress(checkedIn, issuedTickets) {
-    var checkedInProgressHtml = createCheckedInProgressCircle(checkedIn, issuedTickets);
-    $('.ticket-info_hidden_all .ticket-progress-container.checkedin-progress').html(checkedInProgressHtml);
-}
-
-// Function to update the checked-in progress component
+// Update the checked-in progress component specifically for .ticket_checkedin_main_stats
 function updateCheckedInProgress(response) {
     if (!response || !response.event_data) {
         console.error("Invalid response data.");
@@ -411,8 +405,11 @@ function updateCheckedInProgress(response) {
         return;
     }
 
-    // Update the checked-in progress component
-    updateCheckedInProgress(checkedIn, issuedTickets);
+    // Create the checked-in progress component HTML
+    var checkedInProgressHtml = createCheckedInProgressCircle(checkedIn, issuedTickets);
+
+    // Update the checked-in progress component in the DOM
+    $('.ticket_checkedin_main_stats .ticket-progress-container').html(checkedInProgressHtml);
 }
 
 
