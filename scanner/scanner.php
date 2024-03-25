@@ -337,7 +337,7 @@ button i {
 
 }
 .main_stats i{
-    opacity: 0.1;
+    opacity: 0.06;
     transform: rotate(302deg) !important;
     font-size: 46px;
     position: absolute;
@@ -482,7 +482,7 @@ button i {
 
 
 .ticket-info_hidden_all{
-    display: none;
+    display: flex;
     flex-direction: column;
     gap: 22px;
 }
