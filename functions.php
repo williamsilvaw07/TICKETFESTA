@@ -4613,38 +4613,22 @@ add_action('wp_ajax_nopriv_validate_event_pass', 'validate_event_pass'); // If y
 
 
 
-
-
-
-function update_event_checkin_stats(&$event_total_checked, &$event_total_overall) {
-    // Assuming the event ID is defined or retrieved elsewhere in your application
-    $event_id = get_current_event_id(); // Placeholder function for obtaining the current event ID
-
-    // Get the total number of issued tickets for the event
-    $event_total_overall = get_total_issued_tickets($event_id);
-
-    // Assuming an instance creation and method call similar to before for checking attendance
-    $attendance_totals = new Tribe__Tickets__Attendance_Totals($event_id);
-    $event_total_checked = $attendance_totals->get_total_checked_in();
-}
-
 function validate_event_pass() {
     $event_pass = isset($_POST['event_pass']) ? esc_attr($_POST['event_pass']) : false;
     $events = get_posts_by_event_pass($event_pass);
     $match = false;
     $event_id = null;
     $event_data = [];
+    $event_total_checked
+    $event_total_overall 
 
     foreach ($events as $event) {
+        $ticket_list = []; // Reset ticket list for each event
+
         if (isset($event->ID)) {
             $match = true;
             $event_id = $event->ID;
-
-            // Initial setup for capacity and checked-in calculations
             $total_capacity = apply_filters('tribe_tickets_total_event_capacity', null, $event_id);
-            $event_total_checked = 0;
-            $event_total_overall = 0;
-            $ticket_list = [];
 
             if (null === $total_capacity) {
                 $tickets = Tribe__Tickets__Tickets::get_all_event_tickets($event_id);
@@ -4656,10 +4640,10 @@ function validate_event_pass() {
 
                     // Retrieve the number of issued tickets for this ticket
                     $issued_tickets_message = tribe_tickets_get_ticket_stock_message($ticket, __('issued', 'event-tickets'));
-                    preg_match('/\d+/', $issued_tickets_message, $matches);
-                    $issued_tickets = isset($matches[0]) ? intval($matches[0]) : 0;
 
-                    $event_total_overall += $issued_tickets; // Accumulate the total number of issued tickets
+                    // Extract the number of issued tickets from the message
+                    preg_match('/\d+/', $issued_tickets_message, $matches);
+                    $issued_tickets = isset($matches[0]) ? $matches[0] : 0;
 
                     // Add each ticket's name, capacity, and issued tickets to the ticket list
                     $ticket_list[] = [
@@ -4669,44 +4653,54 @@ function validate_event_pass() {
                     ];
                 }
             }
-
-            // Assume get_total_checked_in_for_event is a function that retrieves the total checked-in attendees for an event
-            $event_total_checked = get_total_checked_in_for_event($event_id);
-
+            
+            // Get the number of attendees who have checked in
+            $attendees_checked_in = get_total_checked_in_for_event($event_id);
+            
             // Calculate the percentage of attendees checked in
-            $percentage_checked_in = ($total_capacity > 0) ? ($event_total_checked / $total_capacity) * 100 : 0;
+            $percentage_checked_in = ($attendees_checked_in / $total_capacity) * 100;
 
-            // Formatting event start date, time, etc.
             $start_date = get_post_meta($event_id, '_EventStartDate', true);
             $start_date_timestamp = strtotime($start_date);
+            
+            // Get the day of the week in abbreviated format (e.g., "Thur")
             $day_of_week = date('D', $start_date_timestamp);
+            
+            // Get the day of the month with the appropriate suffix (e.g., "25th")
             $day_of_month = date('jS', $start_date_timestamp);
+            
+            // Get the month in abbreviated format (e.g., "Mar")
             $month = date('M', $start_date_timestamp);
+            
+            // Get the time in 24-hour format (e.g., "08:00")
             $time = date('H:i', $start_date_timestamp);
+            
+            // Combine the formatted components
             $formatted_start_date = "$day_of_week, $day_of_month $month at $time";
-
+            
             $event_data = [
-                'start_date' => $formatted_start_date,
-                'issued_tickets' => $event_total_overall,
+                'start_date'              => $formatted_start_date,
+                'issued_tickets'          => get_post_meta($event_id, '_tribe_progressive_ticket_current_number', true),
                 'total_tickets_available' => $total_capacity,
-                'ticket_list' => $ticket_list,
-                'name' => get_the_title($event_id),
-                'thumbnail_url' => get_the_post_thumbnail_url($event_id, 'medium'),
-                'checked_in' => $event_total_checked,
-                'percentage_checked_in' => round($percentage_checked_in, 2), // Optionally round the percentage
+                'ticket_list'             => $ticket_list,
+                'name'                    => get_the_title($event_id),
+                'thumbnail_url'           => get_the_post_thumbnail_url($event_id, 'medium'),
+                'checkedin'    => 
             ];
+            
         }
     }
 
     $response = [
-        'match' => $match,
-        'event_id' => $event_id,
+        'match'      => $match,
+        'event_id'   => $event_id,
         'event_data' => $event_data,
     ];
 
     wp_send_json($response);
     wp_die();
 }
+
 
 // Remember to properly hook your function to WordPress AJAX actions if it's intended for AJAX.
 
