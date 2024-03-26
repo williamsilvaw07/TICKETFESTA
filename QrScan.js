@@ -443,14 +443,7 @@ function passcodeMatch(response) {
                  }
                  });
              }
-         }
-         
-         // Call the function immediately to update on page load
-         CheckProgressData();
-         
-         // Set an interval to call the function every 30 seconds
-         var intervalId = setInterval(CheckProgressData, 3000);
-         
+        }
          // (Optional) Clear the interval when the user leaves the page
         //  $(window).unload(function() {
         //      clearInterval(intervalId);
@@ -510,6 +503,10 @@ $('.ticket_dropdown').on('click', function() {
 
 // When the document is fully loaded and ready
 $(document).ready(function() {
+         
+     // Set an interval to call the function every 30 seconds
+     var intervalId = setInterval(CheckProgressData, 3000);
+
     // Initially load passcodes from Local Storage and populate the datalist
     loadPasscodes();
 
