@@ -423,24 +423,6 @@ function passcodeMatch(response) {
     startScanQR(response.event_id);
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         function CheckProgressData() {
             if(event_id_global){
                 console.log('ajax called');
