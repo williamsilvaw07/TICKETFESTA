@@ -4901,11 +4901,10 @@ function tribe_check_progress_data(){
                 ];
             }
         }
-
         // Assuming an instance creation and method call similar to before for checking attendance
         $attendance_totals = new Tribe__Tickets__Attendance_Totals($event_id);
         $total_checked_in = $attendance_totals->get_total_checked_in();
-        $total_issued_tickets = get_post_meta($event_id, '_tribe_progressive_ticket_current_number', true),
+        $total_issued_tickets = get_post_meta($event_id, '_tribe_progressive_ticket_current_number', true);
         // Format the data for checked in total / total issued tickets
         $checked_in_format = sprintf('%d / %d', $total_checked_in, $total_issued_tickets);
 
