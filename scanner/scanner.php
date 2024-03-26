@@ -498,7 +498,7 @@ button i {
 .ticket-info_hidden_all{
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 23px;
 }
 
 .container-fluid , .content-wrapper>.content{
@@ -530,27 +530,19 @@ li.tab a{
 .display-block{
     display:block
 }
-.single_ticket_section{
-    background-color: #19191b;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+.single_ticket_section {
+    background: #19191b;
     position: relative;
-    padding: 17px;
+    padding: 20px 17px;
     border-radius: 10px;
     max-width: 500px;
     width: 100%;
-    align-items: flex-start;
-    display: flex !important;
+    display: flex;
     gap: 35px;
     flex-direction: column;
-    justify-content: center!important;
-    align-items: flex-start!important;
-  margin-top:11px!important;
-  margin: 0 auto;
-  padding-bottom: 20px;
-    padding-top: 20px;
-    margin-bottom: 100px;
+    justify-content: center;
+    align-items: flex-start;
+    margin: 0 auto 100px;
 }
 .ticket-count{
     margin-bottom:0;
