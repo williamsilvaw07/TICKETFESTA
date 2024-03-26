@@ -61,6 +61,9 @@ if (file_exists($custom_footer_path)) {
 .main-header .d-block{
     display:none!important
 }
+footer{
+    display:none!important
+}
 .main-header{
     padding-left: 0;
     padding-right: 0;
