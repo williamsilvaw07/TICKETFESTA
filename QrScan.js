@@ -151,7 +151,13 @@
                     if(response.match){
                         event_id_global = response.event_id;
                         // startScanQR(response.event_id);
-                        passcodeMatch(response);
+                        if (!response || !response.event_data) {
+                            console.error("Invalid response data.");
+                            return;
+                        } else{
+                            $('.tabs-container').show();
+                            passcodeMatch(response);
+                        }
                         
                     }else{
                         noEventFound();
@@ -347,7 +353,7 @@ function updateCheckedInProgress(response) {
                 return;
             }
 
-            $('.tabs-container').show();
+            // $('.tabs-container').show();
             $('.tab-content-container').show();
             $('.event-container .event-image').attr('src', response.event_data.thumbnail_url);
             $('.event-container .name span').text(response.event_data.name);
@@ -430,6 +436,7 @@ function updateCheckedInProgress(response) {
                  },
                  success: function(response) {
                     console.log(response); 
+                    $('.tabs-container').show();
                     passcodeMatch(response);
 
                  },
@@ -451,7 +458,7 @@ function updateCheckedInProgress(response) {
             $('.tabs-container').hide();
             $('.scanner_login_div').show(); 
             $('.change_event_btn').css("display", "none");
-            clearInterval(intervalId);
+            
         });
          // (Optional) Clear the interval when the user leaves the page
         //  $(window).unload(function() {
