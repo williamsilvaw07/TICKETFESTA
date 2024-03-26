@@ -2,6 +2,7 @@
     
     document.addEventListener("DOMContentLoaded", function(event) {
         var event_id_global = '';
+        var changing_event = false;
         // const video = document.getElementById('video');
 
         // Check if getUserMedia is supported
@@ -157,6 +158,7 @@
                         } else{
                             $('.tabs-container').show();
                             $('.tab-content-container').show();
+                            changing_event =  false;
                             passcodeMatch(response);
                         }
                         
@@ -425,7 +427,7 @@ function updateCheckedInProgress(response) {
         }
 
         function CheckProgressData() {
-            if(event_id_global){
+            if(event_id_global && ! changing_event ){
                 console.log('ajax called');
                  $.ajax({
                  url: window.tribe_ajax.ajax_url,
@@ -455,6 +457,7 @@ function updateCheckedInProgress(response) {
 
         $(document).on('click', '.change_event_btn', function() {
             console.log("Button clicked");
+            changing_event = true;
             $('.tabs-container').hide();
             $('.scanner_login_div').show(); 
             $('.change_event_btn').css("display", "none");
