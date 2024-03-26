@@ -444,6 +444,7 @@ function updateCheckedInProgress(response) {
                  });
              }
         }
+        CheckProgressData();
         setInterval(CheckProgressData, 3000);
          // (Optional) Clear the interval when the user leaves the page
         //  $(window).unload(function() {
