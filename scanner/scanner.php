@@ -246,8 +246,9 @@ input#event-pass {
     display: flex;
     flex-direction: column;
     padding: 30px;
-    /* justify-content: center; */
         align-items: center;
+        padding-top: 5px;
+        margin-bottom: 100px;
     }
     input#event-pass {
         margin-bottom: 30px;
