@@ -434,15 +434,21 @@ function passcodeMatch(response) {
                      event_id: event_id_global
                  },
                  success: function(response) {
-                     console.log(response); 
-                     var issuedTickets = parseInt(response.event_data.issued_tickets, 10);
-                     var totalTickets = parseInt(response.event_data.total_tickets_available, 10);
-                       // Check for NaN values after parsing
-                     if (isNaN(issuedTickets) || isNaN(totalTickets)) {
-                         console.error("Error parsing ticket information.");
-                         return;
-                     }
-                 
+                    console.log(response); 
+                    var issuedTickets = parseInt(response.event_data.issued_tickets, 10);
+                    var totalTickets = parseInt(response.event_data.total_tickets_available, 10);
+                    // Check for NaN values after parsing
+                    if (isNaN(issuedTickets) || isNaN(totalTickets)) {
+                        console.error("Error parsing ticket information.");
+                        return;
+                    }
+                    // Calculate the checked-in percentage
+                    var checkedIn = parseInt(response.event_data.checked_in.split(' / ')[0], 10);
+                    var checkedInPercentage = checkedIn === 0 ? 0 : Math.ceil((checkedIn / issuedTickets) * 100); // Round up the percentage
+                    var checkedInText = checkedInPercentage === 0 ? '0%' : checkedInPercentage.toFixed(0) + '%';
+    
+                    updateProgressCircle(issuedTickets, totalTickets);
+
                  },
                  error: function(jqXHR, textStatus, errorThrown) {
                      console.error("AJAX Error:", textStatus, errorThrown);
