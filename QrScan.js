@@ -195,7 +195,7 @@
                         if(response.fullname){
                             $('.checkin-details .name').text(response.fullname);
                             $('.checkin-details .email').text(response.email);
-                            $('.checkin-details .checkin-time').text('checked-in by ' + response.checkin_time);
+                            $('.checkin-details .checkin-time').text('Checked-in at ' + response.checkin_time);
                             $('.checkin-details .scaned_by span').text(response.scaned_by);
                             $('.checkin-details').show();
                         }
