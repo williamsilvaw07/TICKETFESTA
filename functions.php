@@ -4793,16 +4793,16 @@ function checkinTicket(){
             $email = get_post_meta( $ticket_id, '_tribe_tickets_email', true);
             $checkin_details = maybe_unserialize( $checkin_details );
             
-            // Format the date
+            // Assuming $checkin_details['date'] is in a recognizable format
             $date = new DateTime($checkin_details['date']);
-            $formatted_date = $date->format('y-m-d H:i'); // Change format here
+            $formatted_date = $date->format('d-m-y H:i'); // Correct format for day-month-year hour:minute
             
             $response = [
                 'success'      => false,
                 'fullname'     => $fullname,
                 'email'        => $email,
                 'message'      => 'Already Checked In.',
-                'checkin_time' => $formatted_date,  // Updated to use formatted date
+                'checkin_time' => $formatted_date, // Now using the corrected format
                 'scaned_by'    => $checkin_details['scaned_by'],
             ];
             wp_send_json($response);
