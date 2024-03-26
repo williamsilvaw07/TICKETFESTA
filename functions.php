@@ -4630,7 +4630,7 @@ function custom_qr_scanner_shortcode() {
                         <span id="qr_error" style='display:none'>Event not found. Please verify the Passcode</span>
                         <div class="name"></div>
                         <div class="email"></div>
-                        <div class="checkin-time">Check-in time</div>
+                        <div class="checkin-time"></div>
                         <div class="scaned-by"> Scanned by: <span> </span> </div>
                     </div>
                     <div id="video-container">

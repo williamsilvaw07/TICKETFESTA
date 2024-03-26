@@ -180,14 +180,13 @@
                 success: function(response) {
                     if(response.success){
                         $('#qr_error').hide();
-                        $('#qr_error').text(response.message);
                         $('.checkin-details').css("background-color", "green");
                         if(response.fullname){
                             $('.checkin-details .name').text(response.fullname);
                             $('.checkin-details .email').text(response.email);
                             //$('.checkin-details .checkin-time').text('Checked-in at ' + response.checkin_time);
                             //$('.checkin-details .scaned_by span').text(response.scaned_by);
-                            $('.checkin-details').show();
+                           // $('.checkin-details').show();
                         }
                     }else{
                         $('.checkin-details').css("background-color", "#c30101");
