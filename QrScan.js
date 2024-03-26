@@ -547,6 +547,17 @@ $('.ticket_dropdown').on('click', function() {
 });
 
 
+
+
+
+
+    // Event handler for click event on the button with ID 'html5-qrcode-button-camera-start'
+    $('#html5-qrcode-button-camera-start').click(function() {
+        // Toggle visibility of the element with ID 'checkin-details'
+        // This will show the element if it's hidden, or hide it if it's shown
+        $('#checkin-details').toggle();
+    });
+
 })(jQuery);
 
 
