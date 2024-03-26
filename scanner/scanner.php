@@ -543,6 +543,7 @@ li.tab a{
     justify-content: center;
     align-items: flex-start;
     margin: 0 auto 100px;
+    margin-top: 11px;
 }
 .ticket-count{
     margin-bottom:0;
