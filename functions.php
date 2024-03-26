@@ -4879,7 +4879,6 @@ function tribe_check_progress_data(){
     if( $event_id ){
 
         $total_capacity = apply_filters('tribe_tickets_total_event_capacity', null, $event_id);
-        $total_capacity = 0;
         if (null === $total_capacity) {
             $tickets = Tribe__Tickets__Tickets::get_all_event_tickets($event_id);
 
