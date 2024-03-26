@@ -154,6 +154,7 @@
                     // Handle the response from the server
                     console.log('ajax response', response);
                     if(response.match){
+                        event_id_global = response.event_id;
                         // startScanQR(response.event_id);
                         passcodeMatch(response);
                         
@@ -346,8 +347,6 @@ function updateCheckedInProgress(response) {
 
         // Function to handle passcode match response
         function passcodeMatch(response) {
-            event_id_global = response.event_id;
-
             if (!response || !response.event_data) {
                 console.error("Invalid response data.");
                 return;
