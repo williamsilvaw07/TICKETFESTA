@@ -66,7 +66,7 @@
             if(eventID == qr_event_id){
                 checkinTicket(ticket_id);
             }else{
-                $('#qr_error').html('QR Code did not Match with Event Pass.');
+                $('#qr_error').html('Ticket is not valid for this event');
                 $('#event-pass').addClass('error');
                 $('#qr_error').show();
             }
