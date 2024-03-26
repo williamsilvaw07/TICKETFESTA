@@ -65,7 +65,7 @@
 
             if(eventID == qr_event_id){
                 checkinTicket(ticket_id);
-                $('#qr_error').html('Checked-in successfully');
+                
             }else{
                 $('#qr_error').html('Ticket is not valid for this event');
                 $('#event-pass').addClass('error');
@@ -180,6 +180,7 @@
                 success: function(response) {
                     if(response.success){
                         $('#qr_error').hide();
+                        $('#qr_error').text(response.message);
                         $('.checkin-details').css("background-color", "green");
                         if(response.fullname){
                             $('.checkin-details .name').text(response.fullname);

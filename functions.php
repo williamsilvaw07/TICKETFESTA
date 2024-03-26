@@ -4779,7 +4779,7 @@ function checkinTicket(){
             $email = get_post_meta( $ticket_id, '_tribe_tickets_email', true);
             $response = [
                 'success'      => true,
-                'message'      => 'Successfully checked in.',
+                'message'      => 'Checked-in Sccessfully',
                 'fullname'     => $fullname,
                 'email'        => $email,
                 'scaned_by'    => $scaned_by,
@@ -4801,7 +4801,7 @@ function checkinTicket(){
                 'success'      => false,
                 'fullname'     => $fullname,
                 'email'        => $email,
-                'message'      => 'Already Checked In.',
+                'message'      => 'Already Checked-in',
                 'checkin_time' => $formatted_date, // Now using the corrected format
                 'scaned_by'    => $checkin_details['scaned_by'],
             ];
