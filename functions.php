@@ -4870,6 +4870,60 @@ function generate_unique_random_hash($length) {
 
 
 
+add_action('wp_ajax_check_progress_data', 'tribe_check_progress_data');
+add_action('wp_ajax_nopriv_check_progress_data', 'tribe_check_progress_data');
+
+function tribe_check_progress_data(){
+
+    $event_id = isset($_POST['event_id']) ? esc_attr( $_POST['event_id'] ) : false;
+    if( $event_id ){
+
+        $total_capacity = apply_filters('tribe_tickets_total_event_capacity', null, $event_id);
+        $total_capacity = 0;
+        if (null === $total_capacity) {
+            $tickets = Tribe__Tickets__Tickets::get_all_event_tickets($event_id);
+
+            foreach ($tickets as $ticket) {
+                $ticket_capacity = tribe_tickets_get_capacity($ticket->ID); // Retrieve ticket capacity
+                $total_capacity += $ticket_capacity;
+
+                // Retrieve the number of issued tickets for this ticket
+                $issued_tickets_message = tribe_tickets_get_ticket_stock_message($ticket, __('issued', 'event-tickets'));
+
+                // Extract the number of issued tickets from the message
+                preg_match('/\d+/', $issued_tickets_message, $matches);
+                $issued_tickets = isset($matches[0]) ? $matches[0] : 0;
+
+                // Add each ticket's name, capacity, and issued tickets to the ticket list
+                $ticket_list[] = [
+                    'name' => $ticket->name,
+                    'capacity' => $ticket_capacity,
+                    'issued_tickets' => $issued_tickets,
+                ];
+            }
+        }
+
+        $event_data = [
+            'start_date'              => get_post_meta($event_id, '_EventStartDate', true),
+            'issued_tickets'          => get_post_meta($event_id, '_tribe_progressive_ticket_current_number', true),
+            'total_tickets_available' => $total_capacity,
+            'ticket_list'             => $ticket_list,
+            'name'                    => get_the_title($event_id),
+            'thumbnail_url'           => get_the_post_thumbnail_url($event_id, 'medium'),
+        ];
+
+        $response = [
+            'event_data' => $event_data,
+        ];
+    
+        wp_send_json($response);
+    }else{
+        wp_send_json_error('No tickets found for this event.');
+    }
+}
+
+
+
 
 
 
