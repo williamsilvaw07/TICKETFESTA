@@ -239,8 +239,19 @@ input#event-pass {
         margin-top: 20px;
         font-weight: bold;
     }
-
-
+#qr_error{
+    font-weight: 700;
+    font-size: 21px;
+}
+.checkin-details{
+    background-color: red;
+    text-align: center;
+    border-radius: 10px;
+    max-width: 350px;
+    margin: 0 auto;
+    padding: 5px;
+    font-size: 14px;
+}
 
     div#video-container {
     display: flex;

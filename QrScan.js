@@ -188,7 +188,7 @@
                             $('.checkin-details').show();
                         }
                     }else{
-                        $('.checkin-details').css("background-color", "red");
+                        $('.checkin-details').css("background-color", "#c30101");
                         $('#qr_error').text(response.message);
                         $('#qr_error').show();
                         if(response.fullname){
