@@ -4914,6 +4914,7 @@ function tribe_check_progress_data(){
             'issued_tickets'          => $total_issued_tickets,
             'total_tickets_available' => $total_capacity,
             'ticket_list'             => $ticket_list,
+            'event_id'                => $event_id,
             'name'                    => get_the_title($event_id),
             'checked_in'              => $checked_in_format,
             'thumbnail_url'           => get_the_post_thumbnail_url($event_id, 'medium'),

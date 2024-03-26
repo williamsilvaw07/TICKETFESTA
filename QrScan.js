@@ -346,6 +346,8 @@ function updateCheckedInProgress(response) {
 
         // Function to handle passcode match response
         function passcodeMatch(response) {
+            event_id_global = response.event_id;
+
             if (!response || !response.event_data) {
                 console.error("Invalid response data.");
                 return;
@@ -419,7 +421,6 @@ function updateCheckedInProgress(response) {
             });
 
             // Proceed with other functions like startScanQR...
-            event_id_global = response.event_id;
             startScanQR(response.event_id);
         }
 
