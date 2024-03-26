@@ -444,8 +444,15 @@ function updateCheckedInProgress(response) {
                  });
              }
         }
-        CheckProgressData();
-        setInterval(CheckProgressData, 3000);
+       
+
+        $(document).ready(function() {
+            CheckProgressData();
+            var intervalId = setInterval(function() {
+                // Your function to be called every 3 seconds
+                CheckProgressData();
+            }, 3000);
+        });
          // (Optional) Clear the interval when the user leaves the page
         //  $(window).unload(function() {
         //      clearInterval(intervalId);
@@ -474,6 +481,8 @@ $('.ticket_dropdown').on('click', function() {
         iconElement.removeClass('fa-angle-up').addClass('fa-angle-down');
     }
 });
+
+
 
 })(jQuery);
 
