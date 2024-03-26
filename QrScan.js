@@ -98,12 +98,7 @@
         ///function to change event passcode
    
             // Delegating click event for dynamically added content
-            $(document).on('click', '.change_event_btn', function() {
-                console.log("Button clicked");
-                $('.tabs-container').hide();
-                $('.scanner_login_div').show(); 
-                $('.change_event_btn').css("display", "none");
-            });
+
     
 
 
@@ -446,12 +441,17 @@ function updateCheckedInProgress(response) {
         }
        
 
-        $(document).ready(function() {
+        var intervalId = setInterval(function() {
+            // Your function to be called every 3 seconds
             CheckProgressData();
-            var intervalId = setInterval(function() {
-                // Your function to be called every 3 seconds
-                CheckProgressData();
-            }, 3000);
+        }, 3000);
+
+        $(document).on('click', '.change_event_btn', function() {
+            console.log("Button clicked");
+            $('.tabs-container').hide();
+            $('.scanner_login_div').show(); 
+            $('.change_event_btn').css("display", "none");
+            clearInterval(intervalId);
         });
          // (Optional) Clear the interval when the user leaves the page
         //  $(window).unload(function() {
