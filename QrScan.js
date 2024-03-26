@@ -156,6 +156,7 @@
                             return;
                         } else{
                             $('.tabs-container').show();
+                            $('.tab-content-container').show();
                             passcodeMatch(response);
                         }
                         
@@ -354,7 +355,6 @@ function updateCheckedInProgress(response) {
             }
 
             // $('.tabs-container').show();
-            $('.tab-content-container').show();
             $('.event-container .event-image').attr('src', response.event_data.thumbnail_url);
             $('.event-container .name span').text(response.event_data.name);
             $('.event-container .date span').text(response.event_data.start_date);
