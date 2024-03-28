@@ -11,5 +11,5 @@ function add_event_attendee(){
     $result = [
         'event_id' => $event_id
     ];
-    wp_send_json_success( );
+    wp_send_json_success( $result);
 }
