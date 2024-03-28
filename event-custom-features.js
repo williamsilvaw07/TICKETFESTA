@@ -2,7 +2,7 @@
 
     $(document).ready(function() {
         console.log('add_attendee 99');
-        $('bosy').on('click', function () {
+        $('body').on('click', function () {
             console.log('body');
         });
         $('.tickets_checkin').on('click', request_add_attendee());
