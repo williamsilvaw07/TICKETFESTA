@@ -11,6 +11,6 @@ function custom_add_event_attendee(){
         'event_id' => $event_id,
         'data' => get_post_meta( $event_id),
     ];
-    var_dump( $event_id);
+    var_dump( $result);
     die();
 }

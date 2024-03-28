@@ -7,7 +7,7 @@
 
     
     function request_add_attendee(){
-        let eventID = $(this).data('event-id');
+        let eventID = $('.add_attendee').data('event-id');
         $.ajax({
             url: window.tribe_ajax.ajax_url,
             type: 'POST',
