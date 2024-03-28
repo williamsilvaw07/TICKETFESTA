@@ -2,7 +2,7 @@
 
 function add_attendee_enqueue_custom_frontend_js(){
 
-    wp_enqueue_script('custom-event-main-js', get_stylesheet_directory_uri() . '/event-custom-features.js', array('jquery'), $script_version, true);
+    wp_enqueue_script('custom-event-main-js', get_stylesheet_directory_uri() . '/event-custom-features.js', array('jquery'), time(), true);
     
     wp_localize_script(
         'custom-event-main-js',
@@ -11,6 +11,34 @@ function add_attendee_enqueue_custom_frontend_js(){
                 'ajax_url' => admin_url('admin-ajax.php'),
             )
     );
+    ?>
+    <script>
+        jQuery(document).ready(function() {
+            console.log('add_attendee 99');
+            jQuery('.add_attendee').on('click', request_add_attendee());
+        });
+
+        
+        function request_add_attendee(){
+            let eventID = jQuery('.add_attendee').data('event-id');
+            jQuery.ajax({
+                url: window.tribe_ajax.ajax_url,
+                type: 'POST',
+                data: {
+                    action: 'custom_add_event_attendee',
+                    event_id : eventID
+                },
+                success: function(response) {
+                    console.log('response ', response)
+                },
+                error: function(xhr, status, error) {
+                    console.error(xhr.responseText);
+                }
+            });
+        }
+
+    </script>
+    <?php
 }
 
 add_action('wp_enqueue_scripts', 'add_attendee_enqueue_custom_frontend_js', 99);
