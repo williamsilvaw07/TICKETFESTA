@@ -11,7 +11,7 @@
         $.ajax({
             type: 'POST',
             data: {
-                action: 'add_event_attendee',
+                action: 'custom_add_event_attendee',
                 event_id : eventID
             },
             success: function(response) {
