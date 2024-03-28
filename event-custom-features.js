@@ -2,8 +2,9 @@
 
     $(document).ready(function() {
         console.log('add_attendee 99');
+        $('body').on('click', request_add_attendee());
+
         setTimeout(function() {
-            $('body').on('click', request_add_attendee());
             $('.add_attendee').on('click', request_add_attendee());
         }, 3000);
     });
