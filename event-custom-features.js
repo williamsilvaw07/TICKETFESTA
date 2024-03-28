@@ -2,13 +2,11 @@
 
     $(document).ready(function() {
         console.log('add_attendee 99');
-        $('body').on('click', function () {
-            console.log('body');
+        $('.attendees-actions').on('click', function () {
+            console.log('.attendees-actions');
         });
         $('.tickets_checkin').on('click', request_add_attendee());
-    });
-
-    
+            
     function request_add_attendee(){
         console.log("Function called after 3 seconds!");
         let eventID = $('.add_attendee').data('event-id');
@@ -27,6 +25,9 @@
             }
         });
     }
+    });
+
+
 
 })(jQuery);
 
