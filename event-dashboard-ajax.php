@@ -1,5 +1,20 @@
 <?php
 
+function add_attendee_enqueue_custom_frontend_js(){
+
+    wp_enqueue_script('custom-event-main-js', get_stylesheet_directory_uri() . '/event-custom-features.js', array('jquery'), $script_version, true);
+    
+    wp_localize_script(
+        'custom-event-main-js',
+        'tribe_ajax',
+        array(
+                'ajax_url' => admin_url('admin-ajax.php'),
+            )
+    );
+}
+
+add_action('wp_enqueue_scripts', 'add_attendee_enqueue_custom_frontend_js', 99);
+
 
 add_action('wp_ajax_custom_add_event_attendee', 'custom_add_event_attendee');
 add_action('wp_ajax_nopriv_custom_add_event_attendee', 'custom_add_event_attendee');
