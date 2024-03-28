@@ -15,7 +15,7 @@
                 event_id : eventID
             },
             success: function(response) {
-                console.log('response ', response)
+                // console.log('response ', response)
             },
             error: function(xhr, status, error) {
                 console.error(xhr.responseText);
