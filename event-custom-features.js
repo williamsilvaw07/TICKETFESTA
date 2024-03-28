@@ -1,6 +1,7 @@
 (function($) {
 
     $(document).ready(function() {
+        console.log('add_attendee 99');
         $('.add_attendee').on('click', request_add_attendee());
     });
 
