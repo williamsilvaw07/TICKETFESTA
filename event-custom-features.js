@@ -6,7 +6,7 @@
     });
 
     
-    function request_add_attendee(this){
+    function request_add_attendee(){
         let eventID = $(this).data('event-id');
         $.ajax({
             type: 'POST',
