@@ -3782,7 +3782,15 @@ function enqueue_custom_frontend_js()
         );
     }
 
-    
+    wp_enqueue_script('custom-event-main-js', get_stylesheet_directory_uri() . '/event-custom-features.js', array('jquery'), $script_version, true);
+
+    wp_localize_script(
+        'custom-event-main-js',
+        'tribe_ajax',
+        array(
+            'ajax_url' => admin_url('admin-ajax.php'),
+        )
+    );
 }
 
 // Hook your custom function into 'wp_enqueue_scripts' action.
@@ -4933,6 +4941,7 @@ function tribe_check_progress_data(){
 
 
 
+require_once get_stylesheet_directory() . '/event-dashboard-ajax.php';
 
 
 
