@@ -2,11 +2,14 @@
 
     $(document).ready(function() {
         console.log('add_attendee 99');
-        $('.add_attendee').on('click', request_add_attendee());
+        setTimeout(function() {
+            $('.add_attendee').on('click', request_add_attendee());
+        }, 3000);
     });
 
     
     function request_add_attendee(){
+        console.log("Function called after 3 seconds!");
         let eventID = $('.add_attendee').data('event-id');
         $.ajax({
             url: window.tribe_ajax.ajax_url,
