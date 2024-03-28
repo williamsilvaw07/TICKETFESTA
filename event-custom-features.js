@@ -1,10 +1,6 @@
 (function($) {
 
     $(document).ready(function() {
-        console.log('add_attendee 99');
-        $('.attendees-actions').on('click', function () {
-            console.log('.attendees-actions');
-        });
         $('.tickets_checkin').on('click', request_add_attendee());
             
     function request_add_attendee(){
