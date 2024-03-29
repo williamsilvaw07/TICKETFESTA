@@ -58,32 +58,6 @@ add_action( 'generate_header', 'generatepress_child_custom_header_layout', 5 );
 
 
 
-/////FUNCTION TO AUTO COMPLEATE THE ORDERS 
-add_action('woocommerce_payment_complete', 'auto_complete_digital_orders');
-
-function auto_complete_digital_orders($order_id)
-{
-    $order = wc_get_order($order_id);
-
-    if (!$order) {
-        return;
-    }
-
-    $items = $order->get_items();
-
-    foreach ($items as $item) {
-        $product = $item->get_product();
-
-        // Check if there's any non-downloadable product.
-        if (!$product->is_downloadable()) {
-            return; // Exit if any product is not downloadable.
-        }
-    }
-
-    // If all items are downloadable, update order status to completed.
-    $order->update_status('completed');
-}
-
 
 
 
@@ -112,22 +86,11 @@ function woocommerce_cart_item_name_event_title($title, $values, $cart_item_key)
     return $title;
 }
 
-/**
- * Flux checkout - Allow custom CSS files.
- *
- * @param array $sources Sources.
- *
- * @return array
- */
-function flux_allow_custom_css_files($sources)
-{
-    $sources[] = 'http://site.com/wp-content/themes/storefront/style.css';
-    return $sources;
-}
-add_filter('flux_checkout_allowed_sources', 'flux_allow_custom_css_files');
 
-add_action('flux_before_layout', 'get_header');
-add_action('flux_after_layout', 'get_footer');
+
+
+
+
 
 ////FONTASWER
 
@@ -153,13 +116,11 @@ add_action('wp_enqueue_scripts', 'enqueue_font_awesome');
 
 
 
-//* Do NOT include the opening php tag
 
 
 
 
-
-
+/////FUNCTION TO AUTO COMPLEATE THE ORDERS 
 add_action('woocommerce_payment_complete', 'custom_woocommerce_auto_complete_order');
 function custom_woocommerce_auto_complete_order($order_id)
 {
