@@ -1,6 +1,6 @@
 <?php
 
-
+include ('./coupon_auto_apply.php');
 
 
 // header layout
