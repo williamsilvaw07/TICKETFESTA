@@ -133,10 +133,11 @@ $attributes = apply_filters( 'tribe_tickets_block_ticket_html_attributes', $attr
 >
 
 	<?php $this->template( 'v2/tickets/item/content', $context ); ?>
-
+<?php if(tribe_events_ticket_is_on_sale( $ticket ) ){?>
 	<?php $this->template( 'v2/tickets/item/quantity', $context ); ?>
 
 	<?php $this->template( 'v2/tickets/item/quantity-mini', $context ); ?>
+<?php	}?>
 
 	<?php $this->template( 'v2/tickets/item/opt-out', $context ); ?>
 
