@@ -6,7 +6,9 @@ function start_session() {
         session_start();
     }
 
-    $_SESSION['applied_coupon'] = sanitize_text_field($_GET['coupon']);
+    if (isset($_GET['coupon'])) {
+        $_SESSION['applied_coupon'] = sanitize_text_field($_GET['coupon']);
+    }
 }
 
 // Function to set session variable if coupon parameter is present
@@ -17,7 +19,7 @@ function set_coupon_session() {
 }
 
 // Hook the function to set session variable when the WooCommerce product page loads
-add_action('woocommerce_before_single_product', 'set_coupon_session');
+//add_action('woocommerce_before_single_product', 'set_coupon_session');
 
 // Function to display the price drop
 function display_price_with_discount() {
@@ -40,7 +42,7 @@ function display_price_with_discount() {
 }
 
 // Hook the function to display the price drop to the WooCommerce product page
-add_action('woocommerce_single_product_summary', 'display_price_with_discount', 10);
+//add_action('woocommerce_single_product_summary', 'display_price_with_discount', 10);
 
 
 // Function to automatically apply coupon when product is added to cart
@@ -49,7 +51,7 @@ function auto_apply_coupon_to_cart($cart) {
         return;
     }
 
-    if (empty($cart->get_applied_coupons())) {
+    // if (empty($cart->get_applied_coupons())) {
         if (isset($_SESSION['applied_coupon'])) {
             $coupon_code = $_SESSION['applied_coupon'];
             $coupon = new WC_Coupon($coupon_code);
@@ -57,7 +59,7 @@ function auto_apply_coupon_to_cart($cart) {
                 $cart->apply_coupon($coupon_code);
             }
         }
-    }
+    // }
 }
 
 // Hook the function to automatically apply coupon to the cart
