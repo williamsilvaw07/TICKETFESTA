@@ -58,32 +58,6 @@ add_action( 'generate_header', 'generatepress_child_custom_header_layout', 5 );
 
 
 
-/////FUNCTION TO AUTO COMPLEATE THE ORDERS 
-add_action('woocommerce_payment_complete', 'auto_complete_digital_orders');
-
-function auto_complete_digital_orders($order_id)
-{
-    $order = wc_get_order($order_id);
-
-    if (!$order) {
-        return;
-    }
-
-    $items = $order->get_items();
-
-    foreach ($items as $item) {
-        $product = $item->get_product();
-
-        // Check if there's any non-downloadable product.
-        if (!$product->is_downloadable()) {
-            return; // Exit if any product is not downloadable.
-        }
-    }
-
-    // If all items are downloadable, update order status to completed.
-    $order->update_status('completed');
-}
-
 
 
 
@@ -112,22 +86,11 @@ function woocommerce_cart_item_name_event_title($title, $values, $cart_item_key)
     return $title;
 }
 
-/**
- * Flux checkout - Allow custom CSS files.
- *
- * @param array $sources Sources.
- *
- * @return array
- */
-function flux_allow_custom_css_files($sources)
-{
-    $sources[] = 'http://site.com/wp-content/themes/storefront/style.css';
-    return $sources;
-}
-add_filter('flux_checkout_allowed_sources', 'flux_allow_custom_css_files');
 
-add_action('flux_before_layout', 'get_header');
-add_action('flux_after_layout', 'get_footer');
+
+
+
+
 
 ////FONTASWER
 
@@ -153,13 +116,11 @@ add_action('wp_enqueue_scripts', 'enqueue_font_awesome');
 
 
 
-//* Do NOT include the opening php tag
 
 
 
 
-
-
+/////FUNCTION TO AUTO COMPLEATE THE ORDERS 
 add_action('woocommerce_payment_complete', 'custom_woocommerce_auto_complete_order');
 function custom_woocommerce_auto_complete_order($order_id)
 {
@@ -906,6 +867,8 @@ function iam00_create_event()
 }
 add_action('wp_ajax_add_event', 'iam00_create_event');
 
+
+
 /**
  * Recommended way to include parent theme styles.
  * (Please see http://codex.wordpress.org/Child_Themes#How_to_Create_a_Child_Theme)
@@ -915,7 +878,7 @@ add_action('wp_ajax_add_event', 'iam00_create_event');
 add_action('wp_enqueue_scripts', 'generatepress_child_style');
 function generatepress_child_style()
 {
-    if (is_page_template('organizer-template.php') || is_page_template('organizer-coupons.php')) {
+    if (is_page_template('organizer-template.php') || is_page_template('organizer-coupons.php') || is_page_template('scanner/scanner.php')) {
         /** Call landing-page-template-one enqueue */
         wp_enqueue_style('fontawsome', get_stylesheet_directory_uri() . '/adminlte/plugins/fontawesome-free/css/all.min.css');
         wp_enqueue_style('tempusdominus', get_stylesheet_directory_uri() . '/adminlte/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css');
@@ -3768,12 +3731,11 @@ function enqueue_custom_frontend_js()
     // Enqueue your custom script, the 'get_stylesheet_directory_uri()' function points to your child theme's root directory.
     wp_enqueue_script('custom-frontend-js', get_stylesheet_directory_uri() . '/custom-function-frontend.js', array('jquery'), $script_version, true);
     if ( is_page( 'scan-code' ) ) {
-
-    wp_enqueue_script('html5-qrcode', 'https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js', array('jquery'), null, true);
-        wp_enqueue_script('custom-qr-scanner-10', 'https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js', array('jquery'), $script_version, true);
-        wp_enqueue_script('custom-qr-main-js-10', get_stylesheet_directory_uri() . '/QrScan.js', array('jquery', 'custom-qr-scanner-10'), $script_version, true);
+        wp_enqueue_script('html5-qrcode', '//cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.7/html5-qrcode.min.js', array('jquery'), null, true);
+        // wp_enqueue_script('custom-qr-scanner-custom', 'https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js', array('jquery'), $script_version, true);
+        wp_enqueue_script('custom-qr-main-js', get_stylesheet_directory_uri() . '/QrScan.js', array('jquery', 'html5-qrcode'), $script_version, true);
         wp_localize_script(
-            'custom-qr-main-js-10',
+            'custom-qr-main-js',
             'tribe_ajax',
             array(
                 'ajax_url' => admin_url('admin-ajax.php'),
@@ -3781,7 +3743,15 @@ function enqueue_custom_frontend_js()
         );
     }
 
-    
+    wp_enqueue_script('custom-event-main-js', get_stylesheet_directory_uri() . '/event-custom-features.js', array('jquery'), $script_version, true);
+
+    wp_localize_script(
+        'custom-event-main-js',
+        'tribe_ajax',
+        array(
+            'ajax_url' => admin_url('admin-ajax.php'),
+        )
+    );
 }
 
 // Hook your custom function into 'wp_enqueue_scripts' action.
@@ -4495,55 +4465,154 @@ add_action('wp_enqueue_scripts', 'custom_enqueue_scripts');
 
 
 function custom_qr_scanner_shortcode() {
+    enqueue_custom_frontend_js();
     ob_start();
     ?>
     <style>
-    #video-container {
-        width: 100%;
-        text-align: center;
-    }
-
-    #video {
-        width: 100%;
-        max-width: 600px;
-    }
-
-    #result {
-        margin-top: 20px;
-        font-weight: bold;
-    }
-
-    div#video-container {
-    display: flex;
-    flex-direction: column;
-    padding: 30px;
-    /* justify-content: center; */
-        align-items: center;
-    }
-    input#event-pass {
-        margin-bottom: 30px;
-    }
-    input#event-pass.error {
-        border: 2px solid #ea4335 !important;
-    }
+   
     </style>
     <!-- <div id="qr-reader" style="width: 100%; height: auto;"></div>
     <div id="qr-reader-results"></div>
 
     -->
 
-    <div id="video-container">
-        <input type="text" id="event-pass" name="event-pass" placeholder="enter event pass">
-        <video id="video" playsinline></video>
-        <div id="result"></div>
-        <span id="event_not_found" style='display:none'>No event found that for the event pass.</span>
-        <button id="scan-button" >Scan QR Code</button>
-        <div class="checkin-details"  style='display:none'>
-            <div class="name"></div>
-            <div class="email"></div>
-            <div class="checkin-time"></div>
-        </div>
+    <div class="scanner_login_div"> 
+    <h3>Log in to scan ticket QR codes.</h3>
+<p>You can locate the event passcode on the organizer's dashboard under the events section.</p>
+<input type="text" id="event-pass" name="event-pass" placeholder="Event Passcode" list="passcodes" autocomplete="on">
+<datalist id="passcodes"></datalist>
+<button id="check-passcode">
+    <i class="fas fa-sign-in-alt"></i> Login
+</button>
+    <span id="event_not_found" style='display:none'>Event not found. Please verify the Passcode</span>
+</div>
+
+    <?php 
+
+    ?>
+
+            <div class="tabs-container" style="display: none">
+      
+ 
+                <ul class="tabs-nav">
+  <li class="tab tab1 active"><a href="#tab1"><i class="fa-solid fa-calendar-week"></i>Event Details</a></li>
+<li class="tab tab2"><a href="#tab2"><i class="fa-solid fa-camera"></i> Scan QR Code</a></li>
+
+
+                </ul>
+                <div class="main_div_event_data">
+                <div class="event_data">
+            <div class="event-container ">
+                        <div class="name"><span> </span>  </div>
+                        <div class="date"><span> </span> </div>
+</div>
+</div>
+
+
+
+                
+
+            <div class="tab-content-container" style="display: none">
+                <div class="tab-content tab-conent-1 active" id="tab1">
+
+
+
+
+
+                <div class="main_stats">
+
+                <div class="ticket_sold_main_stats  main_stats_block">
+                <div class="ticket-progress-container_main">
+               <div class="ticket-progress-container">
+               <svg class="progress-ring" width="58" height="58">
+    <circle class="progress-ring__circle-bg" cx="29" cy="29" r="24" stroke-width="6"></circle> <!-- Background circle -->
+    <circle class="progress-ring__circle" cx="29" cy="29" r="24" stroke-width="6"></circle> <!-- Foreground circle -->
+</svg>
+        <div class="progress-percentage">0%</div>
     </div>
+    
+
+    <div class="ticket-info info_div">
+        <h6>Total Ticket Sold</h6>
+        <p class="stats_count_main ticket-count">0<span>/</span>0</p>
+       
+        </div>
+        </div>
+    <i class="fas fa-ticket-alt"></i>
+
+</div>
+
+<div class="ticket_checkedin_main_stats main_stats_block event-container">
+    <i class="fas fa-check-circle"></i>
+    <div class="checkedin_ticket-info info_div">
+        <h6>Checked-in Tickets</h6>
+        <p class="stats_count_main checkedin_ticket-count"><span></span></p>
+       
+        </div>
+    <div class="checkedin-progress-ring-container">
+       
+    </div>
+
+</div>  
+
+
+                </div>
+
+
+
+
+
+
+
+
+
+                    <div class="event-container single_ticket_section">
+
+                    <div class="ticket_dropdown">
+    <h6>Ticket Types Breakdown:</h6>
+    <i class="fas fa-angle-down"></i>
+</div>
+
+                    <div class="event-container single_ticket_section_inner">
+                        <img src="#" alt="" class="event-image">     
+               <!-- <div class="location">Location: </div>-->
+  <div class="ticket-info-container_main">
+          <div class="ticket-info_hidden_all">
+            <ul>
+                <!-- Ticket list will be dynamically populated here -->
+            </ul>
+            
+</div>
+
+    </div>
+                
+</div>
+</div>
+                
+
+
+</div>
+
+
+<div class="tab-content tab-conent-2" id="tab2">
+                    <div class="checkin-details"  style='display:none'>
+                        <span id="qr_error" style='display:none'>Event not found. Please verify the Passcode</span>
+                        <div class="name"></div>
+                        <div class="email"></div>
+                        <div class="checkin-time"></div>
+                        <div class="scaned-by"> Scanned by: <span> </span> </div>
+                    </div>
+                    <div id="video-container">
+                        <!-- <input type="text" id="event-pass" name="event-pass" placeholder="enter event pass"> -->
+                        <!-- <video id="video" playsinline style="width: 500px"></video> -->
+                        <div id="qr-reader" class="qr-reader"></div>
+                        <!-- <button id="scan-button" >Scan QR Code</button> -->
+                        
+                    </div>
+                </div>
+            </div>
+            </div>
+            </div>
     <?php
     return ob_get_clean();
 }
@@ -4553,36 +4622,96 @@ add_shortcode('custom_qr_scanner', 'custom_qr_scanner_shortcode');
 add_action('wp_ajax_validate_event_pass', 'validate_event_pass');
 add_action('wp_ajax_nopriv_validate_event_pass', 'validate_event_pass'); // If you want to allow non-logged-in users to access the AJAX endpoint
 
+
 function validate_event_pass() {
-    // Your AJAX handling logic goes here
-    // You can access the posted data via $_POST
-    // Process the data, perform actions, and generate a response
-    $event_pass = isset(  $_POST['event_pass'] ) ? esc_attr( $_POST['event_pass']) : false;
+    $event_pass = isset($_POST['event_pass']) ? esc_attr($_POST['event_pass']) : false;
     $events = get_posts_by_event_pass($event_pass);
-    $match  =  false;
-    $event_id =  null;
-    foreach($events as $event){
-        if(isset($event->ID)){
-            $match    =  true;
+    $match = false;
+    $event_id = null;
+    $event_data = [];
+    $shortcode_output = '';
+    
+
+    foreach ($events as $event) {
+        $ticket_list = []; // Reset ticket list for each event
+
+        if (isset($event->ID)) {
+            $match = true;
             $event_id = $event->ID;
+            $total_capacity = apply_filters('tribe_tickets_total_event_capacity', null, $event_id);
+
+            $total_issued_tickets = 0; // Total issued tickets for the ratio calculation
+            if (null === $total_capacity) {
+                $tickets = Tribe__Tickets__Tickets::get_all_event_tickets($event_id);
+                $total_capacity = 0;
+
+                foreach ($tickets as $ticket) {
+                    $ticket_capacity = tribe_tickets_get_capacity($ticket->ID); // Retrieve ticket capacity
+                    $total_capacity += $ticket_capacity;
+
+                    // Retrieve the number of issued tickets for this ticket
+                    $issued_tickets_message = tribe_tickets_get_ticket_stock_message($ticket, __('issued', 'event-tickets'));
+                    preg_match('/\d+/', $issued_tickets_message, $matches);
+                    $issued_tickets = isset($matches[0]) ? intval($matches[0]) : 0;
+
+                    $total_issued_tickets += $issued_tickets; // Summing up issued tickets
+
+                    // Add each ticket's name, capacity, and issued tickets to the ticket list
+                    $ticket_list[] = [
+                        'name' => $ticket->name,
+                        'capacity' => $ticket_capacity,
+                        'issued_tickets' => $issued_tickets,
+                    ];
+                }
+            }
+
+            // Assuming an instance creation and method call similar to before for checking attendance
+            $attendance_totals = new Tribe__Tickets__Attendance_Totals($event_id);
+            $total_checked_in = $attendance_totals->get_total_checked_in();
+
+            // Format the data for checked in total / total issued tickets
+            $checked_in_format = sprintf('%d / %d', $total_checked_in, $total_issued_tickets);
+
+            $start_date = get_post_meta($event_id, '_EventStartDate', true);
+            $start_date_timestamp = strtotime($start_date);
+            $day_of_week = date('D', $start_date_timestamp);
+            $day_of_month = date('jS', $start_date_timestamp);
+            $month = date('M', $start_date_timestamp);
+            $time = date('H:i', $start_date_timestamp);
+            $formatted_start_date = "$day_of_week, $day_of_month $month at $time";
+
+            $event_data = [
+                'start_date' => $formatted_start_date,
+                'issued_tickets' => $total_issued_tickets,
+                'total_tickets_available' => $total_capacity,
+                'ticket_list' => $ticket_list,
+                'name' => get_the_title($event_id),
+                'thumbnail_url' => get_the_post_thumbnail_url($event_id, 'medium'),
+                'checked_in' => $checked_in_format, //"checked in / total" format
+            ];
+
+            // Generate shortcode output for attendees report
+            $shortcode_output = do_shortcode('[tribe_community_tickets view="attendees_report" id="' . $event_id . '"]');
         }
     }
-    $response = array(
-        'match'    =>  $match,
-        'event_id' =>  $event_id,
-    );
-      
-   
 
-    // Send the response back to the client
+    $response = [
+        'match' => $match,
+        'event_id' => $event_id,
+        'event_data' => $event_data,
+        'shortcode_output' => $shortcode_output, // Include the shortcode output in the response
+    ];
+
     wp_send_json($response);
-
-    // Always remember to exit after sending the response
     wp_die();
 }
+// Remember to properly hook your function to WordPress AJAX actions if it's intended for AJAX.
+
 
 add_action('wp_ajax_custom_check_in_ticket', 'checkinTicket');
 add_action('wp_ajax_nopriv_custom_check_in_ticket', 'checkinTicket'); 
+
+
 
 function checkinTicket(){
     $ticket_id = isset(  $_POST['ticket_id'] ) ? esc_attr( $_POST['ticket_id']) : false;
@@ -4600,19 +4729,29 @@ function checkinTicket(){
             update_post_meta( $ticket_id, '_tribe_tpp_checkedin', 1 );
 
             $now = new DateTime();
-            $formatted_datetime = $now->format('Y-m-d H:i:s');
+     
+            $formatted_datetime = $now->format('d F Y H:i:s');
+
             $checkin_details = [
-                'date' => $formatted_datetime,
-                'source' => 'qr-code',
+                'date'      => $formatted_datetime,
+                'source'    => 'qr-code',
             ];
+            $scaned_by = '';
+            $current_user = wp_get_current_user();
+            if ( $current_user->ID != 0 ) {
+                $scaned_by = $current_user->user_email;
+                $checkin_details['scaned_by'] = $user_email;
+            }
+
             update_post_meta( $ticket_id, '_tribe_wooticket_checkedin_details', $checkin_details );
             $fullname = get_post_meta( $ticket_id, '_tribe_tickets_full_name', true);
             $email = get_post_meta( $ticket_id, '_tribe_tickets_email', true);
             $response = [
                 'success'      => true,
-                'message'      => 'Successfully checked in.',
+                'message'      => 'Checked-in Sccessfully',
                 'fullname'     => $fullname,
                 'email'        => $email,
+                'scaned_by'    => $scaned_by,
                 'checkin_time' => $formatted_datetime,
             ];
             wp_send_json($response);
@@ -4622,12 +4761,18 @@ function checkinTicket(){
             $fullname = get_post_meta( $ticket_id, '_tribe_tickets_full_name', true);
             $email = get_post_meta( $ticket_id, '_tribe_tickets_email', true);
             $checkin_details = maybe_unserialize( $checkin_details );
+            
+            // Assuming $checkin_details['date'] is in a recognizable format
+            $date = new DateTime($checkin_details['date']);
+            $formatted_date = $date->format('d-m-y H:i'); // Correct format for day-month-year hour:minute
+            
             $response = [
-                'success'         => false,
-                'fullname'        => $fullname,
-                'email'           => $email,
-                'message'         => 'Already Checked In.',
-                'checkin_time'    => $checkin_details['date'],
+                'success'      => false,
+                'fullname'     => $fullname,
+                'email'        => $email,
+                'message'      => 'Already Checked-in',
+                'checkin_time' => $formatted_date, // Now using the corrected format
+                'scaned_by'    => $checkin_details['scaned_by'],
             ];
             wp_send_json($response);
         }
@@ -4694,57 +4839,83 @@ function generate_unique_random_hash($length) {
 
 
 
+add_action('wp_ajax_check_progress_data', 'tribe_check_progress_data');
+add_action('wp_ajax_nopriv_check_progress_data', 'tribe_check_progress_data');
 
+function tribe_check_progress_data(){
 
+    $event_id = isset($_POST['event_id']) ? esc_attr( $_POST['event_id'] ) : false;
+    if( $event_id ){
 
+        $total_capacity = apply_filters('tribe_tickets_total_event_capacity', null, $event_id);
+        if (null === $total_capacity) {
+            $tickets = Tribe__Tickets__Tickets::get_all_event_tickets($event_id);
 
+            foreach ($tickets as $ticket) {
+                $ticket_capacity = tribe_tickets_get_capacity($ticket->ID); // Retrieve ticket capacity
+                $total_capacity += $ticket_capacity;
 
+                // Retrieve the number of issued tickets for this ticket
+                $issued_tickets_message = tribe_tickets_get_ticket_stock_message($ticket, __('issued', 'event-tickets'));
 
+                // Extract the number of issued tickets from the message
+                preg_match('/\d+/', $issued_tickets_message, $matches);
+                $issued_tickets = isset($matches[0]) ? $matches[0] : 0;
 
-
-
-
-
-
-
-
-
-
-
-function my_enqueue_qrcode_script() {
-    // Enqueue html5-qrcode script with jQuery dependency
-    wp_enqueue_script('html5-qrcode', 'https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js', array('jquery'), null, true);
-}
-add_action('wp_enqueue_scripts', 'my_enqueue_qrcode_script');
-
-function display_html5_qrcode_scanner_shortcode() {
-    my_enqueue_qrcode_script(); // Make sure to enqueue scripts when shortcode is used
-    
-    // Inline JavaScript to initialize the QR code scanner
-    $inline_script = <<<EOD
-<script>
-jQuery(document).ready(function($) {
-    function onScanSuccess(decodedText, decodedResult) {
-        // Handle the scanned text as needed.
-        console.log(`Code scanned = ${decodedText}`, decodedResult);
-    }
-    
-    var config = { fps: 10, qrbox: 250 };
-    var html5QrCode = new Html5Qrcode("qr-reader");
-    Html5Qrcode.getCameras().then(cameras => {
-        if (cameras.length > 0) {
-            html5QrCode.start({ facingMode: "environment" }, config, onScanSuccess);
-        } else {
-            console.error("No cameras found.");
+                // Add each ticket's name, capacity, and issued tickets to the ticket list
+                $ticket_list[] = [
+                    'name' => $ticket->name,
+                    'capacity' => $ticket_capacity,
+                    'issued_tickets' => $issued_tickets,
+                ];
+            }
         }
-    }).catch(err => {
-        console.error("Unable to start QR scanner", err);
-    });
-});
-</script>
-EOD;
+        // Assuming an instance creation and method call similar to before for checking attendance
+        $attendance_totals = new Tribe__Tickets__Attendance_Totals($event_id);
+        $total_checked_in = $attendance_totals->get_total_checked_in();
+        $total_issued_tickets = get_post_meta($event_id, '_tribe_progressive_ticket_current_number', true);
+        // Format the data for checked in total / total issued tickets
+        $checked_in_format = sprintf('%d / %d', $total_checked_in, $total_issued_tickets);
 
-    // Return the HTML for the scanner along with the inline JavaScript
-    return '<div id="qr-reader" style="width:500px; height:500px;"></div>' . $inline_script;
+
+        $event_data = [
+            'start_date'              => get_post_meta($event_id, '_EventStartDate', true),
+            'issued_tickets'          => $total_issued_tickets,
+            'total_tickets_available' => $total_capacity,
+            'ticket_list'             => $ticket_list,
+            'event_id'                => $event_id,
+            'name'                    => get_the_title($event_id),
+            'checked_in'              => $checked_in_format,
+            'thumbnail_url'           => get_the_post_thumbnail_url($event_id, 'medium'),
+        ];
+
+        $response = [
+            'event_data' => $event_data,
+        ];
+    
+        wp_send_json($response);
+    }else{
+        wp_send_json_error('No tickets found for this event.');
+    }
 }
-add_shortcode('display_html5_qrcode_scanner', 'display_html5_qrcode_scanner_shortcode');
+
+
+
+
+require_once get_stylesheet_directory() . '/event-dashboard-ajax.php';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

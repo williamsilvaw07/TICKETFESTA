@@ -166,6 +166,9 @@ do_action( 'tribe_community_events_before_list_table' );
     <th class="event-column">
         Event
     </th>
+    <th class="tickets-passcode-column">
+        Ticket Passcode
+    </th>
     <th class="tickets-sold-column">
         Ticket Sold
     </th>
@@ -197,6 +200,8 @@ do_action( 'tribe_community_events_before_list_table' );
                     class="tribe-dependent tribe-list-column <?php echo sanitize_html_class( 'tribe-list-column-' . $column_slug ); ?>"
                 >
                     <?php   
+                     
+
                     if ( 'title' === $column_slug ) {
                         // Display the event image
                         if ( has_post_thumbnail() ) {
@@ -209,12 +214,19 @@ do_action( 'tribe_community_events_before_list_table' );
                             'event' => $events->post,
                         ] );
                     } else {
+                       
                         // Display other columns as usual
                         tribe_get_template_part( 'community/columns/' . sanitize_key( $column_slug ), null, [
                             'column_slug' => $column_slug,
                             'column_label' => $column_label,
                             'event' => $events->post,
                         ] );
+                    }
+                 
+                    if ( 'status' === $column_slug ) {
+                        $event_id = get_the_ID();
+                        $event_pass = get_post_meta($event_id, 'event_pass', true);
+                        echo "</td><td class='tribe-list-column-passcode'><span class='passcode'>$event_pass</span>";
                     }
                     ?>
                 </td>

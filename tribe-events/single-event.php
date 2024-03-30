@@ -441,7 +441,7 @@ $norefunds = get_post_meta($event_id, 'norefunds', true);
 
 
 			<!-- Event content -->
-			<?php do_action( 'tribe_events_single_event_before_the_content' ) ?>
+			<?php //do_action( 'tribe_events_single_event_before_the_content' ) ?>
 			<div class="tribe-events-single-event-description tribe-events-content">
 				<?php the_content(); ?>
 			</div>
@@ -1627,9 +1627,13 @@ background: #2C2C2C!important;
 .tribe-events-single-event-description h2 {
     text-transform: capitalize;
     font-size: 23px;
+    background-color: inherit!important;
 }
 .tribe-events-single-event-description p{
     font-weight: 300;
+}
+.tribe-events-single-event-description  span , .tribe-events-single-event-description p {
+    background-color: inherit!important;
 }
 .tribe-common .tribe-common-h7{
     color: white!important;
