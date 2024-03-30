@@ -1,9 +1,12 @@
 <?php
+
 add_action('init', 'start_session', 1);
 function start_session() {
     if (!session_id()) {
         session_start();
     }
+
+    $_SESSION['applied_coupon'] = sanitize_text_field($_GET['coupon']);
 }
 
 // Function to set session variable if coupon parameter is present
