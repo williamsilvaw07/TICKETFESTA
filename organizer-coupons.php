@@ -32,27 +32,27 @@ get_header('organizer');
 ?>
 
 <style>
-
-
-
-.col-12{
-    margin-bottom:100px
-}
-.tribe-community-events-list{
-    margin-bottom:0!important
-}
-
-    .admin_dashboard_event_list_nav{
-        margin-bottom:20px
+    .col-12 {
+        margin-bottom: 100px
     }
-    .main_custom_container_second .tribe-button-primary{
+
+    .tribe-community-events-list {
+        margin-bottom: 0 !important
+    }
+
+    .admin_dashboard_event_list_nav {
+        margin-bottom: 20px
+    }
+
+    .main_custom_container_second .tribe-button-primary {
         background: #d3fa16 !important;
-    color: #000000 !important;
-    text-transform: capitalize !important;
-    text-decoration: none;
-    white-space: nowrap;
-    font-size: 12px;
+        color: #000000 !important;
+        text-transform: capitalize !important;
+        text-decoration: none;
+        white-space: nowrap;
+        font-size: 12px;
     }
+
     .content-wrapper {
         height: 100%;
     }
@@ -127,37 +127,47 @@ get_header('organizer');
     }
 
 
-    .dark-mode .modal-content{
-        background-color: #19191b!important;
+    .dark-mode .modal-content {
+        background-color: #19191b !important;
     }
-    .dark-mode .custom-control-label::before, .dark-mode .custom-file-label, .dark-mode .custom-file-label::after, .dark-mode .custom-select, .dark-mode .form-control:not(.form-control-navbar):not(.form-control-sidebar), .dark-mode .input-group-text {
-    background-color: #121212;
-    color: #fff;
-    border: 0px;
-    font-size: 13px;
-}
 
-label:not(.form-check-label):not(.custom-file-label) {
-    font-weight: 300 !important;
-    font-size: 15px;
-}
-.dark-mode .btn-primary {
-    color: #000;
-    background-color: #d3fa16;
-    border:0px;
-    box-shadow: none;
-}
-.datetimepicker-input{
-    font-size:16px!important
-}
-.dark-mode .btn-primary:hover{
-    background:black!important;
-    color:white!important
-}
-.dark-mode .swal2-popup {
-    background-color: #19191b;
-    color: #e9ecef;
-}
+    .dark-mode .custom-control-label::before,
+    .dark-mode .custom-file-label,
+    .dark-mode .custom-file-label::after,
+    .dark-mode .custom-select,
+    .dark-mode .form-control:not(.form-control-navbar):not(.form-control-sidebar),
+    .dark-mode .input-group-text {
+        background-color: #121212;
+        color: #fff;
+        border: 0px;
+        font-size: 13px;
+    }
+
+    label:not(.form-check-label):not(.custom-file-label) {
+        font-weight: 300 !important;
+        font-size: 15px;
+    }
+
+    .dark-mode .btn-primary {
+        color: #000;
+        background-color: #d3fa16;
+        border: 0px;
+        box-shadow: none;
+    }
+
+    .datetimepicker-input {
+        font-size: 16px !important
+    }
+
+    .dark-mode .btn-primary:hover {
+        background: black !important;
+        color: white !important
+    }
+
+    .dark-mode .swal2-popup {
+        background-color: #19191b;
+        color: #e9ecef;
+    }
 
 
     @media (max-width: 655px) {
@@ -166,29 +176,27 @@ label:not(.form-check-label):not(.custom-file-label) {
         }
 
 
-.table-responsive {
-    overflow-x: auto; /* Enables horizontal scrolling */
-    position: relative; /* For the ::before and ::after to position properly */
-    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS devices */
-}
+        .table-responsive {
+            overflow-x: auto;
+            /* Enables horizontal scrolling */
+            position: relative;
+            /* For the ::before and ::after to position properly */
+            -webkit-overflow-scrolling: touch;
+            /* Smooth scrolling on iOS devices */
+        }
 
-.table-responsive table {
-    min-width: 1400px; /* Adjust based on your content */
-    border-collapse: collapse;
-}
+        .table-responsive table {
+            min-width: 1400px;
+            /* Adjust based on your content */
+            border-collapse: collapse;
+        }
 
-.table-responsive th,
-.table-responsive td {
-    text-align: left;
-    padding: 8px;
-}
+        .table-responsive th,
+        .table-responsive td {
+            text-align: left;
+            padding: 8px;
+        }
     }
-
-
-
-
-
-
 </style>
 
 <!-- Content Wrapper. Contains page content -->
@@ -216,133 +224,138 @@ label:not(.form-check-label):not(.custom-file-label) {
 
 
 
-                    <div class="table-responsive">
-                        <table id="tribe-community-events-list"
-                            class="tribe-community-events-list display responsive stripe">
-                            <thead>
-                                <tr>
-                                    <th class="event-column">
-                                        Coupon Code
-                                    </th>
-                                    <th class="tickets-sold-column">
-                                        Ticket
-                                    </th>
-                                    <th class="gross-column">
-                                        Event Name
-                                    </th>
-                                    <th class="status-column">
-                                        Start Date
-                                    </th>
-                                    <th class="status-column">
-                                        End Date
-                                    </th>
-                                    <th class="status-column">
-                                        Value
-                                    </th>
-                                    <th class="status-column">
-                                        Type
-                                    </th>
-                                    <th class="status-column action">
-                                        Action
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php foreach ($coupon_posts as $coupon): ?>
-                                    <?php $wooCoupon = new WC_Coupon($coupon->ID); ?>
-                                    <?php $data = []; ?>
+                        <div class="table-responsive">
+                            <table id="tribe-community-events-list"
+                                class="tribe-community-events-list display responsive stripe">
+                                <thead>
                                     <tr>
-                                        <td class="tribe-dependent tribe-list-column tribe-list-column-status tribe-active">
-                                            <span class="value">
-                                                <?php
-                                                $data['code'] = $wooCoupon->get_code();
-                                                $data['coupon_id'] = $coupon->ID;
-                                                echo $wooCoupon->get_code();
-                                                ?>
-                                            </span>
-                                        </td>
-                                        <td class="event-status-form">
-                                            <?php
-
-                                            $postMeta = get_post_meta($coupon->ID, 'product_ids', true);
-                                            $product_ids_array = explode(',', $postMeta);
-                                            echo "<ul style='margin: 0;'>";
-                                            foreach ($product_ids_array as $key => $product_id) {
-                                                $product = wc_get_product($product_id);
-                                                echo "<li>{$product->get_name()}</li>";
-                                            }
-                                            echo "</ul>";
-                                            $data['product_ids'] = $product_ids_array;
-                                            ?>
-                                        </td>
-                                        <td class="event-status-form">
-    <?php
-    $data['event_id'] = get_post_meta($coupon->ID, 'event_id', true);
-    if (isset($eventArray[$data['event_id']])) {
-        $eventTitle = $eventArray[$data['event_id']];
-        $eventTitleShort = mb_substr($eventTitle, 0, 50);
-        
-        // Append '...' to the shortened title if it was longer than 50 characters
-        if (mb_strlen($eventTitle) > 50) {
-            $eventTitleShort .= '...';
-        }
-        
-        echo $eventTitleShort;
-    }
-    ?>
-</td>
-<td class="event-status-form">
-    <?php
-    $start_date = $wooCoupon->get_date_created();
-    echo $start_date ? date('d-m-Y H:i', strtotime($start_date)) : '';
-    $data['start_date'] = $start_date ? date('d-m-Y H:i', strtotime($start_date)) : '';
-    ?>
-</td>
-<td class="event-status-form">
-    <?php
-    $expire_date = $wooCoupon->get_date_expires();
-    echo $expire_date ? date('d-m-Y H:i', strtotime($expire_date)) : '';
-    $data['expire_date'] = $expire_date ? date('d-m-Y H:i', strtotime($expire_date)) : '';
-    ?>
-</td>
-
-
-                                        <td class="event-status-form">
-                                            <?php
-                                            $data['amount'] = $wooCoupon->get_amount();
-                                            echo $wooCoupon->get_amount();
-                                            ?>
-                                        </td>
-                                        <td class="event-status-form">
-                                            <?php
-                                            $data['discount_type'] = $wooCoupon->get_discount_type();
-
-                                            echo ['fixed_cart' => 'Fixed', 'percent' => 'Percent'][$wooCoupon->get_discount_type()];
-                                            ?>
-                                        </td>
-                                        <td class="text-end action">
-                                            <div class="btn-group dropleft">
-                                                <button type="button" class="dropbtn" data-toggle="dropdown"
-                                                    aria-expanded="false">⋮</button>
-
-                                                <div class="dropdown-menu" role="menu" style="">
-
-                                                    <a class="dropdown-item" href="#"
-                                                        data-details='<?php echo json_encode($data) ?>'
-                                                        onclick="onClickEditHandeler(this)" data-toggle="modal"
-                                                        data-target="#modal-edit">Edit</a>
-                                                    <a class="dropdown-item" href="#"
-                                                        onclick="onClickDeleteHandeler(<?php echo $coupon->ID ?>)">Delete</a>
-                                                </div>
-                                            </div>
-                                        </td>
+                                        <th class="event-column">
+                                            Coupon Code
+                                        </th>
+                                        <th class="tickets-sold-column">
+                                            Ticket
+                                        </th>
+                                        <th class="gross-column">
+                                            Event Name
+                                        </th>
+                                        <th class="status-column">
+                                            Start Date
+                                        </th>
+                                        <th class="status-column">
+                                            End Date
+                                        </th>
+                                        <th class="status-column">
+                                            Value
+                                        </th>
+                                        <th class="status-column">
+                                            Type
+                                        </th>
+                                        <th class="status-column action">
+                                            Action
+                                        </th>
                                     </tr>
-                                <?php endforeach; ?>
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($coupon_posts as $coupon): ?>
+                                        <?php $wooCoupon = new WC_Coupon($coupon->ID); ?>
+                                        <?php $data = []; ?>
+                                        <tr>
+                                            <td
+                                                class="tribe-dependent tribe-list-column tribe-list-column-status tribe-active">
+                                                <span class="value">
+                                                    <?php
+                                                    $data['code'] = $wooCoupon->get_code();
+                                                    $data['coupon_id'] = $coupon->ID;
+                                                    echo $wooCoupon->get_code();
+                                                    ?>
+                                                </span>
+                                            </td>
+                                            <td class="event-status-form">
+                                                <?php
+
+                                                $postMeta = get_post_meta($coupon->ID, 'product_ids', true);
+                                                $product_ids_array = explode(',', $postMeta);
+                                                echo "<ul style='margin: 0;'>";
+                                                foreach ($product_ids_array as $key => $product_id) {
+                                                    $product = wc_get_product($product_id);
+                                                    echo "<li>{$product->get_name()}</li>";
+                                                }
+                                                echo "</ul>";
+                                                $data['product_ids'] = $product_ids_array;
+                                                ?>
+                                            </td>
+                                            <td class="event-status-form">
+                                                <?php
+                                                $data['event_id'] = get_post_meta($coupon->ID, 'event_id', true);
+                                                if (isset($eventArray[$data['event_id']])) {
+                                                    $eventTitle = $eventArray[$data['event_id']];
+                                                    $eventTitleShort = mb_substr($eventTitle, 0, 50);
+
+                                                    // Append '...' to the shortened title if it was longer than 50 characters
+                                                    if (mb_strlen($eventTitle) > 50) {
+                                                        $eventTitleShort .= '...';
+                                                    }
+
+                                                    echo $eventTitleShort;
+                                                }
+                                                ?>
+                                            </td>
+                                            <td class="event-status-form">
+                                                <?php
+                                                $start_date = $wooCoupon->get_date_created();
+                                                echo $start_date ? date('d-m-Y H:i', strtotime($start_date)) : '';
+                                                $data['start_date'] = $start_date ? date('d-m-Y H:i', strtotime($start_date)) : '';
+                                                ?>
+                                            </td>
+                                            <td class="event-status-form">
+                                                <?php
+                                                $expire_date = $wooCoupon->get_date_expires();
+                                                echo $expire_date ? date('d-m-Y H:i', strtotime($expire_date)) : '';
+                                                $data['expire_date'] = $expire_date ? date('d-m-Y H:i', strtotime($expire_date)) : '';
+                                                ?>
+                                            </td>
+
+
+                                            <td class="event-status-form">
+                                                <?php
+                                                $data['amount'] = $wooCoupon->get_amount();
+                                                echo $wooCoupon->get_amount();
+                                                ?>
+                                            </td>
+                                            <td class="event-status-form">
+                                                <?php
+                                                $data['discount_type'] = $wooCoupon->get_discount_type();
+
+                                                echo ['fixed_cart' => 'Fixed', 'percent' => 'Percent'][$wooCoupon->get_discount_type()];
+                                                ?>
+                                            </td>
+                                            <?php 
+                                                $auto_apply = get_post_meta($coupon->ID, 'auto_apply', 0);
+                                                $data['auto_apply'] = is_array($auto_apply) ? (int) $auto_apply[0] : 0;
+                                            ?>
+                                            <td class="text-end action">
+                                                <div class="btn-group dropleft">
+                                                    <button type="button" class="dropbtn" data-toggle="dropdown"
+                                                        aria-expanded="false">⋮</button>
+
+                                                    <div class="dropdown-menu" role="menu" style="">
+
+                                                        <a class="dropdown-item" href="#"
+                                                            data-details='<?php echo json_encode($data) ?>'
+                                                            onclick="onClickEditHandeler(this)" data-toggle="modal"
+                                                            data-target="#modal-edit">Edit</a>
+                                                        <a class="dropdown-item" href="#"
+                                                            onclick="onClickDeleteHandeler(<?php echo $coupon->ID ?>)">Delete</a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
                         </div>
 
-                        
+
                     </div>
 
                 </div>
@@ -431,6 +444,12 @@ label:not(.form-check-label):not(.custom-file-label) {
                         }
                         ?>
                     </select>
+                </div>
+                <div class="form-group">
+                    <div class="form-check">
+                        <input class="form-check-input" id="auto_apply" type="checkbox" name="auto_apply" value="1">
+                        <label class="form-check-label" for="auto_apply">Auto apply coupon</label>
+                    </div>
                 </div>
                 <div class="form-group" id="tickets">
 
@@ -530,6 +549,13 @@ label:not(.form-check-label):not(.custom-file-label) {
                         }
                         ?>
                     </select>
+                </div>
+                <div class="form-group">
+                    <div class="form-check">
+                        <input class="form-check-input" id="edit_auto_apply" type="checkbox" name="auto_apply"
+                            value="1">
+                        <label class="form-check-label" for="edit_auto_apply">Auto apply coupon</label>
+                    </div>
                 </div>
                 <div class="form-group" id="edit_tickets">
 

@@ -64,7 +64,15 @@ function onClickEditHandeler(elem) {
   jQuery('#edit_end_date_time').val(data.expire_date);
   jQuery('#coupon_id').val(data.coupon_id);
 
+  if(data.auto_apply){
+    jQuery('#edit_auto_apply').prop('checked', true);
+  } else {
+    jQuery('#edit_auto_apply').prop('checked', false);
+  }
+
   product_ids_selected = data.product_ids;
+
+  
 }
 
 function onClickDeleteHandeler(coupon_id) {
@@ -247,6 +255,7 @@ jQuery(document).ready(function (jQuery) {
         // usage_limit: usage_limit.value,
         end_date_time: end_date_time.value,
         start_date_time: start_date_time.value,
+        auto_apply: jQuery('#auto_apply').is(':checked')
       },
       success: function (response) {
         // Handle the response from the server
@@ -369,11 +378,6 @@ jQuery(document).ready(function (jQuery) {
 });
 
 
-
-
-
-
-
 // Check if the URL contains 'category_id'
 jQuery(document).ready(function () {
 
@@ -391,7 +395,7 @@ jQuery(document).ready(function () {
       success: function (response) {
         // Handle the response from the server
         if (response.success) {
-          console.log(response)
+          
           Object.entries(response.data).forEach(([key, value]) => {
             htmlOutputStart +=
               `<div class="form-check">
