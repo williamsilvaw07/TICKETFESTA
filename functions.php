@@ -557,7 +557,12 @@ function iam00_create_woo_coupon_for_ticket()
 
         $coupon->update_meta_data('event_id', $eventId);
 
-
+        if(isset($_POST['auto_apply']) && $_POST['auto_apply']){
+            $coupon->update_meta_data('auto_apply',1 );
+        } else {
+            $coupon->update_meta_data('auto_apply', 0 );
+        }
+        
         $expire_date = '';
         if (isset($_POST['end_date_time']) && $_POST['end_date_time'] != '') {
             $expire_date = strtotime($_POST['end_date_time']);
@@ -721,6 +726,13 @@ function iam00_edit_coupon_action()
         $coupon->set_usage_limit($usage_limit); // Change this to the maximum number of times the coupon can be used
 
         $coupon->update_meta_data('event_id', $eventId);
+
+        if(isset($_POST['auto_apply']) && $_POST['auto_apply']){
+            $coupon->update_meta_data('auto_apply',1 );
+        } else {
+            $coupon->update_meta_data('auto_apply', 0 );
+        }
+        
 
 
         $expire_date = '';
