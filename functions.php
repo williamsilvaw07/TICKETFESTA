@@ -1,16 +1,19 @@
 <?php
 
-add_filter('post_link', 'custom_post_permalink', 10, 3);
-
-function custom_post_permalink($permalink, $post, $leavename) {
-    // Check if it's the type of post you want to change.
-    if ($post->post_type == 'post') { // Change 'post' to any custom post type if needed
+function custom_permalink($permalink, $post, $leavename) {
+    // Check if it's the type of content you want to change.
+    if ($post->post_type == 'post' || $post->post_type == 'page' || $post->post_type == 'product') {
         $new_slug = 'custom'; // This is where you set your new base slug
         $permalink = trailingslashit(home_url('/' . $new_slug . '/' . $post->post_name . '/'));
     }
 
     return $permalink;
 }
+
+// Apply the custom permalink function to posts, pages, and products
+add_filter('post_link', 'custom_permalink', 10, 3);
+add_filter('page_link', 'custom_permalink', 10, 3);
+add_filter('post_type_link', 'custom_permalink', 10, 3);
 
 
 include ('./coupon_auto_apply.php');
