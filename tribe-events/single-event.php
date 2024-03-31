@@ -1731,9 +1731,18 @@ html .single-tribe_events .tribe-events-gmap{
 }
 
 
-
-.tribe-tickets__tickets-item-extra-available , html .tribe-events .tribe-events-c-subscribe-dropdown__container{
+ html .tribe-events .tribe-events-c-subscribe-dropdown__container{
     display: none!important;
+}
+.tribe-tickets__tickets-item-extra-available{
+    width: fit-content;
+    color: #d3fa16 !important;
+    background: rgba(211, 250, 22, 0.2) !important;
+    padding: 3px 7px;
+    border-radius: 2px;
+}
+.tribe-tickets__tickets-item-extra-available-quantity{
+    color: #d3fa16 !important;
 }
 .tribe-tickets__tickets-item-content-title{
     font-weight: 400!important;
