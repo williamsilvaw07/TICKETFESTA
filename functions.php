@@ -3439,41 +3439,6 @@ function ticketfeasta_publish_tribe_events_on_first_update($post_id, $post, $upd
 
 add_action('save_post', 'ticketfeasta_publish_tribe_events_on_first_update', 10, 3);
 
-function ticketfeasta_order_update_follower($post_id, $post, $update)
-{
-    if ($post->post_type == 'shop_order') {
-        $ticket_datas = get_post_meta($post_id);
-        $user_email = $ticket_datas['_billing_email'][0];
-
-        $user = get_user_by('email', $user_email);
-
-        $user_id = false;
-        if ($user) {
-            $user_id = $user->ID;
-        }
-        if ($user_id !== false & isset($ticket_datas['_community_tickets_order_fees']) && is_array($ticket_datas['_community_tickets_order_fees'])) {
-            foreach ($ticket_datas['_community_tickets_order_fees'] as $item) {
-                $item_data = unserialize($item);
-                $fees = $item_data['breakdown']['fees'];
-                if (is_array($fees)) {
-                    foreach ($fees as $fee) {
-                        $fee_items = $fee;
-                        if (is_array($fee_items)) {
-                            foreach ($fee_items as $fee_item) {
-                                $event_id = $fee_item['event_id'];
-                                $organizer_id = get_post_meta($event_id, '_EventOrganizerID', true);
-                                ticketfeasta_follow($organizer_id, $user_id);
-                                ticketfeasta_add_follower($organizer_id, $user_id);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-}
-
 
 add_action('save_post', 'ticketfeasta_order_update_follower', 10, 3);
 
@@ -3836,6 +3801,31 @@ function ticketfesta_login_redirect($redirect, $user)
 
 
 
+add_action('woocommerce_cart_calculate_fees', 'add_extra_fees_for_products');
+
+function add_extra_fees_for_products($cart)
+{
+    $extra_fee = 0;
+    // Loop through each cart item
+    foreach ($cart->get_cart() as $cart_item_key => $cart_item) {
+        // Get the product ID
+        $product_id = $cart_item['product_id'];
+
+        // Calculate extra fee based on product price
+        $product_price = $cart_item['data']->get_price();
+        $quantity = $cart_item['quantity'];
+        if ($product_price < 50) {
+            $extra_fee += ($product_price * .03 + 0.02) * $quantity;
+        } elseif ($product_price > 50) {
+            $extra_fee += ($product_price * .01 + 0.02) * $quantity;
+        }
+
+    }
+
+    if ($extra_fee !== 0) {
+        $cart->add_fee('Sites Fee ', $extra_fee);
+    }
+}
 
 require_once get_stylesheet_directory() . '/option-page.php';
 
