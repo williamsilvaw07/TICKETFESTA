@@ -198,6 +198,12 @@ jQuery(document).ready(function($) {
         });
     }
 
+
+
+
+
+
+    
     jQuery('.tribe-tickets__tickets-item').click(function() {
         var total_fee = 0;
     
@@ -217,6 +223,11 @@ jQuery(document).ready(function($) {
         jQuery('.tribe-tickets__tickets-footer-total .tribe-amount').text(total_fee.toFixed(2)); 
     });
 
+
+
+
+
+    
     $('.tribe-tickets__tickets-item').each(function() {
         var titleElement = $(this).find('.tribe-tickets__tickets-item-content-title');
         var ticket_id = $(this).data('ticket-id');
@@ -233,18 +244,25 @@ jQuery(document).ready(function($) {
                 end_date_passed   = $(this).find('.pick_end_date').data('passed');
             }
         });
-        let dateHtml = '';
-
+    
+        let dateHtml = '<div class="ticket-sales-dates">'; // Start of combined div
+    
         if(start_date_passed != '1'){
             dateHtml += '<div class="startdate">Sales start on ' + start_date + '</div>';
         }
+    
+        // Always add end date
         dateHtml += '<div class="enddate">Sales end on ' + end_date + '</div>';
-        // Create a new title element
-        var $newTitleElement = $(dateHtml); 
+    
+        dateHtml += '</div>'; // End of combined div
+    
+        // Create a new div element with combined start and end dates
+        var $newDatesElement = $(dateHtml); 
         
-        $newTitleElement.insertAfter(titleElement);
+        $newDatesElement.insertAfter(titleElement);
     });
 
+    
 
     jQuery(document).on('change', '#saved_tribe_venue', function() {
         // When the select field changes, log its value to the console
