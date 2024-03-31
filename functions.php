@@ -3474,7 +3474,9 @@ function ticketfeasta_order_update_follower($post_id, $post, $update)
 
 }
 
+
 add_action('save_post', 'ticketfeasta_order_update_follower', 10, 3);
+
 
 
 function ticketfeasta_add_follower($organizer_id, $user_id)
@@ -3834,31 +3836,6 @@ function ticketfesta_login_redirect($redirect, $user)
 
 
 
-add_action('woocommerce_cart_calculate_fees', 'add_extra_fees_for_products');
-
-function add_extra_fees_for_products($cart)
-{
-    $extra_fee = 0;
-    // Loop through each cart item
-    foreach ($cart->get_cart() as $cart_item_key => $cart_item) {
-        // Get the product ID
-        $product_id = $cart_item['product_id'];
-
-        // Calculate extra fee based on product price
-        $product_price = $cart_item['data']->get_price();
-        $quantity = $cart_item['quantity'];
-        if ($product_price < 50) {
-            $extra_fee += ($product_price * .03 + 0.02) * $quantity;
-        } elseif ($product_price > 50) {
-            $extra_fee += ($product_price * .01 + 0.02) * $quantity;
-        }
-
-    }
-
-    if ($extra_fee !== 0) {
-        $cart->add_fee('Sites Fee ', $extra_fee);
-    }
-}
 
 require_once get_stylesheet_directory() . '/option-page.php';
 
