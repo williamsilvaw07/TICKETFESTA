@@ -1738,7 +1738,7 @@ html .single-tribe_events .tribe-events-gmap{
     width: fit-content;
     color: #d3fa16 !important;
     background: rgba(211, 250, 22, 0.2) !important;
-    padding: 3px 7px;
+    padding: 3px 7px!important;;
     border-radius: 2px;
 }
 .tribe-tickets__tickets-item-extra-available-quantity{
