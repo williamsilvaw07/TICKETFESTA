@@ -1434,6 +1434,9 @@ text-transform: capitalize!important;
     font-weight: 500;
 
 }
+.tribe-tickets__tickets-item-extra .tribe-tickets__tickets-item-extra-price{
+    text-align: left;
+}
 .tribe-tickets__tickets-item-extra-price{
     text-align: center;
     font-size: 20px!important;
