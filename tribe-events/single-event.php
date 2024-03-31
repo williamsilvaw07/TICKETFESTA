@@ -2299,6 +2299,10 @@ html .single-tribe_events .tribe-tickets__tickets-footer{
     color: #d3fa16!important;
     font-size: 19px!important;
 }
+.tribe-tickets__tickets-item-extra-available {
+    font-size: 11px;
+    margin-top: 5px !important;
+}
   }
 
   @media screen and (max-width: 450px) {
