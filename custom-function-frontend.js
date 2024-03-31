@@ -203,14 +203,13 @@ jQuery(document).ready(function($) {
 
 
     jQuery(document).ready(function($) {
-        // Recalculate the total and update the footer whenever add or remove buttons are clicked.
+        // Function to recalculate the total and update the footer
         function recalculateTotal() {
             var total = 0;
     
             $('.tribe-tickets__tickets-item').each(function() {
                 var ticketAmount = parseFloat($(this).find('.tribe-amount').text().replace('£', '').trim());
                 var quantity = parseInt($(this).find('.tribe-tickets__tickets-item-quantity-number-input').val());
-                // Extract the site fee directly from the .site-fee-container
                 var siteFee = parseFloat($(this).find('.site-fee-container .ticket_site_fee').text().trim());
     
                 if (!isNaN(ticketAmount) && !isNaN(quantity) && !isNaN(siteFee)) {
@@ -218,18 +217,24 @@ jQuery(document).ready(function($) {
                 }
             });
     
-            // Update the total fee displayed in the footer. Adjust selector if needed.
+            // Update the total fee displayed in the footer
             $('.tribe-tickets__tickets-footer-total .tribe-amount').text('£' + total.toFixed(2));
         }
     
-        // Attach click event listeners to the add and remove quantity buttons.
+        // Attach event listeners to the add and remove buttons
         $('body').on('click', '.tribe-tickets__tickets-item-quantity-add, .tribe-tickets__tickets-item-quantity-remove', function() {
-            // Small delay to wait for the input value to update.
+            // Slight delay to wait for the input value to update
             setTimeout(function() {
                 recalculateTotal();
             }, 100);
         });
+    
+        // Additional listener for any change in ticket quantity input fields
+        $('body').on('change', '.tribe-tickets__tickets-item-quantity-number-input', function() {
+            recalculateTotal();
+        });
     });
+    
 
     
     
