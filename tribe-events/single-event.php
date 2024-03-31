@@ -1736,13 +1736,13 @@ html .single-tribe_events .tribe-events-gmap{
 }
 .tribe-tickets__tickets-item-extra-available{
     width: fit-content;
-    color: #d3fa16 !important;
+    color: #ffffff !important;
     background: rgba(211, 250, 22, 0.2) !important;
     padding: 3px 7px!important;;
     border-radius: 2px;
 }
 .tribe-tickets__tickets-item-extra-available-quantity{
-    color: #d3fa16 !important;
+    color: #ffffff !important
 }
 .tribe-tickets__tickets-item-content-title{
     font-weight: 400!important;
