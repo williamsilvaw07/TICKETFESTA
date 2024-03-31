@@ -209,20 +209,34 @@ jQuery(document).ready(function($) {
     
         // Iterate over each .tribe-tickets__tickets-item
         jQuery('.tribe-tickets__tickets-item').each(function() {
-            var ticketAmount = jQuery(this).find('.tribe-amount').text().replace(',', ''); 
-            ticketAmount = parseFloat(ticketAmount.trim()).toFixed(2);
-            ticketAmount = isNaN(ticketAmount) ? 0 : parseFloat(ticketAmount);
+            var ticketAmountText = jQuery(this).find('.tribe-amount').text().replace(',', '');
+            console.log('Ticket Amount Text:', ticketAmountText); // Log the text of the ticket amount
+    
+            var ticketAmount = parseFloat(ticketAmountText.trim()).toFixed(2);
+            console.log('Formatted Ticket Amount:', ticketAmount); // Log the formatted ticket amount
+    
+            ticketAmount = isNaN(parseFloat(ticketAmount)) ? 0 : parseFloat(ticketAmount);
+            console.log('Ticket Amount After NaN Check:', ticketAmount); // Log after NaN check
+    
             var quantity = parseInt(jQuery(this).find('.tribe-tickets__tickets-item-quantity-number-input').val());
+            console.log('Quantity:', quantity); // Log the quantity
+    
             var ticketSiteFee = get_tribe_ticket_fee(ticketAmount, quantity);
-            if(ticketAmount != 0){
+            console.log('Ticket Site Fee:', ticketSiteFee); // Log the ticket site fee
+    
+            if (ticketAmount != 0) {
                 total_fee += (ticketAmount * quantity) + parseFloat(ticketSiteFee);
             }
+            console.log('Total Fee After Iteration:', total_fee); // Log the total fee after each iteration
         });
     
         // Update the total fee displayed in the footer
-        jQuery('.tribe-tickets__tickets-footer-total .tribe-amount').text(total_fee.toFixed(2)); 
+        jQuery('.tribe-tickets__tickets-footer-total .tribe-amount').text(total_fee.toFixed(2));
+        console.log('Final Total Fee:', total_fee.toFixed(2)); // Log the final total fee
     });
 
+    
+    
 
 
 
