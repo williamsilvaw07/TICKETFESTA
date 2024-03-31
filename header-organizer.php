@@ -1362,9 +1362,6 @@ html .tickets-sold-column , html .tribe-list-column-title {
                 font-size: 15px;
 
             }
-            #tribe-community-events-list span.passcode {
-                font-size: 19px;
-            }
 
             .report_gross_income {
                 font-size: 15px;
@@ -1405,7 +1402,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
 
             .tribe-community-events-list tbody tr {
                 display: grid;
-                grid-template-columns: 38% 12% 12% 14% 14% 10%;
+                grid-template-columns: 50% 12% 14% 14% 10%;
 
                 justify-items: stretch;
                 justify-content: start;
@@ -1423,7 +1420,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
 
             .tribe-community-events-list thead tr {
                 display: grid;
-                grid-template-columns: 38% 12% 12% 14% 14% 10%;
+                grid-template-columns: 50% 12% 14% 14% 10%;
 
                 justify-items: stretch;
                 justify-content: start;
@@ -3675,12 +3672,8 @@ display:block!important
                     margin-bottom: 16px;
                 }
 
-                .tribe-community-events-list tbody .tribe-list-column-passcode {
-                    grid-area: 2 / 1 / 3 / 2;
-
-                }
                 .tribe-community-events-list tbody .tribe-list-column-title {
-                    grid-area: 3 / 1 / 4 / 2;
+                    grid-area: 2 / 1 / 3 / 2;
 
                 }
 
@@ -3711,12 +3704,12 @@ display:block!important
                 }
 
                 .tribe-community-events-list tbody .tribe-list-column-organizer {
-                    grid-area: 4 / 1 / 5 / 2;
+                    grid-area: 3 / 1 / 4 / 2;
 
                 }
 
                 .tribe-community-events-list tbody .tribe-list-column-venue {
-                    grid-area: 5 / 1 / 6 / 2;
+                    grid-area: 4 / 1 / 5 / 2;
 
                 }
 

@@ -27,17 +27,17 @@
     background-color:#0d0e0e;
 }
  body {
-font-family: 'Roboto', sans-serif;
+    font-family: "Plus Jakarta Sans", Sans-serif;
     background-color:#282828;
     color: white!important;
 
   }
 
   .footer_main_div{
-font-family: 'Roboto', sans-serif;
+    font-family: "Plus Jakarta Sans", Sans-serif!important;
   }
   .tribe-events-c-events-bar__filter-button-text , html button{
-font-family: 'Roboto', sans-serif;
+    font-family: "Plus Jakarta Sans", Sans-serif!important;
   }
   .entry-content .alignwide, body:not(.no-sidebar) .entry-content .alignfull{
     margin-left:inherit!important;
@@ -52,7 +52,7 @@ font-family: 'Roboto', sans-serif;
     margin-bottom: 0!important;
   }
  h2,h3,h4,h5,h6, li , p , a {
-font-family: 'Roboto', sans-serif;
+    font-family: "Plus Jakarta Sans", Sans-serif!important;
   }
 .elementor-heading-title{
     font-family: inherit!important;
@@ -69,7 +69,7 @@ font-family: 'Roboto', sans-serif;
   }
 body h1 ,body h2,body h3,body h4,body h5,body h6,html p,html a,body span,dd,dt, .main-navigation .main-nav ul li a{
 color:white!important;
-font-family: 'Roboto', sans-serif;
+font-family: "Plus Jakarta Sans", Sans-serif;
 }
 #tribe-events-pg-template {
     max-width: 1800px;
@@ -895,7 +895,7 @@ a.tribe-button.tribe-button-primary.add-new , .organizers_add_new_btn{
 .tribe-upcoming{
     background-color: #3d3d3f!important;
     text-transform: capitalize!important;
-font-family: 'Roboto', sans-serif;
+    font-family: "Plus Jakarta Sans", Sans-serif!important;
     letter-spacing: 1px!important;
     font-weight: 200!important;
 }
@@ -921,7 +921,7 @@ font-family: 'Roboto', sans-serif;
 }
 
 #tinymce p{
-font-family: 'Roboto', sans-serif;  
+    font-family: "Plus Jakarta Sans", Sans-serif!important;  
 
 }
 
@@ -2213,197 +2213,12 @@ form.edit-vanue-form {
     color:black!important
 }
 
-.heading_green {
+.heading_green , .heading_green h5{
     color: #d3fa16!important;
 }
 
-.entry-title{
-    display: none!important;
-}
-body .section_page_scroll_div span{
-    color: #000!important;
-}
-
-.entry-content , .site-main{
-    margin-top: 0!important;
-}
-
-.on_this_section_text p{
-color: black!important;
-}
-.div_freatue_section h3 span  , body .div_freatue_section h3 , .div_freatue_section h4 {
-    color: #313638!important;
-    fill: #313638!important
-}
-body .div_freatue_section p {
-    color: #71717a!important;
-}
-body .div_freatue_section svg{
-    fill: #313638!important
-}
-.elementor-toggle-item {
-    background-color: #121212;
-    color: #ffffff;
-    cursor: pointer;
-    margin-bottom: 10px!important;
-    padding: 18px;
-    width: 100%;
-    text-align: left;
-    border: none;
-    outline: none;
-    transition: 0.4s;
-    position: relative;
-    font-size: 18px !important;
-    font-weight: 500;
-    border-radius: 4px;
-    border-left: 4px solid;
-}
-.elementor-toggle-item p{
-    padding-top: 15px!important;
-    margin-bottom:0!important
-}
-
-.price_section_green{
-    color: #313638 !important
-}
-
-.price_section h5{
-    color: #D3FA16 !important
-}
-.price_section_green p{
-    color: #71717a!important;
-
-}
-
-.price_section p{
-    color: #71717a!important;
-    font-weight: 300;
-    font-size: 16px;
-    margin-top: -20px;
-
-}
-.price_section_green h2{
-    color: #313638 !important
-}
-.price_section h6{
-
-    color: #71717a !important;
-    font-size: 14px!important;
-    font-weight: 300!important;
-    margin-top: -16px !important;
-    margin-bottom: 15px!important;
-}
-
-.price_section_green li span{
-    color: #313638 !important 
-}
-body .price_section_dark svg{
-    fill: #ffffff !important 
-}
-.price_section_dark li span{
-    color: #ffffff !important 
-}
-.price_section_dark span{
-    color: black!important 
-
-
-}
-
-.price_section_green .elementor-button:hover .elementor-button-text {
-    color: black!important 
-}
-.price_section_dark .elementor-button:hover .elementor-button-text {
-    color: rgb(255, 255, 255)!important 
-}
-.price_section_green .elementor-button:hover{
-    border:1px solid #19191b!important 
-}
-.price_section ul{
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-}
-
-
-/***********END********/
 
 
 
 
-
-
-
-
-
-/****Scanner web app styles****/
-
-/* Hide file input elements in the html5-qrcode scanner */
-.html5qr-qrcode-fileinput, .html5qr-qrcode-header {
-    display: none !important;
-}
-#qr-reader{
-  width: 100%;
-}
-
-.qrcode_scanner_wrapper_div{
-    max-width: 300px;
-width: 100%;
-margin: 0 auto;
-padding-top: 50px!important;
-}
-html #qr-reader__dashboard_section #html5-qrcode-anchor-scan-type-change{
-    display: none!important;
-
-}
-#qr-reader__header_message{
-    color: white!important;
-    padding-top: 15px!important;
-}
-#html5-qrcode-button-camera-start{
-    background: #d3fa16 !important;
-    color: #000000 !important;
-    text-transform: capitalize !important;
-    width: fit-content;
-    padding: 7px 15px;
-    border-radius: 4px;
-    text-decoration: none;
-    white-space: nowrap;
-}
-
-html #qr-reader #html5-qrcode-button-camera-permission{
-    width: fit-content;
-    padding: 7px 15px;
-    border-radius: 4px;
-    color: rgb(0, 0, 0) !important;
-    background: #ffc107 !important;
-}
-html #html5-qrcode-button-camera-stop{
-    width: fit-content;
-    font-size: 13px;
-    padding: 4px 10px;
-    border-radius: 2px;
-    color: white !important;
-    background: #ff4d4d !important;
-}
-#qr-reader{
-    border: 0px!important;
-}
-html #qr-reader__dashboard_section_csr span:first-child{
-    display: none!important;
-    visibility: hidden!important
-}
-
-html #qr-reader__dashboard_section_csr{
-    display: flex!important;
-    flex-direction: column-reverse;
-    gap: 50px;
-    padding: 10px 10px;
-}
-
-#qr-reader__dashboard{
-    max-height: 75px;
-}
-#qr-reader img{
-    display: none!important;
-}
 /***********END********/

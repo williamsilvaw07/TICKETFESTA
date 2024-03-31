@@ -521,18 +521,9 @@ function category_image_gallery_shortcode($atts) {
 function get_default_organizer(){
     $customer_id = get_current_user_id();
     $organizer_id =  get_user_meta($customer_id, '_tribe_organizer_id', true);
-    return $organizer_id ? get_the_title($organizer_id) : set_default_organizer($customer_id);
+    return $organizer_id ? get_the_title($organizer_id) : false;
 }
 
-function set_default_organizer($customer_id){
-    $organisers = get_posts(array(
-        'post_type' => 'tribe_organizer', // Assuming 'organiser' is the custom post type for organizers
-        'author' => $customer_id, // Retrieve organizers only for the current user
-        'posts_per_page' => -1
-    ));
-    update_user_meta($customer_id, '_tribe_organizer_id', $organisers[0]->ID);
-    return get_the_title($organisers[0]->ID);
-}
 function register_as_media($url){
     // require_once("wp-load.php");
 
