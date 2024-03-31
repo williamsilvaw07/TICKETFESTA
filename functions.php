@@ -1,7 +1,7 @@
 <?php
 
 
-include ('./coupon_auto_apply.php');
+include (get_stylesheet_directory() . '/coupon_auto_apply.php');
 
 
 // header layout
