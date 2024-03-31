@@ -13,17 +13,26 @@ function get_tribe_ticket_fee(ticketAmount, quantity = 1){
 
 document.addEventListener('DOMContentLoaded', function() {
 
-    // single product price
-    jQuery('.tribe-tickets__tickets-sale-price').each(function() {
-        // Append a div element with the text "Sites Fees" to each item
-        var ticketAmount = jQuery(this).find('.tribe-amount').text().replace(',', ''); 
-        ticketAmount = parseFloat(ticketAmount.trim()).toFixed(2);
-        var ticketSiteFee =  get_tribe_ticket_fee(ticketAmount);
-       // console.log('ticket price: ', ticketAmount)
-        jQuery(this).append('<span class="site-fee-container">+ £<span class="ticket_site_fee">'+ticketSiteFee+'</span> Fee</span>');
-    }); 
 
 
+
+
+
+
+// single product price
+jQuery('.tribe-tickets__tickets-sale-price').each(function() {
+    // Append a div element with the text "Site Fees" to each item
+    var ticketAmount = jQuery(this).find('.tribe-amount').text().replace(',', ''); 
+    ticketAmount = parseFloat(ticketAmount.trim()).toFixed(2);
+    var ticketSiteFee =  get_tribe_ticket_fee(ticketAmount);
+    console.log('Ticket price: ', ticketAmount); // Log the ticket price
+    console.log('Site fee: ', ticketSiteFee); // Log the site fee
+    jQuery(this).append('<span class="site-fee-container">+ £<span class="ticket_site_fee">'+ticketSiteFee+'</span> Fee</span>');
+});
+
+
+
+    
     jQuery('.flux-checkout__login-button.login-button').each(function() {
         // Add classes 'xoo-el-action-sc' and 'xoo-el-login-tgr'
         jQuery(this).addClass('xoo-el-action-sc xoo-el-login-tgr');
