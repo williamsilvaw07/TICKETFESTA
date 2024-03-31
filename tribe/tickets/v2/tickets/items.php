@@ -36,42 +36,38 @@
  * @var string                             $checkout_url                [Global] Link to Checkout (could be empty).
  */
 
-if ( empty( $tickets_on_sale ) ) {
-//	return;
+
+ if ( empty( $tickets_on_sale ) ) {
+    // return; Uncomment this if you want to return early when there are no tickets on sale.
 }
 
 foreach ( $tickets as $key => $ticket ) {
-	$available_count = $ticket->available();
+    $available_count = $ticket->available();
+    
+    // Placeholder: Adjust according to your setup to retrieve the sales end date.
+    $sales_end_date = method_exists( $ticket, 'get_end_date' ) ? $ticket->get_end_date() : '';
+    $formatted_sales_end_date = date_i18n( get_option( 'date_format' ), strtotime( $sales_end_date ) );
 
-	/**
-	 * Allows hiding of "unlimited" to be toggled on/off conditionally.
-	 *
-	 * @since 4.11.1
-	 * @since 5.0.3 Added $ticket parameter.
-	 *
-	 * @var bool                          $show_unlimited  Whether to show the "unlimited" text.
-	 * @var int                           $available_count The quantity of Available tickets based on the Attendees number.
-	 * @var Tribe__Tickets__Ticket_Object $ticket          The ticket object.
-	 */
-	$show_unlimited = apply_filters( 'tribe_tickets_block_show_unlimited_availability', true, $available_count, $ticket );
+    $show_unlimited = apply_filters( 'tribe_tickets_block_show_unlimited_availability', true, $available_count, $ticket );
 
-	$has_shared_cap = $handler->has_shared_capacity( $ticket );
+    $has_shared_cap = $handler->has_shared_capacity( $ticket );
 
-	$ticket_max_purchase = $handler->get_ticket_max_purchase( $ticket->ID );
-	$this->template(
-		'v2/tickets/item',
-		[
-			'ticket'              => $ticket,
-			'key'                 => $key,
-			'data_available'      => 0 === $ticket_max_purchase ? 'false' : 'true',
-			'has_shared_cap'      => $has_shared_cap,
-			'data_has_shared_cap' => $has_shared_cap ? 'true' : 'false',
-			'currency_symbol'     => $currency->get_currency_symbol( $ticket->ID, true ),
-			'show_unlimited'      => (bool) $show_unlimited,
-			'available_count'     => $available_count,
-			'is_unlimited'        => - 1 === $available_count,
-			'max_at_a_time'       => $ticket_max_purchase,
-		]
-	);
+    $ticket_max_purchase = $handler->get_ticket_max_purchase( $ticket->ID );
+    $this->template(
+        'v2/tickets/item',
+        [
+            'ticket'                => $ticket,
+            'key'                   => $key,
+            'data_available'        => 0 === $ticket_max_purchase ? 'false' : 'true',
+            'has_shared_cap'        => $has_shared_cap,
+            'data_has_shared_cap'   => $has_shared_cap ? 'true' : 'false',
+            'currency_symbol'       => $currency->get_currency_symbol( $ticket->ID, true ),
+            'show_unlimited'        => (bool) $show_unlimited,
+            'available_count'       => $available_count,
+            'is_unlimited'          => -1 === $available_count,
+            'max_at_a_time'         => $ticket_max_purchase,
+            // Include sales end date in the passed data
+            'sales_end_date'        => $formatted_sales_end_date,
+        ]
+    );
 }
-
