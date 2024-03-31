@@ -572,7 +572,6 @@ get_header('organizer');
 
 </div>
 
-
 <?php
 get_footer('organizer'); // Include the footer
 
