@@ -57,10 +57,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
     var searchIcon = document.querySelector('.header_search_icon');
-    console.log('Search icon element:', searchIcon); // Check if the search icon is correctly identified
+    //console.log('Search icon element:', searchIcon); // Check if the search icon is correctly identified
 
     if (!searchIcon) {
-       console.error('Search icon not found.');
+       //console.error('Search icon not found.');
         return;
     }
 
@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', function() {
         var searchPopup = document.getElementById('searchPopup');
 
         if (!searchPopup) {
-           console.error('Search popup element not found.');
+           //console.error('Search popup element not found.');
             return;
         }
 
@@ -114,7 +114,7 @@ document.addEventListener('DOMContentLoaded', function() {
     var dynamicDiv = document.querySelector('.dynamic_div');
 
     if (!dynamicDiv) {
-        console.error('Dynamic div container not found.');
+        //console.error('Dynamic div container not found.');
         return;
     }
 
@@ -125,26 +125,26 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Append the newly created span to the dynamic div
     dynamicDiv.appendChild(searchIconMobile);
-    console.log('Mobile search icon span added to the dynamic div.');
+    //console.log('Mobile search icon span added to the dynamic div.');
 
     function openSearchPopup() {
-        console.log('Attempting to open mobile search popup...');
+        //console.log('Attempting to open mobile search popup...');
         var searchPopup = document.getElementById('searchPopup');
 
         if (!searchPopup) {
-            console.error('Search popup element not found.');
+           // console.error('Search popup element not found.');
             return;
         }
 
         // Toggle the display of the search popup
         searchPopup.style.display = (searchPopup.style.display === 'block') ? 'none' : 'block';
-        console.log('Mobile search popup toggled.');
+        //console.log('Mobile search popup toggled.');
     }
 
     // Function to handle click/tap events on the newly added span
     function handleMobileIconTap(event) {
         event.preventDefault(); // Prevent default actions
-        console.log('Mobile search icon span tapped.');
+       // console.log('Mobile search icon span tapped.');
         openSearchPopup(); // Call the function to open the search popup
     }
 
@@ -152,7 +152,7 @@ document.addEventListener('DOMContentLoaded', function() {
     searchIconMobile.addEventListener('click', handleMobileIconTap);
     searchIconMobile.addEventListener('touchend', handleMobileIconTap);
 
-    console.log('Event listeners attached to the mobile search icon span.');
+    //console.log('Event listeners attached to the mobile search icon span.');
 });
 
 
@@ -183,7 +183,7 @@ jQuery(document).ready(function($) {
                 jQuery('#organizer-row-' + vanueID).remove(); // Remove the row from the table
             },
             fail: function(response){
-                console.log('AJAX error:', response);
+                //console.log('AJAX error:', response);
                 alert('Failed to delete: ' );
             }
         });
@@ -365,4 +365,16 @@ function autoSelectCountry(){
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
 
