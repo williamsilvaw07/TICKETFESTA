@@ -202,37 +202,33 @@ jQuery(document).ready(function($) {
 
 
 
-
+    jQuery(document).ready(function($) {
+        // Recalculate the total and update the footer whenever add or remove buttons are clicked.
+        function recalculateTotal() {
+            var total = 0;
     
-    jQuery('.tribe-tickets__tickets-item-quantity-add').click(function() {
-        var total_fee = 0;
+            $('.tribe-tickets__tickets-item').each(function() {
+                var ticketAmount = parseFloat($(this).find('.tribe-amount').text().replace('£', '').trim());
+                var quantity = parseInt($(this).find('.tribe-tickets__tickets-item-quantity-number-input').val());
+                // Extract the site fee directly from the .site-fee-container
+                var siteFee = parseFloat($(this).find('.site-fee-container .ticket_site_fee').text().trim());
     
-        // Iterate over each .tribe-tickets__tickets-item
-        jQuery('.tribe-tickets__tickets-item').each(function() {
-            var ticketAmountText = jQuery(this).find('.tribe-amount').text().replace(',', '');
-            console.log('Ticket Amount Text:', ticketAmountText); // Log the text of the ticket amount
+                if (!isNaN(ticketAmount) && !isNaN(quantity) && !isNaN(siteFee)) {
+                    total += (ticketAmount * quantity) + (siteFee * quantity);
+                }
+            });
     
-            var ticketAmount = parseFloat(ticketAmountText.trim()).toFixed(2);
-            console.log('Formatted Ticket Amount:', ticketAmount); // Log the formatted ticket amount
+            // Update the total fee displayed in the footer. Adjust selector if needed.
+            $('.tribe-tickets__tickets-footer-total .tribe-amount').text('£' + total.toFixed(2));
+        }
     
-            ticketAmount = isNaN(parseFloat(ticketAmount)) ? 0 : parseFloat(ticketAmount);
-            console.log('Ticket Amount After NaN Check:', ticketAmount); // Log after NaN check
-    
-            var quantity = parseInt(jQuery(this).find('.tribe-tickets__tickets-item-quantity-number-input').val());
-            console.log('Quantity:', quantity); // Log the quantity
-    
-            var ticketSiteFee = get_tribe_ticket_fee(ticketAmount, quantity);
-            console.log('Ticket Site Fee:', ticketSiteFee); // Log the ticket site fee
-    
-            if (ticketAmount != 0) {
-                total_fee += (ticketAmount * quantity) + parseFloat(ticketSiteFee);
-            }
-            console.log('Total Fee After Iteration:', total_fee); // Log the total fee after each iteration
+        // Attach click event listeners to the add and remove quantity buttons.
+        $('body').on('click', '.tribe-tickets__tickets-item-quantity-add, .tribe-tickets__tickets-item-quantity-remove', function() {
+            // Small delay to wait for the input value to update.
+            setTimeout(function() {
+                recalculateTotal();
+            }, 100);
         });
-    
-        // Update the total fee displayed in the footer
-        jQuery('.tribe-tickets__tickets-footer-total .tribe-amount').text(total_fee.toFixed(2));
-        console.log('Final Total Fee:', total_fee.toFixed(2)); // Log the final total fee
     });
 
     
