@@ -3850,9 +3850,9 @@ function add_extra_fees_for_products($cart)
         $product_price = $cart_item['data']->get_price();
         $quantity = $cart_item['quantity'];
         if ($product_price < 50) {
-            $extra_fee += ($product_price * .09 + 0.02) * $quantity;
+            $extra_fee += ($product_price * .03 + 0.02) * $quantity;
         } elseif ($product_price > 50) {
-            $extra_fee += ($product_price * .09 + 0.02) * $quantity;
+            $extra_fee += ($product_price * .01 + 0.02) * $quantity;
         }
 
     }
