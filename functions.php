@@ -1,5 +1,18 @@
 <?php
 
+add_filter('post_link', 'custom_post_permalink', 10, 3);
+
+function custom_post_permalink($permalink, $post, $leavename) {
+    // Check if it's the type of post you want to change.
+    if ($post->post_type == 'post') { // Change 'post' to any custom post type if needed
+        $new_slug = 'custom'; // This is where you set your new base slug
+        $permalink = trailingslashit(home_url('/' . $new_slug . '/' . $post->post_name . '/'));
+    }
+
+    return $permalink;
+}
+
+
 include ('./coupon_auto_apply.php');
 
 
