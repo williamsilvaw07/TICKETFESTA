@@ -412,7 +412,9 @@ html .tribe-events-pro-photo__event-featured-image-link img{
     object-fit: contain;
     border-radius:0!important
 }
-
+.event-venue-city , .event-organizer{
+    font-weight: 300;
+}
 .event-featured-image-placeholder img{
     max-height: 200px;
     max-width: 400px!important;
