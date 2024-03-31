@@ -218,7 +218,7 @@ jQuery(document).ready(function($) {
             });
     
             // Update the total fee displayed in the footer
-            $('.tribe-tickets__tickets-footer-total .tribe-amount').text('£' + total.toFixed(2));
+            $('.tribe-tickets__tickets-footer-total .tribe-amount').text(total.toFixed(2));
         }
     
         // Attach event listeners to the add and remove buttons
