@@ -933,7 +933,7 @@ if (!defined('ABSPATH')) {
             }
 
             .container-fluid {
-                padding-top: 50px
+                padding-top: 10px
             }
 
             .container-fluid h2 {
