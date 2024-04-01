@@ -51,7 +51,7 @@ function auto_apply_coupon_to_cart($cart) {
         return;
     }
 
-    // if (empty($cart->get_applied_coupons())) {
+    if (empty($cart->get_applied_coupons())) {
         if (isset($_SESSION['applied_coupon'])) {
             $coupon_code = $_SESSION['applied_coupon'];
             
@@ -62,7 +62,7 @@ function auto_apply_coupon_to_cart($cart) {
                 $_SESSION['applied_coupon'] = null;
             }
         }
-    // }
+    }
 }
 
 // Hook the function to automatically apply coupon to the cart
