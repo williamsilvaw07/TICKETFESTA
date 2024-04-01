@@ -130,7 +130,7 @@ $attributes = apply_filters( 'tribe_tickets_block_ticket_html_attributes', $attr
 	id="<?php echo esc_attr( $ticket_item_id ); ?>"
 	<?php tribe_classes( $classes ); ?>
 	<?php tribe_attributes( $attributes ); ?>
->
+<?php if(!tribe_events_ticket_is_on_sale( $ticket ) ){echo "style='opacity:0.4;'";}?>>
 
 	<?php $this->template( 'v2/tickets/item/content', $context ); ?>
 <?php if(tribe_events_ticket_is_on_sale( $ticket ) ){?>
