@@ -1999,7 +1999,11 @@ body .tribe-tickets__tickets-buy{
 
 
 
+.entry .entry-content .event-tickets .tribe-tickets__tickets-item, .event-tickets .tribe-tickets__tickets-item , .entry .entry-content .event-tickets .tribe-tickets__tickets-footer, .event-tickets .tribe-tickets__tickets-footer  {
 
+    border-top: 0px solid rgba(255, 255, 255, 0.2)!important;
+   
+}
 
 
 
