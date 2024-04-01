@@ -1093,8 +1093,8 @@ width:90%!important;
 .home .entry-content:not(:first-child) , .home .site-main{
     margin-top: 0em!important;
 }
-.home_main_heading{
-    opacity: 0.7!important;
+.home_main_heading h1{
+    color: rgba(255, 255, 255, 0.6) !important;
 }
 .home_main_heading{
     position: absolute!important;
