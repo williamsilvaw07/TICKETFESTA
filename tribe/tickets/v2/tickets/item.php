@@ -126,11 +126,16 @@ if ( $has_shared_cap ) {
  */
 $attributes = apply_filters( 'tribe_tickets_block_ticket_html_attributes', $attributes, $ticket );
 ?>
+
+<?php if(!tribe_events_ticket_is_on_sale( $ticket ) ){
+	array_push($classes,'future_tickets_item');
+	
+}?>
 <div
 	id="<?php echo esc_attr( $ticket_item_id ); ?>"
 	<?php tribe_classes( $classes ); ?>
 	<?php tribe_attributes( $attributes ); ?>
-<?php if(!tribe_events_ticket_is_on_sale( $ticket ) ){echo "style='opacity:0.4;'";}?>>
+>
 
 	<?php $this->template( 'v2/tickets/item/content', $context ); ?>
 <?php if(tribe_events_ticket_is_on_sale( $ticket ) ){?>
