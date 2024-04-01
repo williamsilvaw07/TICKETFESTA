@@ -129,6 +129,7 @@ $cost  = tribe_get_formatted_cost( $event_id );
            <?php 
                 $tickets = Tribe__Tickets__Tickets::get_event_tickets( get_the_ID(  ) );
                 foreach($tickets as $ticket){
+				
                     $currentDateTime = new DateTime();
                     $start_dateTime = $ticket->start_date . ' ' . $ticket->start_time;
                     $end_dateTime = $ticket->end_date. ' ' .$ticket->end_time;
@@ -136,11 +137,30 @@ $cost  = tribe_get_formatted_cost( $event_id );
                     $date->setTimezone(new DateTimeZone('Europe/London'));
                     $EventStartDate = $date->format('d M, H:i');
                     $startDatedPassed = $date < $currentDateTime;
-
+				
                     $date = new DateTime($end_dateTime);
                     $date->setTimezone(new DateTimeZone('Europe/London'));
                     $EventEndDate = $date->format('d M, H:i');
+				
                     $endDatedPassed = $date < $currentDateTime;
+					if($ticket->end_date == ''){
+						  // Format for the date and time
+          $event_start_date_time = tribe_get_start_date( $event_id, true, 'D, j M, H:i' );
+          
+          // Get the event's timezone object
+          $timezone = Tribe__Events__Timezones::get_event_timezone_string( $event_id );
+
+          // Create a DateTimeZone object from the event's timezone string
+          $dateTimeZone = new DateTimeZone($timezone);
+
+          // Create a DateTime object for the event's start date/time in the event's timezone
+          $dateTime = new DateTime( tribe_get_start_date( $event_id, false, 'Y-m-d H:i:s' ), $dateTimeZone );
+
+          // Format the DateTime object to get the timezone abbreviation
+          // Handles cases like BST/GMT dynamically based on the event's date and timezone
+          $timezone_abbr = $dateTime->format('T');
+						$EventEndDate = $event_start_date_time . ' ' . $timezone_abbr;
+					}
                     echo "<div style='display:none' class='ticket-date-container' data-ticket-id='$ticket->ID'> 
                         <span class='pick_start_date' data-passed='$startDatedPassed'>$EventStartDate</span> 
                         <span class='pick_end_date' data-passed='$endDatedPassed' >$EventEndDate</span>
