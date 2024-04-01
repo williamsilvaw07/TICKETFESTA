@@ -8,6 +8,8 @@ function start_session() {
 
     if (isset($_GET['coupon'])) {
         $_SESSION['applied_coupon'] = sanitize_text_field($_GET['coupon']);
+
+        var_dump($_SESSION['applied_coupon']);
     }
 }
 
@@ -42,7 +44,7 @@ function display_price_with_discount() {
 }
 
 // Hook the function to display the price drop to the WooCommerce product page
-//add_action('woocommerce_single_product_summary', 'display_price_with_discount', 10);
+add_action('woocommerce_single_product_summary', 'display_price_with_discount', 10);
 
 
 // Function to automatically apply coupon when product is added to cart
