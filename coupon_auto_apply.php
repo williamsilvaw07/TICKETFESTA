@@ -8,8 +8,6 @@ function start_session() {
 
     if (isset($_GET['coupon'])) {
         $_SESSION['applied_coupon'] = sanitize_text_field($_GET['coupon']);
-
-        var_dump($_SESSION['applied_coupon']);
     }
 }
 
@@ -55,6 +53,8 @@ function auto_apply_coupon_to_cart($cart) {
 
     // if (empty($cart->get_applied_coupons())) {
         if (isset($_SESSION['applied_coupon'])) {
+            var_dump($_SESSION['applied_coupon']);
+            
             $coupon_code = $_SESSION['applied_coupon'];
             $coupon = new WC_Coupon($coupon_code);
             if ($coupon->is_valid()) {
