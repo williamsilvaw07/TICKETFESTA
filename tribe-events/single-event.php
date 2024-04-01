@@ -1168,19 +1168,32 @@ jQuery(document).ready(function($) {
 
 
 
-jQuery(document).ready(function($) {
-    // Main Comment: Hide the sales end date for tickets without a quantity selector. This script ensures that end dates 
-    // are only shown for tickets that allow quantity selection, improving clarity for the users.
 
-    // Iterate through each ticket item in the form
+
+jQuery(document).ready(function($) {
+    // Function to toggle display of available ticket quantities.
+    // It sets .tribe-tickets__tickets-item-extra-available to display:block
+    // if the available quantity is less than 15, otherwise hides it.
+    
+    // Iterate over each ticket item on the page
     $('.tribe-tickets__tickets-item').each(function() {
-        // Check if the ticket item does not have a quantity selector
-        if ($(this).find('.tribe-tickets__tickets-item-quantity').length === 0) {
-            // Hide the sales end date for this ticket item
-            $(this).find('.ticket-sales-dates .enddate').hide();
+        // Parse the available quantity text to an integer
+        var availableQuantity = parseInt($(this).find('.tribe-tickets__tickets-item-extra-available-quantity').text(), 10);
+        
+        // Check if availableQuantity is a number and less than 15
+        if (!isNaN(availableQuantity) && availableQuantity < 15) {
+            // If conditions are met, show the available quantity element
+            $(this).find('.tribe-tickets__tickets-item-extra-available').css('display', 'block');
+        } else {
+            // Otherwise, hide the available quantity element
+            $(this).find('.tribe-tickets__tickets-item-extra-available').css('display', 'none');
         }
     });
 });
+
+
+
+
 
 
 
