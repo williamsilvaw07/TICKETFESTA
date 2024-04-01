@@ -56,13 +56,10 @@ function auto_apply_coupon_to_cart($cart) {
             $coupon_code = $_SESSION['applied_coupon'];
             
             $coupon = new WC_Coupon($coupon_code);
-            // echo "<pre>";
-            // var_dump($coupon);
-            // echo "</pre>";
-            var_dump($coupon->is_valid());
 
             if ($coupon->is_valid()) {
                 $cart->apply_coupon($coupon_code);
+                $_SESSION['applied_coupon'] = null;
             }
         }
     // }
