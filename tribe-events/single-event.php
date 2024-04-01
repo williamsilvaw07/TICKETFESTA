@@ -1169,20 +1169,18 @@ jQuery(document).ready(function($) {
 
 
 jQuery(document).ready(function($) {
-    // This function checks each ticket item on the page. If a ticket item does not include 
-    // a quantity selector (tribe-tickets__tickets-item-quantity), this script hides the 
-    // end date associated with that ticket.
+    // Main Comment: Hide the sales end date for tickets without a quantity selector. This script ensures that end dates 
+    // are only shown for tickets that allow quantity selection, improving clarity for the users.
 
-    // Loop through each ticket item
+    // Iterate through each ticket item in the form
     $('.tribe-tickets__tickets-item').each(function() {
-        // Check if the ticket item does NOT have a quantity selector
+        // Check if the ticket item does not have a quantity selector
         if ($(this).find('.tribe-tickets__tickets-item-quantity').length === 0) {
-            // If no quantity selector is found, hide the end date for this ticket item
+            // Hide the sales end date for this ticket item
             $(this).find('.ticket-sales-dates .enddate').hide();
         }
     });
 });
-
 
 
 
