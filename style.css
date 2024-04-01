@@ -1012,7 +1012,7 @@ html .tribe-community-events .tribe-community-notice-error p:last-child {
 }
 
 .main_bk_home_main_div{
-    margin-top: -100px!important;
+    margin-top: 0px!important;
 }
 
 .main_bk_home_main_div:before{
