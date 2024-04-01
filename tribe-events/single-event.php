@@ -2000,14 +2000,18 @@ body .tribe-tickets__tickets-buy{
 
 
 .entry .entry-content .event-tickets .tribe-tickets__tickets-item, .event-tickets .tribe-tickets__tickets-item , .entry .entry-content .event-tickets .tribe-tickets__tickets-footer, .event-tickets .tribe-tickets__tickets-footer  {
-    -webkit-box-shadow: 0px 0px 26px -1px rgba(0,0,0,1);
--moz-box-shadow: 0px 0px 26px -1px rgba(0,0,0,1);
-box-shadow: 0px 0px 26px -1px rgba(0,0,0,1);
+
     border-top: 0px solid rgba(255, 255, 255, 0.2)!important;
    
 }
 
+.entry .entry-content .event-tickets .tribe-tickets__tickets-item, .event-tickets .tribe-tickets__tickets-item  {
+    -webkit-box-shadow: 0px 0px 26px -1px rgba(0,0,0,1);
+-moz-box-shadow: 0px 0px 26px -1px rgba(0,0,0,1);
+box-shadow: 0px 0px 26px -1px rgba(0,0,0,1);
 
+   
+}
 
 .single_event_page_line_up ul {
     list-style-type: none; 
