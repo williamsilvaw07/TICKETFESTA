@@ -54,10 +54,11 @@ function auto_apply_coupon_to_cart($cart) {
     // if (empty($cart->get_applied_coupons())) {
         if (isset($_SESSION['applied_coupon'])) {
             $coupon_code = $_SESSION['applied_coupon'];
-            var_dump($coupon_code);
+            
             $coupon = new WC_Coupon($coupon_code);
-
+            echo "<pre>";
             var_dump($coupon);
+            echo "</pre>";
             var_dump($coupon->is_valid());
 
             if ($coupon->is_valid()) {
