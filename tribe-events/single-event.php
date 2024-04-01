@@ -1195,20 +1195,6 @@ jQuery(document).ready(function($) {
 
 
 
-jQuery(document).ready(function($) {
-    // Main Comment: Hide the sales end date for tickets without a quantity selector. This script ensures that end dates 
-    // are only shown for tickets that allow quantity selection, improving clarity for the users.
-
-    // Iterate through each ticket item in the form
-    $('.tribe-tickets__tickets-item').each(function() {
-        // Check if the ticket item does not have a quantity selector
-        if ($(this).find('.tribe-tickets__tickets-item-quantity').length === 0) {
-            // Hide the sales end date for this ticket item
-            $(this).find('.ticket-sales-dates .enddate').hide();
-        }
-    });
-});
-
     </script>
 
 
