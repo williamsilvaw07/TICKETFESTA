@@ -1194,6 +1194,20 @@ jQuery(document).ready(function($) {
 
 
 
+
+jQuery(document).ready(function($) {
+    // Main comment: This function hides the sales end date for tickets without a quantity selector.
+
+    // Iterate over each ticket item in the form
+    $('.tribe-tickets__tickets-item').each(function() {
+        // Check if the current ticket item lacks a quantity selector
+        if ($(this).find('.tribe-tickets__tickets-item-quantity').length === 0) {
+            // If no quantity selector is present, hide the sales end date for this ticket
+            $(this).find('.ticket-sales-dates .enddate').hide();
+        }
+    });
+});
+
     </script>
 
 
