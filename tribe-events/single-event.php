@@ -1812,7 +1812,7 @@ html .single-tribe_events .tribe-events-gmap{
 .site-fee-container{
     text-align: right;
 }
-.entry .entry-content .event-tickets .tribe-tickets__tickets-item, .event-tickets .tribe-tickets__tickets-item, .entry .entry-content .event-tickets .tribe-tickets__tickets-footer, .event-tickets .tribe-tickets__tickets-footer {
+html .entry .entry-content .event-tickets .tribe-tickets__tickets-item, html .event-tickets .tribe-tickets__tickets-item, html .entry .entry-content .event-tickets .tribe-tickets__tickets-footer, html .event-tickets .tribe-tickets__tickets-footer {
     border-top: 0px solid rgba(255, 255, 255, 0.2) !important;
 }
 
