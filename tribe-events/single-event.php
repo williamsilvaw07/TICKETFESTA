@@ -1308,6 +1308,13 @@ jQuery(document).ready(function($) {
     display: none;
 }
 
+.future_tickets_item{
+    opacity: 0.4;
+}
+.future_tickets_item .enddate{
+    display: none
+}
+
 /****Event organizer***/
 .organizer-details{
     display: flex;
