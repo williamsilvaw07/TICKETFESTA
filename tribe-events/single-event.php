@@ -1815,7 +1815,7 @@ html .single-tribe_events .tribe-events-gmap{
 
 
 span.site-fee-container, span.site-fee-container span.ticket_site_fee  , .enddate , .startdate{
-    color: #949494!important;
+    color: #bcbcbc !important;
     font-size: 13px;
     font-weight: 300;
 }
