@@ -1,22 +1,23 @@
 <?php
 
 
-// Hook into WooCommerce 'add to cart' action
+// Hook into WooCommerce 'add to cart' action to start a timer
 add_action('woocommerce_add_to_cart', function($cart_item_key, $product_id, $quantity, $variation_id, $variation, $cart_item_data) {
-    // Set a 1-minute reservation expiry time in the session
-    WC()->session->set('reservation_expiry', time() + 60); // 60 seconds = 1 minute
+    WC()->session->set('reservation_expiry', time() + 60); // Set expiry for 60 seconds from now
 }, 10, 6);
 
-// Register AJAX actions for clearing the cart and restoring stock
+// Register AJAX action for both logged-in and not-logged-in users
 add_action('wp_ajax_clear_cart_restore_stock', 'clear_cart_and_restore_stock');
 add_action('wp_ajax_nopriv_clear_cart_restore_stock', 'clear_cart_and_restore_stock');
 
 function clear_cart_and_restore_stock() {
-    // Iterate through cart items and restore stock
-    foreach (WC()->cart->get_cart() as $cart_item_key => $cart_item) {
+    // Iterate through cart items to restore stock
+    foreach (WC()->cart->get_cart_contents() as $cart_item) {
         $product = wc_get_product($cart_item['product_id']);
         $quantity = $cart_item['quantity'];
-        // Assume stock is adjusted here as needed
+        $current_stock = $product->get_stock_quantity();
+        $product->set_stock_quantity($current_stock + $quantity); // Restore stock
+        $product->save();
     }
     
     WC()->cart->empty_cart(); // Clear the cart
@@ -24,31 +25,26 @@ function clear_cart_and_restore_stock() {
     wp_send_json_success('Cart cleared and stock restored due to inactivity.'); // Send success response
 }
 
-// Inject countdown timer script into cart and checkout pages
+// Inject countdown timer and AJAX call into the cart and checkout pages
 add_action('woocommerce_before_cart', 'inject_reservation_countdown');
 add_action('woocommerce_before_checkout_form', 'inject_reservation_countdown');
 
 function inject_reservation_countdown() {
-    // Check for reservation expiry time
-    $expiry_time = WC()->session->get('reservation_expiry');
-    if (!$expiry_time) return; // Exit if no expiry time is set
-    
-    // Placeholder for the countdown timer
+    // Output the countdown timer's placeholder
     echo '<div id="reservation-countdown" style="padding: 10px; background-color: #f8f9fa; margin-bottom: 20px; text-align: center;"></div>';
 
     // Inline JavaScript for countdown and AJAX request
     ?>
     <script>
     jQuery(document).ready(function($) {
-        var expiryTime = <?php echo json_encode($expiry_time); ?>;
-        var countdownElement = $('#reservation-countdown');
+        var expiryTime = <?php echo json_encode(WC()->session->get('reservation_expiry')); ?>;
         var countdownTimer = setInterval(function() {
             var currentTime = Math.floor(Date.now() / 1000);
             var timeLeft = expiryTime - currentTime;
 
             if (timeLeft <= 0) {
                 clearInterval(countdownTimer);
-                countdownElement.text('Clearing the cart due to reservation expiration...');
+                $('#reservation-countdown').text('Clearing the cart due to reservation expiration...');
 
                 // AJAX request to clear the cart and restore stock
                 $.ajax({
@@ -60,15 +56,17 @@ function inject_reservation_countdown() {
                     success: function(response) {
                         if (response.success) {
                             alert(response.data); // Display success message
-                            location.reload(); // Refresh the page
+                            window.location.reload(); // Refresh the page to show an empty cart
                         }
+                    },
+                    error: function(error) {
+                        console.log('Error clearing cart:', error);
                     }
                 });
             } else {
-                // Update countdown display
                 var minutes = Math.floor(timeLeft / 60);
                 var seconds = timeLeft % 60;
-                countdownElement.text('Reservation ends in: ' + minutes + 'm ' + (seconds < 10 ? '0' : '') + seconds + 's');
+                $('#reservation-countdown').text('Reservation ends in: ' + minutes + 'm ' + (seconds < 10 ? '0' : '') + seconds + 's');
             }
         }, 1000);
     });
