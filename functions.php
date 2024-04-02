@@ -32,10 +32,12 @@ function remove_reserved_stock($product_id, $quantity) {
     update_post_meta($product_id, '_reserved_stock', $reserved_stock);
 
     // Add the reserved quantity back to stock
-    $old_stock = $product->get_stock_quantity();
+    $old_stock = $product ? $product->get_stock_quantity() : 0;
     $new_stock = $old_stock + $quantity;
-    $product->set_stock_quantity($new_stock);
-    $product->save();
+    if ($product) {
+        $product->set_stock_quantity($new_stock);
+        $product->save();
+    }
 
     // Clear the cart
     WC()->cart->empty_cart();
@@ -89,7 +91,6 @@ function custom_woocommerce_empty_cart_action() {
     }
 }
 add_action( 'init', 'custom_woocommerce_empty_cart_action' );
-
 
 
 
