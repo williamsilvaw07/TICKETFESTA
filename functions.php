@@ -5045,8 +5045,6 @@ require_once get_stylesheet_directory() . '/event-dashboard-ajax.php';
 
 
 
-
-
 // Function to retrieve attendees for a specific event ID
 function get_event_attendees($event_id) {
     // Check if The Events Calendar plugin is active
@@ -5083,3 +5081,9 @@ function event_attendees_shortcode($atts) {
     }
 }
 add_shortcode('event_attendees', 'event_attendees_shortcode');
+
+// Adding a message to check if the shortcode is being executed
+function check_shortcode_execution() {
+    return 'The event_attendees shortcode is executed successfully.';
+}
+add_shortcode('check_execution', 'check_shortcode_execution');
