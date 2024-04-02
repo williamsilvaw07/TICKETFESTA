@@ -39,8 +39,8 @@ function remove_reserved_stock($product_id) {
     // Empty the cart
     WC()->cart->empty_cart();
 
-    // Show a message to the user
-    wc_add_notice(__('Your cart has been cleared due to inactivity.'), 'error');
+    // Add a custom notice with a link
+    wc_add_notice('<a href="' . esc_url(home_url()) . '">Your cart has been cleared due to inactivity. Click here to continue shopping.</a>', 'error');
 }
 add_action('remove_reserved_stock_event', 'remove_reserved_stock', 10, 1);
 
@@ -88,7 +88,6 @@ function custom_woocommerce_empty_cart_action() {
     }
 }
 add_action( 'init', 'custom_woocommerce_empty_cart_action' );
-
 
 
 
