@@ -1,5 +1,9 @@
 <?php
 
+
+
+
+
 // Add custom function to reserve stock when product is added to cart
 function reserve_stock_on_add_to_cart($cart_item_key, $product_id, $quantity, $variation_id, $variation, $cart_item_data) {
     // Get the product object
