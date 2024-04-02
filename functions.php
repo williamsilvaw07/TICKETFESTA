@@ -88,24 +88,6 @@ add_action( 'init', 'custom_woocommerce_empty_cart_action' );
 
 
 
-// Add custom function to display empty cart button
-function custom_woocommerce_empty_cart_button() {
-    echo '<a href="' . esc_url( add_query_arg( 'empty_cart', 'yes', wc_get_cart_url() ) ) . '" class="button" title="' . esc_attr( 'Empty Cart', 'woocommerce' ) . '">' . esc_html( 'Empty Cart', 'woocommerce' ) . '</a>';
-}
-add_action( 'woocommerce_cart_coupon', 'custom_woocommerce_empty_cart_button' );
-
-// Add custom function to empty cart on action
-function custom_woocommerce_empty_cart_action() {
-    if ( isset( $_GET['empty_cart'] ) && 'yes' === $_GET['empty_cart'] ) {
-        WC()->cart->empty_cart();
-
-        // Redirect back to the cart page
-        wp_redirect( wc_get_cart_url() );
-        exit;
-    }
-}
-add_action( 'init', 'custom_woocommerce_empty_cart_action' );
-
 
 
 
