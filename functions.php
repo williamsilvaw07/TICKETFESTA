@@ -5042,15 +5042,16 @@ require_once get_stylesheet_directory() . '/event-dashboard-ajax.php';
 
 
 
+add_shortcode('check_execution', 'custom_event_info_shortcode');
 
 function custom_event_info_shortcode() {
     // Hardcoded event ID
     $event_id = 5640;
 
-    // Start output buffering
-    ob_start();
+    // Initialize an output variable
+    $output = '';
 
-    // Check if the event ID is a valid event
+    // Check if the event ID is valid
     if ( tribe_is_event($event_id) ) {
         $event_title = get_the_title($event_id);
         $event_url = get_permalink($event_id);
@@ -5060,19 +5061,18 @@ function custom_event_info_shortcode() {
         $venue_name = tribe_get_venue($event_id);
         $venue_url = tribe_get_venue_website_url($event_id);
 
-        echo "<h3>Event Information:</h3>";
-        echo "<p><strong>Title:</strong> <a href='{$event_url}'>{$event_title}</a></p>";
-        echo "<p><strong>Start Date:</strong> {$start_date}</p>";
-        echo "<p><strong>End Date:</strong> {$end_date}</p>";
+        // Build the output HTML
+        $output .= "<h3>Event Information:</h3>";
+        $output .= "<p><strong>Title:</strong> <a href='{$event_url}'>{$event_title}</a></p>";
+        $output .= "<p><strong>Start Date:</strong> {$start_date}</p>";
+        $output .= "<p><strong>End Date:</strong> {$end_date}</p>";
         if ($venue_id) {
-            echo "<p><strong>Venue:</strong> <a href='{$venue_url}'>{$venue_name}</a></p>";
+            $output .= "<p><strong>Venue:</strong> <a href='{$venue_url}'>{$venue_name}</a></p>";
         }
     } else {
-        echo "<p>Event with ID {$event_id} not found.</p>";
+        $output .= "<p>Event with ID {$event_id} not found.</p>";
     }
 
-    // End output buffering and return contents
-    $output = ob_get_clean();
+    // Return the generated HTML
     return $output;
 }
-add_shortcode('event_info', 'custom_event_info_shortcode');
