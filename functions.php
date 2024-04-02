@@ -25,7 +25,7 @@ add_action('woocommerce_add_to_cart', 'reverse_stock_on_add_to_cart', 10, 6);
 
 // Remove reserved stock after specified time
 function remove_reserved_stock($product_id) {
-    // Clear the cart
+    // Empty the cart
     WC()->cart->empty_cart();
 
     // Show a message to the user
@@ -48,14 +48,16 @@ function display_cart_timer() {
                     document.getElementById("timer-countdown").textContent = timeLeft;
                     if (timeLeft <= 0) {
                         clearInterval(timer);
-                        document.getElementById("cart-timer").style.display = "none";
+                        // Refresh the page after the timer is over
+                        setTimeout(function(){
+                            location.reload();
+                        }, 1000);
                     }
                 }, 1000);
               </script>';
     }
 }
 add_action('woocommerce_before_cart', 'display_cart_timer');
-
 
 
 
