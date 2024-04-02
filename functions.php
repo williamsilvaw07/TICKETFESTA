@@ -1,6 +1,66 @@
 <?php
 
 
+
+
+// Add to your theme's functions.php file
+
+// Hook into the 'woocommerce_add_to_cart' action to set reservation expiry
+add_action('woocommerce_add_to_cart', function() {
+    // Set reservation expiry to 10 minutes from now
+    WC()->session->set('reservation_expiry', time() + 600);
+});
+
+// Output the countdown timer script in the cart and checkout
+add_action('woocommerce_before_cart', 'output_reservation_countdown_script');
+add_action('woocommerce_before_checkout_form', 'output_reservation_countdown_script');
+
+function output_reservation_countdown_script() {
+    // Get the reservation expiry from the session
+    $reservation_expiry = WC()->session->get('reservation_expiry');
+    
+    // Only proceed if we have an expiry time
+    if (!$reservation_expiry) return;
+
+    ?>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var expiryTime = <?php echo json_encode($reservation_expiry); ?>;
+            var countdownElement = document.getElementById('reservation-countdown');
+            
+            // Update the countdown every second
+            var countdownTimer = setInterval(function() {
+                var currentTime = Math.floor(Date.now() / 1000);
+                var timeLeft = expiryTime - currentTime;
+
+                if (timeLeft <= 0) {
+                    clearInterval(countdownTimer);
+                    countdownElement.textContent = 'Reservation expired.';
+                    // Optionally, trigger any desired action here, like refreshing the cart
+                } else {
+                    var minutes = Math.floor(timeLeft / 60);
+                    var seconds = timeLeft % 60;
+                    countdownElement.textContent = `Time left: ${minutes}m ${seconds}s`;
+                }
+            }, 1000);
+        });
+    </script>
+    <?php
+}
+
+// Insert the countdown element in the cart and checkout pages
+add_action('woocommerce_before_cart_table', 'add_countdown_timer_element');
+add_action('woocommerce_review_order_before_payment', 'add_countdown_timer_element');
+
+function add_countdown_timer_element() {
+    echo '<div id="reservation-countdown" style="padding: 10px; background-color: #f8f9fa; border-radius: 5px; margin-bottom: 20px; text-align: center;">Time left: --</div>';
+}
+
+
+
+
+
+
 include (get_stylesheet_directory() . '/coupon_auto_apply.php');
 
 
