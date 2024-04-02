@@ -5038,59 +5038,52 @@ require_once get_stylesheet_directory() . '/event-dashboard-ajax.php';
 
 
 
+add_shortcode('check_execution', 'custom_check_execution_shortcode');
 
+function custom_check_execution_shortcode() {
+    // Hardcoded event ID for demonstration purposes
+    $event_id = 5640; 
 
+    // Assuming you've established a way to map your event ID to WooCommerce product IDs
+    // For this example, these are manually specified.
+    $ticket_product_ids = [/* Insert the WooCommerce product IDs for the tickets here */];
 
+    $attendees = []; // Initialize attendees array
 
+    // Fetch orders that contain the ticket products
+    $args = array(
+        'status' => 'completed', // You can adjust this as necessary
+        'limit' => -1, // No limit
+        'return' => 'ids', // We only need the order IDs
+    );
 
-add_shortcode('check_execution', 'check_shortcode_execution');
+    $orders = wc_get_orders($args);
 
-function check_shortcode_execution() {
-    $event_id = 5640; // Example event ID, adjust as needed
-    $attendees = get_event_attendees_from_woo_orders($event_id);
+    foreach ($orders as $order_id) {
+        $order = wc_get_order($order_id);
+        foreach ($order->get_items() as $item_id => $item) {
+            // Check if the product ID of the item is in the list of ticket product IDs
+            if (in_array($item->get_product_id(), $ticket_product_ids)) {
+                // Assuming the billing name is the attendee name
+                $attendee_name = $order->get_billing_first_name() . ' ' . $order->get_billing_last_name();
+                // Add attendee name to the array
+                $attendees[] = $attendee_name;
+            }
+        }
+    }
 
-    ob_start();
+    ob_start(); // Start output buffering
+
     if (!empty($attendees)) {
-        echo '<h3>Attendees for Event ID ' . $event_id . ':</h3><ul>';
-        foreach ($attendees as $attendee) {
-            echo '<li>' . esc_html($attendee->name) . ' (' . esc_html($attendee->email) . ')</li>';
+        echo '<h3>Attendees for Event ID ' . $event_id . ':</h3>';
+        echo '<ul>';
+        foreach ($attendees as $attendee_name) {
+            echo '<li>' . esc_html($attendee_name) . '</li>';
         }
         echo '</ul>';
     } else {
         echo 'No attendees found for the specified event ID (' . $event_id . ').';
     }
-    return ob_get_clean();
-}
 
-function get_event_attendees_from_woo_orders($event_id) {
-    // Assuming you know the WooCommerce product IDs for tickets linked to the event
-    $ticket_product_ids = [/* Array of product IDs */];
-    $attendees = [];
-
-    $orders = wc_get_orders([
-        'status' => ['wc-completed', 'wc-processing'],
-        'limit' => -1,
-        'meta_query' => [
-            [
-                'key' => '_product_id',
-                'value' => $ticket_product_ids,
-                'compare' => 'IN',
-            ],
-        ],
-    ]);
-
-    foreach ($orders as $order) {
-        foreach ($order->get_items() as $item_id => $item) {
-            $product_id = $item->get_product_id();
-            if (in_array($product_id, $ticket_product_ids)) {
-                // Assuming you want the billing name and email as attendee info
-                $attendees[] = (object)[
-                    'name' => $order->get_billing_first_name() . ' ' . $order->get_billing_last_name(),
-                    'email' => $order->get_billing_email(),
-                ];
-            }
-        }
-    }
-
-    return $attendees;
+    return ob_get_clean(); // Return the output buffer contents
 }
