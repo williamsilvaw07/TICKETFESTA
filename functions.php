@@ -5043,33 +5043,36 @@ require_once get_stylesheet_directory() . '/event-dashboard-ajax.php';
 
 
 
+function custom_event_info_shortcode() {
+    // Hardcoded event ID
+    $event_id = 5640;
 
-function fetch_event_attendees_info_hardcoded() {
-    $event_id = 5640; // Hardcoded event ID
+    // Start output buffering
+    ob_start();
 
-    // Check if function exists to avoid errors in case Event Tickets Plus is not active
-    if (function_exists('tribe_tickets_get_attendees')) {
-        $attendees = tribe_tickets_get_attendees($event_id);
-        $output = '';
+    // Check if the event ID is a valid event
+    if ( tribe_is_event($event_id) ) {
+        $event_title = get_the_title($event_id);
+        $event_url = get_permalink($event_id);
+        $start_date = tribe_get_start_date($event_id);
+        $end_date = tribe_get_end_date($event_id);
+        $venue_id = tribe_get_venue_id($event_id);
+        $venue_name = tribe_get_venue($event_id);
+        $venue_url = tribe_get_venue_website_url($event_id);
 
-        if (!empty($attendees)) {
-            $output .= '<ul>';
-            foreach ($attendees as $attendee) {
-                // Adjust these keys if necessary
-                $output .= '<li>' . esc_html($attendee['attendee_name'] . ' - ' . $attendee['attendee_email']) . '</li>';
-            }
-            $output .= '</ul>';
-        } else {
-            $output = 'No attendees found for this event.';
+        echo "<h3>Event Information:</h3>";
+        echo "<p><strong>Title:</strong> <a href='{$event_url}'>{$event_title}</a></p>";
+        echo "<p><strong>Start Date:</strong> {$start_date}</p>";
+        echo "<p><strong>End Date:</strong> {$end_date}</p>";
+        if ($venue_id) {
+            echo "<p><strong>Venue:</strong> <a href='{$venue_url}'>{$venue_name}</a></p>";
         }
-
-        return $output;
     } else {
-        return 'Event Tickets Plus plugin is not active.';
+        echo "<p>Event with ID {$event_id} not found.</p>";
     }
-}
 
-// Shortcode that uses the hardcoded event ID function
-add_shortcode('check_execution', function () {
-    return fetch_event_attendees_info_hardcoded();
-});
+    // End output buffering and return contents
+    $output = ob_get_clean();
+    return $output;
+}
+add_shortcode('event_info', 'custom_event_info_shortcode');
