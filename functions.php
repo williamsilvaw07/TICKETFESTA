@@ -5043,47 +5043,42 @@ add_shortcode('check_execution', 'custom_check_execution_shortcode');
 function custom_check_execution_shortcode() {
     // Hardcoded event ID for demonstration purposes
     $event_id = 5640; 
+    // Example product IDs. Replace these with actual IDs of ticket products for the event.
+    $ticket_product_ids = [6271];
 
-    // Assuming you've established a way to map your event ID to WooCommerce product IDs
-    // For this example, these are manually specified.
-    $ticket_product_ids = [/* Insert the WooCommerce product IDs for the tickets here */];
+    $attendees = [];
 
-    $attendees = []; // Initialize attendees array
-
-    // Fetch orders that contain the ticket products
-    $args = array(
-        'status' => 'completed', // You can adjust this as necessary
-        'limit' => -1, // No limit
-        'return' => 'ids', // We only need the order IDs
-    );
-
-    $orders = wc_get_orders($args);
+    // Fetch all completed orders
+    $orders = wc_get_orders(array(
+        'status' => 'completed',
+        'limit' => -1,
+        'return' => 'ids',
+    ));
 
     foreach ($orders as $order_id) {
         $order = wc_get_order($order_id);
+
         foreach ($order->get_items() as $item_id => $item) {
-            // Check if the product ID of the item is in the list of ticket product IDs
-            if (in_array($item->get_product_id(), $ticket_product_ids)) {
-                // Assuming the billing name is the attendee name
+            $product_id = $item->get_product_id();
+            $variation_id = $item->get_variation_id(); // In case of product variations
+
+            if (in_array($product_id, $ticket_product_ids) || in_array($variation_id, $ticket_product_ids)) {
+                // Extract and store attendee information
                 $attendee_name = $order->get_billing_first_name() . ' ' . $order->get_billing_last_name();
-                // Add attendee name to the array
-                $attendees[] = $attendee_name;
+                $attendees[$attendee_name] = 'attended'; // Use attendee name as key to prevent duplicates
             }
         }
     }
 
-    ob_start(); // Start output buffering
-
+    ob_start();
     if (!empty($attendees)) {
-        echo '<h3>Attendees for Event ID ' . $event_id . ':</h3>';
-        echo '<ul>';
-        foreach ($attendees as $attendee_name) {
+        echo '<h3>Attendees for Event ID ' . $event_id . ':</h3><ul>';
+        foreach ($attendees as $attendee_name => $status) {
             echo '<li>' . esc_html($attendee_name) . '</li>';
         }
         echo '</ul>';
     } else {
         echo 'No attendees found for the specified event ID (' . $event_id . ').';
     }
-
-    return ob_get_clean(); // Return the output buffer contents
+    return ob_get_clean();
 }
