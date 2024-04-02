@@ -5034,9 +5034,26 @@ require_once get_stylesheet_directory() . '/event-dashboard-ajax.php';
 
 
 
-
-
 function check_shortcode_execution() {
-    return 'Shortcode is executing.';
+    error_log('Shortcode started');
+
+    if (!class_exists('Tribe__Events__Main')) {
+        error_log('The Events Calendar plugin is not active.');
+        return 'The Events Calendar plugin is not active.';
+    }
+
+    $event_id = 5640; // Ensure this event ID exists
+    error_log('Using event ID: ' . $event_id);
+
+    $attendees = get_event_attendees($event_id);
+    error_log('Attendees: ' . print_r($attendees, true));
+
+    if (is_array($attendees) && count($attendees) > 0) {
+        error_log('Found attendees: ' . count($attendees));
+        // Further logic...
+    } else {
+        error_log('No attendees found or error occurred.');
+        return 'No attendees found for the specified event ID (' . $event_id . ').';
+    }
 }
 add_shortcode('check_execution', 'check_shortcode_execution');
