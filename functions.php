@@ -2,7 +2,6 @@
 
 
 
-
 // Add custom function to reverse stock when product is added to cart
 function reverse_stock_on_add_to_cart($cart_item_key, $product_id, $quantity, $variation_id, $variation, $cart_item_data) {
     // Get the product object
@@ -12,17 +11,30 @@ function reverse_stock_on_add_to_cart($cart_item_key, $product_id, $quantity, $v
     if ($product && $product->is_in_stock()) {
         // Reserve the stock for 40 seconds
         $reservation_time = 40; // in seconds
-        WC()->session->set('reserved_stock_' . $product_id, $quantity);
+        $old_stock = $product->get_stock_quantity();
+        $new_stock = $old_stock - $quantity;
+
+        // Reserve the stock by reducing it
+        wc_update_product_stock($product, $new_stock);
+
         // Schedule the removal of reserved stock after reservation_time seconds
-        wp_schedule_single_event(time() + $reservation_time, 'remove_reserved_stock_event', array($product_id, $cart_item_key));
+        wp_schedule_single_event(time() + $reservation_time, 'remove_reserved_stock_event', array($product_id));
     }
 }
 add_action('woocommerce_add_to_cart', 'reverse_stock_on_add_to_cart', 10, 6);
 
 // Remove reserved stock after specified time
-function remove_reserved_stock($product_id, $cart_item_key) {
-    // Remove reserved stock
-    WC()->session->__unset('reserved_stock_' . $product_id);
+function remove_reserved_stock($product_id) {
+    // Get the product object
+    $product = wc_get_product($product_id);
+
+    // Get the reserved quantity
+    $reserved_quantity = WC()->cart->get_cart_contents_count();
+
+    // Add the reserved quantity back to stock
+    $old_stock = $product->get_stock_quantity();
+    $new_stock = $old_stock + $reserved_quantity;
+    wc_update_product_stock($product, $new_stock);
 
     // Clear the cart
     WC()->cart->empty_cart();
@@ -30,20 +42,19 @@ function remove_reserved_stock($product_id, $cart_item_key) {
     // Show a message to the user
     wc_add_notice(__('Your cart has been cleared due to inactivity.'), 'error');
 }
-add_action('remove_reserved_stock_event', 'remove_reserved_stock', 10, 2);
+add_action('remove_reserved_stock_event', 'remove_reserved_stock', 10, 1);
 
 // Add timer on the cart page
 function display_cart_timer() {
     // Get reserved stock
-    $reserved_stock = WC()->session->get('reserved_stock_' . $product_id);
+    $reserved_stock = WC()->cart->get_cart_contents_count();
     // Display the timer only if there is reserved stock
-    if ($reserved_stock) {
+    if ($reserved_stock > 0) {
         $time_left = 40; // 40 seconds
         echo '<p class="cart-timer">Time left: ' . $time_left . ' seconds</p>';
     }
 }
 add_action('woocommerce_before_cart', 'display_cart_timer');
-
 
 
 
