@@ -1,8 +1,6 @@
 <?php
 
 
-
-
 // Add custom function to reserve stock when product is added to cart
 function reserve_stock_on_add_to_cart($cart_item_key, $product_id, $quantity, $variation_id, $variation, $cart_item_data) {
     // Get the product object
@@ -23,6 +21,7 @@ function reserve_stock_on_add_to_cart($cart_item_key, $product_id, $quantity, $v
     }
 }
 add_action('woocommerce_add_to_cart', 'reserve_stock_on_add_to_cart', 10, 6);
+
 // Remove reserved stock after specified time
 function remove_reserved_stock($product_id) {
     // Get the product object
@@ -37,7 +36,7 @@ function remove_reserved_stock($product_id) {
     $product->set_stock_quantity($new_stock);
     $product->save();
 
-    // Clear the cart
+    // Empty the cart
     WC()->cart->empty_cart();
 
     // Show a message to the user
