@@ -5041,9 +5041,6 @@ require_once get_stylesheet_directory() . '/event-dashboard-ajax.php';
 
 
 
-
-
-
 // Function to retrieve attendees for a specific event ID
 function get_event_attendees($event_id) {
     // Check if The Events Calendar plugin is active
@@ -5061,12 +5058,14 @@ function get_event_attendees($event_id) {
 // Shortcode to display attendees for event ID 5640
 function event_attendees_shortcode($atts) {
     // Retrieve attendees for the hardcoded event ID 5640
-    $attendees = get_event_attendees(5640);
+    $event_id = 5640; // Hardcoded event ID
+    $attendees = get_event_attendees($event_id);
 
     // Check if attendees exist
     if ($attendees) {
         // Output attendees list
-        $output = '<ul>';
+        $output = '<h3>Attendees for Event ID ' . $event_id . ':</h3>';
+        $output .= '<ul>';
         foreach ($attendees as $attendee) {
             // Check if attendee has a name
             if (!empty($attendee->display_name)) {
@@ -5080,7 +5079,7 @@ function event_attendees_shortcode($atts) {
         return $output;
     } else {
         // Add debug info if no attendees found
-        return 'No attendees found for the specified event ID.';
+        return 'No attendees found for the specified event ID (' . $event_id . ').';
     }
 }
 add_shortcode('event_attendees', 'event_attendees_shortcode');
