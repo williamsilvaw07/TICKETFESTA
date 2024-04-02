@@ -5038,34 +5038,55 @@ require_once get_stylesheet_directory() . '/event-dashboard-ajax.php';
 
 
 
-
 function check_shortcode_execution() {
+    // Adding debug information
+    $debug_info = 'Debug Information:<br>';
+
+    // Check if The Events Calendar plugin is active
+    if (!class_exists('Tribe__Events__Main')) {
+        return $debug_info . 'The Events Calendar plugin is not active.';
+    }
+
     // Hardcoded event ID, adjust as necessary
     $event_id = 5640;
+    $debug_info .= 'Event ID: ' . $event_id . '<br>';
+
+    // Attempt to retrieve the event post to verify it exists
+    $event = get_post($event_id);
+    if (!$event) {
+        return $debug_info . 'Event with ID ' . $event_id . ' not found.';
+    } else {
+        $debug_info .= 'Event title: ' . $event->post_title . '<br>';
+    }
+
+    // Attempt to retrieve attendees
     $attendees = get_event_attendees($event_id);
+    if (is_string($attendees)) {
+        // If get_event_attendees returns a string, it's an error message
+        return $debug_info . $attendees;
+    }
 
     if (is_array($attendees) && count($attendees) > 0) {
+        $debug_info .= 'Attendees found: ' . count($attendees) . '<br>';
         $output = '<h3>Attendees for Event ID ' . $event_id . ':</h3>';
         $output .= '<table>';
         $output .= '<thead><tr><th>Name</th><th>Email</th><th>Ticket Name</th><th>Order ID</th></tr></thead><tbody>';
-        
+
         foreach ($attendees as $attendee) {
-            // Adjust these keys based on your actual data structure
+            // Assuming these keys exist; adjust based on actual data structure
             $name = $attendee->display_name ?? 'N/A';
-            $email = $attendee->email ?? 'N/A'; // Assume $attendee->email contains the email
-            $ticket_name = $attendee->ticket_name ?? 'N/A'; // Assume this structure
-            $order_id = $attendee->order_id ?? 'N/A'; // And this one too
-            
+            $email = $attendee->email ?? 'N/A';
+            $ticket_name = $attendee->ticket_name ?? 'N/A';
+            $order_id = $attendee->order_id ?? 'N/A';
+
             $output .= "<tr><td>$name</td><td>$email</td><td>$ticket_name</td><td>$order_id</td></tr>";
         }
-        
+
         $output .= '</tbody></table>';
         return $output;
-    } elseif (is_string($attendees)) {
-        // If get_event_attendees returns a string, it's an error message
-        return $attendees;
     } else {
-        return 'No attendees found for the specified event ID (' . $event_id . ').';
+        $debug_info .= 'No attendees found for the specified event ID.';
+        return $debug_info;
     }
 }
 add_shortcode('check_execution', 'check_shortcode_execution');
