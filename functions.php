@@ -5036,19 +5036,17 @@ require_once get_stylesheet_directory() . '/event-dashboard-ajax.php';
 
 
 
-
-
 add_shortcode('check_execution', 'custom_check_execution_shortcode');
 
 function custom_check_execution_shortcode() {
-    // Hardcoded event ID for demonstration purposes
-    $event_id = 5640; 
-    // Example product IDs. Replace these with actual IDs of ticket products for the event.
-    $ticket_product_ids = [6271];
+    $event_id = 5640; // Hardcoded event ID for demonstration purposes
+    $ticket_product_ids = get_ticket_product_ids_for_event($event_id);
+
+    if (empty($ticket_product_ids)) {
+        return 'No ticket products found for the specified event ID (' . $event_id . ').';
+    }
 
     $attendees = [];
-
-    // Fetch all completed orders
     $orders = wc_get_orders(array(
         'status' => 'completed',
         'limit' => -1,
@@ -5057,13 +5055,8 @@ function custom_check_execution_shortcode() {
 
     foreach ($orders as $order_id) {
         $order = wc_get_order($order_id);
-
         foreach ($order->get_items() as $item_id => $item) {
-            $product_id = $item->get_product_id();
-            $variation_id = $item->get_variation_id(); // In case of product variations
-
-            if (in_array($product_id, $ticket_product_ids) || in_array($variation_id, $ticket_product_ids)) {
-                // Extract and store attendee information
+            if (in_array($item->get_product_id(), $ticket_product_ids) || in_array($item->get_variation_id(), $ticket_product_ids)) {
                 $attendee_name = $order->get_billing_first_name() . ' ' . $order->get_billing_last_name();
                 $attendees[$attendee_name] = 'attended'; // Use attendee name as key to prevent duplicates
             }
@@ -5073,7 +5066,7 @@ function custom_check_execution_shortcode() {
     ob_start();
     if (!empty($attendees)) {
         echo '<h3>Attendees for Event ID ' . $event_id . ':</h3><ul>';
-        foreach ($attendees as $attendee_name => $status) {
+        foreach (array_keys($attendees) as $attendee_name) {
             echo '<li>' . esc_html($attendee_name) . '</li>';
         }
         echo '</ul>';
@@ -5081,4 +5074,22 @@ function custom_check_execution_shortcode() {
         echo 'No attendees found for the specified event ID (' . $event_id . ').';
     }
     return ob_get_clean();
+}
+
+function get_ticket_product_ids_for_event($event_id) {
+    $args = array(
+        'post_type' => 'product',
+        'posts_per_page' => -1,
+        'meta_query' => array(
+            array(
+                'key' => '_tribe_wooticket_for_event',
+                'value' => $event_id,
+                'compare' => '=',
+            ),
+        ),
+        'fields' => 'ids',
+    );
+
+    $products = get_posts($args);
+    return $products; // Returns an array of product IDs
 }
