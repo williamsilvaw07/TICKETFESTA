@@ -3,59 +3,77 @@
 
 
 
-// Hook into WooCommerce add to cart to set a reservation expiration
+// Decrease stock and set a reservation expiration upon adding to cart.
 add_action('woocommerce_add_to_cart', function($cart_item_key, $product_id, $quantity, $variation_id, $variation, $cart_item_data) {
-    WC()->session->set('reservation_expiry', time() + (2 * 60)); // 2 minutes from now
+    $product = wc_get_product($product_id);
+    $current_stock = $product->get_stock_quantity();
+    if ($current_stock >= $quantity) {
+        $new_stock = $current_stock - $quantity;
+        $product->set_stock_quantity($new_stock);
+        $product->save();
+        WC()->session->set('reservation_expiry', time() + 120); // 120 seconds = 2 minutes
+        WC()->session->set($cart_item_key . '_reserved_stock', $quantity);
+    }
 }, 10, 6);
 
-// WordPress AJAX actions for logged-in and not logged-in users
-add_action('wp_ajax_clear_user_cart', 'clear_user_cart');
-add_action('wp_ajax_nopriv_clear_user_cart', 'clear_user_cart');
+// AJAX actions for clearing the cart and restoring stock.
+add_action('wp_ajax_clear_user_cart_and_restore_stock', 'clear_user_cart_and_restore_stock');
+add_action('wp_ajax_nopriv_clear_user_cart_and_restore_stock', 'clear_user_cart_and_restore_stock');
 
-function clear_user_cart() {
-    WC()->cart->empty_cart(); // Clear the current user's cart
-    wp_die(); // Terminate and return a proper response
+function clear_user_cart_and_restore_stock() {
+    foreach (WC()->cart->get_cart() as $cart_item_key => $cart_item) {
+        $reserved_quantity = WC()->session->get($cart_item_key . '_reserved_stock');
+        if (!empty($reserved_quantity)) {
+            $product_id = $cart_item['product_id'];
+            $product = wc_get_product($product_id);
+            $current_stock = $product->get_stock_quantity();
+            $product->set_stock_quantity($current_stock + $reserved_quantity);
+            $product->save();
+            WC()->session->__unset($cart_item_key . '_reserved_stock'); // Clear the session variable
+        }
+    }
+    WC()->cart->empty_cart();
+    wp_send_json_success('Your cart has been cleared due to inactivity.');
 }
 
-// Inject the countdown timer and AJAX call script into the cart and checkout pages
-add_action('woocommerce_before_cart', 'inject_countdown_timer');
-add_action('woocommerce_before_checkout_form', 'inject_countdown_timer');
+// Inject the countdown timer into the cart and checkout pages.
+add_action('woocommerce_before_cart', 'inject_countdown_timer_script');
+add_action('woocommerce_before_checkout_form', 'inject_countdown_timer_script');
 
-function inject_countdown_timer() {
+function inject_countdown_timer_script() {
     $expiry_time = WC()->session->get('reservation_expiry');
     if (!$expiry_time) {
         return;
     }
 
-    $time_left = $expiry_time - time();
-    echo '<div id="reservation-countdown" style="padding: 10px; background-color: #f8f9fa; border-radius: 5px; margin-bottom: 20px; text-align: center;">Reserving your items...</div>';
+    // Output the countdown timer's HTML and JavaScript
     ?>
+    <div id="reservation-countdown" style="padding: 10px; background-color: #f8f9fa; border-radius: 5px; margin-bottom: 20px; text-align: center;"></div>
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    jQuery(document).ready(function($) {
         var expiryTime = <?php echo json_encode($expiry_time); ?>;
-        var countdownElement = document.getElementById('reservation-countdown');
         var countdownTimer = setInterval(function() {
             var currentTime = Math.floor(Date.now() / 1000);
             var timeLeft = expiryTime - currentTime;
             if (timeLeft <= 0) {
                 clearInterval(countdownTimer);
-                countdownElement.innerHTML = 'Reservation expired. Clearing the cart...';
-
-                // AJAX call to server to clear the cart
-                jQuery.post('<?php echo admin_url('admin-ajax.php'); ?>', { 'action': 'clear_user_cart' }, function(response) {
-                    window.location.reload(); // Reload the page to reflect the empty cart
+                $('#reservation-countdown').text('Clearing the cart due to reservation expiration...');
+                $.post('<?php echo admin_url('admin-ajax.php'); ?>', { action: 'clear_user_cart_and_restore_stock' }, function(response) {
+                    if (response.success) {
+                        alert(response.data); // Display the returned message
+                        window.location.reload(); // Refresh the page to show an empty cart
+                    }
                 });
             } else {
                 var minutes = Math.floor(timeLeft / 60);
                 var seconds = timeLeft % 60;
-                countdownElement.innerHTML = 'Reservation ends in: ' + minutes + 'm ' + (seconds < 10 ? '0' : '') + seconds + 's';
+                $('#reservation-countdown').text('Reservation ends in: ' + minutes + 'm ' + (seconds < 10 ? '0' : '') + seconds + 's');
             }
         }, 1000);
     });
     </script>
     <?php
 }
-
 
 
 
