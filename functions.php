@@ -65,6 +65,29 @@ add_action('woocommerce_before_cart', 'display_cart_timer');
 
 
 
+
+
+
+
+
+
+
+
+add_action( 'woocommerce_cart_coupon', 'custom_woocommerce_empty_cart_button' );
+function custom_woocommerce_empty_cart_button() {
+	echo '<a href="' . esc_url( add_query_arg( 'empty_cart', 'yes' ) ) . '" class="button" title="' . esc_attr( 'Empty Cart', 'woocommerce' ) . '">' . esc_html( 'Empty Cart', 'woocommerce' ) . '</a>';
+}
+
+add_action( 'wp_loaded', 'custom_woocommerce_empty_cart_action', 20 );
+function custom_woocommerce_empty_cart_action() {
+	if ( isset( $_GET['empty_cart'] ) && 'yes' === esc_html( $_GET['empty_cart'] ) ) {
+		WC()->cart->empty_cart();
+
+		$referer  = wp_get_referer() ? esc_url( remove_query_arg( 'empty_cart' ) ) : wc_get_cart_url();
+		wp_safe_redirect( $referer );
+	}
+}
+
 include (get_stylesheet_directory() . '/coupon_auto_apply.php');
 
 
