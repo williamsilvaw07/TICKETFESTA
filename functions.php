@@ -5039,11 +5039,9 @@ require_once get_stylesheet_directory() . '/event-dashboard-ajax.php';
 
 
 
-
-
-function event_attendees_shortcode($atts) {
-    // Retrieve attendees for the hardcoded event ID
-    $event_id = 5640; // Example: dynamically fetch this or pass via shortcode attributes
+function check_shortcode_execution() {
+    // Hardcoded event ID, adjust as necessary
+    $event_id = 5640;
     $attendees = get_event_attendees($event_id);
 
     if (is_array($attendees) && count($attendees) > 0) {
@@ -5052,7 +5050,7 @@ function event_attendees_shortcode($atts) {
         $output .= '<thead><tr><th>Name</th><th>Email</th><th>Ticket Name</th><th>Order ID</th></tr></thead><tbody>';
         
         foreach ($attendees as $attendee) {
-            // Example: Adjust these keys based on your actual data structure
+            // Adjust these keys based on your actual data structure
             $name = $attendee->display_name ?? 'N/A';
             $email = $attendee->email ?? 'N/A'; // Assume $attendee->email contains the email
             $ticket_name = $attendee->ticket_name ?? 'N/A'; // Assume this structure
@@ -5064,10 +5062,10 @@ function event_attendees_shortcode($atts) {
         $output .= '</tbody></table>';
         return $output;
     } elseif (is_string($attendees)) {
-        // Direct return of error messages
+        // If get_event_attendees returns a string, it's an error message
         return $attendees;
     } else {
         return 'No attendees found for the specified event ID (' . $event_id . ').';
     }
 }
-add_shortcode('event_attendees', 'event_attendees_shortcode');
+add_shortcode('check_execution', 'check_shortcode_execution');
