@@ -5045,11 +5045,19 @@ require_once get_stylesheet_directory() . '/event-dashboard-ajax.php';
 function get_event_attendees($event_id) {
     // Check if The Events Calendar plugin is active
     if (class_exists('Tribe__Events__Main')) {
-        // Query attendees using the Events Calendar API
-        $attendees = tribe_get_attendees($event_id);
-        
-        // Return attendees
-        return $attendees;
+        // Retrieve event post ID
+        $event = get_post($event_id);
+
+        // Check if event exists
+        if ($event) {
+            // Retrieve event attendees using the Event Tickets plugin
+            $attendees = apply_filters('tribe_tickets_event_attendees', array(), $event_id, array());
+
+            // Return attendees
+            return $attendees;
+        } else {
+            return 'Event with ID ' . $event_id . ' not found.';
+        }
     } else {
         return 'The Events Calendar plugin is not active.';
     }
