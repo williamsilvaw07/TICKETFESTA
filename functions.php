@@ -1,12 +1,8 @@
 <?php
-
 // Add custom function to reserve stock when product is added to cart
 function reserve_stock_on_add_to_cart($cart_item_key, $product_id, $quantity, $variation_id, $variation, $cart_item_data) {
-    // Get the product object
-    $product = wc_get_product($product_id);
-
     // Check if the product is in stock
-    if ($product && $product->is_in_stock()) {
+    if (wc_product_has_stock($product_id)) {
         // Reserve the stock for 40 seconds
         $reservation_time = 40; // in seconds
         $reserved_stock = get_post_meta($product_id, '_reserved_stock', true);
@@ -21,28 +17,18 @@ add_action('woocommerce_add_to_cart', 'reserve_stock_on_add_to_cart', 10, 6);
 
 // Remove reserved stock after specified time
 function remove_reserved_stock($product_id, $quantity) {
-    // Get the product object
-    $product = wc_get_product($product_id);
-
-    // Get the reserved quantity
     $reserved_stock = get_post_meta($product_id, '_reserved_stock', true);
     $reserved_stock -= $quantity;
-
-    // Update the reserved stock meta
     update_post_meta($product_id, '_reserved_stock', $reserved_stock);
 
-    // Add the reserved quantity back to stock
-    $old_stock = $product ? $product->get_stock_quantity() : 0;
-    $new_stock = $old_stock + $quantity;
+    $product = wc_get_product($product_id);
     if ($product) {
+        $new_stock = $product->get_stock_quantity() + $quantity;
         $product->set_stock_quantity($new_stock);
         $product->save();
     }
 
-    // Clear the cart
     WC()->cart->empty_cart();
-
-    // Show a message to the user
     wc_add_notice(__('Your cart has been cleared due to inactivity.'), 'error');
 }
 add_action('remove_reserved_stock_event', 'remove_reserved_stock', 10, 2);
@@ -91,7 +77,6 @@ function custom_woocommerce_empty_cart_action() {
     }
 }
 add_action( 'init', 'custom_woocommerce_empty_cart_action' );
-
 
 
 
