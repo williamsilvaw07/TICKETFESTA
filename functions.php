@@ -1,8 +1,5 @@
 <?php
 
-
-
-
 // Add custom function to reserve stock when product is added to cart
 function reserve_stock_on_add_to_cart($cart_item_key, $product_id, $quantity, $variation_id, $variation, $cart_item_data) {
     // Get the product object
@@ -12,36 +9,24 @@ function reserve_stock_on_add_to_cart($cart_item_key, $product_id, $quantity, $v
     if ($product && $product->is_in_stock()) {
         // Reserve the stock for 40 seconds
         $reservation_time = 40; // in seconds
-        $old_stock = $product->get_stock_quantity();
-        $new_stock = $old_stock - $quantity;
-
-        // Reserve the stock by reducing it
-        wc_update_product_stock($product, $new_stock);
+        wc_update_product_stock($product, $quantity, 'decrease'); // Decrease stock
+        WC()->cart->cart_contents[$cart_item_key]['reserved_stock'] = $quantity; // Track reserved quantity
 
         // Schedule the removal of reserved stock after reservation_time seconds
-        wp_schedule_single_event(time() + $reservation_time, 'remove_reserved_stock_event', array($product_id));
+        wp_schedule_single_event(time() + $reservation_time, 'remove_reserved_stock_event', array($cart_item_key));
     }
 }
 add_action('woocommerce_add_to_cart', 'reserve_stock_on_add_to_cart', 10, 6);
+
 // Remove reserved stock after specified time
-function remove_reserved_stock($product_id) {
-    // Get the product object
-    $product = wc_get_product($product_id);
-
-    // Get the reserved quantity
-    $reserved_quantity = WC()->cart->get_cart_contents_count();
-
-    // Add the reserved quantity back to stock
-    $old_stock = $product->get_stock_quantity();
-    $new_stock = $old_stock + $reserved_quantity;
-    $product->set_stock_quantity($new_stock);
-    $product->save();
-
-    // Clear the cart
-    WC()->cart->empty_cart();
-
-    // Show a message to the user
-    wc_add_notice(__('Your cart has been cleared due to inactivity.'), 'error');
+function remove_reserved_stock($cart_item_key) {
+    $cart_items = WC()->cart->get_cart();
+    if (isset($cart_items[$cart_item_key])) {
+        $item = $cart_items[$cart_item_key];
+        $product = wc_get_product($item['product_id']);
+        $reserved_quantity = isset($item['reserved_stock']) ? $item['reserved_stock'] : 0;
+        wc_update_product_stock($product, $reserved_quantity, 'increase'); // Accurately restore the reserved stock
+    }
 }
 add_action('remove_reserved_stock_event', 'remove_reserved_stock', 10, 1);
 
@@ -89,7 +74,6 @@ function custom_woocommerce_empty_cart_action() {
     }
 }
 add_action( 'init', 'custom_woocommerce_empty_cart_action' );
-
 
 
 
