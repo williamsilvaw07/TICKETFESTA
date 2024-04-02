@@ -5041,6 +5041,13 @@ require_once get_stylesheet_directory() . '/event-dashboard-ajax.php';
 
 
 
+
+
+
+
+
+
+
 // Function to retrieve attendees for a specific event ID
 function get_event_attendees($event_id) {
     // Check if The Events Calendar plugin is active
