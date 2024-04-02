@@ -5094,6 +5094,6 @@ add_shortcode('event_attendees', 'event_attendees_shortcode');
 
 // Adding a message to check if the shortcode is being executed
 function check_shortcode_execution() {
-    return 'The event_attendees shortcode is executed successfully.';
+    return 'The event_attendees shortcode is executed successfully';
 }
 add_shortcode('check_execution', 'check_shortcode_execution');
