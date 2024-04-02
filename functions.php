@@ -2,8 +2,10 @@
 
 
 
-// Add custom function to reverse stock when product is added to cart
-function reverse_stock_on_add_to_cart($cart_item_key, $product_id, $quantity, $variation_id, $variation, $cart_item_data) {
+
+
+// Add custom function to reserve stock when product is added to cart
+function reserve_stock_on_add_to_cart($cart_item_key, $product_id, $quantity, $variation_id, $variation, $cart_item_data) {
     // Get the product object
     $product = wc_get_product($product_id);
 
@@ -21,10 +23,21 @@ function reverse_stock_on_add_to_cart($cart_item_key, $product_id, $quantity, $v
         wp_schedule_single_event(time() + $reservation_time, 'remove_reserved_stock_event', array($product_id));
     }
 }
-add_action('woocommerce_add_to_cart', 'reverse_stock_on_add_to_cart', 10, 6);
+add_action('woocommerce_add_to_cart', 'reserve_stock_on_add_to_cart', 10, 6);
 
 // Remove reserved stock after specified time
 function remove_reserved_stock($product_id) {
+    // Get the product object
+    $product = wc_get_product($product_id);
+
+    // Get the reserved quantity
+    $reserved_quantity = WC()->cart->get_cart_contents_count();
+
+    // Add the reserved quantity back to stock
+    $old_stock = $product->get_stock_quantity();
+    $new_stock = $old_stock + $reserved_quantity;
+    wc_update_product_stock($product, $new_stock);
+
     // Empty the cart
     WC()->cart->empty_cart();
 
@@ -49,7 +62,10 @@ function display_cart_timer() {
                     if (timeLeft <= 0) {
                         clearInterval(timer);
                         // Trigger click event on the "Empty Cart" button
-                        document.querySelector(".empty-cart-button").click();
+                        var emptyCartButton = document.querySelector(".empty-cart-button");
+                        if (emptyCartButton) {
+                            emptyCartButton.click();
+                        }
                     }
                 }, 1000);
               </script>';
@@ -74,12 +90,6 @@ function custom_woocommerce_empty_cart_action() {
     }
 }
 add_action( 'init', 'custom_woocommerce_empty_cart_action' );
-
-
-
-
-
-
 
 
 
