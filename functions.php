@@ -5031,22 +5031,66 @@ require_once get_stylesheet_directory() . '/event-dashboard-ajax.php';
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+add_shortcode('check_execution', 'check_shortcode_execution');
+
 function check_shortcode_execution() {
-    $event_id = 5640; // Example event ID
-    $attendees = get_event_attendees($event_id);
+    $event_id = 5640; // Example event ID, adjust as needed
+    $attendees = get_event_attendees_from_woo_orders($event_id);
 
     ob_start();
-    echo 'Shortcode started.<br>';
-    echo 'Using event ID: ' . $event_id . '<br>';
-
     if (!empty($attendees)) {
-        echo 'Attendees found: ' . count($attendees) . '<br>';
+        echo '<h3>Attendees for Event ID ' . $event_id . ':</h3><ul>';
         foreach ($attendees as $attendee) {
-            echo "Name: {$attendee->display_name}, Email: {$attendee->email}, Ticket: {$attendee->ticket_name}, Order ID: {$attendee->order_id}<br>";
+            echo '<li>' . esc_html($attendee->name) . ' (' . esc_html($attendee->email) . ')</li>';
         }
+        echo '</ul>';
     } else {
-        echo 'No attendees found.<br>';
+        echo 'No attendees found for the specified event ID (' . $event_id . ').';
     }
     return ob_get_clean();
 }
-add_shortcode('check_execution', 'check_shortcode_execution');
+
+function get_event_attendees_from_woo_orders($event_id) {
+    // Assuming you know the WooCommerce product IDs for tickets linked to the event
+    $ticket_product_ids = [/* Array of product IDs */];
+    $attendees = [];
+
+    $orders = wc_get_orders([
+        'status' => ['wc-completed', 'wc-processing'],
+        'limit' => -1,
+        'meta_query' => [
+            [
+                'key' => '_product_id',
+                'value' => $ticket_product_ids,
+                'compare' => 'IN',
+            ],
+        ],
+    ]);
+
+    foreach ($orders as $order) {
+        foreach ($order->get_items() as $item_id => $item) {
+            $product_id = $item->get_product_id();
+            if (in_array($product_id, $ticket_product_ids)) {
+                // Assuming you want the billing name and email as attendee info
+                $attendees[] = (object)[
+                    'name' => $order->get_billing_first_name() . ' ' . $order->get_billing_last_name(),
+                    'email' => $order->get_billing_email(),
+                ];
+            }
+        }
+    }
+
+    return $attendees;
+}
