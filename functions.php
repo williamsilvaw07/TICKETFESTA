@@ -1,6 +1,5 @@
 <?php
 
-
 // Add custom function to reserve stock when product is added to cart
 function reserve_stock_on_add_to_cart($cart_item_key, $product_id, $quantity, $variation_id, $variation, $cart_item_data) {
     // Get the product object
@@ -40,7 +39,7 @@ function remove_reserved_stock($product_id) {
     WC()->cart->empty_cart();
 
     // Add a custom notice with a link
-    wc_add_notice('<a href="' . esc_url(home_url()) . '">Your cart has been cleared due to inactivity. Click here to continue shopping.</a>', 'error');
+    wc_add_notice('Your cart has been cleared due to inactivity. <a href="' . esc_url(home_url()) . '">Click here</a> to continue shopping.', 'error');
 }
 add_action('remove_reserved_stock_event', 'remove_reserved_stock', 10, 1);
 
@@ -88,6 +87,15 @@ function custom_woocommerce_empty_cart_action() {
     }
 }
 add_action( 'init', 'custom_woocommerce_empty_cart_action' );
+
+
+
+
+
+
+
+
+
 
 
 
