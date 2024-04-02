@@ -3,12 +3,10 @@
 
 
 
-// Add to your theme's functions.php file
-
 // Hook into the 'woocommerce_add_to_cart' action to set reservation expiry
 add_action('woocommerce_add_to_cart', function() {
-    // Set reservation expiry to 10 minutes from now
-    WC()->session->set('reservation_expiry', time() + 600);
+    // Set reservation expiry to 2 minutes from now
+    WC()->session->set('reservation_expiry', time() + (2 * 60));
 });
 
 // Output the countdown timer script in the cart and checkout
@@ -28,6 +26,9 @@ function output_reservation_countdown_script() {
             var expiryTime = <?php echo json_encode($reservation_expiry); ?>;
             var countdownElement = document.getElementById('reservation-countdown');
             
+            // Initialize countdown display
+            countdownElement.textContent = 'Time left: --';
+            
             // Update the countdown every second
             var countdownTimer = setInterval(function() {
                 var currentTime = Math.floor(Date.now() / 1000);
@@ -35,12 +36,12 @@ function output_reservation_countdown_script() {
 
                 if (timeLeft <= 0) {
                     clearInterval(countdownTimer);
-                    countdownElement.textContent = 'Reservation expired.';
+                    countdownElement.textContent = 'Time left: --';
                     // Optionally, trigger any desired action here, like refreshing the cart
                 } else {
                     var minutes = Math.floor(timeLeft / 60);
                     var seconds = timeLeft % 60;
-                    countdownElement.textContent = `Time left: ${minutes}m ${seconds}s`;
+                    countdownElement.textContent = `Time left: ${minutes}m ${seconds < 10 ? '0' + seconds : seconds}s`;
                 }
             }, 1000);
         });
@@ -55,6 +56,7 @@ add_action('woocommerce_review_order_before_payment', 'add_countdown_timer_eleme
 function add_countdown_timer_element() {
     echo '<div id="reservation-countdown" style="padding: 10px; background-color: #f8f9fa; border-radius: 5px; margin-bottom: 20px; text-align: center;">Time left: --</div>';
 }
+
 
 
 
