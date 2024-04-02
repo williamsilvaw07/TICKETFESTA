@@ -70,24 +70,46 @@ add_action('woocommerce_before_cart', 'display_cart_timer');
 
 
 
+add_action('woocommerce_after_cart_table', 'ts_empty_cart_button_to_cart');
 
-
-
-add_action( 'woocommerce_cart_coupon', 'custom_woocommerce_empty_cart_button' );
-function custom_woocommerce_empty_cart_button() {
-	echo '<a href="' . esc_url( add_query_arg( 'empty_cart', 'yes' ) ) . '" class="button" title="' . esc_attr( 'Empty Cart', 'woocommerce' ) . '">' . esc_html( 'Empty Cart', 'woocommerce' ) . '</a>';
+function ts_empty_cart_button_to_cart() {
+ob_start();
+?>
+<a href="#" id="empty-cart-link">Clear Cart</a>
+<script>
+jQuery(function ($) {
+$('#empty-cart-link').on('click', function (e) {
+e.preventDefault();
+if (confirm('Are you sure you want to remove all items from your cart?')) {
+// Use AJAX to update the cart without refreshing the page
+$.ajax({
+type: 'POST',
+url: wc_cart_fragments_params.ajax_url,
+data: {
+action: 'empty_cart_action'
+},
+success: function (response) {
+// Redirect to the cart page
+window.location.href = '<?php echo wc_get_cart_url(); ?>';
+}
+});
+}
+});
+});
+</script>
+<?php
+echo ob_get_clean();
 }
 
-add_action( 'wp_loaded', 'custom_woocommerce_empty_cart_action', 20 );
-function custom_woocommerce_empty_cart_action() {
-	if ( isset( $_GET['empty_cart'] ) && 'yes' === esc_html( $_GET['empty_cart'] ) ) {
-		WC()->cart->empty_cart();
-
-		$referer  = wp_get_referer() ? esc_url( remove_query_arg( 'empty_cart' ) ) : wc_get_cart_url();
-		wp_safe_redirect( $referer );
-	}
+add_action('wp_ajax_empty_cart_action', 'ts_empty_cart_action_callback');
+add_action('wp_ajax_nopriv_empty_cart_action', 'ts_empty_cart_action_callback');
+function ts_empty_cart_action_callback() {
+// Set quantities to zero for all items in the cart
+foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
+WC()->cart->set_quantity( $cart_item_key, 0 );
 }
-
+die();
+}
 include (get_stylesheet_directory() . '/coupon_auto_apply.php');
 
 
