@@ -5093,3 +5093,32 @@ function get_ticket_product_ids_for_event($event_id) {
     $products = get_posts($args);
     return $products; // Returns an array of product IDs
 }
+
+
+
+add_action( 'manage_shop_order_posts_custom_column', 'get_sellers_and_coupon_values' );
+function get_sellers_and_coupon_values( $column ) {
+    global $post, $the_order;
+    
+    $order_id = $the_order->get_id();
+    
+    // Replace 'my_custom_column_key' with your desired column key
+    if ( 'my_custom_column_key' === $column ) {
+        $display = array();
+        
+        // Loop through order items
+        foreach ( $the_order->get_items() as $item_id => $item ) {
+            // $item_id is the current Item ID
+
+            // Get the WC_Product Object
+            $product = $item->get_product();
+            
+            // Get custom order item meta data | Replace 'some_meta_key' by the desired meta key
+            $meta_value = $item->get_meta('some_meta_key');
+            
+            $display[$item_id] = $meta_value;
+        }
+        // Testing output
+        echo implode(' | ', $meta_value);
+    }
+}
