@@ -5038,38 +5038,38 @@ require_once get_stylesheet_directory() . '/event-dashboard-ajax.php';
 
 
 
+add_shortcode('event_attendees', 'display_event_attendees_shortcode');
 
-add_shortcode('check_execution', 'custom_event_info_shortcode');
+function display_event_attendees_shortcode($atts) {
+    // Ensure the Event ID is provided via shortcode attributes.
+    $atts = shortcode_atts(array(
+        'id' => '0',
+    ), $atts, 'event_attendees');
 
-function custom_event_info_shortcode() {
-    $event_id = 5640; // Hardcoded event ID for demonstration
-
-    // Fetch event details
-    $event_title = get_the_title($event_id);
-    $event_url = get_permalink($event_id);
-
-    // Start building the output
-    $output = "<h3>Event Information:</h3>";
-    $output .= "<p><strong>Title:</strong> <a href='{$event_url}'>{$event_title}</a></p>";
-
-    // Get tickets for the event
-    $tickets = tribe_get_tickets($event_id);
-
-    if (!empty($tickets)) {
-        $output .= "<h4>Tickets:</h4>";
-        $output .= "<ul>";
-        foreach ($tickets as $ticket) {
-            // Assuming $ticket is an object. Adjust based on actual return structure.
-            $ticket_name = $ticket->name;
-            $ticket_price = tribe_get_ticket_price($ticket->ID);
-            $ticket_stock = tribe_tickets_get_ticket_stock_message($ticket);
-
-            $output .= "<li>{$ticket_name} - Price: {$ticket_price}, {$ticket_stock}</li>";
-        }
-        $output .= "</ul>";
-    } else {
-        $output .= "<p>No tickets found for this event.</p>";
+    $event_id = $atts['id'];
+    if ($event_id == '0') {
+        return 'Please specify an event ID.';
     }
+
+    // Attempt to retrieve the attendees for the specified event ID.
+    $attendees = tribe_tickets_get_attendees($event_id);
+
+    // Check if attendees were found.
+    if (empty($attendees)) {
+        return 'No attendees found for this event.';
+    }
+
+    // Start building the output.
+    $output = '<h3>Attendees for Event ID ' . esc_html($event_id) . ':</h3>';
+    $output .= '<ul>';
+
+    // Loop through each attendee and add them to the output.
+    foreach ($attendees as $attendee) {
+        $attendee_name = isset($attendee['attendee_name']) ? $attendee['attendee_name'] : 'N/A';
+        $output .= '<li>' . esc_html($attendee_name) . '</li>';
+    }
+
+    $output .= '</ul>';
 
     return $output;
 }
