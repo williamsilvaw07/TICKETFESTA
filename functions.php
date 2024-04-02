@@ -5032,28 +5032,35 @@ require_once get_stylesheet_directory() . '/event-dashboard-ajax.php';
 
 
 
-
-
 function check_shortcode_execution() {
-    error_log('Shortcode started');
+    // Start buffering output
+    ob_start();
+    
+    echo 'Shortcode started.<br>';
 
     if (!class_exists('Tribe__Events__Main')) {
-        error_log('The Events Calendar plugin is not active.');
-        return 'The Events Calendar plugin is not active.';
+        echo 'The Events Calendar plugin is not active.<br>';
+        return ob_get_clean(); // Return and clear buffer
     }
 
     $event_id = 5640; // Ensure this event ID exists
-    error_log('Using event ID: ' . $event_id);
+    echo 'Using event ID: ' . $event_id . '<br>';
 
     $attendees = get_event_attendees($event_id);
-    error_log('Attendees: ' . print_r($attendees, true));
-
-    if (is_array($attendees) && count($attendees) > 0) {
-        error_log('Found attendees: ' . count($attendees));
-        // Further logic...
-    } else {
-        error_log('No attendees found or error occurred.');
-        return 'No attendees found for the specified event ID (' . $event_id . ').';
+    if (!is_array($attendees)) {
+        echo 'Error retrieving attendees. Data type: ' . gettype($attendees) . '<br>';
+        return ob_get_clean(); // Return and clear buffer
     }
+    
+    if (count($attendees) > 0) {
+        echo 'Found attendees: ' . count($attendees) . '<br>';
+        // Optionally, list attendees for further debug
+        echo '<pre>' . esc_html(print_r($attendees, true)) . '</pre>';
+    } else {
+        echo 'No attendees found for the specified event ID.<br>';
+    }
+    
+    // Return all accumulated output
+    return ob_get_clean();
 }
 add_shortcode('check_execution', 'check_shortcode_execution');
