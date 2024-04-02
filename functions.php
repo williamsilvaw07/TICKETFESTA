@@ -5036,89 +5036,40 @@ require_once get_stylesheet_directory() . '/event-dashboard-ajax.php';
 
 
 
-add_shortcode('check_execution', 'custom_check_execution_shortcode');
 
-function custom_check_execution_shortcode() {
-    $event_id = 5640; // Hardcoded event ID for demonstration purposes
-    $ticket_product_ids = get_ticket_product_ids_for_event($event_id);
 
-    if (empty($ticket_product_ids)) {
-        return 'No ticket products found for the specified event ID (' . $event_id . ').';
-    }
 
-    $attendees = [];
-    $orders = wc_get_orders(array(
-        'status' => 'completed',
-        'limit' => -1,
-        'return' => 'ids',
-    ));
 
-    foreach ($orders as $order_id) {
-        $order = wc_get_order($order_id);
-        foreach ($order->get_items() as $item_id => $item) {
-            if (in_array($item->get_product_id(), $ticket_product_ids) || in_array($item->get_variation_id(), $ticket_product_ids)) {
-                $attendee_name = $order->get_billing_first_name() . ' ' . $order->get_billing_last_name();
-                $attendees[$attendee_name] = 'attended'; // Use attendee name as key to prevent duplicates
+
+
+
+
+function fetch_event_attendees_info_hardcoded() {
+    $event_id = 5640; // Hardcoded event ID
+
+    // Check if function exists to avoid errors in case Event Tickets Plus is not active
+    if (function_exists('tribe_tickets_get_attendees')) {
+        $attendees = tribe_tickets_get_attendees($event_id);
+        $output = '';
+
+        if (!empty($attendees)) {
+            $output .= '<ul>';
+            foreach ($attendees as $attendee) {
+                // Adjust these keys if necessary
+                $output .= '<li>' . esc_html($attendee['attendee_name'] . ' - ' . $attendee['attendee_email']) . '</li>';
             }
+            $output .= '</ul>';
+        } else {
+            $output = 'No attendees found for this event.';
         }
-    }
 
-    ob_start();
-    if (!empty($attendees)) {
-        echo '<h3>Attendees for Event ID ' . $event_id . ':</h3><ul>';
-        foreach (array_keys($attendees) as $attendee_name) {
-            echo '<li>' . esc_html($attendee_name) . '</li>';
-        }
-        echo '</ul>';
+        return $output;
     } else {
-        echo 'No attendees found for the specified event ID (' . $event_id . ').';
-    }
-    return ob_get_clean();
-}
-
-function get_ticket_product_ids_for_event($event_id) {
-    $args = array(
-        'post_type' => 'product',
-        'posts_per_page' => -1,
-        'meta_query' => array(
-            array(
-                'key' => '_tribe_wooticket_for_event',
-                'value' => $event_id,
-                'compare' => '=',
-            ),
-        ),
-        'fields' => 'ids',
-    );
-
-    $products = get_posts($args);
-    return $products; // Returns an array of product IDs
-}
-
-
-
-add_action( 'manage_shop_order_posts_custom_column', 'get_sellers_and_coupon_values' );
-function get_sellers_and_coupon_values( $column ) {
-    global $post, $the_order;
-    
-    $order_id = $the_order->get_id();
-    
-    // Replace 'my_custom_column_key' with your desired column key
-    if ( 'my_custom_column_key' === $column ) {
-        $display = array();
-        
-        // Loop through order items
-        foreach ( $the_order->get_items() as $item_id => $item ) {
-            // $item_id is the current Item ID
-
-            // Get the WC_Product Object
-            $product = $item->get_product();
-            
-            // Get custom order item meta data | Replace 'some_meta_key' by the desired meta key
-            $meta_value = $item->get_meta('some_meta_key');
-            
-            $display[$item_id] = $meta_value;
-        }
-        // Testing output
-        echo implode(' | ', $meta_value);
+        return 'Event Tickets Plus plugin is not active.';
     }
 }
+
+// Shortcode that uses the hardcoded event ID function
+add_shortcode('check_execution', function () {
+    return fetch_event_attendees_info_hardcoded();
+});
