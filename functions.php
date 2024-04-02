@@ -11,42 +11,47 @@ add_action('wp_ajax_clear_cart_restore_stock', 'clear_cart_and_restore_stock');
 add_action('wp_ajax_nopriv_clear_cart_restore_stock', 'clear_cart_and_restore_stock');
 
 function clear_cart_and_restore_stock() {
-    // Iterate through cart items to restore stock
-    foreach (WC()->cart->get_cart_contents() as $cart_item) {
-        $product = wc_get_product($cart_item['product_id']);
+    // Ensure we're not interfering with the checkout process
+    if (is_checkout()) {
+        wp_send_json_error('Checkout in progress');
+        return;
+    }
+
+    foreach (WC()->cart->get_cart() as $cart_item_key => $cart_item) {
+        $product = $cart_item['data'];
         $quantity = $cart_item['quantity'];
-        $current_stock = $product->get_stock_quantity();
-        $product->set_stock_quantity($current_stock + $quantity); // Restore stock
-        $product->save();
+        wc_update_product_stock($product, $quantity, 'increase');
     }
     
     WC()->cart->empty_cart(); // Clear the cart
-
-    wp_send_json_success('Cart cleared and stock restored due to inactivity.'); // Send success response
+    
+    wp_send_json_success('Cart cleared and stock restored due to inactivity.');
 }
 
-// Inject countdown timer and AJAX call into the cart and checkout pages
+// Inject countdown timer script into cart and checkout pages
 add_action('woocommerce_before_cart', 'inject_reservation_countdown');
 add_action('woocommerce_before_checkout_form', 'inject_reservation_countdown');
 
 function inject_reservation_countdown() {
-    // Output the countdown timer's placeholder
+    // Check for an active reservation expiry time
+    $expiry_time = WC()->session->get('reservation_expiry');
+    if (!$expiry_time) return;
+
     echo '<div id="reservation-countdown" style="padding: 10px; background-color: #f8f9fa; margin-bottom: 20px; text-align: center;"></div>';
 
-    // Inline JavaScript for countdown and AJAX request
     ?>
     <script>
     jQuery(document).ready(function($) {
-        var expiryTime = <?php echo json_encode(WC()->session->get('reservation_expiry')); ?>;
+        var expiryTime = <?php echo json_encode($expiry_time); ?>;
+        var countdownElement = $('#reservation-countdown');
         var countdownTimer = setInterval(function() {
             var currentTime = Math.floor(Date.now() / 1000);
             var timeLeft = expiryTime - currentTime;
 
             if (timeLeft <= 0) {
                 clearInterval(countdownTimer);
-                $('#reservation-countdown').text('Clearing the cart due to reservation expiration...');
+                countdownElement.text('Clearing the cart due to reservation expiration...');
 
-                // AJAX request to clear the cart and restore stock
                 $.ajax({
                     url: '<?php echo admin_url('admin-ajax.php'); ?>',
                     method: 'POST',
@@ -55,18 +60,19 @@ function inject_reservation_countdown() {
                     },
                     success: function(response) {
                         if (response.success) {
-                            alert(response.data); // Display success message
-                            window.location.reload(); // Refresh the page to show an empty cart
+                            // Optionally, replace alert with a more subtle notification
+                            alert(response.data); 
+                            location.reload();
                         }
                     },
                     error: function(error) {
-                        console.log('Error clearing cart:', error);
+                        console.error('Error clearing cart:', error);
                     }
                 });
             } else {
                 var minutes = Math.floor(timeLeft / 60);
                 var seconds = timeLeft % 60;
-                $('#reservation-countdown').text('Reservation ends in: ' + minutes + 'm ' + (seconds < 10 ? '0' : '') + seconds + 's');
+                countdownElement.text('Reservation ends in: ' + minutes + 'm ' + (seconds < 10 ? '0' : '') + seconds + 's');
             }
         }, 1000);
     });
