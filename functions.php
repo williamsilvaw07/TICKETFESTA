@@ -36,7 +36,8 @@ function remove_reserved_stock($product_id) {
     // Add the reserved quantity back to stock
     $old_stock = $product->get_stock_quantity();
     $new_stock = $old_stock + $reserved_quantity;
-    wc_update_product_stock($product, $new_stock);
+    $product->set_stock_quantity($new_stock);
+    $product->save();
 
     // Empty the cart
     WC()->cart->empty_cart();
@@ -90,7 +91,6 @@ function custom_woocommerce_empty_cart_action() {
     }
 }
 add_action( 'init', 'custom_woocommerce_empty_cart_action' );
-
 
 
 
