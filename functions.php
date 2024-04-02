@@ -5044,7 +5044,6 @@ require_once get_stylesheet_directory() . '/event-dashboard-ajax.php';
 
 
 
-
 // Function to retrieve attendees for a specific event ID
 function get_event_attendees($event_id) {
     // Check if The Events Calendar plugin is active
@@ -5072,11 +5071,15 @@ function event_attendees_shortcode($atts) {
             // Check if attendee has a name
             if (!empty($attendee->display_name)) {
                 $output .= '<li>' . $attendee->display_name . '</li>';
+            } else {
+                // Add debug info for attendees without a name
+                $output .= '<li>No name for this attendee</li>';
             }
         }
         $output .= '</ul>';
         return $output;
     } else {
+        // Add debug info if no attendees found
         return 'No attendees found for the specified event ID.';
     }
 }
