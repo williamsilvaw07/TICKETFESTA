@@ -3,59 +3,57 @@
 
 
 
-// Hook into the 'woocommerce_add_to_cart' action to set reservation expiry
-add_action('woocommerce_add_to_cart', function() {
-    // Set reservation expiry to 2 minutes from now
-    WC()->session->set('reservation_expiry', time() + (2 * 60));
+add_action('woocommerce_add_to_cart', function($cart_item_key, $product_id, $quantity, $variation_id, $variation, $cart_item_data) {
+    $current_stock = get_post_meta($product_id, '_stock', true);
+    $new_stock = $current_stock - $quantity;
+    
+    // Check if there's enough stock
+    if ($new_stock >= 0) {
+        // Update the stock quantity
+        update_post_meta($product_id, '_stock', $new_stock);
+
+        // Set a transient to restore the stock after 2 minutes
+        set_transient('restore_stock_' . $product_id, $quantity, 2 * MINUTE_IN_SECONDS);
+    } else {
+        // Handle the case where there isn't enough stock
+        // You might want to remove the item from the cart or notify the user
+    }
+}, 10, 6);
+
+// Scheduled action to check and restore expired stock reservations
+add_action('init', function() {
+    if (!wp_next_scheduled('check_restore_stock_reservations')) {
+        wp_schedule_event(time(), 'minute', 'check_restore_stock_reservations');
+    }
 });
 
-// Output the countdown timer script in the cart and checkout
-add_action('woocommerce_before_cart', 'output_reservation_countdown_script');
-add_action('woocommerce_before_checkout_form', 'output_reservation_countdown_script');
-
-function output_reservation_countdown_script() {
-    // Get the reservation expiry from the session
-    $reservation_expiry = WC()->session->get('reservation_expiry');
-    
-    // Only proceed if we have an expiry time
-    if (!$reservation_expiry) return;
-
-    ?>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var expiryTime = <?php echo json_encode($reservation_expiry); ?>;
-            var countdownElement = document.getElementById('reservation-countdown');
+add_action('check_restore_stock_reservations', function() {
+    global $wpdb;
+    $transients = $wpdb->get_results("SELECT option_name FROM {$wpdb->options} WHERE option_name LIKE '\_transient\_restore_stock\_%'");
+    foreach ($transients as $transient) {
+        $product_id = str_replace('_transient_restore_stock_', '', $transient->option_name);
+        $quantity = get_transient('restore_stock_' . $product_id);
+        
+        if ($quantity !== false) {
+            $current_stock = get_post_meta($product_id, '_stock', true);
+            update_post_meta($product_id, '_stock', $current_stock + $quantity);
             
-            // Initialize countdown display
-            countdownElement.textContent = 'Time left: --';
-            
-            // Update the countdown every second
-            var countdownTimer = setInterval(function() {
-                var currentTime = Math.floor(Date.now() / 1000);
-                var timeLeft = expiryTime - currentTime;
+            // Delete the transient to avoid restoring the stock again
+            delete_transient('restore_stock_' . $product_id);
+        }
+    }
+});
 
-                if (timeLeft <= 0) {
-                    clearInterval(countdownTimer);
-                    countdownElement.textContent = 'Time left: --';
-                    // Optionally, trigger any desired action here, like refreshing the cart
-                } else {
-                    var minutes = Math.floor(timeLeft / 60);
-                    var seconds = timeLeft % 60;
-                    countdownElement.textContent = `Time left: ${minutes}m ${seconds < 10 ? '0' + seconds : seconds}s`;
-                }
-            }, 1000);
-        });
-    </script>
-    <?php
-}
-
-// Insert the countdown element in the cart and checkout pages
-add_action('woocommerce_before_cart_table', 'add_countdown_timer_element');
-add_action('woocommerce_review_order_before_payment', 'add_countdown_timer_element');
-
-function add_countdown_timer_element() {
-    echo '<div id="reservation-countdown" style="padding: 10px; background-color: #f8f9fa; border-radius: 5px; margin-bottom: 20px; text-align: center;">Time left: --</div>';
-}
+// Ensure custom cron schedule is added for 'minute' interval
+add_filter('cron_schedules', function ($schedules) {
+    if (!isset($schedules['minute'])) {
+        $schedules['minute'] = [
+            'interval' => MINUTE_IN_SECONDS,
+            'display'  => esc_html__('Every Minute'),
+        ];
+    }
+    return $schedules;
+});
 
 
 
