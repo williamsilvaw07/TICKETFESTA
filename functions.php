@@ -7,20 +7,15 @@ add_action('woocommerce_add_to_cart', function($cart_item_key, $product_id, $qua
     $current_stock = get_post_meta($product_id, '_stock', true);
     $new_stock = $current_stock - $quantity;
     
-    // Check if there's enough stock
     if ($new_stock >= 0) {
-        // Update the stock quantity
         update_post_meta($product_id, '_stock', $new_stock);
-
-        // Set a transient to restore the stock after 2 minutes
         set_transient('restore_stock_' . $product_id, $quantity, 2 * MINUTE_IN_SECONDS);
-    } else {
-        // Handle the case where there isn't enough stock
-        // You might want to remove the item from the cart or notify the user
     }
+
+    // Also, set or update a session variable for the countdown timer
+    WC()->session->set('reservation_expiry_' . $product_id, time() + (2 * 60)); // 2 minutes from now
 }, 10, 6);
 
-// Scheduled action to check and restore expired stock reservations
 add_action('init', function() {
     if (!wp_next_scheduled('check_restore_stock_reservations')) {
         wp_schedule_event(time(), 'minute', 'check_restore_stock_reservations');
@@ -37,23 +32,55 @@ add_action('check_restore_stock_reservations', function() {
         if ($quantity !== false) {
             $current_stock = get_post_meta($product_id, '_stock', true);
             update_post_meta($product_id, '_stock', $current_stock + $quantity);
-            
-            // Delete the transient to avoid restoring the stock again
             delete_transient('restore_stock_' . $product_id);
         }
     }
 });
 
-// Ensure custom cron schedule is added for 'minute' interval
 add_filter('cron_schedules', function ($schedules) {
     if (!isset($schedules['minute'])) {
         $schedules['minute'] = [
-            'interval' => MINUTE_IN_SECONDS,
+            'interval' => 60,
             'display'  => esc_html__('Every Minute'),
         ];
     }
     return $schedules;
 });
+
+add_action('woocommerce_before_cart_table', 'add_countdown_timer_element');
+add_action('woocommerce_review_order_before_payment', 'add_countdown_timer_element');
+
+function add_countdown_timer_element() {
+    foreach (WC()->cart->get_cart() as $cart_item_key => $cart_item) {
+        $product_id = $cart_item['product_id'];
+        $expiry_time = WC()->session->get('reservation_expiry_' . $product_id);
+        if (!$expiry_time) continue; // Skip if no reservation expiry is set
+
+        $time_left = $expiry_time - time();
+        ?>
+        <div id="reservation-countdown-<?php echo esc_attr($product_id); ?>" style="padding: 10px; background-color: #f8f9fa; border-radius: 5px; margin-bottom: 20px; text-align: center;"></div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                var timeLeft = <?php echo $time_left; ?>;
+                var countdownElement = document.getElementById('reservation-countdown-<?php echo esc_js($product_id); ?>');
+                var countdownTimer = setInterval(function() {
+                    if (timeLeft <= 0) {
+                        clearInterval(countdownTimer);
+                        countdownElement.innerHTML = 'Reservation expired.';
+                    } else {
+                        var minutes = Math.floor(timeLeft / 60);
+                        var seconds = timeLeft % 60;
+                        countdownElement.innerHTML = 'Time left: ' + minutes + 'm ' + (seconds < 10 ? '0' : '') + seconds + 's';
+                        timeLeft--;
+                    }
+                }, 1000);
+            });
+        </script>
+        <?php
+        // Only add the script once if multiple products are in the cart
+        break;
+    }
+}
 
 
 
