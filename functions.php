@@ -5041,59 +5041,33 @@ require_once get_stylesheet_directory() . '/event-dashboard-ajax.php';
 
 
 
-// Function to retrieve attendees for a specific event ID
-function get_event_attendees($event_id) {
-    // Check if The Events Calendar plugin is active
-    if (class_exists('Tribe__Events__Main')) {
-        // Retrieve event post ID
-        $event = get_post($event_id);
-
-        // Check if event exists
-        if ($event) {
-            // Retrieve event attendees using the Event Tickets plugin
-            $attendees = apply_filters('tribe_tickets_event_attendees', array(), $event_id, array());
-
-            // Return attendees
-            return $attendees;
-        } else {
-            return 'Event with ID ' . $event_id . ' not found.';
-        }
-    } else {
-        return 'The Events Calendar plugin is not active.';
-    }
-}
-
-// Shortcode to display attendees for event ID 5640
 function event_attendees_shortcode($atts) {
-    // Retrieve attendees for the hardcoded event ID 5640
-    $event_id = 5640; // Hardcoded event ID
+    // Retrieve attendees for the hardcoded event ID
+    $event_id = 5640; // Example: dynamically fetch this or pass via shortcode attributes
     $attendees = get_event_attendees($event_id);
 
-    // Check if attendees exist
-    if ($attendees) {
-        // Output attendees list
+    if (is_array($attendees) && count($attendees) > 0) {
         $output = '<h3>Attendees for Event ID ' . $event_id . ':</h3>';
-        $output .= '<ul>';
+        $output .= '<table>';
+        $output .= '<thead><tr><th>Name</th><th>Email</th><th>Ticket Name</th><th>Order ID</th></tr></thead><tbody>';
+        
         foreach ($attendees as $attendee) {
-            // Check if attendee has a name
-            if (!empty($attendee->display_name)) {
-                $output .= '<li>' . $attendee->display_name . '</li>';
-            } else {
-                // Add debug info for attendees without a name
-                $output .= '<li>No name for this attendee</li>';
-            }
+            // Example: Adjust these keys based on your actual data structure
+            $name = $attendee->display_name ?? 'N/A';
+            $email = $attendee->email ?? 'N/A'; // Assume $attendee->email contains the email
+            $ticket_name = $attendee->ticket_name ?? 'N/A'; // Assume this structure
+            $order_id = $attendee->order_id ?? 'N/A'; // And this one too
+            
+            $output .= "<tr><td>$name</td><td>$email</td><td>$ticket_name</td><td>$order_id</td></tr>";
         }
-        $output .= '</ul>';
+        
+        $output .= '</tbody></table>';
         return $output;
+    } elseif (is_string($attendees)) {
+        // Direct return of error messages
+        return $attendees;
     } else {
-        // Add debug info if no attendees found
         return 'No attendees found for the specified event ID (' . $event_id . ').';
     }
 }
 add_shortcode('event_attendees', 'event_attendees_shortcode');
-
-// Adding a message to check if the shortcode is being executed
-function check_shortcode_execution() {
-    return 'The event_attendees shortcode is executed successfully';
-}
-add_shortcode('check_execution', 'check_shortcode_execution');
