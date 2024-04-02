@@ -5041,3 +5041,46 @@ require_once get_stylesheet_directory() . '/event-dashboard-ajax.php';
 
 
 
+// Function to retrieve attendees for a specific event ID
+function get_event_attendees($event_id) {
+    // Check if The Events Calendar plugin is active
+    if (class_exists('Tribe__Events__Main')) {
+        // Query attendees using the Events Calendar API
+        $attendees = tribe_get_attendees($event_id);
+        
+        // Return attendees
+        return $attendees;
+    } else {
+        return 'The Events Calendar plugin is not active.';
+    }
+}
+
+// Shortcode to display attendees for a specific event ID
+function event_attendees_shortcode($atts) {
+    // Extract shortcode attributes
+    $atts = shortcode_atts(array(
+        'event_id' => '', // Default event ID
+    ), $atts);
+
+    // Check if event ID is provided
+    if (empty($atts['event_id'])) {
+        return 'Please provide an event ID.';
+    }
+
+    // Retrieve attendees for the specified event ID
+    $attendees = get_event_attendees($atts['event_id']);
+
+    // Check if attendees exist
+    if ($attendees) {
+        // Output attendees list
+        $output = '<ul>';
+        foreach ($attendees as $attendee) {
+            $output .= '<li>' . $attendee->display_name . '</li>';
+        }
+        $output .= '</ul>';
+        return $output;
+    } else {
+        return 'No attendees found for the specified event ID.';
+    }
+}
+add_shortcode('event_attendees', 'event_attendees_shortcode');
