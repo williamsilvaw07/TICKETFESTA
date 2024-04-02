@@ -5039,40 +5039,37 @@ require_once get_stylesheet_directory() . '/event-dashboard-ajax.php';
 
 
 
-
-
-
 add_shortcode('check_execution', 'custom_event_info_shortcode');
 
 function custom_event_info_shortcode() {
-    // Hardcoded event ID
-    $event_id = 5640;
+    $event_id = 5640; // Hardcoded event ID for demonstration
 
-    // Initialize an output variable
-    $output = '';
+    // Fetch event details
+    $event_title = get_the_title($event_id);
+    $event_url = get_permalink($event_id);
 
-    // Check if the event ID is valid
-    if ( tribe_is_event($event_id) ) {
-        $event_title = get_the_title($event_id);
-        $event_url = get_permalink($event_id);
-        $start_date = tribe_get_start_date($event_id);
-        $end_date = tribe_get_end_date($event_id);
-        $venue_id = tribe_get_venue_id($event_id);
-        $venue_name = tribe_get_venue($event_id);
-        $venue_url = tribe_get_venue_website_url($event_id);
+    // Start building the output
+    $output = "<h3>Event Information:</h3>";
+    $output .= "<p><strong>Title:</strong> <a href='{$event_url}'>{$event_title}</a></p>";
 
-        // Build the output HTML
-        $output .= "<h3>Event Information:</h3>";
-        $output .= "<p><strong>Title:</strong> <a href='{$event_url}'>{$event_title}</a></p>";
-        $output .= "<p><strong>Start Date:</strong> {$start_date}</p>";
-        $output .= "<p><strong>End Date:</strong> {$end_date}</p>";
-        if ($venue_id) {
-            $output .= "<p><strong>Venue:</strong> <a href='{$venue_url}'>{$venue_name}</a></p>";
+    // Get tickets for the event
+    $tickets = tribe_get_tickets($event_id);
+
+    if (!empty($tickets)) {
+        $output .= "<h4>Tickets:</h4>";
+        $output .= "<ul>";
+        foreach ($tickets as $ticket) {
+            // Assuming $ticket is an object. Adjust based on actual return structure.
+            $ticket_name = $ticket->name;
+            $ticket_price = tribe_get_ticket_price($ticket->ID);
+            $ticket_stock = tribe_tickets_get_ticket_stock_message($ticket);
+
+            $output .= "<li>{$ticket_name} - Price: {$ticket_price}, {$ticket_stock}</li>";
         }
+        $output .= "</ul>";
     } else {
-        $output .= "<p>Event with ID {$event_id} not found.</p>";
+        $output .= "<p>No tickets found for this event.</p>";
     }
 
-    // Return the generated HTML
     return $output;
 }
