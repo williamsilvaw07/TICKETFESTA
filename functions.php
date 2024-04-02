@@ -1,56 +1,53 @@
 <?php
 
-// Register AJAX actions for clearing the cart, for logged-in and not-logged-in users
-add_action('wp_ajax_clear_cart_action', 'handle_clear_cart');
-add_action('wp_ajax_nopriv_clear_cart_action', 'handle_clear_cart');
 
-function handle_clear_cart() {
-    if (WC()->cart->empty_cart()) {
-        wp_send_json_success('Cart has been successfully cleared.');
-    } else {
-        wp_send_json_error('Failed to clear the cart.');
+
+
+// Add custom function to reverse stock when product is added to cart
+function reverse_stock_on_add_to_cart($cart_item_key, $product_id, $quantity, $variation_id, $variation, $cart_item_data) {
+    // Get the product object
+    $product = wc_get_product($product_id);
+
+    // Check if the product is in stock
+    if ($product && $product->is_in_stock()) {
+        // Reserve the stock for 40 seconds
+        $reservation_time = 40; // in seconds
+        WC()->session->set('reserved_stock_' . $product_id, $quantity);
+        // Schedule the removal of reserved stock after reservation_time seconds
+        wp_schedule_single_event(time() + $reservation_time, 'remove_reserved_stock_event', array($product_id, $cart_item_key));
     }
 }
+add_action('woocommerce_add_to_cart', 'reverse_stock_on_add_to_cart', 10, 6);
 
-// Add a JavaScript snippet to the footer that listens for a custom event to clear the cart
-add_action('wp_footer', 'add_clear_cart_js');
-function add_clear_cart_js() {
-    // Only add this script on the cart page to avoid unnecessary loading
-    if (is_cart()) {
-    ?>
-    <script type="text/javascript">
-        jQuery(function($) {
-            // Listen for the custom event, e.g., triggered by a button click or a specific condition
-            $('body').on('clearCartEvent', function() {
-                $.ajax({
-                    url: '<?php echo admin_url('admin-ajax.php'); ?>',
-                    method: 'POST',
-                    data: {
-                        action: 'clear_cart_action',
-                    },
-                    success: function(response) {
-                        console.log(response); // Log the response for debugging
-                        if (response.success) {
-                            alert(response.data); // Optionally, use a more subtle notification method
-                            location.reload(); // Refresh the page to update the cart display
-                        }
-                    },
-                    error: function(error) {
-                        console.error('AJAX error:', error);
-                    }
-                });
-            });
+// Remove reserved stock after specified time
+function remove_reserved_stock($product_id, $cart_item_key) {
+    // Remove reserved stock
+    WC()->session->__unset('reserved_stock_' . $product_id);
 
-            // Example trigger for the custom event
-            $('#your-clear-cart-button').click(function(e) {
-                e.preventDefault();
-                $('body').trigger('clearCartEvent');
-            });
-        });
-    </script>
-    <?php
+    // Clear the cart
+    WC()->cart->empty_cart();
+
+    // Show a message to the user
+    wc_add_notice(__('Your cart has been cleared due to inactivity.'), 'error');
+}
+add_action('remove_reserved_stock_event', 'remove_reserved_stock', 10, 2);
+
+// Add timer on the cart page
+function display_cart_timer() {
+    // Get reserved stock
+    $reserved_stock = WC()->session->get('reserved_stock_' . $product_id);
+    // Display the timer only if there is reserved stock
+    if ($reserved_stock) {
+        $time_left = 40; // 40 seconds
+        echo '<p class="cart-timer">Time left: ' . $time_left . ' seconds</p>';
     }
 }
+add_action('woocommerce_before_cart', 'display_cart_timer');
+
+
+
+
+
 
 
 
