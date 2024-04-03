@@ -5048,33 +5048,36 @@ require_once get_stylesheet_directory() . '/event-dashboard-ajax.php';
 
 
 
-function custom_event_attendees_shortcode() {
-    global $wpdb; // Access to the WordPress database class
 
+
+
+
+
+
+
+
+function display_event_tickets() {
     $event_id = 5640; // Hardcoded event ID
 
-    // Query to select attendees based on event ID. Adjust the table name and field names according to your setup.
-    $query = $wpdb->prepare("
-        SELECT meta_value 
-        FROM $wpdb->postmeta 
-        WHERE post_id = %d 
-        AND meta_key = '_tribe_tickets_attendees'", 
-        $event_id
-    );
+    // Ensure the function exists to prevent errors in case the plugin is not activated or the function is removed in future versions.
+    if (function_exists('Tribe__Tickets__Tickets::get_tickets')) {
+        $tickets = Tribe__Tickets__Tickets::get_tickets($event_id);
 
-    $attendees = $wpdb->get_results($query);
+        if (empty($tickets)) {
+            return 'No tickets found for this event.';
+        }
 
-    if (empty($attendees)) {
-        return 'No attendees found for this event.';
+        $output = '<h3>Event Tickets</h3><ul>';
+        foreach ($tickets as $ticket) {
+            $output .= sprintf('<li>%s - Price: %s</li>', esc_html($ticket->name), esc_html($ticket->price));
+        }
+        $output .= '</ul>';
+
+        return $output;
+    } else {
+        return 'The required function is not available.';
     }
-
-    // Assuming the meta_value contains attendee names or IDs. Adjust the processing as necessary.
-    $output = '<h3>Attendees List</h3><ul>';
-    foreach ($attendees as $attendee) {
-        $output .= sprintf('<li>%s</li>', esc_html($attendee->meta_value)); // Adjust to format the attendee data correctly
-    }
-    $output .= '</ul>';
-
-    return $output;
+}function add_event_tickets_shortcode() {
+    return display_event_tickets(); // Call the above function.
 }
-add_shortcode('event_attendees', 'custom_event_attendees_shortcode');
+add_shortcode('event_tickets', 'add_event_tickets_shortcode');
