@@ -5051,44 +5051,41 @@ require_once get_stylesheet_directory() . '/event-dashboard-ajax.php';
 
 
 
+function custom_event_attendees_shortcode() {
+    $event_id = 5640; // Hardcoded event ID, change as necessary.
 
-function custom_event_attendees_report_shortcode($atts) {
-    // Ensure the function exists to prevent errors when The Events Calendar is not activated.
-    if (!function_exists('tribe_tickets_get_attendees')) {
-        return 'Please ensure The Events Calendar and Event Tickets plugins are activated.';
+    // Ensure current user has permission to view attendees.
+    if (!current_user_can('manage_options')) {
+        return 'You do not have sufficient permissions to access this information.';
     }
 
-    // Shortcode attributes for flexibility. Default event_id is hardcoded as per the requirement.
-    $atts = shortcode_atts([
-        'event_id' => '5640', // Default event ID; adjust as needed.
-    ], $atts, 'event_attendees_report');
+    // Fetch attendees for the event. This function needs to be defined based on your data structure.
+    $attendees = fetch_attendees_for_event($event_id);
 
-    $event_id = $atts['event_id'];
-
-    // Fetch attendees for the given event ID.
-    $attendees = tribe_tickets_get_attendees($event_id);
+    if (empty($attendees)) {
+        return 'No attendees found for this event.';
+    }
 
     // Start building the output.
-    $output = '<h3>Attendee Report</h3>';
-
-    if (!empty($attendees)) {
-        $output .= '<table class="event-attendees-report-table">';
-        $output .= '<tr><th>ID</th><th>Name</th><th>Email</th></tr>';
-        
-        foreach ($attendees as $attendee) {
-            $output .= sprintf(
-                '<tr><td>%s</td><td>%s</td><td>%s</td></tr>',
-                esc_html($attendee['attendee_id']),
-                esc_html($attendee['purchaser_name']),
-                esc_html($attendee['purchaser_email'])
-            );
-        }
-
-        $output .= '</table>';
-    } else {
-        $output .= '<p>No attendees found for this event.</p>';
+    $output = '<h3>Attendees List</h3><ul>';
+    foreach ($attendees as $attendee) {
+        // Adjust output formatting as necessary.
+        $output .= sprintf('<li>%s - %s</li>', esc_html($attendee['name']), esc_html($attendee['email']));
     }
+    $output .= '</ul>';
 
     return $output;
 }
-add_shortcode('event_attendees_report', 'custom_event_attendees_report_shortcode');
+add_shortcode('event_attendees', 'custom_event_attendees_shortcode');
+function fetch_attendees_for_event($event_id) {
+    // Placeholder for fetching event attendees logic.
+    // This needs to be replaced with actual logic, possibly querying a custom database table or using a plugin API.
+
+    $attendees = []; // Assume this will be filled with attendee data.
+
+    // Example of filling the array with dummy data.
+    $attendees[] = ['name' => 'John Doe', 'email' => 'john@example.com'];
+    $attendees[] = ['name' => 'Jane Doe', 'email' => 'jane@example.com'];
+
+    return $attendees;
+}
