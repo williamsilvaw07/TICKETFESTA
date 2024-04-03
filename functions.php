@@ -5049,43 +5049,33 @@ require_once get_stylesheet_directory() . '/event-dashboard-ajax.php';
 
 
 
-
-
 function custom_event_attendees_shortcode() {
-    $event_id = 5640; // Hardcoded event ID, change as necessary.
+    $event_id = 5640; // Hardcoded event ID
 
-    // Ensure current user has permission to view attendees.
+    // Check permissions
     if (!current_user_can('manage_options')) {
         return 'You do not have sufficient permissions to access this information.';
     }
 
-    // Fetch attendees for the event. This function needs to be defined based on your data structure.
-    $attendees = fetch_attendees_for_event($event_id);
+    // Attempt to use the Attendees Repository to fetch attendees
+    $attendees = []; // Initialize empty array
+    if (class_exists('\TEC\Tickets\Commerce\Repositories\Attendees_Repository')) {
+        $repository = new \TEC\Tickets\Commerce\Repositories\Attendees_Repository();
+        $attendees = $repository->filter_by_events([$event_id]);
+    }
 
     if (empty($attendees)) {
         return 'No attendees found for this event.';
     }
 
-    // Start building the output.
+    // Build output
     $output = '<h3>Attendees List</h3><ul>';
     foreach ($attendees as $attendee) {
-        // Adjust output formatting as necessary.
-        $output .= sprintf('<li>%s - %s</li>', esc_html($attendee['name']), esc_html($attendee['email']));
+        // Adjust output formatting as necessary
+        $output .= sprintf('<li>%s</li>', esc_html($attendee->get_name())); // Example, adjust based on actual method to get attendee name
     }
     $output .= '</ul>';
 
     return $output;
 }
 add_shortcode('event_attendees', 'custom_event_attendees_shortcode');
-function fetch_attendees_for_event($event_id) {
-    // Placeholder for fetching event attendees logic.
-    // This needs to be replaced with actual logic, possibly querying a custom database table or using a plugin API.
-
-    $attendees = []; // Assume this will be filled with attendee data.
-
-    // Example of filling the array with dummy data.
-    $attendees[] = ['name' => 'John Doe', 'email' => 'john@example.com'];
-    $attendees[] = ['name' => 'Jane Doe', 'email' => 'jane@example.com'];
-
-    return $attendees;
-}
