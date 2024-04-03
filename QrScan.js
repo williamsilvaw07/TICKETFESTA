@@ -455,12 +455,12 @@ function updateCheckedInProgress(response) {
        
 
 
-        /*
+        
         var intervalId = setInterval(function() {
             // Your function to be called every 3 seconds
             CheckProgressData();
         }, 3000);
-*/
+
 
 
 
