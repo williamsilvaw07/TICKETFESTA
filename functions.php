@@ -5053,31 +5053,33 @@ require_once get_stylesheet_directory() . '/event-dashboard-ajax.php';
 
 
 
+add_action('plugins_loaded', 'setup_custom_event_tickets_shortcode');
 
+function setup_custom_event_tickets_shortcode() {
+    // Check if the class exists to ensure the Event Tickets plugin is active and loaded.
+    if (class_exists('Tribe__Tickets__Tickets')) {
+        add_shortcode('event_tickets', 'add_event_tickets_shortcode');
+    }
+}
 
-
-function display_event_tickets() {
+function add_event_tickets_shortcode() {
     $event_id = 5640; // Hardcoded event ID
 
-    // Ensure the function exists to prevent errors in case the plugin is not activated or the function is removed in future versions.
-    if (function_exists('Tribe__Tickets__Tickets::get_tickets')) {
-        $tickets = Tribe__Tickets__Tickets::get_tickets($event_id);
+    // Attempt to fetch tickets using an available method or API from the plugin.
+    $tickets = tribe_get_tickets($event_id);
 
-        if (empty($tickets)) {
-            return 'No tickets found for this event.';
-        }
-
-        $output = '<h3>Event Tickets</h3><ul>';
-        foreach ($tickets as $ticket) {
-            $output .= sprintf('<li>%s - Price: %s</li>', esc_html($ticket->name), esc_html($ticket->price));
-        }
-        $output .= '</ul>';
-
-        return $output;
-    } else {
-        return 'The required function is not available.';
+    if (empty($tickets)) {
+        return 'No tickets found for this event.';
     }
-}function add_event_tickets_shortcode() {
-    return display_event_tickets(); // Call the above function.
+
+    $output = '<h3>Event Tickets</h3><ul>';
+    foreach ($tickets as $ticket) {
+        // Adjust these properties based on the actual structure of your ticket objects.
+        $ticket_name = $ticket->title;
+        $ticket_price = $ticket->price;
+        $output .= sprintf('<li>%s - Price: %s</li>', esc_html($ticket_name), esc_html($ticket_price));
+    }
+    $output .= '</ul>';
+
+    return $output;
 }
-add_shortcode('event_tickets', 'add_event_tickets_shortcode');
