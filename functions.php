@@ -5053,10 +5053,6 @@ require_once get_stylesheet_directory() . '/event-dashboard-ajax.php';
 
 
 
-
-
-
-
 function custom_event_attendees_shortcode($atts) {
     // Shortcode attributes, allows specifying event ID directly in shortcode.
     $atts = shortcode_atts(array(
@@ -5076,7 +5072,8 @@ function custom_event_attendees_shortcode($atts) {
         $output .= '<ul class="event-attendees-list">';
         foreach ($attendees as $attendee) {
             $output .= '<li>';
-            // Customize this part as needed to display desired attendee information.
+            // Displaying attendee ID along with purchaser name and email.
+            $output .= 'ID: ' . esc_html($attendee['attendee_id']) . ' - ';
             $output .= esc_html($attendee['purchaser_name']) . ' - ' . esc_html($attendee['purchaser_email']);
             $output .= '</li>';
         }
