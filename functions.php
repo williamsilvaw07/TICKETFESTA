@@ -5049,3 +5049,42 @@ require_once get_stylesheet_directory() . '/event-dashboard-ajax.php';
 
 
 
+
+
+
+
+
+
+
+
+function custom_event_attendees_shortcode($atts) {
+    // Shortcode attributes, allows specifying event ID directly in shortcode.
+    $atts = shortcode_atts(array(
+        'event_id' => '5640', // Default event ID; replace with your event ID or remove default.
+    ), $atts, 'event_attendees');
+
+    $event_id = $atts['event_id'];
+    
+    // Use the tribe_tickets_get_attendees function to get attendees for the specified event ID.
+    $attendees = tribe_tickets_get_attendees($event_id);
+
+    // Start building the output.
+    $output = '';
+
+    // Check if we have attendees and output their details.
+    if (!empty($attendees)) {
+        $output .= '<ul class="event-attendees-list">';
+        foreach ($attendees as $attendee) {
+            $output .= '<li>';
+            // Customize this part as needed to display desired attendee information.
+            $output .= esc_html($attendee['purchaser_name']) . ' - ' . esc_html($attendee['purchaser_email']);
+            $output .= '</li>';
+        }
+        $output .= '</ul>';
+    } else {
+        $output = '<p>No attendees found for this event.</p>';
+    }
+
+    return $output;
+}
+add_shortcode('event_attendees', 'custom_event_attendees_shortcode');
