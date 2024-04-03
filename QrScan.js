@@ -426,6 +426,10 @@ function updateCheckedInProgress(response) {
             startScanQR(response.event_id);
         }
 
+
+
+
+
         function CheckProgressData() {
             if(event_id_global && ! changing_event ){
                 console.log('ajax called');
@@ -450,10 +454,59 @@ function updateCheckedInProgress(response) {
         }
        
 
-        var intervalId = setInterval(function() {
-            // Your function to be called every 3 seconds
-            CheckProgressData();
-        }, 3000);
+ 
+
+
+
+
+        var intervalId = null;
+
+        function checkAndRun() {
+            // Check if #tab1 has the 'active' class
+            if ($('#tab1').hasClass('active')) {
+                // If the interval is not already set, set it
+                if (intervalId === null) {
+                    intervalId = setInterval(function() {
+                        // Call your function here
+                        CheckProgressData();
+                    }, 3000);
+                }
+            } else {
+                // If #tab1 is not active and an interval is set, clear it
+                if (intervalId !== null) {
+                    clearInterval(intervalId);
+                    intervalId = null; // Reset the interval ID
+                }
+            }
+        }
+    
+        // Initial check to run or not run the function based on the 'active' class
+        checkAndRun();
+    
+        // Use MutationObserver to watch for class changes on #tab1
+        // This is more efficient than continuously polling with setInterval
+        var observer = new MutationObserver(function(mutations) {
+            mutations.forEach(function(mutation) {
+                if (mutation.attributeName === "class") {
+                    checkAndRun(); // Recheck conditions whenever the class attribute changes
+                }
+            });
+        });
+    
+        // Start observing #tab1 for attribute changes specifically to the class attribute
+        observer.observe(document.getElementById('tab1'), {
+            attributes: true, // Listen for attribute changes
+            attributeFilter: ['class'] // Specifically for changes in the class attribute
+        });
+
+
+
+
+
+
+
+
+
 
         $(document).on('click', '.change_event_btn', function() {
             console.log("Button clicked");
