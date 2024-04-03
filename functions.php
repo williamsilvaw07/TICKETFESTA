@@ -5052,36 +5052,43 @@ require_once get_stylesheet_directory() . '/event-dashboard-ajax.php';
 
 
 
+function custom_event_attendees_report_shortcode($atts) {
+    // Ensure the function exists to prevent errors when The Events Calendar is not activated.
+    if (!function_exists('tribe_tickets_get_attendees')) {
+        return 'Please ensure The Events Calendar and Event Tickets plugins are activated.';
+    }
 
-function custom_event_attendees_shortcode($atts) {
-    // Shortcode attributes, allows specifying event ID directly in shortcode.
-    $atts = shortcode_atts(array(
-        'event_id' => '5640', // Default event ID; replace with your event ID or remove default.
-    ), $atts, 'event_attendees');
+    // Shortcode attributes for flexibility. Default event_id is hardcoded as per the requirement.
+    $atts = shortcode_atts([
+        'event_id' => '5640', // Default event ID; adjust as needed.
+    ], $atts, 'event_attendees_report');
 
     $event_id = $atts['event_id'];
-    
-    // Use the tribe_tickets_get_attendees function to get attendees for the specified event ID.
+
+    // Fetch attendees for the given event ID.
     $attendees = tribe_tickets_get_attendees($event_id);
 
     // Start building the output.
-    $output = '';
+    $output = '<h3>Attendee Report</h3>';
 
-    // Check if we have attendees and output their details.
     if (!empty($attendees)) {
-        $output .= '<ul class="event-attendees-list">';
+        $output .= '<table class="event-attendees-report-table">';
+        $output .= '<tr><th>ID</th><th>Name</th><th>Email</th></tr>';
+        
         foreach ($attendees as $attendee) {
-            $output .= '<li>';
-            // Displaying attendee ID along with purchaser name and email.
-            $output .= 'ID: ' . esc_html($attendee['attendee_id']) . ' - ';
-            $output .= esc_html($attendee['purchaser_name']) . ' - ' . esc_html($attendee['purchaser_email']);
-            $output .= '</li>';
+            $output .= sprintf(
+                '<tr><td>%s</td><td>%s</td><td>%s</td></tr>',
+                esc_html($attendee['attendee_id']),
+                esc_html($attendee['purchaser_name']),
+                esc_html($attendee['purchaser_email'])
+            );
         }
-        $output .= '</ul>';
+
+        $output .= '</table>';
     } else {
-        $output = '<p>No attendees found for this event.</p>';
+        $output .= '<p>No attendees found for this event.</p>';
     }
 
     return $output;
 }
-add_shortcode('event_attendees', 'custom_event_attendees_shortcode');
+add_shortcode('event_attendees_report', 'custom_event_attendees_report_shortcode');
