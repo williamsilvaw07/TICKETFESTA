@@ -463,7 +463,55 @@ function updateCheckedInProgress(response) {
 */
 
 
-        
+
+/*
+var intervalId = null;
+
+function checkAndRun() {
+    if ($('#tab1').hasClass('active')) {
+        if (intervalId === null) {
+            console.log('Starting interval because #tab1 is active.');
+            intervalId = setInterval(function() {
+                console.log('Calling CheckProgressData function.');
+                CheckProgressData();
+            }, 3000);
+        }
+    } else {
+        if (intervalId !== null) {
+            console.log('Clearing interval because #tab1 is no longer active.');
+            clearInterval(intervalId);
+            intervalId = null;
+        }
+    }
+}
+
+checkAndRun(); // Perform the initial check
+
+var observer = new MutationObserver(function(mutations) {
+    mutations.forEach(function(mutation) {
+        if (mutation.attributeName === "class") {
+            console.log('#tab1 class attribute changed.');
+            checkAndRun();
+        }
+    });
+});
+
+observer.observe(document.getElementById('tab1'), {
+    attributes: true,
+    attributeFilter: ['class']
+});
+*/
+
+
+
+
+
+
+
+
+
+
+
         $(document).on('click', '.change_event_btn', function() {
             console.log("Button clicked");
             changing_event = true;
