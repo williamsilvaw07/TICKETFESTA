@@ -461,51 +461,42 @@ function updateCheckedInProgress(response) {
 
         var intervalId = null;
 
-        function checkAndRun() {
-            // Check if #tab1 has the 'active' class
-            if ($('#tab1').hasClass('active')) {
-                // If the interval is not already set, set it
-                if (intervalId === null) {
-                    intervalId = setInterval(function() {
-                        // Call your function here
-                        CheckProgressData();
-                    }, 3000);
-                }
-            } else {
-                // If #tab1 is not active and an interval is set, clear it
-                if (intervalId !== null) {
-                    clearInterval(intervalId);
-                    intervalId = null; // Reset the interval ID
-                }
+    function checkAndRun() {
+        if ($('#tab1').hasClass('active')) {
+            if (intervalId === null) {
+                console.log('Starting interval because #tab1 is active.');
+                intervalId = setInterval(function() {
+                    console.log('Calling CheckProgressData function.');
+                    CheckProgressData();
+                }, 3000);
+            }
+        } else {
+            if (intervalId !== null) {
+                console.log('Clearing interval because #tab1 is no longer active.');
+                clearInterval(intervalId);
+                intervalId = null;
             }
         }
-    
-        // Initial check to run or not run the function based on the 'active' class
-        checkAndRun();
-    
-        // Use MutationObserver to watch for class changes on #tab1
-        // This is more efficient than continuously polling with setInterval
-        var observer = new MutationObserver(function(mutations) {
-            mutations.forEach(function(mutation) {
-                if (mutation.attributeName === "class") {
-                    checkAndRun(); // Recheck conditions whenever the class attribute changes
-                }
-            });
+    }
+
+    checkAndRun(); // Perform the initial check
+
+    var observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+            if (mutation.attributeName === "class") {
+                console.log('#tab1 class attribute changed.');
+                checkAndRun();
+            }
         });
+    });
+
+    observer.observe(document.getElementById('tab1'), {
+        attributes: true,
+        attributeFilter: ['class']
+    });
+
+
     
-        // Start observing #tab1 for attribute changes specifically to the class attribute
-        observer.observe(document.getElementById('tab1'), {
-            attributes: true, // Listen for attribute changes
-            attributeFilter: ['class'] // Specifically for changes in the class attribute
-        });
-
-
-
-
-
-
-
-
 
 
         $(document).on('click', '.change_event_btn', function() {
