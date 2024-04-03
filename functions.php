@@ -5051,7 +5051,7 @@ require_once get_stylesheet_directory() . '/event-dashboard-ajax.php';
 
 
 
-function display_event_tickets_with_context() {
+function display_event_tickets_with_woocommerce_product_id() {
     $event_id = 5640; // Hardcoded event ID
 
     // Check if the method exists to prevent errors if the plugin is not activated.
@@ -5065,8 +5065,14 @@ function display_event_tickets_with_context() {
         // Start building the output.
         $output = '<h3>Event Tickets</h3><ul>';
         foreach ($tickets as $ticket) {
-            // Example properties, adjust based on actual ticket object structure
-            $output .= sprintf('<li>%s - Price: %s</li>', esc_html($ticket->name), esc_html($ticket->price));
+            // Assuming $ticket->ID is the WooCommerce Product ID.
+            // The property might differ; adjust based on the actual ticket object structure.
+            $ticket_name = esc_html($ticket->name);
+            $ticket_price = esc_html($ticket->price);
+            $product_id = esc_html($ticket->ID); // This line assumes the product ID is directly accessible. Adjust as needed.
+
+            // Modify the output format as desired.
+            $output .= "<li>{$ticket_name} - Price: {$ticket_price}, WooCommerce Product ID: {$product_id}</li>";
         }
         $output .= '</ul>';
 
@@ -5075,6 +5081,12 @@ function display_event_tickets_with_context() {
         return 'The required method is not available.';
     }
 }
+
+
+
+
+
+
 
 
 function add_event_tickets_shortcode_with_context() {
