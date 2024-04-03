@@ -5043,7 +5043,7 @@ function tribe_check_progress_data(){
 
 
 
-
+/*
 
 function display_event_tickets_and_create_free_order() {
     $event_id = 5640; // Hardcoded event ID
@@ -5090,7 +5090,7 @@ function display_event_tickets_and_create_free_order() {
         return 'The required method is not available.';
     }
 }
-
+*/
 
 
 
