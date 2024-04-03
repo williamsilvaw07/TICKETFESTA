@@ -5040,9 +5040,6 @@ function tribe_check_progress_data(){
 
 
 
-require_once get_stylesheet_directory() . '/event-dashboard-ajax.php';
-
-
 
 
 
