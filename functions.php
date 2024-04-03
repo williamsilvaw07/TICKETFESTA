@@ -5048,31 +5048,30 @@ require_once get_stylesheet_directory() . '/event-dashboard-ajax.php';
 
 
 
-
 function custom_event_attendees_shortcode() {
+    global $wpdb; // Access to the WordPress database class
+
     $event_id = 5640; // Hardcoded event ID
 
-    // Check permissions
-    if (!current_user_can('manage_options')) {
-        return 'You do not have sufficient permissions to access this information.';
-    }
+    // Query to select attendees based on event ID. Adjust the table name and field names according to your setup.
+    $query = $wpdb->prepare("
+        SELECT meta_value 
+        FROM $wpdb->postmeta 
+        WHERE post_id = %d 
+        AND meta_key = '_tribe_tickets_attendees'", 
+        $event_id
+    );
 
-    // Attempt to use the Attendees Repository to fetch attendees
-    $attendees = []; // Initialize empty array
-    if (class_exists('\TEC\Tickets\Commerce\Repositories\Attendees_Repository')) {
-        $repository = new \TEC\Tickets\Commerce\Repositories\Attendees_Repository();
-        $attendees = $repository->filter_by_events([$event_id]);
-    }
+    $attendees = $wpdb->get_results($query);
 
     if (empty($attendees)) {
         return 'No attendees found for this event.';
     }
 
-    // Build output
+    // Assuming the meta_value contains attendee names or IDs. Adjust the processing as necessary.
     $output = '<h3>Attendees List</h3><ul>';
     foreach ($attendees as $attendee) {
-        // Adjust output formatting as necessary
-        $output .= sprintf('<li>%s</li>', esc_html($attendee->get_name())); // Example, adjust based on actual method to get attendee name
+        $output .= sprintf('<li>%s</li>', esc_html($attendee->meta_value)); // Adjust to format the attendee data correctly
     }
     $output .= '</ul>';
 
