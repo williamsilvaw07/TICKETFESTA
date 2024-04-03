@@ -5051,35 +5051,33 @@ require_once get_stylesheet_directory() . '/event-dashboard-ajax.php';
 
 
 
-
-
-add_action('plugins_loaded', 'setup_custom_event_tickets_shortcode');
-
-function setup_custom_event_tickets_shortcode() {
-    // Check if the class exists to ensure the Event Tickets plugin is active and loaded.
-    if (class_exists('Tribe__Tickets__Tickets')) {
-        add_shortcode('event_tickets', 'add_event_tickets_shortcode');
-    }
-}
-
-function add_event_tickets_shortcode() {
+function display_event_tickets_with_context() {
     $event_id = 5640; // Hardcoded event ID
 
-    // Attempt to fetch tickets using an available method or API from the plugin.
-    $tickets = tribe_get_tickets($event_id);
+    // Check if the method exists to prevent errors if the plugin is not activated.
+    if (method_exists('Tribe__Tickets__Tickets', 'get_all_event_tickets')) {
+        $tickets = Tribe__Tickets__Tickets::get_all_event_tickets($event_id);
 
-    if (empty($tickets)) {
-        return 'No tickets found for this event.';
+        if (empty($tickets)) {
+            return 'No tickets found for this event.';
+        }
+
+        // Start building the output.
+        $output = '<h3>Event Tickets</h3><ul>';
+        foreach ($tickets as $ticket) {
+            // Example properties, adjust based on actual ticket object structure
+            $output .= sprintf('<li>%s - Price: %s</li>', esc_html($ticket->name), esc_html($ticket->price));
+        }
+        $output .= '</ul>';
+
+        return $output;
+    } else {
+        return 'The required method is not available.';
     }
-
-    $output = '<h3>Event Tickets</h3><ul>';
-    foreach ($tickets as $ticket) {
-        // Adjust these properties based on the actual structure of your ticket objects.
-        $ticket_name = $ticket->title;
-        $ticket_price = $ticket->price;
-        $output .= sprintf('<li>%s - Price: %s</li>', esc_html($ticket_name), esc_html($ticket_price));
-    }
-    $output .= '</ul>';
-
-    return $output;
 }
+
+
+function add_event_tickets_shortcode_with_context() {
+    return display_event_tickets_with_context(); // Call the function defined above.
+}
+add_shortcode('event_tickets_context', 'add_event_tickets_shortcode_with_context');
