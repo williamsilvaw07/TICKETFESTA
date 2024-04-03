@@ -130,6 +130,7 @@ $attributes = apply_filters( 'tribe_tickets_block_ticket_html_attributes', $attr
 <?php if(!tribe_events_ticket_is_on_sale( $ticket ) ){
 	array_push($classes,'future_tickets_item');
 	$attributes['data-available'] = 'false';
+		$attributes['data-tmp-ticket-id'] = $attributes['data-ticket-id'];
 	unset($attributes['data-ticket-id']);
 	
 }?>
