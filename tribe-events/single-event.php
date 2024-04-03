@@ -1308,6 +1308,13 @@ jQuery(document).ready(function($) {
     display: none;
 }
 
+.future_tickets_item{
+    opacity: 0.4;
+}
+.future_tickets_item .enddate{
+    display: none
+}
+
 /****Event organizer***/
 .organizer-details{
     display: flex;
@@ -1808,7 +1815,7 @@ html .single-tribe_events .tribe-events-gmap{
 
 
 span.site-fee-container, span.site-fee-container span.ticket_site_fee  , .enddate , .startdate{
-    color: #949494!important;
+    color: #bcbcbc !important;
     font-size: 13px;
     font-weight: 300;
 }
@@ -1997,8 +2004,13 @@ body .tribe-tickets__tickets-buy{
     border-top: 1px solid rgba(255, 255, 255, 0.2)!important;
    
 }
+.entry .entry-content .event-tickets .tribe-tickets__tickets-footer, .event-tickets .tribe-tickets__tickets-footer{
+    border-top: 2px solid rgba(255, 255, 255, 0.2)!important;
+}
+.entry .entry-content .event-tickets .tribe-tickets__tickets-item, .event-tickets .tribe-tickets__tickets-item  {
 
-
+   
+}
 
 .single_event_page_line_up ul {
     list-style-type: none; 

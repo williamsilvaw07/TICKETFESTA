@@ -1012,7 +1012,7 @@ html .tribe-community-events .tribe-community-notice-error p:last-child {
 }
 
 .main_bk_home_main_div{
-    margin-top: -100px!important;
+    margin-top: 0px!important;
 }
 
 .main_bk_home_main_div:before{
@@ -1035,7 +1035,7 @@ width:90%!important;
 
 
 .main_bk_home_main_div {
-    background-image: url('https://ticketfesta.co.uk/wp-content/uploads/2024/02/yvette-de-wit-NYrVisodQ2M-unsplash-min.jpg');
+    background-image: url('https://ticketfesta.co.uk/wp-content/uploads/2024/04/nainoa-shizuru-NcdG9mK3PBY-unsplash-1-min-1.jpg');
     background-size: cover;
     background-position: center;
 }
@@ -1093,8 +1093,8 @@ width:90%!important;
 .home .entry-content:not(:first-child) , .home .site-main{
     margin-top: 0em!important;
 }
-.home_main_heading{
-    opacity: 0.7!important;
+.home_main_heading h1{
+    color: rgba(255, 255, 255, 0.6) !important;
 }
 .home_main_heading{
     position: absolute!important;

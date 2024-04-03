@@ -65,3 +65,10 @@ edit these three functions
 --> functions.php add_extra_fees_for_products()
 --> custom-function-frontend.js get_tribe_ticket_fee()
 --> admin-order.js get_tribe_ticket_fee()
+
+
+
+
+### Check before any plugin update 
+Veune function to allow to add the same veune name 
+https://ticketfesta.co.uk/wp-admin/plugin-editor.php?file=the-events-calendar%2Fsrc%2FTribe%2FVenue.php&plugin=the-events-calendar%2Fthe-events-calendar.php

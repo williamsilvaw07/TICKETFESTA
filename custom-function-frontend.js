@@ -1,4 +1,3 @@
-
 function get_tribe_ticket_fee(ticketAmount, quantity = 1){
     ticketSiteFee = 0;
     if(ticketAmount < 50 ){
@@ -246,12 +245,16 @@ jQuery(document).ready(function($) {
     $('.tribe-tickets__tickets-item').each(function() {
         var titleElement = $(this).find('.tribe-tickets__tickets-item-content-title');
         var ticket_id = $(this).data('ticket-id');
+		if($(this).hasClass("future_tickets_item")){
+				 ticket_id = $(this).data('tmp-ticket-id');
+			}
         var start_date = jQuery('.pick_start_date').text().trim();
         var end_date = jQuery('.pick_end_date').text().trim();
         var start_date_passed = '';
         var end_date_passed = '';
         $('.ticket-date-container').each(function() {
             var ticketId = $(this).data('ticket-id');
+			
             if(ticket_id == ticketId){
                 start_date        = $(this).find('.pick_start_date').text().trim();
                 start_date_passed = $(this).find('.pick_start_date').data('passed');

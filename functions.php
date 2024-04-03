@@ -1,6 +1,129 @@
 <?php
 
 
+
+
+// Add custom function to reserve stock when product is added to cart
+function reserve_stock_on_add_to_cart($cart_item_key, $product_id, $quantity, $variation_id, $variation, $cart_item_data) {
+    // Get the product object
+    $product = wc_get_product($product_id);
+
+    // Check if the product is in stock
+    if ($product && $product->is_in_stock()) {
+        // Reserve the stock for 40 seconds
+        $reservation_time = 40; // in seconds
+        $old_stock = $product->get_stock_quantity();
+        $new_stock = $old_stock - $quantity;
+
+        // Reserve the stock by reducing it
+        wc_update_product_stock($product, $new_stock);
+
+        // Schedule the removal of reserved stock after reservation_time seconds
+        wp_next_scheduled(time() + $reservation_time, 'remove_reserved_stock_event', array($product_id));
+    }
+}
+add_action('woocommerce_add_to_cart', 'reserve_stock_on_add_to_cart', 10, 6);
+
+// Remove reserved stock after specified time
+function remove_reserved_stock($product_id) {
+	 $cart_items = WC()->cart->get_cart();
+	//print_r($cart_items);
+	foreach ( $cart_items as $cart_item_key => $cart_item ) {
+        // Get product ID
+        $product_id = $cart_item['product_id'];
+			$product = wc_get_product($product_id);
+
+    // Get the reserved quantity
+    $reserved_quantity = WC()->cart->get_cart_contents_count();
+
+    // Add the reserved quantity back to stock
+    $old_stock = $product->get_stock_quantity();
+    $new_stock = $old_stock + $reserved_quantity;
+    $product->set_stock_quantity($new_stock);
+    $product->save();
+     
+    
+    }
+
+    // Get the product object
+    /*$product = wc_get_product($product_id);
+
+    // Get the reserved quantity
+    $reserved_quantity = WC()->cart->get_cart_contents_count();
+
+    // Add the reserved quantity back to stock
+    $old_stock = $product->get_stock_quantity();
+    $new_stock = $old_stock + $reserved_quantity;
+    $product->set_stock_quantity($new_stock);
+    $product->save();
+
+    // Empty the cart
+    WC()->cart->empty_cart();*/
+
+    // Add a custom notice with a link
+    wc_add_notice('Your cart has been cleared due to inactivity. <a href="' . esc_url(home_url()) . '">Click here</a> to continue shopping.', 'error');
+}
+add_action('woocommerce_before_cart_emptied', 'remove_reserved_stock', 10, 1);
+
+// Add timer on the cart page
+function display_cart_timer() {
+    // Get reserved stock
+    $reserved_stock = WC()->cart->get_cart_contents_count();
+    // Display the timer only if there is reserved stock
+    if ($reserved_stock > 0) {
+        $time_left = 40; // 40 seconds
+        echo '<p class="cart-timer" id="cart-timer">Time left: <span id="timer-countdown">' . $time_left . '</span> seconds</p>';
+        echo '<script>
+                var timeLeft = ' . $time_left . ';
+                var timer = setInterval(function() {
+                    timeLeft--;
+                    document.getElementById("timer-countdown").textContent = timeLeft;
+                    if (timeLeft <= 0) {
+                        clearInterval(timer);
+                        // Trigger click event on the "Empty Cart" button
+                        var emptyCartButton = document.querySelector(".empty-cart-button");
+                        if (emptyCartButton) {
+                            emptyCartButton.click();
+                        }
+                    }
+                }, 1000);
+              </script>';
+    }
+}
+add_action('woocommerce_before_cart', 'display_cart_timer');
+
+// Add custom function to display empty cart button
+function custom_woocommerce_empty_cart_button() {
+    echo '<a href="' . esc_url( add_query_arg( 'empty_cart', 'yes', wc_get_cart_url() ) ) . '" class="button empty-cart-button" title="' . esc_attr( 'Empty Cart', 'woocommerce' ) . '">' . esc_html( 'Empty Cart', 'woocommerce' ) . '</a>';
+}
+add_action( 'woocommerce_cart_coupon', 'custom_woocommerce_empty_cart_button' );
+
+// Add custom function to empty cart on action
+function custom_woocommerce_empty_cart_action() {
+    if ( isset( $_GET['empty_cart'] ) && 'yes' === $_GET['empty_cart'] ) {
+        WC()->cart->empty_cart();
+
+        // Redirect back to the cart page
+        wp_redirect( wc_get_cart_url() );
+        exit;
+    }
+}
+add_action( 'init', 'custom_woocommerce_empty_cart_action' );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 include (get_stylesheet_directory() . '/coupon_auto_apply.php');
 
 
@@ -4927,10 +5050,38 @@ require_once get_stylesheet_directory() . '/event-dashboard-ajax.php';
 
 
 
+function display_event_tickets_with_ids() {
+    $event_id = 5640; // Hardcoded event ID
+
+    // Check if the method exists to prevent errors if the plugin is not activated.
+    if (method_exists('Tribe__Tickets__Tickets', 'get_all_event_tickets')) {
+        $tickets = Tribe__Tickets__Tickets::get_all_event_tickets($event_id);
+
+        if (empty($tickets)) {
+            return 'No tickets found for this event.';
+        }
+
+        // Start building the output.
+        $output = '<h3>Event Tickets</h3><ul>';
+        foreach ($tickets as $ticket) {
+            // Ensure you replace 'ID', 'name', and 'price' with the correct properties for your ticket objects.
+            // 'ID' is a placeholder and might need to be adjusted based on the actual structure.
+            $ticket_id = isset($ticket->ID) ? $ticket->ID : 'Unknown ID';
+            $ticket_name = isset($ticket->name) ? $ticket->name : 'Unknown Name';
+            $ticket_price = isset($ticket->price) ? $ticket->price : 'Unknown Price';
+            $output .= sprintf('<li>ID: %s - %s - Price: %s</li>', esc_html($ticket_id), esc_html($ticket_name), esc_html($ticket_price));
+        }
+        $output .= '</ul>';
+
+        return $output;
+    } else {
+        return 'The required method is not available.';
+    }
+}
 
 
 
-
-
-
-
+function add_event_tickets_shortcode_with_ids() {
+    return display_event_tickets_with_ids(); // This calls the updated function.
+}
+add_shortcode('event_tickets_context', 'add_event_tickets_shortcode_with_ids');
