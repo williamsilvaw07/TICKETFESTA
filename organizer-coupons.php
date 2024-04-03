@@ -258,7 +258,13 @@ get_header('organizer');
                                 <tbody>
                                     <?php foreach ($coupon_posts as $coupon): ?>
                                         <?php $wooCoupon = new WC_Coupon($coupon->ID); ?>
-                                        <?php $data = []; ?>
+                                        <?php
+                                            $data = [];
+                                            $auto_apply = get_post_meta($coupon->ID, 'auto_apply', 0);
+                                            $data['auto_apply'] = is_array($auto_apply) ? (int) $auto_apply[0] : 0;
+                                            $data['event_id'] = get_post_meta($coupon->ID, 'event_id', true);
+                                            $event = tribe_get_event($data['event_id']);
+                                        ?>
                                         <tr>
                                             <td
                                                 class="tribe-dependent tribe-list-column tribe-list-column-status tribe-active">
@@ -269,6 +275,7 @@ get_header('organizer');
                                                     echo $wooCoupon->get_code();
                                                     ?>
                                                 </span>
+                                                
                                             </td>
                                             <td class="event-status-form">
                                                 <?php
@@ -286,10 +293,10 @@ get_header('organizer');
                                             </td>
                                             <td class="event-status-form">
                                                 <?php
-                                                $data['event_id'] = get_post_meta($coupon->ID, 'event_id', true);
-                                                if (isset($eventArray[$data['event_id']])) {
-                                                    $eventTitle = $eventArray[$data['event_id']];
-                                                    $eventTitleShort = mb_substr($eventTitle, 0, 50);
+
+                                                if (isset($event->post_title)) {
+
+                                                    $eventTitleShort = mb_substr($event->post_title, 0, 50);
 
                                                     // Append '...' to the shortened title if it was longer than 50 characters
                                                     if (mb_strlen($eventTitle) > 50) {
@@ -329,10 +336,7 @@ get_header('organizer');
                                                 echo ['fixed_cart' => 'Fixed', 'percent' => 'Percent'][$wooCoupon->get_discount_type()];
                                                 ?>
                                             </td>
-                                            <?php 
-                                                $auto_apply = get_post_meta($coupon->ID, 'auto_apply', 0);
-                                                $data['auto_apply'] = is_array($auto_apply) ? (int) $auto_apply[0] : 0;
-                                            ?>
+
                                             <td class="text-end action">
                                                 <div class="btn-group dropleft">
                                                     <button type="button" class="dropbtn" data-toggle="dropdown"
@@ -346,6 +350,12 @@ get_header('organizer');
                                                             data-target="#modal-edit">Edit</a>
                                                         <a class="dropdown-item" href="#"
                                                             onclick="onClickDeleteHandeler(<?php echo $coupon->ID ?>)">Delete</a>
+
+                                                        <?php if($auto_apply) : ?>
+                                                            <span role="buttin" class="dropdown-item"
+                                                            onclick='copyURL("<?php echo get_permalink($data['event_id']) . '?=' . $wooCoupon->get_code() ?>")'>Copy URL</span>
+                                                        <?php endif ?>
+
                                                     </div>
                                                 </div>
                                             </td>
@@ -365,7 +375,17 @@ get_header('organizer');
     <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
-
+<script>
+function copyURL(url) {
+    const el = document.createElement('textarea');
+    el.value = url;
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand('copy');
+    document.body.removeChild(el);
+    // alert('URL copied to clipboard: ' + url);
+}
+</script>
 <div class="modal fade" id="modal-default" style="display: none;" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
