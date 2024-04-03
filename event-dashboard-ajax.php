@@ -1,5 +1,6 @@
 <?php
 
+/*
 function add_attendee_enqueue_custom_frontend_js(){
 
     wp_enqueue_script('custom-event-main-js', get_stylesheet_directory_uri() . '/event-custom-features.js', array('jquery'), time(), true);
@@ -30,3 +31,4 @@ function custom_add_event_attendee(){
     var_dump( $result);
     die();
 }
+*/
