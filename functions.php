@@ -5033,34 +5033,3 @@ require_once get_stylesheet_directory() . '/event-dashboard-ajax.php';
 
 
 
-
-
-
-
-function custom_check_execution_shortcode() {
-    // Hardcoded event ID
-    $event_id = 5640; // Replace 5640 with your actual event ID
-
-    // Attempt to retrieve the attendees for the specified event ID
-    $attendees = tribe_tickets_get_attendees($event_id);
-
-    // Check if attendees were found
-    if (empty($attendees)) {
-        return 'No attendees found for the specified event ID (' . $event_id . ').';
-    }
-
-    // Start building the output
-    $output = '<h3>Attendees for Event ID ' . esc_html($event_id) . ':</h3>';
-    $output .= '<ul>';
-
-    // Loop through each attendee and add them to the output
-    foreach ($attendees as $attendee) {
-        $attendee_name = isset($attendee['attendee_name']) ? $attendee['attendee_name'] : 'N/A';
-        $output .= '<li>' . esc_html($attendee_name) . '</li>';
-    }
-
-    $output .= '</ul>';
-
-    return $output;
-}
-add_shortcode('check_execution', 'custom_check_execution_shortcode');
