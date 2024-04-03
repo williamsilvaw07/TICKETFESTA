@@ -5050,8 +5050,7 @@ require_once get_stylesheet_directory() . '/event-dashboard-ajax.php';
 
 
 
-
-function display_event_tickets_with_woocommerce_product_id() {
+function display_event_tickets_with_ids() {
     $event_id = 5640; // Hardcoded event ID
 
     // Check if the method exists to prevent errors if the plugin is not activated.
@@ -5065,14 +5064,12 @@ function display_event_tickets_with_woocommerce_product_id() {
         // Start building the output.
         $output = '<h3>Event Tickets</h3><ul>';
         foreach ($tickets as $ticket) {
-            // Assuming $ticket->ID is the WooCommerce Product ID.
-            // The property might differ; adjust based on the actual ticket object structure.
-            $ticket_name = esc_html($ticket->name);
-            $ticket_price = esc_html($ticket->price);
-            $product_id = esc_html($ticket->ID); // This line assumes the product ID is directly accessible. Adjust as needed.
-
-            // Modify the output format as desired.
-            $output .= "<li>{$ticket_name} - Price: {$ticket_price}, WooCommerce Product ID: {$product_id}</li>";
+            // Ensure you replace 'ID', 'name', and 'price' with the correct properties for your ticket objects.
+            // 'ID' is a placeholder and might need to be adjusted based on the actual structure.
+            $ticket_id = isset($ticket->ID) ? $ticket->ID : 'Unknown ID';
+            $ticket_name = isset($ticket->name) ? $ticket->name : 'Unknown Name';
+            $ticket_price = isset($ticket->price) ? $ticket->price : 'Unknown Price';
+            $output .= sprintf('<li>ID: %s - %s - Price: %s</li>', esc_html($ticket_id), esc_html($ticket_name), esc_html($ticket_price));
         }
         $output .= '</ul>';
 
@@ -5081,7 +5078,6 @@ function display_event_tickets_with_woocommerce_product_id() {
         return 'The required method is not available.';
     }
 }
-
 
 
 
