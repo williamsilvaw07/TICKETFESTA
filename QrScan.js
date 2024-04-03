@@ -459,56 +459,10 @@ function updateCheckedInProgress(response) {
 
 
 
-        var intervalId = null; // Store the interval ID for later reference
-
-        // Function to check the .active class and manage the interval
-        function checkAndRun() {
-            // Check if #tab1 has the 'active' class
-            if ($('#tab1').hasClass('active')) {
-                // If the interval is not set, then set it
-                if (intervalId === null) {
-                    console.log('Starting interval because #tab1 is active.');
-                    intervalId = setInterval(function() {
-                        console.log('Calling CheckProgressData function.');
-                        CheckProgressData(); // Your function to be called every 3 seconds
-                    }, 3000);
-                }
-            } else {
-                // If #tab1 is not active and an interval is set, clear it
-                if (intervalId !== null) {
-                    console.log('Clearing interval because #tab1 is no longer active.');
-                    clearInterval(intervalId);
-                    intervalId = null; // Reset the interval ID after clearing it
-                }
-            }
-        }
-    
-        // Perform the initial check to manage the interval based on the 'active' class
-        checkAndRun();
-    
-        // MutationObserver to watch for class changes on #tab1
-        var observer = new MutationObserver(function(mutations) {
-            mutations.forEach(function(mutation) {
-                // React to class attribute changes
-                if (mutation.attributeName === "class") {
-                    console.log('#tab1 class attribute changed.');
-                    checkAndRun(); // Re-evaluate the interval whenever the class changes
-                }
-            });
-        });
-    
-        // Start observing #tab1 for changes specifically to the class attribute
-        observer.observe(document.getElementById('tab1'), {
-            attributes: true, // Listen for attribute changes
-            attributeFilter: ['class'] // Specifically for class attribute changes
-        });
-
-        
 
 
 
 
-        
 
 
         $(document).on('click', '.change_event_btn', function() {
