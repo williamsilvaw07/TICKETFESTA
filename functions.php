@@ -5081,11 +5081,7 @@ function display_event_tickets_with_ids() {
 
 
 
-
-
-
-
-function add_event_tickets_shortcode_with_context() {
-    return display_event_tickets_with_context(); // Call the function defined above.
+function add_event_tickets_shortcode_with_ids() {
+    return display_event_tickets_with_ids(); // This calls the updated function.
 }
-add_shortcode('event_tickets_context', 'add_event_tickets_shortcode_with_context');
+add_shortcode('event_tickets_context', 'add_event_tickets_shortcode_with_ids');
