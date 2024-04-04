@@ -1834,7 +1834,6 @@ html .tickets-sold-column , html .tribe-list-column-title {
 .tribe-report-page .row-actions a , .tribe-report-page .row-actions .edit_link  button {
     transition: none;
     text-decoration: none;
-    border: 0.4px solid white;
     padding: 3px 8px;
 }
 
