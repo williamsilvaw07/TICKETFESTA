@@ -45,21 +45,6 @@ function remove_reserved_stock($product_id) {
     
     }
 
-    // Get the product object
-    /*$product = wc_get_product($product_id);
-
-    // Get the reserved quantity
-    $reserved_quantity = WC()->cart->get_cart_contents_count();
-
-    // Add the reserved quantity back to stock
-    $old_stock = $product->get_stock_quantity();
-    $new_stock = $old_stock + $reserved_quantity;
-    $product->set_stock_quantity($new_stock);
-    $product->save();
-
-    // Empty the cart
-    WC()->cart->empty_cart();*/
-
     // Add a custom notice with a link
     wc_add_notice('Your cart has been cleared due to inactivity. <a href="' . esc_url(home_url()) . '">Click here</a> to continue shopping.', 'error');
 }
@@ -72,7 +57,10 @@ function display_cart_timer() {
     // Display the timer only if there is reserved stock
     if ($reserved_stock > 0) {
         $time_left = 40; // 40 seconds
+        echo '<div class="cart-timer_div">';
+        echo '<p class="cart-timer_text">Tickets on Hold for</p>';
         echo '<p class="cart-timer" id="cart-timer">Time left: <span id="timer-countdown">' . $time_left . '</span> seconds</p>';
+        echo '</div>';
         echo '<script>
                 var timeLeft = ' . $time_left . ';
                 var timer = setInterval(function() {
@@ -5235,3 +5223,54 @@ function get_author_list() {
 
 
 */
+
+
+
+
+
+
+function display_event_organizers() {
+    // Get all organizers
+    $organizers = tribe_get_organizers();
+
+    // Check if organizers exist
+    if ($organizers) {
+        $output = '<ul>';
+        foreach ($organizers as $organizer) {
+            // Get organizer ID
+            $organizer_id = tribe_get_organizer_id($organizer);
+
+            // Get organizer name
+            $organizer_name = get_the_title($organizer);
+
+            // Get users associated with the organizer
+            $users = get_users(array(
+                'meta_key' => 'organizer_id',
+                'meta_value' => $organizer_id,
+                'meta_compare' => '='
+            ));
+
+            // Prepare user names
+            $user_names = '';
+            foreach ($users as $user) {
+                $user_names .= $user->display_name . ', ';
+            }
+            $user_names = rtrim($user_names, ', ');
+
+            // Output organizer information
+            $output .= '<li>';
+            $output .= 'Organizer: ' . $organizer_name . ' (ID: ' . $organizer_id . ')<br>';
+            $output .= 'Users: ' . $user_names;
+            $output .= '</li>';
+        }
+        $output .= '</ul>';
+
+        // Display the output
+        echo $output;
+    } else {
+        echo 'No organizers found.';
+    }
+}
+
+// Register shortcode to display event organizers
+add_shortcode('display_event_organizers', 'display_event_organizers');
