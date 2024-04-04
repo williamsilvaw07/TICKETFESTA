@@ -5172,18 +5172,23 @@ add_shortcode('user_coauthor_form', 'add_coauthor_form_shortcode');
 
 
 
+
+
 // Register the meta box for additional authors
 function register_additional_authors_meta_box() {
-    add_meta_box('additional-authors', 'Additional Authors', 'display_additional_authors_meta_box', 'event', 'side', 'default');
+    $post_types = get_post_types(array('public' => true), 'names');
+    foreach ($post_types as $post_type) {
+        add_meta_box('additional-authors', 'Additional Authors', 'display_additional_authors_meta_box', $post_type, 'side', 'default');
+    }
 }
 add_action('add_meta_boxes', 'register_additional_authors_meta_box');
 
 // Display the meta box
 function display_additional_authors_meta_box($post) {
     $additional_authors = get_post_meta($post->ID, '_additional_authors', true);
-    // Get all authors (or a specific role if you prefer)
-    $users = get_users(array('role' => 'author'));
-    echo '<select name="additional_authors[]" multiple style="width:100%;" size="5">';
+    // Get all users
+    $users = get_users(array('role__in' => array('author', 'editor', 'administrator'))); // Adjust according to your needs
+    echo '<select name="additional_authors[]" multiple="multiple" style="width:100%;" size="5">';
     foreach ($users as $user) {
         echo sprintf('<option value="%s"%s>%s</option>',
             esc_attr($user->ID),
@@ -5192,7 +5197,7 @@ function display_additional_authors_meta_box($post) {
         );
     }
     echo '</select>';
-    echo '<p>Hold down the Ctrl (windows) or Command (Mac) button to select multiple options.</p>';
+    echo '<p>Hold down the Ctrl (Windows) or Command (Mac) button to select multiple options.</p>';
 }
 
 // Save the meta box data
@@ -5207,9 +5212,9 @@ function save_additional_authors_meta_box($post_id) {
 }
 add_action('save_post', 'save_additional_authors_meta_box');
 
-// Example function to display additional authors on the front-end
-function get_additional_authors_by_event_id($event_id) {
-    $authors_ids = get_post_meta($event_id, '_additional_authors', true);
+// Example function to display additional authors
+function get_additional_authors_by_post_id($post_id) {
+    $authors_ids = get_post_meta($post_id, '_additional_authors', true);
     $authors = array();
     if (!empty($authors_ids)) {
         foreach ($authors_ids as $author_id) {
