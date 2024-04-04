@@ -5095,6 +5095,61 @@ function display_event_tickets_and_create_free_order() {
 
 
 
+add_shortcode('list_all_events_with_authors', 'display_events_with_authors_shortcode');
+
+function display_events_with_authors_shortcode() {
+    $output = ''; // Initialize the output variable
+
+    // Query to get all event posts
+    $args = [
+        'post_type' => 'event', // Change this to your actual event post type
+        'posts_per_page' => -1, // Retrieve all events
+    ];
+
+    $events = new WP_Query($args);
+
+    if ($events->have_posts()) {
+        $output .= '<ul class="events-list">';
+
+        while ($events->have_posts()) {
+            $events->the_post();
+            $event_id = get_the_ID();
+            $event_title = get_the_title();
+            $author_id = get_post_field('post_author', $event_id);
+            $author_name = get_the_author_meta('display_name', $author_id);
+            $additional_authors_ids = get_post_meta($event_id, '_additional_authors', true);
+            $additional_authors_names = [];
+
+            if (!empty($additional_authors_ids)) {
+                foreach ($additional_authors_ids as $additional_author_id) {
+                    $additional_authors_names[] = get_the_author_meta('display_name', $additional_author_id);
+                }
+            }
+
+            $all_authors = array_merge([$author_name], $additional_authors_names);
+            $authors_list = implode(', ', $all_authors);
+
+            // Output the event and authors
+            $output .= sprintf('<li>%s - Authors: %s</li>', esc_html($event_title), esc_html($authors_list));
+        }
+
+        $output .= '</ul>';
+    } else {
+        $output .= '<p>No events found.</p>';
+    }
+
+    wp_reset_postdata(); // Reset the query
+
+    return $output; // Return the output
+}
+
+
+
+
+
+
+
+
 add_action('add_meta_boxes', 'register_additional_authors_meta_box');
 add_action('save_post', 'save_additional_authors_meta_box');
 
