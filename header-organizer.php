@@ -1792,7 +1792,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
         font-size: 17px;
     font-weight: 400;
       }
-      .tribe-report-page.attendees-actions{
+      .tribe-report-page .attendees-actions{
         display: flex!important;
     /* align-content: flex-start; */
     align-items: flex-start;
