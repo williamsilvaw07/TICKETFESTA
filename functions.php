@@ -5147,7 +5147,7 @@ function add_additional_authors_to_event($event_id, $author_ids) {
 change_event_author(5640, 72);
 
 // Add additional authors with IDs 70 and 1 to the event ID 5640
-add_additional_authors_to_event(5640, [70, 1]);
+add_additional_authors_to_event(5640, [70, 1, 72]);
 
 
 
