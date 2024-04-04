@@ -336,7 +336,7 @@ input#event-pass {
     .change_event_btn {
         background-color: #19191b;
     color: white;
-    font-size: 11px;
+    font-size: 13px;
     padding: 2px 9px;
     border: none;
     border-radius: 5px;
@@ -344,6 +344,9 @@ input#event-pass {
     height: 32px;
     margin-top: 15px;
     margin-left: 13px;
+}
+.change_event_btn  .fa-sign-in-alt:before {
+    color: #ff3b3b;
 }
 
 button i {
