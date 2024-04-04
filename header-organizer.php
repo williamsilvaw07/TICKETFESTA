@@ -1850,10 +1850,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
     color: #ffffff!important;
 
 }
-.tribe-report-page .tribe-common .tribe-common-c-btn{
-    background: #d3fa16 !important;
-    color: #000000 !important;
-}
+
    /**************END********** */
 
 
@@ -3233,9 +3230,13 @@ html .tickets-sold-column , html .tribe-list-column-title {
     background: #121212!important;
 }
 
+#image-gallery .select-organizer , #image-gallery  #organiser-selector{
+    display:none!important
+}
+
         /*****setting page***/ 
 
-.
+
         .setting_page_admin{
             padding-top: 50px;
             max-width:900px;
