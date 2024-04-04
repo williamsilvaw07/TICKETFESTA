@@ -517,14 +517,18 @@ observer.observe(document.getElementById('tab1'), {
 
 
 
-$(document).on('click', '.change_event_btn', function(event) {
-    event.preventDefault(); // Prevent the default form submission behavior
-    console.log("Button clicked");
-    changing_event = true;
-    $('.tabs-container').hide();
-    $('.scanner_login_div').show(); 
-    $('.change_event_btn').css("display", "none");
-});
+        $(document).on('click', '.change_event_btn', function() {
+            console.log("Button clicked");
+            changing_event = true;
+          //  $('.tabs-container').hide();
+           // $('.scanner_login_div').show(); 
+          //  $('.change_event_btn').css("display", "none");
+             
+          
+          // Refresh the page immediately
+    location.reload();
+            
+        });
          // (Optional) Clear the interval when the user leaves the page
         //  $(window).unload(function() {
         //      clearInterval(intervalId);
