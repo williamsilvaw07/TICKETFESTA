@@ -5229,7 +5229,7 @@ function get_author_list() {
 
 
 
-function display_event_organizers() {
+function display_event_organizers_with_users() {
     // Get all organizers
     $organizers = tribe_get_organizers();
 
@@ -5260,7 +5260,7 @@ function display_event_organizers() {
             // Output organizer information
             $output .= '<li>';
             $output .= 'Organizer: ' . $organizer_name . ' (ID: ' . $organizer_id . ')<br>';
-            $output .= 'Users: ' . $user_names;
+            $output .= 'Users: ' . ($user_names ? $user_names : 'None');
             $output .= '</li>';
         }
         $output .= '</ul>';
@@ -5272,5 +5272,5 @@ function display_event_organizers() {
     }
 }
 
-// Register shortcode to display event organizers
-add_shortcode('display_event_organizers', 'display_event_organizers');
+// Register shortcode to display event organizers with associated users
+add_shortcode('display_event_organizers_with_users', 'display_event_organizers_with_users');
