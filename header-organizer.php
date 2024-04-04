@@ -3238,7 +3238,23 @@ html .tickets-sold-column , html .tribe-list-column-title {
     padding-top: 34px;
 
 }
-
+#image-preview-container{
+    display: flex;
+    margin-top: -90px;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+#image-preview-container .preview-image{
+    height: auto;
+    max-width: 100%;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    object-fit: cover;
+    max-width: 200px;
+    width: 100%;
+    max-height: 194px;
+}
         /*****setting page***/ 
 
 
