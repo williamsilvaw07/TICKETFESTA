@@ -1837,8 +1837,18 @@ html .tickets-sold-column , html .tribe-list-column-title {
     text-decoration: none;
 }
 
+.tribe-report-page.tribe-dialog__wrapper div[role=document] {
+    align-items: flex-end;
+    display: flex;
+    flex-flow: column;
+    justify-content: space-between;
+    position: relative;
+    background: #121212;
+}
 
-
+.tribe-report-page.tribe-dialog__wrapper .tribe-tickets__form-field-label{
+    color: white !important;
+}
 
 
 
