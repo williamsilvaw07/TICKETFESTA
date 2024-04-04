@@ -1784,6 +1784,30 @@ html .tickets-sold-column , html .tribe-list-column-title {
 
             /****END***/
 
+
+      /***********Attendees-report**********/
+.page-id-1925 .row-actions .trash{
+    display:none!important
+}
+.page-id-1925 .row-actions .edit_attendee{
+    background: inherit;
+    padding: 0;
+    font-size: inherit;
+    text-decoration: underline;
+}
+
+.page-id-1925 .row-actions {
+
+}
+.page-id-1925  .row-actions span.inline a:nth-child(2),
+.page-id-1925  .row-actions span.inline a:nth-child(4) {
+    display: none;
+}
+   /**************END********** */
+
+
+
+
             /****ADMIN- DASHBOARD PAGE***/
 
             .sales-card.today_sale_admin_dashboard {
