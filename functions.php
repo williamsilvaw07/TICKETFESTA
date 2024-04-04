@@ -5094,54 +5094,55 @@ function display_event_tickets_and_create_free_order() {
 
 
 
+function list_events_with_authors_shortcode() {
+    $output = ''; // Initialize the output variable.
 
-add_shortcode('list_all_events_with_authors', 'display_events_with_authors_shortcode');
-
-function display_events_with_authors_shortcode() {
-    $output = ''; // Initialize the output variable
-
-    // Query to get all event posts
-    $args = [
-        'post_type' => 'event', // Change this to your actual event post type
-        'posts_per_page' => -1, // Retrieve all events
-    ];
+    // Query arguments to fetch events.
+    $args = array(
+        'post_type' => 'event', // Change 'event' to your custom post type.
+        'posts_per_page' => -1, // Fetch all events.
+        'post_status' => 'publish', // Only fetch published events.
+    );
 
     $events = new WP_Query($args);
 
     if ($events->have_posts()) {
-        $output .= '<ul class="events-list">';
-
+        $output .= '<ul>';
         while ($events->have_posts()) {
             $events->the_post();
-            $event_id = get_the_ID();
-            $event_title = get_the_title();
-            $author_id = get_post_field('post_author', $event_id);
-            $author_name = get_the_author_meta('display_name', $author_id);
-            $additional_authors_ids = get_post_meta($event_id, '_additional_authors', true);
-            $additional_authors_names = [];
 
+            // Fetch the primary author of the event.
+            $author_id = get_post_field('post_author', get_the_ID());
+            $author_name = get_the_author_meta('display_name', $author_id);
+
+            // Initialize authors array with the primary author.
+            $authors = array($author_name);
+
+            // Fetch additional authors if any.
+            $additional_authors_ids = get_post_meta(get_the_ID(), '_additional_authors', true);
             if (!empty($additional_authors_ids)) {
                 foreach ($additional_authors_ids as $additional_author_id) {
-                    $additional_authors_names[] = get_the_author_meta('display_name', $additional_author_id);
+                    $additional_author_name = get_the_author_meta('display_name', $additional_author_id);
+                    $authors[] = $additional_author_name; // Add additional authors to the array.
                 }
             }
 
-            $all_authors = array_merge([$author_name], $additional_authors_names);
-            $authors_list = implode(', ', $all_authors);
+            // Combine all author names for display.
+            $authors_list = implode(', ', $authors);
 
-            // Output the event and authors
-            $output .= sprintf('<li>%s - Authors: %s</li>', esc_html($event_title), esc_html($authors_list));
+            $output .= '<li>' . get_the_title() . ' - Authors: ' . $authors_list . '</li>';
         }
-
         $output .= '</ul>';
     } else {
-        $output .= '<p>No events found.</p>';
+        $output .= 'No events found.';
     }
 
-    wp_reset_postdata(); // Reset the query
+    // Reset post data to avoid conflicts with other queries.
+    wp_reset_postdata();
 
-    return $output; // Return the output
+    return $output;
 }
+add_shortcode('list_events_with_authors', 'list_events_with_authors_shortcode');
 
 
 
