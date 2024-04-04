@@ -1788,16 +1788,25 @@ html .tickets-sold-column , html .tribe-list-column-title {
       /***********Attendees-report**********/
 
 
-      .page-id-1925  .event-tickets-ticket-name , .page-id-1925   .purchaser_name {
+      .tribe-report-page  .event-tickets-ticket-name , .tribe-report-page  .purchaser_name {
         font-size: 17px;
     font-weight: 400;
       }
-
-.page-id-1925 .row-actions .trash , 
-.page-id-1925 .column-security , .page-id-1925 .column-attendee_actions{
+      .tribe-report-page.attendees-actions{
+        display: flex;
+    /* align-content: flex-start; */
+    align-items: flex-start;
+    justify-content: center;
+    gap: 15px;
+}
+.report-page .attendees-actions input.print{
+    margin:0!important
+}
+.tribe-report-page .row-actions .trash , 
+.tribe-report-page.column-security , .tribe-report-page .column-attendee_actions{
     display:none!important
 }
-.page-id-1925 .row-actions .edit_attendee{
+.tribe-report-page .row-actions .edit_attendee{
     background: inherit;
     padding: 0;
     font-size: inherit;
@@ -1816,14 +1825,14 @@ html .tickets-sold-column , html .tribe-list-column-title {
     font-size:15px
 }
 
-.page-id-1925 .row-actions a , .page-id-1925 .row-actions .edit_link  button {
+.tribe-report-page .row-actions a , .tribe-report-page .row-actions .edit_link  button {
     transition: none;
     text-decoration: none;
     border: 0.4px solid white;
     padding: 3px 8px;
 }
 
-.page-id-1925 .wp-list-table a{
+.tribe-report-page .wp-list-table a{
     text-decoration: none;
 }
 
