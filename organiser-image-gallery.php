@@ -124,17 +124,18 @@ function organiser_image_gallery_shortcode() {
         }
         .delete-button {
             position: absolute;
-            top: 8px;
-            right: 14px;
-            background-color: #f44336;
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 33px;
-            height: 33px;
-            cursor: pointer;
-            font-weight: 700;
-            padding: 0;
+    top: 2px;
+    right: 5px;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    font-weight: 700;
+    padding: 0;
+    line-height: 25px;
         }
 
     
