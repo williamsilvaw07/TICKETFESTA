@@ -4167,11 +4167,11 @@ jQuery(document).ready(function($) {
 
 
 
-<script>
+
 jQuery(document).ready(function($) {
     $('.row-actions span.inline a:nth-child(2), .row-actions span.inline a:nth-child(4)').hide();
 });
-</script>
+
 
 </script>
 
