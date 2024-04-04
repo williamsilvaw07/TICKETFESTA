@@ -1793,7 +1793,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
     font-weight: 400;
       }
       .tribe-report-page.attendees-actions{
-        display: flex;
+        display: flex!important;
     /* align-content: flex-start; */
     align-items: flex-start;
     justify-content: center;
