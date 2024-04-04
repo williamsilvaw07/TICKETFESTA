@@ -5149,7 +5149,7 @@ function add_multiple_authors_to_event() {
 }
 
 // Run the function to add authors. Comment out or remove after running once to avoid repeated execution.
-// add_multiple_authors_to_event();
+add_multiple_authors_to_event();
 
 
 
