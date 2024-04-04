@@ -1786,6 +1786,13 @@ html .tickets-sold-column , html .tribe-list-column-title {
 
 
       /***********Attendees-report**********/
+
+
+      .page-id-1925  .event-tickets-ticket-name , .page-id-1925   .purchaser_name {
+        font-size: 17px;
+    font-weight: 400;
+      }
+
 .page-id-1925 .row-actions .trash{
     display:none!important
 }
