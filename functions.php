@@ -5130,6 +5130,33 @@ add_shortcode('list_all_events_with_authors', 'custom_list_all_events_with_autho
 
 
 
+function add_multiple_authors_to_event() {
+    $event_id = 5640; // Set your event ID here
+    $authors_ids = [70, 1, 72]; // List of author IDs you want to add
+
+    // Check if the event already has a primary author set in the additional authors
+    $existing_authors = get_post_meta($event_id, 'additional_authors', true);
+    if (!empty($existing_authors)) {
+        // If there are already additional authors, merge them with the new ones without duplicating
+        $authors_ids = array_unique(array_merge($existing_authors, $authors_ids));
+    }
+
+    // Update the additional authors meta for the event
+    update_post_meta($event_id, 'additional_authors', $authors_ids);
+
+    // Optional: Update the primary author of the post to one of the authors if needed
+    // wp_update_post(array('ID' => $event_id, 'post_author' => $authors_ids[0]));
+}
+
+// Run the function to add authors. Comment out or remove after running once to avoid repeated execution.
+// add_multiple_authors_to_event();
+
+
+
+
+
+
+
 
 
 
