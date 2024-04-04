@@ -1803,6 +1803,17 @@ html .tickets-sold-column , html .tribe-list-column-title {
 .page-id-1925  .row-actions span.inline a:nth-child(4) {
     display: none!important;
 }
+.row-actions span.inline > a:nth-of-type(2),
+.row-actions span.inline > a:nth-of-type(4) {
+    display: none !important;
+}
+
+
+
+
+
+
+
    /**************END********** */
 
 
