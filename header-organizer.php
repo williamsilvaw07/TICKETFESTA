@@ -1843,7 +1843,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
     flex-flow: column;
     justify-content: space-between;
     position: relative;
-    background: #121212;
+    background: #121212!important;
 }
 
 .tribe-report-page.tribe-dialog__wrapper .tribe-tickets__form-field-label{
