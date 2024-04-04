@@ -1796,8 +1796,11 @@ html .tickets-sold-column , html .tribe-list-column-title {
     text-decoration: underline;
 }
 
-.page-id-1925 .row-actions {
-
+.page-id-1925 .row-actions a , .page-id-1925 .row-actions a span  {
+    transition: none;
+    text-decoration: none;
+    border: 0.4px solid white;
+    padding: 3px 8px;
 }
 
 
