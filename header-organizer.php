@@ -4169,9 +4169,13 @@ jQuery(document).ready(function($) {
 
 
 jQuery(document).ready(function($) {
-    $('.row-actions span.inline a:nth-child(2), .row-actions span.inline a:nth-child(4)').hide();
+    $('.row-actions span.inline a').each(function() {
+        var text = $(this).text();
+        if (text.includes('Check In') || text.includes('Undo Check In') || text.includes('Edit Attendee') || text.includes('Delete')) {
+            $(this).hide();
+        }
+    });
 });
-
 
 </script>
 
