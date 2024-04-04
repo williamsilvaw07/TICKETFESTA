@@ -4168,6 +4168,7 @@ jQuery(document).ready(function($) {
 
 
 
+
 jQuery(document).ready(function($) {
     $('.row-actions span.inline a').each(function() {
         var text = $(this).text();
@@ -4176,6 +4177,8 @@ jQuery(document).ready(function($) {
         }
     });
 });
+
+
 
 </script>
 
