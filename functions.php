@@ -5126,38 +5126,46 @@ add_shortcode('list_all_events_with_authors', 'custom_list_all_events_with_autho
 
 
 
-
-
-
-function custom_change_event_author() {
-    $event_id = 5640; // The ID of the event you want to change the author for.
-    $new_author_id = 72; // The new author ID.
-
-    // Check if the post exists and its post type is an event.
-    $post_type = get_post_type($event_id);
-    if ($post_type && in_array($post_type, ['tribe_events', 'event'], true)) { // Adjust the post type if necessary.
-        // Get current post author
-        $current_author_id = get_post_field('post_author', $event_id);
-        
-        // Check if the current author ID is different from the new author ID
-        if ($current_author_id != $new_author_id) {
-            // Update the post author.
-            wp_update_post([
-                'ID'          => $event_id,
-                'post_author' => $new_author_id,
-            ]);
-
-            echo "Author for event ID $event_id has been updated to author ID $new_author_id.";
-        } else {
-            echo "The author for event ID $event_id is already set to author ID $new_author_id.";
-        }
-    } else {
-        echo "The post with ID $event_id is not an event or does not exist.";
+function add_multiple_authors_to_event($event_id, $author_ids) {
+    if (!is_array($author_ids)) {
+        $author_ids = array($author_ids);
     }
+    
+    // Add or update the additional authors in post meta
+    update_post_meta($event_id, '_additional_authors', $author_ids);
+    
+    echo "Additional authors added to event ID $event_id.";
 }
 
-// Run the function - you may choose a different action or trigger based on your needs.
-add_action('wp_loaded', 'custom_change_event_author');
+// Example usage: Adding authors with ID 70 and ID 1 to event with ID 5640.
+add_action('wp_loaded', function() {
+    add_multiple_authors_to_event(5640, [70, 1]);
+});
+
+function get_additional_authors_for_event($event_id) {
+    $additional_authors_ids = get_post_meta($event_id, '_additional_authors', true);
+    
+    if (!empty($additional_authors_ids)) {
+        $authors = [];
+        foreach ($additional_authors_ids as $author_id) {
+            $authors[] = get_user_by('ID', $author_id);
+        }
+        return $authors;
+    }
+    
+    return false;
+}
+
+// Example usage: Retrieve and display additional authors for event ID 5640.
+$additional_authors = get_additional_authors_for_event(5640);
+if ($additional_authors) {
+    echo "Additional Authors for Event ID 5640:<br/>";
+    foreach ($additional_authors as $author) {
+        echo "Name: " . $author->display_name . "<br/>";
+    }
+} else {
+    echo "No additional authors found for this event.";
+}
 
 
 
