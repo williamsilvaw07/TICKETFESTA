@@ -5095,132 +5095,69 @@ function display_event_tickets_and_create_free_order() {
 
 
 
-
-function add_coauthor_form_shortcode($atts) {
-    // Ensure user is logged in
-    if (!is_user_logged_in()) {
-        return 'You must be logged in to manage events.';
-    }
-
-    $output = ''; // Initialize output
-
-    // Process form submission
-    if (isset($_POST['add_coauthor_nonce_field'], $_POST['coauthor_email'], $_POST['event_selector']) 
-        && wp_verify_nonce($_POST['add_coauthor_nonce_field'], 'add_coauthor_nonce')) {
-        
-        $coauthor_email = sanitize_email($_POST['coauthor_email']);
-        $event_id = intval($_POST['event_selector']);
-
-        // For debugging: Output submitted data
-        $debug_info = 'Submitted Data: Event ID - ' . $event_id . ', Co-author Email - ' . $coauthor_email;
-        
-        // Attempt to find user by email
-        $user = get_user_by('email', $coauthor_email);
-        if ($user) {
-            // Simplified example: storing the co-author's user ID in post meta
-            update_post_meta($event_id, '_additional_coauthor', $user->ID);
-
-            $output .= '<p>Co-author added successfully.</p>';
-        } else {
-            $output .= '<p>No user found with that email.</p>';
-        }
-
-        // Display debugging info on the frontend
-        $output .= '<div class="debug-info" style="background-color: #f7f7f7; padding: 10px; margin-top: 20px;">Debug Info: ' . esc_html($debug_info) . '</div>';
-    }
-
-    // Fetch current user's events for the dropdown
-    $user_id = get_current_user_id();
-    $args = [
-        'post_type' => 'tribe_events',
-        'author' => $user_id,
-        'posts_per_page' => -1,
-        'post_status' => 'publish',
-    ];
-    $user_events = new WP_Query($args);
-
-    if (!$user_events->have_posts()) {
-        return 'No events found.';
-    }
-
-    // Form HTML
-    $output .= '<form id="add-coauthor-form" action="" method="post">';
-    $output .= '<select name="event_selector" required>';
-    $output .= '<option value="">Select an Event</option>';
-
-    while ($user_events->have_posts()) {
-        $user_events->the_post();
-        $output .= '<option value="' . get_the_ID() . '">' . get_the_title() . '</option>';
-    }
-
-    $output .= '</select>';
-    $output .= '<input type="email" name="coauthor_email" placeholder="Enter co-author\'s email" required>';
-    wp_nonce_field('add_coauthor_nonce', 'add_coauthor_nonce_field');
-    $output .= '<input type="submit" value="Add Co-Author">';
-    $output .= '</form>';
-
-    wp_reset_postdata();
-
-    return $output;
-}
-add_shortcode('user_coauthor_form', 'add_coauthor_form_shortcode');
-
-
-
-
-
-
-
-
-
-
-// Register the meta box for additional authors
-function register_additional_authors_meta_box() {
-    $post_types = get_post_types(array('public' => true), 'names');
-    foreach ($post_types as $post_type) {
-        add_meta_box('additional-authors', 'Additional Authors', 'display_additional_authors_meta_box', $post_type, 'side', 'default');
-    }
-}
 add_action('add_meta_boxes', 'register_additional_authors_meta_box');
+add_action('save_post', 'save_additional_authors_meta_box');
 
-// Display the meta box
+// Registers a meta box for all public post types
+function register_additional_authors_meta_box() {
+    $post_types = get_post_types(['public' => true], 'names');
+    foreach ($post_types as $post_type) {
+        add_meta_box(
+            'additional-authors',
+            __('Additional Authors', 'textdomain'),
+            'display_additional_authors_meta_box',
+            $post_type,
+            'side',
+            'default'
+        );
+    }
+}
+
+// Display the meta box in post editor
 function display_additional_authors_meta_box($post) {
+    // Nonce field for security
+    wp_nonce_field(basename(__FILE__), 'additional_authors_nonce');
+
+    // Get existing additional authors
     $additional_authors = get_post_meta($post->ID, '_additional_authors', true);
-    // Get all users
-    $users = get_users(array('role__in' => array('author', 'editor', 'administrator'))); // Adjust according to your needs
-    echo '<select name="additional_authors[]" multiple="multiple" style="width:100%;" size="5">';
-    foreach ($users as $user) {
-        echo sprintf('<option value="%s"%s>%s</option>',
-            esc_attr($user->ID),
-            in_array($user->ID, (array)$additional_authors) ? ' selected="selected"' : '',
-            esc_html($user->display_name)
+
+    // Assuming you have a function to list authors - `get_author_list()`
+    echo '<select name="additional_authors[]" multiple>';
+    foreach (get_author_list() as $author_id => $author_name) {
+        echo sprintf(
+            '<option value="%s"%s>%s</option>',
+            esc_attr($author_id),
+            in_array($author_id, (array)$additional_authors) ? ' selected' : '',
+            esc_html($author_name)
         );
     }
     echo '</select>';
-    echo '<p>Hold down the Ctrl (Windows) or Command (Mac) button to select multiple options.</p>';
+    echo '<p>Hold down the Ctrl (windows) / Command (Mac) button to select multiple options.</p>';
 }
 
-// Save the meta box data
+// Save the additional authors when the post is saved
 function save_additional_authors_meta_box($post_id) {
-    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
-    if (!current_user_can('edit_post', $post_id)) return;
+    // Check nonce, autosave, and permissions
+    if (!isset($_POST['additional_authors_nonce']) || !wp_verify_nonce($_POST['additional_authors_nonce'], basename(__FILE__)) ||
+        (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) ||
+        !current_user_can('edit_post', $post_id)) {
+        return;
+    }
+
+    // Update post meta
     if (isset($_POST['additional_authors'])) {
         update_post_meta($post_id, '_additional_authors', $_POST['additional_authors']);
     } else {
         delete_post_meta($post_id, '_additional_authors');
     }
 }
-add_action('save_post', 'save_additional_authors_meta_box');
 
-// Example function to display additional authors
-function get_additional_authors_by_post_id($post_id) {
-    $authors_ids = get_post_meta($post_id, '_additional_authors', true);
-    $authors = array();
-    if (!empty($authors_ids)) {
-        foreach ($authors_ids as $author_id) {
-            $user_info = get_userdata($author_id);
-            $authors[] = $user_info->display_name; // Or any other user data
-        }
+// Example function to get authors - replace with your actual logic
+function get_author_list() {
+    $users = get_users(['role__in' => ['author', 'administrator']]);
+    $author_list = [];
+    foreach ($users as $user) {
+        $author_list[$user->ID] = $user->display_name;
     }
-    return $authors;
+    return $author_list;
 }
