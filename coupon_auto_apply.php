@@ -9,8 +9,7 @@ function start_session() {
     if (isset($_GET['coupon'])) {
         $_SESSION['applied_coupon'] = sanitize_text_field($_GET['coupon']);
     }
-    var_dump($_SESSION['applied_coupon']);
-    exit();
+    
 }
 
 // Function to set session variable if coupon parameter is present
@@ -58,7 +57,8 @@ function auto_apply_coupon_to_cart($cart) {
             $coupon_code = $_SESSION['applied_coupon'];
             
             $coupon = new WC_Coupon($coupon_code);
-
+            var_dump($_SESSION['applied_coupon']);
+            exit();
             if ($coupon->is_valid()) {
                 $cart->apply_coupon($coupon_code);
                 $_SESSION['applied_coupon'] = null;
