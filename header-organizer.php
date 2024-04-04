@@ -1799,14 +1799,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
 .page-id-1925 .row-actions {
 
 }
-.page-id-1925  .row-actions span.inline a:nth-child(2),
-.page-id-1925  .row-actions span.inline a:nth-child(4) {
-    display: none!important;
-}
-.row-actions span.inline > a:nth-of-type(2),
-.row-actions span.inline > a:nth-of-type(4) {
-    display: none !important;
-}
+
 
 
 
@@ -4164,18 +4157,6 @@ jQuery(document).ready(function($) {
 
 
 
-
-
-jQuery(document).ready(function($) {
-    setTimeout(function() {
-        $('.row-actions span.inline a').each(function() {
-            var text = $(this).text();
-            if (text.includes('Check In') || text.includes('Undo Check In') || text.includes('PDF Ticket') || text.includes('Download Apple Wallet pass')) {
-                $(this).hide();
-            }
-        });
-    }, 1000); // 1000 milliseconds = 1 second
-});
 
 
 
