@@ -5040,20 +5040,16 @@ function tribe_check_progress_data(){
 
 
 
-require_once get_stylesheet_directory() . '/event-dashboard-ajax.php';
 
 
 
+/*
 
-
-
-
-
-
-function display_event_tickets_with_ids() {
+function display_event_tickets_and_create_free_order() {
     $event_id = 5640; // Hardcoded event ID
+    $ticket_product_id = 5642; // Hardcoded product ID for the ticket
 
-    // Check if the method exists to prevent errors if the plugin is not activated.
+    // Check if the Tribe Tickets method exists
     if (method_exists('Tribe__Tickets__Tickets', 'get_all_event_tickets')) {
         $tickets = Tribe__Tickets__Tickets::get_all_event_tickets($event_id);
 
@@ -5061,27 +5057,44 @@ function display_event_tickets_with_ids() {
             return 'No tickets found for this event.';
         }
 
-        // Start building the output.
+        // Attempt to find the specific ticket in the event's tickets list
+        $specific_ticket_found = false;
+        foreach ($tickets as $ticket) {
+            if ($ticket->ID == $ticket_product_id) {
+                $specific_ticket_found = true;
+                break;
+            }
+        }
+
+        if (!$specific_ticket_found) {
+            return 'The specified ticket was not found for this event.';
+        }
+
+        // Creating a free order for the specified ticket
+        $order = wc_create_order();
+        $order->add_product(wc_get_product($ticket_product_id), 1); // adds 1 quantity of the ticket
+        $order->set_total(0); // set the order total to 0 for a free ticket
+        $order->set_status('completed', 'Free ticket order automatically completed.', TRUE);
+        $order->save();
+
+        // Building the output
         $output = '<h3>Event Tickets</h3><ul>';
         foreach ($tickets as $ticket) {
-            // Ensure you replace 'ID', 'name', and 'price' with the correct properties for your ticket objects.
-            // 'ID' is a placeholder and might need to be adjusted based on the actual structure.
-            $ticket_id = isset($ticket->ID) ? $ticket->ID : 'Unknown ID';
-            $ticket_name = isset($ticket->name) ? $ticket->name : 'Unknown Name';
-            $ticket_price = isset($ticket->price) ? $ticket->price : 'Unknown Price';
-            $output .= sprintf('<li>ID: %s - %s - Price: %s</li>', esc_html($ticket_id), esc_html($ticket_name), esc_html($ticket_price));
+            $output .= sprintf('<li>%s - Price: %s</li>', esc_html($ticket->name), esc_html($ticket->price));
         }
         $output .= '</ul>';
+        $output .= '<p>A free order for Ticket ID ' . $ticket_product_id . ' has been created.</p>';
 
         return $output;
     } else {
         return 'The required method is not available.';
     }
 }
+*/
 
 
 
-function add_event_tickets_shortcode_with_ids() {
-    return display_event_tickets_with_ids(); // This calls the updated function.
+function add_event_tickets_shortcode_with_free_order() {
+    return display_event_tickets_and_create_free_order(); // Call the defined function.
 }
-add_shortcode('event_tickets_context', 'add_event_tickets_shortcode_with_ids');
+add_shortcode('event_tickets_free_order', 'add_event_tickets_shortcode_with_free_order');

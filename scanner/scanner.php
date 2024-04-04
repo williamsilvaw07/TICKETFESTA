@@ -514,6 +514,8 @@ button i {
     display: flex;
     flex-direction: column;
     gap: 23px;
+    text-align: left!important;
+
 }
 
 .container-fluid , .content-wrapper>.content{
