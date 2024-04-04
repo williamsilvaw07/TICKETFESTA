@@ -1786,7 +1786,13 @@ html .tickets-sold-column , html .tribe-list-column-title {
 
 
       /***********Attendees-report**********/
-
+#the-list tr{
+    background: #121212 !important;
+    border-radius: 10px;
+    color: white !important;
+    padding: 20px 18px;
+    margin: 20px 0; 
+}
 
       .tribe-report-page  .event-tickets-ticket-name , .tribe-report-page  .purchaser_name {
         font-size: 17px;
