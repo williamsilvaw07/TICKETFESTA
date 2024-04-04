@@ -1805,7 +1805,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
     margin:0!important
 }
 .tribe-report-page .row-actions .trash , 
-.tribe-report-page .column-security , .wp-list-table .tribe-report-page .column-attendee_actions , .page-id-1925 .wp-list-table .is-expanded td:not(.hidden){
+.tribe-report-page .column-security , .wp-list-table .tribe-report-page .column-attendee_actions {
     display:none!important
 }
 .tribe-report-page .row-actions .edit_attendee{
