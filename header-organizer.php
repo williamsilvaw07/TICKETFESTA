@@ -1858,11 +1858,17 @@ html .tickets-sold-column , html .tribe-list-column-title {
 
             /****ADMIN- DASHBOARD PAGE***/
 
-            .sales-card-content::before {
-  content: "\f3ff"; /* Unicode for the fas fa-ticket-alt icon */
-  font-family: "Font Awesome 5 Free"; /* Font family for FontAwesome */
-  font-weight: 900; /* Font weight for the icon */
-  margin-right: 5px; /* Adjust this according to your design */
+            .today_ticket_sale_admin_dashboard::before {
+  content: "\f3ff"; 
+  font-family: "Font Awesome 5 Free"; 
+  font-weight: 900; 
+  margin-right: 5px; 
+  opacity: 0.06;
+    transform: rotate(302deg) !important;
+    font-size: 46px;
+    position: absolute;
+    top: 20%;
+    right: 0;
 }
 
 

@@ -2332,7 +2332,7 @@ function shortcode_todays_tickets_sold()
     }
 
     return '
-    <div class="sales-card today_sale_admin_dashboard">
+    <div class="sales-card today_sale_admin_dashboard today_ticket_sale_admin_dashboard">
         <div class="sales-card-content ">
             <div class="sales-today ">
                 <h5 class="admin_dashboard_sales-label card_admin_dashboard ">Tickets Sold Today</h5>
