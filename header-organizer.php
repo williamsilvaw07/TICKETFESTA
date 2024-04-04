@@ -1838,7 +1838,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
 }
 
 .tribe-common .tribe-dialog__wrapper div[role=document]{
-  
+  color:white!important;
     background: #121212!important;
 }
 
