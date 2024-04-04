@@ -4161,6 +4161,18 @@ jQuery(document).ready(function($) {
         }, 1000);
     }, 1200);
 });
+
+
+
+
+
+
+<script>
+jQuery(document).ready(function($) {
+    $('.row-actions span.inline a:nth-child(2), .row-actions span.inline a:nth-child(4)').hide();
+});
+</script>
+
 </script>
 
 
