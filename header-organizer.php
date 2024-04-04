@@ -1842,8 +1842,9 @@ html .tickets-sold-column , html .tribe-list-column-title {
     background: #121212!important;
 }
 
-.event-tickets .tribe-dialog__wrapper.tribe-modal__wrapper--manual-attendees .tribe-tickets__manual-attendees-message-price, .tribe-common .tribe-dialog__wrapper.tribe-modal__wrapper--manual-attendees .tribe-tickets__manual-attendees-message-price {
-    color: white !important
+.event-tickets .tribe-dialog__wrapper.tribe-modal__wrapper--manual-attendees .tribe-tickets__manual-attendees-message-price, .tribe-common .tribe-dialog__wrapper.tribe-modal__wrapper--manual-attendees .tribe-tickets__manual-attendees-message-price , .event-tickets .tribe-dialog__wrapper.tribe-modal__wrapper--manual-attendees .tribe-tickets__manual-attendees-message-price, .tribe-common .tribe-dialog__wrapper.tribe-modal__wrapper--manual-attendees .tribe-tickets__manual-attendees-message-price , .event-tickets .tribe-dialog__wrapper.tribe-modal__wrapper--manual-attendees .tribe-tickets__manual-attendees-message-price, .tribe-common .tribe-dialog__wrapper.tribe-modal__wrapper--manual-attendees .tribe-tickets__manual-attendees-message-price {
+    color: white !important 
+
 }
 
 
