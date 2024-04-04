@@ -5129,6 +5129,36 @@ add_shortcode('list_all_events_with_authors', 'custom_list_all_events_with_autho
 
 
 
+function custom_change_event_author() {
+    $event_id = 5640; // The ID of the event you want to change the author for.
+    $new_author_id = 72; // The new author ID.
+
+    // Check if the post exists and its post type is an event.
+    $post_type = get_post_type($event_id);
+    if ($post_type && in_array($post_type, ['tribe_events', 'event'], true)) { // Adjust the post type if necessary.
+        // Get current post author
+        $current_author_id = get_post_field('post_author', $event_id);
+        
+        // Check if the current author ID is different from the new author ID
+        if ($current_author_id != $new_author_id) {
+            // Update the post author.
+            wp_update_post([
+                'ID'          => $event_id,
+                'post_author' => $new_author_id,
+            ]);
+
+            echo "Author for event ID $event_id has been updated to author ID $new_author_id.";
+        } else {
+            echo "The author for event ID $event_id is already set to author ID $new_author_id.";
+        }
+    } else {
+        echo "The post with ID $event_id is not an event or does not exist.";
+    }
+}
+
+// Run the function - you may choose a different action or trigger based on your needs.
+add_action('wp_loaded', 'custom_change_event_author');
+
 
 
 
