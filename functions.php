@@ -5092,48 +5092,40 @@ function display_event_tickets_and_create_free_order() {
 }
 */
 
+function add_attendee_form_shortcode($atts) {
+    // Shortcode attributes for event ID, could be passed in like [add_attendee_form event_id="123"]
+    $atts = shortcode_atts(array('event_id' => 0), $atts, 'add_attendee_form');
 
-function get_current_user_events() {
-    // Ensure the user is logged in
-    if (!is_user_logged_in()) {
-        return 'You must be logged in to view your events.';
-    }
-
-    // Get the current user ID
-    $user_id = get_current_user_id();
-
-    // Set up the query arguments
-    $args = array(
-        'post_type' => 'tribe_events', // or 'tribe_events' depending on the plugin version
-        'posts_per_page' => -1, // Retrieve all events
-        'author' => $user_id, // Filter by current user
-        'post_status' => 'publish', // Only show published events
-    );
-
-    // Perform the query
-    $events = new WP_Query($args);
-
-    // Check if there are events
-    if (!$events->have_posts()) {
-        return 'No events found.';
-    }
-
-    // Start building the output
-    $output = '<ul>';
-    while ($events->have_posts()) {
-        $events->the_post();
-        $output .= '<li><a href="' . get_permalink() . '">' . get_the_title() . '</a></li>';
-    }
-    $output .= '</ul>';
-
-    // Reset post data to avoid conflicts
-    wp_reset_postdata();
-
-    return $output;
+    ob_start(); // Start output buffering to capture the form HTML
+    ?>
+    <form id="add-attendee-form" action="#!" method="post">
+        <input type="email" name="attendee_email" placeholder="Enter attendee email" required>
+        <input type="hidden" name="event_id" value="<?php echo esc_attr($atts['event_id']); ?>">
+        <input type="submit" value="Add Attendee">
+        <?php wp_nonce_field('add_attendee_nonce', 'add_attendee_nonce_field'); // Security ?>
+    </form>
+    <?php
+    return ob_get_clean(); // Return the form HTML
 }
+add_shortcode('add_attendee_form', 'add_attendee_form_shortcode');
+function process_add_attendee_form_submission() {
+    // Check if our form is submitted
+    if (isset($_POST['add_attendee_nonce_field'], $_POST['attendee_email'], $_POST['event_id']) && wp_verify_nonce($_POST['add_attendee_nonce_field'], 'add_attendee_nonce')) {
+        $attendee_email = sanitize_email($_POST['attendee_email']);
+        $event_id = intval($_POST['event_id']);
 
-function current_user_events_shortcode() {
-    // Call the function and return its content for the shortcode
-    return get_current_user_events();
+        // Further validation (e.g., ensure email isn't already an attendee) would go here
+
+        // Add the attendee email to the event's custom field or custom table
+        // This example uses a simple custom field approach
+        $existing_attendees = get_post_meta($event_id, '_event_attendees', true);
+        $attendees = $existing_attendees ? explode(',', $existing_attendees) : [];
+        if (!in_array($attendee_email, $attendees)) {
+            $attendees[] = $attendee_email;
+            update_post_meta($event_id, '_event_attendees', implode(',', $attendees));
+        }
+
+        // Redirect or add a message to indicate success/failure
+    }
 }
-add_shortcode('current_user_events', 'current_user_events_shortcode');
+add_action('init', 'process_add_attendee_form_submission');
