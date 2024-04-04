@@ -5092,35 +5092,33 @@ function display_event_tickets_and_create_free_order() {
 }
 */
 
+
+
 function custom_list_all_events_with_authors_shortcode() {
     // Fetch all events, including past events
     $events = tribe_get_events([
         'posts_per_page' => -1, // Fetch all events
         'start_date'     => '1970-01-01', // Use a date far in the past to include all events
         'end_date'       => '2099-12-31', // Use a future date to ensure all upcoming events are included
+        'status'         => 'publish', // Ensure only published events are fetched
     ]);
 
-    if (empty($events)) {
-        return 'No events found.'; // Return message if no events
-    }
-
-    // Start building the output
     $output = '<ul>';
     foreach ($events as $event) {
-        // Get the post author (organizer in this case)
-        $author_id = get_post_field('post_author', $event->ID);
+        $event_id = $event->ID;
+        $author_id = get_post_field('post_author', $event_id);
         $author_name = get_the_author_meta('display_name', $author_id);
-
-        // Append event title and author to the output
-        $output .= sprintf(
-            '<li>%s - Author: %s</li>',
-            esc_html(get_the_title($event->ID)),
-            esc_html($author_name)
+        $output .= sprintf('<li>Event ID: %d, Title: %s, Author ID: %d, Author: %s</li>',
+            $event_id,
+            get_the_title($event_id),
+            $author_id,
+            $author_name
         );
     }
     $output .= '</ul>';
 
-    return $output; // Return the list of events and authors
+    // Return HTML list if events are found, or a message if no events are found.
+    return $events ? $output : 'No events found.';
 }
 add_shortcode('list_all_events_with_authors', 'custom_list_all_events_with_authors_shortcode');
 
