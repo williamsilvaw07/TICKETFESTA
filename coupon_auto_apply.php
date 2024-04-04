@@ -9,6 +9,8 @@ function start_session() {
     if (isset($_GET['coupon'])) {
         $_SESSION['applied_coupon'] = sanitize_text_field($_GET['coupon']);
     }
+    var_dump($_SESSION['applied_coupon']);
+    exit();
 }
 
 // Function to set session variable if coupon parameter is present
