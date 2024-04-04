@@ -4166,16 +4166,15 @@ jQuery(document).ready(function($) {
 
 
 
-
-
-
 jQuery(document).ready(function($) {
-    $('.row-actions span.inline a').each(function() {
-        var text = $(this).text();
-        if (text.includes('Check In') || text.includes('Undo Check In') || text.includes('PDF Ticket') || text.includes('Download Apple Wallet pass')) {
-            $(this).hide();
-        }
-    });
+    setTimeout(function() {
+        $('.row-actions span.inline a').each(function() {
+            var text = $(this).text();
+            if (text.includes('Check In') || text.includes('Undo Check In') || text.includes('PDF Ticket') || text.includes('Download Apple Wallet pass')) {
+                $(this).hide();
+            }
+        });
+    }, 1000); // 1000 milliseconds = 1 second
 });
 
 
