@@ -5091,54 +5091,79 @@ function display_event_tickets_and_create_free_order() {
     }
 }
 */
-function add_attendee_form_and_process_shortcode($atts) {
-    // Ensure user is logged in to see the form and add attendees
+
+
+
+
+
+
+function display_user_events_form_shortcode() {
+    // Ensure user is logged in
     if (!is_user_logged_in()) {
-        return 'You must be logged in to add attendees.';
+        return 'You must be logged in to manage events.';
     }
 
-    // Shortcode attributes; assuming 'event_id' is passed to the shortcode
-    $atts = shortcode_atts(array('event_id' => 0), $atts, 'add_attendee_form');
-    $event_id = $atts['event_id'];
+    $output = ''; // Initialize output
 
-    // Form submission handler
-    if (isset($_POST['add_attendee_nonce_field'], $_POST['attendee_email'], $_POST['event_id']) 
-        && wp_verify_nonce($_POST['add_attendee_nonce_field'], 'add_attendee_nonce') 
-        && $event_id == $_POST['event_id']) {
+    // Get current user ID
+    $user_id = get_current_user_id();
 
-        $attendee_email = sanitize_email($_POST['attendee_email']);
+    // Query for the user's events
+    $args = array(
+        'post_type' => 'tribe_events', // Make sure this matches the post type of your events
+        'author' => $user_id,
+        'posts_per_page' => -1, // Retrieve all events
+        'post_status' => 'publish',
+    );
+    $user_events = new WP_Query($args);
 
-        // Add the attendee email to the event's attendees list
-        $existing_attendees = get_post_meta($event_id, '_event_attendees', true);
-        $attendees = $existing_attendees ? explode(',', $existing_attendees) : [];
-        if (!in_array($attendee_email, $attendees)) {
-            $attendees[] = $attendee_email;
-            update_post_meta($event_id, '_event_attendees', implode(',', $attendees));
+    if ($user_events->have_posts()) {
+        $output .= '<form id="add-coauthor-form" action="' . esc_url($_SERVER['REQUEST_URI']) . '" method="post">';
+        $output .= '<select name="event_selector" required>';
+        $output .= '<option value="">Select an Event</option>';
+
+        while ($user_events->have_posts()) {
+            $user_events->the_post();
+            $output .= '<option value="' . get_the_ID() . '">' . get_the_title() . '</option>';
         }
 
-        // Feedback message
-        echo '<p>Attendee added successfully!</p>';
+        $output .= '</select>';
+        $output .= '<input type="email" name="coauthor_email" placeholder="Enter co-author\'s email" required>';
+        wp_nonce_field('add_coauthor_nonce', 'add_coauthor_nonce_field');
+        $output .= '<input type="submit" value="Add Co-Author">';
+        $output .= '</form>';
+    } else {
+        $output .= 'No events found.';
     }
 
-    // Attendee form
-    $output = '<form id="add-attendee-form" action="' . get_permalink() . '" method="post">';
-    $output .= '<input type="email" name="attendee_email" placeholder="Enter attendee email" required>';
-    $output .= '<input type="hidden" name="event_id" value="' . esc_attr($event_id) . '">';
-    $output .= wp_nonce_field('add_attendee_nonce', 'add_attendee_nonce_field', true, false);
-    $output .= '<input type="submit" value="Add Attendee">';
-    $output .= '</form>';
-
-    // Optionally, display current attendees
-    $existing_attendees = get_post_meta($event_id, '_event_attendees', true);
-    if (!empty($existing_attendees)) {
-        $attendees = explode(',', $existing_attendees);
-        $output .= '<h3>Current Attendees:</h3><ul>';
-        foreach ($attendees as $attendee) {
-            $output .= '<li>' . esc_html($attendee) . '</li>';
-        }
-        $output .= '</ul>';
-    }
+    wp_reset_postdata();
 
     return $output;
 }
-add_shortcode('add_attendee_form', 'add_attendee_form_and_process_shortcode');
+add_shortcode('user_events_form', 'display_user_events_form_shortcode');
+
+
+
+function process_add_coauthor_form_submission() {
+    if (isset($_POST['add_coauthor_nonce_field'], $_POST['event_selector'], $_POST['coauthor_email']) && wp_verify_nonce($_POST['add_coauthor_nonce_field'], 'add_coauthor_nonce')) {
+        $event_id = sanitize_text_field($_POST['event_selector']);
+        $coauthor_email = sanitize_email($_POST['coauthor_email']);
+
+        // Optional: Verify the event ID belongs to the current user to prevent unauthorized assignments
+
+        // Attempt to get the user by email
+        $user = get_user_by('email', $coauthor_email);
+
+        if ($user) {
+            // Here you might store the additional author in a custom field or take other actions
+            // This is a simplified example storing the user ID in a post meta field
+            update_post_meta($event_id, '_additional_coauthor', $user->ID);
+
+            // Optional: Provide feedback or redirect
+            echo '<p>Co-author added successfully.</p>';
+        } else {
+            echo '<p>No user found with that email.</p>';
+        }
+    }
+}
+add_action('init', 'process_add_coauthor_form_submission');
