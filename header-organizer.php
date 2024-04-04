@@ -1803,7 +1803,9 @@ html .tickets-sold-column , html .tribe-list-column-title {
     padding: 3px 8px;
 }
 
-
+.page-id-1925 .wp-list-table a{
+    text-decoration: none;
+}
 
 
 
