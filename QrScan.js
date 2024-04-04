@@ -159,7 +159,7 @@
                             $('.tabs-container').show();
                             $('.tab-content-container').show();
                             changing_event =  false;
-                            passcodeMatch(response);
+                            passcodeMatch(response,0);
                         }
                         
                     }else{
@@ -186,6 +186,7 @@
                     if(response.success){
                         $('#qr_error').hide();
                         $('.checkin-details').css("background-color", "green");
+
                         if(response.fullname){
                             $('.checkin-details .name').text(response.fullname);
                             $('.checkin-details .email').text(response.email);
@@ -281,7 +282,7 @@ function updateIndividualProgressCircle(container, issuedTickets, totalTickets) 
     var dashOffset = circumference - (percentage / 100) * circumference;
 
     container.find('.progress-ring__circle-individual').css({
-        'stroke-dasharray': dashArray,
+        'stroke-dasharray': circumference,
         'stroke-dashoffset': dashOffset,
         'stroke': '#d3fa16' // Color of progress
     });
@@ -310,13 +311,15 @@ function createCheckedInProgressCircle(checkedIn, issuedTickets) {
             <div class="ticket-progress-container_svg">
             <svg class="progress-ring" width="58" height="58">
             <circle class="progress-ring__circle-bg" cx="29" cy="29" r="24" stroke-width="6"></circle>
-            <circle class="progress-ring__circle progress-ring__circle-first-half" cx="29" cy="29" r="24" stroke-width="6" style="stroke-dasharray: ${dashArray1}px; stroke-dashoffset: ${dashOffset1}px; stroke: #d3fa16;"></circle>
+            <circle class="progress-ring__circle progress-ring__circle-first-half" cx="29" cy="29" r="24" stroke-width="6" style="stroke-dasharray: ${circumference}px; stroke-dashoffset: ${circumference - (checkedInPercentage / 100) * circumference}px; stroke: #d3fa16;"></circle>
         </svg>
                 <span class="progress-percentage">${checkedInText}</span>
             </div>
         </div>
     `;
 
+
+  
     return checkedInProgressHtml;
 }
 
@@ -350,7 +353,7 @@ function updateCheckedInProgress(response) {
 
 
         // Function to handle passcode match response
-        function passcodeMatch(response) {
+        function passcodeMatch(response,isajax = 1) {
             if (!response || !response.event_data) {
                 console.error("Invalid response data.");
                 return;
@@ -423,7 +426,9 @@ function updateCheckedInProgress(response) {
             });
 
             // Proceed with other functions like startScanQR...
+           if(!isajax){
             startScanQR(response.event_id);
+        }
         }
 
 
@@ -455,13 +460,13 @@ function updateCheckedInProgress(response) {
        
 
 
-        /*
+        
         var intervalId = setInterval(function() {
             // Your function to be called every 3 seconds
             CheckProgressData();
         }, 3000);
 
-*/
+
 
 
 /*
@@ -575,7 +580,16 @@ $(document).ready(function() {
 
     // Initially load passcodes from Local Storage and populate the datalist
     loadPasscodes();
-
+   
+    document.addEventListener("click", function(e){
+  const target = e.target.closest("#html5-qrcode-button-camera-start"); // Or any other selector.
+       console.log(target)
+       
+  if(target){
+    // Do something with `target`.
+     $(".checkin-details").hide();
+  }
+});
     // Event handler for clicking the login button
     $('#check-passcode').click(function() {
         // Retrieve the current value entered in the passcode input field
