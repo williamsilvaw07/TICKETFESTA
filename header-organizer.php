@@ -1858,9 +1858,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
 
             /****ADMIN- DASHBOARD PAGE***/
 
-            .today_ticket_sale_admin_dashboard::before {
-  content: "\f3ff"; 
-  font-family: "Font Awesome 5 Free"; 
+            .today_sale_admin_dashboard::before {
   font-weight: 900; 
   margin-right: 5px; 
   opacity: 0.06;
@@ -1871,6 +1869,19 @@ html .tickets-sold-column , html .tribe-list-column-title {
     right: 0;
 }
 
+
+.today_ticket_sale_admin_dashboard::before {
+  content: "\f3d1"; 
+  font-family: "Font Awesome 5 Free"; 
+  font-weight: 900; 
+  margin-right: 5px; 
+  opacity: 0.06;
+    transform: rotate(302deg) !important;
+    font-size: 46px;
+    position: absolute;
+    top: 20%;
+    right: 0;
+}
 
 
             .sales-card.today_sale_admin_dashboard {
