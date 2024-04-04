@@ -2172,7 +2172,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
         $currency_code = get_woocommerce_currency();
 
         return "
-        <div class='sales-card today_sale_admin_dashboard'>
+        <div class='sales-card today_sale_admin_dashboard today_sale_admin_dashboard_revenue'>
             <div class='sales-card-content'>
                 <div class='sales-today'>
                     <h5 class='admin_dashboard_sales-label card_admin_dashboard'>Lifetime Revenue</h5>
@@ -2281,7 +2281,7 @@ function shortcode_todays_sales()
 
     // Create the HTML for the card-like section
     $output = '
-    <div class="sales-card today_sale_admin_dashboard">
+    <div class="sales-card today_sale_admin_dashboard today_sale_admin_dashboard_money">
         <div class="sales-card-content ">
             <div class="sales-today ">
                 <h5 class="admin_dashboard_sales-label card_admin_dashboard ">Today\'s Sales</h5>
