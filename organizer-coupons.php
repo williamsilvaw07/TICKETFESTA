@@ -353,7 +353,7 @@ get_header('organizer');
 
                                                         <?php if($auto_apply) : ?>
                                                             <span role="buttin" class="dropdown-item"
-                                                            onclick='copyURL("<?php echo get_permalink($data['event_id']) . '?=' . $wooCoupon->get_code() ?>")'>Copy URL</span>
+                                                            onclick='copyURL("<?php echo get_permalink($data['event_id']) . '?coupon=' . $wooCoupon->get_code() ?>")'>Copy URL</span>
                                                         <?php endif ?>
 
                                                     </div>
