@@ -5093,8 +5093,47 @@ function display_event_tickets_and_create_free_order() {
 */
 
 
+function get_current_user_events() {
+    // Ensure the user is logged in
+    if (!is_user_logged_in()) {
+        return 'You must be logged in to view your events.';
+    }
 
-function add_event_tickets_shortcode_with_free_order() {
-    return display_event_tickets_and_create_free_order(); // Call the defined function.
+    // Get the current user ID
+    $user_id = get_current_user_id();
+
+    // Set up the query arguments
+    $args = array(
+        'post_type' => 'tribe_events', // or 'tribe_events' depending on the plugin version
+        'posts_per_page' => -1, // Retrieve all events
+        'author' => $user_id, // Filter by current user
+        'post_status' => 'publish', // Only show published events
+    );
+
+    // Perform the query
+    $events = new WP_Query($args);
+
+    // Check if there are events
+    if (!$events->have_posts()) {
+        return 'No events found.';
+    }
+
+    // Start building the output
+    $output = '<ul>';
+    while ($events->have_posts()) {
+        $events->the_post();
+        $output .= '<li><a href="' . get_permalink() . '">' . get_the_title() . '</a></li>';
+    }
+    $output .= '</ul>';
+
+    // Reset post data to avoid conflicts
+    wp_reset_postdata();
+
+    return $output;
 }
-add_shortcode('event_tickets_free_order', 'add_event_tickets_shortcode_with_free_order');
+
+function current_user_events_shortcode() {
+    // Call the function and return its content for the shortcode
+    return get_current_user_events();
+}
+add_shortcode('current_user_events', 'current_user_events_shortcode');
