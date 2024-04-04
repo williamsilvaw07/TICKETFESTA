@@ -120,7 +120,7 @@ function organiser_image_gallery_shortcode() {
         .thumbnail-container {
             position: relative;
             display: inline-block;
-            margin-right: 10px;
+         
         }
         .delete-button {
             position: absolute;
