@@ -1794,7 +1794,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
       }
 
 .page-id-1925 .row-actions .trash , 
-.page-id-1925 .column-security{
+.page-id-1925 .column-security , .page-id-1925 .column-attendee_actions{
     display:none!important
 }
 .page-id-1925 .row-actions .edit_attendee{
