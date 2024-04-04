@@ -1858,6 +1858,15 @@ html .tickets-sold-column , html .tribe-list-column-title {
 
             /****ADMIN- DASHBOARD PAGE***/
 
+            .sales-card-content::before {
+  content: "\f3ff"; /* Unicode for the fas fa-ticket-alt icon */
+  font-family: "Font Awesome 5 Free"; /* Font family for FontAwesome */
+  font-weight: 900; /* Font weight for the icon */
+  margin-right: 5px; /* Adjust this according to your design */
+}
+
+
+
             .sales-card.today_sale_admin_dashboard {
                 background-color: #19191b;
                 background-size: cover;
