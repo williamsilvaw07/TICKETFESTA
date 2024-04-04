@@ -1803,6 +1803,18 @@ html .tickets-sold-column , html .tribe-list-column-title {
     font-size: inherit;
     text-decoration: underline;
 }
+.add_attendee{
+    background: #d3fa16 !important;
+    color: #000000 !important;
+    text-transform: capitalize !important;
+    text-decoration: none;
+    white-space: nowrap;
+    border-radius: 3px;
+    line-height: 1;
+    margin: 10px;
+    padding: 9px 12px;
+    font-size:15px
+}
 
 .page-id-1925 .row-actions a , .page-id-1925 .row-actions .edit_link  button {
     transition: none;
