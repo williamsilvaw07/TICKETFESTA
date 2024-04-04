@@ -1793,7 +1793,8 @@ html .tickets-sold-column , html .tribe-list-column-title {
     font-weight: 400;
       }
 
-.page-id-1925 .row-actions .trash{
+.page-id-1925 .row-actions .trash , 
+.page-id-1925 .column-security{
     display:none!important
 }
 .page-id-1925 .row-actions .edit_attendee{
