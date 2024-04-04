@@ -1837,12 +1837,8 @@ html .tickets-sold-column , html .tribe-list-column-title {
     text-decoration: none;
 }
 
-.tribe-report-page .tribe-dialog__wrapper div[role=document] {
-    align-items: flex-end;
-    display: flex;
-    flex-flow: column;
-    justify-content: space-between;
-    position: relative;
+.tribe-report-page .tribe-common .tribe-dialog {
+  
     background: #121212!important;
 }
 
