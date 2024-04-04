@@ -5122,60 +5122,7 @@ function custom_list_all_events_with_authors_shortcode() {
 }
 add_shortcode('list_all_events_with_authors', 'custom_list_all_events_with_authors_shortcode');
 
-// Function to change the author of a post (event)
-function change_event_author($event_id, $new_author_id) {
-    wp_update_post(array(
-        'ID' => $event_id,
-        'post_author' => $new_author_id
-    ));
-    echo "Author for event ID $event_id updated to author ID $new_author_id.<br/>";
-}
 
-// Function to add multiple authors to an event
-function add_additional_authors_to_event($event_id, $author_ids) {
-    if (!is_array($author_ids)) {
-        $author_ids = array($author_ids);
-    }
-    
-    // Store the additional authors in post meta
-    update_post_meta($event_id, '_additional_authors', $author_ids);
-    
-    echo "Additional authors added to event ID $event_id.<br/>";
-}
-
-// Change the primary author of the event to ID 72
-change_event_author(5640, 72);
-
-// Add additional authors with IDs 70 and 1 to the event ID 5640
-add_additional_authors_to_event(5640, [70, 1, 72]);
-
-
-
-function display_event_with_authors($event_id) {
-    $event_post = get_post($event_id);
-    if(!$event_post) {
-        return "Event not found.";
-    }
-
-    $output = "Event ID: $event_id, Title: \"" . esc_html($event_post->post_title) . "\", Primary Author ID: " . $event_post->post_author . ", Primary Author: " . get_the_author_meta('display_name', $event_post->post_author) . "<br/>";
-
-    // Assuming additional authors are stored in a post meta with key 'additional_authors'
-    $additional_authors_ids = get_post_meta($event_id, 'additional_authors', true);
-    if (!empty($additional_authors_ids)) {
-        $additional_authors_ids = maybe_unserialize($additional_authors_ids); // Ensure it's an array
-        foreach ($additional_authors_ids as $author_id) {
-            $author_info = get_userdata($author_id);
-            if($author_info) {
-                $output .= "Additional Author ID: $author_id, Author: " . $author_info->display_name . "<br/>";
-            }
-        }
-    }
-
-    return $output;
-}
-
-// Usage
-echo display_event_with_authors(5640);
 
 
 
