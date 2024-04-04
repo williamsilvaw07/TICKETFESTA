@@ -3233,6 +3233,11 @@ html .tickets-sold-column , html .tribe-list-column-title {
 #image-gallery .select-organizer , #image-gallery  #organiser-selector{
     display:none!important
 }
+#image-gallery .default-organizer{
+    margin-bottom: -20px;
+    padding-top: 34px;
+
+}
 
         /*****setting page***/ 
 
