@@ -3243,6 +3243,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
     margin-top: -90px;
     flex-direction: row;
     flex-wrap: wrap;
+    gap: 3px;
 }
 #image-preview-container .preview-image{
     height: auto;
