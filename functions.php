@@ -5092,13 +5092,12 @@ function display_event_tickets_and_create_free_order() {
 }
 */
 
-
-
-function custom_list_events_with_authors_shortcode() {
-    // Fetch all events
+function custom_list_all_events_with_authors_shortcode() {
+    // Fetch all events, including past events
     $events = tribe_get_events([
         'posts_per_page' => -1, // Fetch all events
-        'start_date' => 'now', // From current date forward
+        'start_date'     => '1970-01-01', // Use a date far in the past to include all events
+        'end_date'       => '2099-12-31', // Use a future date to ensure all upcoming events are included
     ]);
 
     if (empty($events)) {
@@ -5123,9 +5122,7 @@ function custom_list_events_with_authors_shortcode() {
 
     return $output; // Return the list of events and authors
 }
-add_shortcode('list_events_with_authors', 'custom_list_events_with_authors_shortcode');
-
-
+add_shortcode('list_all_events_with_authors', 'custom_list_all_events_with_authors_shortcode');
 
 
 
