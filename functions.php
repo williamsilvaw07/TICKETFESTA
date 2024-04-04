@@ -5122,25 +5122,53 @@ function custom_list_all_events_with_authors_shortcode() {
 }
 add_shortcode('list_all_events_with_authors', 'custom_list_all_events_with_authors_shortcode');
 
+// Function to change the author of a post (event)
+function change_event_author($event_id, $new_author_id) {
+    wp_update_post(array(
+        'ID' => $event_id,
+        'post_author' => $new_author_id
+    ));
+    echo "Author for event ID $event_id updated to author ID $new_author_id.<br/>";
+}
 
-
-
-
-function add_multiple_authors_to_event($event_id, $author_ids) {
+// Function to add multiple authors to an event
+function add_additional_authors_to_event($event_id, $author_ids) {
     if (!is_array($author_ids)) {
         $author_ids = array($author_ids);
     }
     
-    // Add or update the additional authors in post meta
+    // Store the additional authors in post meta
     update_post_meta($event_id, '_additional_authors', $author_ids);
     
-    echo "Additional authors added to event ID $event_id.";
+    echo "Additional authors added to event ID $event_id.<br/>";
 }
 
-// Example usage: Adding authors with ID 70 and ID 1 to event with ID 5640.
-add_action('wp_loaded', function() {
-    add_multiple_authors_to_event(5640, [70, 1]);
-});
+// Change the primary author of the event to ID 72
+change_event_author(5640, 72);
+
+// Add additional authors with IDs 70 and 1 to the event ID 5640
+add_additional_authors_to_event(5640, [70, 1]);
+
+function display_event_with_all_authors($event_id) {
+    $event_post = get_post($event_id);
+    $primary_author_id = $event_post->post_author;
+    $primary_author = get_userdata($primary_author_id);
+    $additional_authors_ids = get_post_meta($event_id, '_additional_authors', true);
+    
+    echo "Event ID: $event_id, Title: " . $event_post->post_title . ", Author ID: $primary_author_id, Author: " . $primary_author->display_name . "<br/>";
+    
+    if (!empty($additional_authors_ids)) {
+        echo "Additional Authors:<br/>";
+        foreach ($additional_authors_ids as $author_id) {
+            $author = get_userdata($author_id);
+            echo "Author ID: $author_id, Author: " . $author->display_name . "<br/>";
+        }
+    }
+}
+
+// Display event with ID 5640 and all associated authors
+display_event_with_all_authors(5640);
+
 
 
 
