@@ -1850,7 +1850,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
     color: #ffffff!important;
 
 }
-.tribe-common .tribe-common-c-btn{
+.tribe-report-page .tribe-common .tribe-common-c-btn{
     background: #d3fa16 !important;
     color: #000000 !important;
 }
