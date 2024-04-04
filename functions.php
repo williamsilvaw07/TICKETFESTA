@@ -5090,7 +5090,7 @@ function display_event_tickets_and_create_free_order() {
         return 'The required method is not available.';
     }
 }
-*/
+
 
 
 
@@ -5232,3 +5232,6 @@ function get_author_list() {
     }
     return $author_list;
 }
+
+
+*/
