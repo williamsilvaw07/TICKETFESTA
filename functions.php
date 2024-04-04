@@ -5096,8 +5096,7 @@ function display_event_tickets_and_create_free_order() {
 
 
 
-
-function display_user_events_form_shortcode() {
+function add_coauthor_form_shortcode($atts) {
     // Ensure user is logged in
     if (!is_user_logged_in()) {
         return 'You must be logged in to manage events.';
@@ -5105,65 +5104,63 @@ function display_user_events_form_shortcode() {
 
     $output = ''; // Initialize output
 
-    // Get current user ID
-    $user_id = get_current_user_id();
+    // Process form submission
+    if (isset($_POST['add_coauthor_nonce_field'], $_POST['coauthor_email'], $_POST['event_selector']) 
+        && wp_verify_nonce($_POST['add_coauthor_nonce_field'], 'add_coauthor_nonce')) {
+        
+        $coauthor_email = sanitize_email($_POST['coauthor_email']);
+        $event_id = intval($_POST['event_selector']);
 
-    // Query for the user's events
-    $args = array(
-        'post_type' => 'tribe_events', // Make sure this matches the post type of your events
-        'author' => $user_id,
-        'posts_per_page' => -1, // Retrieve all events
-        'post_status' => 'publish',
-    );
-    $user_events = new WP_Query($args);
+        // For debugging: Output submitted data
+        $debug_info = 'Submitted Data: Event ID - ' . $event_id . ', Co-author Email - ' . $coauthor_email;
+        
+        // Attempt to find user by email
+        $user = get_user_by('email', $coauthor_email);
+        if ($user) {
+            // Simplified example: storing the co-author's user ID in post meta
+            update_post_meta($event_id, '_additional_coauthor', $user->ID);
 
-    if ($user_events->have_posts()) {
-        $output .= '<form id="add-coauthor-form" action="' . esc_url($_SERVER['REQUEST_URI']) . '" method="post">';
-        $output .= '<select name="event_selector" required>';
-        $output .= '<option value="">Select an Event</option>';
-
-        while ($user_events->have_posts()) {
-            $user_events->the_post();
-            $output .= '<option value="' . get_the_ID() . '">' . get_the_title() . '</option>';
+            $output .= '<p>Co-author added successfully.</p>';
+        } else {
+            $output .= '<p>No user found with that email.</p>';
         }
 
-        $output .= '</select>';
-        $output .= '<input type="email" name="coauthor_email" placeholder="Enter co-author\'s email" required>';
-        wp_nonce_field('add_coauthor_nonce', 'add_coauthor_nonce_field');
-        $output .= '<input type="submit" value="Add Co-Author">';
-        $output .= '</form>';
-    } else {
-        $output .= 'No events found.';
+        // Display debugging info on the frontend
+        $output .= '<div class="debug-info" style="background-color: #f7f7f7; padding: 10px; margin-top: 20px;">Debug Info: ' . esc_html($debug_info) . '</div>';
     }
+
+    // Fetch current user's events for the dropdown
+    $user_id = get_current_user_id();
+    $args = [
+        'post_type' => 'tribe_events',
+        'author' => $user_id,
+        'posts_per_page' => -1,
+        'post_status' => 'publish',
+    ];
+    $user_events = new WP_Query($args);
+
+    if (!$user_events->have_posts()) {
+        return 'No events found.';
+    }
+
+    // Form HTML
+    $output .= '<form id="add-coauthor-form" action="" method="post">';
+    $output .= '<select name="event_selector" required>';
+    $output .= '<option value="">Select an Event</option>';
+
+    while ($user_events->have_posts()) {
+        $user_events->the_post();
+        $output .= '<option value="' . get_the_ID() . '">' . get_the_title() . '</option>';
+    }
+
+    $output .= '</select>';
+    $output .= '<input type="email" name="coauthor_email" placeholder="Enter co-author\'s email" required>';
+    wp_nonce_field('add_coauthor_nonce', 'add_coauthor_nonce_field');
+    $output .= '<input type="submit" value="Add Co-Author">';
+    $output .= '</form>';
 
     wp_reset_postdata();
 
     return $output;
 }
-add_shortcode('user_events_form', 'display_user_events_form_shortcode');
-
-
-
-function process_add_coauthor_form_submission() {
-    if (isset($_POST['add_coauthor_nonce_field'], $_POST['event_selector'], $_POST['coauthor_email']) && wp_verify_nonce($_POST['add_coauthor_nonce_field'], 'add_coauthor_nonce')) {
-        $event_id = sanitize_text_field($_POST['event_selector']);
-        $coauthor_email = sanitize_email($_POST['coauthor_email']);
-
-        // Optional: Verify the event ID belongs to the current user to prevent unauthorized assignments
-
-        // Attempt to get the user by email
-        $user = get_user_by('email', $coauthor_email);
-
-        if ($user) {
-            // Here you might store the additional author in a custom field or take other actions
-            // This is a simplified example storing the user ID in a post meta field
-            update_post_meta($event_id, '_additional_coauthor', $user->ID);
-
-            // Optional: Provide feedback or redirect
-            echo '<p>Co-author added successfully.</p>';
-        } else {
-            echo '<p>No user found with that email.</p>';
-        }
-    }
-}
-add_action('init', 'process_add_coauthor_form_submission');
+add_shortcode('user_coauthor_form', 'add_coauthor_form_shortcode');
