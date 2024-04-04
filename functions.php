@@ -5091,33 +5091,24 @@ function display_event_tickets_and_create_free_order() {
     }
 }
 */
+function add_attendee_form_and_process_shortcode($atts) {
+    // Ensure user is logged in to see the form and add attendees
+    if (!is_user_logged_in()) {
+        return 'You must be logged in to add attendees.';
+    }
 
-function add_attendee_form_shortcode($atts) {
-    // Shortcode attributes for event ID, could be passed in like [add_attendee_form event_id="123"]
+    // Shortcode attributes; assuming 'event_id' is passed to the shortcode
     $atts = shortcode_atts(array('event_id' => 0), $atts, 'add_attendee_form');
+    $event_id = $atts['event_id'];
 
-    ob_start(); // Start output buffering to capture the form HTML
-    ?>
-    <form id="add-attendee-form" action="#!" method="post">
-        <input type="email" name="attendee_email" placeholder="Enter attendee email" required>
-        <input type="hidden" name="event_id" value="<?php echo esc_attr($atts['event_id']); ?>">
-        <input type="submit" value="Add Attendee">
-        <?php wp_nonce_field('add_attendee_nonce', 'add_attendee_nonce_field'); // Security ?>
-    </form>
-    <?php
-    return ob_get_clean(); // Return the form HTML
-}
-add_shortcode('add_attendee_form', 'add_attendee_form_shortcode');
-function process_add_attendee_form_submission() {
-    // Check if our form is submitted
-    if (isset($_POST['add_attendee_nonce_field'], $_POST['attendee_email'], $_POST['event_id']) && wp_verify_nonce($_POST['add_attendee_nonce_field'], 'add_attendee_nonce')) {
+    // Form submission handler
+    if (isset($_POST['add_attendee_nonce_field'], $_POST['attendee_email'], $_POST['event_id']) 
+        && wp_verify_nonce($_POST['add_attendee_nonce_field'], 'add_attendee_nonce') 
+        && $event_id == $_POST['event_id']) {
+
         $attendee_email = sanitize_email($_POST['attendee_email']);
-        $event_id = intval($_POST['event_id']);
 
-        // Further validation (e.g., ensure email isn't already an attendee) would go here
-
-        // Add the attendee email to the event's custom field or custom table
-        // This example uses a simple custom field approach
+        // Add the attendee email to the event's attendees list
         $existing_attendees = get_post_meta($event_id, '_event_attendees', true);
         $attendees = $existing_attendees ? explode(',', $existing_attendees) : [];
         if (!in_array($attendee_email, $attendees)) {
@@ -5125,7 +5116,29 @@ function process_add_attendee_form_submission() {
             update_post_meta($event_id, '_event_attendees', implode(',', $attendees));
         }
 
-        // Redirect or add a message to indicate success/failure
+        // Feedback message
+        echo '<p>Attendee added successfully!</p>';
     }
+
+    // Attendee form
+    $output = '<form id="add-attendee-form" action="' . get_permalink() . '" method="post">';
+    $output .= '<input type="email" name="attendee_email" placeholder="Enter attendee email" required>';
+    $output .= '<input type="hidden" name="event_id" value="' . esc_attr($event_id) . '">';
+    $output .= wp_nonce_field('add_attendee_nonce', 'add_attendee_nonce_field', true, false);
+    $output .= '<input type="submit" value="Add Attendee">';
+    $output .= '</form>';
+
+    // Optionally, display current attendees
+    $existing_attendees = get_post_meta($event_id, '_event_attendees', true);
+    if (!empty($existing_attendees)) {
+        $attendees = explode(',', $existing_attendees);
+        $output .= '<h3>Current Attendees:</h3><ul>';
+        foreach ($attendees as $attendee) {
+            $output .= '<li>' . esc_html($attendee) . '</li>';
+        }
+        $output .= '</ul>';
+    }
+
+    return $output;
 }
-add_action('init', 'process_add_attendee_form_submission');
+add_shortcode('add_attendee_form', 'add_attendee_form_and_process_shortcode');
