@@ -39,7 +39,16 @@ if ( file_exists( $custom_header_path ) ) {
                 // Display a message prompting the user to log in
                 echo '<p>Please log in to access this page.</p>';
                 // Display the frontend login form
-                wp_login_form();
+                ?>
+                <form id="custom-login-form" action="<?php echo wp_login_url( get_permalink() ); ?>" method="post">
+                    <label for="username">Username</label>
+                    <input type="text" name="log" id="username" required>
+                    <label for="password">Password</label>
+                    <input type="password" name="pwd" id="password" required>
+                    <input type="submit" value="Login">
+                    <input type="hidden" name="redirect_to" value="<?php echo esc_url( home_url( '/organizer-scanner/' ) ); ?>">
+                </form>
+                <?php
             }
             ?>
         </div><!-- /.container-fluid -->
@@ -58,6 +67,7 @@ if ( file_exists( $custom_footer_path ) ) {
     get_footer();
 }
 ?>
+
 
 
 
