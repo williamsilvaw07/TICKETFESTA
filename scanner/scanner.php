@@ -25,20 +25,23 @@ if ( file_exists( $custom_header_path ) ) {
     <!-- Main content -->
     <div class="content">
         <div class="container-fluid">
-            <!-- Your content goes here -->
             <?php
-            if ( have_posts() ) :
-                while ( have_posts() ) :
-                    the_post();
-                    the_content();
-                endwhile;
-            endif;
+            // Check if the user is logged in
+            if ( is_user_logged_in() ) {
+                // Display the content if the user is logged in
+                if ( have_posts() ) :
+                    while ( have_posts() ) :
+                        the_post();
+                        the_content();
+                    endwhile;
+                endif;
+            } else {
+                // Display a message prompting the user to log in
+                echo '<p>Please log in to access this page.</p>';
+                // Display the login form
+                echo wp_login_form();
+            }
             ?>
-
-            <!-- Frontend Login Form -->
-            <div class="frontend-login-form">
-                <?php wp_login_form(); ?>
-            </div>
         </div><!-- /.container-fluid -->
     </div>
     <!-- /.content -->
