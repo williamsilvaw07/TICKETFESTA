@@ -4,13 +4,7 @@ Template Name: Organizer Scanner
 */
 
 // Include the custom header
-$custom_header_path = get_stylesheet_directory() . '/scanner/header-organizer-scanner.php';
-if (file_exists($custom_header_path)) {
-    require_once($custom_header_path);
-} else {
-    // Fallback to the default header if your custom header is not found
-    get_header();
-}
+get_header();
 ?>
 
 <!-- Content Wrapper. Contains page content -->
@@ -43,14 +37,9 @@ if (file_exists($custom_header_path)) {
 
 <?php
 // Include the custom footer
-$custom_footer_path = get_stylesheet_directory() . '/scanner/footer-organizer-scanner.php';
-if (file_exists($custom_footer_path)) {
-    require_once($custom_footer_path);
-} else {
-    // Fallback to the default footer if your custom footer is not found
-    get_footer();
-}
+get_footer();
 ?>
+
 
 
 
