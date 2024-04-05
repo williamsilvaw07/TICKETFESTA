@@ -18,28 +18,6 @@ if (file_exists($custom_header_path)) {
     // Fallback to the default header if your custom header is not found
     get_header();
 }
-
-// Handle login form submission
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['custom_login_submit'])) {
-    $username = isset($_POST['username']) ? sanitize_user($_POST['username']) : '';
-    $password = isset($_POST['password']) ? $_POST['password'] : '';
-
-    // Perform user authentication
-    $user = wp_signon(array(
-        'user_login'    => $username,
-        'user_password' => $password,
-        'remember'      => true // Set to true if you want to remember the user
-    ));
-
-    if (is_wp_error($user)) {
-        // Authentication failed, display error message
-        echo '<p>' . esc_html__('Invalid username or password. Please try again.', 'text-domain') . '</p>';
-    } else {
-        // Authentication successful, redirect to the current page
-        wp_redirect(get_permalink());
-        exit;
-    }
-}
 ?>
 
 <!-- Content Wrapper. Contains page content -->
@@ -58,16 +36,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['custom_login_submit']
                     endwhile;
                 endif;
             } else {
-                // Display the frontend login form
-            ?>
-                <form id="custom-login-form" action="<?php echo esc_url($_SERVER['REQUEST_URI']); ?>" method="post">
-                    <label for="username"><?php esc_html_e('Username', 'text-domain'); ?></label>
-                    <input type="text" name="username" id="username" required>
-                    <label for="password"><?php esc_html_e('Password', 'text-domain'); ?></label>
-                    <input type="password" name="password" id="password" required>
-                    <input type="submit" name="custom_login_submit" value="<?php esc_attr_e('Login', 'text-domain'); ?>">
-                </form>
-            <?php
+                // Display the inline login/signup form
+                echo do_shortcode('[xoo_el_inline_form tabs="login,register" active="login"]');
             }
             ?>
         </div><!-- /.container-fluid -->
