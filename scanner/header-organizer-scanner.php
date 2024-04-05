@@ -80,6 +80,15 @@ if (!defined('ABSPATH')) {
 
 <ul class="show-notification profile-notification dropdown-menu" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
     
+    <!-- Organiser Dashboard (added for organisers) -->
+    <?php if (current_user_can('organiser')) : ?>
+                            <li class="admin_dashboard-sidebar-item">
+                                <a href="/dahsboard">
+                                    <i class="fas fa-home"></i> <span class="nav-text">Organiser Dashboard</span>
+                                </a>
+                            </li>
+                            <?php endif; ?>
+
     <li class="admin_dashboard-sidebar-item">
         <a href="https://ticketfesta.co.uk/">
             <i class="fas fa-exchange-alt"></i><span class="nav-text">Switch to Attendee</span>
