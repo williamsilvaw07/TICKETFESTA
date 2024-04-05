@@ -3710,7 +3710,7 @@ function ticketfeasta_follow($organizer_id, $user_id)
 
 
 
-
+/*
 ////////FUNCTION TO CREATE A SIGN UP FORM FOR THE ORGANIZER
 // Function to display the custom registration form
 function custom_user_registration_form()
@@ -3819,6 +3819,7 @@ function restrict_access_and_show_login_form()
     }
 }
 add_action('template_redirect', 'restrict_access_and_show_login_form');
+*/
 //////END
 
 
