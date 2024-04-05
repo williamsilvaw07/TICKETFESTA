@@ -4931,7 +4931,6 @@ function get_posts_by_event_pass($event_pass) {
 
 // generate hash event pass
 
-// Add action to generate event passcode on post save
 add_action('save_post', 'generate_event_pass_on_update', 10, 3);
 function generate_event_pass_on_update($post_id, $post, $update) {
     // Check if it's a 'tribe_events' post type and the post is being updated
@@ -4947,69 +4946,6 @@ function generate_event_pass_on_update($post_id, $post, $update) {
     }
 }
 
-// Add action to update event passcode every 20 seconds
-add_action('admin_footer', 'update_event_passcode_script');
-function update_event_passcode_script() {
-    // Check if we are on the edit post screen for the 'tribe_events' post type
-    global $pagenow;
-    if ($pagenow === 'post.php' && isset($_GET['post']) && get_post_type($_GET['post']) === 'tribe_events') {
-        $event_id = intval($_GET['post']); // Get the event ID
-        $nonce = wp_create_nonce('update_event_passcode_' . $event_id);
-        ?>
-        <script>
-            jQuery(document).ready(function($) {
-                function updatePasscode() {
-                    // AJAX request to update the event passcode
-                    $.ajax({
-                        url: ajaxurl,
-                        type: 'POST',
-                        data: {
-                            action: 'update_event_passcode',
-                            event_id: <?php echo $event_id; ?>,
-                            nonce: '<?php echo $nonce; ?>'
-                        },
-                        success: function(response) {
-                            if (response.success) {
-                                $('.passcode').text(response.data.passcode); // Update the passcode on the page
-                            } else {
-                                console.error('Failed to update event passcode');
-                            }
-                        },
-                        error: function(xhr, status, error) {
-                            console.error('Error updating event passcode: ' + error);
-                        }
-                    });
-                }
-
-                // Update the passcode every 20 seconds
-                setInterval(updatePasscode, 20000);
-            });
-        </script>
-        <?php
-    }
-}
-
-// AJAX handler to update event passcode
-add_action('wp_ajax_update_event_passcode', 'update_event_passcode_ajax');
-function update_event_passcode_ajax() {
-    // Verify the AJAX nonce
-    $nonce = $_POST['nonce'];
-    $event_id = $_POST['event_id'];
-    if (!wp_verify_nonce($nonce, 'update_event_passcode_' . $event_id)) {
-        wp_send_json_error('Invalid nonce');
-    }
-
-    // Generate a new event passcode
-    $event_pass = generate_unique_random_hash(8);
-
-    // Update the event passcode in the post meta
-    update_post_meta($event_id, 'event_pass', $event_pass);
-
-    // Return the updated passcode
-    wp_send_json_success(array('passcode' => $event_pass));
-}
-
-// Function to generate a unique random hash
 function generate_unique_random_hash($length) {
     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     $characters_length = strlen($characters);
