@@ -1858,25 +1858,31 @@ html .tickets-sold-column , html .tribe-list-column-title {
 
             /****ADMIN- DASHBOARD PAGE***/
 
-            .today_sale_admin_dashboard::before {
-  font-weight: 900; 
-  margin-right: 5px; 
-  opacity: 0.06;
+            .today_ticket_sale_admin_dashboard::before {
+  content: "\f3ff"; 
+  font-family: "Font Awesome 5 Free"; 
     transform: rotate(302deg) !important;
-    font-size: 46px;
-    position: absolute;
-    top: 20%;
-    right: 0;
+   
+}
+.today_sale_admin_dashboard_money::before {
+  content: "\f51e"; 
+  font-family: "Font Awesome 5 Free"; 
+   
 }
 
 
-.today_ticket_sale_admin_dashboard::before {
-    content: "\f51e";
+.today_sale_admin_dashboard_revenue::before {
+  content: "\f81d"; 
   font-family: "Font Awesome 5 Free"; 
+
+   
+}
+
+.today_sale_admin_dashboard::before {
+
   font-weight: 900; 
   margin-right: 5px; 
   opacity: 0.06;
-    transform: rotate(302deg) !important;
     font-size: 46px;
     position: absolute;
     top: 20%;
