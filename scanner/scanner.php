@@ -38,8 +38,8 @@ if ( file_exists( $custom_header_path ) ) {
             } else {
                 // Display a message prompting the user to log in
                 echo '<p>Please log in to access this page.</p>';
-                // Display the login form
-                echo wp_login_form();
+                // Display the frontend login form
+                wp_login_form();
             }
             ?>
         </div><!-- /.container-fluid -->
@@ -58,6 +58,7 @@ if ( file_exists( $custom_footer_path ) ) {
     get_footer();
 }
 ?>
+
 
 
 
