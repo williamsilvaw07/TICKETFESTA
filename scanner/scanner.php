@@ -4,19 +4,41 @@ Template Name: Organizer Scanner
 */
 
 // Check if the current user has the required role to access this page
-if ( ! current_user_can( 'organiser' ) && ! current_user_can( 'administrator' ) && ! current_user_can( 'verifier' ) ) {
+if (!current_user_can('organiser') && !current_user_can('administrator') && !current_user_can('verifier')) {
     // Redirect users without the required role to the login page
-    wp_redirect( wp_login_url() );
+    wp_redirect(wp_login_url());
     exit;
 }
 
 // Include the custom header
 $custom_header_path = get_stylesheet_directory() . '/scanner/header-organizer-scanner.php';
-if ( file_exists( $custom_header_path ) ) {
-    require_once( $custom_header_path );
+if (file_exists($custom_header_path)) {
+    require_once($custom_header_path);
 } else {
     // Fallback to the default header if your custom header is not found
     get_header();
+}
+
+// Handle login form submission
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['custom_login_submit'])) {
+    $username = isset($_POST['username']) ? sanitize_user($_POST['username']) : '';
+    $password = isset($_POST['password']) ? $_POST['password'] : '';
+
+    // Perform user authentication
+    $user = wp_signon(array(
+        'user_login'    => $username,
+        'user_password' => $password,
+        'remember'      => true // Set to true if you want to remember the user
+    ));
+
+    if (is_wp_error($user)) {
+        // Authentication failed, display error message
+        echo '<p>' . esc_html__('Invalid username or password. Please try again.', 'text-domain') . '</p>';
+    } else {
+        // Authentication successful, redirect to the current page
+        wp_redirect(get_permalink());
+        exit;
+    }
 }
 ?>
 
@@ -27,28 +49,25 @@ if ( file_exists( $custom_header_path ) ) {
         <div class="container-fluid">
             <?php
             // Check if the user is logged in
-            if ( is_user_logged_in() ) {
+            if (is_user_logged_in()) {
                 // Display the content if the user is logged in
-                if ( have_posts() ) :
-                    while ( have_posts() ) :
+                if (have_posts()) :
+                    while (have_posts()) :
                         the_post();
                         the_content();
                     endwhile;
                 endif;
             } else {
-                // Display a message prompting the user to log in
-                echo '<p>Please log in to access this page.</p>';
                 // Display the frontend login form
-                ?>
-                <form id="custom-login-form" action="<?php echo wp_login_url( get_permalink() ); ?>" method="post">
-                    <label for="username">Username</label>
-                    <input type="text" name="log" id="username" required>
-                    <label for="password">Password</label>
-                    <input type="password" name="pwd" id="password" required>
-                    <input type="submit" value="Login">
-                    <input type="hidden" name="redirect_to" value="<?php echo esc_url( home_url( '/organizer-scanner/' ) ); ?>">
+            ?>
+                <form id="custom-login-form" action="<?php echo esc_url($_SERVER['REQUEST_URI']); ?>" method="post">
+                    <label for="username"><?php esc_html_e('Username', 'text-domain'); ?></label>
+                    <input type="text" name="username" id="username" required>
+                    <label for="password"><?php esc_html_e('Password', 'text-domain'); ?></label>
+                    <input type="password" name="password" id="password" required>
+                    <input type="submit" name="custom_login_submit" value="<?php esc_attr_e('Login', 'text-domain'); ?>">
                 </form>
-                <?php
+            <?php
             }
             ?>
         </div><!-- /.container-fluid -->
@@ -60,13 +79,14 @@ if ( file_exists( $custom_header_path ) ) {
 <?php
 // Include the custom footer
 $custom_footer_path = get_stylesheet_directory() . '/scanner/footer-organizer-scanner.php';
-if ( file_exists( $custom_footer_path ) ) {
-    require_once( $custom_footer_path );
+if (file_exists($custom_footer_path)) {
+    require_once($custom_footer_path);
 } else {
     // Fallback to the default footer if your custom footer is not found
     get_footer();
 }
 ?>
+
 
 
 
