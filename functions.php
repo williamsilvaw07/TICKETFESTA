@@ -2390,7 +2390,7 @@ function shortcode_current_user_upcoming_live_events_count()
 
     // Return the count in the specified HTML layout
     return '
-    <div class="sales-card today_sale_admin_dashboard">
+    <div class="sales-card today_sale_admin_dashboard today_sale_admin_dashboard_live_events">
         <div class="sales-card-content ">
             <div class="sales-today ">
                 <h5 class="admin_dashboard_sales-label card_admin_dashboard ">Live Events</h5>
