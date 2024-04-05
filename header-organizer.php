@@ -1864,14 +1864,14 @@ html .tickets-sold-column , html .tribe-list-column-title {
     transform: rotate(302deg) !important;
    
 }
-.today_sale_admin_dashboard_money .sales-card-conten::before {
+.today_sale_admin_dashboard_money .sales-card-content::before {
   content: "\f51e"; 
   font-family: "Font Awesome 5 Free"; 
    
 }
 
 
-.today_sale_admin_dashboard_revenue .sales-card-conten::before {
+.today_sale_admin_dashboard_revenue .sales-card-content::before {
   content: "\f81d"; 
   font-family: "Font Awesome 5 Free"; 
 
