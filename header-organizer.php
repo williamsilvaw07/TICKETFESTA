@@ -1872,7 +1872,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
 
 .today_ticket_sale_admin_dashboard::before {
     content: "\f4c5";
-  font-family: "Font Awesome 6 Free"; 
+  font-family: "Font Awesome 5 Free"; 
   font-weight: 900; 
   margin-right: 5px; 
   opacity: 0.06;
