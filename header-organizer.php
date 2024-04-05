@@ -4206,7 +4206,7 @@ display:block!important
                 }
                 .sales-card.today_sale_admin_dashboard {
                  
-                    max-height: inherit;
+                    min-height: inherit;
                 }
             }
 
