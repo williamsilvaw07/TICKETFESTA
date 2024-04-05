@@ -36,8 +36,13 @@ if (file_exists($custom_header_path)) {
                     endwhile;
                 endif;
             } else {
-                // Display the inline login/signup form
-                echo do_shortcode('[xoo_el_inline_form tabs="login,register" active="login"]');
+                // Display the custom login form
+                ?>
+                <div class="custom-login-form">
+                    <h2>Login</h2>
+                    <?php wp_login_form(array('echo' => true)); ?>
+                </div>
+                <?php
             }
             ?>
         </div><!-- /.container-fluid -->
@@ -56,7 +61,6 @@ if (file_exists($custom_footer_path)) {
     get_footer();
 }
 ?>
-
 
 
 
