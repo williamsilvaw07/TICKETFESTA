@@ -1878,7 +1878,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
    
 }
 
-.today_sale_admin_dashboard::before {
+.today_sale_admin_dashboard .sales-card-content::before {
 
   font-weight: 900; 
   margin-right: 5px; 
