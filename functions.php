@@ -4930,29 +4930,59 @@ function get_posts_by_event_pass($event_pass) {
 }
 
 // generate hash event pass
+// Schedule event pass update on plugin activation
+register_activation_hook(__FILE__, 'schedule_event_pass_update');
 
-add_action('save_post', 'generate_event_pass_on_update', 10, 3);
-
-function generate_event_pass_on_update($post_id, $post, $update) {
-    // Check if it's a 'tribe_events' post type and the post is being updated
-    if ($post->post_type == 'tribe_events') {
-        // Get the timestamp of the last update from the transient
-        $last_update_time = get_transient('event_pass_last_update_time_' . $post_id);
-        // Get the current timestamp
-        $current_time = time();
-
-        // Check if 20 seconds have passed since the last update or if the event pass doesn't exist
-        if (empty($last_update_time) || ($current_time - $last_update_time) >= 20) {
-            // Generate a unique 8-digit hash
-            $event_pass = generate_unique_random_hash(8);
-            // Set the 'event_pass' metadata for the post
-            update_post_meta($post_id, 'event_pass', $event_pass);
-            // Update the transient with the current timestamp
-            set_transient('event_pass_last_update_time_' . $post_id, $current_time);
-        }
+// Hook to schedule event pass update
+function schedule_event_pass_update() {
+    if (!wp_next_scheduled('update_event_pass_hook')) {
+        wp_schedule_event(time(), 'twenty_seconds', 'update_event_pass_hook');
     }
 }
 
+// Hook to update event pass every 20 seconds
+add_action('update_event_pass_hook', 'update_event_pass');
+
+// Function to update event pass
+function update_event_pass() {
+    $args = array(
+        'post_type' => 'tribe_events',
+        'posts_per_page' => -1,
+    );
+
+    $events = new WP_Query($args);
+
+    if ($events->have_posts()) {
+        while ($events->have_posts()) {
+            $events->the_post();
+            $post_id = get_the_ID();
+            $event_pass = generate_unique_random_hash(8);
+            update_post_meta($post_id, 'event_pass', $event_pass);
+        }
+        wp_reset_postdata();
+    }
+}
+
+// Schedule event pass update on plugin deactivation
+register_deactivation_hook(__FILE__, 'unschedule_event_pass_update');
+
+// Hook to unschedule event pass update
+function unschedule_event_pass_update() {
+    wp_clear_scheduled_hook('update_event_pass_hook');
+}
+
+// Add custom time interval
+add_filter('cron_schedules', 'add_twenty_seconds_interval');
+
+function add_twenty_seconds_interval($schedules) {
+    $schedules['twenty_seconds'] = array(
+        'interval' => 20,
+        'display' => __('Every 20 Seconds'),
+    );
+    return $schedules;
+}
+
+// Generate unique random hash
 function generate_unique_random_hash($length) {
     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     $characters_length = strlen($characters);
@@ -4968,6 +4998,7 @@ function generate_unique_random_hash($length) {
 
     return $unique_hash;
 }
+
 
 
 
