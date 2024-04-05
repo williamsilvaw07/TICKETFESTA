@@ -1858,7 +1858,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
 
             /****ADMIN- DASHBOARD PAGE***/
 
-            .today_ticket_sale_admin_dashboard::before {
+            .today_ticket_sale_admin_dashboard .sales-card-content::before {
   content: "\f3ff"; 
   font-family: "Font Awesome 5 Free"; 
     transform: rotate(302deg) !important;
