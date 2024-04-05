@@ -1466,8 +1466,8 @@ html .tickets-sold-column , html .tribe-list-column-title {
                 color: #aaa !important;
                 text-transform: capitalize;
                 padding-left: 6px;
-                font-weight: 200;
-                text-align: l;
+                font-weight: 300;
+                text-align: left;
             }
 
             .event-title-image {
