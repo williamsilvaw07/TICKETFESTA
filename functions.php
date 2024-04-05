@@ -4930,59 +4930,86 @@ function get_posts_by_event_pass($event_pass) {
 }
 
 // generate hash event pass
-// Schedule event pass update on plugin activation
-register_activation_hook(__FILE__, 'schedule_event_pass_update');
 
-// Hook to schedule event pass update
-function schedule_event_pass_update() {
-    if (!wp_next_scheduled('update_event_pass_hook')) {
-        wp_schedule_event(time(), 'twenty_seconds', 'update_event_pass_hook');
-    }
-}
-
-// Hook to update event pass every 20 seconds
-add_action('update_event_pass_hook', 'update_event_pass');
-
-// Function to update event pass
-function update_event_pass() {
-    $args = array(
-        'post_type' => 'tribe_events',
-        'posts_per_page' => -1,
-    );
-
-    $events = new WP_Query($args);
-
-    if ($events->have_posts()) {
-        while ($events->have_posts()) {
-            $events->the_post();
-            $post_id = get_the_ID();
+// Add action to generate event passcode on post save
+add_action('save_post', 'generate_event_pass_on_update', 10, 3);
+function generate_event_pass_on_update($post_id, $post, $update) {
+    // Check if it's a 'tribe_events' post type and the post is being updated
+    if ($post->post_type == 'tribe_events') {
+        // Check if the post doesn't have the 'event_pass' metadata
+        $event_pass = get_post_meta($post_id, 'event_pass', true);
+        if (empty($event_pass)) {
+            // Generate a unique 8-digit hash
             $event_pass = generate_unique_random_hash(8);
+            // Set the 'event_pass' metadata for the post
             update_post_meta($post_id, 'event_pass', $event_pass);
         }
-        wp_reset_postdata();
     }
 }
 
-// Schedule event pass update on plugin deactivation
-register_deactivation_hook(__FILE__, 'unschedule_event_pass_update');
+// Add action to update event passcode every 20 seconds
+add_action('admin_footer', 'update_event_passcode_script');
+function update_event_passcode_script() {
+    // Check if we are on the edit post screen for the 'tribe_events' post type
+    global $pagenow;
+    if ($pagenow === 'post.php' && isset($_GET['post']) && get_post_type($_GET['post']) === 'tribe_events') {
+        $event_id = intval($_GET['post']); // Get the event ID
+        $nonce = wp_create_nonce('update_event_passcode_' . $event_id);
+        ?>
+        <script>
+            jQuery(document).ready(function($) {
+                function updatePasscode() {
+                    // AJAX request to update the event passcode
+                    $.ajax({
+                        url: ajaxurl,
+                        type: 'POST',
+                        data: {
+                            action: 'update_event_passcode',
+                            event_id: <?php echo $event_id; ?>,
+                            nonce: '<?php echo $nonce; ?>'
+                        },
+                        success: function(response) {
+                            if (response.success) {
+                                $('.passcode').text(response.data.passcode); // Update the passcode on the page
+                            } else {
+                                console.error('Failed to update event passcode');
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            console.error('Error updating event passcode: ' + error);
+                        }
+                    });
+                }
 
-// Hook to unschedule event pass update
-function unschedule_event_pass_update() {
-    wp_clear_scheduled_hook('update_event_pass_hook');
+                // Update the passcode every 20 seconds
+                setInterval(updatePasscode, 20000);
+            });
+        </script>
+        <?php
+    }
 }
 
-// Add custom time interval
-add_filter('cron_schedules', 'add_twenty_seconds_interval');
+// AJAX handler to update event passcode
+add_action('wp_ajax_update_event_passcode', 'update_event_passcode_ajax');
+function update_event_passcode_ajax() {
+    // Verify the AJAX nonce
+    $nonce = $_POST['nonce'];
+    $event_id = $_POST['event_id'];
+    if (!wp_verify_nonce($nonce, 'update_event_passcode_' . $event_id)) {
+        wp_send_json_error('Invalid nonce');
+    }
 
-function add_twenty_seconds_interval($schedules) {
-    $schedules['twenty_seconds'] = array(
-        'interval' => 20,
-        'display' => __('Every 20 Seconds'),
-    );
-    return $schedules;
+    // Generate a new event passcode
+    $event_pass = generate_unique_random_hash(8);
+
+    // Update the event passcode in the post meta
+    update_post_meta($event_id, 'event_pass', $event_pass);
+
+    // Return the updated passcode
+    wp_send_json_success(array('passcode' => $event_pass));
 }
 
-// Generate unique random hash
+// Function to generate a unique random hash
 function generate_unique_random_hash($length) {
     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     $characters_length = strlen($characters);
