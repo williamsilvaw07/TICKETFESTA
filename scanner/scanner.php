@@ -5,9 +5,10 @@ Template Name: Organizer Scanner
 
 // Check if the current user has the required role to access this page
 if (!current_user_can('organiser') && !current_user_can('administrator') && !current_user_can('verifier')) {
-    // Redirect users without the required role to the login page
-    wp_redirect(wp_login_url());
-    exit;
+    // Display the login form directly on the page for users without the required role
+    echo do_shortcode('[xoo_el_inline_form tabs="login,register" active="login"]');
+    // Stop further execution
+    return;
 }
 
 // Include the custom header
@@ -26,24 +27,13 @@ if (file_exists($custom_header_path)) {
     <div class="content">
         <div class="container-fluid">
             <?php
-            // Check if the user is logged in
-            if (is_user_logged_in()) {
-                // Display the content if the user is logged in
-                if (have_posts()) :
-                    while (have_posts()) :
-                        the_post();
-                        the_content();
-                    endwhile;
-                endif;
-            } else {
-                // Display the custom login form
-                ?>
-                <div class="custom-login-form">
-                    <h2>Login</h2>
-                    <?php wp_login_form(array('echo' => true)); ?>
-                </div>
-                <?php
-            }
+            // Display the content for users with the required role
+            if (have_posts()) :
+                while (have_posts()) :
+                    the_post();
+                    the_content();
+                endwhile;
+            endif;
             ?>
         </div><!-- /.container-fluid -->
     </div>
@@ -61,6 +51,7 @@ if (file_exists($custom_footer_path)) {
     get_footer();
 }
 ?>
+
 
 
 
