@@ -1905,6 +1905,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
                 border-radius: 10px;
                 width: 100%;
                 max-width: 320px;
+                min-height: 152.5px;
             }
 
             .today_sale_admin_dashboard h5 {
@@ -4202,6 +4203,10 @@ display:block!important
                 .admin_dashboard_main_amount {
                     font-size: 12px;
                     font-family: "Plus Jakarta Sans", Sans-serif !important;
+                }
+                .sales-card.today_sale_admin_dashboard {
+                 
+                    max-height: inherit;
                 }
             }
 
