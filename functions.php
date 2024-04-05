@@ -4932,16 +4932,23 @@ function get_posts_by_event_pass($event_pass) {
 // generate hash event pass
 
 add_action('save_post', 'generate_event_pass_on_update', 10, 3);
+
 function generate_event_pass_on_update($post_id, $post, $update) {
     // Check if it's a 'tribe_events' post type and the post is being updated
     if ($post->post_type == 'tribe_events') {
-        // Check if the post doesn't have the 'event_pass' metadata
-        $event_pass = get_post_meta($post_id, 'event_pass', true);
-        if (empty($event_pass)) {
+        // Get the timestamp of the last update
+        $last_update_time = get_post_meta($post_id, 'last_update_time', true);
+        // Get the current timestamp
+        $current_time = current_time('timestamp');
+
+        // Check if 48 hours have passed since the last update or if the event pass doesn't exist
+        if (empty($last_update_time) || ($current_time - $last_update_time) >= 48 * 60 * 60) {
             // Generate a unique 8-digit hash
             $event_pass = generate_unique_random_hash(8);
             // Set the 'event_pass' metadata for the post
             update_post_meta($post_id, 'event_pass', $event_pass);
+            // Update the timestamp of the last update
+            update_post_meta($post_id, 'last_update_time', $current_time);
         }
     }
 }
