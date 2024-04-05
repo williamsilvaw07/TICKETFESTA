@@ -56,6 +56,17 @@ if (!defined('ABSPATH')) {
                     </div>
                     <!-- Dropdown menu -->
                     <ul class="show-notification profile-notification dropdown-menu" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
+
+                       <!-- Organiser Dashboard (added for organisers and administrators) -->
+                       <?php if (current_user_can('organiser') || current_user_can('administrator')) : ?>
+                            <li class="admin_dashboard-sidebar-item">
+                                <a href="/dahsboard">
+                                    <i class="fas fa-home"></i> <span class="nav-text">Organiser Dashboard</span>
+                                </a>
+                            </li>
+                        <?php endif; ?>
+
+                        
                         <!-- Switch to Attendee -->
                         <li class="admin_dashboard-sidebar-item">
                             <a href="https://ticketfesta.co.uk/">
@@ -85,14 +96,7 @@ if (!defined('ABSPATH')) {
                                 <span class="user-email-address"><?php echo esc_html( $current_user->user_email ); ?></span>
                             <?php endif; ?>
                         </li>
-                        <!-- Organiser Dashboard (added for organisers) -->
-                        <?php if (current_user_can('organiser')) : ?>
-                            <li class="admin_dashboard-sidebar-item">
-                                <a href="/dahsboard">
-                                    <i class="fas fa-home"></i> <span class="nav-text">Organiser Dashboard</span>
-                                </a>
-                            </li>
-                        <?php endif; ?>
+                     
                     </ul>
                 </li>
             </ul>
