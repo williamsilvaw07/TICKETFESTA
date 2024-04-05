@@ -34,6 +34,11 @@ if ( file_exists( $custom_header_path ) ) {
                 endwhile;
             endif;
             ?>
+
+            <!-- Frontend Login Form -->
+            <div class="frontend-login-form">
+                <?php wp_login_form(); ?>
+            </div>
         </div><!-- /.container-fluid -->
     </div>
     <!-- /.content -->
