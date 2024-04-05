@@ -1869,6 +1869,11 @@ html .tickets-sold-column , html .tribe-list-column-title {
   font-family: "Font Awesome 5 Free"; 
    
 }
+.today_sale_admin_dashboard_live_events .sales-card-content::before {
+  content: "\f274"; 
+  font-family: "Font Awesome 5 Free"; 
+   
+}
 
 
 .today_sale_admin_dashboard_revenue .sales-card-content::before {
