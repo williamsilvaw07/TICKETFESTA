@@ -1720,13 +1720,13 @@ html .tickets-sold-column , html .tribe-list-column-title {
             .admin_dashboard_main_customer_info strong {
                 font-size: 14px;
                 color: #fff;
-                font-weight: 300;
+                font-weight: 400;
             }
 
             .admin_dashboard_main_customer_info span {
                 font-size: 13px;
                 color: #aaa;
-                font-weight: 100;
+                font-weight: 300;
             }
 
             .admin_dashboard_main_amount {
@@ -1937,7 +1937,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
             }
 
             .from_text_price_yesturday {
-                font-size: 11px !important;
+                font-size: 13px !important;
                 font-weight: 300 !important;
                 color: #aaa !important;
             }
@@ -1950,12 +1950,9 @@ html .tickets-sold-column , html .tribe-list-column-title {
                 align-items: flex-end;
             }
 
-            .from_text_price_yesturday {
-                font-size: 12px;
-            }
-
+          
             .admin_dashboard_sales-amount_span {
-                font-weight: 200;
+                font-weight: 300;
                 font-size: 13px;
             }
 
