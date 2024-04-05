@@ -5,8 +5,8 @@ Template Name: Organizer Scanner
 
 // Check if the current user has the required role to access this page
 if ( ! current_user_can( 'organiser' ) && ! current_user_can( 'administrator' ) && ! current_user_can( 'verifier' ) ) {
-    // Redirect users without the required role to the homepage or any other page
-    wp_redirect( home_url() );
+    // Redirect users without the required role to the login page
+    wp_redirect( wp_login_url() );
     exit;
 }
 
@@ -50,6 +50,7 @@ if ( file_exists( $custom_footer_path ) ) {
     get_footer();
 }
 ?>
+
 
 
 
