@@ -30,15 +30,13 @@ if (file_exists($custom_header_path)) {
             } else {
                 // Inform the user if they are logged in but don't have the right role
                 if (is_user_logged_in()) {
-                    echo '<div class="scanner_login_divs"><h2>Access Denied</h2><p>You do not have the necessary permissions to access this page. Please contact the site administrator if you believe this is an error.</p></div>';
+                    echo '<div class="scanner_login_divs"><h2>Access Denied</h2><p>You do not have the necessary permissions to access this page. Please contact Support if you believe this is an error.</p></div>';
                 } else {
                     // Display an inline login form if user is not logged in
-                    echo '<div class="scanner_login_divs"><h2>Please Log In</h2>';
                     echo do_shortcode('[xoo_el_inline_form tabs="login" active="login"]');
                     echo '</div>';
                 }
-                // Forgot password link
-                echo '<div class="forgot-password"><a href="' . wp_lostpassword_url() . '">Forgot Password?</a></div>';
+            
             }
             ?>
         </div><!-- /.container-fluid -->
