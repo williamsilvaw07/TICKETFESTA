@@ -198,8 +198,17 @@ if (!defined('ABSPATH')) {
                             <span
                                     class="nav-text">Scanner Access
 
-</span></a>
-                        </li>
+</span></a> </li>
+
+
+<li class="admin_dashboard-sidebar-item">
+                            <a href="/dashboard/organisation-settings/"><i class="fa-solid fa-qrcode"></i>
+                                
+                            <span
+                                    class="nav-text">QR Scanner
+
+</span></a> </li>
+
                         <li class="admin_dashboard-sidebar-item">
                             <a href="/dashboard/organisation-settings/"><i class="fas fa-cog"></i><span
                                     class="nav-text">Organisation Settings
