@@ -65,6 +65,11 @@ if (file_exists($custom_footer_path)) {
 
 
 <style>
+    .xoo-el-form-container.xoo-el-form-inline {
+    max-width: 700px;
+    margin: 0px auto;
+    padding-top: 83px;
+}
 .main-header .d-block{
     display:none!important
 }
