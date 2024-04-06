@@ -3,26 +3,18 @@
 Template Name: Organizer Scanner
 */
 
-// Include the custom header
+// Include the appropriate header based on user role
 $custom_header_path = get_stylesheet_directory() . '/scanner/header-organizer-scanner.php';
 if (file_exists($custom_header_path)) {
     require_once($custom_header_path);
 } else {
-    get_header();
+    get_header();  // Default site header for other users
 }
-
-// Display user and role info for debugging
-if (is_user_logged_in()) {
-    $current_user = wp_get_current_user();
-    echo '<p>Logged in as: ' . $current_user->user_login . '</p>';
-    echo '<p>Current User Roles: ' . implode(', ', $current_user->roles) . '</p>';
-    echo '<p>Can Organise: ' . (current_user_can('organiser') ? 'Yes' : 'No') . '</p>';
-    echo '<p>Is Admin: ' . (current_user_can('administrator') ? 'Yes' : 'No') . '</p>';
-    echo '<p>Is Verifier: ' . (current_user_can('verifier') ? 'Yes' : 'No') . '</p>';
-}
-
 ?>
+
+<!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
+    <!-- Main content -->
     <div class="content">
         <div class="container-fluid">
             <?php
@@ -30,21 +22,35 @@ if (is_user_logged_in()) {
                 if (have_posts()) {
                     while (have_posts()) {
                         the_post();
-                        the_content();
+                        the_content();  // Display the main content of the page
                     }
                 }
             } else {
-                echo '<div class="scanner_login_divs"><h2>Access Denied</h2><p>You do not have the necessary permissions to access this page. Please contact the site administrator if you believe this is an error.</p></div>';
+                // Different messages based on user status
+                if (is_user_logged_in()) {
+                    echo '<div class="scanner_login_divs"><h2>Access Denied</h2><p>You do not have the necessary permissions to access this page. Please contact the site administrator if you believe this is an error.</p></div>';
+                } else {
+                    echo '<div class="scanner_login_divs"><h2>This page is for organisers only. Please log in.</h2>';
+                    echo do_shortcode('[xoo_el_inline_form tabs="login" active="login"]');
+                }
             }
             ?>
-        </div>
+        </div><!-- /.container-fluid -->
     </div>
+    <!-- /.content -->
 </div>
+<!-- /.content-wrapper -->
 
 <?php
-get_footer();
+// Include the custom footer
+$custom_footer_path = get_stylesheet_directory() . '/scanner/footer-organizer-scanner.php';
+if (file_exists($custom_footer_path)) {
+    require_once($custom_footer_path);
+} else {
+    // Fallback to the default footer if your custom footer is not found
+    get_footer();
+}
 ?>
-
 
 
 
