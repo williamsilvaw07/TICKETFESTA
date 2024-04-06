@@ -3,13 +3,16 @@
 Template Name: Organizer Scanner
 */
 
-// Determine which header to use based on user role
-if (is_user_logged_in() && (current_user_can('organiser') || current_user_can('administrator'))) {
-    get_header('organizer');  // Custom header for 'organiser' and 'administrator'
+// Include the custom header
+$custom_header_path = get_stylesheet_directory() . '/scanner/header-organizer-scanner.php';
+if (file_exists($custom_header_path)) {
+    require_once($custom_header_path);
 } else {
-    get_header();  // Default site header for other users
+    // Fallback to the default header if your custom header is not found
+    get_header();
 }
 ?>
+
 
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
@@ -60,6 +63,8 @@ if (file_exists($custom_footer_path)) {
     get_footer();
 }
 ?>
+
+
 
 
 
