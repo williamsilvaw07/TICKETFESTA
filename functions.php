@@ -4711,7 +4711,7 @@ function custom_qr_scanner_shortcode() {
 </div>
          
 <div class="short_code_here">
-    <h5>fdfdfd</h5>
+    <h5>fdfdfddd</h5>
     <!-- Content loaded via AJAX will appear here -->
 </div>
 
