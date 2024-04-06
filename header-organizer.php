@@ -3342,7 +3342,20 @@ html .tickets-sold-column , html .tribe-list-column-title {
 
 #emailTable {
     margin-top: 20px;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-width: 0;
+    margin: 0;
+    width: 100%;
+    background-color: #19191b;
+    position: relative;
+    padding: 17px;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 900px;
 }
+
+
         /****admin settings page */
 
         .page-template-organizer-template-php .orgerinser_settings_form input{
