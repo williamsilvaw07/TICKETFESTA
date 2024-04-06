@@ -348,40 +348,38 @@ function updateCheckedInProgress(response) {
     // Update the checked-in progress component in the DOM
     $('.ticket_checkedin_main_stats .checkedin-progress-ring-container').html(checkedInProgressHtml);
 }
+
+
 function passcodeMatch(response, isajax = 1) {
-    console.log("AJAX Response:", response);  // Log the entire response to see what you're getting back
+    console.log("AJAX Response received:", response);
 
-    if (!response) {
-        console.error("No response received.");
-        return;
-    }
-    if (!response.event_data) {
-        console.error("Invalid or missing event data.");
+    if (!response || !response.event_data) {
+        console.error("Invalid response data received from server.");
         return;
     }
 
-    // Display event details
+    if (response.shortcode_output === "") {
+        console.error("Shortcode output is empty. Check server-side generation.");
+    }
+
     $('.event-container .event-image').attr('src', response.event_data.thumbnail_url);
     $('.event-container .name span').text(response.event_data.name);
     $('.event-container .date span').text(response.event_data.start_date);
     $('.checkedin_ticket-count span').text(response.event_data.checked_in);
-    console.log("Event details updated.");
 
-    // Clear and update ticket information
-    $('.ticket-info_hidden_all').empty();
-    response.event_data.ticket_list.forEach(function(ticket) {
+    response.event_data.ticket_list.forEach(ticket => {
         const issued = parseInt(ticket.issued_tickets, 10);
         const capacity = parseInt(ticket.capacity, 10);
         const percentage = (issued / capacity * 100).toFixed(1);
 
         const progressHtml = `
             <div class="ticket-progress-container">
-                <svg class="progress-ring" width="58">
-                    <circle cx="29" cy="29" r="24" fill="none" stroke="#ccc" stroke-width="6"></circle>
-                    <circle cx="29" cy="29" r="24" fill="none" stroke="#4CAF50" stroke-width="6" stroke-dasharray="${percentage} 100" stroke-dashoffset="0" transform="rotate(-90) translate(-58)"></circle>
-                    <text x="29" y="29" font-size="8" fill="#333" text-anchor="middle" dy=".3em">${percentage}%</text>
+                <svg class="progress-ring" width="58" height="58">
+                    <circle class="progress-ring__circle-bg" cx="29" cy="29" r="24" stroke="#ccc" stroke-width="6"></circle>
+                    <circle class="progress-ring__circle progress-ring__circle-individual" cx="29" cy="29" r="24" stroke="#4CAF50" stroke-width="6" style="stroke-dasharray: ${percentage} 100;"></circle>
                 </svg>
-                <div>
+                <span class="progress-percentage_individual">${percentage}%</span>
+                <div class="ticket-details">
                     <h6>${ticket.name}</h6>
                     <p>${issued}/${capacity} tickets sold</p>
                 </div>
@@ -389,11 +387,8 @@ function passcodeMatch(response, isajax = 1) {
         `;
         $('.ticket-info_hidden_all').append(progressHtml);
     });
-    console.log("Ticket info updated.");
 
-    // Insert the shortcode HTML output into the page
     $('.short_code_here').html(response.shortcode_output);
-    console.log("Shortcode output inserted.");
 
     if (!isajax) {
         startScanQR(response.event_id);
