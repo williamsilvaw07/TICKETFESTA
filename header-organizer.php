@@ -3331,6 +3331,14 @@ html .tickets-sold-column , html .tribe-list-column-title {
         /******end */
 
 
+
+        /****orginser seetings  */
+.settings-tab-content h2 {
+    font-size: 25px;
+    font-weight: 500;
+    margin-top: 30px;
+
+}
         /****admin settings page */
 
         .page-template-organizer-template-php .orgerinser_settings_form input{
