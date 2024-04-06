@@ -3,15 +3,15 @@
 Template Name: Organizer Scanner
 */
 
-// Include the appropriate header
+// Include the custom header
 $custom_header_path = get_stylesheet_directory() . '/scanner/header-organizer-scanner.php';
 if (file_exists($custom_header_path)) {
     require_once($custom_header_path);
 } else {
-    get_header(); // Use default header if custom header not found
+    get_header();
 }
 
-echo '<!-- Debugging Output -->';
+// Display user and role info for debugging
 if (is_user_logged_in()) {
     $current_user = wp_get_current_user();
     echo '<p>Logged in as: ' . $current_user->user_login . '</p>';
@@ -22,12 +22,11 @@ if (is_user_logged_in()) {
 }
 
 ?>
-
 <div class="content-wrapper">
     <div class="content">
         <div class="container-fluid">
             <?php
-            if (is_user_logged_in() && current_user_can('organiser') && !current_user_can('verifier')) {
+            if (is_user_logged_in() && (current_user_can('organiser') || current_user_can('administrator'))) {
                 if (have_posts()) {
                     while (have_posts()) {
                         the_post();
@@ -35,19 +34,16 @@ if (is_user_logged_in()) {
                     }
                 }
             } else {
-                if (is_user_logged_in()) {
-                    echo '<div class="scanner_login_divs"><h2>Access Denied</h2><p>You do not have the necessary permissions to access this page. Please contact the site administrator if you believe this is an error.</p></div>';
-                } else {
-                    echo '<div class="scanner_login_divs"><h2>This page is for organisers only. Please log in.</h2>';
-                    echo do_shortcode('[xoo_el_inline_form tabs="login" active="login"]');
-                }
+                echo '<div class="scanner_login_divs"><h2>Access Denied</h2><p>You do not have the necessary permissions to access this page. Please contact the site administrator if you believe this is an error.</p></div>';
             }
             ?>
         </div>
     </div>
 </div>
 
-<?php get_footer(); ?>
+<?php
+get_footer();
+?>
 
 
 
