@@ -121,7 +121,7 @@
                 // Handle the scanned code as needed
                 $('#html5-qrcode-button-camera-stop').trigger('click');
                 $('#html5-qrcode-button-camera-start').text('Scan Another Ticket');
-               // console.log(`Code scanned = ${decodedText}`, decodedResult);
+                console.log(`Code scanned = ${decodedText}`, decodedResult);
                 processQRCode(eventID, decodedText);
             }
     
@@ -148,12 +148,12 @@
                     $('.scanner_login_div').hide(); 
                     $('.change_event_btn').css("display", "block");  
                     // Handle the response from the server
-                    //console.log('ajax response', response);
+                    console.log('ajax response', response);
                     if(response.match){
                         event_id_global = response.event_id;
                         // startScanQR(response.event_id);
                         if (!response || !response.event_data) {
-                           // console.error("Invalid response data.");
+                            console.error("Invalid response data.");
                             return;
                         } else{
                             $('.tabs-container').show();
@@ -168,7 +168,7 @@
                 },
                 error: function(xhr, status, error) {
                     // Handle errors
-                    //console.error(xhr.responseText);
+                    console.error(xhr.responseText);
                 }
             });
         }
@@ -210,7 +210,7 @@
                 },
                 error: function(xhr, status, error) {
                     // Handle errors
-                    //console.error(xhr.responseText);
+                    console.error(xhr.responseText);
                 }
             });
         }
@@ -234,7 +234,7 @@
     // Function to calculate percentage
 function calculatePercentage(issued, total) {
     if (total === 0) {
-       // console.error("Total tickets cannot be 0.");
+        console.error("Total tickets cannot be 0.");
         return 0;
     }
     return (issued / total) * 100;
@@ -244,7 +244,7 @@ function calculatePercentage(issued, total) {
 function updateProgressCircle(issuedTickets, totalTickets) {
     var percentage = calculatePercentage(issuedTickets, totalTickets);
     if (isNaN(percentage)) {
-        //console.error("Percentage calculation error.");
+        console.error("Percentage calculation error.");
         return;
     }
 
@@ -269,7 +269,7 @@ function updateProgressCircle(issuedTickets, totalTickets) {
 function updateIndividualProgressCircle(container, issuedTickets, totalTickets) {
     var percentage = calculatePercentage(issuedTickets, totalTickets);
     if (isNaN(percentage)) {
-        //console.error("Percentage calculation error.");
+        console.error("Percentage calculation error.");
         return;
     }
 
@@ -328,7 +328,7 @@ function createCheckedInProgressCircle(checkedIn, issuedTickets) {
 // Function to update the checked-in progress component specifically for .ticket_checkedin_main_stats
 function updateCheckedInProgress(response) {
     if (!response || !response.event_data) {
-        //console.error("Invalid response data.");
+        console.error("Invalid response data.");
         return;
     }
 
@@ -338,7 +338,7 @@ function updateCheckedInProgress(response) {
 
     // Check for NaN values after parsing
     if (isNaN(checkedIn) || isNaN(issuedTickets)) {
-        //console.error("Error parsing checked-in information.");
+        console.error("Error parsing checked-in information.");
         return;
     }
 
@@ -351,55 +351,89 @@ function updateCheckedInProgress(response) {
 
 
 
-function passcodeMatch(response, isajax = 1) {
-    console.log("AJAX Response received:", response);
 
-    if (!response || !response.event_data) {
-        console.error("Invalid response data received from server.");
-        return;
-    }
+        // Function to handle passcode match response
+        function passcodeMatch(response,isajax = 1) {
+            if (!response || !response.event_data) {
+                console.error("Invalid response data.");
+                return;
+            }
 
-    if (response.shortcode_output === "") {
-        console.error("Shortcode output is empty. Check server-side generation.");
-    }
+            // $('.tabs-container').show();
+            $('.event-container .event-image').attr('src', response.event_data.thumbnail_url);
+            $('.event-container .name span').text(response.event_data.name);
+            $('.event-container .date span').text(response.event_data.start_date);
+            $('.checkedin_ticket-count span').text(response.event_data.checked_in);
+            $('.ticket-info_hidden_all ').text();
+            $('.short_code_here').text(response.shortcode_output);
 
-    $('.event-container .event-image').attr('src', response.event_data.thumbnail_url);
-    $('.event-container .name span').text(response.event_data.name);
-    $('.event-container .date span').text(response.event_data.start_date);
-    $('.checkedin_ticket-count span').text(response.event_data.checked_in);
 
-    response.event_data.ticket_list.forEach(function(ticket) {
-        var issued = parseInt(ticket.issued_tickets, 10);
-        var capacity = parseInt(ticket.capacity, 10);
-        var percentage = (issued / capacity * 100).toFixed(1);
+            // Extract the ticket information
+            var issuedTickets = parseInt(response.event_data.issued_tickets, 10);
+            var totalTickets = parseInt(response.event_data.total_tickets_available, 10);
 
-        var progressHtml = `
-            <div class="ticket-progress-container">
-                <div class="ticket-progress-container_svg">
-                    <svg class="progress-ring" width="58" height="58">
+            // Check for NaN values after parsing
+            if (isNaN(issuedTickets) || isNaN(totalTickets)) {
+                console.error("Error parsing ticket information.");
+                return;
+            }
+
+            // Calculate the checked-in percentage
+            var checkedIn = parseInt(response.event_data.checked_in.split(' / ')[0], 10);
+            var checkedInPercentage = checkedIn === 0 ? 0 : Math.ceil((checkedIn / issuedTickets) * 100); // Round up the percentage
+            var checkedInText = checkedInPercentage === 0 ? '0%' : checkedInPercentage.toFixed(0) + '%';
+            
+
+            // Update the progress circle with the new data
+            updateProgressCircle(issuedTickets, totalTickets);
+
+            // Update the checked-in progress component
+            updateCheckedInProgress(response);
+
+            // Clear existing ticket information
+            $('.ticket-info_hidden_all').empty();
+
+            // Display ticket information with percentages
+            var ticketList = response.event_data.ticket_list;
+            ticketList.forEach(function(ticket) {
+                var issued = parseInt(ticket.issued_tickets, 10);
+                var capacity = parseInt(ticket.capacity, 10);
+                var percentage = calculatePercentage(issued, capacity).toFixed(1); // Calculate percentage for each ticket type
+
+                // HTML for individual progress components
+                var individualProgressHtml = `
+                    <div class="ticket-progress-container">
+                        <div class="ticket-progress-container_svg">
+                        <svg class="progress-ring" width="58" height="58">
                         <circle class="progress-ring__circle-bg" cx="29" cy="29" r="24" stroke-width="6"></circle>
-                        <circle class="progress-ring__circle progress-ring__circle-individual" cx="29" cy="29" r="24" stroke-width="6" style="stroke-dasharray: ${percentage} 100;"></circle>
+                        <circle class="progress-ring__circle progress-ring__circle-individual" cx="29" cy="29" r="24" stroke-width="6"></circle>
                     </svg>
-                    <span class="progress-percentage_individual">${percentage}%</span>
-                </div>
-                <div class="ticket-details info_div">
-                    <h6>Total Ticket Sold</h6>
-                    <div class="ticket-name">${ticket.name}</div>
-                    <p class="ticket-count">${issued} / ${capacity}</p>
-                </div>
-            </div>
-        `;
+                            <span class="progress-percentage_individual">${percentage}%</span>
+                        </div>
+                        <div class="ticket-details info_div">
+                            <h6>Total Ticket Sold</h6>
+                            <div class="ticket-name">${ticket.name}</div>
+                            <p class="ticket-count">${issued} / ${capacity}</p>
+                        </div>
+                    </div>
+                `;
 
-        $('.ticket-info_hidden_all').append(progressHtml);
-    });
+                // Append individual progress components to container
+                $('.ticket-info_hidden_all').append(individualProgressHtml);
 
-    $('.short_code_here').html(response.shortcode_output);
 
-    if (!isajax) {
-        startScanQR(response.event_id);
-    }
-}
+    
 
+
+                // Update individual progress circles with the correct percentage
+                updateIndividualProgressCircle($('.ticket-info_hidden_all .ticket-progress-container').last(), issued, capacity);
+            });
+
+            // Proceed with other functions like startScanQR...
+           if(!isajax){
+            startScanQR(response.event_id);
+        }
+        }
 
 
 
@@ -422,7 +456,7 @@ function passcodeMatch(response, isajax = 1) {
 
                  },
                  error: function(jqXHR, textStatus, errorThrown) {
-                    // console.error("AJAX Error:", textStatus, errorThrown);
+                     console.error("AJAX Error:", textStatus, errorThrown);
                  }
                  });
              }
@@ -597,9 +631,6 @@ function loadPasscodes() {
         $('#passcodes').append($('<option></option>').attr('value', passcode));
     });
 }
-
-
-
 
 
 
