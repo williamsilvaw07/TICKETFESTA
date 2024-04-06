@@ -121,7 +121,7 @@
                 // Handle the scanned code as needed
                 $('#html5-qrcode-button-camera-stop').trigger('click');
                 $('#html5-qrcode-button-camera-start').text('Scan Another Ticket');
-                console.log(`Code scanned = ${decodedText}`, decodedResult);
+               // console.log(`Code scanned = ${decodedText}`, decodedResult);
                 processQRCode(eventID, decodedText);
             }
     
@@ -148,12 +148,12 @@
                     $('.scanner_login_div').hide(); 
                     $('.change_event_btn').css("display", "block");  
                     // Handle the response from the server
-                    console.log('ajax response', response);
+                    //console.log('ajax response', response);
                     if(response.match){
                         event_id_global = response.event_id;
                         // startScanQR(response.event_id);
                         if (!response || !response.event_data) {
-                            console.error("Invalid response data.");
+                           // console.error("Invalid response data.");
                             return;
                         } else{
                             $('.tabs-container').show();
@@ -168,7 +168,7 @@
                 },
                 error: function(xhr, status, error) {
                     // Handle errors
-                    console.error(xhr.responseText);
+                    //console.error(xhr.responseText);
                 }
             });
         }
@@ -210,7 +210,7 @@
                 },
                 error: function(xhr, status, error) {
                     // Handle errors
-                    console.error(xhr.responseText);
+                    //console.error(xhr.responseText);
                 }
             });
         }
@@ -234,7 +234,7 @@
     // Function to calculate percentage
 function calculatePercentage(issued, total) {
     if (total === 0) {
-        console.error("Total tickets cannot be 0.");
+       // console.error("Total tickets cannot be 0.");
         return 0;
     }
     return (issued / total) * 100;
@@ -244,7 +244,7 @@ function calculatePercentage(issued, total) {
 function updateProgressCircle(issuedTickets, totalTickets) {
     var percentage = calculatePercentage(issuedTickets, totalTickets);
     if (isNaN(percentage)) {
-        console.error("Percentage calculation error.");
+        //console.error("Percentage calculation error.");
         return;
     }
 
@@ -269,7 +269,7 @@ function updateProgressCircle(issuedTickets, totalTickets) {
 function updateIndividualProgressCircle(container, issuedTickets, totalTickets) {
     var percentage = calculatePercentage(issuedTickets, totalTickets);
     if (isNaN(percentage)) {
-        console.error("Percentage calculation error.");
+        //console.error("Percentage calculation error.");
         return;
     }
 
@@ -328,7 +328,7 @@ function createCheckedInProgressCircle(checkedIn, issuedTickets) {
 // Function to update the checked-in progress component specifically for .ticket_checkedin_main_stats
 function updateCheckedInProgress(response) {
     if (!response || !response.event_data) {
-        console.error("Invalid response data.");
+        //console.error("Invalid response data.");
         return;
     }
 
@@ -338,7 +338,7 @@ function updateCheckedInProgress(response) {
 
     // Check for NaN values after parsing
     if (isNaN(checkedIn) || isNaN(issuedTickets)) {
-        console.error("Error parsing checked-in information.");
+        //console.error("Error parsing checked-in information.");
         return;
     }
 
@@ -352,7 +352,7 @@ function updateCheckedInProgress(response) {
 // Function to handle passcode match response
 function passcodeMatch(response, isajax = 1) {
     if (!response || !response.event_data) {
-        console.error("Invalid response data.");
+        //("Invalid response data.");
         return;
     }
 
@@ -370,7 +370,7 @@ function passcodeMatch(response, isajax = 1) {
     var totalTickets = parseInt(response.event_data.total_tickets_available, 10);
 
     if (isNaN(issuedTickets) || isNaN(totalTickets)) {
-        console.error("Error parsing ticket information.");
+        //console.error("Error parsing ticket information.");
         return;
     }
 
@@ -433,7 +433,7 @@ function passcodeMatch(response, isajax = 1) {
 
                  },
                  error: function(jqXHR, textStatus, errorThrown) {
-                     console.error("AJAX Error:", textStatus, errorThrown);
+                    // console.error("AJAX Error:", textStatus, errorThrown);
                  }
                  });
              }
