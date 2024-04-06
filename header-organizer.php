@@ -652,20 +652,23 @@ if (!defined('ABSPATH')) {
 
             #user-organizers-list .edit-link {
                 color: #FFA300 !important;
-                border-radius: 6px;
-                background: rgba(255, 163, 0, 0.20);
+    border-radius: 6px;
+    background: rgba(255, 163, 0, 0.40);
+    font-weight: 400;
             }
 
             #user-organizers-list .delete-link {
                 color: #E53D3D !important;
                 border-radius: 6px;
-                background: rgba(166, 28, 28, 0.20);
+                font-weight: 400;
+                background: rgba(166, 28, 28, 0.40);
             }
 
             #user-organizers-list .profile-link {
                 color: #21DAB8 !important;
                 border-radius: 6px;
-                background: rgba(19, 180, 151, 0.20);
+                font-weight: 400;
+                background: rgba(19, 180, 151, 0.40);
             }
 
 
