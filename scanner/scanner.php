@@ -4,7 +4,13 @@ Template Name: Organizer Scanner
 */
 
 // Include the custom header
-get_header();
+$custom_header_path = get_stylesheet_directory() . '/scanner/header-organizer-scanner.php';
+if (file_exists($custom_header_path)) {
+    require_once($custom_header_path);
+} else {
+    // Fallback to the default header if your custom header is not found
+    get_header();
+}
 ?>
 
 <!-- Content Wrapper. Contains page content -->
@@ -12,20 +18,20 @@ get_header();
     <!-- Main content -->
     <div class="content">
         <div class="container-fluid">
-            <?php
-            // Check if the current user has the required role to access this page
-            if (!current_user_can('organiser') && !current_user_can('administrator') && !current_user_can('verifier')) {
-                // Display the login form directly on the page for users without the required role
-                echo do_shortcode('[xoo_el_inline_form tabs="login" active="login"]');
-                // Stop further execution
-                return;
-            }
 
-            // Display the content for users with the required role
+  
+              <!--  <p class="scanner_vrsion">Version 1.0</p> -->
+      <div class="scanner_login_divs"> 
+
+
+          <!--<h2 class="tribe-community-events-list-title">Ticket Scanner</h2>-->
+        <button class="change_event_btn" style="display:none"><i class="fas fa-sign-in-alt"></i> Change Event</button>
+        </div>
+            <?php
             if (have_posts()) :
                 while (have_posts()) :
                     the_post();
-                    the_content();
+                      the_content();
                 endwhile;
             endif;
             ?>
@@ -37,11 +43,14 @@ get_header();
 
 <?php
 // Include the custom footer
-get_footer();
+$custom_footer_path = get_stylesheet_directory() . '/scanner/footer-organizer-scanner.php';
+if (file_exists($custom_footer_path)) {
+    require_once($custom_footer_path);
+} else {
+    // Fallback to the default footer if your custom footer is not found
+    get_footer();
+}
 ?>
-
-
-
 
 
 
