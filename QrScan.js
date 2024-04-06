@@ -349,17 +349,12 @@ function updateCheckedInProgress(response) {
     $('.ticket_checkedin_main_stats .checkedin-progress-ring-container').html(checkedInProgressHtml);
 }
 
-
 // Function to handle passcode match response
 function passcodeMatch(response, isajax = 1) {
-    console.log("Response received:", response);  // Log the full response for debugging
-
     if (!response || !response.event_data) {
         console.error("Invalid response data.");
         return;
     }
-
-    console.log("Event data:", response.event_data);  // Log the event data for inspection
 
     // Display event details
     $('.event-container .event-image').attr('src', response.event_data.thumbnail_url);
@@ -375,15 +370,9 @@ function passcodeMatch(response, isajax = 1) {
     var totalTickets = parseInt(response.event_data.total_tickets_available, 10);
 
     if (isNaN(issuedTickets) || isNaN(totalTickets)) {
-        console.error("Error parsing ticket information: Issued Tickets -", issuedTickets, "Total Tickets -", totalTickets);
+        console.error("Error parsing ticket information.");
         return;
     }
-
-    var checkedIn = parseInt(response.event_data.checked_in.split(' / ')[0], 10);
-    var checkedInPercentage = (checkedIn === 0 ? 0 : Math.ceil((checkedIn / issuedTickets) * 100));
-    var checkedInText = checkedInPercentage === 0 ? '0%' : checkedInPercentage.toFixed(0) + '%';
-
-    console.log("Checked In Percentage:", checkedInText);  // Log the calculated checked-in percentage
 
     // Display ticket information and update progress indicators
     response.event_data.ticket_list.forEach(function(ticket) {
@@ -391,14 +380,12 @@ function passcodeMatch(response, isajax = 1) {
         var capacity = parseInt(ticket.capacity, 10);
         var percentage = (issued / capacity * 100).toFixed(1); // Calculate percentage for each ticket type
 
-        console.log("Ticket Details:", ticket.name, "Issued:", issued, "Capacity:", capacity, "Percentage:", percentage);
-
         var individualProgressHtml = `
             <div class="ticket-progress-container">
                 <div class="ticket-progress-container_svg">
                     <svg class="progress-ring" width="58" height="58">
                         <circle class="progress-ring__circle-bg" cx="29" cy="29" r="24" stroke-width="6"></circle>
-                        <circle class="progress-ring__circle progress-ring__circle-individual" cx="29" cy="29" r="24" stroke-width="6" style="stroke-dasharray: ${percentage}, 100;"></circle>
+                        <circle class="progress-ring__circle progress-ring__circle-individual" cx="29" cy="29" r="24" stroke-width="6" style="stroke-dasharray: ${percentage} 100;"></circle>
                     </svg>
                     <span class="progress-percentage_individual">${percentage}%</span>
                 </div>
@@ -413,6 +400,9 @@ function passcodeMatch(response, isajax = 1) {
         // Append individual progress components to container
         $('.ticket-info_hidden_all').append(individualProgressHtml);
     });
+
+    // Log shortcode output for debugging
+    console.log("Shortcode output:", response.shortcode_output);
 
     // Insert the shortcode HTML output into the page
     $('.short_code_here').html(response.shortcode_output);
