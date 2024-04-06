@@ -21,6 +21,7 @@ if (is_user_logged_in()) {
             <?php
             // Main role-checking condition
             if (is_user_logged_in() && (current_user_can('organiser') || current_user_can('administrator')) && !current_user_can('verifier')) {
+                // Allowed access
                 if (have_posts()) {
                     while (have_posts()) {
                         the_post();
