@@ -4787,7 +4787,9 @@ function validate_event_pass() {
                 'total_tickets_available' => $total_capacity,
                 'name' => get_the_title($event_id),
                 'thumbnail_url' => get_the_post_thumbnail_url($event_id, 'medium'),
-                'checked_in' => sprintf('%d / %d', $total_checked_in, $total_issued_tickets)
+                'checked_in' => sprintf('%d / %d', $total_checked_in, $total_issued_tickets),
+                'shortcode_output' => $shortcode_output
+
             ];
         }
     }
