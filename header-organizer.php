@@ -191,6 +191,15 @@ if (!defined('ABSPATH')) {
                                     class="nav-text">Gallery</span></a>
                         </li>
 
+
+                        <li class="admin_dashboard-sidebar-item">
+                            <a href="/dashboard/organisation-settings/"><i class="fa-solid fa-user-group"></i>
+                                
+                            <span
+                                    class="nav-text">Scanner Multiple access
+
+</span></a>
+                        </li>
                         <li class="admin_dashboard-sidebar-item">
                             <a href="/dashboard/organisation-settings/"><i class="fas fa-cog"></i><span
                                     class="nav-text">Organisation Settings
