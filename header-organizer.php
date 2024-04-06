@@ -192,13 +192,7 @@ if (!defined('ABSPATH')) {
                         </li>
 
 
-                        <li class="admin_dashboard-sidebar-item">
-                            <a href="/dashboard/organisation-settings/"><i class="fa-solid fa-user-group"></i>
-                                
-                            <span
-                                    class="nav-text">Scanner Access
-
-</span></a> </li>
+                
 
 
 <li class="admin_dashboard-sidebar-item">
@@ -209,12 +203,7 @@ if (!defined('ABSPATH')) {
 
 </span></a> </li>
 
-                        <li class="admin_dashboard-sidebar-item">
-                            <a href="/dashboard/organisation-settings/"><i class="fas fa-cog"></i><span
-                                    class="nav-text">Organisation Settings
-
-</span></a>
-                        </li>
+                      
 
 
                         <li class="admin_dashboard-sidebar-item admin_dashboard-coming-soon">
@@ -231,10 +220,13 @@ if (!defined('ABSPATH')) {
 
                 <nav class="lower_admin_dashboard-sidebar">
                     <ul class="admin_dashboard-sidebar-list lower_admin_dashboard-sidebar-list">
-                        <li class="admin_dashboard-sidebar-item">
-                            <a href="/organisers-setting/"><i class="fas fa-cog"></i><span
-                                    class="nav-text">Settings</span></a>
+                    <li class="admin_dashboard-sidebar-item">
+                            <a href="/dashboard/organisation-settings/"><i class="fas fa-cog"></i><span
+                                    class="nav-text">Organisation Settings
+
+</span></a>
                         </li>
+                        
                         <li class="admin_dashboard-sidebar-item">
     <a href="<?php echo esc_url(wp_logout_url(home_url())); ?>"><i class="fas fa-sign-out-alt"></i><span class="nav-text">Logout</span></a>
 </li>
