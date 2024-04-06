@@ -3,13 +3,11 @@
 Template Name: Custom Role Control Template
 */
 
-// Check if the user is logged in and has the 'organiser' or 'administrator' role
+// Dynamically choose the header based on user role
 if (is_user_logged_in() && (current_user_can('organiser') || current_user_can('administrator'))) {
-    // Include the custom header for organisers and administrators
-    get_header('organizer');
+    get_header('organizer'); // Use the custom header for organisers/administrators
 } else {
-    // Include the standard header for other users
-    get_header();
+    get_header(); // Use the default header for other users
 }
 ?>
 
@@ -19,24 +17,21 @@ if (is_user_logged_in() && (current_user_can('organiser') || current_user_can('a
     <div class="content">
         <div class="container-fluid">
             <?php
-            // Check if the user is logged in and has the 'organiser' or 'administrator' role
+            // Check user's role and display content accordingly
             if (is_user_logged_in() && (current_user_can('organiser') || current_user_can('administrator'))) {
-                // User is logged in and has the required role, display the content
+                // Display page content if user has the correct role
                 if (have_posts()) :
                     while (have_posts()) :
                         the_post();
-                        the_content(); // The main content of the page
+                        the_content();
                     endwhile;
                 endif;
             } else {
-                // Different messages based on user status
+                // Show different messages or actions based on user's login status
                 if (is_user_logged_in()) {
-                    // User is logged in but does not have the correct role
                     echo '<p>This page is limited to organizers only. Please change your account role to \'organizer\' to view this content. Note that this change is irreversible.</p>';
-                    // Provide a button to switch the role to 'organiser'
                     echo '<button onclick="switchUserRole()">Switch My Account to Organiser</button>';
                 } else {
-                    // User is not logged in
                     echo '<p>This page is for organisers only. Please log in.</p>';
                     echo do_shortcode('[xoo_el_inline_form tabs="login" active="login"]');
                 }
@@ -48,7 +43,13 @@ if (is_user_logged_in() && (current_user_can('organiser') || current_user_can('a
 </div>
 <!-- /.content-wrapper -->
 
+<!-- Include Toastr and SweetAlert2 -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastr@latest/toastr.min.css">
+<script src="https://cdn.jsdelivr.net/npm/toastr@latest/toastr.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+
 <script>
+// Function to switch user role with Toastr notification
 function switchUserRole() {
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "/wp-admin/admin-ajax.php", true);
@@ -56,9 +57,29 @@ function switchUserRole() {
     xhr.onreadystatechange = function () {
         if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
             toastr.success("Your account has been updated to organiser.");
-            location.reload(); // Reload the page to update content
+            location.reload(); // Reload the page to reflect the role change
         }
     }
+    xhr.send("action=switch_to_organiser");
+}
+
+// Function to update role with SweetAlert2 for handling responses
+function updateRole() {
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "/wp-admin/admin-ajax.php", true);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhr.onload = function() {
+        if (this.status >= 200 && this.status < 300) {
+            var response = JSON.parse(this.responseText);
+            Swal.fire('Success!', response.data, 'success');
+            location.reload();
+        } else {
+            Swal.fire('Error!', 'Failed to update role. Please try again.', 'error');
+        }
+    };
+    xhr.onerror = function() {
+        Swal.fire('Error!', 'Network Error. Please check your connection and try again.', 'error');
+    };
     xhr.send("action=switch_to_organiser");
 }
 </script>
@@ -67,10 +88,3 @@ function switchUserRole() {
 // Include the custom footer
 get_footer();
 ?>
-
-
-
-
-
-
-
