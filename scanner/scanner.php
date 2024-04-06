@@ -30,11 +30,11 @@ if (file_exists($custom_header_path)) {
             } else {
                 // Inform the user if they are logged in but don't have the right role
                 if (is_user_logged_in()) {
-                    echo '<div class="scanner_login_divs"><h2>Access Denied</h2><p>You do not have the necessary permissions to access this page. Please contact the Support if you believe this is an error.</p></div>';
+                    echo '<div class="scanner_login_divs"><h2>Access Denied</h2><p>You do not have the necessary permissions to access this page. Please contact the site administrator if you believe this is an error.</p></div>';
                 } else {
-                    // Display the login form if user is not logged in
-                    echo '<div class="scanner_login_divs"><h2>Please Log In</h2>';
-                    wp_login_form();
+                    // Display the login link that triggers the popup
+                    echo '<div class="scanner_login_divs"><h2>Please Log In</h2><p>You need to log in to access this page.</p>';
+                    echo do_shortcode('[xoo_el_action type="login" display="button" text="Log In"]');
                     echo '</div>';
                 }
                 // Forgot password link
@@ -57,6 +57,7 @@ if (file_exists($custom_footer_path)) {
     get_footer();
 }
 ?>
+
 
 
 
