@@ -3,9 +3,14 @@
 Template Name: Custom Role Control Template
 */
 
-// Include the custom header
-get_header('organizer'); // Include the header
-
+// Check if the user is logged in and has the 'organiser' or 'administrator' role
+if (is_user_logged_in() && (current_user_can('organiser') || current_user_can('administrator'))) {
+    // Include the custom header for organisers and administrators
+    get_header('organizer');
+} else {
+    // Include the standard header for other users
+    get_header();
+}
 ?>
 
 <!-- Content Wrapper. Contains page content -->
@@ -28,7 +33,6 @@ get_header('organizer'); // Include the header
                 if (is_user_logged_in()) {
                     // User is logged in but does not have the correct role
                     echo '<p>This page is limited to organizers only. Please change your account role to \'organizer\' to view this content. Note that this change is irreversible.</p>';
-
                     // Provide a button to switch the role to 'organiser'
                     echo '<button onclick="switchUserRole()">Switch My Account to Organiser</button>';
                 } else {
@@ -45,8 +49,6 @@ get_header('organizer'); // Include the header
 <!-- /.content-wrapper -->
 
 <script>
-
-    
 function switchUserRole() {
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "/wp-admin/admin-ajax.php", true);
@@ -59,14 +61,12 @@ function switchUserRole() {
     }
     xhr.send("action=switch_to_organiser");
 }
-
 </script>
 
 <?php
 // Include the custom footer
 get_footer();
 ?>
-
 
 
 
