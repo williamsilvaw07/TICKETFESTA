@@ -3,61 +3,47 @@
 Template Name: Organizer Scanner
 */
 
-// Include the custom header
-$custom_header_path = get_stylesheet_directory() . '/scanner/header-organizer-scanner.php';
-if (file_exists($custom_header_path)) {
-    require_once($custom_header_path);
-} else {
-    // Fallback to the default header if your custom header is not found
-    get_header();
+// Include the correct header based on user role
+get_header(is_user_logged_in() && (current_user_can('organiser') || current_user_can('administrator')) ? 'organizer' : '');
+
+// Display current user's roles for debugging
+if (is_user_logged_in()) {
+    $current_user = wp_get_current_user();
+    echo '<p>Logged in as: ' . $current_user->user_login . '</p>';
+    echo '<p>Current User Roles: ' . implode(', ', $current_user->roles) . '</p>';
 }
+
 ?>
 
-<!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
-    <!-- Main content -->
     <div class="content">
         <div class="container-fluid">
             <?php
-            // Check if the user is logged in and has the 'organiser' or 'administrator' role, and not 'verifier'
+            // Main role-checking condition
             if (is_user_logged_in() && (current_user_can('organiser') || current_user_can('administrator')) && !current_user_can('verifier')) {
-                if (have_posts()) :
-                    while (have_posts()) :
+                if (have_posts()) {
+                    while (have_posts()) {
                         the_post();
                         the_content();
-                    endwhile;
-                endif;
-            } else {
-                // Inform the user if they are logged in but don't have the right role
-                if (is_user_logged_in()) {
-                    echo '<div class="scanner_login_divs"><h2>Access Denied</h2><p>You do not have the necessary permissions to access this page. Please contact the site administrator if you believe this is an error.</p></div>';
-                } else {
-                    // Display an inline login form if user is not logged in
-                    echo '<div class="scanner_login_divs">';
-                    echo do_shortcode('[xoo_el_inline_form tabs="login" active="login"]');
-                    echo '</div>';
+                    }
                 }
-            
+            } else {
+                if (is_user_logged_in()) {
+                    echo '<div class="scanner_login_divs"><h2>Access Denied</h2><p>You do not have the necessary permissions to access this page. If you believe this is an error, please contact the site administrator.</p></div>';
+                } else {
+                    echo '<div class="scanner_login_divs"><h2>This page is for organisers only. Please log in.</h2>';
+                    echo do_shortcode('[xoo_el_inline_form tabs="login" active="login"]');
+                }
             }
             ?>
-        </div><!-- /.container-fluid -->
+        </div>
     </div>
-    <!-- /.content -->
 </div>
-<!-- /.content-wrapper -->
 
 <?php
-// Include the custom footer
-$custom_footer_path = get_stylesheet_directory() . '/scanner/footer-organizer-scanner.php';
-if (file_exists($custom_footer_path)) {
-    require_once($custom_footer_path);
-} else {
-    // Fallback to the default footer if your custom footer is not found
-    get_footer();
-}
+// Footer
+get_footer();
 ?>
-
-
 
 
 
