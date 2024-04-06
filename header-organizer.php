@@ -3340,7 +3340,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
 
 }
 
-.qr-scan-content.settings-tab-content.active h2 + div {
+#emailTable {
     margin-top: 20px;
 }
         /****admin settings page */
