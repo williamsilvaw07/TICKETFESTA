@@ -16,7 +16,7 @@ get_header();
             // Check if the current user has the required role to access this page
             if (!current_user_can('organiser') && !current_user_can('administrator') && !current_user_can('verifier')) {
                 // Display the login form directly on the page for users without the required role
-                wp_login_form();
+                echo do_shortcode('[xoo_el_inline_form tabs="login" active="login"]');
                 // Stop further execution
                 return;
             }
@@ -39,7 +39,6 @@ get_header();
 // Include the custom footer
 get_footer();
 ?>
-
 
 
 
