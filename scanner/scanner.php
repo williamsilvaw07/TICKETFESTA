@@ -18,22 +18,22 @@ if (file_exists($custom_header_path)) {
     <!-- Main content -->
     <div class="content">
         <div class="container-fluid">
-
-  
-              <!--  <p class="scanner_vrsion">Version 1.0</p> -->
-      <div class="scanner_login_divs"> 
-
-
-          <!--<h2 class="tribe-community-events-list-title">Ticket Scanner</h2>-->
-        <button class="change_event_btn" style="display:none"><i class="fas fa-sign-in-alt"></i> Change Event</button>
-        </div>
             <?php
-            if (have_posts()) :
-                while (have_posts()) :
-                    the_post();
-                      the_content();
-                endwhile;
-            endif;
+            // Check if the user is logged in and has the 'organiser' role, but not 'administrator' or 'verifier'
+            if (is_user_logged_in() && current_user_can('organiser') && !current_user_can('administrator') && !current_user_can('verifier')) {
+                if (have_posts()) :
+                    while (have_posts()) :
+                        the_post();
+                        the_content();
+                    endwhile;
+                endif;
+            } else {
+                // Display the login form if user is not logged in or does not have the 'organiser' role
+                echo '<div class="scanner_login_divs">';
+                echo '<h2>Please Log In</h2>';
+                wp_login_form();
+                echo '</div>';
+            }
             ?>
         </div><!-- /.container-fluid -->
     </div>
