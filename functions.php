@@ -4687,16 +4687,6 @@ function custom_qr_scanner_shortcode() {
 </div>  
 
 
-                </div>
-
-
-
-
-
-
-
-
-
                     <div class="event-container single_ticket_section">
 
                     <div class="ticket_dropdown">
@@ -4719,7 +4709,10 @@ function custom_qr_scanner_shortcode() {
                 
 </div>
 </div>
-                
+         
+<div class="short_code_here">
+    <!-- Content loaded via AJAX will appear here -->
+</div>
 
 
 </div>
@@ -4966,6 +4959,30 @@ function generate_unique_random_hash($length) {
 
     return $unique_hash;
 }
+
+
+
+
+
+add_action('wp_ajax_load_attendees_report', 'handle_load_attendees_report');
+
+
+function handle_load_attendees_report() {
+    if (isset($_POST['event_id']) && !empty($_POST['event_id'])) {
+        $event_id = intval($_POST['event_id']);  // Sanitize and validate the incoming event ID
+        $shortcode = '[tribe_community_tickets view="attendees_report" id="' . $event_id . '"]';
+        echo do_shortcode($shortcode);
+    } else {
+        echo 'No event ID provided.';
+    }
+    wp_die();  // Always terminate AJAX handlers correctly
+}
+
+
+
+
+
+
 
 
 

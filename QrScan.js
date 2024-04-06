@@ -629,3 +629,28 @@ function loadPasscodes() {
 }
 
 
+
+
+
+
+
+
+
+function loadEventAttendeesReport(eventId) {
+    jQuery.ajax({
+        url: ajaxurl,  // Ensure ajaxurl is defined for front-end usage
+        type: 'POST',
+        data: {
+            'action': 'load_attendees_report',  // The WP AJAX action hook
+            'event_id': eventId  // Passing the event ID
+        },
+        success: function(response) {
+            // Assuming the server returns the shortcode HTML
+            document.querySelector('.short_code_here').innerHTML = response;
+        },
+        error: function() {
+            console.error('Failed to retrieve event details.');
+            document.querySelector('.short_code_here').innerHTML = 'Unable to load event details. Please try again.';
+        }
+    });
+}
