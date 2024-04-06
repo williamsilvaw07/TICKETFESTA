@@ -10,25 +10,14 @@ if (file_exists($custom_header_path)) {
 } else {
     get_header();  // Default site header for other users
 }
-
-// Debugging output
-echo '<!-- Debugging Output -->';
-if (is_user_logged_in()) {
-    $current_user = wp_get_current_user();
-    echo '<p>Logged in as: ' . $current_user->user_login . '</p>';
-    echo '<p>Current User Roles: ' . implode(', ', $current_user->roles) . '</p>';
-    echo '<p>Can Organise: ' . (current_user_can('organiser') ? 'Yes' : 'No') . '</p>';
-    echo '<p>Is Admin: ' . (current_user_can('administrator') ? 'Yes' : 'No') . '</p>';
-    echo '<p>Is Verifier: ' . (current_user_can('verifier') ? 'Yes' : 'No') . '</p>';
-}
-
 ?>
 
 <div class="content-wrapper">
     <div class="content">
         <div class="container-fluid">
             <?php
-            if (is_user_logged_in() && (current_user_can('organiser') || current_user_can('administrator')) && !current_user_can('verifier')) {
+            // Adjusted conditional logic to grant access to 'administrator', 'verifier', and 'organiser'
+            if (is_user_logged_in() && (current_user_can('administrator') || current_user_can('organiser') || current_user_can('verifier'))) {
                 if (have_posts()) {
                     while (have_posts()) {
                         the_post();
@@ -40,7 +29,7 @@ if (is_user_logged_in()) {
                 if (is_user_logged_in()) {
                     echo '<div class="scanner_login_divs"><h2>Access Denied</h2><p>You do not have the necessary permissions to access this page. Please contact the site administrator if you believe this is an error.</p></div>';
                 } else {
-                    echo '<div class="scanner_login_divs"><div class="login_prompt"><h2>This page is for organisers only. Please log in:</h2></div>';
+                    echo '<div class="scanner_login_divs"><div class="login_prompt"><h2>This page is for organisers, verifiers, and administrators only. Please log in:</h2></div>';
                     echo do_shortcode('[xoo_el_inline_form tabs="login" active="login"]');
                     echo '</div>';
                 }
@@ -62,7 +51,6 @@ if (file_exists($custom_footer_path)) {
     get_footer();
 }
 ?>
-
 
 
 
