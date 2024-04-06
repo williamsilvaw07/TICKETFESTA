@@ -4,7 +4,7 @@ Template Name: Custom Role Control Template
 */
 
 // Include the custom header
-get_header();
+get_header('organizer'); // Include the header
 
 ?>
 
@@ -45,6 +45,8 @@ get_header();
 <!-- /.content-wrapper -->
 
 <script>
+
+    
 function switchUserRole() {
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "/wp-admin/admin-ajax.php", true);
