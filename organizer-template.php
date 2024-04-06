@@ -1,6 +1,6 @@
 <?php
 /*
-Template Name: Custom Access Control Template
+Template Name: Custom Role Control Template
 */
 
 // Include the custom header
@@ -24,8 +24,17 @@ get_header();
                     endwhile;
                 endif;
             } else {
-                // User is not logged in or does not have the required role, show login form
-                echo do_shortcode('[xoo_el_inline_form tabs="login" active="login"]');
+                // Different messages based on user status
+                if (is_user_logged_in()) {
+                    // User is logged in but does not have the correct role
+                    echo '<p>This page is restricted. Please switch your account to organiser to access this content.</p>';
+                    // Provide a button to switch the role to 'organiser'
+                    echo '<button onclick="switchUserRole()">Switch My Account to Organiser</button>';
+                } else {
+                    // User is not logged in
+                    echo '<p>This page is for organisers only.</p>';
+                    echo do_shortcode('[xoo_el_inline_form tabs="login" active="login"]');
+                }
             }
             ?>
         </div><!-- /.container-fluid -->
@@ -33,6 +42,22 @@ get_header();
     <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
+
+<script>
+function switchUserRole() {
+    // AJAX call to server to change user role
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "/wp-admin/admin-ajax.php", true);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhr.onreadystatechange = function () {
+        if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+            alert("Your role has been updated to organiser.");
+            location.reload(); // Reload the page to update content
+        }
+    }
+    xhr.send("action=switch_to_organiser");
+}
+</script>
 
 <?php
 // Include the custom footer

@@ -3620,6 +3620,10 @@ function ticketfeasta_follow($organizer_id, $user_id)
 }
 
 
+
+
+
+
 // Add a custom checkbox field to the checkout page
 // add_action( 'woocommerce_after_order_notes', 'add_subscribed_organiser_checkbox' );
 // function add_subscribed_organiser_checkbox( $checkout ) {
@@ -5226,52 +5230,27 @@ function get_author_list() {
 */
 
 
+// Register an AJAX action for logged-in users
+add_action('wp_ajax_switch_to_organiser', 'switch_to_organiser_role');
 
-
-
-
-function display_event_organizers_with_users() {
-    // Get all organizers
-    $organizers = tribe_get_organizers();
-
-    // Check if organizers exist
-    if ($organizers) {
-        $output = '<ul>';
-        foreach ($organizers as $organizer) {
-            // Get organizer ID
-            $organizer_id = tribe_get_organizer_id($organizer);
-
-            // Get organizer name
-            $organizer_name = get_the_title($organizer);
-
-            // Get users associated with the organizer
-            $users = get_users(array(
-                'meta_key' => 'organizer_id',
-                'meta_value' => $organizer_id,
-                'meta_compare' => '='
-            ));
-
-            // Prepare user names
-            $user_names = '';
-            foreach ($users as $user) {
-                $user_names .= $user->display_name . ', ';
-            }
-            $user_names = rtrim($user_names, ', ');
-
-            // Output organizer information
-            $output .= '<li>';
-            $output .= 'Organizer: ' . $organizer_name . ' (ID: ' . $organizer_id . ')<br>';
-            $output .= 'Users: ' . ($user_names ? $user_names : 'None');
-            $output .= '</li>';
-        }
-        $output .= '</ul>';
-
-        // Display the output
-        echo $output;
-    } else {
-        echo 'No organizers found.';
+/**
+ * Changes the current user's role to 'organiser' unless they are an administrator.
+ *
+ * This function is called via AJAX when a user clicks the "Switch My Account to Organiser" button
+ * on a specific page. It checks if the user is not an administrator to prevent any unwanted
+ * privilege escalation, and then changes their role to 'organiser'.
+ */
+function switch_to_organiser_role() {
+    // Get the current user object
+    $current_user = wp_get_current_user();
+    
+    // Check if the current user is not an administrator to prevent administrators
+    // from being demoted accidentally or maliciously.
+    if (!current_user_can('administrator')) {
+        // Set the user's role to 'organiser'
+        $current_user->set_role('organiser');
     }
+    
+    // Properly end the AJAX request
+    wp_die();
 }
-
-// Register shortcode to display event organizers with associated users
-add_shortcode('display_event_organizers_with_users', 'display_event_organizers_with_users');
