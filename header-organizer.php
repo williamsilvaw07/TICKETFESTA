@@ -3339,6 +3339,10 @@ html .tickets-sold-column , html .tribe-list-column-title {
     margin-top: 30px;
 
 }
+
+.qr-scan-content.settings-tab-content.active h2 + div {
+    margin-top: 20px;
+}
         /****admin settings page */
 
         .page-template-organizer-template-php .orgerinser_settings_form input{
