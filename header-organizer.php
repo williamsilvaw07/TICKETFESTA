@@ -196,7 +196,7 @@ if (!defined('ABSPATH')) {
                             <a href="/dashboard/organisation-settings/"><i class="fa-solid fa-user-group"></i>
                                 
                             <span
-                                    class="nav-text">Scanner Multiple access
+                                    class="nav-text">Scanner Access
 
 </span></a>
                         </li>
