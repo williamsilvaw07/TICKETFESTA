@@ -3366,7 +3366,14 @@ html .tickets-sold-column , html .tribe-list-column-title {
     padding: 9px 12px;
     font-size: 12px;
     height: fit-content;
-    margin: 20px 0;
+}
+
+#userEmail{
+    max-width: 600px;
+    margin-right: 10px;
+    padding: 4px 10px;
+    position: relative;
+    top: 1px;
 }
 
         /****admin settings page */
