@@ -3355,7 +3355,19 @@ html .tickets-sold-column , html .tribe-list-column-title {
     width: 100%;
     max-width: 900px;
 }
-
+#customRoleAssign {
+    background: #d3fa16 !important;
+    color: #000000 !important;
+    text-transform: capitalize !important;
+    text-decoration: none;
+    white-space: nowrap;
+    border-radius: 3px;
+    line-height: 1;
+    padding: 9px 12px;
+    font-size: 12px;
+    height: fit-content;
+    margin: 20px 0;
+}
 
         /****admin settings page */
 
