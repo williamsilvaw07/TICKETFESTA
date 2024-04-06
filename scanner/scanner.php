@@ -13,38 +13,31 @@ if (file_exists($custom_header_path)) {
 }
 ?>
 
-
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <!-- Main content -->
     <div class="content">
         <div class="container-fluid">
             <?php
-            // Display the current user's role for debugging purposes
-            if (is_user_logged_in()) {
-                $current_user = wp_get_current_user();
-                $roles = (array) $current_user->roles;
-                echo '<p>Current User Role: ' . implode(', ', $roles) . '</p>'; // Display all roles assigned to the user
-            }
-
-            // Check if the user has the 'organiser' or 'administrator' role, and not 'verifier'
+            // Check if the user is logged in and has the 'organiser' or 'administrator' role, and not 'verifier'
             if (is_user_logged_in() && (current_user_can('organiser') || current_user_can('administrator')) && !current_user_can('verifier')) {
                 if (have_posts()) :
                     while (have_posts()) :
                         the_post();
-                        the_content();  // Display the main content of the page
+                        the_content();
                     endwhile;
                 endif;
             } else {
-                // Different messages based on user status
+                // Inform the user if they are logged in but don't have the right role
                 if (is_user_logged_in()) {
                     echo '<div class="scanner_login_divs"><h2>Access Denied</h2><p>You do not have the necessary permissions to access this page. Please contact the site administrator if you believe this is an error.</p></div>';
                 } else {
-                    // Display a login form if the user is not logged in
-                    echo '<div class="scanner_login_divs"><h2>This page is for organisers only. Please log in.</h2>';
+                    // Display an inline login form if user is not logged in
+                    echo '<div class="scanner_login_divs">';
                     echo do_shortcode('[xoo_el_inline_form tabs="login" active="login"]');
                     echo '</div>';
                 }
+            
             }
             ?>
         </div><!-- /.container-fluid -->
