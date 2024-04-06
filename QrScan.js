@@ -348,11 +348,15 @@ function updateCheckedInProgress(response) {
     // Update the checked-in progress component in the DOM
     $('.ticket_checkedin_main_stats .checkedin-progress-ring-container').html(checkedInProgressHtml);
 }
-
-// Function to handle passcode match response
 function passcodeMatch(response, isajax = 1) {
-    if (!response || !response.event_data) {
-        //("Invalid response data.");
+    console.log("AJAX Response:", response);  // Log the entire response to see what you're getting back
+
+    if (!response) {
+        console.error("No response received.");
+        return;
+    }
+    if (!response.event_data) {
+        console.error("Invalid or missing event data.");
         return;
     }
 
@@ -361,57 +365,41 @@ function passcodeMatch(response, isajax = 1) {
     $('.event-container .name span').text(response.event_data.name);
     $('.event-container .date span').text(response.event_data.start_date);
     $('.checkedin_ticket-count span').text(response.event_data.checked_in);
+    console.log("Event details updated.");
 
-    // Clear existing ticket information
+    // Clear and update ticket information
     $('.ticket-info_hidden_all').empty();
-
-    // Extract ticket information and calculate statistics
-    var issuedTickets = parseInt(response.event_data.issued_tickets, 10);
-    var totalTickets = parseInt(response.event_data.total_tickets_available, 10);
-
-    if (isNaN(issuedTickets) || isNaN(totalTickets)) {
-        //console.error("Error parsing ticket information.");
-        return;
-    }
-
-    // Display ticket information and update progress indicators
     response.event_data.ticket_list.forEach(function(ticket) {
-        var issued = parseInt(ticket.issued_tickets, 10);
-        var capacity = parseInt(ticket.capacity, 10);
-        var percentage = (issued / capacity * 100).toFixed(1); // Calculate percentage for each ticket type
+        const issued = parseInt(ticket.issued_tickets, 10);
+        const capacity = parseInt(ticket.capacity, 10);
+        const percentage = (issued / capacity * 100).toFixed(1);
 
-        var individualProgressHtml = `
+        const progressHtml = `
             <div class="ticket-progress-container">
-                <div class="ticket-progress-container_svg">
-                    <svg class="progress-ring" width="58" height="58">
-                        <circle class="progress-ring__circle-bg" cx="29" cy="29" r="24" stroke-width="6"></circle>
-                        <circle class="progress-ring__circle progress-ring__circle-individual" cx="29" cy="29" r="24" stroke-width="6" style="stroke-dasharray: ${percentage} 100;"></circle>
-                    </svg>
-                    <span class="progress-percentage_individual">${percentage}%</span>
-                </div>
-                <div class="ticket-details info_div">
-                    <h6>Total Ticket Sold</h6>
-                    <div class="ticket-name">${ticket.name}</div>
-                    <p class="ticket-count">${issued} / ${capacity}</p>
+                <svg class="progress-ring" width="58">
+                    <circle cx="29" cy="29" r="24" fill="none" stroke="#ccc" stroke-width="6"></circle>
+                    <circle cx="29" cy="29" r="24" fill="none" stroke="#4CAF50" stroke-width="6" stroke-dasharray="${percentage} 100" stroke-dashoffset="0" transform="rotate(-90) translate(-58)"></circle>
+                    <text x="29" y="29" font-size="8" fill="#333" text-anchor="middle" dy=".3em">${percentage}%</text>
+                </svg>
+                <div>
+                    <h6>${ticket.name}</h6>
+                    <p>${issued}/${capacity} tickets sold</p>
                 </div>
             </div>
         `;
-
-        // Append individual progress components to container
-        $('.ticket-info_hidden_all').append(individualProgressHtml);
+        $('.ticket-info_hidden_all').append(progressHtml);
     });
-
-    // Log shortcode output for debugging
-    console.log("Shortcode output:", response.shortcode_output);
+    console.log("Ticket info updated.");
 
     // Insert the shortcode HTML output into the page
     $('.short_code_here').html(response.shortcode_output);
+    console.log("Shortcode output inserted.");
 
-    // Additional functions as needed, e.g., starting QR code scanning
     if (!isajax) {
         startScanQR(response.event_id);
     }
 }
+
 
 
 
