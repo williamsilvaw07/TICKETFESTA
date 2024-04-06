@@ -3341,7 +3341,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
 }
 
 #emailTable {
-    margin-top: 20px;
+    margin-top: 20px!important;
     border-collapse: separate;
     border-spacing: 0;
     border-width: 0;
