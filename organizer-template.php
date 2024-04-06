@@ -27,12 +27,13 @@ get_header();
                 // Different messages based on user status
                 if (is_user_logged_in()) {
                     // User is logged in but does not have the correct role
-                    echo '<p>This page is restricted. Please switch your account to organiser to access this content.</p>';
+                    echo '<p>This page is limited to organizers only. Please change your account role to \'organizer\' to view this content. Note that this change is irreversible.</p>';
+
                     // Provide a button to switch the role to 'organiser'
                     echo '<button onclick="switchUserRole()">Switch My Account to Organiser</button>';
                 } else {
                     // User is not logged in
-                    echo '<p>This page is for organisers only.</p>';
+                    echo '<p>This page is for organisers only. Please log in.</p>';
                     echo do_shortcode('[xoo_el_inline_form tabs="login" active="login"]');
                 }
             }
@@ -44,20 +45,44 @@ get_header();
 <!-- /.content-wrapper -->
 
 <script>
+
+
 function switchUserRole() {
-    // AJAX call to server to change user role
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "/wp-admin/admin-ajax.php", true);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.onreadystatechange = function () {
         if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-            alert("Your role has been updated to organiser.");
+            toastr.success("Your account has been updated to organiser.");
             location.reload(); // Reload the page to update content
         }
     }
     xhr.send("action=switch_to_organiser");
 }
+
+
+
 </script>
+<!-- Bootstrap Modal for Notifications -->
+<div class="modal fade" id="roleChangeModal" tabindex="-1" role="dialog" aria-labelledby="roleChangeModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="roleChangeModalLabel">Update Successful</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Your account has been updated to organiser.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 <?php
 // Include the custom footer
