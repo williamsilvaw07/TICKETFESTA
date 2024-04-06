@@ -3337,6 +3337,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
     font-size: 25px;
     font-weight: 500;
     margin-top: 30px;
+    margin-bottom:0
 
 }
 
