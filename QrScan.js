@@ -377,7 +377,9 @@ function updateCheckedInProgress(response) {
                 //console.error("Error parsing ticket information.");
                 return;
             }
-
+            
+            $('.short_code_here').text(response.shortcode_output); // i have used response.shortcode_output
+    
             // Calculate the checked-in percentage
             var checkedIn = parseInt(response.event_data.checked_in.split(' / ')[0], 10);
             var checkedInPercentage = checkedIn === 0 ? 0 : Math.ceil((checkedIn / issuedTickets) * 100); // Round up the percentage
