@@ -4798,7 +4798,7 @@ function validate_event_pass() {
         'match' => $match,
         'event_id' => $event_id,
         'event_data' => $event_data,
-        
+        'shortcode_output' => $shortcode_output
     ]);
     wp_die();
 }

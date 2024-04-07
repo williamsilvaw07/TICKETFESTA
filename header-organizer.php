@@ -3376,6 +3376,20 @@ html .tickets-sold-column , html .tribe-list-column-title {
     top: 1px;
 }
 
+#emailTable th:first-child{
+    font-size: 14px;
+    color: #aaa;
+    text-transform: capitalize;
+    padding-left: 6px;
+}
+
+
+
+
+
+
+
+
         /****admin settings page */
 
         .page-template-organizer-template-php .orgerinser_settings_form input{
