@@ -356,81 +356,89 @@ function updateCheckedInProgress(response) {
 
 
 
- // Function to handle passcode match response
-function passcodeMatch(response, isajax = 1) {
-    if (!response || !response.event_data || !Array.isArray(response.event_data.ticket_list)) {
-        console.error("Invalid response data or missing ticket list.");
-        return;
-    }
+        // Function to handle passcode match response
+        function passcodeMatch(response,isajax = 1) {
+            if (!response || !response.event_data) {
+                //console.error("Invalid response data.");
+                return;
+            }
 
-    // $('.tabs-container').show();
-    $('.event-container .event-image').attr('src', response.event_data.thumbnail_url);
-    $('.event-container .name span').text(response.event_data.name);
-    $('.event-container .date span').text(response.event_data.start_date);
-    $('.checkedin_ticket-count span').text(response.event_data.checked_in);
-    $('.ticket-info_hidden_all ').text();
+            // $('.tabs-container').show();
+            $('.event-container .event-image').attr('src', response.event_data.thumbnail_url);
+            $('.event-container .name span').text(response.event_data.name);
+            $('.event-container .date span').text(response.event_data.start_date);
+            $('.checkedin_ticket-count span').text(response.event_data.checked_in);
+            $('.ticket-info_hidden_all ').text();
 
-    // Extract the ticket information
-    var issuedTickets = parseInt(response.event_data.issued_tickets, 10);
-    var totalTickets = parseInt(response.event_data.total_tickets_available, 10);
 
-    // Check for NaN values after parsing
-    if (isNaN(issuedTickets) || isNaN(totalTickets)) {
-        console.error("Error parsing ticket information.");
-        return;
-    }
 
-    // Calculate the checked-in percentage
-    var checkedIn = parseInt(response.event_data.checked_in.split(' / ')[0], 10);
-    var checkedInPercentage = checkedIn === 0 ? 0 : Math.ceil((checkedIn / issuedTickets) * 100); // Round up the percentage
-    var checkedInText = checkedInPercentage === 0 ? '0%' : checkedInPercentage.toFixed(0) + '%';
 
-    // Update the progress circle with the new data
-    updateProgressCircle(issuedTickets, totalTickets);
+            // Extract the ticket information
+            var issuedTickets = parseInt(response.event_data.issued_tickets, 10);
+            var totalTickets = parseInt(response.event_data.total_tickets_available, 10);
 
-    // Update the checked-in progress component
-    updateCheckedInProgress(response);
+            // Check for NaN values after parsing
+            if (isNaN(issuedTickets) || isNaN(totalTickets)) {
+                //console.error("Error parsing ticket information.");
+                return;
+            }
 
-    // Clear existing ticket information
-    $('.ticket-info_hidden_all').empty();
+            // Calculate the checked-in percentage
+            var checkedIn = parseInt(response.event_data.checked_in.split(' / ')[0], 10);
+            var checkedInPercentage = checkedIn === 0 ? 0 : Math.ceil((checkedIn / issuedTickets) * 100); // Round up the percentage
+            var checkedInText = checkedInPercentage === 0 ? '0%' : checkedInPercentage.toFixed(0) + '%';
+            
 
-    // Display ticket information with percentages
-    var ticketList = response.event_data.ticket_list;
-    ticketList.forEach(function(ticket) {
-        var issued = parseInt(ticket.issued_tickets, 10);
-        var capacity = parseInt(ticket.capacity, 10);
-        var percentage = calculatePercentage(issued, capacity).toFixed(1); // Calculate percentage for each ticket type
+            // Update the progress circle with the new data
+            updateProgressCircle(issuedTickets, totalTickets);
 
-        // HTML for individual progress components
-        var individualProgressHtml = `
-            <div class="ticket-progress-container">
-                <div class="ticket-progress-container_svg">
-                    <svg class="progress-ring" width="58" height="58">
+            // Update the checked-in progress component
+            updateCheckedInProgress(response);
+
+            // Clear existing ticket information
+            $('.ticket-info_hidden_all').empty();
+
+            // Display ticket information with percentages
+            var ticketList = response.event_data.ticket_list;
+            ticketList.forEach(function(ticket) {
+                var issued = parseInt(ticket.issued_tickets, 10);
+                var capacity = parseInt(ticket.capacity, 10);
+                var percentage = calculatePercentage(issued, capacity).toFixed(1); // Calculate percentage for each ticket type
+
+                // HTML for individual progress components
+                var individualProgressHtml = `
+                    <div class="ticket-progress-container">
+                        <div class="ticket-progress-container_svg">
+                        <svg class="progress-ring" width="58" height="58">
                         <circle class="progress-ring__circle-bg" cx="29" cy="29" r="24" stroke-width="6"></circle>
                         <circle class="progress-ring__circle progress-ring__circle-individual" cx="29" cy="29" r="24" stroke-width="6"></circle>
                     </svg>
-                    <span class="progress-percentage_individual">${percentage}%</span>
-                </div>
-                <div class="ticket-details info_div">
-                    <h6>Total Ticket Sold</h6>
-                    <div class="ticket-name">${ticket.name}</div>
-                    <p class="ticket-count">${issued} / ${capacity}</p>
-                </div>
-            </div>
-        `;
+                            <span class="progress-percentage_individual">${percentage}%</span>
+                        </div>
+                        <div class="ticket-details info_div">
+                            <h6>Total Ticket Sold</h6>
+                            <div class="ticket-name">${ticket.name}</div>
+                            <p class="ticket-count">${issued} / ${capacity}</p>
+                        </div>
+                    </div>
+                `;
 
-        // Append individual progress components to container
-        $('.ticket-info_hidden_all').append(individualProgressHtml);
+                // Append individual progress components to container
+                $('.ticket-info_hidden_all').append(individualProgressHtml);
 
-        // Update individual progress circles with the correct percentage
-        updateIndividualProgressCircle($('.ticket-info_hidden_all .ticket-progress-container').last(), issued, capacity);
-    });
 
-    // Proceed with other functions like startScanQR...
-    if (!isajax) {
-        startScanQR(response.event_id);
-    }
-}
+    
+
+
+                // Update individual progress circles with the correct percentage
+                updateIndividualProgressCircle($('.ticket-info_hidden_all .ticket-progress-container').last(), issued, capacity);
+            });
+
+            // Proceed with other functions like startScanQR...
+           if(!isajax){
+            startScanQR(response.event_id);
+        }
+        }
 
 
 
@@ -541,41 +549,22 @@ observer.observe(document.getElementById('tab1'), {
 
 
 // Add a click event listener to the .ticket_dropdown element
-$('.single_ticket_section').on('click', function() {
-    // Log a message indicating that the click event is triggered
-    console.log("Dropdown clicked");
-
+$('.ticket_dropdown').on('click', function() {
     // Get the .single_ticket_section_inner and <i class="fas fa-angle-down"></i> elements
     var innerElement = $('.single_ticket_section_inner');
     var iconElement = $('.ticket_dropdown i.fas');
 
     // Check if the inner element has the 'display-block' class
     if (innerElement.hasClass('display-block')) {
-        // Log a message indicating that the inner element has 'display-block' class
-        console.log("Inner element has 'display-block' class");
-
         // If it does, remove the 'display-block' class
         innerElement.removeClass('display-block');
-        // Log a message indicating that the 'display-block' class is removed
-        console.log("Removed 'display-block' class from inner element");
-
         // and change the icon's class to fa-angle-up
         iconElement.removeClass('fa-angle-down').addClass('fa-angle-up');
-        // Log a message indicating that the icon's class is changed
-        console.log("Changed icon's class to fa-angle-up");
     } else {
-        // Log a message indicating that the inner element doesn't have 'display-block' class
-        console.log("Inner element doesn't have 'display-block' class");
-
         // If the inner element doesn't have the 'display-block' class, add the 'display-block' class
         innerElement.addClass('display-block');
-        // Log a message indicating that the 'display-block' class is added
-        console.log("Added 'display-block' class to inner element");
-
         // and change the icon's class to fa-angle-down
         iconElement.removeClass('fa-angle-up').addClass('fa-angle-down');
-        // Log a message indicating that the icon's class is changed
-        console.log("Changed icon's class to fa-angle-down");
     }
 });
 
