@@ -3376,13 +3376,15 @@ html .tickets-sold-column , html .tribe-list-column-title {
     top: 1px;
 }
 
-#emailTable th:first-child{
+
+
+
+#emailTable tbody tr:first-child th {
     font-size: 14px;
     color: #aaa;
     text-transform: capitalize;
     padding-left: 6px;
 }
-
 
 
 
