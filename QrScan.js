@@ -1,5 +1,7 @@
 (function($) {
     
+    $('.change_event_btn').css('display', 'none');
+
     document.addEventListener("DOMContentLoaded", function(event) {
         var event_id_global = '';
         var changing_event = false;
@@ -146,7 +148,7 @@
                 },
                 success: function(response) {
                     $('.scanner_login_div').hide(); 
-                    $('.change_event_btn').css("display", "block!important");  
+                    $('.change_event_btn').css("display", "block");  
             
 
                     // Handle the response from the server
