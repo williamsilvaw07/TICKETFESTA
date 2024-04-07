@@ -392,7 +392,7 @@ if (!defined('ABSPATH')) {
         // Initialize a SweetAlert dialog with a loading message
         Swal.fire({
             title: 'Loading...',
-            text: 'Please wait while.',
+            text: 'Please wait.',
             icon: 'info',
             allowOutsideClick: false,
             showConfirmButton: false,
@@ -799,7 +799,7 @@ if (!defined('ABSPATH')) {
                 text-overflow: ellipsis;
                 white-space: nowrap;
                 font-size: 14px;
-                font-weight: 200;
+                font-weight: 400;
             }
 
             .page-id-1840 .container-fluid {
