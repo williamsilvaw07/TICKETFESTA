@@ -4616,9 +4616,7 @@ function custom_qr_scanner_shortcode() {
     <i class="fas fa-sign-in-alt"></i> Login
 </button>
 
-<button class="change_event_btn">
-    <i class="fas fa-sign-in-alt"></i> Change Event
-</button>
+
 
 
     <span id="event_not_found" style='display:none'>Event not found. Please verify the Passcode</span>
@@ -4629,7 +4627,9 @@ function custom_qr_scanner_shortcode() {
     ?>
 
             <div class="tabs-container" style="display: none">
-      
+            <button class="change_event_btn">
+    <i class="fas fa-sign-in-alt"></i> Change Event
+</button>
  
                 <ul class="tabs-nav">
   <li class="tab tab1 active"><a href="#tab1"><i class="fa-solid fa-calendar-week"></i>Event Details</a></li>
