@@ -549,7 +549,7 @@ observer.observe(document.getElementById('tab1'), {
 
 
 // Add a click event listener to the .ticket_dropdown element
-$('.ticket_dropdown').on('click', function() {
+$('.single_ticket_section').on('click', function() {
     // Log a message indicating that the click event is triggered
     console.log("Dropdown clicked");
 
