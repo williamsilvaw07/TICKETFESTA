@@ -549,7 +549,7 @@ observer.observe(document.getElementById('tab1'), {
 
 
 // Add a click event listener to the .ticket_dropdown element
-$('.ticket_dropdown').on('click', function() {
+$('.single_ticket_section').on('click', function() {
     // Get the .single_ticket_section_inner and <i class="fas fa-angle-down"></i> elements
     var innerElement = $('.single_ticket_section_inner');
     var iconElement = $('.ticket_dropdown i.fas');
