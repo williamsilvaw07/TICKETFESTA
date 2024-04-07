@@ -4778,8 +4778,7 @@ function validate_event_pass() {
             $formatted_start_date = date('D, jS M \a\t H:i', strtotime(get_post_meta($event_id, '_EventStartDate', true)));
 
             // Generate the shortcode output for attendees report
-            $shortcode_output = "<p>You currently have no tickets for upcoming events.</p>";
-
+            $shortcode_output = do_shortcode('[tribe_community_tickets view="attendees_report" id="' . $event_id . '"]');
 
             // Prepare the event data for response
             $event_data = [
@@ -4799,7 +4798,7 @@ function validate_event_pass() {
         'match' => $match,
         'event_id' => $event_id,
         'event_data' => $event_data,
-        'shortcode_output' => $shortcode_output
+        
     ]);
     wp_die();
 }
