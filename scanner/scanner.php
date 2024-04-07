@@ -59,6 +59,10 @@ if (file_exists($custom_footer_path)) {
 
 
 <style>
+    .container-fluid{
+        padding-top: 34px !important;
+    }
+
     .xoo-el-form-container.xoo-el-form-inline {
     max-width: 700px;
     margin: 0px auto;
