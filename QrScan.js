@@ -549,22 +549,41 @@ observer.observe(document.getElementById('tab1'), {
 
 
 // Add a click event listener to the .ticket_dropdown element
-$('.single_ticket_section').on('click', function() {
+$('.ticket_dropdown').on('click', function() {
+    // Log a message indicating that the click event is triggered
+    console.log("Dropdown clicked");
+
     // Get the .single_ticket_section_inner and <i class="fas fa-angle-down"></i> elements
     var innerElement = $('.single_ticket_section_inner');
     var iconElement = $('.ticket_dropdown i.fas');
 
     // Check if the inner element has the 'display-block' class
     if (innerElement.hasClass('display-block')) {
+        // Log a message indicating that the inner element has 'display-block' class
+        console.log("Inner element has 'display-block' class");
+
         // If it does, remove the 'display-block' class
         innerElement.removeClass('display-block');
+        // Log a message indicating that the 'display-block' class is removed
+        console.log("Removed 'display-block' class from inner element");
+
         // and change the icon's class to fa-angle-up
         iconElement.removeClass('fa-angle-down').addClass('fa-angle-up');
+        // Log a message indicating that the icon's class is changed
+        console.log("Changed icon's class to fa-angle-up");
     } else {
+        // Log a message indicating that the inner element doesn't have 'display-block' class
+        console.log("Inner element doesn't have 'display-block' class");
+
         // If the inner element doesn't have the 'display-block' class, add the 'display-block' class
         innerElement.addClass('display-block');
+        // Log a message indicating that the 'display-block' class is added
+        console.log("Added 'display-block' class to inner element");
+
         // and change the icon's class to fa-angle-down
         iconElement.removeClass('fa-angle-up').addClass('fa-angle-down');
+        // Log a message indicating that the icon's class is changed
+        console.log("Changed icon's class to fa-angle-down");
     }
 });
 
