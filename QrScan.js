@@ -2,7 +2,7 @@
     
 
 // Add a click event listener to the .single_ticket_section element
-$('.single_ticket_section').on('click', function() {
+$('.ticket_dropdown h6').on('click', function() {
     // Log a message indicating that the element is clicked
     console.log("Single ticket section clicked");
 
