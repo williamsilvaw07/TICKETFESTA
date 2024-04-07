@@ -4775,7 +4775,7 @@ function validate_event_pass() {
             $formatted_start_date = date('D, jS M \a\t H:i', strtotime(get_post_meta($event_id, '_EventStartDate', true)));
 
             // Generate the shortcode output for attendees report
-            $shortcode_output = do_shortcode('[tribe_community_tickets view="attendees_report" id="' . $event_id . '"]');
+          //  $shortcode_output = do_shortcode('[tribe_community_tickets view="attendees_report" id="' . $event_id . '"]');
 
             // Prepare the event data for response
             $event_data = [
@@ -4784,8 +4784,8 @@ function validate_event_pass() {
                 'total_tickets_available' => $total_capacity,
                 'name' => get_the_title($event_id),
                 'thumbnail_url' => get_the_post_thumbnail_url($event_id, 'medium'),
-                'checked_in' => sprintf('%d / %d', $total_checked_in, $total_issued_tickets),
-                'shortcode_output' => $shortcode_output
+                'checked_in' => sprintf('%d / %d', $total_checked_in, $total_issued_tickets)
+               // 'shortcode_output' => $shortcode_output
 
             ];
         }
@@ -4794,8 +4794,8 @@ function validate_event_pass() {
     wp_send_json([
         'match' => $match,
         'event_id' => $event_id,
-        'event_data' => $event_data,
-        'shortcode_output' => $shortcode_output
+        'event_data' => $event_data
+       // 'shortcode_output' => $shortcode_output
     ]);
     wp_die();
 }
