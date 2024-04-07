@@ -27,9 +27,9 @@ if (file_exists($custom_header_path)) {
             } else {
                 // Different messages based on user status
                 if (is_user_logged_in()) {
-                    echo '<div class="scanner_login_divs"><h2>Access Denied</h2><p>You do not have the necessary permissions to access this page. Please contact the site administrator if you believe this is an error.</p></div>';
+                    echo '<div class="scanner_login_divs_before"><h2>Access Denied</h2><p>You do not have the necessary permissions to access this page. Please contact the support if you believe this is an error.</p></div>';
                 } else {
-                    echo '<div class="scanner_login_divs"><div class="login_prompt"><h2>This page is for organisers, verifiers, and administrators only. Please log in:</h2></div>';
+                    echo '<div class="scanner_login_divs_before"><div class="login_prompt"><h2>This page is for Organisers or Event Host only. Please log in:</h2></div>';
                     echo do_shortcode('[xoo_el_inline_form tabs="login" active="login"]');
                     echo '</div>';
                 }
