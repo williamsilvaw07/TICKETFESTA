@@ -365,7 +365,7 @@ function updateCheckedInProgress(response) {
             $('.event-container .date span').text(response.event_data.start_date);
             $('.checkedin_ticket-count span').text(response.event_data.checked_in);
             $('.ticket-info_hidden_all ').text();
-            $('.short_code_here').html(response.event_data.shortcode_output);
+            
 
 
             // Extract the ticket information
@@ -377,9 +377,7 @@ function updateCheckedInProgress(response) {
                 //console.error("Error parsing ticket information.");
                 return;
             }
-            
-            $('.short_code_here').text(response.shortcode_output); // i have used response.shortcode_output
-    
+
             // Calculate the checked-in percentage
             var checkedIn = parseInt(response.event_data.checked_in.split(' / ')[0], 10);
             var checkedInPercentage = checkedIn === 0 ? 0 : Math.ceil((checkedIn / issuedTickets) * 100); // Round up the percentage
@@ -422,6 +420,10 @@ function updateCheckedInProgress(response) {
 
                 // Append individual progress components to container
                 $('.ticket-info_hidden_all').append(individualProgressHtml);
+
+
+    
+
 
                 // Update individual progress circles with the correct percentage
                 updateIndividualProgressCircle($('.ticket-info_hidden_all .ticket-progress-container').last(), issued, capacity);
