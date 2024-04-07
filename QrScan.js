@@ -1,6 +1,26 @@
 (function($) {
     
 
+// Add a click event listener to the .ticket_dropdown element
+$('.single_ticket_section').on('click', function() {
+    // Get the .single_ticket_section_inner and <i class="fas fa-angle-down"></i> elements
+    var innerElement = $('.single_ticket_section_inner');
+    var iconElement = $('.ticket_dropdown i.fas');
+
+    // Check if the inner element has the 'display-block' class
+    if (innerElement.hasClass('display-block')) {
+        // If it does, remove the 'display-block' class
+        innerElement.removeClass('display-block');
+        // and change the icon's class to fa-angle-up
+        iconElement.removeClass('fa-angle-down').addClass('fa-angle-up');
+    } else {
+        // If the inner element doesn't have the 'display-block' class, add the 'display-block' class
+        innerElement.addClass('display-block');
+        // and change the icon's class to fa-angle-down
+        iconElement.removeClass('fa-angle-up').addClass('fa-angle-down');
+    }
+});
+
 
     document.addEventListener("DOMContentLoaded", function(event) {
         var event_id_global = '';
@@ -547,26 +567,6 @@ observer.observe(document.getElementById('tab1'), {
 
 
 
-
-// Add a click event listener to the .ticket_dropdown element
-$('.ticket_dropdown').on('click', function() {
-    // Get the .single_ticket_section_inner and <i class="fas fa-angle-down"></i> elements
-    var innerElement = $('.single_ticket_section_inner');
-    var iconElement = $('.ticket_dropdown i.fas');
-
-    // Check if the inner element has the 'display-block' class
-    if (innerElement.hasClass('display-block')) {
-        // If it does, remove the 'display-block' class
-        innerElement.removeClass('display-block');
-        // and change the icon's class to fa-angle-up
-        iconElement.removeClass('fa-angle-down').addClass('fa-angle-up');
-    } else {
-        // If the inner element doesn't have the 'display-block' class, add the 'display-block' class
-        innerElement.addClass('display-block');
-        // and change the icon's class to fa-angle-down
-        iconElement.removeClass('fa-angle-up').addClass('fa-angle-down');
-    }
-});
 
 
 
