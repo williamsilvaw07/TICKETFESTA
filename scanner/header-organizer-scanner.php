@@ -51,7 +51,7 @@ if (!defined('ABSPATH')) {
             <!-- Dropdown menu -->
             <ul class="show-notification profile-notification dropdown-menu" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
                 <li class="admin_dashboard-sidebar-item">
-                    <a href="/dahsboard">
+                    <a href="/dashboard">
                         <i class="fas fa-home"></i> <span class="nav-text">Organiser Dashboard</span>
                     </a>
                 </li>
