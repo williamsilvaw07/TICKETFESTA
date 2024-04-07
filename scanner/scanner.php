@@ -350,6 +350,8 @@ input#event-pass {
     height: 32px;
     margin-top: 15px;
     margin-left: 13px;
+    max-width: 200px;
+    margin: 30px auto;
 }
 .change_event_btn  .fa-sign-in-alt:before {
     color: #ff3b3b;
