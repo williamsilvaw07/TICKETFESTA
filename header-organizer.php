@@ -420,7 +420,7 @@ if (!defined('ABSPATH')) {
                     $('#emailTable').html(response.data);
                 } else {
                     // Display a default message if no data was loaded
-                    $('#emailTable').html('<div>No user emails load.</div>');
+                    $('#emailTable').html('<div>No user found</div>');
                 }
             },
             error: function() {
