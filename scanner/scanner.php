@@ -67,12 +67,14 @@ if (file_exists($custom_footer_path)) {
     display:none
 }
 .scanner_login_divs_before h2{
-    margin:20px auto;
+    margin: 0 auto;
+    width: fit-content;
+    font-weight: 400 !important;
 }
     .xoo-el-form-container.xoo-el-form-inline {
-    max-width: 700px;
+    max-width: 400px;
     margin: 0px auto;
-    padding-top: 83px;
+    padding-top: 17px;
 }
 .main-header .d-block{
     display:none!important
