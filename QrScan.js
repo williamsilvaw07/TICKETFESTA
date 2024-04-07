@@ -146,7 +146,9 @@
                 },
                 success: function(response) {
                     $('.scanner_login_div').hide(); 
-                    $('.change_event_btn').css("display", "block");  
+                    $('.change_event_btn').css("display", "block!important");  
+            
+
                     // Handle the response from the server
                   // console.log('ajax response', response);
                     if(response.match){
@@ -365,7 +367,7 @@ function updateCheckedInProgress(response) {
             $('.event-container .date span').text(response.event_data.start_date);
             $('.checkedin_ticket-count span').text(response.event_data.checked_in);
             $('.ticket-info_hidden_all ').text();
-            $('.change_event_btn').css('display', 'block');
+
 
 
 
