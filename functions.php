@@ -4687,6 +4687,16 @@ function custom_qr_scanner_shortcode() {
 </div>  
 
 
+                </div>
+
+
+
+
+
+
+
+
+
                     <div class="event-container single_ticket_section">
 
                     <div class="ticket_dropdown">
@@ -4709,8 +4719,7 @@ function custom_qr_scanner_shortcode() {
                 
 </div>
 </div>
-         
-
+                
 
 
 </div>
@@ -4722,7 +4731,7 @@ function custom_qr_scanner_shortcode() {
                         <div class="name"></div>
                         <div class="email"></div>
                         <div class="checkin-time"></div>
-                        <div class="scaned-by">Scanned by: <span> </span> </div>
+                        <div class="scaned-by"> Scanned by: <span> </span> </div>
                     </div>
                     <div id="video-container">
                         <!-- <input type="text" id="event-pass" name="event-pass" placeholder="enter event pass"> -->
