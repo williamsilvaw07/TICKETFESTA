@@ -59,7 +59,8 @@ if (file_exists($custom_footer_path)) {
 
 
 <style>
-    .container-fluid{
+
+    html .container-fluid{
         padding-top: 34px !important;
     }
 
