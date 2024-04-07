@@ -192,7 +192,7 @@ body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .content-w
     font-weight: 300;
     color: #aaa !important;
     font-size: 15px;
-    max-width: 400px;
+    max-width: 500px;
 }
 
 
