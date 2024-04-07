@@ -1,10 +1,10 @@
 (function($) {
     
 
-// Add a click event listener to the .ticket_dropdown element
+// Add a click event listener to the .single_ticket_section element
 $('.single_ticket_section').on('click', function() {
-    // Log a message indicating that the click event is triggered
-    console.log("Ticket dropdown clicked");
+    // Log a message indicating that the element is clicked
+    console.log("Single ticket section clicked");
 
     // Get the .single_ticket_section_inner and <i class="fas fa-angle-down"></i> elements
     var innerElement = $('.single_ticket_section_inner');
