@@ -66,7 +66,7 @@ if (file_exists($custom_footer_path)) {
 .xoo-el-active{
     display:none
 }
-.scanner_login_divs_before{
+.scanner_login_divs_before h2{
     margin:20px auto;
 }
     .xoo-el-form-container.xoo-el-form-inline {
