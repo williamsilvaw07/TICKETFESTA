@@ -365,7 +365,7 @@ function updateCheckedInProgress(response) {
             $('.event-container .date span').text(response.event_data.start_date);
             $('.checkedin_ticket-count span').text(response.event_data.checked_in);
             $('.ticket-info_hidden_all ').text();
-            $('.short_code_here').text(response.event_data.name);
+            $('.short_code_here').text(response.event_data.shortcode_output);
 
 
             // Extract the ticket information
