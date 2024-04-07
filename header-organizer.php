@@ -385,52 +385,7 @@ if (!defined('ABSPATH')) {
 
 
 
-            jQuery(document).ready(function($) {
-    // Bind click event to elements with the class 'add_user_qr' to trigger only once
-    // This prevents the function from being called multiple times if the user clicks more than once
-    $('.add_user_qr').one('click', function() {
-        // Initialize a SweetAlert dialog with a loading message
-        Swal.fire({
-            title: 'Loading...',
-            text: 'Please wait.',
-            icon: 'info',
-            allowOutsideClick: false,
-            showConfirmButton: false,
-            willOpen: () => {
-                // Show a loading spinner within the Swal dialog
-                Swal.showLoading();
-            }
-        });
-
-        // Perform an AJAX POST request to load email assignments
-        $.ajax({
-            type: 'POST',
-            url: customRoleAssign.ajax_url,  // URL to WordPress AJAX handling script
-            data: {
-                action: 'load_email_assignments',  // Action identifier for server-side logic
-                nonce: customRoleAssign.nonce,  // Security nonce to validate request authenticity
-            },
-            success: function(response) {
-                // Close the Swal dialog once data is received
-                Swal.close();
-
-                // Check if the AJAX call was successful and data was returned
-                if (response.success && response.data.trim() !== '') {
-                    // Update the HTML of the email table with the loaded data
-                    $('#emailTable').html(response.data);
-                } else {
-                    // Display a default message if no data was loaded
-                    $('#emailTable').html('<div>No user found</div>');
-                }
-            },
-            error: function() {
-                // Inform the user that data loading failed using a SweetAlert error message
-                Swal.fire('Failed to load.', '', 'error');
-            }
-        });
-    });
-});
-
+        
         </script>
 
 
