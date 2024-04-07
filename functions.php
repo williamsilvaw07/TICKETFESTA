@@ -4609,9 +4609,9 @@ function custom_qr_scanner_shortcode() {
 
     <div class="scanner_login_div"> 
     <h3>Event Login.</h3>
-<p>
-Please log in to view the event details and check in attendees.<br>
-You can find the event passcode on the organizer's dashboard under the events section.</p>
+<h6>
+Please log in to view the event details and check in attendees.</h6>
+<p>You can find the event passcode on the organizer's dashboard under the events section.</p>
 <input type="text" id="event-pass" name="event-pass" placeholder="Event Passcode" list="passcodes" autocomplete="on">
 <datalist id="passcodes"></datalist>
 <button id="check-passcode">
