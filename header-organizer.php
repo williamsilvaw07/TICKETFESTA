@@ -196,7 +196,7 @@ if (!defined('ABSPATH')) {
 
 
 <li class="admin_dashboard-sidebar-item">
-                            <a href="/qr-scanner/"><i class="fa-solid fa-qrcode"></i>
+                            <a href="/qr-code-scanner/"><i class="fa-solid fa-qrcode"></i>
                                 
                             <span
                                     class="nav-text">QR Scanner
