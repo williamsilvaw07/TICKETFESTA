@@ -433,7 +433,7 @@ function autoSelectCountry(){
 
 
 
-
+console.log("js clicked loaded");
 // Add a click event listener to the .single_ticket_section element
 $('.ticket_dropdown h6').on('click', function() {
     // Log a message indicating that the element is clicked
