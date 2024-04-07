@@ -356,89 +356,81 @@ function updateCheckedInProgress(response) {
 
 
 
-        // Function to handle passcode match response
-        function passcodeMatch(response,isajax = 1) {
-            if (!response || !response.event_data) {
-                //console.error("Invalid response data.");
-                return;
-            }
+ // Function to handle passcode match response
+function passcodeMatch(response, isajax = 1) {
+    if (!response || !response.event_data || !Array.isArray(response.event_data.ticket_list)) {
+        console.error("Invalid response data or missing ticket list.");
+        return;
+    }
 
-            // $('.tabs-container').show();
-            $('.event-container .event-image').attr('src', response.event_data.thumbnail_url);
-            $('.event-container .name span').text(response.event_data.name);
-            $('.event-container .date span').text(response.event_data.start_date);
-            $('.checkedin_ticket-count span').text(response.event_data.checked_in);
-            $('.ticket-info_hidden_all ').text();
+    // $('.tabs-container').show();
+    $('.event-container .event-image').attr('src', response.event_data.thumbnail_url);
+    $('.event-container .name span').text(response.event_data.name);
+    $('.event-container .date span').text(response.event_data.start_date);
+    $('.checkedin_ticket-count span').text(response.event_data.checked_in);
+    $('.ticket-info_hidden_all ').text();
 
+    // Extract the ticket information
+    var issuedTickets = parseInt(response.event_data.issued_tickets, 10);
+    var totalTickets = parseInt(response.event_data.total_tickets_available, 10);
 
+    // Check for NaN values after parsing
+    if (isNaN(issuedTickets) || isNaN(totalTickets)) {
+        console.error("Error parsing ticket information.");
+        return;
+    }
 
+    // Calculate the checked-in percentage
+    var checkedIn = parseInt(response.event_data.checked_in.split(' / ')[0], 10);
+    var checkedInPercentage = checkedIn === 0 ? 0 : Math.ceil((checkedIn / issuedTickets) * 100); // Round up the percentage
+    var checkedInText = checkedInPercentage === 0 ? '0%' : checkedInPercentage.toFixed(0) + '%';
 
-            // Extract the ticket information
-            var issuedTickets = parseInt(response.event_data.issued_tickets, 10);
-            var totalTickets = parseInt(response.event_data.total_tickets_available, 10);
+    // Update the progress circle with the new data
+    updateProgressCircle(issuedTickets, totalTickets);
 
-            // Check for NaN values after parsing
-            if (isNaN(issuedTickets) || isNaN(totalTickets)) {
-                //console.error("Error parsing ticket information.");
-                return;
-            }
+    // Update the checked-in progress component
+    updateCheckedInProgress(response);
 
-            // Calculate the checked-in percentage
-            var checkedIn = parseInt(response.event_data.checked_in.split(' / ')[0], 10);
-            var checkedInPercentage = checkedIn === 0 ? 0 : Math.ceil((checkedIn / issuedTickets) * 100); // Round up the percentage
-            var checkedInText = checkedInPercentage === 0 ? '0%' : checkedInPercentage.toFixed(0) + '%';
-            
+    // Clear existing ticket information
+    $('.ticket-info_hidden_all').empty();
 
-            // Update the progress circle with the new data
-            updateProgressCircle(issuedTickets, totalTickets);
+    // Display ticket information with percentages
+    var ticketList = response.event_data.ticket_list;
+    ticketList.forEach(function(ticket) {
+        var issued = parseInt(ticket.issued_tickets, 10);
+        var capacity = parseInt(ticket.capacity, 10);
+        var percentage = calculatePercentage(issued, capacity).toFixed(1); // Calculate percentage for each ticket type
 
-            // Update the checked-in progress component
-            updateCheckedInProgress(response);
-
-            // Clear existing ticket information
-            $('.ticket-info_hidden_all').empty();
-
-            // Display ticket information with percentages
-            var ticketList = response.event_data.ticket_list;
-            ticketList.forEach(function(ticket) {
-                var issued = parseInt(ticket.issued_tickets, 10);
-                var capacity = parseInt(ticket.capacity, 10);
-                var percentage = calculatePercentage(issued, capacity).toFixed(1); // Calculate percentage for each ticket type
-
-                // HTML for individual progress components
-                var individualProgressHtml = `
-                    <div class="ticket-progress-container">
-                        <div class="ticket-progress-container_svg">
-                        <svg class="progress-ring" width="58" height="58">
+        // HTML for individual progress components
+        var individualProgressHtml = `
+            <div class="ticket-progress-container">
+                <div class="ticket-progress-container_svg">
+                    <svg class="progress-ring" width="58" height="58">
                         <circle class="progress-ring__circle-bg" cx="29" cy="29" r="24" stroke-width="6"></circle>
                         <circle class="progress-ring__circle progress-ring__circle-individual" cx="29" cy="29" r="24" stroke-width="6"></circle>
                     </svg>
-                            <span class="progress-percentage_individual">${percentage}%</span>
-                        </div>
-                        <div class="ticket-details info_div">
-                            <h6>Total Ticket Sold</h6>
-                            <div class="ticket-name">${ticket.name}</div>
-                            <p class="ticket-count">${issued} / ${capacity}</p>
-                        </div>
-                    </div>
-                `;
+                    <span class="progress-percentage_individual">${percentage}%</span>
+                </div>
+                <div class="ticket-details info_div">
+                    <h6>Total Ticket Sold</h6>
+                    <div class="ticket-name">${ticket.name}</div>
+                    <p class="ticket-count">${issued} / ${capacity}</p>
+                </div>
+            </div>
+        `;
 
-                // Append individual progress components to container
-                $('.ticket-info_hidden_all').append(individualProgressHtml);
+        // Append individual progress components to container
+        $('.ticket-info_hidden_all').append(individualProgressHtml);
 
+        // Update individual progress circles with the correct percentage
+        updateIndividualProgressCircle($('.ticket-info_hidden_all .ticket-progress-container').last(), issued, capacity);
+    });
 
-    
-
-
-                // Update individual progress circles with the correct percentage
-                updateIndividualProgressCircle($('.ticket-info_hidden_all .ticket-progress-container').last(), issued, capacity);
-            });
-
-            // Proceed with other functions like startScanQR...
-           if(!isajax){
-            startScanQR(response.event_id);
-        }
-        }
+    // Proceed with other functions like startScanQR...
+    if (!isajax) {
+        startScanQR(response.event_id);
+    }
+}
 
 
 
