@@ -539,7 +539,38 @@ observer.observe(document.getElementById('tab1'), {
 
 
 
+// Add a click event listener to the .single_ticket_section element
+$('.single_ticket_section').on('click', function() {
+    // Log a message indicating that the element is clicked
+    console.log("Single ticket section clicked");
 
+    // Get the .single_ticket_section_inner and <i class="fas fa-angle-down"></i> elements
+    var innerElement = $('.single_ticket_section_inner');
+    var iconElement = $('.ticket_dropdown i.fas');
+
+    // Check if the inner element has the 'display-block' class
+    if (innerElement.hasClass('display-block')) {
+        // If it does, remove the 'display-block' class
+        innerElement.removeClass('display-block');
+        // Log a message indicating that the 'display-block' class is removed
+        console.log("Removed 'display-block' class from inner element");
+
+        // and change the icon's class to fa-angle-up
+        iconElement.removeClass('fa-angle-down').addClass('fa-angle-up');
+        // Log a message indicating that the icon's class is changed
+        console.log("Changed icon's class to fa-angle-up");
+    } else {
+        // If the inner element doesn't have the 'display-block' class, add the 'display-block' class
+        innerElement.addClass('display-block');
+        // Log a message indicating that the 'display-block' class is added
+        console.log("Added 'display-block' class to inner element");
+
+        // and change the icon's class to fa-angle-down
+        iconElement.removeClass('fa-angle-up').addClass('fa-angle-down');
+        // Log a message indicating that the icon's class is changed
+        console.log("Changed icon's class to fa-angle-down");
+    }
+});
 
 
 
