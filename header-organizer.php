@@ -386,9 +386,9 @@ if (!defined('ABSPATH')) {
 
 
 
-jQuery(document).ready(function($) {
-    // Bind click event to elements with the class 'add_user_qr'
-    $('.add_user_qr').on('click', function() {
+            jQuery(document).ready(function($) {
+    // Bind click event to elements with the class 'add_user_qr' to trigger only once
+    $('.add_user_qr').one('click', function() {
         Swal.fire({
             title: 'Loading...',
             text: 'Please wait while the emails are being loaded.',
