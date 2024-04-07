@@ -3382,12 +3382,22 @@ html .tickets-sold-column , html .tribe-list-column-title {
 #emailTable tbody tr:first-child th {
     font-size: 14px;
     color: #aaa;
+    font-weight: 300;
     text-transform: capitalize;
     padding-left: 6px;
 }
 
 
-
+.revokeRole {
+    border-width: 0;
+    padding: 7px 0px;
+    background: #d5d5d5 !important;
+    border-radius: 4px;
+    color: black !important;
+    font-size: 13px;
+    text-align: center;
+    width: fit-content;
+}
 
 
 
