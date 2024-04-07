@@ -392,7 +392,7 @@ if (!defined('ABSPATH')) {
         // Initialize a SweetAlert dialog with a loading message
         Swal.fire({
             title: 'Loading...',
-            text: 'Please wait while the emails are being loaded.',
+            text: 'Please wait while.',
             icon: 'info',
             allowOutsideClick: false,
             showConfirmButton: false,
@@ -420,12 +420,12 @@ if (!defined('ABSPATH')) {
                     $('#emailTable').html(response.data);
                 } else {
                     // Display a default message if no data was loaded
-                    $('#emailTable').html('<div>No email assignments to load.</div>');
+                    $('#emailTable').html('<div>No user emails load.</div>');
                 }
             },
             error: function() {
                 // Inform the user that data loading failed using a SweetAlert error message
-                Swal.fire('Failed to load emails.', '', 'error');
+                Swal.fire('Failed to load.', '', 'error');
             }
         });
     });
