@@ -385,10 +385,11 @@ if (!defined('ABSPATH')) {
 
 
 
-
             jQuery(document).ready(function($) {
     // Bind click event to elements with the class 'add_user_qr' to trigger only once
+    // This prevents the function from being called multiple times if the user clicks more than once
     $('.add_user_qr').one('click', function() {
+        // Initialize a SweetAlert dialog with a loading message
         Swal.fire({
             title: 'Loading...',
             text: 'Please wait while the emails are being loaded.',
@@ -396,26 +397,34 @@ if (!defined('ABSPATH')) {
             allowOutsideClick: false,
             showConfirmButton: false,
             willOpen: () => {
+                // Show a loading spinner within the Swal dialog
                 Swal.showLoading();
             }
         });
 
+        // Perform an AJAX POST request to load email assignments
         $.ajax({
             type: 'POST',
-            url: customRoleAssign.ajax_url,
+            url: customRoleAssign.ajax_url,  // URL to WordPress AJAX handling script
             data: {
-                action: 'load_email_assignments',
-                nonce: customRoleAssign.nonce,
+                action: 'load_email_assignments',  // Action identifier for server-side logic
+                nonce: customRoleAssign.nonce,  // Security nonce to validate request authenticity
             },
             success: function(response) {
-                Swal.close(); // Close the loading Swal when data is received
+                // Close the Swal dialog once data is received
+                Swal.close();
+
+                // Check if the AJAX call was successful and data was returned
                 if (response.success && response.data.trim() !== '') {
+                    // Update the HTML of the email table with the loaded data
                     $('#emailTable').html(response.data);
                 } else {
+                    // Display a default message if no data was loaded
                     $('#emailTable').html('<div>No email assignments to load.</div>');
                 }
             },
             error: function() {
+                // Inform the user that data loading failed using a SweetAlert error message
                 Swal.fire('Failed to load emails.', '', 'error');
             }
         });
@@ -3433,7 +3442,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
 
 .revokeRole {
     border-width: 0;
-    padding: 7px 0px;
+    padding: 7px 9px;
     background: #d5d5d5 !important;
     border-radius: 4px;
     color: black !important;
