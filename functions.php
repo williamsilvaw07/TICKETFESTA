@@ -4615,6 +4615,12 @@ function custom_qr_scanner_shortcode() {
 <button id="check-passcode">
     <i class="fas fa-sign-in-alt"></i> Login
 </button>
+
+<button class="change_event_btn">
+    <i class="fas fa-sign-in-alt"></i> Change Event
+</button>
+
+
     <span id="event_not_found" style='display:none'>Event not found. Please verify the Passcode</span>
 </div>
 
