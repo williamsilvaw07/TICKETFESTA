@@ -4616,7 +4616,7 @@ function custom_qr_scanner_shortcode() {
     <i class="fas fa-sign-in-alt"></i> Login
 </button>
 
-<button class="change_event_btn">
+<button class="change_event_btn" style="display: none">
     <i class="fas fa-sign-in-alt"></i> Change Event
 </button>
 
