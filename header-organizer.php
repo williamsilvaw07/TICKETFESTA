@@ -338,11 +338,10 @@ if (!defined('ABSPATH')) {
                     $(this).find('img, .title').wrapAll('<div class="image-title-wrapper"></div>');
                 });
             });
-        </script>
+       
 
 
 
-        <script>
             jQuery(document).ready(function ($) {
                 // Function to add arrow based on the value
                 function addArrowAndChangeColor(element, isNegative, isZero) {
@@ -378,6 +377,50 @@ if (!defined('ABSPATH')) {
                 });
             });
 
+
+
+
+
+
+
+
+
+
+jQuery(document).ready(function($) {
+    // Bind click event to elements with the class 'add_user_qr'
+    $('.add_user_qr').on('click', function() {
+        Swal.fire({
+            title: 'Loading...',
+            text: 'Please wait while the emails are being loaded.',
+            icon: 'info',
+            allowOutsideClick: false,
+            showConfirmButton: false,
+            willOpen: () => {
+                Swal.showLoading();
+            }
+        });
+
+        $.ajax({
+            type: 'POST',
+            url: customRoleAssign.ajax_url,
+            data: {
+                action: 'load_email_assignments',
+                nonce: customRoleAssign.nonce,
+            },
+            success: function(response) {
+                Swal.close(); // Close the loading Swal when data is received
+                if (response.success && response.data.trim() !== '') {
+                    $('#emailTable').html(response.data);
+                } else {
+                    $('#emailTable').html('<div>No email assignments to load.</div>');
+                }
+            },
+            error: function() {
+                Swal.fire('Failed to load emails.', '', 'error');
+            }
+        });
+    });
+});
 
         </script>
 
