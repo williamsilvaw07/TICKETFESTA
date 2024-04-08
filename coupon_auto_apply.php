@@ -25,9 +25,38 @@ function add_custom_script_to_footer()
 {
     if (isset($_GET['coupon'])) {
         // Your JavaScript code here
+        // Create a new WC_Coupon object
+        $coupon = new WC_Coupon($_GET['coupon']);
+
+        // Get coupon amount
+        $coupon_amount = $coupon->get_amount();
+
+        // Get product information
+        $product_ids = $coupon->get_product_ids(); // Get product IDs associated with the coupon
+
+        $productData = '';
+
+        foreach ($product_ids as $product_id) {
+            // Get WC_Product object for each product ID
+            $product = wc_get_product($product_id);
+
+            // Get product name
+            $product_name = $product->get_name();
+
+            // Get product price
+            $product_price = $product->get_price();
+
+            // Output product information
+            $productData .= "Product Name: $product_name, Price: $product_price <br>";
+        }
+
+        // Output coupon amount
+
         $custom_script = "
         // Your JavaScript code goes here
         console.log('This script runs in the footer.');
+        console.log('Coupon Amount: $coupon_amount');
+        console.log('$productData');
     ";
         // Add the JavaScript code to the footer
         wp_add_inline_script('jquery', $custom_script);
