@@ -69,8 +69,14 @@
                 
             }else{
                 $('#qr_error').html('Ticket is not valid for this event');
+                   $('.checkin-details .name').text('');
+                            $('.checkin-details .email').text('');
+                            $('.checkin-details .checkin-time').text('');
+                            $('.checkin-details .scaned_by span').text('');
                 $('#event-pass').addClass('error');
+                $("#qr_error").css("background-color", "");
                 $('#qr_error').show();
+
                 $(".checkin-details").show();
             }
         
@@ -196,9 +202,13 @@
                             //$('.checkin-details .scaned_by span').text(response.scaned_by);
                            // $('.checkin-details').show();
                         }
+                         $('#qr_error').text(response.message);
+                         $('#qr_error').show();
+                         $("#qr_error").css("background-color", "green");
                         $('.checkin-details').show();
                     }else{
                         $('.checkin-details').css("background-color", "#c30101");
+                          $("#qr_error").css("background-color", "");
                         $('#qr_error').text(response.message);
                         $('#qr_error').show();
                         if(response.fullname){
@@ -589,15 +599,15 @@ $(document).ready(function() {
     // Initially load passcodes from Local Storage and populate the datalist
     loadPasscodes();
    
-    /*document.addEventListener("click", function(e){
+    document.addEventListener("click", function(e){
   const target = e.target.closest("#html5-qrcode-button-camera-start"); // Or any other selector.
        console.log(target)
        
   if(target){
     // Do something with `target`.
-     $(".checkin-details").hide();
+     $("##qr_error").html('');
   }
-});*/
+});
     // Event handler for clicking the login button
     $('#check-passcode').click(function() {
         // Retrieve the current value entered in the passcode input field

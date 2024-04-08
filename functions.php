@@ -1,6 +1,13 @@
 <?php
 
 
+function empty_cart_before_cart_page_load() {
+    if ( is_cart() && $_GET['timeout']) {
+        // If it's the cart page, empty the cart
+        WC()->cart->empty_cart();
+    }
+}
+add_action( 'template_redirect', 'empty_cart_before_cart_page_load' );
 
 
 // Add custom function to reserve stock when product is added to cart
@@ -69,16 +76,24 @@ function display_cart_timer() {
                     if (timeLeft <= 0) {
                         clearInterval(timer);
                         // Trigger click event on the "Empty Cart" button
-                        var emptyCartButton = document.querySelector(".empty-cart-button");
+						';
+							if(is_cart()){
+								
+                       echo 'var emptyCartButton = document.querySelector(".empty-cart-button");
                         if (emptyCartButton) {
                             emptyCartButton.click();
-                        }
-                    }
+                        }';
+								}
+						   else{
+							   echo 'window.location.href="/cart?timeout=1"';
+						   }
+                 echo ' }
                 }, 1000);
               </script>';
     }
 }
 add_action('woocommerce_before_cart', 'display_cart_timer');
+add_action('woocommerce_before_checkout_billing_form', 'display_cart_timer');
 
 // Add custom function to display empty cart button
 function custom_woocommerce_empty_cart_button() {
@@ -3864,7 +3879,7 @@ function enqueue_custom_frontend_js()
     if ( is_page( 'qr-code-scanner' ) ) {
         wp_enqueue_script('html5-qrcode', '//cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.7/html5-qrcode.min.js', array('jquery'), null, true);
         // wp_enqueue_script('custom-qr-scanner-custom', 'https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js', array('jquery'), $script_version, true);
-        wp_enqueue_script('custom-qr-main-js', get_stylesheet_directory_uri() . '/QrScan.js', array('jquery', 'html5-qrcode'), $script_version, true);
+        wp_enqueue_script('custom-qr-main-js', get_stylesheet_directory_uri() . '/QrScan.js', array('jquery', 'html5-qrcode'), 2.2, true);
         wp_localize_script(
             'custom-qr-main-js',
             'tribe_ajax',
