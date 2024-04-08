@@ -71,6 +71,7 @@
                 $('#qr_error').html('Ticket is not valid for this event');
                 $('#event-pass').addClass('error');
                 $('#qr_error').show();
+                $(".checkin-details").show();
             }
         
         }
@@ -183,6 +184,7 @@
                     ticket_id : ticketId
                 },
                 success: function(response) {
+				
                     if(response.success){
                         $('#qr_error').hide();
                         $('.checkin-details').css("background-color", "green");
@@ -194,6 +196,7 @@
                             //$('.checkin-details .scaned_by span').text(response.scaned_by);
                            // $('.checkin-details').show();
                         }
+                        $('.checkin-details').show();
                     }else{
                         $('.checkin-details').css("background-color", "#c30101");
                         $('#qr_error').text(response.message);
@@ -464,7 +467,7 @@ function updateCheckedInProgress(response) {
         var intervalId = setInterval(function() {
             // Your function to be called every 3 seconds
             CheckProgressData();
-        }, 3000);
+        }, 9000);
 
 
 
