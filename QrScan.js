@@ -529,7 +529,7 @@ observer.observe(document.getElementById('tab1'), {
     location.reload();
             
         });
-           });
+    });
          // (Optional) Clear the interval when the user leaves the page
         //  $(window).unload(function() {
         //      clearInterval(intervalId);
