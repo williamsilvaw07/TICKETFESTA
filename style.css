@@ -2457,6 +2457,9 @@ html #qr-reader__dashboard_section_csr{
     color: black !important;
     font-family: 'Roboto', sans-serif;
 }
+.checkout-button:hover{
+    color: white!important;
+}
 
 .check_out_login_only{
 
@@ -2477,7 +2480,7 @@ html #qr-reader__dashboard_section_csr{
 
 
 .cart_right_bottom{
-    
+
 }
 /***********END***********/
 
