@@ -191,12 +191,19 @@ if (!defined('ABSPATH')) {
                                     class="nav-text">Gallery</span></a>
                         </li>
 
-                        <li class="admin_dashboard-sidebar-item">
-                            <a href="/dashboard/organisation-settings/"><i class="fas fa-cog"></i><span
-                                    class="nav-text">Organisation Settings
 
-</span></a>
-                        </li>
+                
+
+
+<li class="admin_dashboard-sidebar-item">
+                            <a href="/qr-code-scanner/"><i class="fa-solid fa-qrcode"></i>
+                                
+                            <span
+                                    class="nav-text">QR Scanner
+
+</span></a> </li>
+
+                      
 
 
                         <li class="admin_dashboard-sidebar-item admin_dashboard-coming-soon">
@@ -213,10 +220,13 @@ if (!defined('ABSPATH')) {
 
                 <nav class="lower_admin_dashboard-sidebar">
                     <ul class="admin_dashboard-sidebar-list lower_admin_dashboard-sidebar-list">
-                        <li class="admin_dashboard-sidebar-item">
-                            <a href="/organisers-setting/"><i class="fas fa-cog"></i><span
-                                    class="nav-text">Settings</span></a>
+                    <li class="admin_dashboard-sidebar-item">
+                            <a href="/dashboard/organisation-settings/"><i class="fas fa-cog"></i><span
+                                    class="nav-text">Organisation Settings
+
+</span></a>
                         </li>
+                        
                         <li class="admin_dashboard-sidebar-item">
     <a href="<?php echo esc_url(wp_logout_url(home_url())); ?>"><i class="fas fa-sign-out-alt"></i><span class="nav-text">Logout</span></a>
 </li>
@@ -328,11 +338,10 @@ if (!defined('ABSPATH')) {
                     $(this).find('img, .title').wrapAll('<div class="image-title-wrapper"></div>');
                 });
             });
-        </script>
+       
 
 
 
-        <script>
             jQuery(document).ready(function ($) {
                 // Function to add arrow based on the value
                 function addArrowAndChangeColor(element, isNegative, isZero) {
@@ -369,6 +378,14 @@ if (!defined('ABSPATH')) {
             });
 
 
+
+
+
+
+
+
+
+        
         </script>
 
 
@@ -642,20 +659,23 @@ if (!defined('ABSPATH')) {
 
             #user-organizers-list .edit-link {
                 color: #FFA300 !important;
-                border-radius: 6px;
-                background: rgba(255, 163, 0, 0.20);
+    border-radius: 6px;
+    background: rgba(255, 163, 0, 0.40);
+    font-weight: 400;
             }
 
             #user-organizers-list .delete-link {
                 color: #E53D3D !important;
                 border-radius: 6px;
-                background: rgba(166, 28, 28, 0.20);
+                font-weight: 400;
+                background: rgba(166, 28, 28, 0.40);
             }
 
             #user-organizers-list .profile-link {
                 color: #21DAB8 !important;
                 border-radius: 6px;
-                background: rgba(19, 180, 151, 0.20);
+                font-weight: 400;
+                background: rgba(19, 180, 151, 0.40);
             }
 
 
@@ -734,7 +754,7 @@ if (!defined('ABSPATH')) {
                 text-overflow: ellipsis;
                 white-space: nowrap;
                 font-size: 14px;
-                font-weight: 200;
+                font-weight: 400;
             }
 
             .page-id-1840 .container-fluid {
@@ -1466,8 +1486,8 @@ html .tickets-sold-column , html .tribe-list-column-title {
                 color: #aaa !important;
                 text-transform: capitalize;
                 padding-left: 6px;
-                font-weight: 200;
-                text-align: l;
+                font-weight: 300;
+                text-align: left;
             }
 
             .event-title-image {
@@ -1720,13 +1740,13 @@ html .tickets-sold-column , html .tribe-list-column-title {
             .admin_dashboard_main_customer_info strong {
                 font-size: 14px;
                 color: #fff;
-                font-weight: 300;
+                font-weight: 400;
             }
 
             .admin_dashboard_main_customer_info span {
                 font-size: 13px;
                 color: #aaa;
-                font-weight: 100;
+                font-weight: 300;
             }
 
             .admin_dashboard_main_amount {
@@ -1784,7 +1804,116 @@ html .tickets-sold-column , html .tribe-list-column-title {
 
             /****END***/
 
+
+      /***********Attendees-report**********/
+#the-list tr{
+
+}
+
+      .tribe-report-page  .event-tickets-ticket-name , .tribe-report-page  .purchaser_name {
+        font-size: 17px;
+    font-weight: 400;
+      }
+      .tribe-report-page .attendees-actions{
+        display: flex!important;
+    /* align-content: flex-start; */
+    align-items: flex-start;
+    justify-content: center;
+    gap: 15px;
+}
+.report-page .attendees-actions input.print{
+    margin:0!important
+}
+.tribe-report-page .row-actions .trash , 
+.tribe-report-page .column-security , .tribe-report-page .column-attendee_actions {
+    display:none!important
+}
+.tribe-report-page .row-actions .edit_attendee{
+    background: inherit;
+    padding: 0;
+    font-size: inherit;
+    text-decoration: underline;
+}
+.add_attendee{
+    background: #d3fa16 !important;
+    color: #000000 !important;
+    text-transform: capitalize !important;
+    text-decoration: none;
+    white-space: nowrap;
+    border-radius: 3px;
+    line-height: 1;
+    margin: 10px;
+    padding: 9px 12px;
+    font-size:15px
+}
+
+.tribe-report-page .row-actions a , .tribe-report-page .row-actions .edit_link  button {
+    transition: none;
+    text-decoration: none;
+    padding: 3px 8px;
+}
+
+.tribe-report-page .wp-list-table a{
+    text-decoration: none;
+}
+
+.tribe-common .tribe-dialog__wrapper div[role=document]{
+  color:white!important;
+    background: #121212!important;
+}
+
+.event-tickets .tribe-dialog__wrapper.tribe-modal__wrapper--manual-attendees .tribe-tickets__manual-attendees-message-price, .tribe-common .tribe-dialog__wrapper.tribe-modal__wrapper--manual-attendees .tribe-tickets__manual-attendees-message-price , .event-tickets .tribe-dialog__wrapper.tribe-modal__wrapper--manual-attendees .tribe-tickets__manual-attendees-message-price, .tribe-common .tribe-dialog__wrapper.tribe-modal__wrapper--manual-attendees .tribe-tickets__manual-attendees-message-price , .event-tickets .tribe-dialog__wrapper.tribe-modal__wrapper--manual-attendees .tribe-tickets__manual-attendees-message-price, .tribe-common .tribe-dialog__wrapper.tribe-modal__wrapper--manual-attendees .tribe-tickets__manual-attendees-message-price {
+    color: #ffffff!important;
+}
+
+.event-tickets .tribe-tickets__form label, .event-tickets .tribe-tickets__form .tribe-tickets__form-field-label {
+    color: #ffffff!important;
+
+}
+
+   /**************END********** */
+
+
+
+
             /****ADMIN- DASHBOARD PAGE***/
+
+            .today_ticket_sale_admin_dashboard .sales-card-content::before {
+  content: "\f3ff"; 
+  font-family: "Font Awesome 5 Free"; 
+    transform: rotate(302deg) !important;
+   
+}
+.today_sale_admin_dashboard_money .sales-card-content::before {
+  content: "\f51e"; 
+  font-family: "Font Awesome 5 Free"; 
+   
+}
+.today_sale_admin_dashboard_live_events .sales-card-content::before {
+  content: "\f274"; 
+  font-family: "Font Awesome 5 Free"; 
+   
+}
+
+
+.today_sale_admin_dashboard_revenue .sales-card-content::before {
+  content: "\f81d"; 
+  font-family: "Font Awesome 5 Free"; 
+
+   
+}
+
+.today_sale_admin_dashboard .sales-card-content::before {
+
+  font-weight: 900; 
+  margin-right: 5px; 
+  opacity: 0.06;
+    font-size: 46px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
 
             .sales-card.today_sale_admin_dashboard {
                 background-color: #19191b;
@@ -1796,6 +1925,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
                 border-radius: 10px;
                 width: 100%;
                 max-width: 320px;
+                min-height: 152.5px;
             }
 
             .today_sale_admin_dashboard h5 {
@@ -1827,7 +1957,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
             }
 
             .from_text_price_yesturday {
-                font-size: 11px !important;
+                font-size: 13px !important;
                 font-weight: 300 !important;
                 color: #aaa !important;
             }
@@ -1840,12 +1970,9 @@ html .tickets-sold-column , html .tribe-list-column-title {
                 align-items: flex-end;
             }
 
-            .from_text_price_yesturday {
-                font-size: 12px;
-            }
-
+          
             .admin_dashboard_sales-amount_span {
-                font-weight: 200;
+                font-weight: 300;
                 font-size: 13px;
             }
 
@@ -3158,9 +3285,35 @@ html .tickets-sold-column , html .tribe-list-column-title {
     background: #121212!important;
 }
 
+#image-gallery .select-organizer , #image-gallery  #organiser-selector{
+    display:none!important
+}
+#image-gallery .default-organizer{
+    margin-bottom: -20px;
+    padding-top: 34px;
+
+}
+#image-preview-container{
+    display: flex;
+    margin-top: -90px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+#image-preview-container .preview-image{
+    height: auto;
+    max-width: 100%;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    object-fit: cover;
+    max-width: 200px;
+    width: 100%;
+    max-height: 194px;
+}
         /*****setting page***/ 
 
-.
+
         .setting_page_admin{
             padding-top: 50px;
             max-width:900px;
@@ -3183,6 +3336,77 @@ html .tickets-sold-column , html .tribe-list-column-title {
 
 }
         /******end */
+
+
+
+        /****orginser seetings  */
+.settings-tab-content h2 {
+    font-size: 25px;
+    font-weight: 500;
+    margin-top: 30px;
+    margin-bottom:0
+
+}
+
+#emailTable {
+    margin-top: 30px!important;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-width: 0;
+    margin: 0;
+    width: 100%;
+    background-color: #19191b;
+    position: relative;
+    padding: 17px;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 900px;
+}
+#customRoleAssign {
+    background: #d3fa16 !important;
+    color: #000000 !important;
+    text-transform: capitalize !important;
+    text-decoration: none;
+    white-space: nowrap;
+    border-radius: 3px;
+    line-height: 1;
+    padding: 9px 12px;
+    font-size: 12px;
+    height: fit-content;
+}
+
+#userEmail{
+    max-width: 600px;
+    margin-right: 10px;
+    padding: 4px 10px;
+    position: relative;
+    top: 1px;
+}
+
+
+
+
+#emailTable tbody tr:first-child th {
+    font-size: 14px;
+    color: #aaa;
+    font-weight: 300;
+    text-transform: capitalize;
+    padding-left: 6px;
+}
+
+
+.revokeRole {
+    border-width: 0;
+    padding: 7px 9px;
+    background: #d5d5d5 !important;
+    border-radius: 4px;
+    color: black !important;
+    font-size: 13px;
+    text-align: center;
+    width: fit-content;
+}
+
+
 
 
         /****admin settings page */
@@ -4068,6 +4292,10 @@ display:block!important
                     font-size: 12px;
                     font-family: "Plus Jakarta Sans", Sans-serif !important;
                 }
+                .sales-card.today_sale_admin_dashboard {
+                 
+                    min-height: inherit;
+                }
             }
 
 
@@ -4126,6 +4354,12 @@ jQuery(document).ready(function($) {
         }, 1000);
     }, 1200);
 });
+
+
+
+
+
+
 </script>
 
 

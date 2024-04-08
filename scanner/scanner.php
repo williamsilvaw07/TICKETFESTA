@@ -3,37 +3,37 @@
 Template Name: Organizer Scanner
 */
 
-// Include the custom header
+// Include the appropriate header based on user role
 $custom_header_path = get_stylesheet_directory() . '/scanner/header-organizer-scanner.php';
 if (file_exists($custom_header_path)) {
     require_once($custom_header_path);
 } else {
-    // Fallback to the default header if your custom header is not found
-    get_header();
+    get_header();  // Default site header for other users
 }
 ?>
 
-<!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
-    <!-- Main content -->
     <div class="content">
         <div class="container-fluid">
-
-  
-              <!--  <p class="scanner_vrsion">Version 1.0</p> -->
-      <div class="scanner_login_divs"> 
-
-
-          <!--<h2 class="tribe-community-events-list-title">Ticket Scanner</h2>-->
-        <button class="change_event_btn" style="display:none"><i class="fas fa-sign-in-alt"></i> Change Event</button>
-        </div>
             <?php
-            if (have_posts()) :
-                while (have_posts()) :
-                    the_post();
-                      the_content();
-                endwhile;
-            endif;
+            // Adjusted conditional logic to grant access to 'administrator', 'verifier', and 'organiser'
+            if (is_user_logged_in() && (current_user_can('administrator') || current_user_can('organiser') || current_user_can('verifier'))) {
+                if (have_posts()) {
+                    while (have_posts()) {
+                        the_post();
+                        the_content();  // Display the main content of the page
+                    }
+                }
+            } else {
+                // Different messages based on user status
+                if (is_user_logged_in()) {
+                    echo '<div class="scanner_login_divs_before"><h2>Access Denied</h2><p>You do not have the necessary permissions to access this page. Please contact the support if you believe this is an error.</p></div>';
+                } else {
+                    echo '<div class="scanner_login_divs_before"><div class="login_prompt"><h2>Attendees Check-in:</h2></div>';
+                    echo do_shortcode('[xoo_el_inline_form tabs="login" active="login"]');
+                    echo '</div>';
+                }
+            }
             ?>
         </div><!-- /.container-fluid -->
     </div>
@@ -57,7 +57,25 @@ if (file_exists($custom_footer_path)) {
 
 
 
+
 <style>
+
+    html .container-fluid{
+        padding-top: 34px !important;
+    }
+.xoo-el-active{
+    display:none
+}
+.scanner_login_divs_before h2{
+    margin: 0 auto;
+    width: fit-content;
+    font-weight: 400 !important;
+}
+    .xoo-el-form-container.xoo-el-form-inline {
+    max-width: 400px;
+    margin: 0px auto;
+    padding-top: 17px;
+}
 .main-header .d-block{
     display:none!important
 }
@@ -174,7 +192,7 @@ body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .content-w
     font-weight: 300;
     color: #aaa !important;
     font-size: 15px;
-    max-width: 400px;
+    max-width: 500px;
 }
 
 
@@ -336,7 +354,7 @@ input#event-pass {
     .change_event_btn {
         background-color: #19191b;
     color: white;
-    font-size: 11px;
+    font-size: 13px;
     padding: 2px 9px;
     border: none;
     border-radius: 5px;
@@ -344,6 +362,12 @@ input#event-pass {
     height: 32px;
     margin-top: 15px;
     margin-left: 13px;
+    max-width: 200px;
+    margin: 0px auto;
+    margin-bottom:15px
+}
+.change_event_btn  .fa-sign-in-alt:before {
+    color: #ff3b3b;
 }
 
 button i {

@@ -45,21 +45,6 @@ function remove_reserved_stock($product_id) {
     
     }
 
-    // Get the product object
-    /*$product = wc_get_product($product_id);
-
-    // Get the reserved quantity
-    $reserved_quantity = WC()->cart->get_cart_contents_count();
-
-    // Add the reserved quantity back to stock
-    $old_stock = $product->get_stock_quantity();
-    $new_stock = $old_stock + $reserved_quantity;
-    $product->set_stock_quantity($new_stock);
-    $product->save();
-
-    // Empty the cart
-    WC()->cart->empty_cart();*/
-
     // Add a custom notice with a link
     wc_add_notice('Your cart has been cleared due to inactivity. <a href="' . esc_url(home_url()) . '">Click here</a> to continue shopping.', 'error');
 }
@@ -72,7 +57,10 @@ function display_cart_timer() {
     // Display the timer only if there is reserved stock
     if ($reserved_stock > 0) {
         $time_left = 40; // 40 seconds
+        echo '<div class="cart-timer_div">';
+        echo '<p class="cart-timer_text">Tickets on Hold for</p>';
         echo '<p class="cart-timer" id="cart-timer">Time left: <span id="timer-countdown">' . $time_left . '</span> seconds</p>';
+        echo '</div>';
         echo '<script>
                 var timeLeft = ' . $time_left . ';
                 var timer = setInterval(function() {
@@ -2184,7 +2172,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
         $currency_code = get_woocommerce_currency();
 
         return "
-        <div class='sales-card today_sale_admin_dashboard'>
+        <div class='sales-card today_sale_admin_dashboard today_sale_admin_dashboard_revenue'>
             <div class='sales-card-content'>
                 <div class='sales-today'>
                     <h5 class='admin_dashboard_sales-label card_admin_dashboard'>Lifetime Revenue</h5>
@@ -2293,7 +2281,7 @@ function shortcode_todays_sales()
 
     // Create the HTML for the card-like section
     $output = '
-    <div class="sales-card today_sale_admin_dashboard">
+    <div class="sales-card today_sale_admin_dashboard today_sale_admin_dashboard_money">
         <div class="sales-card-content ">
             <div class="sales-today ">
                 <h5 class="admin_dashboard_sales-label card_admin_dashboard ">Today\'s Sales</h5>
@@ -2344,7 +2332,7 @@ function shortcode_todays_tickets_sold()
     }
 
     return '
-    <div class="sales-card today_sale_admin_dashboard">
+    <div class="sales-card today_sale_admin_dashboard today_ticket_sale_admin_dashboard">
         <div class="sales-card-content ">
             <div class="sales-today ">
                 <h5 class="admin_dashboard_sales-label card_admin_dashboard ">Tickets Sold Today</h5>
@@ -2402,7 +2390,7 @@ function shortcode_current_user_upcoming_live_events_count()
 
     // Return the count in the specified HTML layout
     return '
-    <div class="sales-card today_sale_admin_dashboard">
+    <div class="sales-card today_sale_admin_dashboard today_sale_admin_dashboard_live_events">
         <div class="sales-card-content ">
             <div class="sales-today ">
                 <h5 class="admin_dashboard_sales-label card_admin_dashboard ">Live Events</h5>
@@ -3632,6 +3620,10 @@ function ticketfeasta_follow($organizer_id, $user_id)
 }
 
 
+
+
+
+
 // Add a custom checkbox field to the checkout page
 // add_action( 'woocommerce_after_order_notes', 'add_subscribed_organiser_checkbox' );
 // function add_subscribed_organiser_checkbox( $checkout ) {
@@ -3722,7 +3714,7 @@ function ticketfeasta_follow($organizer_id, $user_id)
 
 
 
-
+/*
 ////////FUNCTION TO CREATE A SIGN UP FORM FOR THE ORGANIZER
 // Function to display the custom registration form
 function custom_user_registration_form()
@@ -3831,6 +3823,7 @@ function restrict_access_and_show_login_form()
     }
 }
 add_action('template_redirect', 'restrict_access_and_show_login_form');
+*/
 //////END
 
 
@@ -3868,7 +3861,7 @@ function enqueue_custom_frontend_js()
 
     // Enqueue your custom script, the 'get_stylesheet_directory_uri()' function points to your child theme's root directory.
     wp_enqueue_script('custom-frontend-js', get_stylesheet_directory_uri() . '/custom-function-frontend.js', array('jquery'), $script_version, true);
-    if ( is_page( 'scan-code' ) ) {
+    if ( is_page( 'qr-code-scanner' ) ) {
         wp_enqueue_script('html5-qrcode', '//cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.7/html5-qrcode.min.js', array('jquery'), null, true);
         // wp_enqueue_script('custom-qr-scanner-custom', 'https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js', array('jquery'), $script_version, true);
         wp_enqueue_script('custom-qr-main-js', get_stylesheet_directory_uri() . '/QrScan.js', array('jquery', 'html5-qrcode'), $script_version, true);
@@ -4592,6 +4585,8 @@ return $protocols;
 
 
 
+
+
 function custom_enqueue_scripts() {
 
     wp_enqueue_script('html5-qrcode', 'https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js', array('jquery'), null, true);
@@ -5041,8 +5036,6 @@ function tribe_check_progress_data(){
 
 
 
-
-
 /*
 
 function display_event_tickets_and_create_free_order() {
@@ -5090,11 +5083,174 @@ function display_event_tickets_and_create_free_order() {
         return 'The required method is not available.';
     }
 }
+
+
+
+
+function custom_list_all_events_with_authors_shortcode() {
+    // Fetch all events, including past events
+    $events = tribe_get_events([
+        'posts_per_page' => -1, // Fetch all events
+        'start_date'     => '1970-01-01', // Use a date far in the past to include all events
+        'end_date'       => '2099-12-31', // Use a future date to ensure all upcoming events are included
+        'status'         => 'publish', // Ensure only published events are fetched
+    ]);
+
+    $output = '<ul>';
+    foreach ($events as $event) {
+        $event_id = $event->ID;
+        $author_id = get_post_field('post_author', $event_id);
+        $author_name = get_the_author_meta('display_name', $author_id);
+        $output .= sprintf('<li>Event ID: %d, Title: %s, Author ID: %d, Author: %s</li>',
+            $event_id,
+            get_the_title($event_id),
+            $author_id,
+            $author_name
+        );
+    }
+    $output .= '</ul>';
+
+    // Return HTML list if events are found, or a message if no events are found.
+    return $events ? $output : 'No events found.';
+}
+add_shortcode('list_all_events_with_authors', 'custom_list_all_events_with_authors_shortcode');
+
+
+
+
+
+
+
+
+
+function add_multiple_authors_to_event() {
+    $event_id = 5640; // Set your event ID here
+    $authors_ids = [70, 1, 72]; // List of author IDs you want to add
+
+    // Check if the event already has a primary author set in the additional authors
+    $existing_authors = get_post_meta($event_id, 'additional_authors', true);
+    if (!empty($existing_authors)) {
+        // If there are already additional authors, merge them with the new ones without duplicating
+        $authors_ids = array_unique(array_merge($existing_authors, $authors_ids));
+    }
+
+    // Update the additional authors meta for the event
+    update_post_meta($event_id, 'additional_authors', $authors_ids);
+
+    // Optional: Update the primary author of the post to one of the authors if needed
+    // wp_update_post(array('ID' => $event_id, 'post_author' => $authors_ids[0]));
+}
+
+// Run the function to add authors. Comment out or remove after running once to avoid repeated execution.
+add_multiple_authors_to_event();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+add_action('add_meta_boxes', 'register_additional_authors_meta_box');
+add_action('save_post', 'save_additional_authors_meta_box');
+
+// Registers a meta box for all public post types
+function register_additional_authors_meta_box() {
+    $post_types = get_post_types(['public' => true], 'names');
+    foreach ($post_types as $post_type) {
+        add_meta_box(
+            'additional-authors',
+            __('Additional Authors', 'textdomain'),
+            'display_additional_authors_meta_box',
+            $post_type,
+            'side',
+            'default'
+        );
+    }
+}
+
+// Display the meta box in post editor
+function display_additional_authors_meta_box($post) {
+    // Nonce field for security
+    wp_nonce_field(basename(__FILE__), 'additional_authors_nonce');
+
+    // Get existing additional authors
+    $additional_authors = get_post_meta($post->ID, '_additional_authors', true);
+
+    // Assuming you have a function to list authors - `get_author_list()`
+    echo '<select name="additional_authors[]" multiple>';
+    foreach (get_author_list() as $author_id => $author_name) {
+        echo sprintf(
+            '<option value="%s"%s>%s</option>',
+            esc_attr($author_id),
+            in_array($author_id, (array)$additional_authors) ? ' selected' : '',
+            esc_html($author_name)
+        );
+    }
+    echo '</select>';
+    echo '<p>Hold down the Ctrl (windows) / Command (Mac) button to select multiple options.</p>';
+}
+
+// Save the additional authors when the post is saved
+function save_additional_authors_meta_box($post_id) {
+    // Check nonce, autosave, and permissions
+    if (!isset($_POST['additional_authors_nonce']) || !wp_verify_nonce($_POST['additional_authors_nonce'], basename(__FILE__)) ||
+        (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) ||
+        !current_user_can('edit_post', $post_id)) {
+        return;
+    }
+
+    // Update post meta
+    if (isset($_POST['additional_authors'])) {
+        update_post_meta($post_id, '_additional_authors', $_POST['additional_authors']);
+    } else {
+        delete_post_meta($post_id, '_additional_authors');
+    }
+}
+
+// Example function to get authors - replace with your actual logic
+function get_author_list() {
+    $users = get_users(['role__in' => ['author', 'administrator']]);
+    $author_list = [];
+    foreach ($users as $user) {
+        $author_list[$user->ID] = $user->display_name;
+    }
+    return $author_list;
+}
+
+
 */
 
 
+// Register an AJAX action for logged-in users
+add_action('wp_ajax_switch_to_organiser', 'switch_to_organiser_role');
 
-function add_event_tickets_shortcode_with_free_order() {
-    return display_event_tickets_and_create_free_order(); // Call the defined function.
+/**
+ * Changes the current user's role to 'organiser' unless they are an administrator.
+ *
+ * This function is called via AJAX when a user clicks the "Switch My Account to Organiser" button
+ * on a specific page. It checks if the user is not an administrator to prevent any unwanted
+ * privilege escalation, and then changes their role to 'organiser'.
+ */
+function switch_to_organiser_role() {
+    // Get the current user object
+    $current_user = wp_get_current_user();
+    
+    // Check if the current user is not an administrator to prevent administrators
+    // from being demoted accidentally or maliciously.
+    if (!current_user_can('administrator')) {
+        // Set the user's role to 'organiser'
+        $current_user->set_role('organiser');
+    }
+    
+    // Properly end the AJAX request
+    wp_die();
 }
-add_shortcode('event_tickets_free_order', 'add_event_tickets_shortcode_with_free_order');

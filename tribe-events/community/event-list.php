@@ -228,6 +228,7 @@ do_action( 'tribe_community_events_before_list_table' );
                         $event_pass = get_post_meta($event_id, 'event_pass', true);
                         echo "</td><td class='tribe-list-column-passcode'><span class='passcode'>$event_pass</span>";
                     }
+                    
                     ?>
                 </td>
             <?php endforeach; ?>
