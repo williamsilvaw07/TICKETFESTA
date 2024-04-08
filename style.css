@@ -2436,7 +2436,7 @@ html #qr-reader__dashboard_section_csr{
     max-width: 150px!important;
     width: 100%!important;
 }
-.page-id-101 .input-text{
+.page-id-101 .coupon .input-text{
    max-width: 164px;
    width: 100%!important;;
     padding: 10px 15px;
@@ -2445,7 +2445,7 @@ html #qr-reader__dashboard_section_csr{
     color: white !important;
 }
 
- .page-id-101 .empty-cart-button{
+.page-id-101  .product-quantity .minus , .page-id-101  .product-quantity .plus  , .page-id-101 .empty-cart-button{
     display: none!important;
 }
 .page-id-101 .woocommerce h1,
