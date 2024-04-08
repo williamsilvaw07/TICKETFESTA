@@ -2443,8 +2443,11 @@ html #qr-reader__dashboard_section_csr{
     border-radius: 5px;
     border: 0px!important;
     color: white !important;
+    background-color: #1a1a1a!important;
 }
-
+.page-id-101 .coupon button:last-child{
+    display: none;
+}
 .page-id-101  .product-quantity .minus , .page-id-101  .product-quantity .plus  , .page-id-101 .empty-cart-button{
     display: none!important;
 }
