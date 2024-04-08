@@ -50,13 +50,33 @@ function add_custom_script_to_footer()
             $productData .= "Product Name: $product_name, Price: $product_price <br>";
         }
 
+        $expire_date = $coupon->get_date_expires();
+        $formatted_expire_date = $expire_date ? date('Y-m-d H:i', strtotime($expire_date)) : '';
+
+        $start_date = $coupon->get_date_created();
+        $formatted_start_date = $start_date ? date('Y-m-d H:i', strtotime($start_date)) : '';
+
+        $response_data = array(
+            'code' => $coupon->get_code(),
+            'discount_type' => $coupon->get_discount_type(),
+            'amount' => $coupon->get_amount(),
+            'individual_use' => $coupon->get_individual_use(),
+            'description' => $coupon->get_description(),
+            'usage_limit' => $coupon->get_usage_limit(),
+            'expire_date' => $formatted_expire_date,
+            'start_date' => $formatted_start_date,
+        );
+
+        $data = json_encode($response_data);
+
         // Output coupon amount
 
         $custom_script = "
         // Your JavaScript code goes here
         console.log('This script runs in the footer.');
-        console.log('Coupon Amount: $coupon_amount $coupon->get_discount_type()');
+        console.log('Coupon Amount: $coupon_amount');
         console.log('$productData');
+        console.log('$data');
     ";
         // Add the JavaScript code to the footer
         wp_add_inline_script('jquery', $custom_script);
