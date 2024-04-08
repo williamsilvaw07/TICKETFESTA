@@ -2437,6 +2437,10 @@ html #qr-reader__dashboard_section_csr{
     width: 100%!important;
 }
 
+
+.page-id-101  .product-quantity .minus , .page-id-101  .product-quantity .plus {
+    display: none;
+}
 .page-id-101 .woocommerce h1,
 .page-id-101 .woocommerce h2,
 .page-id-101 .woocommerce h3,
@@ -2454,6 +2458,27 @@ html #qr-reader__dashboard_section_csr{
     font-family: 'Roboto', sans-serif;
 }
 
+.check_out_login_only{
+
+}
+
+
+.checkout_cart_div{
+
+}
+
+.cart_left{
+
+}
+
+.cart_right_bottom{
+
+}
+
+
+.cart_right_bottom{
+    
+}
 /***********END***********/
 
 
