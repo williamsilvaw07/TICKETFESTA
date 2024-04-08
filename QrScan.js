@@ -467,7 +467,7 @@ function updateCheckedInProgress(response) {
         var intervalId = setInterval(function() {
             // Your function to be called every 3 seconds
             CheckProgressData();
-        }, 9000);
+        }, 3000);
 
 
 
@@ -543,7 +543,7 @@ observer.observe(document.getElementById('tab1'), {
 
 
 // Add a click event listener to the .ticket_dropdown element
-$('.ticket_dropdown').on('click', function() {
+$("body").on('click','.ticket_dropdown', function() {
     // Get the .single_ticket_section_inner and <i class="fas fa-angle-down"></i> elements
     var innerElement = $('.single_ticket_section_inner');
     var iconElement = $('.ticket_dropdown i.fas');
@@ -589,7 +589,7 @@ $(document).ready(function() {
     // Initially load passcodes from Local Storage and populate the datalist
     loadPasscodes();
    
-    document.addEventListener("click", function(e){
+    /*document.addEventListener("click", function(e){
   const target = e.target.closest("#html5-qrcode-button-camera-start"); // Or any other selector.
        console.log(target)
        
@@ -597,7 +597,7 @@ $(document).ready(function() {
     // Do something with `target`.
      $(".checkin-details").hide();
   }
-});
+});*/
     // Event handler for clicking the login button
     $('#check-passcode').click(function() {
         // Retrieve the current value entered in the passcode input field
