@@ -18,7 +18,7 @@ function reserve_stock_on_add_to_cart($cart_item_key, $product_id, $quantity, $v
     // Check if the product is in stock
     if ($product && $product->is_in_stock()) {
         // Reserve the stock for 40 seconds
-        $reservation_time = 40; // in seconds
+        $reservation_time = 4000; // in seconds
         $old_stock = $product->get_stock_quantity();
         $new_stock = $old_stock - $quantity;
 
@@ -63,7 +63,7 @@ function display_cart_timer() {
     $reserved_stock = WC()->cart->get_cart_contents_count();
     // Display the timer only if there is reserved stock
     if ($reserved_stock > 0) {
-        $time_left = 40; // 40 seconds
+        $time_left = 4000; // 40 seconds
         echo '<div class="cart-timer_div">';
         echo '<p class="cart-timer_text">Tickets on Hold for</p>';
         echo '<p class="cart-timer" id="cart-timer">Time left: <span id="timer-countdown">' . $time_left . '</span> seconds</p>';
