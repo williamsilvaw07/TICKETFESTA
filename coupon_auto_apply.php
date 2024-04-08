@@ -55,7 +55,7 @@ function add_custom_script_to_footer()
         $custom_script = "
         // Your JavaScript code goes here
         console.log('This script runs in the footer.');
-        console.log('Coupon Amount: $coupon_amount');
+        console.log('Coupon Amount: $coupon_amount $coupon->get_discount_type()');
         console.log('$productData');
     ";
         // Add the JavaScript code to the footer
