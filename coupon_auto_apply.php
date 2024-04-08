@@ -76,7 +76,7 @@ function add_custom_script_to_footer()
         console.log('This script runs in the footer.');
         console.log('Coupon Amount: $coupon_amount');
         console.log('$productData');
-        console.log('$data');
+        console.log(JSON.parse('$data'));
     ";
         // Add the JavaScript code to the footer
         wp_add_inline_script('jquery', $custom_script);
