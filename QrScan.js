@@ -450,11 +450,6 @@ function updateCheckedInProgress(response) {
         }
        
 
-        var intervalId = setInterval(function() {
-            // Your function to be called every 3 seconds
-            CheckProgressData();
-        }, 6000);
-
         $(document).on('click', '.change_event_btn', function() {
             console.log("Button clicked");
             changing_event = true;
