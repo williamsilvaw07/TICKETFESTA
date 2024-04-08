@@ -4585,6 +4585,8 @@ return $protocols;
 
 
 
+
+
 function custom_enqueue_scripts() {
 
     wp_enqueue_script('html5-qrcode', 'https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js', array('jquery'), null, true);
@@ -4608,19 +4610,13 @@ function custom_qr_scanner_shortcode() {
     -->
 
     <div class="scanner_login_div"> 
-    <h3>Event Login.</h3>
-<h6>
-Please log in to view the event details and check in attendees.</h6>
-<p>You can find the event passcode on the organizer's dashboard under the events section.</p>
+    <h3>Log in to scan ticket QR codes.</h3>
+<p>You can locate the event passcode on the organizer's dashboard under the events section.</p>
 <input type="text" id="event-pass" name="event-pass" placeholder="Event Passcode" list="passcodes" autocomplete="on">
 <datalist id="passcodes"></datalist>
 <button id="check-passcode">
     <i class="fas fa-sign-in-alt"></i> Login
 </button>
-
-
-
-
     <span id="event_not_found" style='display:none'>Event not found. Please verify the Passcode</span>
 </div>
 
@@ -4629,9 +4625,7 @@ Please log in to view the event details and check in attendees.</h6>
     ?>
 
             <div class="tabs-container" style="display: none">
-            <button class="change_event_btn">
-    <i class="fas fa-sign-in-alt"></i> Change Event
-</button>
+      
  
                 <ul class="tabs-nav">
   <li class="tab tab1 active"><a href="#tab1"><i class="fa-solid fa-calendar-week"></i>Event Details</a></li>
@@ -4769,56 +4763,81 @@ function validate_event_pass() {
     $event_id = null;
     $event_data = [];
     $shortcode_output = '';
+    
 
     foreach ($events as $event) {
+        $ticket_list = []; // Reset ticket list for each event
+
         if (isset($event->ID)) {
             $match = true;
             $event_id = $event->ID;
+            $total_capacity = apply_filters('tribe_tickets_total_event_capacity', null, $event_id);
 
-            // Calculate capacities and tickets
-            $tickets = Tribe__Tickets__Tickets::get_all_event_tickets($event_id);
-            $total_capacity = array_sum(array_map(function($ticket) {
-                return tribe_tickets_get_capacity($ticket->ID);
-            }, $tickets));
+            $total_issued_tickets = 0; // Total issued tickets for the ratio calculation
+            if (null === $total_capacity) {
+                $tickets = Tribe__Tickets__Tickets::get_all_event_tickets($event_id);
+                $total_capacity = 0;
 
-            $total_issued_tickets = array_sum(array_map(function($ticket) {
-                preg_match('/\d+/', tribe_tickets_get_ticket_stock_message($ticket, __('issued', 'event-tickets')), $matches);
-                return $matches[0] ?? 0;
-            }, $tickets));
+                foreach ($tickets as $ticket) {
+                    $ticket_capacity = tribe_tickets_get_capacity($ticket->ID); // Retrieve ticket capacity
+                    $total_capacity += $ticket_capacity;
 
-            // Event attendance data
+                    // Retrieve the number of issued tickets for this ticket
+                    $issued_tickets_message = tribe_tickets_get_ticket_stock_message($ticket, __('issued', 'event-tickets'));
+                    preg_match('/\d+/', $issued_tickets_message, $matches);
+                    $issued_tickets = isset($matches[0]) ? intval($matches[0]) : 0;
+
+                    $total_issued_tickets += $issued_tickets; // Summing up issued tickets
+
+                    // Add each ticket's name, capacity, and issued tickets to the ticket list
+                    $ticket_list[] = [
+                        'name' => $ticket->name,
+                        'capacity' => $ticket_capacity,
+                        'issued_tickets' => $issued_tickets,
+                    ];
+                }
+            }
+
+            // Assuming an instance creation and method call similar to before for checking attendance
             $attendance_totals = new Tribe__Tickets__Attendance_Totals($event_id);
             $total_checked_in = $attendance_totals->get_total_checked_in();
-            $formatted_start_date = date('D, jS M \a\t H:i', strtotime(get_post_meta($event_id, '_EventStartDate', true)));
 
-            // Generate the shortcode output for attendees report
-          //  $shortcode_output = do_shortcode('[tribe_community_tickets view="attendees_report" id="' . $event_id . '"]');
+            // Format the data for checked in total / total issued tickets
+            $checked_in_format = sprintf('%d / %d', $total_checked_in, $total_issued_tickets);
 
-            // Prepare the event data for response
+            $start_date = get_post_meta($event_id, '_EventStartDate', true);
+            $start_date_timestamp = strtotime($start_date);
+            $day_of_week = date('D', $start_date_timestamp);
+            $day_of_month = date('jS', $start_date_timestamp);
+            $month = date('M', $start_date_timestamp);
+            $time = date('H:i', $start_date_timestamp);
+            $formatted_start_date = "$day_of_week, $day_of_month $month at $time";
+
             $event_data = [
                 'start_date' => $formatted_start_date,
                 'issued_tickets' => $total_issued_tickets,
                 'total_tickets_available' => $total_capacity,
+                'ticket_list' => $ticket_list,
                 'name' => get_the_title($event_id),
                 'thumbnail_url' => get_the_post_thumbnail_url($event_id, 'medium'),
-                'checked_in' => sprintf('%d / %d', $total_checked_in, $total_issued_tickets)
-               // 'shortcode_output' => $shortcode_output
-
+                'checked_in' => $checked_in_format, //"checked in / total" format
             ];
+
+            // Generate shortcode output for attendees report
+            $shortcode_output = do_shortcode('[tribe_community_tickets view="attendees_report" id="' . $event_id . '"]');
         }
     }
 
-    wp_send_json([
+    $response = [
         'match' => $match,
         'event_id' => $event_id,
-        'event_data' => $event_data
-       // 'shortcode_output' => $shortcode_output
-    ]);
+        'event_data' => $event_data,
+        'shortcode_output' => $shortcode_output, // Include the shortcode output in the response
+    ];
+
+    wp_send_json($response);
     wp_die();
 }
-add_action('wp_ajax_validate_event_pass', 'validate_event_pass');
-add_action('wp_ajax_nopriv_validate_event_pass', 'validate_event_pass');
-
 // Remember to properly hook your function to WordPress AJAX actions if it's intended for AJAX.
 
 
@@ -4953,15 +4972,6 @@ function generate_unique_random_hash($length) {
 
 
 
-
-
-
-
-
-
-
-
-
 add_action('wp_ajax_check_progress_data', 'tribe_check_progress_data');
 add_action('wp_ajax_nopriv_check_progress_data', 'tribe_check_progress_data');
 
@@ -5021,8 +5031,6 @@ function tribe_check_progress_data(){
         wp_send_json_error('No tickets found for this event.');
     }
 }
-
-
 
 
 
