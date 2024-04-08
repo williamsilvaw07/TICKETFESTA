@@ -2420,10 +2420,13 @@ html #qr-reader__dashboard_section_csr{
 
 
 /*********CART*************/
-.woocommerce
+.woocommerce , .cart-timer_div
 {
     background: white;
     color: black;
+}
+.cart-subtotal th{
+    color: black!important;
 }
 .woocommerce-cart-form__cart-item img{
     max-width: 150px;
