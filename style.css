@@ -2432,6 +2432,22 @@ html #qr-reader__dashboard_section_csr{
     max-width: 150px;
     width: 100%!important;
 }
+.cart h1,
+.cart h2,
+.cart h3,
+.cart h4,
+.cart h5,
+.cart h6,
+.cart p,
+.cart a,
+.cart span,
+.cart dd,
+.cart dt,
+.cart .main-navigation .main-nav ul li a,
+.cart {
+    color: black !important;
+    font-family: 'Roboto', sans-serif;
+}
 
 /***********END***********/
 
