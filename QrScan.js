@@ -1,8 +1,28 @@
+
+function loadaTeendeReoport(event_id) {
+    $.ajax({
+        url: window.tribe_ajax.ajax_url, // WordPress AJAX URL
+        type: 'POST',
+        data: {
+            action: 'attende_report', // AJAX action name
+            event_id: event_id // Pass event ID
+        },
+        success: function(response) {
+            // Display the shortcode output
+            $('#tab3').html(response);
+        },
+        error: function(xhr, status, error) {
+            console.error(xhr.responseText);
+        }
+    });
+
+
 (function($) {
     
     document.addEventListener("DOMContentLoaded", function(event) {
         var event_id_global = '';
         var changing_event = false;
+    
         // const video = document.getElementById('video');
 
         // Check if getUserMedia is supported
@@ -61,6 +81,7 @@
             const event_qr_code = params.get('event_qr_code');
             const ticket_id = params.get('ticket_id');
             const qr_event_id = params.get('event_id');
+            
             const security_code = params.get('security_code');
             const path = params.get('path');
 
@@ -158,6 +179,7 @@
                     console.log('ajax response', response);
                     if(response.match){
                         event_id_global = response.event_id;
+                        loadaTeendeReoport(event_id_global)
                         // startScanQR(response.event_id);
                         if (!response || !response.event_data) {
                             console.error("Invalid response data.");
