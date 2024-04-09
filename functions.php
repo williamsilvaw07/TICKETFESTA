@@ -1,20 +1,6 @@
 <?php
 
 
-add_action( 'init', function() { 
-    ps_register_shortcode_ajax( 'attende_report', 'attende_report' ); 
-  } );
-  
-  function ps_register_shortcode_ajax( $callable, $action ) {
-  
-    if ( empty( $_POST['action'] ) || $_POST['action'] != $action )
-      return;
-  
-    call_user_func( $callable );
-  }
-  
- 
-
 function attende_report() {
 
     
@@ -43,8 +29,8 @@ if ($page) {
     
     wp_die();
 }
-//add_action('wp_ajax_attende_report', 'attende_report');
-//add_action('wp_ajax_nopriv_attende_report', 'attende_report'); 
+add_action('wp_ajax_attende_report', 'attende_report');
+add_action('wp_ajax_nopriv_attende_report', 'attende_report'); 
 
 
 
