@@ -8,7 +8,7 @@ function loadaTeendeReoport(event_id) {
         },
         success: function(response) {
             // Display the shortcode output
-          //  $('#tab3').html(response);
+            $('#tab3').html(response);
         },
         error: function(xhr, status, error) {
             console.error(xhr.responseText);

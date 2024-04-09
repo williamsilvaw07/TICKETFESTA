@@ -4,12 +4,8 @@
 function attende_report() {
     $event_id = $_POST['event_id'];
     
-    $html_content = file_get_contents('https://ticketfesta.co.uk/attende-report?id=1585');
+    $html_content = file_get_contents('https://ticketfesta.co.uk/attende-report?id='.$event_id);
 
-// Remove the body tag from the content
-//$html_content_without_body = preg_replace('/<body[^>]*>(.*?)<\/body>/is', '', $html_content);
-
-// Echo the modified content
 echo $html_content;
     wp_die();
 }
