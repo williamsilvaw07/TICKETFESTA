@@ -2490,6 +2490,9 @@ html .checkout-button:hover{
     color: #f6bc02;
     font-size: 37px;
 }
+.fa-triangle-exclamation{
+    margin-right: 30px;
+}
 .cart-timer_text , .cart-timer{
     margin-bottom: 0!important;
 }
