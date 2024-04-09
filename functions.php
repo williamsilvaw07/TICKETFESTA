@@ -3,9 +3,7 @@
 
 function attende_report() {
 
-    
-    define('WP_USE_THEMES', false);
-require_once('wp-load.php');
+
 
 // Page ID or slug
 $page_id_or_slug = 'attende-report?id=1585';
