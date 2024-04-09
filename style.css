@@ -2528,9 +2528,16 @@ html .checkout-button:hover{
         display: flex;
     }.page-id-101 .coupon button {
     
-        padding: 10px 7px !important;
+        padding: 6px 7px !important;
+        height: fit-content;
     
     }
+
+    .page-id-101 button[name="coupon_code"]{
+    padding: 8px 15px!important;
+    height: fit-content!important;
+    font-size: 16px!important;
+}
     .page-id-101 button[name="update_cart"]{
         margin-left: 0!important;
         margin-top: 15px!important;
