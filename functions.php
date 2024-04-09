@@ -5269,3 +5269,23 @@ function switch_to_organiser_role() {
     // Properly end the AJAX request
     wp_die();
 }
+
+
+
+
+function get_product_normal_image_url($product_id) {
+    // Get the featured image ID for the product
+    $image_id = get_post_thumbnail_id($product_id);
+
+    // If there is no featured image, return empty string
+    if (!$image_id) {
+        return '';
+    }
+
+    // Get the image URL for the normal size
+    $image_url = wp_get_attachment_image_src($image_id, 'full');
+
+    // Return the image URL
+    return $image_url[0];
+}
+
