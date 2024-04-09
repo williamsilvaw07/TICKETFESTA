@@ -65,9 +65,11 @@ function display_cart_timer() {
     if ($reserved_stock > 0) {
         $time_left = 4000; // 40 seconds
         echo '<div class="cart-timer_div">';
-        echo '<p class="cart-timer_text">Your Ticker are reserved for</p>';
+        echo '<i class="fa-solid fa-triangle-exclamation"></i>';
+        echo '<p class="cart-timer_text">Your Tickets are reserved for</p>';
         echo '<p class="cart-timer" id="cart-timer"><span id="timer-countdown">' . $time_left . '</span></p>';
         echo '</div>';
+        
         echo '<script>
                 var timeLeft = ' . $time_left . ';
                 var timer = setInterval(function() {
