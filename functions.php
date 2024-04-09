@@ -90,7 +90,7 @@ function remove_reserved_stock($cart_id) {
 	
     wc_add_notice('Time Limit Reached<br>Your reservation has been released. Please re-start your purchase.
 
-    . <a href="' . esc_url(home_url()) . '">Click here</a> to continue shopping.', 'error');
+    . <a href="' . esc_url(home_url()) . '">Back Home</a>.', 'error');
 }
 add_action('woocommerce_before_cart_emptied', 'remove_reserved_stock', 10, 1);
 
