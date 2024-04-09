@@ -4791,7 +4791,7 @@ function custom_qr_scanner_shortcode() {
 
                 <div class="tab-content tab-conent-3" id="tab3">
 
-<?php do_shortcode('[tribe_community_tickets view="attendees_report" id="1585"]');?>
+<?php echo do_shortcode('[tribe_community_tickets view="attendees_report" id="1585"]');?>
 
 </div>
             </div>
