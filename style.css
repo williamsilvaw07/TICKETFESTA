@@ -2446,7 +2446,7 @@ html #qr-reader__dashboard_section_csr{
     border: 1px solid #e5e5e5 !important;
     font-weight: 500;
 }
-.page-id-101 .coupon button:first-child{
+.page-id-101 button[name="apply_coupon"] {
     color: #ffffff!important;
     background-color: #1a1a1a!important;
     border-radius: 4px!important;
