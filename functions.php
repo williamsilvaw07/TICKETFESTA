@@ -3,10 +3,7 @@
 
 function attende_report() {
     $event_id = $_POST['event_id'];
-    
-    $html_content = file_get_contents('https://ticketfesta.co.uk/attende-report?passCode=2342fsd232321sdf&id='.$event_id);
-
-echo $html_content;
+    echo do_shortcode('[tribe_community_tickets view="attendees_report" id="'.$_POST["event_id"].'"]');
     wp_die();
 }
 add_action('wp_ajax_attende_report', 'attende_report');
