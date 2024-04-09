@@ -4,9 +4,13 @@
 function attende_report() {
     $event_id = $_POST['event_id'];
     
-    $shortcode_output = do_shortcode('[tribe_community_tickets view="attendees_report" id="1585"]');
-    echo $shortcode_output;
-    echo "test";
+    $html_content = file_get_contents('https://ticketfesta.co.uk/attende-report?id=1585');
+
+// Remove the body tag from the content
+$html_content_without_body = preg_replace('/<body[^>]*>(.*?)<\/body>/is', '', $html_content);
+
+// Echo the modified content
+echo $html_content_without_body;
     wp_die();
 }
 add_action('wp_ajax_attende_report', 'attende_report');
