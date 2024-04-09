@@ -30,7 +30,7 @@ echo $html_content_without_body;
 
 
 
-
+//FUNCTION TO MAKE THE STOCK ON OLD WHEN ADDED TO THE CART FOR XX TIME 
 
 function session_start_global(){
     if( ! session_id() ) {
@@ -111,7 +111,8 @@ function display_cart_timer() {
 	
     if ($reserved_stock > 0) {
         // 40 seconds
-        echo '<div class="cart-timer_div test">';
+        echo '<div class="cart-timer_div">';
+        echo '<i class="fa-solid fa-triangle-exclamation"></i>';
         echo '<p class="cart-timer_text">Tickets on Hold for</p>';
         echo '<p class="cart-timer" id="cart-timer">Time left: <span id="timer-countdown"> '.$time_left.'</span> seconds</p>';
         echo '</div>';
