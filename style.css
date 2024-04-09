@@ -2446,8 +2446,14 @@ html #qr-reader__dashboard_section_csr{
     border: 1px solid #e5e5e5 !important;
     font-weight: 500;
 }
-.page-id-101 .coupon button:last-child{
-    display: none;
+.page-id-101 .coupon button:first-child{
+    color: #ffffff;
+    background-color: #1a1a1a;
+    border-radius: 4px;
+    padding: 10px 29px;
+    margin-left: 10px;
+    font-size: 14px;
+
 }
 .page-id-101  .product-quantity .minus , .page-id-101  .product-quantity .plus  , .page-id-101 .empty-cart-button{
     display: none!important;
