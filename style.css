@@ -2546,6 +2546,11 @@ html .checkout-button:hover{
     .page-id-101  .product-subtotal{
         display: none!important;
     }
+    .page-id-101  .shop_table .actions{
+
+        margin-top: 50px;
+
+    }
 }
 /***********END***********/
 
