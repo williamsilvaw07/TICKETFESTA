@@ -16,22 +16,11 @@ if (file_exists($custom_header_path)) {
     <div class="content">
         <div class="container-fluid">
             <?php
-            // Adjusted conditional logic to grant access to 'administrator', 'verifier', and 'organiser'
-            if (is_user_logged_in() && (current_user_can('administrator') || current_user_can('organiser') || current_user_can('verifier'))) {
-                if (have_posts()) {
-                    while (have_posts()) {
-                        the_post();
-                        the_content();  // Display the main content of the page
-                    }
-                }
-            } else {
-                // Different messages based on user status
-                if (is_user_logged_in()) {
-                    echo '<div class="scanner_login_divs_before"><h2>Access Denied</h2><p>You do not have the necessary permissions to access this page. Please contact the support if you believe this is an error.</p></div>';
-                } else {
-                    echo '<div class="scanner_login_divs_before"><div class="login_prompt"><h2>Attendees Check-in:</h2></div>';
-                    echo do_shortcode('[xoo_el_inline_form tabs="login" active="login"]');
-                    echo '</div>';
+            // Content is now freely accessible to all visitors
+            if (have_posts()) {
+                while (have_posts()) {
+                    the_post();
+                    the_content();  // Display the main content of the page
                 }
             }
             ?>
@@ -51,6 +40,7 @@ if (file_exists($custom_footer_path)) {
     get_footer();
 }
 ?>
+
 
 
 
