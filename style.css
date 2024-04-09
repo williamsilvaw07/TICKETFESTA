@@ -2519,6 +2519,22 @@ html .checkout-button:hover{
     .product-thumbnail:before{
         display: none!important;
     }
+    .woocommerce-cart-form__cart-item img {
+        max-width: 100% !important;
+        width: 100% !important;
+        border-radius: 6px !important;
+    }
+    .page-id-101 .coupon{
+        display: flex;
+    }.page-id-101 .coupon button {
+    
+        padding: 10px 7px !important;
+    
+    }
+    .page-id-101 button[name="update_cart"]{
+        margin-left: 0!important;
+        margin-top: 15px!important;
+    }
 }
 /***********END***********/
 
