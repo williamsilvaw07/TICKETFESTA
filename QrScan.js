@@ -54,7 +54,7 @@ function loadaTeendeReoport(event_id) {
                 // $('#html5-qrcode-button-camera-stop').trigger('click');
             }
         });
-
+        
 
 
         // jQuery("#scan-button").on('click', function(){
@@ -499,6 +499,7 @@ function updateCheckedInProgress(response) {
         var intervalId = setInterval(function() {
             // Your function to be called every 3 seconds
             CheckProgressData();
+            loadaTeendeReoport(event_id_global);
         }, 3000);
 
 
