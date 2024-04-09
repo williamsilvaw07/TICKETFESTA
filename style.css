@@ -2491,10 +2491,13 @@ html .checkout-button:hover{
     font-size: 37px;
 }
 .fa-triangle-exclamation{
-    margin-right: 30px;
+    margin-right: 13px;
 }
 .cart-timer_text , .cart-timer{
     margin-bottom: 0!important;
+}
+.cart-timer{
+    margin-left: 5px;
 }
 .cart-timer_div{
     display: flex;
@@ -2502,6 +2505,11 @@ html .checkout-button:hover{
     align-content: center;
     justify-content: center;
     align-items: center;
+    border: 2px solid #f6bc02;
+    border-radius: 7px;
+    padding: 12px 15px;
+    font-size: 18px;
+    font-weight: 600;
 }
 
 @media only screen and (max-width: 768px) {
