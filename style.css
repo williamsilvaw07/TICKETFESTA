@@ -2447,12 +2447,12 @@ html #qr-reader__dashboard_section_csr{
     font-weight: 500;
 }
 .page-id-101 .coupon button:first-child{
-    color: #ffffff;
-    background-color: #1a1a1a;
-    border-radius: 4px;
-    padding: 10px 29px;
-    margin-left: 10px;
-    font-size: 14px;
+    color: #ffffff!important;
+    background-color: #1a1a1a!important;
+    border-radius: 4px!important;
+    padding: 10px 29px!important;
+    margin-left: 10px!important;
+    font-size: 14px!important;
 
 }
 .page-id-101  .product-quantity .minus , .page-id-101  .product-quantity .plus  , .page-id-101 .empty-cart-button{
