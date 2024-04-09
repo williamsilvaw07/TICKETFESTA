@@ -3,7 +3,7 @@
 
 function attende_report() {
 
-    echo do_shortcode('[tribe_community_tickets view="attendees_report" id="'.$_GET["id"].'"]');
+    echo do_shortcode('[tribe_community_tickets view="attendees_report" id="1585"]');
 // Page ID or slug
 /*$page_id_or_slug = 'attende-report?id=1585';
 
