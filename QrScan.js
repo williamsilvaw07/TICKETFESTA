@@ -1,4 +1,3 @@
-
 function loadaTeendeReoport(event_id) {
     $.ajax({
         url: window.tribe_ajax.ajax_url, // WordPress AJAX URL

@@ -422,128 +422,107 @@ $event_description = get_post_meta($event_id, 'event_description', true);
 
 
 
-    //////FUNCTION FOR THE FAQ SECTION 
-    jQuery(document).ready(function ($) {
-        var container = $('#faq-items-container');
-        var index = <?php echo count($faqs); ?>;
-        var maxCharCount = 200; // Maximum character count
+    //////// FUNCTION FOR THE FAQ SECTION 
+jQuery(document).ready(function ($) {
+    var container = $('#faq-items-container');
+    var index = <?php echo count($faqs); ?>;
+    var maxCharCount = 200; // Maximum character count per individual FAQ
 
-        // Function to collapse all accordion contents
-        function collapseAll() {
-            $('.accordion-content').slideUp();
-            $('.accordion-title').removeClass('active'); // Remove the active class from all titles
-        }
+    // Function to collapse all accordion contents
+    function collapseAll() {
+        $('.accordion-content').slideUp();
+        $('.accordion-title').removeClass('active'); // Remove the active class from all titles
+    }
 
-        // Function to add a new FAQ item
-        $('#add-faq').on('click', function () {
-            // Collapse all accordion contents
-            collapseAll();
+    // Function to add a new FAQ item
+    $('#add-faq').on('click', function () {
+        // Collapse all accordion contents
+        collapseAll();
 
-            // Create new item
-            var newItemHtml = `
-            <div class="faq-item" data-index="${index}">
-                <div class="accordion-title">
-                  <span class="question-title">New Question</span>
-                </div>
-                <div class="accordion-content" style="display: none;">
-                    <p><label for="event_faqs_question_${index}"></label>
-                    <input type="text" name="event_faqs[${index}][question]" class="faq-question-input" placeholder="Question" /></p>
-                    <p>
-                        <label for="event_faqs_answer_${index}"></label>
-                        <textarea name="event_faqs[${index}][answer]" placeholder="Answer" class="faq-answer-input"></textarea>
-                    </p>
-                    <span class="char-count" id="char-count-${index}">0/${maxCharCount}</span>
-                    <span class="char-limit-warning" id="char-limit-warning-${index}"></span>
-                    <button type="button" class="remove-faq admin_delect_btn_all">Delete</button>
-                </div>
-            </div>`;
+        // Create new item
+        var newItemHtml = `
+        <div class="faq-item" data-index="${index}">
+            <div class="accordion-title">
+              <span class="question-title">New Question</span>
+            </div>
+            <div class="accordion-content" style="display: none;">
+                <p><label for="event_faqs_question_${index}"></label>
+                <input type="text" name="event_faqs[${index}][question]" class="faq-question-input" placeholder="Question" /></p>
+                <p>
+                    <label for="event_faqs_answer_${index}"></label>
+                    <textarea name="event_faqs[${index}][answer]" placeholder="Answer" class="faq-answer-input"></textarea>
+                </p>
+                <span class="char-count" id="char-count-${index}">0/${maxCharCount}</span>
+                <span class="char-limit-warning" id="char-limit-warning-${index}"></span>
+                <button type="button" class="remove-faq admin_delect_btn_all">Delete</button>
+            </div>
+        </div>`;
 
-            // Append the new item and slide it down
-            var newItem = $(newItemHtml).appendTo(container);
-            newItem.find('.accordion-content').slideDown();
-            newItem.find('.accordion-title').addClass('active'); // Add the active class to the new title
-            index++;
-        });
+        // Append the new item and slide it down
+        var newItem = $(newItemHtml).appendTo(container);
+        newItem.find('.accordion-content').slideDown();
+        newItem.find('.accordion-title').addClass('active'); // Add the active class to the new title
+        index++;
+    });
 
-        // Event handler for toggling accordion contents
-        container.on('click', '.accordion-title', function () {
-            var content = $(this).next('.accordion-content');
-            var wasOpen = content.is(':visible');
+    // Event handler for toggling accordion contents
+    container.on('click', '.accordion-title', function () {
+        var content = $(this).next('.accordion-content');
+        var wasOpen = content.is(':visible');
 
-            // Collapse all others
-            collapseAll();
+        // Collapse all others
+        collapseAll();
 
-            // If it was already open, we leave it closed. Otherwise, open it.
-            if (!wasOpen) {
-                content.slideDown();
-                $(this).addClass('active'); // Add the active class to the clicked title
-            }
-        });
-
-        // Event handler for updating the title text
-        container.on('keyup', '.faq-question-input', function () {
-            var title = $(this).closest('.faq-item').find('.question-title');
-            title.text($(this).val());
-        });
-
-        // Event handler for removing an FAQ item
-        container.on('click', '.remove-faq', function () {
-            $(this).closest('.faq-item').remove();
-        });
-
-        // Function to count characters and update the counter
-        function updateCharCountAndLimit(textarea, index) {
-            var charCount = textarea.value.length;
-            var charCountElement = $('#char-count-' + index);
-            var charLimitWarningElement = $('#char-limit-warning-' + index);
-
-            charCountElement.text(charCount + '/' + maxCharCount);
-
-            if (charCount > maxCharCount) {
-                // Trim the string to the first 200 characters
-                var trimmedString = textarea.value.slice(0, maxCharCount);
-                textarea.value = trimmedString;
-                charCountElement.text(maxCharCount + '/' + maxCharCount);
-                charLimitWarningElement.text('Character limit exceeded').css('color', 'red');
-            } else {
-                charLimitWarningElement.text('');
-            }
-
-            // Check if the "Add FAQ" button should be disabled
-            var totalCharCount = getTotalCharCount();
-            if (totalCharCount >= maxCharCount) {
-                $('#add-faq').prop('disabled', true);
-            } else {
-                $('#add-faq').prop('disabled', false);
-            }
-        }
-
-        // Event handler for character count update
-        container.on('input', '.faq-answer-input', function () {
-            var index = $(this).closest('.faq-item').data('index');
-            updateCharCountAndLimit(this, index);
-        });
-
-        // Initial check on page load for existing textareas
-        $('.faq-answer-input').each(function () {
-            var index = $(this).closest('.faq-item').data('index');
-            updateCharCountAndLimit(this, index);
-        });
-
-        // Function to calculate the total character count of all answers
-        function getTotalCharCount() {
-            var totalCharCount = 0;
-            $('.faq-answer-input').each(function () {
-                totalCharCount += this.value.length;
-            });
-            return totalCharCount;
-        }
-
-        // Disable the "Add FAQ" button initially if the limit is already reached
-        if (getTotalCharCount() >= maxCharCount) {
-            $('#add-faq').prop('disabled', true);
+        // If it was already open, we leave it closed. Otherwise, open it.
+        if (!wasOpen) {
+            content.slideDown();
+            $(this).addClass('active'); // Add the active class to the clicked title
         }
     });
+
+    // Event handler for updating the title text
+    container.on('keyup', '.faq-question-input', function () {
+        var title = $(this).closest('.faq-item').find('.question-title');
+        title.text($(this).val());
+    });
+
+    // Event handler for removing an FAQ item
+    container.on('click', '.remove-faq', function () {
+        $(this).closest('.faq-item').remove();
+    });
+
+    // Function to count characters and update the counter
+    function updateCharCountAndLimit(textarea, index) {
+        var charCount = textarea.value.length;
+        var charCountElement = $('#char-count-' + index);
+        var charLimitWarningElement = $('#char-limit-warning-' + index);
+
+        charCountElement.text(charCount + '/' + maxCharCount);
+
+        if (charCount > maxCharCount) {
+            // Trim the string to the first 200 characters
+            var trimmedString = textarea.value.slice(0, maxCharCount);
+            textarea.value = trimmedString;
+            charCountElement.text(maxCharCount + '/' + maxCharCount);
+            charLimitWarningElement.text('Character limit exceeded').css('color', 'red');
+        } else {
+            charLimitWarningElement.text('');
+        }
+    }
+
+    // Event handler for character count update
+    container.on('input', '.faq-answer-input', function () {
+        var index = $(this).closest('.faq-item').data('index');
+        updateCharCountAndLimit(this, index);
+    });
+
+    // Initial check on page load for existing textareas
+    $('.faq-answer-input').each(function () {
+        var index = $(this).closest('.faq-item').data('index');
+        updateCharCountAndLimit(this, index);
+    });
+});
+
 
 
 
@@ -1284,5 +1263,10 @@ font-size:14px!important
 }
 .tribe-section-content-label label{
     font-size:14px!important
+}
+
+
+.dark-mode input:-webkit-autofill, .dark-mode input:-webkit-autofill:focus, .dark-mode input:-webkit-autofill:hover, .dark-mode select:-webkit-autofill, .dark-mode select:-webkit-autofill:focus, .dark-mode select:-webkit-autofill:hover, .dark-mode textarea:-webkit-autofill, .dark-mode textarea:-webkit-autofill:focus, .dark-mode textarea:-webkit-autofill:hover {
+    -webkit-text-fill-color: #000000;
 }
 </style>

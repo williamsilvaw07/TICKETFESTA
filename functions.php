@@ -3,7 +3,6 @@
 
 function attende_report() {
 
-
     echo do_shortcode('[tribe_community_tickets view="attendees_report" id="'.$_GET["id"].'"]');
 // Page ID or slug
 /*$page_id_or_slug = 'attende-report?id=1585';
@@ -32,7 +31,7 @@ add_action('wp_ajax_nopriv_attende_report', 'attende_report');
 
 
 
-
+//FUNCTION TO MAKE THE STOCK ON OLD WHEN ADDED TO THE CART FOR XX TIME 
 
 function session_start_global(){
     if( ! session_id() ) {
@@ -89,8 +88,15 @@ add_action('woocommerce_add_to_cart', 'reserve_stock_on_add_to_cart', 10, 6);
 
 // Remove reserved stock after specified time
 function remove_reserved_stock($cart_id) {
+<<<<<<< HEAD
     wc_clear_notices();
     wc_add_notice('Your cart has been cleared due to inactivity. <a href="' . esc_url(home_url()) . '">Click here</a> to continue shopping.', 'error');
+=======
+	
+    wc_add_notice('Time Limit Reached<br>Your reservation has been released. Please re-start your purchase.
+
+    . <a href="' . esc_url(home_url()) . '">Back Home</a>.', 'error');
+>>>>>>> 5afc8d9ce2a15aa9bb01019d0623dfc7a63e629e
 }
 add_action('woocommerce_before_cart_emptied', 'remove_reserved_stock', 10, 1);
 
@@ -113,7 +119,8 @@ function display_cart_timer() {
 	
     if ($reserved_stock > 0) {
         // 40 seconds
-        echo '<div class="cart-timer_div test">';
+        echo '<div class="cart-timer_div">';
+        echo '<i class="fa-solid fa-triangle-exclamation"></i>';
         echo '<p class="cart-timer_text">Tickets on Hold for</p>';
         echo '<p class="cart-timer" id="cart-timer">Time left: <span id="timer-countdown"> '.$time_left.'</span> seconds</p>';
         echo '</div>';
