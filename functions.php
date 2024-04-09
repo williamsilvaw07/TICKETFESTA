@@ -1,18 +1,6 @@
 <?php
 
 
-function attende_report() {
-    $event_id = $_POST['event_id'];
-    echo do_shortcode('[tribe_community_tickets view="attendees_report" id="'.$_POST["event_id"].'"]');
-    wp_die();
-}
-add_action('wp_ajax_attende_report', 'attende_report');
-add_action('wp_ajax_nopriv_attende_report', 'attende_report'); 
-
-
-
-
-
 function session_start_global(){
     if( ! session_id() ) {
         session_start();
@@ -4671,7 +4659,6 @@ function custom_qr_scanner_shortcode() {
  
                 <ul class="tabs-nav">
   <li class="tab tab1 active"><a href="#tab1"><i class="fa-solid fa-calendar-week"></i>Event Details</a></li>
-  <li class="tab tab3 "><a href="#tab3"><i class="fa-solid fa-calendar-week"></i>Attendees Report</a></li>
 <li class="tab tab2"><a href="#tab2"><i class="fa-solid fa-camera"></i> Scan QR Code</a></li>
 
 
@@ -4786,12 +4773,6 @@ function custom_qr_scanner_shortcode() {
                         
                     </div>
                 </div>
-
-                <div class="tab-content tab-conent-3" id="tab3">
-
-<?php echo do_shortcode('[tribe_community_tickets view="attendees_report" id="1585"]');?>
-
-</div>
             </div>
             </div>
             </div>
