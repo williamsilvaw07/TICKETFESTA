@@ -2485,32 +2485,21 @@ html #qr-reader__dashboard_section_csr{
 html .checkout-button:hover{
     color: white!important;
 }
-
-.check_out_login_only{
-
+.fa-exclamation-triangle:before, .fa-triangle-exclamation:before, .fa-warning:before {
+    content: "\f071";
+    color: #f6bc02;
+    font-size: 37px;
 }
-
-
-.checkout_cart_div{
-
+.cart-timer_text , .cart-timer{
+    margin-bottom: 0!important;
 }
-
-.cart_left{
-
+.cart-timer_div{
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
 }
-
-.cart_right_bottom{
-
-}
-
-
-.cart_right_bottom{
-
-}
-
-
-
-
 
 @media only screen and (max-width: 768px) {
     .woocommerce table.cart .product-thumbnail, .woocommerce-page #content table.cart .product-thumbnail, .woocommerce-page table.cart .product-thumbnail  {
