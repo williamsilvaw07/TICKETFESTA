@@ -2532,7 +2532,10 @@ html .checkout-button:hover{
         height: fit-content;
     
     }
-
+    .woocommerce #content table.cart td.actions .input-text, .woocommerce table.cart td.actions .input-text, .woocommerce-page #content table.cart td.actions .input-text, .woocommerce-page table.cart td.actions .input-text {
+        width: 150px;
+        padding: 6px 15px;
+    }
     html .page-id-101 button[name="coupon_code"]{
     padding: 8px 15px!important;
     height: fit-content!important;
