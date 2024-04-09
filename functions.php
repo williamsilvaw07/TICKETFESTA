@@ -4,9 +4,9 @@
 function attende_report() {
 
 
-
+    echo do_shortcode('[tribe_community_tickets view="attendees_report" id="'.$_GET["id"].'"]');
 // Page ID or slug
-$page_id_or_slug = 'attende-report?id=1585';
+/*$page_id_or_slug = 'attende-report?id=1585';
 
 // Get the page object
 $page = get_page_by_path($page_id_or_slug);
@@ -24,7 +24,7 @@ if ($page) {
 } else {
     echo 'Page not found';
 }
-    
+    */
     wp_die();
 }
 add_action('wp_ajax_attende_report', 'attende_report');
