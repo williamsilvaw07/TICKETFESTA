@@ -1264,4 +1264,9 @@ font-size:14px!important
 .tribe-section-content-label label{
     font-size:14px!important
 }
+
+
+.dark-mode input:-webkit-autofill, .dark-mode input:-webkit-autofill:focus, .dark-mode input:-webkit-autofill:hover, .dark-mode select:-webkit-autofill, .dark-mode select:-webkit-autofill:focus, .dark-mode select:-webkit-autofill:hover, .dark-mode textarea:-webkit-autofill, .dark-mode textarea:-webkit-autofill:focus, .dark-mode textarea:-webkit-autofill:hover {
+    -webkit-text-fill-color: #000000;
+}
 </style>
