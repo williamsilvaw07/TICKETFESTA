@@ -1,16 +1,6 @@
 <?php
 
 
-function attende_report() {
-    $event_id = $_POST['event_id'];
-    $shortcode_output = do_shortcode('[tribe_community_tickets view="attendees_report" id="' . $event_id . '"]');
-    echo $shortcode_output;
-    echo "test";
-    wp_die();
-}
-add_action('wp_ajax_attende_report', 'attende_report');
-add_action('wp_ajax_nopriv_attende_report', 'attende_report'); 
-
 
 
 
@@ -5305,3 +5295,15 @@ function switch_to_organiser_role() {
     // Properly end the AJAX request
     wp_die();
 }
+
+
+
+function attende_report() {
+    $event_id = $_POST['event_id'];
+    $shortcode_output = do_shortcode('[tribe_community_tickets view="attendees_report" id="1585"]');
+    echo $shortcode_output;
+    echo "test";
+    wp_die();
+}
+add_action('wp_ajax_attende_report', 'attende_report');
+add_action('wp_ajax_nopriv_attende_report', 'attende_report'); 
