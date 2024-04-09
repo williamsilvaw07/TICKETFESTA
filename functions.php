@@ -95,7 +95,7 @@ function display_cart_timer() {
     }
 }
 add_action('woocommerce_before_cart', 'display_cart_timer');
-add_action('woocommerce_before_checkout_billing_form', 'display_cart_timer');
+add_action('woocommerce_before_checkout_form', 'display_cart_timer');
 
 // Add custom function to display empty cart button
 function custom_woocommerce_empty_cart_button() {
