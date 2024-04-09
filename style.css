@@ -2516,6 +2516,9 @@ html .checkout-button:hover{
     .woocommerce table.cart .product-thumbnail, .woocommerce-page #content table.cart .product-thumbnail, .woocommerce-page table.cart .product-thumbnail  {
         display: block!important;
     }
+    .product-thumbnail:before{
+        display: none!important;
+    }
 }
 /***********END***********/
 
