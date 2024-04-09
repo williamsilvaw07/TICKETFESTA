@@ -15,6 +15,7 @@ function loadaTeendeReoport(event_id) {
             console.error(xhr.responseText);
         }
     });
+}
 
 
 (function($) {
