@@ -2533,7 +2533,7 @@ html .checkout-button:hover{
     
     }
 
-    .page-id-101 button[name="coupon_code"]{
+    html .page-id-101 button[name="coupon_code"]{
     padding: 8px 15px!important;
     height: fit-content!important;
     font-size: 16px!important;
