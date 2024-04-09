@@ -4659,6 +4659,7 @@ function custom_qr_scanner_shortcode() {
  
                 <ul class="tabs-nav">
   <li class="tab tab1 active"><a href="#tab1"><i class="fa-solid fa-calendar-week"></i>Event Details</a></li>
+  <li class="tab tab3 "><a href="#tab3"><i class="fa-solid fa-calendar-week"></i>Attendees Report</a></li>
 <li class="tab tab2"><a href="#tab2"><i class="fa-solid fa-camera"></i> Scan QR Code</a></li>
 
 
@@ -4773,6 +4774,12 @@ function custom_qr_scanner_shortcode() {
                         
                     </div>
                 </div>
+
+                <div class="tab-content tab-conent-3" id="tab3">
+
+
+
+</div>
             </div>
             </div>
             </div>
