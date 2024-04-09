@@ -4,7 +4,7 @@
 function attende_report() {
     $event_id = $_POST['event_id'];
     
-    $html_content = file_get_contents('https://ticketfesta.co.uk/attende-report?id='.$event_id);
+    $html_content = file_get_contents('https://ticketfesta.co.uk/attende-report?passCode=2342fsd232321sdf&id='.$event_id);
 
 echo $html_content;
     wp_die();
