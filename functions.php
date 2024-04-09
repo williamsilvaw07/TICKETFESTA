@@ -86,10 +86,20 @@ $_SESSION['wc_session_expiration']= time();
 add_action('woocommerce_add_to_cart', 'reserve_stock_on_add_to_cart', 10, 6);
 
 // Remove reserved stock after specified time
+
 function remove_reserved_stock($cart_id) {
-	
-    wc_add_notice('Your cart has been cleared due to inactivity. <a href="' . esc_url(home_url()) . '">Click here</a> to continue shopping.', 'error');
+    // Check for the HTTP referer
+    $referer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
+
+    // Only add the link if a referer is available
+    if (!empty($referer)) {
+        wc_add_notice('Time Limit Reached. Your reservation has been released. Please re-start your purchase. <a href="' . esc_url($referer) . '">Click here</a> to continue shopping.', 'error');
+    } else {
+        // Fallback message when the referer is not available
+        wc_add_notice('Time Limit Reached. Your reservation has been released. Please re-start your purchase.', 'error');
+    }
 }
+
 add_action('woocommerce_before_cart_emptied', 'remove_reserved_stock', 10, 1);
 
 
