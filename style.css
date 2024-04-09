@@ -2533,8 +2533,7 @@ html .checkout-button:hover{
     
     }
     .woocommerce #content table.cart td.actions .input-text, .woocommerce table.cart td.actions .input-text, .woocommerce-page #content table.cart td.actions .input-text, .woocommerce-page table.cart td.actions .input-text {
-        width: 150px;
-        padding: 6px 15px;
+        padding: 6px 15px!important;
     }
     html .page-id-101 button[name="coupon_code"]{
     padding: 8px 15px!important;
