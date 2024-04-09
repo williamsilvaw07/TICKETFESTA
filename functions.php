@@ -23,8 +23,8 @@ function attende_report() {
     
     wp_die();
 }
-add_action('wp_ajax_attende_report', 'attende_report');
-add_action('wp_ajax_nopriv_attende_report', 'attende_report'); 
+//add_action('wp_ajax_attende_report', 'attende_report');
+//add_action('wp_ajax_nopriv_attende_report', 'attende_report'); 
 
 
 
