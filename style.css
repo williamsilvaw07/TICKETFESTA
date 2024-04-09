@@ -2566,6 +2566,9 @@ html .checkout-button:hover{
         line-height: 28px!important;
         margin-bottom: 50px!important;
     }
+    .woocommerce .cart-collaterals::after, .woocommerce-page .cart-collaterals::after {
+      display: none!important;
+    }
 }
 /***********END***********/
 
