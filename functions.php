@@ -1,10 +1,31 @@
 <?php
 
 
+function session_start_global(){
+    if( ! session_id() ) {
+        session_start();
+    }
+	
+}
+
+add_action('init', 'session_start_global');
+
+
+add_action('wp_head',function(){
+	$time = $_SESSION['wc_session_expiration'];
+	
+	$time =   time() - $time;
+	
+  	 $time_left = 40 - $time;
+	if($time_left<=0){
+		WC()->cart->empty_cart();
+		unset($_SESSION['wc_session_expiration']);
+	}
+});
 function empty_cart_before_cart_page_load() {
     if ( is_cart() && $_GET['timeout']) {
         // If it's the cart page, empty the cart
-        WC()->cart->empty_cart();
+       // WC()->cart->empty_cart();
     }
 }
 add_action( 'template_redirect', 'empty_cart_before_cart_page_load' );
@@ -15,10 +36,12 @@ function reserve_stock_on_add_to_cart($cart_item_key, $product_id, $quantity, $v
     // Get the product object
     $product = wc_get_product($product_id);
 
+$_SESSION['wc_session_expiration']= time();
+	
     // Check if the product is in stock
     if ($product && $product->is_in_stock()) {
         // Reserve the stock for 40 seconds
-        $reservation_time = 4000; // in seconds
+        $reservation_time = 40; // in seconds
         $old_stock = $product->get_stock_quantity();
         $new_stock = $old_stock - $quantity;
 
@@ -32,70 +55,60 @@ function reserve_stock_on_add_to_cart($cart_item_key, $product_id, $quantity, $v
 add_action('woocommerce_add_to_cart', 'reserve_stock_on_add_to_cart', 10, 6);
 
 // Remove reserved stock after specified time
-function remove_reserved_stock($product_id) {
-	 $cart_items = WC()->cart->get_cart();
-	//print_r($cart_items);
-	foreach ( $cart_items as $cart_item_key => $cart_item ) {
-        // Get product ID
-        $product_id = $cart_item['product_id'];
-			$product = wc_get_product($product_id);
-
-    // Get the reserved quantity
-    $reserved_quantity = WC()->cart->get_cart_contents_count();
-
-    // Add the reserved quantity back to stock
-    $old_stock = $product->get_stock_quantity();
-    $new_stock = $old_stock + $reserved_quantity;
-    $product->set_stock_quantity($new_stock);
-    $product->save();
-     
-    
-    }
-
-    // Add a custom notice with a link
+function remove_reserved_stock($cart_id) {
+	
     wc_add_notice('Your cart has been cleared due to inactivity. <a href="' . esc_url(home_url()) . '">Click here</a> to continue shopping.', 'error');
 }
 add_action('woocommerce_before_cart_emptied', 'remove_reserved_stock', 10, 1);
 
+
+
+
+
+
 // Add timer on the cart page
 function display_cart_timer() {
-    // Get reserved stock
+
+
+	$time = $_SESSION['wc_session_expiration'];
+	
+	
+	$time =   time() - $time;
+	
     $reserved_stock = WC()->cart->get_cart_contents_count();
-    // Display the timer only if there is reserved stock
+  	 $time_left = 40 - $time;
+	
     if ($reserved_stock > 0) {
-        $time_left = 4000; // 40 seconds
-        echo '<div class="cart-timer_div">';
-        echo '<i class="fa-solid fa-triangle-exclamation"></i>';
-        echo '<p class="cart-timer_text">Your Tickets are reserved for</p>';
-        echo '<p class="cart-timer" id="cart-timer"><span id="timer-countdown">' . $time_left . '</span></p>';
+        // 40 seconds
+        echo '<div class="cart-timer_div test">';
+        echo '<p class="cart-timer_text">Tickets on Hold for</p>';
+        echo '<p class="cart-timer" id="cart-timer">Time left: <span id="timer-countdown"> '.$time_left.'</span> seconds</p>';
         echo '</div>';
-        
         echo '<script>
+		
+					
                 var timeLeft = ' . $time_left . ';
+					if(timeLeft>0){
                 var timer = setInterval(function() {
                     timeLeft--;
                     document.getElementById("timer-countdown").textContent = timeLeft;
                     if (timeLeft <= 0) {
+							localStorage.removeItem("time_left");
                         clearInterval(timer);
                         // Trigger click event on the "Empty Cart" button
-						';
-							if(is_cart()){
-								
-                       echo 'var emptyCartButton = document.querySelector(".empty-cart-button");
-                        if (emptyCartButton) {
-                            emptyCartButton.click();
-                        }';
-								}
-						   else{
-							   echo 'window.location.href="/cart?timeout=1"';
-						   }
-                 echo ' }
+					
+						window.location.href="/cart"	
+						}
+                      
+              
                 }, 1000);
+				}
+			
               </script>';
     }
 }
 add_action('woocommerce_before_cart', 'display_cart_timer');
-add_action('woocommerce_before_checkout_form', 'display_cart_timer');
+add_action('woocommerce_before_checkout_billing_form', 'display_cart_timer');
 
 // Add custom function to display empty cart button
 function custom_woocommerce_empty_cart_button() {
@@ -5271,5 +5284,3 @@ function switch_to_organiser_role() {
     // Properly end the AJAX request
     wp_die();
 }
-
-
