@@ -2447,7 +2447,7 @@ html #qr-reader__dashboard_section_csr{
     font-weight: 500;
 }
 .page-id-101 .coupon button{
-    color: #ffffff!important;
+
     background-color: #1a1a1a!important;
     border-radius: 4px!important;
     padding: 10px 29px!important;
@@ -2557,6 +2557,7 @@ html .checkout-button:hover{
         font-weight: 700!important;
         border-radius: 4px!important;
         line-height: 28px!important;
+        margin-bottom: 50px!important;
     }
 }
 /***********END***********/
