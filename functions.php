@@ -7,10 +7,10 @@ function attende_report() {
     $html_content = file_get_contents('https://ticketfesta.co.uk/attende-report?id=1585');
 
 // Remove the body tag from the content
-$html_content_without_body = preg_replace('/<body[^>]*>(.*?)<\/body>/is', '', $html_content);
+//$html_content_without_body = preg_replace('/<body[^>]*>(.*?)<\/body>/is', '', $html_content);
 
 // Echo the modified content
-echo $html_content_without_body;
+echo $html_content;
     wp_die();
 }
 add_action('wp_ajax_attende_report', 'attende_report');
