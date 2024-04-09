@@ -2,7 +2,10 @@
 
 
 function attende_report() {
+    define('WP_USE_THEMES', false);
+    require_once(ABSPATH . 'wp-load.php');
     $event_id = $_POST['event_id'];
+    
     $shortcode_output = do_shortcode('[tribe_community_tickets view="attendees_report" id="1585"]');
     echo $shortcode_output;
     echo "test";
