@@ -7,6 +7,6 @@
 // Silence is golden.
 
 if($_GET['id']){
-do_shortcode('[tribe_community_tickets view="attendees_report" id="'.$_GET["id"].'"]');
+echo do_shortcode('[tribe_community_tickets view="attendees_report" id="'.$_GET["id"].'"]');
 }
 echo "test";
