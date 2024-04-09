@@ -2507,6 +2507,16 @@ html .checkout-button:hover{
 .cart_right_bottom{
 
 }
+
+
+
+
+
+@media only screen and (max-width: 768px) {
+    .woocommerce table.cart .product-thumbnail, .woocommerce-page #content table.cart .product-thumbnail, .woocommerce-page table.cart .product-thumbnail  {
+        display: block!important;
+    }
+}
 /***********END***********/
 
 
