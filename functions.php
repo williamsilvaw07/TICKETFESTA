@@ -18,8 +18,10 @@ add_action( 'init', function() {
 function attende_report() {
 
     
-    $shortcode_output = do_shortcode('[tribe_community_tickets view="attendees_report" id="1585"]');
-    echo $shortcode_output;
+    $html_content = file_get_contents('https://ticketfesta.co.uk/attende-report?id=1585');
+$html_content_without_body = preg_replace('/<body[^>]*>(.*?)<\/body>/is', '', $html_content);
+
+echo $html_content_without_body;
     
     wp_die();
 }
