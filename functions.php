@@ -18,10 +18,28 @@ add_action( 'init', function() {
 function attende_report() {
 
     
-    $html_content = file_get_contents('https://ticketfesta.co.uk/attende-report?id=1585');
-$html_content_without_body = preg_replace('/<body[^>]*>(.*?)<\/body>/is', '', $html_content);
+    define('WP_USE_THEMES', false);
+require_once('wp-load.php');
 
-echo $html_content_without_body;
+// Page ID or slug
+$page_id_or_slug = 'attende-report?id=1585';
+
+// Get the page object
+$page = get_page_by_path($page_id_or_slug);
+
+// Check if the page exists
+if ($page) {
+    // Get the content of the page
+    $page_content = apply_filters('the_content', $page->post_content);
+
+    // Remove the body tag from the content
+    $html_content_without_body = preg_replace('/<body[^>]*>(.*?)<\/body>/is', '', $page_content);
+
+    // Echo the modified content
+    echo $html_content_without_body;
+} else {
+    echo 'Page not found';
+}
     
     wp_die();
 }
