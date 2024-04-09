@@ -87,7 +87,7 @@ add_action('woocommerce_add_to_cart', 'reserve_stock_on_add_to_cart', 10, 6);
 
 // Remove reserved stock after specified time
 function remove_reserved_stock($cart_id) {
-	
+    wc_clear_notices();
     wc_add_notice('Your cart has been cleared due to inactivity. <a href="' . esc_url(home_url()) . '">Click here</a> to continue shopping.', 'error');
 }
 add_action('woocommerce_before_cart_emptied', 'remove_reserved_stock', 10, 1);
