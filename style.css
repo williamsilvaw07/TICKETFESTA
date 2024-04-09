@@ -2564,11 +2564,14 @@ html .checkout-button:hover{
         font-weight: 700!important;
         border-radius: 4px!important;
         line-height: 28px!important;
-        margin-bottom: 50px!important;
+       
     }
     .woocommerce .cart-collaterals::after, .woocommerce-page .cart-collaterals::after , .woocommerce .cart-collaterals::after, .woocommerce-page .cart-collaterals::after {
 
       display: none!important;
+    }
+    .woocommerce .cart-collaterals, .woocommerce-page .cart-collaterals {
+        margin-bottom: 50px!important;
     }
 }
 /***********END***********/
