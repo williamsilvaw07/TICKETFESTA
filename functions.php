@@ -2,131 +2,99 @@
 
 
 function session_start_global(){
-    if( ! session_id() ) {
+    if (!session_id()) {
         session_start();
     }
-	
 }
 
 add_action('init', 'session_start_global');
 
-
-add_action('wp_head',function(){
-	$time = $_SESSION['wc_session_expiration'];
-	
-	$time =   time() - $time;
-	
-  	 $time_left = 40 - $time;
-	if($time_left<=0){
-		WC()->cart->empty_cart();
-		unset($_SESSION['wc_session_expiration']);
-	}
+add_action('wp_head', function() {
+    if (isset($_SESSION['wc_session_expiration'])) {
+        $time = time() - $_SESSION['wc_session_expiration'];
+        $time_left = 900 - $time;
+        if ($time_left <= 0) {
+            WC()->cart->empty_cart();
+            unset($_SESSION['wc_session_expiration']);
+        }
+    }
 });
+
 function empty_cart_before_cart_page_load() {
-    if ( is_cart() && $_GET['timeout']) {
-        // If it's the cart page, empty the cart
-       // WC()->cart->empty_cart();
+    if (is_cart() && isset($_GET['timeout'])) {
+        WC()->cart->empty_cart();
     }
 }
-add_action( 'template_redirect', 'empty_cart_before_cart_page_load' );
 
+add_action('template_redirect', 'empty_cart_before_cart_page_load');
 
-// Add custom function to reserve stock when product is added to cart
 function reserve_stock_on_add_to_cart($cart_item_key, $product_id, $quantity, $variation_id, $variation, $cart_item_data) {
-    // Get the product object
+    $_SESSION['wc_session_expiration'] = time();
     $product = wc_get_product($product_id);
-
-$_SESSION['wc_session_expiration']= time();
-	
-    // Check if the product is in stock
     if ($product && $product->is_in_stock()) {
-        // Reserve the stock for 40 seconds
-        $reservation_time = 40; // in seconds
         $old_stock = $product->get_stock_quantity();
         $new_stock = $old_stock - $quantity;
-
-        // Reserve the stock by reducing it
         wc_update_product_stock($product, $new_stock);
-
-        // Schedule the removal of reserved stock after reservation_time seconds
-        wp_next_scheduled(time() + $reservation_time, 'remove_reserved_stock_event', array($product_id));
     }
 }
+
 add_action('woocommerce_add_to_cart', 'reserve_stock_on_add_to_cart', 10, 6);
 
-// Remove reserved stock after specified time
 function remove_reserved_stock($cart_id) {
-	wc_clear_notices();
+    wc_clear_notices();
     wc_add_notice('Your cart has been cleared due to inactivity. <a href="' . esc_url(home_url()) . '">Click here</a> to continue shopping.', 'error');
 }
-add_action('woocommerce_before_cart_emptied', 'remove_reserved_stock', 10, 1);
 
+add_action('woocommerce_before_cart_emptied', 'remove_reserved_stock');
 
-
-
-
-
-// Add timer on the cart page
 function display_cart_timer() {
+    if (isset($_SESSION['wc_session_expiration'])) {
+        $time_passed = time() - $_SESSION['wc_session_expiration'];
+        $time_left = 900 - $time_passed;
+        $minutes = intdiv($time_left, 60);
+        $seconds = $time_left % 60;
 
-
-	$time = $_SESSION['wc_session_expiration'];
-	
-	
-	$time =   time() - $time;
-	
-    $reserved_stock = WC()->cart->get_cart_contents_count();
-  	 $time_left = 40 - $time;
-	
-    if ($reserved_stock > 0) {
-        // 40 seconds
-        echo '<div class="cart-timer_div test">';
-        echo '<p class="cart-timer_text">Tickets on Hold for</p>';
-        echo '<p class="cart-timer" id="cart-timer">Time left: <span id="timer-countdown"> '.$time_left.'</span> seconds</p>';
-        echo '</div>';
-        echo '<script>
-		
-					
+        if ($time_left > 0) {
+            echo '<div class="cart-timer_div">';
+            echo '<i class="fa-solid fa-triangle-exclamation"></i>';
+            echo '<p class="cart-timer_text">Tickets are reserved for</p>';
+            echo '<p class="cart-timer" id="cart-timer"><span id="timer-countdown">' . $minutes . ' : ' . $seconds . ' </span></p>';
+            echo '</div>';
+            echo '<script>
                 var timeLeft = ' . $time_left . ';
-					if(timeLeft>0){
                 var timer = setInterval(function() {
                     timeLeft--;
-                    document.getElementById("timer-countdown").textContent = timeLeft;
+                    var minutes = Math.floor(timeLeft / 60);
+                    var seconds = timeLeft % 60;
+                    document.getElementById("timer-countdown").textContent = minutes + " min " + seconds + " sec";
                     if (timeLeft <= 0) {
-							localStorage.removeItem("time_left");
                         clearInterval(timer);
-                        // Trigger click event on the "Empty Cart" button
-					
-						window.location.href="/cart"	
-						}
-                      
-              
+                        window.location.href = "/cart?timeout=true";
+                    }
                 }, 1000);
-				}
-			
-              </script>';
+            </script>';
+        }
     }
 }
+
 add_action('woocommerce_before_cart', 'display_cart_timer');
-add_action('woocommerce_before_checkout_billing_form', 'display_cart_timer');
+add_action('woocommerce_before_checkout_form', 'display_cart_timer');
 
-// Add custom function to display empty cart button
 function custom_woocommerce_empty_cart_button() {
-    echo '<a href="' . esc_url( add_query_arg( 'empty_cart', 'yes', wc_get_cart_url() ) ) . '" class="button empty-cart-button" title="' . esc_attr( 'Empty Cart', 'woocommerce' ) . '">' . esc_html( 'Empty Cart', 'woocommerce' ) . '</a>';
+    echo '<a href="' . esc_url(add_query_arg('empty_cart', 'yes', wc_get_cart_url())) . '" class="button empty-cart-button">Empty Cart</a>';
 }
-add_action( 'woocommerce_cart_coupon', 'custom_woocommerce_empty_cart_button' );
 
-// Add custom function to empty cart on action
+add_action('woocommerce_cart_coupon', 'custom_woocommerce_empty_cart_button');
+
 function custom_woocommerce_empty_cart_action() {
-    if ( isset( $_GET['empty_cart'] ) && 'yes' === $_GET['empty_cart'] ) {
+    if (isset($_GET['empty_cart']) && 'yes' === $_GET['empty_cart']) {
         WC()->cart->empty_cart();
-
-        // Redirect back to the cart page
-        wp_redirect( wc_get_cart_url() );
+        wp_redirect(wc_get_cart_url());
         exit;
     }
 }
-add_action( 'init', 'custom_woocommerce_empty_cart_action' );
+
+add_action('init', 'custom_woocommerce_empty_cart_action');
 
 
 
@@ -1241,7 +1209,7 @@ function set_default_organizer_featured_image($organizer_id)
     }
 
     // Path to your default image (Upload your default image to the media library and replace this URL)
-    $default_image_url = '/wp-content/uploads/2024/01/default-avatar-photo-placeholder-profile-icon-vector.jpg';
+    $default_image_url = 'https://ticketlocation.com/wp-content/uploads/2024/04/default-avatar-photo-placeholder-profile-icon-vector-1.jpg';
 
     // Find the attachment ID of the image from the URL
     $default_image_id = attachment_url_to_postid($default_image_url);
@@ -3937,7 +3905,7 @@ function ticketfesta_organizer_register($customer_id, $new_customer_data)
         );
 
         $post_id = wp_insert_post($post_data);
-        $image_url = 'https://ticketfesta.co.uk/wp-content/uploads/2024/01/default-avatar-photo-placeholder-profile-icon-vector-1.jpg';
+        $image_url = 'https://ticketlocation.com/wp-content/uploads/2024/04/default-avatar-photo-placeholder-profile-icon-vector-1.jpg';
         $attachment_id = attachment_url_to_postid($image_url);
         set_post_thumbnail($post_id, $attachment_id);
         update_user_meta($customer_id, 'current_organizer', $post_id);
@@ -3984,6 +3952,58 @@ function ticketfesta_login_redirect($redirect, $user)
 
 add_action('woocommerce_cart_calculate_fees', 'add_extra_fees_for_products');
 
+
+
+
+
+
+
+
+
+
+
+
+function add_extra_fees_for_products($cart)
+{
+    $extra_fee_percentage = 0;
+    $total_product_price = 0;
+
+    // Loop through each cart item
+    foreach ($cart->get_cart() as $cart_item_key => $cart_item) {
+        // Get the product price and quantity for each item
+        $product_price = $cart_item['data']->get_price();
+        $quantity = $cart_item['quantity'];
+
+        // Add the product price multiplied by quantity to the total product price
+        $total_product_price += $product_price * $quantity;
+
+        // Calculate the percentage fee for each product individually
+        $extra_fee_percentage += ($product_price * 0.042) * $quantity; // 3.5% of product price
+    }
+
+    // Apply the same flat fee for the whole order
+    $flat_fee = 0.40;
+
+    // Calculate the total extra fee as the sum of percentage fee and flat fee
+    $total_extra_fee = $extra_fee_percentage + $flat_fee;
+
+    // Add the total extra fee to the cart
+    if ($total_extra_fee > 0) {
+        // Round the total extra fee to 2 decimal places
+        $total_extra_fee = round($total_extra_fee, 2);
+
+        // Add the fee to the cart
+        $cart->add_fee('Service fee', $total_extra_fee);
+    }
+}
+
+require_once get_stylesheet_directory() . '/option-page.php';
+
+
+
+
+/*
+///the working function 
 function add_extra_fees_for_products($cart)
 {
     $extra_fee = 0;
@@ -4010,7 +4030,7 @@ function add_extra_fees_for_products($cart)
 
 require_once get_stylesheet_directory() . '/option-page.php';
 
-
+*/
 
 
 
@@ -4642,7 +4662,7 @@ function custom_qr_scanner_shortcode() {
     <div class="scanner_login_div"> 
     <h3>Log in to scan ticket QR codes.</h3>
 <p>You can locate the event passcode on the organizer's dashboard under the events section.</p>
-<input type="text" id="event-pass" name="event-pass" placeholder="Event Passcode" list="passcodes" autocomplete="on">
+<input type="text" id="event-pass" name="event-pass" placeholder="Event Passcode" list="passcodes" autocomplete="off">
 <datalist id="passcodes"></datalist>
 <button id="check-passcode">
     <i class="fas fa-sign-in-alt"></i> Login
@@ -4653,13 +4673,14 @@ function custom_qr_scanner_shortcode() {
     <?php 
 
     ?>
-
+<button class="change_event_btn" style="display:none"><i class="fas fa-sign-in-alt"></i> Change Event</button>
             <div class="tabs-container" style="display: none">
       
  
                 <ul class="tabs-nav">
   <li class="tab tab1 active"><a href="#tab1"><i class="fa-solid fa-calendar-week"></i>Event Details</a></li>
 <li class="tab tab2"><a href="#tab2"><i class="fa-solid fa-camera"></i> Scan QR Code</a></li>
+<li class="tab tab3"><a href="#tab3"><i class="fa-solid fa-users"></i> Attendees</a></li>
 
 
                 </ul>
@@ -4773,9 +4794,20 @@ function custom_qr_scanner_shortcode() {
                         
                     </div>
                 </div>
+
+                <div class="tab-content tab-content-3" id="tab3">
+   					<?php echo do_shortcode( '[dynamic_tribe_ticket_report]' ); ?>
+                </div>
+
+   
+				
+           
             </div>
             </div>
             </div>
+
+
+
     <?php
     return ob_get_clean();
 }
@@ -4786,13 +4818,21 @@ add_action('wp_ajax_validate_event_pass', 'validate_event_pass');
 add_action('wp_ajax_nopriv_validate_event_pass', 'validate_event_pass'); // If you want to allow non-logged-in users to access the AJAX endpoint
 
 
+
+
+
+
+
 function validate_event_pass() {
+    if (!session_id()) {
+        session_start();  // Start PHP session if it hasn't started yet
+    }
+
     $event_pass = isset($_POST['event_pass']) ? esc_attr($_POST['event_pass']) : false;
     $events = get_posts_by_event_pass($event_pass);
     $match = false;
     $event_id = null;
     $event_data = [];
-    $shortcode_output = '';
     
 
     foreach ($events as $event) {
@@ -4801,6 +4841,8 @@ function validate_event_pass() {
         if (isset($event->ID)) {
             $match = true;
             $event_id = $event->ID;
+            $_SESSION['event_id'] = $event_id;  // Store event ID in PHP session <-- Marked Update
+
             $total_capacity = apply_filters('tribe_tickets_total_event_capacity', null, $event_id);
 
             $total_issued_tickets = 0; // Total issued tickets for the ratio calculation
@@ -4809,17 +4851,15 @@ function validate_event_pass() {
                 $total_capacity = 0;
 
                 foreach ($tickets as $ticket) {
-                    $ticket_capacity = tribe_tickets_get_capacity($ticket->ID); // Retrieve ticket capacity
+                    $ticket_capacity = tribe_tickets_get_capacity($ticket->ID);
                     $total_capacity += $ticket_capacity;
 
-                    // Retrieve the number of issued tickets for this ticket
                     $issued_tickets_message = tribe_tickets_get_ticket_stock_message($ticket, __('issued', 'event-tickets'));
                     preg_match('/\d+/', $issued_tickets_message, $matches);
                     $issued_tickets = isset($matches[0]) ? intval($matches[0]) : 0;
 
-                    $total_issued_tickets += $issued_tickets; // Summing up issued tickets
+                    $total_issued_tickets += $issued_tickets;
 
-                    // Add each ticket's name, capacity, and issued tickets to the ticket list
                     $ticket_list[] = [
                         'name' => $ticket->name,
                         'capacity' => $ticket_capacity,
@@ -4828,20 +4868,13 @@ function validate_event_pass() {
                 }
             }
 
-            // Assuming an instance creation and method call similar to before for checking attendance
             $attendance_totals = new Tribe__Tickets__Attendance_Totals($event_id);
             $total_checked_in = $attendance_totals->get_total_checked_in();
-
-            // Format the data for checked in total / total issued tickets
             $checked_in_format = sprintf('%d / %d', $total_checked_in, $total_issued_tickets);
 
             $start_date = get_post_meta($event_id, '_EventStartDate', true);
             $start_date_timestamp = strtotime($start_date);
-            $day_of_week = date('D', $start_date_timestamp);
-            $day_of_month = date('jS', $start_date_timestamp);
-            $month = date('M', $start_date_timestamp);
-            $time = date('H:i', $start_date_timestamp);
-            $formatted_start_date = "$day_of_week, $day_of_month $month at $time";
+            $formatted_start_date = date('D, jS M at H:i', $start_date_timestamp);
 
             $event_data = [
                 'start_date' => $formatted_start_date,
@@ -4850,11 +4883,10 @@ function validate_event_pass() {
                 'ticket_list' => $ticket_list,
                 'name' => get_the_title($event_id),
                 'thumbnail_url' => get_the_post_thumbnail_url($event_id, 'medium'),
-                'checked_in' => $checked_in_format, //"checked in / total" format
+                'checked_in' => $checked_in_format,
             ];
 
-            // Generate shortcode output for attendees report
-            $shortcode_output = do_shortcode('[tribe_community_tickets view="attendees_report" id="' . $event_id . '"]');
+           
         }
     }
 
@@ -4862,12 +4894,28 @@ function validate_event_pass() {
         'match' => $match,
         'event_id' => $event_id,
         'event_data' => $event_data,
-        'shortcode_output' => $shortcode_output, // Include the shortcode output in the response
+        
     ];
 
     wp_send_json($response);
     wp_die();
 }
+
+
+function custom_tribe_ticket_shortcode() {
+    session_start();
+    if (isset($_SESSION['event_id'])) {
+        $event_id = esc_attr($_SESSION['event_id']);  // Retrieve and sanitize the event ID from the session
+        return do_shortcode("[tribe_community_tickets view='attendees_report' id='{$event_id}']");
+    } else {
+        return 'No event ID found. Please validate your event passcode first.';
+    }
+}
+
+add_shortcode('dynamic_tribe_ticket_report', 'custom_tribe_ticket_shortcode');
+
+
+
 // Remember to properly hook your function to WordPress AJAX actions if it's intended for AJAX.
 
 
