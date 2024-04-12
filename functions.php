@@ -12,6 +12,7 @@ add_action('init', 'session_start_global');
 
 add_action('wp_head', function() {
     if (isset($_SESSION) && isset($_SESSION['wc_session_expiration'])) {
+        echo "<h1>test</h1>";
         $time = time() - $_SESSION['wc_session_expiration'];
         $time_left = 10 - $time;
         if ($time_left <= 0) {
@@ -21,13 +22,6 @@ add_action('wp_head', function() {
     }
 });
 
-function empty_cart_before_cart_page_load() {
-    if (is_cart() && isset($_GET['timeout'])) {
-        WC()->cart->empty_cart();
-    }
-}
-
-add_action('template_redirect', 'empty_cart_before_cart_page_load');
 
 function reserve_stock_on_add_to_cart($cart_item_key, $product_id, $quantity, $variation_id, $variation, $cart_item_data) {
     $_SESSION['wc_session_expiration'] = time();
