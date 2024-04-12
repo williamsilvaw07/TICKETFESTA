@@ -11,9 +11,9 @@ function session_start_global(){
 add_action('init', 'session_start_global');
 
 add_action('wp_head', function() {
-    if (isset($_SESSION['wc_session_expiration'])) {
+    if (isset($_SESSION) && isset($_SESSION['wc_session_expiration'])) {
         $time = time() - $_SESSION['wc_session_expiration'];
-        $time_left = 900 - $time;
+        $time_left = 10 - $time;
         if ($time_left <= 0) {
             WC()->cart->empty_cart();
             unset($_SESSION['wc_session_expiration']);
@@ -51,7 +51,7 @@ add_action('woocommerce_before_cart_emptied', 'remove_reserved_stock');
 function display_cart_timer() {
     if (isset($_SESSION['wc_session_expiration'])) {
         $time_passed = time() - $_SESSION['wc_session_expiration'];
-        $time_left = 900 - $time_passed;
+        $time_left = 100 - $time_passed;
         $minutes = intdiv($time_left, 60);
         $seconds = $time_left % 60;
 
