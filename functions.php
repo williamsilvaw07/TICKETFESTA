@@ -1,6 +1,7 @@
 <?php
 
 
+
 function session_start_global(){
     if (!session_id()) {
         session_start();
