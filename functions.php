@@ -12,7 +12,7 @@ add_action('init', 'session_start_global');
 
 add_action('wp_head', function() {
     if (isset($_SESSION) && isset($_SESSION['wc_session_expiration'])) {
-        echo "<h1>test</h1>";
+  
         $time = time() - $_SESSION['wc_session_expiration'];
         $time_left = 10 - $time;
         if ($time_left <= 0) {
@@ -36,7 +36,6 @@ function reserve_stock_on_add_to_cart($cart_item_key, $product_id, $quantity, $v
 add_action('woocommerce_add_to_cart', 'reserve_stock_on_add_to_cart', 10, 6);
 
 function remove_reserved_stock($cart_id) {
-    wc_clear_notices();
     wc_add_notice('Your cart has been cleared due to inactivity. <a href="' . esc_url(home_url()) . '">Click here</a> to continue shopping.', 'error');
 }
 
@@ -64,7 +63,7 @@ function display_cart_timer() {
                     document.getElementById("timer-countdown").textContent = minutes + " min " + seconds + " sec";
                     if (timeLeft <= 0) {
                         clearInterval(timer);
-                        window.location.href = "/cart?timeout=true";
+                        window.location.href = "/cart";
                     }
                 }, 1000);
             </script>';
