@@ -411,12 +411,6 @@ color:black!important
     border: 0px solid white !important;
 
 }
-#mega-menu-main_right_menu_location{
-    padding-top: 60px;
-}
-.menu_btn_border a{
-    padding-left: 0!important;
-}
 }
 
 
@@ -588,7 +582,7 @@ header{
     max-width: 40px!important;  
     height: auto!important;  
     position: relative!important;  
-    top:-5%!important;  
+    top: 19%!important;  
     left: 0%!important;  
 }
 
@@ -750,15 +744,14 @@ nav ul {
 .search-content{
     display: flex;
     flex-direction: row-reverse;
-    justify-content: space-between;
 }
 .close-popup {
-    font-size: 21px;
+    font-size: 17px;
     position: relative;
     right: 3px;
     padding-right: 0;
     position: relative;
-    top: -2px;
+    top: -28px;
 }
 .header_search_icon_mobile:before {
     font-size: 16px;
@@ -794,9 +787,7 @@ nav ul {
     width: 1em;
     fill: white!important;
 }
-.search-overlay{
-    background: #1A1A1A!important;
-}
+
 }
 
 

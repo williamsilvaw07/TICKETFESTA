@@ -3,29 +3,6 @@
 Template Name: Organizer Scanner
 */
 
-?>
-
-<div class="loading_svg_div">
-<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1366 768" xml:space="preserve">
-        <style type="text/css">
-            .st0{fill:none;stroke:#ffff;stroke-width:3;stroke-miterlimit:10;}
-            .st1{fill:none;stroke:#d3fa16;stroke-width:9;stroke-miterlimit:10;}
-        </style>
-        <g>
-            <path class="st0 grey" d="M772.5,347c-6.2-14-2.4-29.5,8.4-35.8c1.1-0.6,1.4-2.2,0.8-3.7l-8.5-19.1c-3.4-7.6-11.2-11.4-17.5-8.6
-                l-201,89.5c-6.3,2.8-8.7,11.2-5.3,18.8c0,0,6.4,14.3,8.5,19.1c0.6,1.4,2,2.2,3.3,1.8c12-3.8,26,3.7,32.3,17.7s2.4,29.5-8.4,35.8
-                c-1.1,0.6-1.4,2.2-0.8,3.7l8.5,19.1c3.4,7.6,11.2,11.4,17.5,8.6l201-89.5c6.3-2.8,8.7-11.2,5.3-18.8l-8.5-19.1
-                c-0.6-1.4-2-2.2-3.3-1.8C792.8,368.5,778.7,361,772.5,347z"></path>
-            <path class="st1 blue" d="M772.5,347c-6.2-14-2.4-29.5,8.4-35.8c1.1-0.6,1.4-2.2,0.8-3.7l-8.5-19.1c-3.4-7.6-11.2-11.4-17.5-8.6
-                l-201,89.5c-6.3,2.8-8.7,11.2-5.3,18.8c0,0,6.4,14.3,8.5,19.1c0.6,1.4,2,2.2,3.3,1.8c12-3.8,26,3.7,32.3,17.7s2.4,29.5-8.4,35.8
-                c-1.1,0.6-1.4,2.2-0.8,3.7l8.5,19.1c3.4,7.6,11.2,11.4,17.5,8.6l201-89.5c6.3-2.8,8.7-11.2,5.3-18.8l-8.5-19.1
-                c-0.6-1.4-2-2.2-3.3-1.8C792.8,368.5,778.7,361,772.5,347z"></path>
-        </g>
-    </svg>
-</div>
-
-<?php
-
 // Include the appropriate header based on user role
 $custom_header_path = get_stylesheet_directory() . '/scanner/header-organizer-scanner.php';
 if (file_exists($custom_header_path)) {
@@ -35,9 +12,7 @@ if (file_exists($custom_header_path)) {
 }
 ?>
 
-
-
-<div class="content-wrapper main_content_loading_div">
+<div class="content-wrapper">
     <div class="content">
         <div class="container-fluid">
             <?php
@@ -54,7 +29,7 @@ if (file_exists($custom_header_path)) {
                 if (is_user_logged_in()) {
                     echo '<div class="scanner_login_divs_before"><h2>Access Denied</h2><p>You do not have the necessary permissions to access this page. Please contact the support if you believe this is an error.</p></div>';
                 } else {
-                    echo '<div class="scanner_login_divs_before"><div class="login_prompt"><h4 class="login_form_title">Attendees Check-in:</h4></div>';
+                    echo '<div class="scanner_login_divs_before"><div class="login_prompt"><h2>Attendees Check-in:</h2></div>';
                     echo do_shortcode('[xoo_el_inline_form tabs="login" active="login"]');
                     echo '</div>';
                 }
@@ -77,139 +52,19 @@ if (file_exists($custom_footer_path)) {
 }
 ?>
 
-<script>
 
-
-///finvtion for the svg  loader
-jQuery(document).ready(function($) {
-    // Wait for 1 second after the document is ready
-    setTimeout(function() {
-        // Select the SVG div and add the 'hidden' class
-        $('.loading_svg_div').addClass('hidden_loading_svg');
-       // console.log('SVG should now be hidden');
-
-        // After hiding the SVG, wait another 1 second to perform further actions
-        setTimeout(function() {
-            //console.log('Performing another action 1 second after hiding the SVG');
-            // Any subsequent actions can be placed here
-        }, 1000);
-    }, 1500);
-});
-
-
-///function for when clicked login button adds a loading icon 
-jQuery(document).ready(function($) {
-
-
-    $('#check-passcode').click(function() {
-    //    console.log("Button clicked!"); // Check if button click event is triggered
-
-        var button = $(this);
-        var icon = button.find('i');
-
-        // Add spinner icon
-        icon.removeClass('fa-sign-in-alt').addClass('fa-spinner fa-spin');
-       // console.log("Spinner added!"); // Check if spinner icon is added
-
-        // Check for the visibility of the elements
-        checkElementsVisibility();
-    });
-
-    function checkElementsVisibility() {
-        // Check if either element is displayed
-        if ($('#event_not_found').css('display') === 'block' || $('.tabs-container').css('display') === 'block') {
-            // Stop the spinner if either element is displayed
-            var icon = $('#check-passcode').find('i');
-            icon.removeClass('fa-spinner fa-spin').addClass('fa-sign-in-alt');
-          //  console.log("Spinner stopped!"); // Check if spinner icon is stopped
-        } else {
-            // If neither element is displayed, check again after a short delay
-            setTimeout(checkElementsVisibility, 100);
-        }
-    }
-});
-
-
-
-
-</script>
 
 
 
 
 
 <style>
-/****LOADING  ANIMATION STYLES*****/
-.loading_svg_div {
-        display: block; /* Or whatever display mode you prefer */
-    }
 
-    .main_content_loading_div {
-    
-    }
-.grey {
-  stroke-dasharray: 788 790;
-  stroke-dashoffset: 789;
-  animation: draw_0 3200ms infinite, fade 3200ms infinite;
-}
-
-.blue {
-  stroke-dasharray: 788 790;
-  stroke-dashoffset: 789;
-  animation: draw_1 3200ms infinite, fade 3200ms infinite;
-}
-
-@keyframes fade {
-  0% {
-    stroke-opacity: 1;
-  }
-  80% {
-    stroke-opacity: 1;
-  }
-  100% {
-    stroke-opacity: 0;
-  }
-}
-
-@keyframes draw_0 {
-  9.375% {
-    stroke-dashoffset: 789
-  }
-  39.375% {
-    stroke-dashoffset: 0;
-  }
-  100% {
-    stroke-dashoffset: 0;
-  }
-}
-
-@keyframes draw_1 {
-  35.625% {
-    stroke-dashoffset: 789
-  }
-  65.625% {
-    stroke-dashoffset: 0;
-  }
-  100% {
-    stroke-dashoffset: 0;
-  }
-}
-
-
-/*****END******/
-
-.wrapper{
-    min-height: 0 !important;
-}
     html .container-fluid{
         padding-top: 34px !important;
     }
- .xoo-el-tabs{
-    display:none!important
-}
-
-.brand-link img{
-    max-width: 170px
+.xoo-el-active{
+    display:none
 }
 .scanner_login_divs_before h2{
     margin: 0 auto;
@@ -250,17 +105,10 @@ body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .content-w
     justify-content: center;
 }
 
-.dark-mode .content-wrapper , .dark-mode {
+.content-wrapper{
     background: #0d0e0e !important;
-    height: 100vh;
-
 }
 
-
-.html body .container-fluid{
-    background: #0d0e0e !important;
-    height: 100vh;
-}
 .fake_aviter span {
     color: black !important;
 }
@@ -347,13 +195,7 @@ body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .content-w
     max-width: 500px;
 }
 
-.dark-mode input:-webkit-autofill, .dark-mode input:-webkit-autofill:focus, .dark-mode input:-webkit-autofill:hover, .dark-mode select:-webkit-autofill, .dark-mode select:-webkit-autofill:focus, .dark-mode select:-webkit-autofill:hover, .dark-mode textarea:-webkit-autofill, .dark-mode textarea:-webkit-autofill:focus, .dark-mode textarea:-webkit-autofill:hover {
-    -webkit-text-fill-color: #000000!important;
-}
-.main-header {
-    padding-left: 3%;
-    padding-right: 3%;
-}
+
 #check-passcode{
     background: white;
     color: black;
@@ -417,10 +259,7 @@ input#event-pass {
     }
 #qr_error{
     font-weight: 700;
-    font-size: 18px;
-}
-.scaned-by{
-    display:none!important
+    font-size: 21px;
 }
 .checkin-details{
     background-color: red;
@@ -429,7 +268,7 @@ input#event-pass {
     max-width: 350px;
     margin: 0 auto;
     padding: 5px;
-    font-size: 13px;
+    font-size: 14px;
 }
 
     div#video-container {
@@ -513,8 +352,19 @@ input#event-pass {
 
 
     .change_event_btn {
- 
-
+        background-color: #19191b;
+    color: white;
+    font-size: 13px;
+    padding: 2px 9px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer !important;
+    height: 32px;
+    margin-top: 15px;
+    margin-left: 13px;
+    max-width: 200px;
+    margin: 0px auto;
+    margin-bottom:15px
 }
 .change_event_btn  .fa-sign-in-alt:before {
     color: #ff3b3b;
@@ -802,12 +652,6 @@ li.tab a{
     width: 30px;
     height: 30px;
 
-}
-.brand-link img {
-    max-width: 140px;
-}
-.login_prompt h2{
-    font-size: 29px;
 }
     }
 

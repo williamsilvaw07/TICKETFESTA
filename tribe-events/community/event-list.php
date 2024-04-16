@@ -443,26 +443,4 @@ $('#filter-events').on('change', function() {
 </script>
 
 
-<style>
-
-.table-menu-hidden{
-display:none
-}
-.tribe-button, a.tribe-button, button.tribe-button, input.tribe-button {
-    border-radius: 3px;
-    line-height: 1;
-    margin: 0px;
-    padding: 9px 12px;
-    font-size: 15px;
-}
-.main_custom_container_second{
-    display: flex;
-    align-items: center;
-    flex-wrap: nowrap;
-    gap: 30px;  
-}
-.tribe-community-events-list-title{
-    margin-bottom:0!important
-}
-</style>    
 

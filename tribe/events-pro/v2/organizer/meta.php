@@ -134,7 +134,7 @@ $template_vars = array_merge( [ 'organizer' => $organizer, ], $conditionals )
             $banner_image_url = wp_get_attachment_image_url($banner_image_id, 'full');
         } else {
             // Use default image if no specific image is set
-            $banner_image_url = 'https://ticketlocation.com/wp-content/uploads/2024/04/antoine-j-r3XvSBEQQLo-unsplash-2-min.jpg';
+            $banner_image_url = '/wp-content/uploads/2024/02/antoine-j-r3XvSBEQQLo-unsplash-2-min.jpg';
         }
         echo 'background-image: url(' . esc_url($banner_image_url) . ');';
         ?>
@@ -459,7 +459,7 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
                 <?php else: ?>
                     <div class="event-image">
                         <a href="<?php echo esc_url( $event_url ); ?>">
-                            <img src="	https://ticketlocation.com/wp-content/uploads/2024/03/placeholder-3-e1712710110524.png" alt="Placeholder" style="width: 100%; height: auto;">
+                            <img src="https://ticketfesta.co.uk/wp-content/uploads/2024/02/placeholder-4.png" alt="Placeholder" style="width: 100%; height: auto;">
                         </a>
                     </div>
                 <?php endif; ?>
@@ -499,7 +499,7 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
                             <span class="event-location"><?php echo tribe_get_venue(); ?></span>
                         </div>
                         <div class="event-actions">
-                            <a href="<?php echo esc_url( $event_url ); ?>" class="btn-get-tickets">Get Tickets</a><span><?php echo $button_text; ?></span>
+                            <a href="<?php echo esc_url( $event_url ); ?>" class="btn-get-tickets"><img src="https://thaynna-william.co.uk/wp-content/uploads/2023/12/Group-188.png">Get Tickets</a><span><?php echo $button_text; ?></span>
                         </div>
                     </div>
                 </div>
@@ -1184,7 +1184,7 @@ jQuery(document).ready(function($) {
 
 .organizer_profile_bk {
     position: relative;
-    background-image: url('https://ticketlocation.com/wp-content/uploads/2024/04/antoine-j-r3XvSBEQQLo-unsplash-2-min.jpg');
+    background-image: url('https://ticketfesta.co.uk/wp-content/uploads/2024/02/antoine-j-r3XvSBEQQLo-unsplash-2.jpg');
     background-size: cover;
     background-position: center;
     overflow: hidden; /* Ensure the pseudo-element does not extend outside this container */
@@ -1860,7 +1860,7 @@ text-align: left;
 
 .image-container::after {
     content: '';
-  
+    background: url('https://thaynna-william.co.uk/wp-content/uploads/2024/01/expand.png') no-repeat center center;
     background-size: cover; /* Adjust as needed */
     position: absolute;
     top: 50%;

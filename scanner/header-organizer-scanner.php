@@ -16,12 +16,12 @@ if (!defined('ABSPATH')) {
         <!-- Navbar -->
         <nav class="main-header navbar navbar-expand navbar-white navbar-light">
    <!-- Brand Logo -->
-<a href="https://ticketlocation.com/" class="brand-link">
-<img src="https://ticketlocation.com/wp-content/uploads/2024/04/Group-210-300x61.png" alt="ticket location logo ">
+<a href="https://ticketfesta.co.uk/" class="brand-link">
+    <img src="https://ticketfesta.co.uk/wp-content/uploads/2024/02/Group-195-2.png" alt="" class="brand-image  elevation-3">
     <span class="brand-text font-weight-light"></span>
 </a>
 
-<?php if ( is_user_logged_in() && ( current_user_can('organiser') ||  current_user_can('verifier') || current_user_can('administrator') ) ): ?>
+<?php if ( is_user_logged_in() && ( current_user_can('organiser') || current_user_can('administrator') ) ): ?>
     <!-- Mobile Menu Icon for small screens -->
     <ul class="navbar-nav ml-0 d-block d-md-none">
         <li class="nav-item">
@@ -50,24 +50,19 @@ if (!defined('ABSPATH')) {
             </div>
             <!-- Dropdown menu -->
             <ul class="show-notification profile-notification dropdown-menu" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
-            
-            
-            <?php if (current_user_can('organiser') || current_user_can('administrator')): ?>
-    <li class="admin_dashboard-sidebar-item">
-        <a href="/dashboard">
-            <i class="fas fa-home"></i> <span class="nav-text">Organiser Dashboard</span>
-        </a>
-    </li>
-<?php endif; ?>
-
                 <li class="admin_dashboard-sidebar-item">
-                    <a href="https://ticketlocation.com/">
+                    <a href="/dashboard">
+                        <i class="fas fa-home"></i> <span class="nav-text">Organiser Dashboard</span>
+                    </a>
+                </li>
+                <li class="admin_dashboard-sidebar-item">
+                    <a href="https://ticketfesta.co.uk/">
                         <i class="fas fa-exchange-alt"></i><span class="nav-text">Switch to Attendee</span>
                     </a>
                 </li>
-                <li class="admin_dashboard-sidebar-item change_event_btn">
+                <li class="admin_dashboard-sidebar-item">
                     <a href="/organisers-setting/">
-                        <i class="fas fa-sign-in-alt"></i><span class="nav-text">Change Event</span>
+                        <i class="fas fa-cog"></i><span class="nav-text">Settings</span>
                     </a>
                 </li>
                 <li class="admin_dashboard-sidebar-item">

@@ -1,17 +1,4 @@
-
-
-console.log('Camera start triggered for Tab 2');
-
-
-
-
-
-
-
 (function($) {
-    
-
-
     
     document.addEventListener("DOMContentLoaded", function(event) {
         var event_id_global = '';
@@ -31,35 +18,24 @@ console.log('Camera start triggered for Tab 2');
         // }
         $('.tabs-nav li.tab a').click(function(e) {
             e.preventDefault(); // Prevent default link behavior
-        
+    
             var target = $(this).attr('href');
-        
+    
             // Remove active class from all tabs and content
             $('.tabs-nav li.tab').removeClass('active');
             $('.tab-content').removeClass('active');
-        
             // Add active class to clicked tab and its corresponding content
             $(this).parent().addClass('active');
             $(target).addClass('active');
-        
-            // Check if the current tab is 'tab2' and hide or show .event_data accordingly
-            if($('.tab2').hasClass('active')){
-                $('.event_data').hide(); // Hide .event_data if 'tab2' is active
-             //  console.log('Tab 2 is active - .event_data is now hidden');
-            } else {
-                $('.event_data').show(); // Show .event_data if 'tab2' is not active
-                //console.log('Tab 2 is not active - .event_data is now visible');
-            }
-        
-            // Optional: Trigger camera start/stop based on tab2's status
+
             if($(this).parent().hasClass('tab2')){
-               // $('#html5-qrcode-button-camera-start').trigger('click');
-               // console.log('Camera start triggered for Tab 2');
+                // $('#html5-qrcode-button-camera-start').trigger('click');
             }else{
-                $('#html5-qrcode-button-camera-stop').trigger('click');
-               // console.log('Camera stop triggered for other tabs');
+                // $('#html5-qrcode-button-camera-stop').trigger('click');
             }
         });
+
+
 
         // jQuery("#scan-button").on('click', function(){
         //     if($('#event-pass').val()){
@@ -151,7 +127,7 @@ console.log('Camera start triggered for Tab 2');
             function onScanSuccess(decodedText, decodedResult) {
                 // Handle the scanned code as needed
                 $('#html5-qrcode-button-camera-stop').trigger('click');
-                $('#html5-qrcode-button-camera-start').text('Scan New Ticket');
+                $('#html5-qrcode-button-camera-start').text('Scan Another Ticket');
                 console.log(`Code scanned = ${decodedText}`, decodedResult);
                 processQRCode(eventID, decodedText);
             }
@@ -396,19 +372,10 @@ function updateCheckedInProgress(response) {
                 return;
             }
 
-
-// Format and display the start date
-var originalDate = response.event_data.start_date;
-var dateObj = new Date(originalDate);
-var day = dateObj.getDate();
-var suffix = ['th', 'st', 'nd', 'rd'][(day % 10 > 3) ? 0 : (day % 100 - day % 10 != 10) * day % 10];
-var formattedDate = `${day}${suffix} ${dateObj.toLocaleString('default', { month: 'short' })}, ${dateObj.getHours()}:${dateObj.getMinutes().toString().padStart(2, '0')}`;
-$('.event-container .date span').text(formattedDate);
-
             // $('.tabs-container').show();
             $('.event-container .event-image').attr('src', response.event_data.thumbnail_url);
             $('.event-container .name span').text(response.event_data.name);
-            $('.event-container .date span').text(formattedDate);
+            $('.event-container .date span').text(response.event_data.start_date);
             $('.checkedin_ticket-count span').text(response.event_data.checked_in);
             $('.ticket-info_hidden_all ').text();
 
@@ -465,7 +432,7 @@ $('.event-container .date span').text(formattedDate);
                 // Append individual progress components to container
                 $('.ticket-info_hidden_all').append(individualProgressHtml);
 
-            
+                $('.showshortcode').append(response.shortcode_output);
 
                 // Update individual progress circles with the correct percentage
                 updateIndividualProgressCircle($('.ticket-info_hidden_all .ticket-progress-container').last(), issued, capacity);
@@ -586,7 +553,7 @@ observer.observe(document.getElementById('tab1'), {
 
 
 // Add a click event listener to the .ticket_dropdown element
-$("body").on('click','.single_ticket_section', function() {
+$("body").on('click','.ticket_dropdown', function() {
     // Get the .single_ticket_section_inner and <i class="fas fa-angle-down"></i> elements
     var innerElement = $('.single_ticket_section_inner');
     var iconElement = $('.ticket_dropdown i.fas');
@@ -607,9 +574,9 @@ $("body").on('click','.single_ticket_section', function() {
 
 
 
-
-
 })(jQuery);
+
+
 
 
 
@@ -673,11 +640,5 @@ function loadPasscodes() {
         $('#passcodes').append($('<option></option>').attr('value', passcode));
     });
 }
-
-
-
-
-
-
 
 

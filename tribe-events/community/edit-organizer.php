@@ -91,7 +91,7 @@ if ('POST' === $_SERVER['REQUEST_METHOD']) {
     ?>
     <script>
     // Specify the URL you want to redirect to
-    var redirectUrl = 'https://ticketlocation.com/dashboard/organisation-settings/?organizer_updated=true';
+    var redirectUrl = 'https://ticketfesta.co.uk/dashboard/organisation-settings/?organizer_updated=true';
 
         // Perform the redirect
         window.location.href = redirectUrl;
@@ -136,7 +136,7 @@ $banner_image_url = $banner_image_id ? wp_get_attachment_image_url($banner_image
       <!-- Check if there's a banner image URL -->
       <?php
 // Set the default banner image URL
-$default_banner_image = 'https://ticketlocation.com/wp-content/uploads/2024/04/antoine-j-r3XvSBEQQLo-unsplash-2-min.jpg';
+$default_banner_image = '/wp-content/uploads/2024/02/antoine-j-r3XvSBEQQLo-unsplash-2-min.jpg';
 
 // Get the banner image ID from post meta
 $banner_image_id = get_post_meta($organizer_id, 'banner_image_id', true);
@@ -160,14 +160,14 @@ if ($banner_image_id) {
 
 </div>
 
- 
+        </div>
         <div class="organizer_image_upload_function_container">
     <div class="organizer_image_upload_function">
         <label><?php esc_html_e( '', 'tribe-events-community' ); ?></label>
 
         <!-- Organizer image element -->
         <?php 
-        $default_image = 'https://ticketlocation.com/wp-content/uploads/2024/04/default-avatar-photo-placeholder-profile-icon-vector-1.jpg';
+        $default_image = '/wp-content/uploads/2024/01/default-avatar-photo-placeholder-profile-icon-vector.jpg';
         $image_src = !empty($organizer_thumbnail_url) ? $organizer_thumbnail_url : $default_image;
         ?>
         <div class="profile_img_svg_div">
@@ -452,7 +452,7 @@ document.addEventListener("DOMContentLoaded", function() {
             <input type="submit" class="button submit events-community-submit" value="<?php
             echo esc_attr( $organizer_id ? sprintf( __( 'Update %s', 'tribe-events-community' ), $organizer_label_singular ) : sprintf( __( 'Submit %s', 'tribe-events-community' ), $organizer_label_singular ) );
             ?>" name="community-event"/>
-            <a class="back-organizer-setting" href="dashboard/organisation-settings/">Back</a>
+            <a class="back-organizer-setting" href="https://ticketfesta.co.uk/dashboard/organisation-settings/">Back</a>
         </div>
         
         <!-- .tribe-events-community-footer -->

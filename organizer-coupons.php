@@ -31,92 +31,10 @@ $coupon_posts = get_posts(
 get_header('organizer');
 ?>
 
-
 <style>
     .col-12 {
         margin-bottom: 100px
     }
-.event_url_coupon_tooltip{
-    margin-bottom:0!important;
-    border-bottom-width: 0 !important;
-    font-size: 14px;
-    color: #aaa !important;
-    font-weight: 300;
-    line-height: 16px;
-    margin-top: 13px;
-}
-.event_url_coupon{
-    margin-bottom:0
-}
-    .copy_link{
-        border-width: 0;
-    padding: 6px 5px;
-    background: #d5d5d5;
-    border-radius: 4px;
-    color: black !important;
-    font-size: 13px;
-    text-align: center;
-    cursor: pointer;
-    }
-    .copy_event_link_btn:hover{
-        cursor: pointer; 
-    }
-    #eventCouponForm .tribe-section {
-                margin: 0 !important;
-            }
-
-
-            .coupon_table_tr , .coupon_table_tr_head{
-    display: grid;
-    grid-template-columns: 30% 15% 15% 8% 8% 8% 8% 4%!important;
-    justify-items: stretch;
-    justify-content: start;
-    align-items: center;
-    align-content: center;
-    border-bottom: 0px solid #444;
-}
-
-
-            .coupon_code_table{
-                display: flex !important;
-    flex-direction: column;
-    align-items: baseline;
-    justify-content: flex-end;
-    margin-right: 32px;
-    line-height: inherit;
-            }
-            .coupon_code_table .value{
-                word-break: break-all;
-    line-height: 18px;
-    margin-bottom: 13px;
-s
-
-            }
-            .tribe-tickets-editor-table tr,
-            .tribe-tickets-editor-table .table-header {
-                background-color: #212121 !important;
-            }
-            .tribe-tickets-editor-table tr td , .tribe-tickets-editor-table thead, .tribe-tickets-editor-table .table-header {
-    border-bottom: 1px solid #444;
-}
-            .ticket_duplicate_text {
-                display: none;
-            }
-
-            #eventCouponForm .tribe-section-content {
-                display: flex;
-                flex-direction: column;
-            }
-
-            #eventCouponForm label:before {
-                content: "Select Ticket";
-                font-size: 17px;
-                font-weight: 600;
-                display: block;
-                padding-bottom: 10px;
-                padding-top: 13px;
-            }
-
 
     .tribe-community-events-list {
         margin-bottom: 0 !important
@@ -160,6 +78,10 @@ s
         padding: 9px 12px;
     }
 
+    .tribe-community-events-list tbody tr,
+    .tribe-community-events-list thead tr {
+        grid-template-columns: 13% 16% 16% 15% 15% 10% 10% 2%;
+    }
 
     .value {
         font-size: 16px;
@@ -248,7 +170,7 @@ s
     }
 
 
-    @media (max-width: 1400px) {
+    @media (max-width: 655px) {
         .tribe-community-events-list thead {
             display: block;
         }
@@ -288,7 +210,7 @@ s
                         <div class="admin_dashboard_event_list_nav">
                             <div class="main_custom_container_second">
                                 <h2 class="tribe-community-events-list-title">
-                                    <?php _e('Promo Codes', 'generatepress-child') ?>
+                                    <?php _e('Coupons', 'generatepress-child') ?>
                                 </h2>
 
                                 <button type="button" class="tribe-button tribe-button-primary add-new"
@@ -306,9 +228,9 @@ s
                             <table id="tribe-community-events-list"
                                 class="tribe-community-events-list display responsive stripe">
                                 <thead>
-                                    <tr class="coupon_table_tr_head">
+                                    <tr>
                                         <th class="event-column">
-                                      Promo Code
+                                            Coupon Code
                                         </th>
                                         <th class="tickets-sold-column">
                                             Ticket
@@ -343,30 +265,18 @@ s
                                             $data['event_id'] = get_post_meta($coupon->ID, 'event_id', true);
                                             $event = tribe_get_event($data['event_id']);
                                         ?>
-                                        <tr class="coupon_table_tr">
-                                        <td class="tribe-dependent tribe-list-column tribe-list-column-status tribe-active coupon_code_table">
-    <p class="value">
-        <?php
-        $data['code'] = $wooCoupon->get_code();
-        $data['coupon_id'] = $coupon->ID;
-        echo $wooCoupon->get_code();
-        ?>
-    </p>
-    <p class="event_url_coupon">
-        <?php if ($auto_apply): ?>
-            <span class="copy_event_link_btn copy_link" onclick="copyURL('<?php echo esc_url(get_permalink($data['event_id']) . '?coupon=' . $wooCoupon->get_code()); ?>')">
-                Share event link
-                <i class="fas fa-link"></i>
-            </span>
-        <?php endif; ?> </p>
-        <p class="event_url_coupon_tooltip">Share an event link that auto-applies a code to orders.</p>
-   
-</td>
-
-
-
-
-
+                                        <tr>
+                                            <td
+                                                class="tribe-dependent tribe-list-column tribe-list-column-status tribe-active">
+                                                <span class="value">
+                                                    <?php
+                                                    $data['code'] = $wooCoupon->get_code();
+                                                    $data['coupon_id'] = $coupon->ID;
+                                                    echo $wooCoupon->get_code();
+                                                    ?>
+                                                </span>
+                                                
+                                            </td>
                                             <td class="event-status-form">
                                                 <?php
 
@@ -475,36 +385,6 @@ function copyURL(url) {
     document.body.removeChild(el);
     // alert('URL copied to clipboard: ' + url);
 }
-
-
-jQuery(document).ready(function($) {
-    $('.copy_event_link_btn').click(function() {
-        var $this = $(this); // Cache the jQuery object of the span
-        var originalText = $this.text().trim(); // Save the original text
-        var originalBackgroundColor = $this.css('backgroundColor'); // Save the original background color
-        var originalColor = $this.css('color'); // Save the original text color
-
-        // Set new text and styles
-        $this.text('Link copied!').css({
-            'backgroundColor': '#d3fa16', // Example: a light green background
-            'color': 'black' // Black text color
-        });
-
-        // Hide the icon temporarily
-        $this.find('i').hide();
-
-        // Revert to original text and styles after 3 seconds
-        setTimeout(function() {
-            $this.text(originalText).css({
-                'backgroundColor': originalBackgroundColor, // Revert background color
-                'color': originalColor // Revert text color
-            });
-
-            // Show the icon again
-            $this.find('i').show();
-        }, 2000); // 3000 milliseconds = 3 seconds
-    });
-});
 </script>
 <div class="modal fade" id="modal-default" style="display: none;" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">

@@ -52,7 +52,7 @@ $organizer_names = array_map('tribe_get_organizer', $organizer_ids);
         <?php $this->template( 'photo/event/featured-image', [ 'event' => $event ] ); ?>
     <?php else : ?>
         <div class="event-featured-image-placeholder">
-            <img src="https://ticketlocation.com/wp-content/uploads/2024/03/placeholder-3-e1712710110524.png" alt="Placeholder Image">
+            <img src="https://ticketfesta.co.uk/wp-content/uploads/2024/02/placeholder-1-1.png" alt="Placeholder Image">
         </div>
     <?php endif; ?>
 
@@ -90,10 +90,6 @@ $organizer_names = array_map('tribe_get_organizer', $organizer_ids);
     </div>
     <span class="copyMessage" style="display: none;">Link copied!</span>
 </div>
-
-
-
-
 
 
     <div class="tribe-events-pro-photo__event-details-wrapper">
@@ -164,20 +160,6 @@ $organizer_names = array_map('tribe_get_organizer', $organizer_ids);
         </div>
     </div>
 
-    </article>
-
-
-
-
-
-
-
-
-
-
-
-
-
     <script>
 
 
@@ -232,9 +214,6 @@ jQuery(document).ready(function($) {
                 }
             }
         });
-
-
-        
     }
 
     // Call the function initially and whenever necessary (e.g., after loading new event data dynamically)
@@ -242,38 +221,11 @@ jQuery(document).ready(function($) {
 
     // Example: To re-check the ticket info after 2 seconds (you can adjust or remove this part based on your needs)
     setTimeout(checkAndUpdateTicketInfo, 500);
-
-
-
-
-
- // Listener for click event on the search button
- $('.tribe-events-c-events-bar__search-button').on('click', function(event) {
-        // Prevent the event from propagating to the document
-        event.stopPropagation();
-
-        // Display the search container as a block
-        $('.tribe-events .tribe-events-c-events-bar__search-container').css('display', 'block');
-    });
-
-    // Click event on the document to close the search container if click occurred outside
-    $(document).on('click', function(event) {
-        var $searchContainer = $('.tribe-events .tribe-events-c-events-bar__search-container');
-
-        // Check if the click was outside the search container
-        if (!$searchContainer.is(event.target) && $searchContainer.has(event.target).length === 0) {
-            // Hide the search container
-            $searchContainer.css('display', 'none');
-        }
-    });
-   
 });
 
 
 
 
-
-  
 
 
 
@@ -289,8 +241,7 @@ jQuery(document).ready(function($) {
             'top': '50%',
             'left': '50%',
             'transform': 'translate(-50%, -50%)',
-            'z-index': '1001',
-            'max-width': '333px'
+            'z-index': '1001'
         });
     });
 
@@ -337,7 +288,7 @@ jQuery(document).ready(function($) {
             $(this).closest('.tribe-events-pro-photo__event').find('.share_btn').css('display', 'block');
         }, function() {
             // Mouse leaves the area
-            $(this).closest('.tribe-events-pro-photo__event').find('.share_btn').css('display', 'block');
+            $(this).closest('.tribe-events-pro-photo__event').find('.share_btn').css('display', 'none');
         }
     );
 });
@@ -411,38 +362,16 @@ jQuery(document).ready(function($) {
             'z-index': '2'
         }); 
     });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 });
 
 
 
 </script>
 
+</article>
 
 <style>
-/***upcooming event button */
-.tribe-events-c-top-bar__datepicker-button
-{
-    display:none!important
-}
 
-/****end */
 /*****SOLD OUT EVENTS */
 .home .tribe-events-c-small-cta__sold-out{
     color: white !important;
@@ -506,11 +435,8 @@ html .tribe-events-pro-photo__event-featured-image-link img{
 
 
 .event-featured-image-placeholder img , .tribe-events-pro-photo__event-featured-image-link img  {
-    border-radius: 3px!important;
+    border-radius: 7px 7px 0px 0px!important;
 
-}
-.tribe-events-c-small-cta__price{
-    font-size:16px!important
 }
 
 .event-timezone{
@@ -534,6 +460,7 @@ html .tribe-events-pro-photo__event-featured-image-link img{
 
 @media (max-width: 960px) {
     .tribe-events-pro-photo__event {
+        flex: 0 1 calc(50% - 10px); /* Adjusted to 50% for 2 items per row */
         margin: 5px;
         max-width: calc(50% - 10px); /* Adjusted to 50% for 2 items per row */
     }
@@ -549,13 +476,6 @@ html .tribe-events-pro-photo__event-featured-image-link img{
         margin: 5px 0; /* Adjusted to have only top and bottom margins */
         max-width: 100%; /* Ensures the item's maximum width is the full container width */
     }
-    .home .tribe-common .tribe-common-g-row{
-        justify-content: center;
-    }
-
-    .tribe-common-g-col{
-        max-width: 400px;
-    }
     body .tribe-events-pro-photo__event-featured-image-link img{
     height: inherit!important;
     max-height:200px
@@ -570,4 +490,3 @@ html .tribe-events-pro-photo__event-featured-image-link img{
 }
 
 </style>
-<?php
