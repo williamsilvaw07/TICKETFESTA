@@ -117,7 +117,7 @@ $cost  = tribe_get_formatted_cost( $event_id );
 
 	<div class="main_single_event_div">
 
-
+<div class="coupon_notice"></div>
 
 
 
@@ -232,11 +232,11 @@ $cost  = tribe_get_formatted_cost( $event_id );
 <!-- Event Location & Date and Time -->
 <div class="single_event_page_location ">
 
-<div class="location_div_js">📍<span class="location_name"></span> - <span class="location_postcode"></span></div>
+<div class="location_div_js"><i class="fa-solid fa-location-dot"></i><span class="location_name"></span> - <span class="location_postcode"></span></div>
   
 <?php if ( tribe_get_venue_id( $event_id ) ): // Check if there's a venue ID associated with the event ?>
   <div class="time_div emoji_div_main">
-    <span class="time_emoji">⏰</span>
+    <span class="time_emoji"><i class="fa-solid fa-clock"></i></span>
     <span class="time_text">
       <h2 class="tribe-event-date-start">
         <?php 
@@ -262,6 +262,8 @@ $cost  = tribe_get_formatted_cost( $event_id );
       </h2>
     </span>
   </div>
+  <div class="ticket_from_price_top"></div>
+  <span class=""></span>
 <?php endif; ?>
 
 <!--  <div class="door_open_time__div emoji_div_main"><span class="door_open_time__emoji">🚪</span> <span class="door_open_time__text">Doors open </span><span class="door_open_time_number"></span></div> -->
@@ -395,7 +397,6 @@ $event_description = str_replace('src="image','src="data:image',$event_descripti
 <div class="single_event_page_about_event single_event_sections">
         <h3>About this event</h3>
 <div class="about_event_inner">
-<div class="eticket_div"><span class="ticket_emoji">🎟️</span> <span class="eticket_text">Mobile eTicket</span></div>
 <?php
 $event_id = get_the_ID(); // Get the current event ID
 
@@ -648,6 +649,39 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
+
+    document.addEventListener('DOMContentLoaded', function() {
+    // Select the element that will show the coupon notice.
+    var couponNotice = document.querySelector('.coupon_notice');
+    
+    if (couponNotice) {
+        // Function to check if the URL has 'coupon' as a query parameter.
+        function hasCouponParameter() {
+            var searchParams = new URLSearchParams(window.location.search);
+            return searchParams.has('coupon');
+        }
+
+        // Execute the function to check for the 'coupon' parameter.
+        var hasCoupon = hasCouponParameter();
+
+        // Uncomment below console logs for debugging when necessary.
+        // console.log('Checking for coupon parameter in URL...');
+
+        // Display or hide the coupon notice based on the presence of the 'coupon' parameter.
+        if (hasCoupon) {
+            // console.log('Coupon parameter is present.');
+            couponNotice.style.display = 'flex'; // Use 'flex' to show the coupon notice if the 'coupon' parameter exists.
+        } else {
+            // console.log('Coupon parameter is not present.');
+            couponNotice.style.display = 'none'; // Hide the coupon notice if the 'coupon' parameter does not exist.
+        }
+    } else {
+        // Log an error if the .coupon_notice element does not exist on the page.
+        // console.log('No .coupon_notice element found on this page.');
+    }
+});
+
+
     ////END
 
 
@@ -656,63 +690,79 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
-
-
-
-jQuery(document).ready(function($) {
-    var element = $('.buttonticket_for_mobile'); // Your target element
-    var originalOffset = element.offset().top; // Original offset top position
-    var elementHeight = element.outerHeight(); // Height of the element
-    var isSticky = false; // Flag to track if sticky styling is applied
+///FUNCTION FOR MOBILE ON SCROLL TO MAKE THE TICKET SECTION STICKLY 
+/*
+    jQuery(document).ready(function($) {
+    var element = $('.buttonticket_for_mobile');
+    var originalOffset = element.offset().top;
+    var isSticky = false; // Flag to indicate if sticky is applied
 
     // Function to check if the element is in the viewport
-    function isInViewport() {
-        var scrollPos = $(window).scrollTop(); // Current scroll position
-        var windowHeight = $(window).height(); // Window height
-        var elementTopPos = originalOffset; // Top position of the element
-        var elementBottomPos = originalOffset + elementHeight; // Bottom position of the element
+    function checkSticky() {
+        var scrollPos = $(window).scrollTop();
+        var windowHeight = $(window).height();
+        var elementHeight = element.outerHeight();
+        var elementTopPos = element.offset().top;
+        var elementBottomPos = elementTopPos + elementHeight;
+        var inViewport = elementBottomPos > scrollPos && elementTopPos < (scrollPos + windowHeight);
 
-        // Element is in viewport if its bottom is greater than the scroll position
-        // and its top is less than the scroll position plus the window height
-        return elementBottomPos > scrollPos && elementTopPos < (scrollPos + windowHeight);
-    }
-
-    // Function to apply or remove fixed style based on element's visibility
-    function updateElementStyle() {
-        if (!isInViewport() && !isSticky) {
-            // Apply fixed style if the element is not in the viewport and sticky styling hasn't been applied yet
-            element.css({
-                position: 'fixed',
-                bottom: '0',
-                left: '0', // Ensure the element spans the full width from the left
-                right: '0', // Ensure the element spans the full width to the right
-                'z-index': '999',
-                'border-radius': '0',
-                'padding-bottom': '40px'
-            });
-            isSticky = true; // Set the flag to true as sticky styling is applied
-        } else if (isInViewport() && isSticky) {
-            // Remove fixed style if the element is back in the viewport and sticky styling has been applied
-            element.removeAttr('style');
-            isSticky = false; // Reset the flag as sticky styling is removed
+        if (!inViewport && !isSticky) {
+            element.addClass('sticky-bottom');
+            isSticky = true;
+        } else if (inViewport && isSticky) {
+            element.removeClass('sticky-bottom');
+            isSticky = false;
         }
     }
 
-    // Initial check to update element style on page load
-    updateElementStyle();
+    // Function to handle scroll with requestAnimationFrame for performance
+    function handleScroll() {
+        requestAnimationFrame(checkSticky);
+    }
 
-    // Update element style on scroll
-    $(window).scroll(updateElementStyle);
+    // Throttle function to limit how frequently a function can run
+    function throttle(func, limit) {
+        let lastFunc;
+        let lastRan;
+        return function() {
+            const context = this;
+            const args = arguments;
+            if (!lastRan) {
+                func.apply(context, args);
+                lastRan = Date.now();
+            } else {
+                clearTimeout(lastFunc);
+                lastFunc = setTimeout(function() {
+                    if ((Date.now() - lastRan) >= limit) {
+                        func.apply(context, args);
+                        lastRan = Date.now();
+                    }
+                }, limit - (Date.now() - lastRan));
+            }
+        }
+    }
 
-    // Update element style on window resize to account for changes in layout
+    $(window).scroll(throttle(handleScroll, 100)); // Throttle scroll events
+
     $(window).resize(function() {
-        // Recalculate original offset in case the layout has changed
-        originalOffset = element.offset().top;
-        // Reset isSticky flag to ensure correct behavior after layout change
-        isSticky = false;
-        updateElementStyle();
+        originalOffset = element.offset().top; // Recalculate original offset on window resize
+        isSticky = false; // Reset sticky status to re-evaluate
+        checkSticky(); // Immediately check sticky status after resize
     });
 });
+
+*/
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -732,50 +782,73 @@ jQuery(document).ready(function(){
     $('.free-text').each(function(){
         $(this).attr('style', 'color: #d3fa16 !important; font-size: 22px !important; font-weight: 600 !important;');
     });
-});
+
 
 
 
 
 ///FUNCTION FOR MOBILE TICKET POPUP AND CALCUTATE THE LOWEST ANDD HIGHT PRICE RANGE AND IF ITS 0.00 SHOW FREE, IF NO TICKET HIDE THE SECTION 
-
-jQuery(document).ready(function() {
-
-
-
-    let minPrice = Infinity;
+let minPrice = Infinity;
     let maxPrice = 0;
-    let priceFound = false; // Flag to track if any valid price was found
+    let priceFound = false;
+    let hasFreeTickets = false;
 
+    // Iterate over each ticket item to determine prices
     $('.tribe-tickets__tickets-item').each(function() {
-        let price = parseFloat($(this).data('ticket-price'));
-        if (!isNaN(price)) { // Check if price is a valid number
-            priceFound = true; // Valid price found
+        let priceText = $(this).find('.tribe-amount').text().trim();
+        if (!priceText) {
+            priceText = $(this).find('.free-text').text().trim(); // Check for free text as alternative
+        }
+        let price = priceText.toLowerCase() === 'free' ? 0 : parseFloat(priceText); // Handle "Free" as 0
+
+        //console.log("Processing ticket:", $(this).attr("id"), "with price:", priceText); // Log for debugging
+
+        if (!isNaN(price)) {
+            priceFound = true;
+            if (price === 0) {
+                hasFreeTickets = true; // Mark presence of free tickets
+            }
             if (price < minPrice) {
-                minPrice = price;
+                minPrice = price; // Update minimum price
             }
             if (price > maxPrice) {
-                maxPrice = price;
+                maxPrice = price; // Update maximum price
             }
         }
     });
 
-    // Determine the price range or "Free" label and update or hide price section
+    //console.log("Min price:", minPrice, "Max price:", maxPrice, "Has free tickets:", hasFreeTickets); // Final log
+
+    // Apply dynamic text based on ticket prices
     if (priceFound) {
-        let priceText;
-        if (minPrice === 0 && maxPrice !== 0) {
-            priceText = 'Free - £' + maxPrice.toFixed(2);
-        } else if (minPrice === 0 && maxPrice === 0) {
-            priceText = 'Free';
+        let fromText = '';
+        let priceRange = '';
+        if (hasFreeTickets && minPrice === 0 && maxPrice > 0) {
+            fromText = '<span class="price-from">From</span>';
+            priceRange = '<span class="price-range">Free - £' + maxPrice.toFixed(2) + '</span>';
+        } else if (hasFreeTickets && maxPrice === 0) {
+            priceRange = '<span class="price-range">Free</span>'; // All tickets are free
         } else {
-            priceText = '£' + minPrice.toFixed(2) + ' - £' + maxPrice.toFixed(2);
+            fromText = '<span class="price-from">From</span>';
+            priceRange = '<span class="price-range">£' + minPrice.toFixed(2) + (minPrice !== maxPrice ? ' - £' + maxPrice.toFixed(2) : '') + '</span>';
         }
 
-        $('.btn_price_span').text(priceText);
+        // Update the main display area with structured HTML
+        $('.ticket_from_price_top').html('<i class="fa-solid fa-ticket"></i> ' + fromText + ' ' + priceRange);
+        $('.btn_price_span').text(priceRange.replace('<span class="price-range">', '').replace('</span>', '')); // Adjust text for button display
+        $('.btn_from_span').text(fromText.includes('From') ? 'From ' : ''); // Conditional "From" text
     } else {
-        // Hide the price section if no valid prices found
+        // Hide elements if no valid prices found
         $('.buttonticket_for_mobile').hide();
+        $('.btn_price_span').hide();
     }
+
+
+
+
+
+
+
 
 
 
@@ -798,7 +871,7 @@ jQuery(document).ready(function() {
 
                 showPopup();
             } else {
-                console.log("Required elements not found");
+               // console.log("Required elements not found");
             }
         });
     });
@@ -892,21 +965,21 @@ jQuery(document).ready(function($) {
 jQuery(document).ready(function($) {
     $('.top_flex_section_single_event .tribe-event-date-start').each(function() {
         var dateTimeText = $(this).text().trim(); // Trim to remove any trailing whitespace
-        console.log("Original dateTimeText:", dateTimeText); 
+       // console.log("Original dateTimeText:", dateTimeText); 
 
         // Adjusted regex to match the time part 'HH:MM'
         var regex = /\d{1,2}:\d{2}$/;
 
         var regexTestResult = regex.test(dateTimeText);
-        console.log("Regex Test Result:", regexTestResult);
+      //  console.log("Regex Test Result:", regexTestResult);
 
         if (regexTestResult) {
             var formattedDateTime = dateTimeText.replace(regex, function(match) {
-                console.log("Matched Time:", match); // Log the matched time
+               // console.log("Matched Time:", match); // Log the matched time
                 return '<span class="time-part">' + match + '</span>';
             });
 
-            console.log("Formatted dateTimeText:", formattedDateTime);
+         //   console.log("Formatted dateTimeText:", formattedDateTime);
             $(this).html(formattedDateTime);
         }
     });
@@ -980,6 +1053,26 @@ jQuery(document).ready(function() {
 
 
 
+
+
+
+
+
+
+///FUNCTION TO ADD A MESSAGE UNDER THE TICKETS BUTTON FOR BOOKNING FEE 
+/*
+jQuery(document).ready(function($) {
+  
+
+setTimeout(function() {
+    
+   $('.tribe-tickets__tickets-footer').append('<p class="booking-fee-notice">Booking fee added at checkout.</p>');
+
+
+
+}, 2000); // 2000 milliseconds = 2 seconds delay
+});
+*/
 /***STICKY TICKET FORM FUNCTION****/
 /*
 jQuery(document).ready(function($) {
@@ -1063,6 +1156,7 @@ jQuery(document).ready(function($) {
 
 
 //DOORS OPEN FUNCTION
+/*
 jQuery(document).ready(function($) {
     // Function to extract time from the text
     function extractStartTime(text) {
@@ -1080,7 +1174,7 @@ jQuery(document).ready(function($) {
         console.log('Error parsing start time');
     }
 });
-
+*/
 
 
 
@@ -1190,6 +1284,13 @@ jQuery(document).ready(function($) {
         }
     });
 });
+
+
+
+
+
+
+
 
 
 
@@ -1394,8 +1495,14 @@ html .organizer-profile-link:hover {
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    gap: 8px;
+   gap:2px;
+   align-items: flex-start;
 
+}
+
+.fa-clock:before {
+    content: "\f017";
+    font-size: 16px;
 }
 html .location_div_js.single_event_sections {
     border:0px solid rgba(255, 255, 255, 0.2)!important
@@ -1409,13 +1516,19 @@ html .location_div_js.single_event_sections {
     align-content: flex-start;
     margin-bottom: 15px;
 }
-.location_div_js{
+.location_div_js {
 margin-top:20px;
 text-transform: capitalize!important;
+}
+.ticket_from_price_top{
+    margin-top:12px
 }
 
 .tribe-street-address , .tribe-locality , .tribe-postal-code {
     line-height: 24px;
+}
+.tribe-locality , .tribe-region{
+    margin:0 3px
 }
 /***END***/
 .single_event_sections h3 , .event-tickets .tribe-tickets__tickets-title{
@@ -1428,7 +1541,13 @@ text-transform: capitalize!important;
 
 }
 
-
+abbr, acronym {
+    border-bottom: 0px dotted #666!important;
+    cursor: inherit!important;
+}
+abbr[title] {
+    text-decoration: none !important;
+}
 .tribe-tickets__tickets-item.outofstock{
     opacity: 1!important;
 }
@@ -1463,7 +1582,8 @@ text-transform: capitalize!important;
 
 }
 .tribe-tickets__tickets-item-extra .tribe-tickets__tickets-item-extra-price{
-    text-align: left;
+    text-align: right;
+    padding-right:15px
 }
 .tribe-tickets__tickets-item-extra-price{
     text-align: center;
@@ -1471,7 +1591,6 @@ text-transform: capitalize!important;
 }
 html body .single_event_sections {
  padding-bottom: 40px;
- margin-bottom: 40px;
     font-weight: 400!important;
   font-size: 15px!important;
   width: 100%;
@@ -1487,15 +1606,19 @@ html body .single_event_sections {
         border-bottom:0px solid!important;
         padding-bottom: 0!important;
     }
+    .tribe-events-event-meta{
+        padding-top:0
+    }
 
     .tribe-events-venue-map{
         max-width: 700px!important;
     width: 100%!important;
+    display:none
     }
 
 
 
-    .tribe-events-event-meta_venue .tribe-events-meta-group-details , .tribe-events-meta-group-organizer  , .tribe-events-meta-group-organizer{
+   .tribe-related-events , .tribe-events-related-events-title , .tribe-events-event-meta_venue .tribe-events-meta-group-details , .tribe-events-meta-group-organizer  , .tribe-events-meta-group-organizer{
 display:none!important
     }
 
@@ -1506,6 +1629,8 @@ display:none!important
     line-height: 21px;
     
     }
+
+    
     .timezone{
         margin-left: -7px;
     }
@@ -1522,7 +1647,7 @@ html .single_event_page_location .tribe-event-time:before{
     content:"-";
     margin:0 5px
 }
-html .single_event_page_location .tribe-event-date-start{
+ .single_event_page_location .tribe-event-date-start{
 font-size:18px!important
 }
 .single_event_background {
@@ -1553,7 +1678,9 @@ background-position: center top;
     display: none;
 }
 */
-
+.single_event_page_location  .fa-solid{
+    min-width:29px;
+}
 .single_event_sections:last-child{
     border-bottom: 0!important;
 }
@@ -1574,7 +1701,7 @@ background-position: center top;
     display: block;
     max-width: 1052px;
     width: 100%!important;
-    border-radius: 11px;
+    border-radius: 7px;
     margin-bottom: 0px!important;
     margin: 0;
     max-height: 475px;
@@ -1633,6 +1760,45 @@ background: #2C2C2C!important;
     margin-top: 11px;
 
 }
+
+
+/***COUPON SECTION*****/
+.coupon_notice{
+    color: #4c4c4c;
+    background-color: #eeedf2 !important;
+    margin-top: 15px;
+    margin-bottom: -30px !important;
+    max-width: 100%;
+    padding: 8px 13px;
+    display: flex;
+    line-height: 16px;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.couponCodeDisplay{
+    font-weight: 600;
+    font-size: 14px;
+    color: #4c4c4c!important;
+}
+.coupon_notice .close_icon{
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 14px;
+    padding-left: 10px;
+    cursor: pointer;
+}
+body .discount_detail , body .coupon_code{
+    font-weight: 400;
+    font-size: 13px;
+    color: #4c4c4c!important;
+}
+body .auto_apply{
+    font-size: 13px;
+    font-weight: 400;
+    color: #4c4c4c!important;
+}
+/***********END******/
 
 .single-tribe_events .tribe-events-nav-pagination {
     display: none!important;
@@ -1750,7 +1916,7 @@ background: #2C2C2C!important;
     display: block;
     width: 100%;
     margin: 0!important;
-    margin-top: 9px!important;
+    margin-top: -1px!important;
     padding: 0;
     flex: inherit
 }
@@ -1817,7 +1983,7 @@ html .single-tribe_events .tribe-events-gmap{
 span.site-fee-container, span.site-fee-container span.ticket_site_fee  , .enddate , .startdate{
     color: #bcbcbc !important;
     font-size: 13px;
-    font-weight: 300;
+    font-weight: 400;
 }
 /**ticket popup**/
 
@@ -1923,6 +2089,9 @@ max-width:900px
 .single_event_page_about_event{
     border-bottom: 0px!important
 }
+.single_event_page_about_event{
+    padding-top: 30px;
+}
 .single_event_page_about_event div{
     margin-bottom: 10px ;
 }
@@ -1930,7 +2099,7 @@ max-width:900px
     padding-bottom: 0!important;
 }
 .single_event_page_about_event div:last-child{
-    margin-bottom: 0!important;
+    margin-bottom:20px!important;
 }
 .ticket_form_sticky {
     position: fixed;
@@ -2172,6 +2341,15 @@ width: 100%;
     border-color: #FF5733; 
 }
 /****END****/
+.sticky-bottom {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 999; /* High z-index to ensure it's on top of other content */
+    border-radius: 0; /* Example property: adjust as needed */
+    padding-bottom: 40px; /* Example property: adjust as needed */
+}
 
 
 /*****END*****/
@@ -2224,6 +2402,23 @@ border-radius: 9px;
 .buttonticket_for_mobile{
     display: flex;
 }
+.top_flex_section_single_event{
+    margin-bottom:5px!important;
+    padding:0!important
+}
+.single_event_sections{
+    border-bottom: 0!important;
+}
+/* CSS for making the button stick to the bottom */
+.buttonticket_for_mobile {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 9; 
+    border-radius: 0; 
+    padding-bottom: 60px; 
+}
 .get_tickets_div_single_event_form_new{
     display: none;
 }
@@ -2231,6 +2426,9 @@ border-radius: 9px;
 
 .single_event_background {
     background-size: 300% auto;
+}
+.single_event_page_location{
+    margin-bottom: 30px;
 }
 }
 
@@ -2285,6 +2483,13 @@ html .single-tribe_events .tribe-tickets__tickets-footer{
     gap: 7px;
     margin-top: 10px;
 }
+.single-tribe_events .tribe-events-address{
+    display: flex;
+    flex-direction: column;
+}
+html .single-tribe_events .tribe-events-gmap{
+    max-width: fit-content;
+}
 }
 
 
@@ -2325,7 +2530,7 @@ html .single-tribe_events .tribe-tickets__tickets-footer{
 
 .tribe-events-single-event-title {
     margin-top: 35px!important;
-    font-size: 27px;
+    font-size: 25px;
 }
 .tribe-tickets__tickets-item-extra-price {
     text-align: left;
@@ -2338,6 +2543,10 @@ html .single-tribe_events .tribe-tickets__tickets-footer{
 .tribe-tickets__tickets-item-extra-available {
     font-size: 11px;
     margin-top: 5px !important;
+}
+html .single_event_page_location .tribe-event-date-start , .location_div_js span, .time_text span 
+{
+    font-size: 14px !important;
 }
   }
 
@@ -2369,7 +2578,10 @@ html .single-tribe_events .tribe-tickets__tickets-footer{
         gap: 20px;
        
     }
-   
+    .single_event_page_about_event{
+    padding-top: 0px;
+}
+.si
     .get_tickets_div_single_event_form_new {
         margin-top: 16px;
     }
@@ -2390,7 +2602,7 @@ html .single-tribe_events .tribe-tickets__tickets-footer{
     }
     body .single_event_sections {
         padding-bottom: 30px;
-        margin-bottom: 30px;
+      
     }
     .organizer-details_main {
         padding-top: 30px;

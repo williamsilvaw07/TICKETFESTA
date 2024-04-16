@@ -12,31 +12,35 @@ if (is_user_logged_in() && (current_user_can('organiser') || current_user_can('a
 ?>
 
 <!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
+<div class="content-wrapper <?php echo !is_user_logged_in() ? 'not-logged-in' : ''; ?>">
     <!-- Main content -->
     <div class="content">
         <div class="container-fluid">
-            <?php
-            // Check user's role and display content accordingly
-            if (is_user_logged_in() && (current_user_can('organiser') || current_user_can('administrator'))) {
-                // Display page content if user has the correct role
-                if (have_posts()) :
-                    while (have_posts()) :
-                        the_post();
-                        the_content();
-                    endwhile;
-                endif;
+        <?php
+        // Start by checking if the user is logged in and has the 'organiser' or 'administrator' role
+        if (is_user_logged_in() && (current_user_can('organiser') || current_user_can('administrator'))) {
+            // Display the WordPress loop to show content if the user has the correct role
+            if (have_posts()) :
+                while (have_posts()) :
+                    the_post();
+                    the_content(); // Display the content of the post
+                endwhile;
+            endif;
+        } else {
+            // Wrap the messages and buttons in a main div for styling and organization
+            echo '<div class="organizer-access-content">';
+            if (is_user_logged_in()) {
+                // Provide an option for logged in users who do not have the 'organiser' or 'administrator' role
+                echo '<p>This page is limited to organizers only. Please change your account role to "organizer" to view this content. Note that this change is irreversible.</p>';
+                echo '<button onclick="switchUserRole()">Switch My Account to Organiser</button>';
             } else {
-                // Show different messages or actions based on user's login status
-                if (is_user_logged_in()) {
-                    echo '<p>This page is limited to organizers only. Please change your account role to \'organizer\' to view this content. Note that this change is irreversible.</p>';
-                    echo '<button onclick="switchUserRole()">Switch My Account to Organiser</button>';
-                } else {
-                    echo '<p>This page is for organisers only. Please log in.</p>';
-                    echo do_shortcode('[xoo_el_inline_form tabs="login" active="login"]');
-                }
+                // Prompt users who are not logged in to log in or register
+                echo '<h4 class="login_form_title">This page is for organisers only. Please log in or register.</h4>';
+                echo do_shortcode('[xoo_el_inline_form tabs="login" active="login"]'); // Shortcode for inline login form
             }
-            ?>
+            echo '</div>'; // Close the main container div
+        }
+        ?>
         </div><!-- /.container-fluid -->
     </div>
     <!-- /.content -->
@@ -85,6 +89,25 @@ function updateRole() {
 </script>
 
 <?php
-// Include the custom footer
-get_footer();
+// Start by checking if the user is logged in and has the 'organizer' or 'administrator' role
+if (is_user_logged_in() && (current_user_can('organizer') || current_user_can('administrator'))) {
+    // Display the WordPress loop to show content if the user has the correct role
+    if (have_posts()) :
+        while (have_posts()) :
+            the_post();
+            the_content(); // Display the content of the post
+        endwhile;
+    endif;
+    get_footer('organizer'); // Use the specific 'organizer' footer for users with the right role
+} else {
+   
+    if (is_user_logged_in()) {
+
+    } else {
+       
+    }
+   
+    get_footer(); // Use the default footer for users who are not organizers or not logged in
+}
 ?>
+

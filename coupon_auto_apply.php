@@ -21,69 +21,78 @@ function set_coupon_session()
     }
 }
 
-function add_custom_script_to_footer()
-{
+
+function add_custom_script_to_footer() {
     if (isset($_GET['coupon'])) {
-        // Your JavaScript code here
         // Create a new WC_Coupon object
-        $coupon = new WC_Coupon($_GET['coupon']);
+        $coupon = new WC_Coupon(sanitize_text_field($_GET['coupon']));
 
-        // Get coupon amount
+        // Get coupon details
         $coupon_amount = $coupon->get_amount();
+        $coupon_type = $coupon->get_discount_type();
+        $coupon_code = strtoupper($coupon->get_code()); // Ensuring code is uppercase
+        $currency_symbol = get_woocommerce_currency_symbol(); // Get currency symbol directly from WooCommerce
 
-        // Get product information
-        $product_ids = $coupon->get_product_ids(); // Get product IDs associated with the coupon
-
-        $productData = '';
-
-        foreach ($product_ids as $product_id) {
-            // Get WC_Product object for each product ID
-            $product = wc_get_product($product_id);
-
-            // Get product name
-            $product_name = $product->get_name();
-
-            // Get product price
-            $product_price = $product->get_price();
-
-            // Output product information
-            $productData .= "Product Name: $product_name, Price: $product_price <br>";
-        }
-
+        // Get expiration and start dates of the coupon
         $expire_date = $coupon->get_date_expires();
-        $formatted_expire_date = $expire_date ? date('Y-m-d H:i', strtotime($expire_date)) : '';
-
+        $formatted_expire_date = $expire_date ? $expire_date->date('Y-m-d H:i') : 'No Expiry';
         $start_date = $coupon->get_date_created();
-        $formatted_start_date = $start_date ? date('Y-m-d H:i', strtotime($start_date)) : '';
+        $formatted_start_date = $start_date ? $start_date->date('Y-m-d H:i') : 'Start Date Not Set';
 
-        $response_data = array(
-            'code' => $coupon->get_code(),
-            'discount_type' => $coupon->get_discount_type(),
-            'amount' => $coupon->get_amount(),
-            'individual_use' => $coupon->get_individual_use(),
-            'description' => $coupon->get_description(),
-            'usage_limit' => $coupon->get_usage_limit(),
-            'expire_date' => $formatted_expire_date,
+        // Assemble coupon details for JSON encoding
+        $coupon_details = array(
+            'code' => $coupon_code,
+            'discount_type' => $coupon_type,
+            'amount' => $coupon_amount,
+            'currency_symbol' => $currency_symbol,
             'start_date' => $formatted_start_date,
+            'expire_date' => $formatted_expire_date,
+            'current_time' => current_time('Y-m-d H:i')
         );
 
-        $data = json_encode($response_data);
+        $coupon_json = json_encode($coupon_details);
 
-        // Output coupon amount
-
+        // JavaScript to update the frontend with new div classes for coupon notice
         $custom_script = "
-        // Your JavaScript code goes here
-        console.log('This script runs in the footer.');
-        console.log('Coupon Amount: $coupon_amount');
-        console.log('$productData');
-        console.log(JSON.parse('$data'));
+      
+        
+
+
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var couponData = JSON.parse('$coupon_json');
+            var now = new Date(couponData.current_time);
+            var startDate = new Date(couponData.start_date);
+            var expireDate = couponData.expire_date !== 'No Expiry' ? new Date(couponData.expire_date) : null;
+    
+            if (now >= startDate && (!expireDate || now <= expireDate)) {
+                var couponNotice = document.querySelector('.coupon_notice');
+                if (couponNotice) {
+                    var discountTypeDetail = couponData.discount_type === 'fixed_cart' ? couponData.currency_symbol + couponData.amount : couponData.amount + '%';
+                    var discountText = 'Get ' + discountTypeDetail + ' off';
+                    var couponCodeDisplay = couponData.code.length > 11 ? couponData.code.substring(0, 11) + '...' : couponData.code;
+                    var couponText = ' with code <span class=\"couponCodeDisplay\">' + couponCodeDisplay + '</span>';
+                    var autoApplyText = ' - Autoapplied at checkout.';
+                    var closeButton = '<div class=\"close_icon\">&times;</div>';
+    
+                    couponNotice.innerHTML = '<div class=\"coupon_details\"><span class=\"discount_detail\">' + discountText + '</span> <span class=\"coupon_code\">' + couponText + '</span><span class=\"auto_apply\">' + autoApplyText + '</span></div>' + closeButton;
+                }
+    
+                document.querySelector('.close_icon').addEventListener('click', function() {
+                    this.parentNode.style.display = 'none';
+                });
+            }
+        });
     ";
-        // Add the JavaScript code to the footer
+    
+    // Add the JavaScript to the page
+    wp_add_inline_script('jquery', $custom_script);
+    
+        // Add the JavaScript to the page
         wp_add_inline_script('jquery', $custom_script);
     }
 }
 add_action('wp_enqueue_scripts', 'add_custom_script_to_footer');
-
 
 // Hook the function to set session variable when the WooCommerce product page loads
 //add_action('woocommerce_before_single_product', 'set_coupon_session');

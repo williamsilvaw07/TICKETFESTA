@@ -2,6 +2,18 @@
 
 
 
+
+
+
+// Disable tribe select2 function when not in tribe admin screens
+add_action( 'admin_enqueue_scripts', 'tribe_select2_conflict_fix', 11);
+function tribe_select2_conflict_fix() {
+$admin_helpers = Tribe__Admin__Helpers::instance();
+if ( ! $admin_helpers->is_screen() ) {
+wp_deregister_script( 'tribe-select2' );
+}
+}
+
 function session_start_global(){
     if (!session_id()) {
         session_start();

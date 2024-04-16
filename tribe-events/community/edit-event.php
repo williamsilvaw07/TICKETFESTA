@@ -65,12 +65,28 @@ $event_url = esc_attr($event_url);
     <?php wp_nonce_field('ecp_event_submission'); ?>
 
     <div id="basic-section" class="event-section">
+
+
+	<?php
+	/**
+	 * Action hook before loading linked post types template parts.
+	 *
+	 * Useful if you want to insert your own additional custom linked post types.
+	 *
+	 * @since 4.5.13
+	 *
+	 * @param int|string $tribe_event_id The Event ID.
+	 */
+	do_action( 'tribe_events_community_form_before_linked_posts', $tribe_event_id );
+	?>
+
         <?php tribe_get_template_part('community/modules/image'); ?>
+        
+        
         <?php tribe_get_template_part('community/modules/title', null, ['events_label_singular' => $events_label_singular]); ?>
         <?php tribe_get_template_part('community/modules/description'); ?>
         <?php tribe_get_template_part('community/modules/datepickers'); ?>
-        <?php tribe_get_template_part('community/modules/taxonomy', null, ['taxonomy' => Tribe__Events__Main::TAXONOMY]); ?>
-        <?php tribe_get_template_part('community/modules/taxonomy', null, ['taxonomy' => 'post_tag']); ?>
+        
         <?php tribe_get_template_part('community/modules/venue'); ?>
         <?php tribe_get_template_part('community/modules/organizer'); ?>
         <button class="next-section-btn" data-target="venue-and-organizer-section">Next</button>
@@ -87,6 +103,22 @@ $event_url = esc_attr($event_url);
         <?php tribe_get_template_part('community/modules/website', null, ['event_url' => $event_url]); ?>
         <?php tribe_get_template_part('community/modules/series'); ?>
         <?php tribe_get_template_part('community/modules/custom'); ?>
+
+
+        
+
+
+<!-- Event Category Section -->
+<div class="event_decp_div hover_section">
+    <h2>Event Category</h2>
+    <p>Select a category to best classify your event, ensuring it appears in the appropriate section on our site for attendees to discover.</p>
+    <div id="category_section" class="hover_section_content_show">
+    <?php tribe_get_template_part( 'community/modules/taxonomy', null, [ 'taxonomy' => Tribe__Events__Main::TAXONOMY ] ); ?>
+</div> 
+</div> 
+
+
+
 
 
         <!-- Sponsor section -->
@@ -324,9 +356,59 @@ $event_description = get_post_meta($event_id, 'event_description', true);
 
 <script>
 
+document.addEventListener('DOMContentLoaded', function() {
+    var eventStatusElement = document.getElementById('event_status');
+
+    // Check if the element exists
+    if (eventStatusElement) {
+        // Traverse up to the closest .event_decp_div and hide it
+        var eventDecpDiv = eventStatusElement.closest('.event_decp_div');
+        if (eventDecpDiv) {
+            eventDecpDiv.style.display = 'none'; // Hide the div
+            console.log('Event description div hidden because it contains #event_status.');
+        }
+    }
+});
 
 
 
+document.addEventListener('DOMContentLoaded', function() {
+    // Delay the execution to ensure all libraries, like Select2, have fully initialized
+    setTimeout(function() {
+        console.log("Starting to update status dropdown...");
+
+        // Find the original <select> element and the Select2 generated text container
+        var originalSelect = document.querySelector('#tribe-events-status-status'); // Adjust the ID if necessary
+        var select2TextContainer = document.querySelector('#select2-tribe-events-status-status-container');
+
+        if (select2TextContainer && originalSelect) {
+            console.log("Elements found. Processing...");
+
+            // Update the visible text in the Select2 control
+            if (select2TextContainer.textContent.trim() === 'Scheduled') {
+                select2TextContainer.textContent = 'Published';
+                console.log("Updated visible text to 'Published'.");
+            }
+
+            // Update the actual <select> options if they're set to 'Scheduled'
+            Array.from(originalSelect.options).forEach(option => {
+                if (option.textContent === 'Scheduled') {
+                    option.textContent = 'Published'; // Update the text shown in the dropdown
+                    if (option.value === 'publish') { // Assuming 'publish' is the correct value
+                        option.selected = true; // Select this option if it is supposed to be the active one
+                        console.log("Updated <select> option text and set 'Published' as selected.");
+                    }
+                }
+            });
+
+            // Trigger the update for Select2 to recognize the change
+            jQuery(originalSelect).trigger('change');
+            console.log("Select2 update triggered.");
+        } else {
+            console.log("Required elements not found or not loaded correctly. Check selectors and script timing.");
+        }
+    }, 3000); // Increase delay as needed if Select2 takes longer to initialize
+});
 
 
     /////FUNCTION FOR LINE UPS 
@@ -1025,7 +1107,14 @@ jQuery(document).ready(function($) {
         border-radius: 4px;
     }
 
+/* CSS to hide the specific .event_decp_div containing #event_status */
+#event_status {
+    display: none!important;
+}
 
+.event_decp_div:has(>#event_tribe_status>#event_status) {
+    display: none!important;
+}
     /* Accordion toggle */
     .accordion::after {
         content: '';

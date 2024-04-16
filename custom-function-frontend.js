@@ -1,19 +1,15 @@
-function get_tribe_ticket_fee(ticketAmount, quantity = 1){
-    ticketSiteFee = 0;
-    if(ticketAmount < 50 ){
-        ticketSiteFee += (ticketAmount * .03 + 0.02) * quantity;
-    }
-    if(ticketAmount > 50 ){
-        ticketSiteFee += (ticketAmount *  .01 + 0.02) * quantity;
-    }
 
-    return ticketSiteFee.toFixed(2);
+/*
+
+function get_tribe_ticket_fee(ticketAmount, quantity = 1) {
+    const flatFee = 0.40; // Flat fee for the whole order
+    const percentageFee = 0.042; // Percentage fee for each ticket
+
+    const ticketFee = ticketAmount * percentageFee * quantity;
+    const totalFee = ticketFee + flatFee;
+
+    return totalFee.toFixed(2);
 }
-
-document.addEventListener('DOMContentLoaded', function() {
-
-
-
 
 
 
@@ -28,6 +24,24 @@ jQuery('.tribe-tickets__tickets-sale-price').each(function() {
     console.log('Site fee: ', ticketSiteFee); // Log the site fee
     jQuery(this).append('<span class="site-fee-container">+ £<span class="ticket_site_fee">'+ticketSiteFee+'</span> Fee</span>');
 });
+*/
+
+
+jQuery(document).ready(function($) {
+    console.log("Initializing Select2");
+    $('select').select2();
+    console.log("Select2 Initialized");
+});
+
+
+
+document.addEventListener('DOMContentLoaded', function() {
+
+
+
+
+
+
 
 
 
@@ -202,6 +216,54 @@ jQuery(document).ready(function($) {
 
 
     jQuery(document).ready(function($) {
+
+        // Function to recalculate the total and update the footer
+        function recalculateTotal() {
+            var total = 0;
+    
+            $('.tribe-tickets__tickets-item').each(function() {
+                var ticketAmount = parseFloat($(this).find('.tribe-amount').text().replace('£', '').trim());
+                var quantity = parseInt($(this).find('.tribe-tickets__tickets-item-quantity-number-input').val());
+              
+    
+                if (!isNaN(ticketAmount) && !isNaN(quantity) && !isNaN(siteFee)) {
+                    total += (ticketAmount * quantity);
+                }
+            });
+    
+            // Update the total fee displayed in the footer
+            $('.tribe-tickets__tickets-footer-total .tribe-amount').text(total.toFixed(2));
+        }
+    
+        // Attach event listeners to the add and remove buttons
+        $('body').on('click', '.tribe-tickets__tickets-item-quantity-add, .tribe-tickets__tickets-item-quantity-remove', function() {
+            // Slight delay to wait for the input value to update
+            setTimeout(function() {
+                recalculateTotal();
+            }, 100);
+        });
+    
+        // Additional listener for any change in ticket quantity input fields
+        $('body').on('change', '.tribe-tickets__tickets-item-quantity-number-input', function() {
+            recalculateTotal();
+        });
+    });
+    
+
+    
+    
+
+
+
+
+
+
+//old one working 
+/*
+    jQuery(document).ready(function($) {
+
+
+        
         // Function to recalculate the total and update the footer
         function recalculateTotal() {
             var total = 0;
@@ -233,13 +295,7 @@ jQuery(document).ready(function($) {
             recalculateTotal();
         });
     });
-    
-
-    
-    
-
-
-
+    */
 
     
     $('.tribe-tickets__tickets-item').each(function() {
@@ -421,9 +477,6 @@ function autoSelectCountry(){
         }
     }
 }
-
-
-
 
 
 

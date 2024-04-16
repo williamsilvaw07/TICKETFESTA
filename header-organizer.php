@@ -56,8 +56,8 @@ if (!defined('ABSPATH')) {
         <nav class="main-header navbar navbar-expand navbar-white navbar-light">
             <!-- Left navbar links -->
 <!-- Brand Logo -->
-<a href="https://ticketfesta.co.uk/" class="brand-link">
-                <img src="https://ticketfesta.co.uk/wp-content/uploads/2024/02/Group-195-2.png" alt=""
+<a href="https://ticketlocation.com" class="brand-link">
+                <img src="https://ticketlocation.com/wp-content/uploads/2024/04/Group-210-300x61.png" alt="ticket location logo "
                     class="brand-image img-circle elevation-3">
                 <span class="brand-text font-weight-light"></span>
             </a>
@@ -105,7 +105,7 @@ if (!defined('ABSPATH')) {
 <ul class="show-notification profile-notification dropdown-menu" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
     
     <li class="admin_dashboard-sidebar-item">
-        <a href="https://ticketfesta.co.uk/">
+        <a href="https://ticketlocation.com/">
             <i class="fas fa-exchange-alt"></i><span class="nav-text">Switch to Attendee</span>
         </a>
     </li>
@@ -143,8 +143,8 @@ if (!defined('ABSPATH')) {
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
-            <a href="https://ticketfesta.co.uk/" class="brand-link">
-                <img src="https://ticketfesta.co.uk/wp-content/uploads/2024/02/Group-195-2.png" alt=""
+            <a href="https://ticketlocation.com/" class="brand-link">
+                <img src="https://ticketlocation.com/wp-content/uploads/2024/04/Group-210-300x61.png" alt=""
                     class="brand-image img-circle elevation-3">
                 <span class="brand-text font-weight-light"></span>
             </a>
@@ -155,7 +155,7 @@ if (!defined('ABSPATH')) {
                 <nav class="admin_dashboard-sidebar">
                     <ul class="admin_dashboard-sidebar-list">
                         <li class="admin_dashboard-sidebar-item">
-                            <a href="https://ticketfesta.co.uk/dashboard/">
+                            <a href="/dashboard/">
                                 <i class="fas fa-home"></i><span class="nav-text">Dashboard</span>
                             </a>
 
@@ -168,7 +168,7 @@ if (!defined('ABSPATH')) {
 
                         <li class="admin_dashboard-sidebar-item">
                             <a href="/organizer-coupons/"><i class="fas fa-ticket-alt"></i><span
-                                    class="nav-text">Coupons</span></a>
+                                    class="nav-text">Promo Codes</span></a>
                         </li>
 
 
@@ -396,6 +396,9 @@ if (!defined('ABSPATH')) {
 
 
         <style>
+
+
+
             .main-header .brand-link{
                 display:none
             }
@@ -1455,10 +1458,19 @@ html .tickets-sold-column , html .tribe-list-column-title {
 
             }
 
-            .event-status-form select {
+            .event-status-form span {
                 font-size: 11px !important;
-                padding: 2px 3px !important;
+          
             }
+
+
+            .select2-container--default .select2-selection--single .select2-selection__rendered {
+    color: #444;
+    line-height: 20px!important;
+    font-size: 12px;
+    font-weight:400!important;
+}
+
 
             .event-title-image .title {
                 font-size: 15px !important;
@@ -1641,6 +1653,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
 
             }
 
+            
 #user-organizers-list tbody tr{
     border-radius: 10px!important;
     margin: 20px 0!important;
@@ -2107,6 +2120,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
             .admin_dashboard_event_list_nav_lower_inner span {
                 font-size: 13px;
                 font-weight: 300;
+                min-width:140px
             }
 
 
@@ -2235,8 +2249,26 @@ html .tickets-sold-column , html .tribe-list-column-title {
                 margin-bottom: 26px !important;
             }
 
+.tribe-section-taxonomy--tribe_events_cat .select2-container--default{
+    width: 100%!important;
+}
+.tribe-section-taxonomy--tribe_events_cat .select2-dropdown--below{
+    min-width: 150px!important;
+    position: relative!important;
+    top: 28px!important;
+}
+.tribe-section-taxonomy--tribe_events_cat .select2-container--default .select2-selection--multiple .select2-selection__choice , .tribe-section-taxonomy--tribe_events_cat .select2-selection__choice__remove{
+    color: black!important;
+}
+.tribe-section-taxonomy--tribe_events_cat  .select2-selection{
+    border-radius: 0!important;
+         }
+         .select2-selection__choice{
+            color: black;
+         }
 
-            .tribe-section-taxonomy,
+
+
             .tribe-section-website,
             .tribe-button-icon-settings,
             #rsvp_form_toggle,
@@ -2276,7 +2308,10 @@ html .tickets-sold-column , html .tribe-list-column-title {
                 border: 0px solid #aaa !important;
                 font-size: 14px !important;
             }
-
+            .select2-container--default .select2-results__option {
+    padding: 2px 5px!important;
+    font-size: 14px!important;
+            }
             .select2-container--default .select2-results__option--highlighted[data-selected] {
                 background-color: #d3fa16 !important;
                 color: rgb(0, 0, 0) !important;
@@ -2681,8 +2716,16 @@ html .tickets-sold-column , html .tribe-list-column-title {
                 width: 300px !important;
 
             }
-
-
+            .tribe-tickets-editor-table tr,
+            .tribe-tickets-editor-table .table-header {
+                background-color: #212121 !important;
+            }
+            .tribe-tickets-editor-table tr td , .tribe-tickets-editor-table thead, .tribe-tickets-editor-table .table-header {
+    border-bottom: 1px solid #444;
+}
+            .ticket_duplicate_text {
+                display: none;
+            }
             .tribe-section-venue input[type="text"] {
                 width: 100% !important;
             }
@@ -2704,36 +2747,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
             }
 
 
-            #eventCouponForm .tribe-section {
-                margin: 0 !important;
-            }
-
-            .tribe-tickets-editor-table tr,
-            .tribe-tickets-editor-table .table-header {
-                background-color: #212121 !important;
-            }
-            .tribe-tickets-editor-table tr td , .tribe-tickets-editor-table thead, .tribe-tickets-editor-table .table-header {
-    border-bottom: 1px solid #444;
-}
-            .ticket_duplicate_text {
-                display: none;
-            }
-
-            #eventCouponForm .tribe-section-content {
-                display: flex;
-                flex-direction: column;
-            }
-
-            #eventCouponForm label:before {
-                content: "Select Ticket";
-                font-size: 17px;
-                font-weight: 600;
-                display: block;
-                padding-bottom: 10px;
-                padding-top: 13px;
-            }
-
-
+   
 
             .tribe-tickets-editor-table thead tr {
 
@@ -2784,7 +2798,9 @@ html .tickets-sold-column , html .tribe-list-column-title {
                 margin-left: 0 !important;
                 margin-top: 50px !important;
             }
-
+.main-footer{
+    display:none!important
+}
             #add_sponsor_button {
                 padding: 7px 15px;
                 border-radius: 4px;
@@ -3383,7 +3399,10 @@ html .tickets-sold-column , html .tribe-list-column-title {
     top: 1px;
 }
 
-
+.brand-link .brand-image {
+    margin-left: 0!important;
+    padding-left:0!important
+}
 
 
 #emailTable tbody tr:first-child th {
@@ -3408,7 +3427,14 @@ html .tickets-sold-column , html .tribe-list-column-title {
 
 
 
+.select2-container--default .select2-selection--single .select2-selection__arrow b {
 
+left: 96%!important;
+
+}
+.select2-container--default .select2-selection--single .select2-selection__arrow{
+    right: 10px!important;
+}
         /****admin settings page */
 
         .page-template-organizer-template-php .orgerinser_settings_form input{
@@ -3917,14 +3943,19 @@ display:block!important
                     content: "Sales";
 
                 }
-
+                .tribe-list-column-passcode:after {
+                    content: "- Scanner Passcode";
+                    padding-left:0!important
+                }
+ 
                 .tribe-community-events-list tbody .tribe-list-column-organizer::after,
-                .tribe-community-events-list tbody .tribe-list-column-title::after {
+                .tribe-community-events-list tbody .tribe-list-column-title::after , .tribe-list-column-passcode:after {
                     padding-left: 5px;
                     font-size: 13px;
                     font-weight: 300;
                     position: relative;
           top: 2px;
+          color: #aaa !important;
                 }
 
                 .tribe-community-events-list tbody .tribe-list-column-title,
