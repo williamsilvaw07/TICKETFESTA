@@ -13,7 +13,7 @@ add_action('wp_head', function() {
     if (isset($_SESSION) && isset($_SESSION['wc_session_expiration'])) {
   
         $time = time() - $_SESSION['wc_session_expiration'];
-        $time_left = 90 - $time;
+        $time_left = 30 - $time;
         if ($time_left <= 0) {
 			 $cart = WC()->cart->get_cart();
     foreach ($cart as $cart_item_key => $cart_item) {
@@ -58,7 +58,7 @@ add_action('woocommerce_before_cart_emptied', 'remove_reserved_stock');
 function display_cart_timer() {
     if (isset($_SESSION['wc_session_expiration'])) {
         $time_passed = time() - $_SESSION['wc_session_expiration'];
-        $time_left = 90 - $time_passed;
+        $time_left = 30 - $time_passed;
         $minutes = intdiv($time_left, 60);
         $seconds = $time_left % 60;
 
