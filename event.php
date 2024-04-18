@@ -232,9 +232,6 @@ jQuery(document).ready(function($) {
                 }
             }
         });
-
-
-        
     }
 
     // Call the function initially and whenever necessary (e.g., after loading new event data dynamically)
@@ -242,20 +239,11 @@ jQuery(document).ready(function($) {
 
     // Example: To re-check the ticket info after 2 seconds (you can adjust or remove this part based on your needs)
     setTimeout(checkAndUpdateTicketInfo, 500);
-
-
-
-
-
-
-   
 });
 
 
 
 
-
-  
 
 
 
@@ -418,13 +406,7 @@ jQuery(document).ready(function($) {
 
 
 <style>
-/***upcooming event button */
-.tribe-events-c-top-bar__datepicker-button
-{
-    display:none!important
-}
 
-/****end */
 /*****SOLD OUT EVENTS */
 .home .tribe-events-c-small-cta__sold-out{
     color: white !important;

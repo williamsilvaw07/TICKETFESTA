@@ -1,5 +1,5 @@
 /**
- * Theme Name:     Ticket Festa
+ * Theme Name:     ticketfesta
  * Author:        William Silva
  * Template:       generatepress
  * Text Domain:	   
@@ -10,7 +10,27 @@
 
 
  
- /*******
+/*****Attendees Tab */
+.main_div_event_data #tribe-attendees-summary .tablenav select{
+    padding: 1px 15px;
+    max-width: 100%;
+    font-size: 14px;
+}
+html body.tribe-report-pag h1{
+display:none!important
+}
+.event-container {
+    text-align: left;
+}
+
+/******END***/
+
+
+
+
+
+
+
  /*****GLOBO CSS****/
  body {
     overflow-x: hidden;
@@ -263,9 +283,13 @@ stroke-dashoffset: 0;
 /*****END*******/
 /***HEADER***/
 .custom-logo-link {
-    width: 170px;
+    width: 191px;
 
 
+}
+.custom-logo-link img{
+	position: relative;
+    top: 3px;
 }
 .site-header{
     display: none;
@@ -298,8 +322,8 @@ html body .mega-menu-wrap:last-child{
 }
 .mega-menu_btn_border{
     border: 1px solid white!important;
-    border-radius: 4px!important;;
-    padding: 0px 10px!important;
+    border-radius: 4px!important;
+    padding: 0px 10px!important; 
 }
 .custom-nav-before-logo, .custom-nav-after-logo {
     display: flex; /* Optional, if you need flexbox behavior inside the menus */
@@ -553,7 +577,7 @@ header{
     padding: 20px;
     border-radius: 5px;
 }
-
+ 
 .close-popup {
     display: block;
     cursor: pointer;
@@ -582,7 +606,7 @@ header{
     max-width: 40px!important;  
     height: auto!important;  
     position: relative!important;  
-    top: 19%!important;  
+    top: 0%!important;  
     left: 0%!important;  
 }
 
@@ -982,7 +1006,36 @@ html .tribe-community-events .tribe-community-notice-error p:last-child {
 
 
 
+/*****NOT LOGGEDIN orginser dahsboard */
+.not-logged-in{
+    margin: 0 !important;
+    width: 100%;
+    display: flex;
+    align-content: flex-start;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding-top: 100px !important;
 
+}
+.not-logged-in .container-fluid{
+
+    max-width: 600px;
+}
+.not-logged-in .organizer-access-content{
+    text-align: center;
+    font-weight: 600;
+    font-size: 25px;
+}
+
+.xoo-el-lostpw-tgr , .xoo-el-form-label span , .xoo-el-fields-cont label{
+    font-size: 15px!important;
+    font-weight: 400!important;
+}
+
+
+
+/******END */
 
 
 
@@ -1021,8 +1074,8 @@ html .tribe-community-events .tribe-community-notice-error p:last-child {
 
 .home_bk_image_imga img
 {
-width:90%!important;  
-    border-radius: 7px!important;  
+width:80%!important;  
+    border-radius: 0px!important;  
     margin: 0px!important;  
     position: relative;
 
@@ -1035,7 +1088,7 @@ width:90%!important;
 
 
 .main_bk_home_main_div {
-    background-image: url('https://ticketfesta.co.uk/wp-content/uploads/2024/04/nainoa-shizuru-NcdG9mK3PBY-unsplash-1-min-1.jpg');
+    background-image: url('https://ticketlocation.com/wp-content/uploads/2024/04/yvette-de-wit-NYrVisodQ2M-unsplash-2-1-e1712709426461.webp');
     background-size: cover;
     background-position: center;
 }
@@ -1086,6 +1139,7 @@ width:90%!important;
 .tribe-events .tribe-events-c-search__button, .tribe-events button.tribe-events-c-search__button {
     background-color: #d3fa16!important;
     color: #0c0d0e!important;
+    margin-right: 13px;
 }
 .tribe-events-c-events-bar--border {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.9)!important;
@@ -1182,9 +1236,9 @@ border-radius: 5px;
 }
 
 .home .tribe-common .tribe-common-g-row {
-    display: flex!important;
+    display: flex !important;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: flex-start;
     gap: 15px;
     align-items: stretch;
 }
@@ -1203,6 +1257,7 @@ border-radius: 5px;
     display: flex;
     color: rgb(255, 255, 255);
     padding: 12px 17px;
+    padding-left: 1px;
 }
 
 .tribe-common--breakpoint-medium.tribe-common .tribe-common-h4--min-medium {
@@ -1226,7 +1281,7 @@ border-radius: 5px;
     align-items: center;
     align-content: center;
     justify-content: flex-start;
-    margin-top: 10px!important;
+    margin-top: 7px!important;
     gap: 10px!important;
    
 }
@@ -1321,18 +1376,20 @@ body .social_sharing_links{
     justify-content: center;
     align-items: center;
     gap: 17px;
+    margin: 10px 0!important
 }
 .social_sharing_links i{
     color:#1A1A1A!important
 }
 body .share_btn{
-    z-index: 9; 
+    z-index: 3; 
     background: white!important;
     border-radius: 100px!important;
     width: 30px;
     height: 30px;
     color: black!important;
     padding: inherit;
+    display: none!important;
 }
 
 .overlay {
@@ -1435,7 +1492,7 @@ body .share_btn{
         }
         body .home_bk_image_imga img {
             width: 100%!important;
-            border-radius: 7px!important;
+            border-radius: 0px!important;
             margin: 0px!important;
             position: relative;
         }
@@ -1451,9 +1508,11 @@ body .share_btn{
   
         .eventUrl{
             white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        max-width: 100%; 
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100%;
+            font-size: 13px;
+            font-weight: 400;
         }
     }
 
@@ -1509,6 +1568,10 @@ body .share_btn{
             font-size: 16px!important;
         
         }
+        .elementor-1476 .elementor-element.elementor-element-679702c::before ,   .main_bk_home_main_div  .elementor-widget-container{
+            display: none!important;
+        }
+    
 }
 /*******end*****/
 
@@ -1552,7 +1615,10 @@ body .share_btn{
 }
 .share_event_url span{
     width: fit-content;
-    color: black!important;
+    color: black !important;
+    overflow: hidden;
+    word-wrap: initial;
+    white-space: nowrap;
 }
 .share_event_url .share_popup_box_title{
     font-size: 11px;
@@ -2420,6 +2486,9 @@ html #qr-reader__dashboard_section_csr{
 
 
 /*********CART*************/
+body .coupon_code{
+    color: black !important;
+}
 .woocommerce , .cart-timer_div , .page-id-101 .entry-content
 {
     background: white;
@@ -2481,14 +2550,31 @@ html #qr-reader__dashboard_section_csr{
     color: black !important;
     font-family: 'Roboto', sans-serif;
 }
+.woocommerce a.remove:after{
+    content: "Remove";
+}
+.woocommerce a.remove{
+    min-width: 70px
+}
+html .woocommerce a.remove {
+    color: inherit !important;
+    background: 0 0 !important;
+    border: 0px solid !important;
+    border-color: inherit;
+    font-weight: 400;
+    font-size: 15px !important;
+    width: 26px !important;
+    height: 35px !important;
+    line-height: 24px !important;
 
+}
 html .checkout-button:hover{
     color: white!important;
 }
 .fa-exclamation-triangle:before, .fa-triangle-exclamation:before, .fa-warning:before {
     content: "\f071";
     color: #f6bc02;
-    font-size: 37px;
+    font-size: 34px;
 }
 .fa-triangle-exclamation{
     margin-right: 13px;
@@ -2499,7 +2585,8 @@ html .checkout-button:hover{
     font-size: 18px;
 }
 .cart-timer span{
-    font-size: 18px;
+    font-size: 16px;
+    font-weight: bold;
 }
 .cart-timer{
     margin-left: 5px;
@@ -2511,10 +2598,11 @@ html .checkout-button:hover{
     justify-content: center;
     align-items: center;
     border: 2px solid #f6bc02;
-    border-radius: 7px;
-    padding: 12px 15px;
+    border-radius: 4px;
+
+    padding: 10px 10px;
     margin-bottom: 30px;
-    font-weight: 600;
+    font-weight: 300;
     margin-top: 30px;
     max-width: 900px;
     margin: 30px auto;
@@ -2576,12 +2664,23 @@ html .checkout-button:hover{
         line-height: 28px!important;
        
     }
-    .woocommerce .cart-collaterals::after, .woocommerce-page .cart-collaterals::after , .woocommerce .cart-collaterals::after, .woocommerce-page .cart-collaterals::after {
+    .woocommerce .cart-collaterals::after, .woocommerce-page .cart-collaterals::after , .woocommerce .cart-collaterals::after, .woocommerce-page .cart-collaterals::after , .tribe-events-header--has-event-search {
 
       display: none!important;
     }
+    .home .tribe-common .tribe-common-g-row{
+        justify-content: center;
+    }
     .woocommerce .cart-collaterals, .woocommerce-page .cart-collaterals {
         margin-bottom: 50px!important;
+    }
+    .cart-timer_text, .cart-timer {
+        margin-bottom: 0 !important;
+        margin-top: 0 !important;
+        font-size: 15px;
+    }
+    .cart-timer span {
+        font-size: 16px;
     }
 }
 /***********END***********/

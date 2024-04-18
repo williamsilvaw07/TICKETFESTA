@@ -3,38 +3,37 @@
 Template Name: Custom Role Control Template
 */
 
-// Dynamically choose the header based on user role
-if (is_user_logged_in() && (current_user_can('organiser') || current_user_can('administrator'))) {
-    get_header('organizer'); // Use the custom header for organisers/administrators
-} else {
-    get_header(); // Use the default header for other users
-}
+// Check if the user is logged in and has the correct role
+$is_logged_in = is_user_logged_in();
+$is_organizer = $is_logged_in && (current_user_can('organiser') || current_user_can('administrator'));
+
+// Choose the appropriate header
+get_header($is_organizer ? 'organizer' : '');
 ?>
 
 <!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
+<div class="content-wrapper <?php echo !$is_logged_in ? 'not-logged-in' : ($is_organizer ? '' : 'not-logged-in'); ?>">
     <!-- Main content -->
     <div class="content">
         <div class="container-fluid">
             <?php
-            // Check user's role and display content accordingly
-            if (is_user_logged_in() && (current_user_can('organiser') || current_user_can('administrator'))) {
-                // Display page content if user has the correct role
+            if ($is_organizer) {
+                // Loop to show content if the user has the correct role
                 if (have_posts()) :
-                    while (have_posts()) :
-                        the_post();
-                        the_content();
+                    while (have_posts()) : the_post();
+                        the_content(); // Display the content of the post
                     endwhile;
                 endif;
             } else {
-                // Show different messages or actions based on user's login status
-                if (is_user_logged_in()) {
-                    echo '<p>This page is limited to organizers only. Please change your account role to \'organizer\' to view this content. Note that this change is irreversible.</p>';
-                    echo '<button onclick="switchUserRole()">Switch My Account to Organiser</button>';
+                // Content for non-qualified users
+                echo '<div class="organizer-access-content">';
+                if ($is_logged_in) {
+                    echo '<p>This page is limited to organizers only. Please contact admin to change your account role to "organizer".</p>';
                 } else {
-                    echo '<p>This page is for organisers only. Please log in.</p>';
+                    echo '<h4 class="login_form_title">This page is for organisers only. Please log in or register.</h4>';
                     echo do_shortcode('[xoo_el_inline_form tabs="login" active="login"]');
                 }
+                echo '</div>'; // Close the main container div
             }
             ?>
         </div><!-- /.container-fluid -->
@@ -42,6 +41,11 @@ if (is_user_logged_in() && (current_user_can('organiser') || current_user_can('a
     <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
+
+<?php
+get_footer($is_organizer ? 'organizer' : '');
+?>
+
 
 <!-- Include Toastr and SweetAlert2 -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastr@latest/toastr.min.css">
@@ -83,8 +87,3 @@ function updateRole() {
     xhr.send("action=switch_to_organiser");
 }
 </script>
-
-<?php
-// Include the custom footer
-get_footer();
-?>

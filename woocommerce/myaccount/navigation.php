@@ -43,8 +43,23 @@ $icons = [
 
 
 
+<script>
 
 
+document.addEventListener('DOMContentLoaded', function() {
+    // Select the email input field by its ID
+    var emailInput = document.getElementById('account_email');
+
+    // Check if the element exists to avoid errors
+    if (emailInput) {
+        // Set the input field to read-only
+        emailInput.readOnly = true;
+
+        // Optionally, disable autocomplete which some browsers may ignore
+        emailInput.autocomplete = 'off';
+    }
+});
+</script>
 
 <style>
 
@@ -80,12 +95,15 @@ font-size: 14px;
 .woocommerce-MyAccount-navigation i {
     padding-right: 10px;
 }
-
+.woocommerce-MyAccount-navigation-link--payment-methods{
+    display:none!important
+}
 
 #custom-welcome-message{
     margin-top: 20px;
     text-align: left;
     text-transform: capitalize;
+    color:white!important
 }
 
 /* Target the active link */
@@ -113,10 +131,35 @@ font-size: 14px;
 .woocommerce-MyAccount-navigation-link.is-active a .nav-label {
     color: white;
 }
+#account_email {
+    background-color: #303030;
+    color: #686868; /* Darker text for better readability */
+    cursor: not-allowed; /* Show a 'not allowed' cursor on hover */
+}
+/* Remove borders from all input fields */
+.woocommerce-MyAccount-content input   {
+    border: none; /* Removes border */
+}
 
+/* Hide display name input and its description */
+#account_display_name,
+#account_display_name + span , label[for="account_display_name"] , .woocommerce-error {
+    display: none!important;
+}
+body .woocommerce-table__product-name{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start !important;
+    justify-content: center;
+}
 
+.woocommerce-MyAccount-content {
+    color: white; /* This will change the text color of all child elements to white */
+}
 
-
+.woocommerce-MyAccount-content a {
+    color: white; /* This ensures that links are also white */
+}
 
 
 

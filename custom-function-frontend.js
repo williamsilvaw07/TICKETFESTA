@@ -1,19 +1,15 @@
-function get_tribe_ticket_fee(ticketAmount, quantity = 1){
-    ticketSiteFee = 0;
-    if(ticketAmount < 50 ){
-        ticketSiteFee += (ticketAmount * .03 + 0.02) * quantity;
-    }
-    if(ticketAmount > 50 ){
-        ticketSiteFee += (ticketAmount *  .01 + 0.02) * quantity;
-    }
 
-    return ticketSiteFee.toFixed(2);
+/*
+
+function get_tribe_ticket_fee(ticketAmount, quantity = 1) {
+    const flatFee = 0.40; // Flat fee for the whole order
+    const percentageFee = 0.042; // Percentage fee for each ticket
+
+    const ticketFee = ticketAmount * percentageFee * quantity;
+    const totalFee = ticketFee + flatFee;
+
+    return totalFee.toFixed(2);
 }
-
-document.addEventListener('DOMContentLoaded', function() {
-
-
-
 
 
 
@@ -28,6 +24,11 @@ jQuery('.tribe-tickets__tickets-sale-price').each(function() {
     console.log('Site fee: ', ticketSiteFee); // Log the site fee
     jQuery(this).append('<span class="site-fee-container">+ £<span class="ticket_site_fee">'+ticketSiteFee+'</span> Fee</span>');
 });
+*/
+
+
+
+document.addEventListener('DOMContentLoaded', function() {
 
 
 
@@ -201,7 +202,21 @@ jQuery(document).ready(function($) {
 
 
 
+
+    
+    
+
+
+
+
+
+
+//old one working 
+/*
     jQuery(document).ready(function($) {
+
+
+        
         // Function to recalculate the total and update the footer
         function recalculateTotal() {
             var total = 0;
@@ -233,13 +248,7 @@ jQuery(document).ready(function($) {
             recalculateTotal();
         });
     });
-    
-
-    
-    
-
-
-
+    */
 
     
     $('.tribe-tickets__tickets-item').each(function() {
@@ -421,9 +430,6 @@ function autoSelectCountry(){
         }
     }
 }
-
-
-
 
 
 

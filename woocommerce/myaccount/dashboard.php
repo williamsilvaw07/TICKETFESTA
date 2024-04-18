@@ -231,7 +231,9 @@ jQuery(document).ready(function($) {
 
 
 <style>
-
+.woocommerce-error{
+    display:none!important
+}
 	.loadingAnimation{
 		display:block
 	}

@@ -1,7 +1,6 @@
 <?php
 
 
-
 function session_start_global(){
     if (!session_id()) {
         session_start();
@@ -14,8 +13,21 @@ add_action('wp_head', function() {
     if (isset($_SESSION) && isset($_SESSION['wc_session_expiration'])) {
   
         $time = time() - $_SESSION['wc_session_expiration'];
-        $time_left = 10 - $time;
+        $time_left = 900 - $time;
         if ($time_left <= 0) {
+			 $cart = WC()->cart->get_cart();
+    foreach ($cart as $cart_item_key => $cart_item) {
+        $product_id = $cart_item['product_id'];
+        $quantity = $cart_item['quantity'];
+
+        // Restore stock for each item
+        $product = wc_get_product($product_id);
+        if ($product && $product->is_in_stock()) {
+            $old_stock = $product->get_stock_quantity();
+            $new_stock = $old_stock + $quantity;
+            wc_update_product_stock($product, $new_stock);
+        }
+    }
             WC()->cart->empty_cart();
             unset($_SESSION['wc_session_expiration']);
         }
@@ -36,6 +48,8 @@ function reserve_stock_on_add_to_cart($cart_item_key, $product_id, $quantity, $v
 add_action('woocommerce_add_to_cart', 'reserve_stock_on_add_to_cart', 10, 6);
 
 function remove_reserved_stock($cart_id) {
+	    wc_clear_notices();
+
     wc_add_notice('Your cart has been cleared due to inactivity. <a href="' . esc_url(home_url()) . '">Click here</a> to continue shopping.', 'error');
 }
 
@@ -44,7 +58,7 @@ add_action('woocommerce_before_cart_emptied', 'remove_reserved_stock');
 function display_cart_timer() {
     if (isset($_SESSION['wc_session_expiration'])) {
         $time_passed = time() - $_SESSION['wc_session_expiration'];
-        $time_left = 100 - $time_passed;
+        $time_left = 900 - $time_passed;
         $minutes = intdiv($time_left, 60);
         $seconds = $time_left % 60;
 
@@ -89,6 +103,10 @@ function custom_woocommerce_empty_cart_action() {
 }
 
 add_action('init', 'custom_woocommerce_empty_cart_action');
+
+
+
+
 
 
 
@@ -1243,6 +1261,10 @@ function get_default_organizer_id_for_current_user()
 
 
 
+
+
+
+
 // FUNCTION TO CREATE LIST OF ORGANIZERS
 function display_user_created_organizers()
 {
@@ -1644,29 +1666,51 @@ if (isset($_POST['update_venue'])) {
 }
 add_shortcode('edit_create_vanues', 'display_edit_create_vanues');
 
-function get_organizer_id_shortcode_function($atts)
-{
+function get_organizer_id_shortcode_function($atts) {
+    // Check if the user is logged in and retrieve user data
+    if (!is_user_logged_in()) {
+        return 'Please log in to edit the organizer details.';
+    }
+
+    // Parse shortcode attributes with default values
     $atts = shortcode_atts(
         array(
-            'id' => '0'
+            'id' => '0'  // Default ID is '0' if not specified
         ),
-        $atts
+        $atts,
+        'get_organizer_id_shortcode_function'
     );
 
+    // Get the organizer ID either from the shortcode attribute or URL parameter
     $organizer_id = $atts['id'];
-
     if ($organizer_id == '0' && isset($_GET['id']) && !empty($_GET['id'])) {
         $organizer_id = $_GET['id'];
     }
 
+    // Check if an organizer ID was provided
     if ($organizer_id == '0') {
         return "No organizer ID provided.";
     }
 
-    return do_shortcode('[tribe_community_events view="edit_organizer" id="' . $organizer_id . '"]');
+    // Get the current user's ID and the post associated with the organizer ID
+    $current_user_id = get_current_user_id();
+    $post_author_id = get_post_field('post_author', $organizer_id);
+
+    // Check if the logged-in user is the author of the post or an administrator
+    if ($current_user_id === (int) $post_author_id || current_user_can('administrator')) {
+        // Generate and execute the shortcode to edit organizer details if the user is authorized
+        return do_shortcode('[tribe_community_events view="edit_organizer" id="' . $organizer_id . '"]');
+    } else {
+        // Provide an error message if the user is not authorized
+        return 'You are not authorized to edit these details.';
+    }
 }
 
+// Register the shortcode with WordPress
 add_shortcode('get_organizer_id_shortcode_function_shortcode', 'get_organizer_id_shortcode_function');
+
+
+
 
 function update_organizer_slug_on_title_change($post_id, $post, $update)
 {
@@ -2026,27 +2070,65 @@ function get_svg_icon($type)
 
 function my_tribe_community_tickets_sales_report_shortcode($atts)
 {
-    // Check if 'event_id' is in the URL and is a number
+    // Check if the user is logged in
+    if (!is_user_logged_in()) {
+        return 'Please log in to view the sales report.';
+    }
+
+    // Check if 'event_id' is provided in the URL and is numeric
     if (isset($_GET['event_id']) && is_numeric($_GET['event_id'])) {
         $event_id = intval($_GET['event_id']);
-        return do_shortcode('[tribe_community_tickets view="sales_report" id="' . $event_id . '"]');
+        $event_post = get_post($event_id);
+
+        // Check if the post exists
+        if (!$event_post) {
+            return 'Event not found.';
+        }
+
+        $current_user = wp_get_current_user();
+        // Check if the logged-in user is the author of the post or has administrator capabilities
+        if ($current_user->ID === (int) $event_post->post_author || current_user_can('administrator')) {
+            // Execute the shortcode if user is the post author or an admin
+            return do_shortcode('[tribe_community_tickets view="sales_report" id="' . $event_id . '"]');
+        } else {
+            // Return error message if user is neither the post author nor an admin
+            return 'You are not authorized to view this sales report.';
+        }
     } else {
-        return 'No Sales Report Found';
+        // Return error message if event ID is not valid
+        return 'Invalid event ID.';
     }
 }
 add_shortcode('organizer_sales_report', 'my_tribe_community_tickets_sales_report_shortcode');
 
+function my_tribe_community_tickets_attendees_report_shortcode($atts) {
+    // Check if the user is logged in
+    if (!is_user_logged_in()) {
+        return 'Please log in to view the attendees report.';
+    }
 
-
-
-function my_tribe_community_tickets_attendees_report_shortcode($atts)
-{
-    // Check if 'event_id' is in the URL and is a number
+    // Check if 'event_id' is provided in the URL and is numeric
     if (isset($_GET['event_id']) && is_numeric($_GET['event_id'])) {
         $event_id = intval($_GET['event_id']);
-        return do_shortcode('[tribe_community_tickets view="attendees_report" id="' . $event_id . '"]');
+        $event_post = get_post($event_id);
+
+        // Check if the post exists
+        if (!$event_post) {
+            return 'Event not found.';
+        }
+
+        $current_user = wp_get_current_user();
+        // Check if the logged-in user is the author of the post or has administrator capabilities
+        if ($current_user->ID === (int) $event_post->post_author || current_user_can('administrator')) {
+            // Execute the shortcode if user is the post author or an admin
+            return do_shortcode('[tribe_community_tickets view="attendees_report" id="' . $event_id . '"]');
+        } else {
+            // Return error message if user is neither the post author nor an admin
+            return 'You are not authorized to view this attendees report.';
+        }
     } else {
-        return 'No Attendees Report Found';
+        // Return error message if event ID is not valid
+        return 'Invalid event ID.';
     }
 }
 add_shortcode('organizer_attendees_report', 'my_tribe_community_tickets_attendees_report_shortcode');
@@ -2827,34 +2909,52 @@ add_shortcode('event_submission_response', 'my_event_submission_response_shortco
  */
 function dynamic_tribe_edit_event_shortcode()
 {
-    // Check if the 'event_id' query parameter is set in the URL
-    $event_id = isset($_GET['event_id']) ? intval($_GET['event_id']) : 0;
-    // Check if a valid event_id is provided
-    if ($event_id > 0) {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            if (!empty($_POST['event_status'])) {
-                // Processing continues as the `event_status` field has a value
-                $args = array(
-                    'ID' => $event_id,
-                    'post_type' => 'tribe_events',
-                    'post_status' => $_POST['event_status'],
-                );
-
-                wp_update_post($args);
-            }
-        }
-        // Generate the tribe_community_events shortcode with the dynamic event ID
-        $shortcode = "[tribe_community_events view='edit_event' id='$event_id']";
-
-        // Execute and return the tribe_community_events shortcode
-        return do_shortcode($shortcode);
+    // Check if the user is logged in
+    if (!is_user_logged_in()) {
+        return 'Please log in to edit the event.';
     }
 
-    // Return an error message or empty string if event_id is not valid
+    // Retrieve the 'event_id' query parameter if it exists
+    $event_id = isset($_GET['event_id']) ? intval($_GET['event_id']) : 0;
+
+    // Proceed if a valid event_id is provided
+    if ($event_id > 0) {
+        $event_post = get_post($event_id);
+
+        // Ensure the event post exists
+        if (!$event_post) {
+            return 'Event not found.';
+        }
+
+        $current_user = wp_get_current_user();
+        // Check if the current user is the author of the event or an administrator
+        if ($current_user->ID === (int) $event_post->post_author || current_user_can('administrator')) {
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                if (!empty($_POST['event_status'])) {
+                    // Process form data if `event_status` is provided
+                    $args = array(
+                        'ID' => $event_id,
+                        'post_type' => 'tribe_events',
+                        'post_status' => $_POST['event_status'],
+                    );
+
+                    wp_update_post($args);
+                }
+            }
+
+            // Generate and execute the shortcode to edit the event
+            $shortcode = "[tribe_community_events view='edit_event' id='$event_id']";
+            return do_shortcode($shortcode);
+        } else {
+            // Provide an authorization error message if not the post author or admin
+            return 'You are not authorized to edit this event.';
+        }
+    }
+
+    // Return an error message if the event_id parameter is not valid
     return 'Please provide a valid event ID in the URL.';
 }
 add_shortcode('dynamic_edit_event', 'dynamic_tribe_edit_event_shortcode');
-
 
 
 
@@ -3856,7 +3956,7 @@ function enqueue_custom_frontend_js()
     if ( is_page( 'qr-code-scanner' ) ) {
         wp_enqueue_script('html5-qrcode', '//cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.7/html5-qrcode.min.js', array('jquery'), null, true);
         // wp_enqueue_script('custom-qr-scanner-custom', 'https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js', array('jquery'), $script_version, true);
-        wp_enqueue_script('custom-qr-main-js', get_stylesheet_directory_uri() . '/QrScan.js', array('jquery', 'html5-qrcode'), 2.2, true);
+        wp_enqueue_script('custom-qr-main-js', get_stylesheet_directory_uri() . '/QrScan.js', array('jquery', 'html5-qrcode'), 2.8, true);
         wp_localize_script(
             'custom-qr-main-js',
             'tribe_ajax',
@@ -3955,12 +4055,9 @@ add_action('woocommerce_cart_calculate_fees', 'add_extra_fees_for_products');
 
 
 
-
-
-function add_extra_fees_for_products($cart)
-{
-    $extra_fee_percentage = 0;
-    $total_product_price = 0;
+function add_extra_fees_for_products($cart) {
+    $extra_fee_percentage = 0; // Initialize the extra fee based on product prices
+    $total_product_price = 0; // Initialize total product price
 
     // Loop through each cart item
     foreach ($cart->get_cart() as $cart_item_key => $cart_item) {
@@ -3971,12 +4068,14 @@ function add_extra_fees_for_products($cart)
         // Add the product price multiplied by quantity to the total product price
         $total_product_price += $product_price * $quantity;
 
-        // Calculate the percentage fee for each product individually
-        $extra_fee_percentage += ($product_price * 0.042) * $quantity; // 3.5% of product price
+        // Only add percentage fee if product is not free
+        if ($product_price > 0) {
+            $extra_fee_percentage += ($product_price * 0.0) * $quantity; // 4.2% of product price
+        }
     }
 
-    // Apply the same flat fee for the whole order
-    $flat_fee = 0.40;
+    // Apply a flat fee for the whole order only if there are payable products
+    $flat_fee = $total_product_price > 0 ? 0.20 : 0; // Apply $0.40 flat fee if any product is not free
 
     // Calculate the total extra fee as the sum of percentage fee and flat fee
     $total_extra_fee = $extra_fee_percentage + $flat_fee;
@@ -3987,9 +4086,12 @@ function add_extra_fees_for_products($cart)
         $total_extra_fee = round($total_extra_fee, 2);
 
         // Add the fee to the cart
-        $cart->add_fee('Service fee', $total_extra_fee);
+        $cart->add_fee('Service Fee', $total_extra_fee);
     }
 }
+
+add_action('woocommerce_cart_calculate_fees', 'add_extra_fees_for_products', 20);
+
 
 require_once get_stylesheet_directory() . '/option-page.php';
 
@@ -4631,23 +4733,13 @@ return $protocols;
 
 
 
-function custom_enqueue_scripts() {
-
-    wp_enqueue_script('html5-qrcode', 'https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js', array('jquery'), null, true);
-  
-    wp_enqueue_script('custom-qr-scanner', get_stylesheet_directory_uri() . '/js/custom-qr-scanner.js', array('jquery', 'html5-qrcode'), null, true);
-  
-}
-add_action('wp_enqueue_scripts', 'custom_enqueue_scripts');
 
 
 function custom_qr_scanner_shortcode() {
     enqueue_custom_frontend_js();
     ob_start();
     ?>
-    <style>
-   
-    </style>
+
     <!-- <div id="qr-reader" style="width: 100%; height: auto;"></div>
     <div id="qr-reader-results"></div>
 
@@ -4667,15 +4759,14 @@ function custom_qr_scanner_shortcode() {
     <?php 
 
     ?>
-<button class="change_event_btn" style="display:none"><i class="fas fa-sign-in-alt"></i> Change Event</button>
+
             <div class="tabs-container" style="display: none">
       
  
                 <ul class="tabs-nav">
-  <li class="tab tab1 active"><a href="#tab1"><i class="fa-solid fa-calendar-week"></i>Event Details</a></li>
+  <li class="tab tab1 active"><a href="#tab1"><i class="fa-solid fa-calendar-week"></i>Event Detail</a></li>
 <li class="tab tab2"><a href="#tab2"><i class="fa-solid fa-camera"></i> Scan QR Code</a></li>
 <li class="tab tab3"><a href="#tab3"><i class="fa-solid fa-users"></i> Attendees</a></li>
-
 
                 </ul>
                 <div class="main_div_event_data">

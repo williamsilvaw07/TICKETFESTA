@@ -31,9 +31,9 @@ if ( ! isset( $event ) ) {
 
 <div class="event_decp_div hover_section">
 <h2>
-Event Organizer
+Event Organiser
 </h2>
-<p>To add or edit an organizer, please vist <a href="/dashboard/organisers-list/"> Organizer Page</a>.</p>
+<p>To add or edit an organiser, please vist <a href="/dashboard/organisation-settings/"> Organiser Page</a>.</p>
 
 <div id="event_tribe_organizer" class="tribe-section tribe-section-organizer hover_section_content_show">
 	<div class="tribe-section-header">

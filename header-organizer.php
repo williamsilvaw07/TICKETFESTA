@@ -56,8 +56,8 @@ if (!defined('ABSPATH')) {
         <nav class="main-header navbar navbar-expand navbar-white navbar-light">
             <!-- Left navbar links -->
 <!-- Brand Logo -->
-<a href="https://ticketfesta.co.uk/" class="brand-link">
-                <img src="https://ticketfesta.co.uk/wp-content/uploads/2024/02/Group-195-2.png" alt=""
+<a href="https://ticketlocation.com" class="brand-link">
+                <img src="https://ticketlocation.com/wp-content/uploads/2024/04/Group-210-300x61.png" alt="ticket location logo "
                     class="brand-image img-circle elevation-3">
                 <span class="brand-text font-weight-light"></span>
             </a>
@@ -105,7 +105,7 @@ if (!defined('ABSPATH')) {
 <ul class="show-notification profile-notification dropdown-menu" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
     
     <li class="admin_dashboard-sidebar-item">
-        <a href="https://ticketfesta.co.uk/">
+        <a href="https://ticketlocation.com/">
             <i class="fas fa-exchange-alt"></i><span class="nav-text">Switch to Attendee</span>
         </a>
     </li>
@@ -143,8 +143,8 @@ if (!defined('ABSPATH')) {
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
-            <a href="https://ticketfesta.co.uk/" class="brand-link">
-                <img src="https://ticketfesta.co.uk/wp-content/uploads/2024/02/Group-195-2.png" alt=""
+            <a href="https://ticketlocation.com/" class="brand-link">
+                <img src="https://ticketlocation.com/wp-content/uploads/2024/04/Group-210-300x61.png" alt=""
                     class="brand-image img-circle elevation-3">
                 <span class="brand-text font-weight-light"></span>
             </a>
@@ -155,7 +155,7 @@ if (!defined('ABSPATH')) {
                 <nav class="admin_dashboard-sidebar">
                     <ul class="admin_dashboard-sidebar-list">
                         <li class="admin_dashboard-sidebar-item">
-                            <a href="https://ticketfesta.co.uk/dashboard/">
+                            <a href="/dashboard/">
                                 <i class="fas fa-home"></i><span class="nav-text">Dashboard</span>
                             </a>
 
@@ -168,7 +168,7 @@ if (!defined('ABSPATH')) {
 
                         <li class="admin_dashboard-sidebar-item">
                             <a href="/organizer-coupons/"><i class="fas fa-ticket-alt"></i><span
-                                    class="nav-text">Coupons</span></a>
+                                    class="nav-text">Promo Codes</span></a>
                         </li>
 
 
@@ -396,6 +396,9 @@ if (!defined('ABSPATH')) {
 
 
         <style>
+
+
+
             .main-header .brand-link{
                 display:none
             }
@@ -1247,6 +1250,11 @@ if (!defined('ABSPATH')) {
             }
 
 
+
+
+            .page-id-3025 .tribe-community-events-list{
+                max-width: inherit!important;
+            }
             /****EVENT LIST****/
             #tribe-community-events-shortcode {
                 max-width: 1000px;
@@ -1641,6 +1649,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
 
             }
 
+            
 #user-organizers-list tbody tr{
     border-radius: 10px!important;
     margin: 20px 0!important;
@@ -2236,7 +2245,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
             }
 
 
-            .tribe-section-taxonomy,
+         
             .tribe-section-website,
             .tribe-button-icon-settings,
             #rsvp_form_toggle,
@@ -2681,8 +2690,16 @@ html .tickets-sold-column , html .tribe-list-column-title {
                 width: 300px !important;
 
             }
-
-
+            .tribe-tickets-editor-table tr,
+            .tribe-tickets-editor-table .table-header {
+                background-color: #212121 !important;
+            }
+            .tribe-tickets-editor-table tr td , .tribe-tickets-editor-table thead, .tribe-tickets-editor-table .table-header {
+    border-bottom: 1px solid #444;
+}
+            .ticket_duplicate_text {
+                display: none;
+            }
             .tribe-section-venue input[type="text"] {
                 width: 100% !important;
             }
@@ -2704,36 +2721,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
             }
 
 
-            #eventCouponForm .tribe-section {
-                margin: 0 !important;
-            }
-
-            .tribe-tickets-editor-table tr,
-            .tribe-tickets-editor-table .table-header {
-                background-color: #212121 !important;
-            }
-            .tribe-tickets-editor-table tr td , .tribe-tickets-editor-table thead, .tribe-tickets-editor-table .table-header {
-    border-bottom: 1px solid #444;
-}
-            .ticket_duplicate_text {
-                display: none;
-            }
-
-            #eventCouponForm .tribe-section-content {
-                display: flex;
-                flex-direction: column;
-            }
-
-            #eventCouponForm label:before {
-                content: "Select Ticket";
-                font-size: 17px;
-                font-weight: 600;
-                display: block;
-                padding-bottom: 10px;
-                padding-top: 13px;
-            }
-
-
+   
 
             .tribe-tickets-editor-table thead tr {
 
@@ -2784,7 +2772,9 @@ html .tickets-sold-column , html .tribe-list-column-title {
                 margin-left: 0 !important;
                 margin-top: 50px !important;
             }
-
+.main-footer{
+    display:none!important
+}
             #add_sponsor_button {
                 padding: 7px 15px;
                 border-radius: 4px;
@@ -3078,7 +3068,7 @@ html .tickets-sold-column , html .tribe-list-column-title {
             }
 
             .admin_bank_details_card p {
-                font-size: 12px;
+                font-size: 13px;
                 font-weight: 300 !important;
                 color: #aaa !important;
                 text-align: left;
@@ -3383,7 +3373,10 @@ html .tickets-sold-column , html .tribe-list-column-title {
     top: 1px;
 }
 
-
+.brand-link .brand-image {
+    margin-left: 0!important;
+    padding-left:0!important
+}
 
 
 #emailTable tbody tr:first-child th {
