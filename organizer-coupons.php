@@ -328,6 +328,9 @@ s
                                         <th class="status-column">
                                             Type
                                         </th>
+                                        <th class="status-column">
+                                            Limit
+                                        </th>
                                         <th class="status-column action">
                                             Action
                                         </th>
@@ -349,6 +352,8 @@ s
         <?php
         $data['code'] = $wooCoupon->get_code();
         $data['coupon_id'] = $coupon->ID;
+        $data['usage_limit'] = $wooCoupon->get_usage_limit();
+        $data['usage_limit_per_user'] = $wooCoupon->get_usage_limit_per_user();
         echo $wooCoupon->get_code();
         ?>
     </p>
@@ -424,6 +429,14 @@ s
                                                 $data['discount_type'] = $wooCoupon->get_discount_type();
 
                                                 echo ['fixed_cart' => 'Fixed', 'percent' => 'Percent'][$wooCoupon->get_discount_type()];
+                                                ?>
+                                            </td>
+                                            <td class="event-status-form">
+                                                <?php
+                                                echo $data['usage_limit']  === 0 ? "&#8734;": $data['usage_limit'];
+                                                echo "/";
+                                                echo $data['usage_limit_per_user']  === 0 ? "&#8734;": $data['usage_limit_per_user'];
+
                                                 ?>
                                             </td>
 
@@ -540,6 +553,20 @@ jQuery(document).ready(function($) {
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
+                            <label for="usage_limit">Usage limit per coupon</label>
+                            <input type="number" class="form-control" id="usage_limit" placeholder="Unlimited usage" name="usage_limit">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="coupon_code" name="usage_limit_per_user">Usage limit per user</label>
+                            <input type="number" class="form-control" id="usage_limit_per_user" placeholder="Unlimited usage" name="usage_limit_per_user">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
                             <label>Start Date & time:</label>
                             <div class="form-group">
                                 <div class="input-group date" id="start_date" data-target-input="nearest">
@@ -636,6 +663,20 @@ jQuery(document).ready(function($) {
                                 <option value="fixed_cart">Fixed</option>
                                 <option value="percent">Percent</option>
                             </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="edit_usage_limit">Usage limit per coupon</label>
+                            <input type="number" class="form-control" id="edit_usage_limit" placeholder="Unlimited usage" name="usage_limit">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="edit_limit_per_user">Usage limit per user</label>
+                            <input type="number" class="form-control" id="edit_limit_per_user" placeholder="Unlimited usage" name="usage_limit_per_user">
                         </div>
                     </div>
                 </div>

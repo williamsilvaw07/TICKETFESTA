@@ -63,6 +63,8 @@ function onClickEditHandeler(elem) {
   jQuery('#edit_start_date_time').val(data.start_date);
   jQuery('#edit_end_date_time').val(data.expire_date);
   jQuery('#coupon_id').val(data.coupon_id);
+  jQuery('#edit_usage_limit').val(data.usage_limit === 0 ? "" : data.usage_limit);
+  jQuery('#edit_limit_per_user').val(data.usage_limit_per_user === 0 ? "" : data.usage_limit_per_user );
 
   if(data.auto_apply){
     jQuery('#edit_auto_apply').prop('checked', true);
@@ -232,7 +234,8 @@ jQuery(document).ready(function (jQuery) {
     var coupon_code = document.getElementById("coupon_code");
     var discount_type = document.getElementById("discount_type");
     var amount = document.getElementById("amount");
-    // var usage_limit = document.getElementById("usage_limit");
+    var usage_limit = document.getElementById("usage_limit");
+    var usage_limit_per_user = document.getElementById("usage_limit_per_user");
     var start_date_time = document.getElementById("start_date_time");
     var end_date_time = document.getElementById("end_date_time");
 
@@ -252,7 +255,8 @@ jQuery(document).ready(function (jQuery) {
         coupon_code: coupon_code.value,
         discount_type: discount_type.value,
         amount: amount.value,
-        // usage_limit: usage_limit.value,
+        usage_limit: usage_limit.value,
+        usage_limit_per_user: usage_limit_per_user.value,
         end_date_time: end_date_time.value,
         start_date_time: start_date_time.value,
         auto_apply: jQuery('#auto_apply').is(':checked')
