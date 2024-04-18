@@ -1010,13 +1010,127 @@ jQuery(document).ready(function($) {
 
 
 
+jQuery(document).ready(function($) {
+    setTimeout(function() {
+        // Make fields read-only
+        $('.tribe-linked-type-venue-phone input, .tribe-linked-type-venue-website input, .tribe-linked-type-venue-state-province input').hide().attr('readonly', true);
+        $('.tribe-linked-type-venue-phone , .tribe-linked-type-venue-website ,  .tribe-linked-type-venue-state-province  , .tribe-tickets-editor-table-tickets-body .tribe-tooltip').hide()
+
+        // Apply CSS styles to specified elements
+        $('.tribe-linked-type-venue-address td:first-child, .tribe-linked-type-venue-city td:first-child, .tribe-linked-type-venue-country td:first-child, .tribe-linked-type-venue-zip td:first-child, .tribe-section-venue tr td , .tribe-linked-type-venue-country td:first-child').css({
+            'min-width': '130px',
+            'max-width': '130px',
+            'font-size': '14px',
+            'margin-right': '11px'
+        });
+
+        $('.tribe-linked-type-venue-country td:last-child').css({
+            'min-width': 'inherit',
+            'max-width': 'inherit',
+            'width': '100%'
+        });
+
+        $('.tribe-linked-type-venue-address input').css({
+            'padding-right': '0',
+            'width': '100%',
+            'font-size': '15px'
+        });
+
+        $('.tribe-linked-type-venue-address input , .tribe_venue-name').css({
+            'padding-right': '0',
+            'width': '100%',
+            'min-width': '213px',
+            'font-size': '14px'
+        });
+
+
+        $('.linked-post-name.tribe_venue-name').attr('placeholder', 'Fabric London');
+        $('input[name="venue[Address][]"]').attr('placeholder', '77A Charterhouse St');
+        $('input[name="venue[City][]"]').attr('placeholder', 'London').css({
+            'font-size': '14px'});
+        $('input[name="venue[Zip][]"]').attr('placeholder', 'EC1M 6HJ').css({
+            'font-size': '14px' });
+
+    }, 2000); // Delay execution for 2000 milliseconds (2 seconds)
+});
+
+
+
+
+
+
+
+jQuery(document).ready(function($) {
+    // Listen for a click event on the element that toggles the form
+    $('#ticket_form_toggle').on('click', function() {
+        // Wait for 2 seconds after the click
+        setTimeout(function() {
+
+         
+            //$('.tribe-field-start_date span').attr('style', 'display: none !important;');
+            //$('body .tribe-field-start_date span.dashicons ').attr('style', 'display: block !important;');
+    
+            $('#ticket_start_date ').attr('placeholder', '25/05/2024');
+            $('#ticket_start_time ').attr('placeholder', '21:30');
+            $('#ticket_end_date ').attr('placeholder', '26/05/2024');
+            $('#ticket_end_time ').attr('placeholder', '04:30');
+            $('#ticket_price ').attr('placeholder', '20.99');
+            $('#Tribe__Tickets_Plus__Commerce__WooCommerce__Main_capacity ').attr('placeholder', '200');
+
+            $('.ui-timepicker-wrapper .ui-timepicker-list li ').attr('style', 'font-size:16px !important;');
+            
+    
+          
+
+            // Setup a click event handler for the help icons
+            $('.dashicons-editor-help').on('click', function() {
+                var $icon = $(this); // Cache the jQuery object of the icon
+                var titleText = $icon.attr('title'); // Get the title attribute
+
+                // Close all other title texts
+                $('.title-text').not($icon.next('.title-text')).css('display', 'none');
+
+                // Check if the title span exists
+                var $titleSpan = $icon.next('.title-text');
+                if (!$titleSpan.length) {
+                    // Create a span to show the title text if it does not already exist
+                    $icon.after('<span class="title-text" style="padding-left: 5px; width: fit-content; opacity: 0.9; font-weight: 400; font-size: 14px; z-index: 1000; display: none;">' + titleText + '</span>');
+                    $titleSpan = $icon.next('.title-text'); // Update the $titleSpan reference
+                }
+
+                // Toggle the display of the title text span
+                $titleSpan.css('display', $titleSpan.css('display') === 'none' ? 'block' : 'none');
+
+                console.log('Title text for:', titleText, 'toggle visibility.');
+            });
+
+            // Apply CSS changes to the help icon to indicate interactiveness
+            $('.dashicons-editor-help').css({
+                'font-size': '22px',
+                'cursor': 'pointer'
+            });
+
+            console.log('Click handler for displaying title text is now set.');
+        }, 2000); // Delay of 2 seconds
+    });
+});
+
+
+
+
 </script>
 
 
 <style>
 
-
-
+/*
+.tribe-linked-type-venue-phone , .tribe-linked-type-venue-website , .tribe-linked-type-venue-state-province{ 
+    display:none!important
+}*/
+/*END*/
+.ui-timepicker-wrapper .ui-timepicker-list li {
+    font-size:16px!important
+}
 .edit-linked-post-link{
     display:none!important;
     visibility: hidden;
